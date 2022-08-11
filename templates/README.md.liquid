@@ -1,0 +1,5 @@
+{% for module in system.modules %}
+{% for interface in module.interfaces %}
+Say hello world to {{module.name|identifier}} {{interface.name|identifier}}{{nl}}
+{% endfor %}
+{% endfor %}

@@ -1,0 +1,14 @@
+schema: "apigear.solution/1.0"
+name: demo
+version: "0.1"
+
+layers:
+  - name: goldenmaster
+    modules:
+      - testbed.module.yaml
+    output: ../test
+    blueprint:
+      package: ""
+      rules: ../rules.yaml
+      features:
+        - all

@@ -1,0 +1,40 @@
+{
+  "name": "@apigear-io-templates/template-helloworld",
+  "version": "0.1.0",
+  "description": "A hello world template",
+  "keywords": [
+    "objectapi"
+  ],
+  "devDependencies": {
+    "@apigear-io/apigear-cli": "^0.3.3",
+    "standard-version": "^9.5.0"
+  },
+  "scripts": {
+    "gen:goldenmaster": "rm -rf goldenmaster && node node_modules/@apigear-io/apigear-cli/bin/run gen run apigear/goldenmaster.solution.yaml && mv test/ goldenmaster",
+    "test:goldenmaster": "rm -rf test && node node_modules/@apigear-io/apigear-cli/bin/run gen run apigear/goldenmaster.solution.yaml && diff -r goldenmaster/ test/",
+    "report:license": "license-report --exclude=@apigear-io/apigear-cli --department.value=apigear --relatedTo.value=$npm_package_name --output=csv --csvHeaders > licenses.csv",
+    "version": "standard-version -i CHANGELOG.md --same-file"
+  },
+  "author": {
+    "name": "ApiGear UG",
+    "url": "https://github.com/apigear-io/template-helloworld"
+  },
+  "homepage": "https://apigear.io",
+  "license": "SEE LICENSE IN LICENSE",
+  "files": [
+    "/templates",
+    "/rules.yaml",
+    "/README.md",
+    "/LICENSE"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apigear-io/template-helloworld.git"
+  },
+  "bugs": {
+    "url": "https://github.com/apigear-io/template-helloworld/issues"
+  }
+}

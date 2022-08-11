@@ -1,0 +1,21 @@
+node_modules/
+*/**/node_modules/
+./lib/
+out/
+dist/
+coverage/
+*.log
+*.local.json
+tsconfig.tsbuildinfo
+demo/
+
+# do not add temporary test folder
+test/
+
+# cross plattform line breaks shall be ignored
+* text=auto eol=lf
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?

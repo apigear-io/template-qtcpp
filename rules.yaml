@@ -1,0 +1,6 @@
+features:
+  helloworld:
+    system:
+      documents:
+        - source: "README.md.liquid"
+          target: "README.md"

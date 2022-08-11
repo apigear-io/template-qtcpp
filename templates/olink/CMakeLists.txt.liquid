@@ -1,0 +1,20 @@
+{% assign module_id = module.name|identifier | append: "_olink" %}
+{% assign MODULE_ID = module.name|identifier|constant | append: "_OLINK" %}
+{% assign module_path = module.name|path %}
+{% assign SOURCES = MODULE_ID | append: "_SOURCES" -%}
+
+find_package(Qt5 REQUIRED COMPONENTS Core Qml Network WebSockets)
+
+set ({{MODULE_ID}}_SOURCES
+    ../../shared/olinkclient.cpp
+    olinkfactory.cpp
+{%- for interface in module.interfaces %}
+    olink{{interface.name|lower}}.cpp
+    olink{{interface.name|lower}}adapter.cpp
+{%- endfor %}
+)
+
+# dynamic library
+add_library({{module_id}} STATIC {{ "${" | append: SOURCES | append: "}"}})
+target_include_directories({{module_id}} PRIVATE ../{{module.name|identifier}})
+target_link_libraries({{module_id}} PRIVATE Qt5::Core Qt5::Qml Qt5::WebSockets {{module.name|identifier}}_api INTERFACE olink_core PUBLIC qtpromise)

@@ -1,0 +1,35 @@
+{% comment %} // Copyright (c) ApiGear UG 2020 {% endcomment -%}
+{{ module | licGPLcpp -}}
+{% capture class%}Wamp{{interface.name}}Adapter{% endcapture %}
+#pragma once
+
+#include <QtCore>
+#include <nlohmann/json.hpp>
+
+#include "../api/api.h"
+#include "../shared/wampclient.h"
+
+using namespace ApiGear;
+
+class {{class}} : public QObject
+{
+    Q_OBJECT
+public:
+    explicit {{class}}(Abstract{{interface}}* impl, QObject *parent = nullptr);
+    virtual ~{{class}}() override;
+public:
+    void publishState();
+    nlohmann::json captureState();
+    void applyState(const nlohmann::json& state);
+    // handler functions
+    void handleGetState(WAMP::ProcedureArg arg);
+    void handleSetState(WAMP::ProcedureArg arg);
+{% for operation in interface.operations %}
+    void handle{{operation.name|upperFirst}}(WAMP::ProcedureArg arg);
+{% endfor %}
+{% for signal in interface.signals %}
+    void publish{{signal.name|upperFirst}}({{signal|qtParams}});
+{% endfor %}
+private:
+    Abstract{{interface}}* m_impl;
+};

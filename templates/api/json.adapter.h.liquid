@@ -1,0 +1,35 @@
+{% comment %} // Copyright (c) ApiGear UG 2020 {% endcomment -%}
+#pragma once
+
+#ifndef JSON_USE_IMPLICIT_CONVERSIONS
+#define JSON_USE_IMPLICIT_CONVERSIONS 0
+#endif
+#include <nlohmann/json.hpp>
+#include <QtCore>
+
+inline void from_json(const nlohmann::json& j, QString& p) {
+    p = QString::fromStdString(j.get<std::string>());
+}
+
+inline void to_json(nlohmann::json& j, const QString& value) {
+    j = value.toStdString();
+}
+{% for struct in module.structs %}
+{% assign class = struct %}
+
+inline void from_json(const nlohmann::json& j, {{class}}& p) {
+{% for field in struct.fields %}
+    if(j.contains("{{field.name}}")) {
+        p.set{{field.name|upperFirst}}(j["{{field.name}}"].get<{{field | qtReturn}}>());
+    }
+{% endfor %}
+}
+
+inline void to_json(nlohmann::json& j, const {{class}}& p) {
+    j = nlohmann::json{
+{% for field in struct.fields %}
+        {"{{field.name}}", p.{{field.name}}()}{% unless forloop.last %},{% endunless %}
+{% endfor %}
+        };
+}
+{% endfor %}

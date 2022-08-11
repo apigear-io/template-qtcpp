@@ -1,12 +1,16 @@
 {
-  "name": "@apigear-io-templates/template-helloworld",
-  "version": "0.1.0",
-  "description": "A hello world template",
+  "name": "@apigear-io-templates/qtcpp-blueprint",
+  "version": "1.15.0",
+  "description": "A Qt C++ code generator",
   "keywords": [
-    "objectapi"
+    "objectapi",
+    "qt",
+    "library",
+    "http",
+    "client"
   ],
   "devDependencies": {
-    "@apigear-io/apigear-cli": "^0.3.3",
+    "@apigear-io/apigear-cli": "^0.4.0",
     "standard-version": "^9.5.0"
   },
   "scripts": {
@@ -17,7 +21,7 @@
   },
   "author": {
     "name": "ApiGear UG",
-    "url": "https://github.com/apigear-io/template-helloworld"
+    "url": "https://github.com/apigear-io/template-qtcpp"
   },
   "homepage": "https://apigear.io",
   "license": "SEE LICENSE IN LICENSE",
@@ -28,13 +32,13 @@
     "/LICENSE"
   ],
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
+    "registry": "https://europe-west3-npm.pkg.dev/apigear/technology-templates/"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/apigear-io/template-helloworld.git"
+    "url": "git+https://github.com/apigear-io/template-qtcpp.git"
   },
   "bugs": {
-    "url": "https://github.com/apigear-io/template-helloworld/issues"
+    "url": "https://github.com/apigear-io/template-qtcpp/issues"
   }
 }

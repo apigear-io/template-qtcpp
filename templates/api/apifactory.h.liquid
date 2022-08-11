@@ -1,0 +1,19 @@
+#pragma once
+
+#include <QtCore>
+#include "api.h"
+
+class {{ module.name | constant }}_EXPORT ApiFactory : public QObject, public ApiFactoryInterface
+{
+    Q_OBJECT
+public:
+    ApiFactory(QObject *parent=nullptr);
+    static void set(ApiFactoryInterface *instance);
+    static ApiFactoryInterface *get();
+
+{% for interface in module.interfaces %}
+    virtual Abstract{{interface.name}}* create{{interface.name|upperFirst}}(QObject *parent);
+{% endfor %}
+private:
+    static ApiFactoryInterface *s_instance;
+};

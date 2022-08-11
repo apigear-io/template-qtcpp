@@ -1,0 +1,21 @@
+{% assign module_id = module.name|identifier | append: "_wamp" %}
+{% assign MODULE_ID = module.name|identifier|constant | append: "_WAMP" %}
+{% assign module_path = module.name|path %}
+{% assign SOURCES = MODULE_ID | append: "_SOURCES" -%}
+
+find_package(Qt5 REQUIRED COMPONENTS Core Qml Network WebSockets)
+set(OUTPUT_PATH ${LIBRARY_PATH}/)
+
+set ({{MODULE_ID}}_SOURCES
+    ../../shared/wampclient.cpp
+    wampfactory.cpp
+{%- for interface in module.interfaces %}
+    wamp{{interface.name|lower}}.cpp
+    wamp{{interface.name|lower}}adapter.cpp
+{%- endfor %}
+)
+
+# dynamic library
+add_library({{module_id}} STATIC {{ "${" | append: SOURCES | append: "}"}})
+target_include_directories({{module_id}} PRIVATE ../{{module.name|identifier}})
+target_link_libraries({{module_id}} PRIVATE Qt5::Core Qt5::Qml Qt5::WebSockets {{module.name|identifier}}_api wamp_lib qtpromise)

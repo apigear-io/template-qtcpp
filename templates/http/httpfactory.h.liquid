@@ -1,0 +1,17 @@
+#pragma once
+
+#include <QtCore>
+#include <QtNetwork>
+
+#include "../api/apifactory.h"
+
+class HttpFactory : public QObject, public ApiFactoryInterface
+{
+public:
+    HttpFactory(QObject *parent = nullptr);
+{% for interface in module.interfaces %}
+    Abstract{{interface.name}}* create{{interface.name|upperFirst}}(QObject *parent) override;
+{% endfor %}
+private:
+    QNetworkAccessManager *m_network;
+};

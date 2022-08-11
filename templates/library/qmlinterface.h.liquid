@@ -1,0 +1,40 @@
+{% comment %} // Copyright (c) ApiGear UG 2020 {% endcomment -%}
+{{ module | licGPLcpp -}}
+{% assign class = interface.name -%}
+{% assign MODULE_ID = module.name|identifier|constant|append:"_LIB" %}
+#pragma once
+
+#include <QtCore>
+
+#include "{{interface.name|lower}}.h"
+
+class {{ MODULE_ID }}_EXPORT Qml{{class}} : public Abstract{{class}}
+{
+    Q_OBJECT
+{% for property in interface.properties %}
+{% assign name = property.name %}
+    Q_PROPERTY({{property|qtReturn}} {{name}} READ {{name}} NOTIFY {{name}}Changed)
+{% endfor %}
+public:
+    explicit Qml{{class}}(QObject *parent = nullptr);
+    virtual ~Qml{{class}}() override;
+
+{% for property in interface.properties %}
+    {{property|qtReturn}} {{property.name}}() const override;
+    void set{{property.name|capital}}({{property|qtParam}}) override;
+{% endfor %}
+
+{% for operation in interface.operations %}
+    Q_INVOKABLE {{operation|qtReturn}} {{operation.name}}({{operation|qtParams}}) override;
+{% endfor %}
+
+Q_SIGNALS:
+{% for signal in interface.signals %}
+    void {{signal.name}}({{signal|qtParams}});
+{% endfor %}
+{% for property in interface.properties %}
+    void {{property.name}}Changed({{property|qtParam}});
+{% endfor %}
+private:
+	Abstract{{class}} *m_obj;
+};

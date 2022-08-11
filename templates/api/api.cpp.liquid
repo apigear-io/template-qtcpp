@@ -1,0 +1,114 @@
+{% comment %} // Copyright (c) ApiGear UG 2020 {% endcomment -%}
+{{ module | licGPLcpp -}}
+#include "api.h"
+
+{% for enum in module.enums %}
+{% assign class = enum.name %}
+// ********************************************************************
+// Enumeration {{class}}
+// ********************************************************************
+{{class}}::{{class}}Enum {{class}}::toEnum(quint8 v, bool *ok)
+{
+    if (ok) {
+        *ok = true;
+    }
+    switch (v) {
+{% for member in enum.members %}
+        case {{member.value}}: return {{class}}::{{member.name}};
+{% endfor %}
+        default:
+            if (ok) {
+                *ok = false;
+            }
+            return {{enum|qtDefault}};
+    }
+}
+{% endfor %}
+
+{% for struct in module.structs %}
+{% assign class = struct.name %}
+// ********************************************************************
+// Struct {{class}}
+// ********************************************************************
+
+{{class}}::{{class}}()
+{% for field in struct.fields %}
+{% if forloop.first %}
+    :{% else %}    ,{% endif %} m_{{field.name}}({{field|qtDefault}})
+{% endfor %}
+{
+}
+
+{% for field in struct.fields %}
+
+void {{class}}::set{{field.name|capital}}({{field|qtParam}})
+{
+  m_{{field.name}} = {{field.name}};
+}
+
+{{field|qtReturn}} {{class}}::{{field.name}}() const
+{
+  return m_{{field.name}};
+}
+{% endfor %}
+
+bool {{class}}::operator==(const {{class}} &other) const
+{
+    return (
+{% for field in struct.fields %}
+        {{field.name}}() == other.{{field.name}}(){% unless forloop.last %} &&
+{% endunless %}
+{% endfor %}
+    );
+}
+
+bool {{class}}::operator!=(const {{class}} &other) const
+{
+    return !(*this == other);
+}
+
+QDataStream &operator<<(QDataStream &stream, const {{class}} &obj)
+{
+    {% for field in struct.fields %}
+    stream << obj.{{field.name}}();
+    {% endfor %}
+
+    return stream;
+}
+
+QDataStream &operator>>(QDataStream &stream, {{class}} &obj)
+{
+    {% for field in struct.fields %}
+    {{field|qtReturn}} {{field.name}}Value;
+    stream >> {{field.name}}Value;
+    obj.set{{field.name|capital}}({{field.name}}Value);
+
+    {% endfor %}
+    return stream;
+}
+
+// ********************************************************************
+// Struct Factory {{class}}
+// ********************************************************************
+
+{{class}} {{class}}Factory::create()
+{
+    return {{class}}();
+}
+{% endfor %}
+
+
+{%- for interface in module.interfaces %}
+
+{% assign class = interface.name | prepend: "Abstract" %}
+
+// ********************************************************************
+// {{class}} abstract interface
+// ********************************************************************
+
+{{class}}::{{class}}(QObject *parent)
+    : QObject(parent)
+{
+}
+
+{% endfor %}

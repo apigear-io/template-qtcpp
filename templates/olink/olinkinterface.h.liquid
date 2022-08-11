@@ -1,0 +1,48 @@
+{% comment %} // Copyright (c) ApiGear UG 2020 {% endcomment -%}
+{{ module | licGPLcpp -}}
+{% assign class = interface.name |prepend:"OLink"-%}
+#pragma once
+
+#include <QtCore>
+#include <QtPromise>
+
+#include "../api/api.h"
+#include "objectlink/olink/clientnode.h"
+
+using namespace ApiGear;
+using namespace ApiGear::ObjectLink;
+
+class {{class}} : public Abstract{{interface.name}}, public IObjectSink
+{
+    Q_OBJECT
+public:
+    explicit {{class}}(QObject *parent = nullptr);
+    virtual ~{{class}}() override;
+
+    void applyState(const json& fields);
+
+{% for property in interface.properties %}
+    {{property|qtReturn}} {{property.name}}() const override;
+    void set{{property.name|capital}}({{property|qtParam}}) override;
+    void set{{property.name|capital}}Local({{property|qtParam}});
+{% endfor %}
+
+{% for operation in interface.operations %}
+    {{operation|qtReturn}} {{operation.name}}({{operation|qtParams}}) override;
+    QtPromise::QPromise<{{operation|qtReturn}}> {{operation.name}}Async({{operation|qtParams}});
+{% endfor %}
+signals:
+    void isReady();
+public:
+    virtual std::string olinkObjectName() override;
+    virtual void olinkOnSignal(std::string name, json args) override;
+    virtual void olinkOnPropertyChanged(std::string name, json value) override;
+    virtual void olinkOnInit(std::string name, json props, IClientNode *node) override;
+    virtual void olinkOnRelease() override;
+private:
+{% for property in interface.properties %}
+    {{property|qtReturn}} m_{{property.name}};
+{% endfor %}
+    bool m_isReady;
+    IClientNode *m_node;
+};

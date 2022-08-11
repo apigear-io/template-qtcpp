@@ -1,0 +1,54 @@
+{% comment %} // Copyright (c) ApiGear UG 2020 {% endcomment -%}
+{{ module | licGPLcpp -}}
+{% assign class = interface.name %}
+
+#include "qml{{class|lower}}.h"
+#include "../api/apifactory.h"
+#include "../api/agent.h"
+
+#include <QtQml>
+
+Qml{{class}}::Qml{{class}}(QObject *parent)
+    : Abstract{{class}}(parent)
+{
+    m_obj = ApiFactory::get()->create{{class}}(this);
+    {% for property in interface.properties %}
+    connect(m_obj, &Abstract{{class}}::{{property.name}}Changed, this, &Qml{{class}}::{{property.name}}Changed);
+    connect(m_obj, &Abstract{{class}}::{{property.name}}Changed, this, &Abstract{{class}}::{{property.name}}Changed);
+    {% endfor %}
+    {% for signal in interface.signals %}
+    connect(m_obj, &Abstract{{class}}::{{signal.name}}, this, &Qml{{class}}::{{signal.name}});
+    connect(m_obj, &Abstract{{class}}::{{signal.name}}, this, &Abstract{{class}}::{{signal.name}});
+    {% endfor %}
+}
+
+Qml{{class}}::~Qml{{class}}()
+{
+}
+
+{% for property in interface.properties %}
+{% assign name = property.name %}
+
+{{property|qtReturn}} Qml{{class}}::{{name}}() const
+{
+    return m_obj->{{name}}();
+}
+
+void Qml{{class}}::set{{name|capital}}({{property|qtParam}})
+{
+    {{interface.name}}Agent::capture_state(this);
+    return m_obj->set{{name|capital}}({{name}});
+}
+
+
+{% endfor %}
+{%- for operation in interface.operations %}
+
+{{operation|qtReturn}} Qml{{class}}::{{operation.name}}({{operation|qtParams}})
+{
+    {% assign space = ', ' %}
+    {{interface.name}}Agent::trace_{{operation.name}}(this{% if operation.params.first %}{{space}}{% endif %}{{ operation.params | join: ', ' }});
+	
+    return m_obj->{{operation.name}}({% for param in operation.params %}{{param.name}}{% unless forloop.last %},{% endunless %}{% endfor %});
+}
+{% endfor %}

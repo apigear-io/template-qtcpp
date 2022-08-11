@@ -1,0 +1,66 @@
+{% comment %} // Copyright (c) ApiGear UG 2020 {% endcomment -%}
+{{ module | licGPLcpp -}}
+
+#include "tst_{{interface.name|lower}}.h"
+#include "{{interface.name|lower}}.h"
+
+{% assign class = interface.name %}
+
+/**
+ *  will be called before the first test function is executed.
+*/
+void Test{{class}}::initTestCase(){
+
+}
+
+/**
+ *  will be called to create a global test data table.
+*/
+void Test{{class}}::initTestCase_data(){
+
+}
+
+/**
+ *  will be called after the last test function was executed.
+*/
+void Test{{class}}::cleanupTestCase(){
+
+}
+
+/**
+ *  will be called before each test function is executed.
+*/
+void Test{{class}}::init(){
+
+}
+
+/**
+ *  will be called after every test function.
+*/
+void Test{{class}}::cleanup(){
+
+}
+
+{% for operation in interface.operations %}
+/**
+ *  Test operation {{operation.name}}
+*/
+void Test{{class}}::{{operation.name}}(){
+    {{class}} test{{class|capitalize}};
+    // Do implement test here
+}
+{% endfor %}
+
+{% for property in interface.properties %}
+/**
+ *  Test proptery {{property.name}}
+*/
+void Test{{class}}::{{property.name}}(){
+    {{class}} test{{class|capitalize}};
+    // Do implement test here
+}
+{% endfor %}
+
+QTEST_MAIN(Test{{class}});
+
+

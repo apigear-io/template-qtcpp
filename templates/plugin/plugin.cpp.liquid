@@ -1,0 +1,35 @@
+{% comment %} // Copyright (c) ApiGear UG 2020 {% endcomment -%}
+{{ module | licGPLcpp -}}
+{% assign version = module.version|version %}
+#include "plugin.h"
+
+#include <QtQml>
+
+#include "../api/api.h"
+
+{% for interface in module.interfaces %}
+#include "../lib/qml{{interface.name|lower}}.h"
+{% endfor %}
+
+void Plugin::registerTypes(const char *uri)
+{
+    // @uri {{module.name}}
+    // register enum
+{% for enum in module.enums %}
+    qmlRegisterUncreatableType<{{enum.name}}>(uri, {{version.major}}, {{version.minor}}, "{{enum.name}}", "An enum can not be created");
+{% endfor %}
+
+    // register structs
+{% for struct in module.structs %}
+    qRegisterMetaType<{{struct.name}}>();
+    qmlRegisterUncreatableType<{{struct.name}}Factory>(uri, {{version.major}}, {{version.minor}}, "{{struct.name}}Factory", "A struct factory can not be created");
+{% endfor %}
+
+    // register interfaces
+{% for interface in module.interfaces %}
+    qmlRegisterType<Qml{{interface.name}}>(uri, {{version.major}}, {{version.minor}}, "{{interface.name}}");
+{% endfor %}
+
+
+
+}

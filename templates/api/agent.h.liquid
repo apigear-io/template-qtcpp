@@ -1,0 +1,22 @@
+{% comment %} // Copyright (c) ApiGear UG 2020 {% endcomment -%}
+#pragma once
+
+#include <QtCore>
+
+#include "api.h"
+
+{% for interface in module.interfaces %}
+{% assign class = interface.name | append: "Agent" %}
+
+
+class {{ module.name | constant }}_EXPORT {{class}}
+{
+public:
+  {{class}}();
+  static QVariantMap capture_state(Abstract{{interface.name}}* obj);
+  static void trace_state(Abstract{{interface.name}}* obj);
+  {% for operation in interface.operations %}
+  static void trace_{{operation.name}}(Abstract{{interface.name}}* obj{{operation | qtParams: ', '}});
+  {% endfor %}
+};
+{% endfor %}

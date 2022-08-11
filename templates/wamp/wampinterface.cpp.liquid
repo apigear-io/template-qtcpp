@@ -1,0 +1,138 @@
+{% comment %} // Copyright (c) ApiGear UG 2020 {% endcomment -%}
+{{ module | licGPLcpp -}}
+{% assign class = interface.name |prepend:"Wamp"-%}
+
+
+#include "{{class|lower}}.h"
+
+#include "../api/agent.h"
+#include "../api/json.adapter.h"
+#include <QtCore>
+
+using namespace ApiGear;
+
+{{class}}::{{class}}(QObject *parent)
+    : Abstract{{interface.name}}(parent)
+{% for property in interface.properties %}
+    , m_{{property.name}}({{property|qtDefault}})
+{% endfor %}
+{    
+    // get initial state from service
+    WampClient::instance()->doCall("{{module.name}}.{{interface.name}}._get", json::array(), json::object(), [this](WAMP::ResponseArg arg) {
+        this->applyState(arg.kwargs);
+    });
+
+    // subscribe to state changes
+    WampClient::instance()->doSubscribe("{{module.name}}.{{interface.name}}", [this](WAMP::EventArg arg) {
+        this->applyState(arg.kwargs);
+    });
+
+{% for signal in interface.signals %}
+    // subscribe to signal {{signal.name}}
+    WampClient::instance()->doSubscribe("{{module.name}}.{{interface.name}}.{{signal.name}}", [this](WAMP::EventArg arg) {
+        this->notify{{signal.name|upperFirst}}(arg);
+    });
+{% endfor %}
+}
+
+{{class}}::~{{class}}()
+{
+}
+
+void {{class}}::applyState(const json& fields) 
+{
+{% for property in interface.properties %}
+    if(fields.contains("{{property.name}}")) {
+        set{{property.name|capitalize}}Local(fields["{{property.name}}"].get<{{property | qtReturn}}>());
+    }
+{% endfor %}
+}
+
+{% for property in interface.properties %}
+{% assign name = property.name %}
+
+void {{class}}::set{{name|capital}}({{property|qtParam}})
+{
+    const json &fields = json::object({
+        { "{{name}}", {{name}} }
+    });
+    WampClient::instance()->doCall("{{module.name}}.{{interface.name}}._set", json::array(), fields);
+}
+
+void {{class}}::set{{name|capital}}Local({{property|qtParam}})
+{
+    if (m_{{name}} != {{name}}) {
+        m_{{name}} = {{name}};
+        emit {{name}}Changed({{name}});
+        {{interface.name}}Agent::trace_state(this);
+    }
+}
+
+
+{{property|qtReturn}} {{class}}::{{name}}() const
+{
+    return m_{{name}};
+}
+
+{% endfor %}
+
+
+{% for operation in interface.operations %}
+{% capture returnType %}{{operation|qtReturn}}{% endcapture %}
+
+{{returnType}} {{class}}::{{operation.name}}({{operation|qtParams}})
+{
+    qDebug() << Q_FUNC_INFO;
+    {% if operation.type == 'void' %}
+    WampClient::instance()->doCall("{{module.name}}.{{interface.name}}.{{operation.name}}", json::array({
+            {%- for param in operation.params -%}
+                {{param}}{% unless forloop.last %},{% endunless -%}
+            {%- endfor -%}}), json::object());
+    {% else %}
+    {{returnType}} value({{operation|qtDefault}});
+    {{operation.name}}Async({{ operation.params | map: 'name' | join: ', ' }})
+        .then([&]({{returnType}} result) {
+            value = result;
+        })
+        .wait();
+    return value;
+    {% endif %}
+}
+
+QtPromise::QPromise<{{returnType}}> {{class}}::{{operation.name}}Async({{operation|qtParams}})
+{
+    {% if operation.type == 'void' %}
+    WampClient::instance()->doCall("{{module.name}}.{{interface.name}}.{{operation.name}}", json::array({
+            {%- for param in operation.params -%}
+                {{param}}{% unless forloop.last %},{% endunless -%}
+            {%- endfor -%}}), json::object());
+    return QtPromise::QPromise<void>::resolve();
+    {% else %}
+    return QtPromise::QPromise<{{returnType}}>{[&](
+        const QtPromise::QPromiseResolve<{{returnType}}>& resolve) {
+            WampClient::instance()->doCall("{{module.name}}.{{interface.name}}.{{operation.name}}", json::array({
+            {%- for param in operation.params -%}
+                {{param}}{% unless forloop.last %},{% endunless -%}
+            {%- endfor -%}}), json::object(), [resolve](WAMP::ResponseArg arg) {                
+                const {{returnType}}& result = arg.args[0].get<{{returnType}}>();
+                resolve(result);
+            });
+        }
+    };
+    {% endif %}
+}
+
+{% endfor %}
+
+{% for signal in interface.signals %}
+
+void {{class}}::notify{{signal.name|upperFirst}}(WAMP::EventArg arg)
+{
+    emit {{signal}}(
+{%- for param in signal.params -%}
+        arg.args[{{forloop.index0}}].get<{{param|qtReturn}}>(){% unless forloop.last %},{% endunless -%}
+{%- endfor -%}
+    );
+}
+{% endfor %}
+

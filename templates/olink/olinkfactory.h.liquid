@@ -1,0 +1,14 @@
+#pragma once
+
+#include <QtCore>
+
+#include "../api/apifactory.h"
+
+class OLinkFactory : public QObject, public ApiFactoryInterface
+{
+public:
+    OLinkFactory(QObject *parent = nullptr);
+{% for interface in module.interfaces %}
+    Abstract{{interface.name}}* create{{interface.name|upperFirst}}(QObject *parent) override;
+{% endfor %}
+};

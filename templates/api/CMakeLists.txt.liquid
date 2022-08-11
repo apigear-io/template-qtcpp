@@ -1,0 +1,22 @@
+{% assign module_id = module.name|identifier|append:"_api" %}
+{% assign MODULE_ID = module.name|identifier|constant|append:"_API" %}
+{% assign module_path = module.name|path %}
+{% assign SOURCES = MODULE_ID | append: "_SOURCES" -%}
+
+find_package(Qt5 REQUIRED COMPONENTS Core Qml WebSockets)
+set(OUTPUT_PATH ${LIBRARY_PATH}/)
+
+set ({{MODULE_ID}}_SOURCES
+    api.cpp
+    apifactory.cpp
+    simu.cpp
+    agent.cpp
+    ../../shared/agentclient.cpp
+    ../../shared/simulationclient.cpp
+)
+
+# dynamic library
+
+add_library({{module_id}} SHARED {{ "${" | append: SOURCES | append: "}"}})
+target_link_libraries({{module_id}} PRIVATE Qt5::Core Qt5::Qml Qt5::WebSockets jsonrpc_lib)
+target_compile_definitions({{module_id}} PRIVATE {{ module.name | constant }}_LIBRARY)

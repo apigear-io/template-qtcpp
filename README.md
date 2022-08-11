@@ -1,7 +1,10 @@
-# Hello world template
+# Qt C++ Blueprint
 
-This template is supposed to be a template for other technology templates.
+A Qt C++ blueprint with support for Qt Quick plugin and http client.
 
 ## Features
 
-* helloworld: creates a simple README
+* api: create interface files and simulation support
+* library: create a Qt library
+* plugin: create a QtQuick plugin, depends on library feature
+* http: http client for ApiGear HTTP Protocol

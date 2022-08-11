@@ -1,0 +1,93 @@
+{% comment %} // Copyright (c) ApiGear UG 2020 {% endcomment -%}
+{{ module | licGPLcpp -}}
+{% assign class = interface.name |prepend:"Http"-%}
+
+#include "{{class|lower}}.h"
+
+#include "../api/agent.h"
+#include <QtQml>
+
+{{class}}::{{class}}(QNetworkAccessManager *network, QObject *parent)
+    : Abstract{{interface.name}}(parent)
+    , m_network(network)
+{% for property in interface.properties %}
+    , m_{{property.name}}({{property|qtDefault}})
+{% endfor %}
+{
+}
+
+{{class}}::~{{class}}()
+{
+}
+
+{% for property in interface.properties %}
+{% assign name = property.name %}
+
+void {{class}}::set{{name|capital}}({{property|qtParam}})
+{
+    if (m_{{name}} != {{name}}) {
+        m_{{name}} = {{name}};
+        emit {{name}}Changed({{name}});
+        {{interface.name}}Agent::trace_state(this);
+    }
+}
+
+{{property|qtReturn}} {{class}}::{{name}}() const
+{
+    return m_{{name}};
+}
+
+{% endfor %}
+{%- for operation in interface.operations %}
+
+{{operation|qtReturn}} {{class}}::{{operation.name}}({{operation|qtParams}})
+{
+    qDebug() << Q_FUNC_INFO;
+
+    QJsonObject payload;
+{% for param in operation.params %}
+    payload["{{param}}"] = QJsonValue::fromVariant(QVariant::fromValue< {{param|qtReturn}} >({{param}}));
+{% endfor %}
+    QJsonObject reply = post("{{module}}/{{interface}}/{{operation}}", payload);
+    qDebug() << QJsonDocument(reply).toJson();
+
+    {% assign space = ', ' %}
+    {{interface.name}}Agent::trace_{{operation}}(this{% if operation.params.first %}{{space}}{% endif %}{{ operation.params | join: ', ' }});
+    return {{operation|qtDefault}};
+}
+{% endfor %}
+
+QJsonObject {{class}}::post(const QString& path, const QJsonObject &payload)
+{
+    const QString address = qEnvironmentVariable("APIGEAR_API_SERVER", "http://localhost:8000");
+    QNetworkRequest request;
+    request.setUrl(QUrl(QString("%1/%2").arg(address).arg(path)));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    const QByteArray& data = QJsonDocument(payload).toJson(QJsonDocument::Compact);
+    qDebug() << qPrintable(data);
+    QNetworkReply* reply = m_network->post(request, data);
+    // wait for finished signal
+    QEventLoop loop;
+    connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
+    loop.exec();
+    if(reply->error()) {
+        qDebug() << reply->errorString();
+        return QJsonObject();
+    }
+    const QJsonObject &response = QJsonDocument::fromJson(reply->readAll()).object();
+    if(response.contains("state")) {
+      applyState(response.value("state").toObject());
+    }
+    return response;
+}
+
+
+void {{class}}::applyState(const QJsonObject &state)
+{
+  {% for property in interface.properties %}
+  if(state.contains("{{property}}")) {
+    const QJsonValue &jsValue = state.value("{{property}}");
+    set{{property.name|capital}}(jsValue.toVariant().value<{{property|qtReturn}}>());
+  }
+  {% endfor %}
+}

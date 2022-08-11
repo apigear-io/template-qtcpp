@@ -1,0 +1,42 @@
+{% comment %} // Copyright (c) ApiGear UG 2020 {% endcomment -%}
+{{ module | licGPLcpp -}}
+{% assign class = interface.name |prepend:"Wamp"-%}
+#pragma once
+
+#include <QtCore>
+#include <QtPromise>
+
+#include "../api/api.h"
+#include "../shared/wampclient.h"
+
+using namespace ApiGear;
+
+class {{class}} : public Abstract{{interface.name}}
+{
+    Q_OBJECT
+public:
+    explicit {{class}}(QObject *parent = nullptr);
+    virtual ~{{class}}() override;
+
+    void applyState(const json& fields);
+
+{% for property in interface.properties %}
+    {{property|qtReturn}} {{property.name}}() const override;
+    void set{{property.name|capital}}({{property|qtParam}}) override;
+    void set{{property.name|capital}}Local({{property|qtParam}});
+{% endfor %}
+
+{% for operation in interface.operations %}
+    {{operation|qtReturn}} {{operation.name}}({{operation|qtParams}}) override;
+    QtPromise::QPromise<{{operation|qtReturn}}> {{operation.name}}Async({{operation|qtParams}});
+{% endfor %}
+
+{% for signal in interface.signals %}
+void notify{{signal.name|upperFirst}}(WAMP::EventArg arg);
+{% endfor %}
+
+private:
+{% for property in interface.properties %}
+    {{property|qtReturn}} m_{{property.name}};
+{% endfor %}
+};

@@ -1,0 +1,88 @@
+#include "simu.h"
+#include "jsonrpc/types.h"
+#include "json.adapter.h"
+#include "../../shared/simulationclient.h"
+
+using namespace ApiGear::JSONRPC;
+
+{%- for interface in module.interfaces %}
+{% assign class = interface.name | prepend: "Simulation" %}
+// ********************************************************************
+// {{class}} simulation interface
+// ********************************************************************
+
+{{class}}::{{class}}(QObject *parent)
+    : Abstract{{interface}}(parent)
+{% for property in interface.properties %}
+    , m_{{property.name}}({{property|qtDefault}})
+{% endfor %}
+{
+    NotifyRequestFunc serviceStateFunc = [this](NotifyRequestArg arg) {
+      qDebug() << "{{class}} service state changes: " << QString::fromStdString(arg.params.dump());
+      {% for property in interface.properties %}
+      if(arg.params.contains("{{property}}")) {
+        set{{property.name|capital}}(arg.params["{{property}}"]);
+      }
+      {% endfor %}
+    };
+    SimulationClient::instance()->onNotifyState("{{module.name}}/{{interface.name}}", serviceStateFunc);
+
+    CallResponseFunc fetchStateFunc = [this](CallResponseArg arg) {
+      qDebug() << "{{class}} service fetch state: " << QString::fromStdString(arg.result.dump());
+      {% for property in interface.properties %}
+      if(arg.result.contains("{{property}}")) {
+        set{{property.name|capital}}(arg.result["{{property}}"]);
+      }
+      {% endfor %}
+    };
+    SimulationClient::instance()->doFetchState("{{module.name}}/{{interface.name}}", fetchStateFunc);
+
+{% for signal in interface.signals %}
+
+    NotifyRequestFunc {{signal.name}}Func = [this](NotifyRequestArg arg) { 
+        emit {{signal.name}}(
+        {%- for param in signal.params -%}
+            arg.params["{{param.name}}"].get<{{param|qtReturn}}>(){% unless forloop.last %},{% endunless -%}
+        {%- endfor -%}
+        );
+    };
+    SimulationClient::instance()->onNotify("{{module.name}}/{{interface.name}}#{{signal.name}}", {{signal.name}}Func);
+{% endfor %}
+}
+
+{{class}}::~{{class}}()
+{
+}
+
+{% for property in interface.properties %}
+{% assign name = property.name %}
+
+void {{class}}::set{{name|capital}}({{property|qtParam}})
+{
+    if (m_{{name}} != {{name}}) {
+        m_{{name}} = {{name}};
+        emit {{name}}Changed({{name}});
+    }
+}
+
+{{property|qtReturn}} {{class}}::{{name}}() const
+{
+    return m_{{name}};
+}
+
+{% endfor %}
+{%- for operation in interface.operations %}
+
+{{operation|qtReturn}} {{class}}::{{operation.name}}({{operation|qtParams}})
+{
+    qDebug() << "simu::" << Q_FUNC_INFO;
+
+    Params params;
+    {% for param in operation.params %}
+    params["{{param.name}}"] = {{param}};
+    {% endfor %}
+    SimulationClient::instance()->doCall("{{module.name}}/{{interface.name}}", "{{operation.name}}", params);
+    return {{operation|qtDefault}};
+}
+{% endfor %}
+{% endfor %}

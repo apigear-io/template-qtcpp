@@ -1,0 +1,119 @@
+{% comment %} // Copyright (c) ApiGear UG 2020 {% endcomment -%}
+{{ module | licGPLcpp -}}
+{% capture class%}OLink{{interface.name}}Adapter{% endcapture %}
+
+
+#include "{{class|lower}}.h"
+
+#include <nlohmann/json.hpp>
+#include "../api/agent.h"
+#include "../api/json.adapter.h"
+
+#include <QtCore>
+
+using namespace ApiGear::ObjectLink;
+
+using json = nlohmann::json;
+
+{{class}}::{{class}}(Abstract{{interface}}* impl, QObject *parent)
+    : QObject(parent)
+    , m_impl(impl)
+    , m_node(nullptr)
+{
+    RemoteRegistry::get().addObjectSource(this);
+    
+{% for property in interface.properties %}
+    connect(m_impl, &Abstract{{interface}}::{{property}}Changed, this, [=]({{property|qtParam}}) {
+        if(m_node) {
+            m_node->notifyPropertyChange("{{module}}.{{interface}}/{{property}}", {{property}});
+        }
+    });
+{% endfor %}    
+{% for signal in interface.signals %}
+    connect(m_impl, &Abstract{{interface}}::{{signal}}, this, [=]({{signal|qtParams}}) {
+        if(m_node) {
+            const json& args = { {{ signal.params | map: 'name' | join: ', ' }} };
+            m_node->notifySignal("{{module}}.{{interface}}/{{signal}}", args);
+        }
+    });
+{% endfor %}
+}
+
+{{class}}::~{{class}}()
+{
+    RemoteRegistry::get().removeObjectSource(this);
+}
+
+json {{class}}::captureState()
+{
+    return json::object({
+{% for property in interface.properties %}
+        { "{{property}}", m_impl->{{property}}() }{% unless forloop.last %},{% endunless %}
+{% endfor %}
+    });
+}
+
+void {{class}}::applyState(const json& state)
+{
+{% for property in interface.properties %}
+    if(state.contains("{{property}}")) {
+        m_impl->set{{property.name|upperFirst}}(state["{{property}}"]);
+    }    
+{% endfor %}
+}
+
+
+std::string {{class}}::olinkObjectName() {
+    return "{{module}}.{{interface}}";
+}
+
+json {{class}}::olinkInvoke(std::string name, json args) {
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
+    std::string path = Name::pathFromName(name);
+{% for operation in interface.operations %}
+    if(path == "{{operation}}") {
+{% for param in operation.params %}
+        const {{param|qtReturn}}& {{param}} = args.at({{ forloop.index0 }});      
+{% endfor %}
+{% if operation.type == 'void' %}
+        m_impl->{{operation}}({{ operation.params | map: 'name' | join: ', ' }});
+        return json{};
+{% else %}
+        {{operation|qtReturn}} result = m_impl->{{operation}}({{ operation.params | map: 'name' | join: ', ' }});
+        return result;
+{% endif %}
+    }
+{% endfor %}
+    return json();
+}
+
+void {{class}}::olinkSetProperty(std::string name, json value) {
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
+    std::string path = Name::pathFromName(name);
+{% for property in interface.properties %}
+    if(path == "{{property}}") {
+        {{property|qtReturn}} {{property}} = value.get<{{property|qtReturn}}>();
+        m_impl->set{{property.name|upperFirst}}({{property}});
+    }
+{% endfor %}    
+}
+
+void {{class}}::olinkLinked(std::string name, IRemoteNode *node) {
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
+    m_node = node;
+}
+
+void {{class}}::olinkUnlinked(std::string name)
+{
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
+    m_node = nullptr;
+}
+
+json {{class}}::olinkCollectProperties()
+{
+    return captureState();
+}
+
+
+
+

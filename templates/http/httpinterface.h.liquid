@@ -1,0 +1,34 @@
+{% comment %} // Copyright (c) ApiGear UG 2020 {% endcomment -%}
+{{ module | licGPLcpp -}}
+{% assign class = interface.name |prepend:"Http"-%}
+#pragma once
+
+#include <QtCore>
+#include <QtNetwork>
+
+#include "../api/api.h"
+
+class {{class}} : public Abstract{{interface.name}}
+{
+    Q_OBJECT
+public:
+    explicit {{class}}(QNetworkAccessManager *network, QObject *parent = nullptr);
+    virtual ~{{class}}() override;
+
+{% for property in interface.properties %}
+    {{property|qtReturn}} {{property.name}}() const override;
+    void set{{property.name|capital}}({{property|qtParam}}) override;
+{% endfor %}
+
+{% for operation in interface.operations %}
+    {{operation|qtReturn}} {{operation.name}}({{operation|qtParams}}) override;
+{% endfor %}
+private:
+    QJsonObject post(const QString& path, const QJsonObject &payload);
+    void applyState(const QJsonObject &state);
+private:
+    QNetworkAccessManager *m_network;
+{% for property in interface.properties %}
+    {{property|qtReturn}} m_{{property.name}};
+{% endfor %}
+};

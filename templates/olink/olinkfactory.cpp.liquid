@@ -1,0 +1,21 @@
+#include "olinkfactory.h"
+
+{% for interface in module.interfaces %}
+#include "olink{{interface.name|lower}}.h"
+{% endfor %}
+
+OLinkFactory::OLinkFactory(QObject *parent)
+    : QObject(parent)
+{
+    qDebug() << Q_FUNC_INFO;
+}
+
+{% for interface in module.interfaces %}
+
+Abstract{{interface.name}}* OLinkFactory::create{{interface.name|upperFirst}}(QObject *parent)
+{
+    qDebug() << Q_FUNC_INFO;
+    return new OLink{{interface.name}}(parent);
+}
+
+{% endfor %}

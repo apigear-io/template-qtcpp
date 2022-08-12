@@ -76,7 +76,7 @@ Enum1::Enum1Enum OLinkSameEnum1Interface::func1(const Enum1::Enum1Enum param1)
     if(!m_node) {
         return Enum1::value1;
     }
-    Enum1::Enum1Enum value(Enum1::value1);
+    Enum1::Enum1Enum value{ Enum1::value1 };
     func1Async(param1)
         .then([&](Enum1::Enum1Enum result) {
             value = result;

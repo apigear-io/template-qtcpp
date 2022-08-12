@@ -160,7 +160,7 @@ StructBool OLinkStructArrayInterface::funcBool(const QList<StructBool>& paramBoo
     if(!m_node) {
         return StructBool();
     }
-    StructBool value(StructBool());
+    StructBool value{ StructBool() };
     funcBoolAsync(paramBool)
         .then([&](StructBool result) {
             value = result;
@@ -191,7 +191,7 @@ StructBool OLinkStructArrayInterface::funcInt(const QList<StructInt>& paramInt)
     if(!m_node) {
         return StructBool();
     }
-    StructBool value(StructBool());
+    StructBool value{ StructBool() };
     funcIntAsync(paramInt)
         .then([&](StructBool result) {
             value = result;
@@ -222,7 +222,7 @@ StructBool OLinkStructArrayInterface::funcFloat(const QList<StructFloat>& paramF
     if(!m_node) {
         return StructBool();
     }
-    StructBool value(StructBool());
+    StructBool value{ StructBool() };
     funcFloatAsync(paramFloat)
         .then([&](StructBool result) {
             value = result;
@@ -253,7 +253,7 @@ StructBool OLinkStructArrayInterface::funcString(const QList<StructString>& para
     if(!m_node) {
         return StructBool();
     }
-    StructBool value(StructBool());
+    StructBool value{ StructBool() };
     funcStringAsync(paramString)
         .then([&](StructBool result) {
             value = result;

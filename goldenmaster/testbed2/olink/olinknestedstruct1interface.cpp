@@ -76,7 +76,7 @@ NestedStruct1 OLinkNestedStruct1Interface::func1(const NestedStruct1& param1)
     if(!m_node) {
         return NestedStruct1();
     }
-    NestedStruct1 value(NestedStruct1());
+    NestedStruct1 value{ NestedStruct1() };
     func1Async(param1)
         .then([&](NestedStruct1 result) {
             value = result;

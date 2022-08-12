@@ -110,7 +110,7 @@ NestedStruct2 WampNestedStruct2Interface::prop2() const
 NestedStruct1 WampNestedStruct2Interface::func1(const NestedStruct1& param1)
 {
     qDebug() << Q_FUNC_INFO;
-    NestedStruct1 value(NestedStruct1());
+    NestedStruct1 value{ NestedStruct1() };
     func1Async(param1)
         .then([&](NestedStruct1 result) {
             value = result;
@@ -134,7 +134,7 @@ QtPromise::QPromise<NestedStruct1> WampNestedStruct2Interface::func1Async(const 
 NestedStruct1 WampNestedStruct2Interface::func2(const NestedStruct1& param1, const NestedStruct2& param2)
 {
     qDebug() << Q_FUNC_INFO;
-    NestedStruct1 value(NestedStruct1());
+    NestedStruct1 value{ NestedStruct1() };
     func2Async(param1, param2)
         .then([&](NestedStruct1 result) {
             value = result;

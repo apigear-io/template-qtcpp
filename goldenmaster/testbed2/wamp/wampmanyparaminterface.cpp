@@ -172,7 +172,7 @@ int WampManyParamInterface::prop4() const
 int WampManyParamInterface::func1(int param1)
 {
     qDebug() << Q_FUNC_INFO;
-    int value(0);
+    int value{ 0 };
     func1Async(param1)
         .then([&](int result) {
             value = result;
@@ -196,7 +196,7 @@ QtPromise::QPromise<int> WampManyParamInterface::func1Async(int param1)
 int WampManyParamInterface::func2(int param1, int param2)
 {
     qDebug() << Q_FUNC_INFO;
-    int value(0);
+    int value{ 0 };
     func2Async(param1, param2)
         .then([&](int result) {
             value = result;
@@ -220,7 +220,7 @@ QtPromise::QPromise<int> WampManyParamInterface::func2Async(int param1, int para
 int WampManyParamInterface::func3(int param1, int param2, int param3)
 {
     qDebug() << Q_FUNC_INFO;
-    int value(0);
+    int value{ 0 };
     func3Async(param1, param2, param3)
         .then([&](int result) {
             value = result;
@@ -244,7 +244,7 @@ QtPromise::QPromise<int> WampManyParamInterface::func3Async(int param1, int para
 int WampManyParamInterface::func4(int param1, int param2, int param3, int param4)
 {
     qDebug() << Q_FUNC_INFO;
-    int value(0);
+    int value{ 0 };
     func4Async(param1, param2, param3, param4)
         .then([&](int result) {
             value = result;

@@ -132,7 +132,7 @@ NestedStruct1 OLinkNestedStruct3Interface::func1(const NestedStruct1& param1)
     if(!m_node) {
         return NestedStruct1();
     }
-    NestedStruct1 value(NestedStruct1());
+    NestedStruct1 value{ NestedStruct1() };
     func1Async(param1)
         .then([&](NestedStruct1 result) {
             value = result;
@@ -163,7 +163,7 @@ NestedStruct1 OLinkNestedStruct3Interface::func2(const NestedStruct1& param1, co
     if(!m_node) {
         return NestedStruct1();
     }
-    NestedStruct1 value(NestedStruct1());
+    NestedStruct1 value{ NestedStruct1() };
     func2Async(param1, param2)
         .then([&](NestedStruct1 result) {
             value = result;
@@ -194,7 +194,7 @@ NestedStruct1 OLinkNestedStruct3Interface::func3(const NestedStruct1& param1, co
     if(!m_node) {
         return NestedStruct1();
     }
-    NestedStruct1 value(NestedStruct1());
+    NestedStruct1 value{ NestedStruct1() };
     func3Async(param1, param2, param3)
         .then([&](NestedStruct1 result) {
             value = result;

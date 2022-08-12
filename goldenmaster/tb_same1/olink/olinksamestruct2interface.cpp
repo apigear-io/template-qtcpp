@@ -104,7 +104,7 @@ Struct1 OLinkSameStruct2Interface::func1(const Struct1& param1)
     if(!m_node) {
         return Struct1();
     }
-    Struct1 value(Struct1());
+    Struct1 value{ Struct1() };
     func1Async(param1)
         .then([&](Struct1 result) {
             value = result;
@@ -135,7 +135,7 @@ Struct1 OLinkSameStruct2Interface::func2(const Struct1& param1, const Struct2& p
     if(!m_node) {
         return Struct1();
     }
-    Struct1 value(Struct1());
+    Struct1 value{ Struct1() };
     func2Async(param1, param2)
         .then([&](Struct1 result) {
             value = result;

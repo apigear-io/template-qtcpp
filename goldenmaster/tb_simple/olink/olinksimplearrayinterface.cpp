@@ -160,7 +160,7 @@ QList<bool> OLinkSimpleArrayInterface::funcBool(const QList<bool>& paramBool)
     if(!m_node) {
         return QList<bool>();
     }
-    QList<bool> value(QList<bool>());
+    QList<bool> value{ QList<bool>() };
     funcBoolAsync(paramBool)
         .then([&](QList<bool> result) {
             value = result;
@@ -191,7 +191,7 @@ QList<int> OLinkSimpleArrayInterface::funcInt(const QList<int>& paramInt)
     if(!m_node) {
         return QList<int>();
     }
-    QList<int> value(QList<int>());
+    QList<int> value{ QList<int>() };
     funcIntAsync(paramInt)
         .then([&](QList<int> result) {
             value = result;
@@ -222,7 +222,7 @@ QList<qreal> OLinkSimpleArrayInterface::funcFloat(const QList<qreal>& paramFloat
     if(!m_node) {
         return QList<qreal>();
     }
-    QList<qreal> value(QList<qreal>());
+    QList<qreal> value{ QList<qreal>() };
     funcFloatAsync(paramFloat)
         .then([&](QList<qreal> result) {
             value = result;
@@ -253,7 +253,7 @@ QList<QString> OLinkSimpleArrayInterface::funcString(const QList<QString>& param
     if(!m_node) {
         return QList<QString>();
     }
-    QList<QString> value(QList<QString>());
+    QList<QString> value{ QList<QString>() };
     funcStringAsync(paramString)
         .then([&](QList<QString> result) {
             value = result;

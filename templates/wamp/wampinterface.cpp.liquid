@@ -89,7 +89,7 @@ void {{class}}::set{{name|capital}}Local({{property|qtParam}})
                 {{param}}{% unless forloop.last %},{% endunless -%}
             {%- endfor -%}}), json::object());
     {% else %}
-    {{returnType}} value({{operation|qtDefault}});
+    {{returnType}} value{ {{operation|qtDefault}} };
     {{operation.name}}Async({{ operation.params | map: 'name' | join: ', ' }})
         .then([&]({{returnType}} result) {
             value = result;

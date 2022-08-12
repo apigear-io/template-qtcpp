@@ -160,7 +160,7 @@ Enum0::Enum0Enum OLinkEnumInterface::func0(const Enum0::Enum0Enum param0)
     if(!m_node) {
         return Enum0::value0;
     }
-    Enum0::Enum0Enum value(Enum0::value0);
+    Enum0::Enum0Enum value{ Enum0::value0 };
     func0Async(param0)
         .then([&](Enum0::Enum0Enum result) {
             value = result;
@@ -191,7 +191,7 @@ Enum1::Enum1Enum OLinkEnumInterface::func1(const Enum1::Enum1Enum param1)
     if(!m_node) {
         return Enum1::value1;
     }
-    Enum1::Enum1Enum value(Enum1::value1);
+    Enum1::Enum1Enum value{ Enum1::value1 };
     func1Async(param1)
         .then([&](Enum1::Enum1Enum result) {
             value = result;
@@ -222,7 +222,7 @@ Enum2::Enum2Enum OLinkEnumInterface::func2(const Enum2::Enum2Enum param2)
     if(!m_node) {
         return Enum2::value2;
     }
-    Enum2::Enum2Enum value(Enum2::value2);
+    Enum2::Enum2Enum value{ Enum2::value2 };
     func2Async(param2)
         .then([&](Enum2::Enum2Enum result) {
             value = result;
@@ -253,7 +253,7 @@ Enum3::Enum3Enum OLinkEnumInterface::func3(const Enum3::Enum3Enum param3)
     if(!m_node) {
         return Enum3::value3;
     }
-    Enum3::Enum3Enum value(Enum3::value3);
+    Enum3::Enum3Enum value{ Enum3::value3 };
     func3Async(param3)
         .then([&](Enum3::Enum3Enum result) {
             value = result;

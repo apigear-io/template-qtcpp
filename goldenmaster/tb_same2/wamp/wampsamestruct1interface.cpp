@@ -79,7 +79,7 @@ Struct1 WampSameStruct1Interface::prop1() const
 Struct1 WampSameStruct1Interface::func1(const Struct1& param1)
 {
     qDebug() << Q_FUNC_INFO;
-    Struct1 value(Struct1());
+    Struct1 value{ Struct1() };
     func1Async(param1)
         .then([&](Struct1 result) {
             value = result;

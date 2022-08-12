@@ -1,0 +1,33 @@
+# This workflow will ensure that all changes to the goldenmaster are tested
+
+name: Technology Template Build Test
+
+on:
+  pull_request:
+    paths:
+      - 'goldenmaster/**'
+    branches: [main]
+
+jobs:
+  cmake_build:
+    name: ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - { name: "CMake Ubuntu Latest GCC", os: ubuntu-latest }
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - name: Install dependencies
+        run: sudo apt-get install -y cmake nlohmann-json3-dev
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '5.15.2'
+          cache: 'true'
+      - name: Run cmake
+        working-directory: goldenmaster
+        run: cmake -Bbuild -H. -DCMAKE_INSTALL_PREFIX=tmp && cmake --build build/

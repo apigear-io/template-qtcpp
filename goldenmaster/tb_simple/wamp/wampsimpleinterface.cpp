@@ -64,16 +64,16 @@ WampSimpleInterface::~WampSimpleInterface()
 void WampSimpleInterface::applyState(const json& fields) 
 {
     if(fields.contains("propBool")) {
-        setPropboolLocal(fields["propBool"].get<bool>());
+        setPropBoolLocal(fields["propBool"].get<bool>());
     }
     if(fields.contains("propInt")) {
-        setPropintLocal(fields["propInt"].get<int>());
+        setPropIntLocal(fields["propInt"].get<int>());
     }
     if(fields.contains("propFloat")) {
-        setPropfloatLocal(fields["propFloat"].get<qreal>());
+        setPropFloatLocal(fields["propFloat"].get<qreal>());
     }
     if(fields.contains("propString")) {
-        setPropstringLocal(fields["propString"].get<QString>());
+        setPropStringLocal(fields["propString"].get<QString>());
     }
 }
 

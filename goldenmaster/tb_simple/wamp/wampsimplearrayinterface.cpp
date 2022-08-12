@@ -64,16 +64,16 @@ WampSimpleArrayInterface::~WampSimpleArrayInterface()
 void WampSimpleArrayInterface::applyState(const json& fields) 
 {
     if(fields.contains("propBool")) {
-        setPropboolLocal(fields["propBool"].get<QList<bool>>());
+        setPropBoolLocal(fields["propBool"].get<QList<bool>>());
     }
     if(fields.contains("propInt")) {
-        setPropintLocal(fields["propInt"].get<QList<int>>());
+        setPropIntLocal(fields["propInt"].get<QList<int>>());
     }
     if(fields.contains("propFloat")) {
-        setPropfloatLocal(fields["propFloat"].get<QList<qreal>>());
+        setPropFloatLocal(fields["propFloat"].get<QList<qreal>>());
     }
     if(fields.contains("propString")) {
-        setPropstringLocal(fields["propString"].get<QList<QString>>());
+        setPropStringLocal(fields["propString"].get<QList<QString>>());
     }
 }
 

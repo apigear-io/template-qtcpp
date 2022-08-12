@@ -12,6 +12,9 @@ demo/
 # do not add temporary test folder
 test/
 
+# do not add build folders
+build*/
+
 # cross plattform line breaks shall be ignored
 * text=auto eol=lf
 

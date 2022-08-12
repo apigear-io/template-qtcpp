@@ -160,7 +160,7 @@ StructBool OLinkStructInterface::funcBool(const StructBool& paramBool)
     if(!m_node) {
         return StructBool();
     }
-    StructBool value(StructBool());
+    StructBool value{ StructBool() };
     funcBoolAsync(paramBool)
         .then([&](StructBool result) {
             value = result;
@@ -191,7 +191,7 @@ StructBool OLinkStructInterface::funcInt(const StructInt& paramInt)
     if(!m_node) {
         return StructBool();
     }
-    StructBool value(StructBool());
+    StructBool value{ StructBool() };
     funcIntAsync(paramInt)
         .then([&](StructBool result) {
             value = result;
@@ -222,7 +222,7 @@ StructFloat OLinkStructInterface::funcFloat(const StructFloat& paramFloat)
     if(!m_node) {
         return StructFloat();
     }
-    StructFloat value(StructFloat());
+    StructFloat value{ StructFloat() };
     funcFloatAsync(paramFloat)
         .then([&](StructFloat result) {
             value = result;
@@ -253,7 +253,7 @@ StructString OLinkStructInterface::funcString(const StructString& paramString)
     if(!m_node) {
         return StructString();
     }
-    StructString value(StructString());
+    StructString value{ StructString() };
     funcStringAsync(paramString)
         .then([&](StructString result) {
             value = result;

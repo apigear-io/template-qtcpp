@@ -172,7 +172,7 @@ QString WampSimpleInterface::propString() const
 bool WampSimpleInterface::funcBool(bool paramBool)
 {
     qDebug() << Q_FUNC_INFO;
-    bool value(false);
+    bool value{ false };
     funcBoolAsync(paramBool)
         .then([&](bool result) {
             value = result;
@@ -196,7 +196,7 @@ QtPromise::QPromise<bool> WampSimpleInterface::funcBoolAsync(bool paramBool)
 int WampSimpleInterface::funcInt(int paramInt)
 {
     qDebug() << Q_FUNC_INFO;
-    int value(0);
+    int value{ 0 };
     funcIntAsync(paramInt)
         .then([&](int result) {
             value = result;
@@ -220,7 +220,7 @@ QtPromise::QPromise<int> WampSimpleInterface::funcIntAsync(int paramInt)
 qreal WampSimpleInterface::funcFloat(qreal paramFloat)
 {
     qDebug() << Q_FUNC_INFO;
-    qreal value(0.0);
+    qreal value{ 0.0 };
     funcFloatAsync(paramFloat)
         .then([&](qreal result) {
             value = result;
@@ -244,7 +244,7 @@ QtPromise::QPromise<qreal> WampSimpleInterface::funcFloatAsync(qreal paramFloat)
 QString WampSimpleInterface::funcString(const QString& paramString)
 {
     qDebug() << Q_FUNC_INFO;
-    QString value(QString());
+    QString value{ QString() };
     funcStringAsync(paramString)
         .then([&](QString result) {
             value = result;

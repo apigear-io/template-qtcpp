@@ -160,7 +160,7 @@ bool OLinkSimpleInterface::funcBool(bool paramBool)
     if(!m_node) {
         return false;
     }
-    bool value(false);
+    bool value{ false };
     funcBoolAsync(paramBool)
         .then([&](bool result) {
             value = result;
@@ -191,7 +191,7 @@ int OLinkSimpleInterface::funcInt(int paramInt)
     if(!m_node) {
         return 0;
     }
-    int value(0);
+    int value{ 0 };
     funcIntAsync(paramInt)
         .then([&](int result) {
             value = result;
@@ -222,7 +222,7 @@ qreal OLinkSimpleInterface::funcFloat(qreal paramFloat)
     if(!m_node) {
         return 0.0;
     }
-    qreal value(0.0);
+    qreal value{ 0.0 };
     funcFloatAsync(paramFloat)
         .then([&](qreal result) {
             value = result;
@@ -253,7 +253,7 @@ QString OLinkSimpleInterface::funcString(const QString& paramString)
     if(!m_node) {
         return QString();
     }
-    QString value(QString());
+    QString value{ QString() };
     funcStringAsync(paramString)
         .then([&](QString result) {
             value = result;

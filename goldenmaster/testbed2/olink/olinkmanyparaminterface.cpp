@@ -160,7 +160,7 @@ int OLinkManyParamInterface::func1(int param1)
     if(!m_node) {
         return 0;
     }
-    int value(0);
+    int value{ 0 };
     func1Async(param1)
         .then([&](int result) {
             value = result;
@@ -191,7 +191,7 @@ int OLinkManyParamInterface::func2(int param1, int param2)
     if(!m_node) {
         return 0;
     }
-    int value(0);
+    int value{ 0 };
     func2Async(param1, param2)
         .then([&](int result) {
             value = result;
@@ -222,7 +222,7 @@ int OLinkManyParamInterface::func3(int param1, int param2, int param3)
     if(!m_node) {
         return 0;
     }
-    int value(0);
+    int value{ 0 };
     func3Async(param1, param2, param3)
         .then([&](int result) {
             value = result;
@@ -253,7 +253,7 @@ int OLinkManyParamInterface::func4(int param1, int param2, int param3, int param
     if(!m_node) {
         return 0;
     }
-    int value(0);
+    int value{ 0 };
     func4Async(param1, param2, param3, param4)
         .then([&](int result) {
             value = result;

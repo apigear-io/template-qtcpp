@@ -110,7 +110,7 @@ Enum2::Enum2Enum WampSameEnum2Interface::prop2() const
 Enum1::Enum1Enum WampSameEnum2Interface::func1(const Enum1::Enum1Enum param1)
 {
     qDebug() << Q_FUNC_INFO;
-    Enum1::Enum1Enum value(Enum1::value1);
+    Enum1::Enum1Enum value{ Enum1::value1 };
     func1Async(param1)
         .then([&](Enum1::Enum1Enum result) {
             value = result;
@@ -134,7 +134,7 @@ QtPromise::QPromise<Enum1::Enum1Enum> WampSameEnum2Interface::func1Async(const E
 Enum1::Enum1Enum WampSameEnum2Interface::func2(const Enum1::Enum1Enum param1, const Enum2::Enum2Enum param2)
 {
     qDebug() << Q_FUNC_INFO;
-    Enum1::Enum1Enum value(Enum1::value1);
+    Enum1::Enum1Enum value{ Enum1::value1 };
     func2Async(param1, param2)
         .then([&](Enum1::Enum1Enum result) {
             value = result;

@@ -84,7 +84,7 @@ void {{class}}::set{{name|capital}}Local({{property|qtParam}})
     });
     m_node->invokeRemote("{{module.name|identifier}}.{{interface}}/{{operation}}", args, func);
     {% else %}
-    {{returnType}} value({{operation|qtDefault}});
+    {{returnType}} value{ {{operation|qtDefault}} };
     {{operation.name}}Async({{ operation.params | map: 'name' | join: ', ' }})
         .then([&]({{returnType}} result) {
             value = result;

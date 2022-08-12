@@ -172,7 +172,7 @@ StructString WampStructInterface::propString() const
 StructBool WampStructInterface::funcBool(const StructBool& paramBool)
 {
     qDebug() << Q_FUNC_INFO;
-    StructBool value(StructBool());
+    StructBool value{ StructBool() };
     funcBoolAsync(paramBool)
         .then([&](StructBool result) {
             value = result;
@@ -196,7 +196,7 @@ QtPromise::QPromise<StructBool> WampStructInterface::funcBoolAsync(const StructB
 StructBool WampStructInterface::funcInt(const StructInt& paramInt)
 {
     qDebug() << Q_FUNC_INFO;
-    StructBool value(StructBool());
+    StructBool value{ StructBool() };
     funcIntAsync(paramInt)
         .then([&](StructBool result) {
             value = result;
@@ -220,7 +220,7 @@ QtPromise::QPromise<StructBool> WampStructInterface::funcIntAsync(const StructIn
 StructFloat WampStructInterface::funcFloat(const StructFloat& paramFloat)
 {
     qDebug() << Q_FUNC_INFO;
-    StructFloat value(StructFloat());
+    StructFloat value{ StructFloat() };
     funcFloatAsync(paramFloat)
         .then([&](StructFloat result) {
             value = result;
@@ -244,7 +244,7 @@ QtPromise::QPromise<StructFloat> WampStructInterface::funcFloatAsync(const Struc
 StructString WampStructInterface::funcString(const StructString& paramString)
 {
     qDebug() << Q_FUNC_INFO;
-    StructString value(StructString());
+    StructString value{ StructString() };
     funcStringAsync(paramString)
         .then([&](StructString result) {
             value = result;

@@ -79,7 +79,7 @@ NestedStruct1 WampNestedStruct1Interface::prop1() const
 NestedStruct1 WampNestedStruct1Interface::func1(const NestedStruct1& param1)
 {
     qDebug() << Q_FUNC_INFO;
-    NestedStruct1 value(NestedStruct1());
+    NestedStruct1 value{ NestedStruct1() };
     func1Async(param1)
         .then([&](NestedStruct1 result) {
             value = result;

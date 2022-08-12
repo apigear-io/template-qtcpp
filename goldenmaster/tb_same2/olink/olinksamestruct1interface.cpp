@@ -76,7 +76,7 @@ Struct1 OLinkSameStruct1Interface::func1(const Struct1& param1)
     if(!m_node) {
         return Struct1();
     }
-    Struct1 value(Struct1());
+    Struct1 value{ Struct1() };
     func1Async(param1)
         .then([&](Struct1 result) {
             value = result;

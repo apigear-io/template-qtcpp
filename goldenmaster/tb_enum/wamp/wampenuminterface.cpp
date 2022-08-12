@@ -172,7 +172,7 @@ Enum3::Enum3Enum WampEnumInterface::prop3() const
 Enum0::Enum0Enum WampEnumInterface::func0(const Enum0::Enum0Enum param0)
 {
     qDebug() << Q_FUNC_INFO;
-    Enum0::Enum0Enum value(Enum0::value0);
+    Enum0::Enum0Enum value{ Enum0::value0 };
     func0Async(param0)
         .then([&](Enum0::Enum0Enum result) {
             value = result;
@@ -196,7 +196,7 @@ QtPromise::QPromise<Enum0::Enum0Enum> WampEnumInterface::func0Async(const Enum0:
 Enum1::Enum1Enum WampEnumInterface::func1(const Enum1::Enum1Enum param1)
 {
     qDebug() << Q_FUNC_INFO;
-    Enum1::Enum1Enum value(Enum1::value1);
+    Enum1::Enum1Enum value{ Enum1::value1 };
     func1Async(param1)
         .then([&](Enum1::Enum1Enum result) {
             value = result;
@@ -220,7 +220,7 @@ QtPromise::QPromise<Enum1::Enum1Enum> WampEnumInterface::func1Async(const Enum1:
 Enum2::Enum2Enum WampEnumInterface::func2(const Enum2::Enum2Enum param2)
 {
     qDebug() << Q_FUNC_INFO;
-    Enum2::Enum2Enum value(Enum2::value2);
+    Enum2::Enum2Enum value{ Enum2::value2 };
     func2Async(param2)
         .then([&](Enum2::Enum2Enum result) {
             value = result;
@@ -244,7 +244,7 @@ QtPromise::QPromise<Enum2::Enum2Enum> WampEnumInterface::func2Async(const Enum2:
 Enum3::Enum3Enum WampEnumInterface::func3(const Enum3::Enum3Enum param3)
 {
     qDebug() << Q_FUNC_INFO;
-    Enum3::Enum3Enum value(Enum3::value3);
+    Enum3::Enum3Enum value{ Enum3::value3 };
     func3Async(param3)
         .then([&](Enum3::Enum3Enum result) {
             value = result;

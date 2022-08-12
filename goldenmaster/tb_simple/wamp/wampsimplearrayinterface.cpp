@@ -172,7 +172,7 @@ QList<QString> WampSimpleArrayInterface::propString() const
 QList<bool> WampSimpleArrayInterface::funcBool(const QList<bool>& paramBool)
 {
     qDebug() << Q_FUNC_INFO;
-    QList<bool> value(QList<bool>());
+    QList<bool> value{ QList<bool>() };
     funcBoolAsync(paramBool)
         .then([&](QList<bool> result) {
             value = result;
@@ -196,7 +196,7 @@ QtPromise::QPromise<QList<bool>> WampSimpleArrayInterface::funcBoolAsync(const Q
 QList<int> WampSimpleArrayInterface::funcInt(const QList<int>& paramInt)
 {
     qDebug() << Q_FUNC_INFO;
-    QList<int> value(QList<int>());
+    QList<int> value{ QList<int>() };
     funcIntAsync(paramInt)
         .then([&](QList<int> result) {
             value = result;
@@ -220,7 +220,7 @@ QtPromise::QPromise<QList<int>> WampSimpleArrayInterface::funcIntAsync(const QLi
 QList<qreal> WampSimpleArrayInterface::funcFloat(const QList<qreal>& paramFloat)
 {
     qDebug() << Q_FUNC_INFO;
-    QList<qreal> value(QList<qreal>());
+    QList<qreal> value{ QList<qreal>() };
     funcFloatAsync(paramFloat)
         .then([&](QList<qreal> result) {
             value = result;
@@ -244,7 +244,7 @@ QtPromise::QPromise<QList<qreal>> WampSimpleArrayInterface::funcFloatAsync(const
 QList<QString> WampSimpleArrayInterface::funcString(const QList<QString>& paramString)
 {
     qDebug() << Q_FUNC_INFO;
-    QList<QString> value(QList<QString>());
+    QList<QString> value{ QList<QString>() };
     funcStringAsync(paramString)
         .then([&](QList<QString> result) {
             value = result;

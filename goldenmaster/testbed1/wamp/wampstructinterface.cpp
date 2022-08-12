@@ -64,16 +64,16 @@ WampStructInterface::~WampStructInterface()
 void WampStructInterface::applyState(const json& fields) 
 {
     if(fields.contains("propBool")) {
-        setPropboolLocal(fields["propBool"].get<StructBool>());
+        setPropBoolLocal(fields["propBool"].get<StructBool>());
     }
     if(fields.contains("propInt")) {
-        setPropintLocal(fields["propInt"].get<StructInt>());
+        setPropIntLocal(fields["propInt"].get<StructInt>());
     }
     if(fields.contains("propFloat")) {
-        setPropfloatLocal(fields["propFloat"].get<StructFloat>());
+        setPropFloatLocal(fields["propFloat"].get<StructFloat>());
     }
     if(fields.contains("propString")) {
-        setPropstringLocal(fields["propString"].get<StructString>());
+        setPropStringLocal(fields["propString"].get<StructString>());
     }
 }
 

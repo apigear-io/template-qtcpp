@@ -43,7 +43,7 @@ void {{class}}::applyState(const json& fields)
 {
 {% for property in interface.properties %}
     if(fields.contains("{{property.name}}")) {
-        set{{property.name|capitalize}}Local(fields["{{property.name}}"].get<{{property | qtReturn}}>());
+        set{{property.name|capital}}Local(fields["{{property.name}}"].get<{{property | qtReturn}}>());
     }
 {% endfor %}
 }

@@ -30,4 +30,4 @@ jobs:
           cache: 'true'
       - name: Run cmake
         working-directory: goldenmaster
-        run: cmake -Bbuild -H. -DCMAKE_INSTALL_PREFIX=tmp && cmake --build build/
+        run: cmake -Bbuild -H. -DCMAKE_INSTALL_PREFIX=tmp && cmake --build build/ && cmake --build build/ --target test

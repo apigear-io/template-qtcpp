@@ -1,0 +1,20 @@
+#include "httpfactory.h"
+
+{{- range .Module.Interfaces }}
+#include "http{{.Name|lower}}.h"
+{{- end }}
+
+HttpFactory::HttpFactory(QObject *parent)
+    : QObject(parent)
+    , m_network(new QNetworkAccessManager(this))
+{
+}
+
+{{- range .Module.Interfaces }}
+
+Abstract{{.Name}}* HttpFactory::create{{Camel .Name}}(QObject *parent)
+{
+    return new Http{{.Name}}(m_network, parent);
+}
+
+{{- end }}

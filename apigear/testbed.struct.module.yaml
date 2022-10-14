@@ -5,76 +5,76 @@ version: "1.0"
 interfaces:
   - name: StructInterface
     properties:
-      - { name: propBool, type: { ref: StructBool } }
-      - { name: propInt, type: { ref: StructInt } }
-      - { name: propFloat, type: { ref: StructFloat } }
-      - { name: propString, type: { ref: StructString } }
+      - { name: propBool, type: StructBool }
+      - { name: propInt, type: StructInt }
+      - { name: propFloat, type: StructFloat }
+      - { name: propString, type: StructString }
     operations:
       - name: funcBool
         params:
-          - { name: paramBool, type: { ref: StructBool } }
-        type: { ref: StructBool }
+          - { name: paramBool, type: StructBool }
+        return: { type: StructBool }
       - name: funcInt
         params:
-          - { name: paramInt, type: { ref: StructInt } }
-        type: { ref: StructBool }
+          - { name: paramInt, type: StructInt }
+        return: { type: StructBool }
       - name: funcFloat
         params:
-          - { name: paramFloat, type: { ref: StructFloat } }
-        type: { ref: StructFloat }
+          - { name: paramFloat, type: StructFloat }
+        return: { type: StructFloat }
       - name: funcString
         params:
-          - { name: paramString, type: { ref: StructString } }
-        type: { ref: StructString }
+          - { name: paramString, type: StructString }
+        return: { type: StructString }
     signals:
       - name: sigBool
         params:
-          - { name: paramBool, type: { ref: StructBool } }
+          - { name: paramBool, type: StructBool }
       - name: sigInt
         params:
-          - { name: paramInt, type: { ref: StructInt } }
+          - { name: paramInt, type: StructInt }
       - name: sigFloat
         params:
-          - { name: paramFloat, type: { ref: StructFloat } }
+          - { name: paramFloat, type: StructFloat }
       - name: sigString
         params:
-          - { name: paramString, type: { ref: StructString } }
+          - { name: paramString, type: StructString }
   - name: StructArrayInterface
     properties:
-      - { name: propBool, type: array, items: { ref: StructBool } }
-      - { name: propInt, type: array, items: { ref: StructInt } }
-      - { name: propFloat, type: array, items: { ref: StructFloat } }
-      - { name: propString, type: array, items: { ref: StructString } }
+      - { name: propBool, type: StructBool, array: true }
+      - { name: propInt, type: StructInt, array: true }
+      - { name: propFloat, type: StructFloat, array: true }
+      - { name: propString, type: StructString, array: true }
     operations:
       - name: funcBool
         params:
-          - { name: paramBool, type: array, items: { ref: StructBool } }
-        type: { ref: StructBool }
+          - { name: paramBool, type: StructBool, array: true }
+        return: { type: StructBool }
       - name: funcInt
         params:
-          - { name: paramInt, type: array, items: { ref: StructInt } }
-        type: { ref: StructBool }
+          - { name: paramInt, type: StructInt, array: true }
+        return: { type: StructBool }
       - name: funcFloat
         params:
-          - { name: paramFloat, type: array, items: { ref: StructFloat } }
-        type: { ref: StructBool }
+          - { name: paramFloat, type: StructFloat, array: true }
+        return: { type: StructBool }
       - name: funcString
         params:
-          - { name: paramString, type: array, items: { ref: StructString } }
-        type: { ref: StructBool }
+          - { name: paramString, type: StructString, array: true }
+        return: { type: StructBool }
     signals:
       - name: sigBool
         params:
-          - { name: paramBool, type: array, items: { ref: StructBool } }
+          - { name: paramBool, type: StructBool, array: true }
       - name: sigInt
         params:
-          - { name: paramInt, type: array, items: { ref: StructInt } }
+          - { name: paramInt, type: StructInt, array: true }
       - name: sigFloat
         params:
-          - { name: paramFloat, type: array, items: { ref: StructFloat } }
+          - { name: paramFloat, type: StructFloat, array: true }
       - name: sigString
         params:
-          - { name: paramString, type: array, items: { ref: StructString } }
+          - { name: paramString, type: StructString, array: true }
 structs:
   - name: StructBool
     fields:

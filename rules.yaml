@@ -1,242 +1,242 @@
 features:
-  api:
-    system:
-      documents:
-        - source: CMakeLists.txt.liquid
-          target: CMakeLists.txt
-          overwrite: false
-        - source: "shared/agentclient.h"
-          raw: true
-        - source: "shared/agentclient.cpp"
-          raw: true
-        - source: "shared/simulationclient.h"
-          raw: true
-        - source: "shared/simulationclient.cpp"
-          raw: true
-        - source: thirdparty/jsonrpc/CMakeLists.txt
-          raw: true
-        - source: thirdparty/jsonrpc/jsonrpc.cpp
-          raw: true
-        - source: thirdparty/jsonrpc/jsonrpc.h
-          raw: true
-        - source: thirdparty/jsonrpc/rpcprotocol.cpp
-          raw: true
-        - source: thirdparty/jsonrpc/rpcprotocol.h
-          raw: true
-        - source: thirdparty/jsonrpc/stdoutlogger.h
-          raw: true
-        - source: thirdparty/jsonrpc/types.cpp
-          raw: true
-        - source: thirdparty/jsonrpc/types.h
-          raw: true
-        - source: thirdparty/nlohmann/CMakeLists.txt
-          raw: true
-        - source: thirdparty/nlohmann/json.hpp
-          raw: true
-        - source: thirdparty/qtpromise/CMakeLists.txt
-          raw: true
-    module:
-      documents:
-        - source: "api/CMakeLists.txt.liquid"
-          target: "{{module.name|identifier}}/api/CMakeLists.txt"
-          overwrite: false
-        - source: "api/api.h.liquid"
-          target: "{{module.name|identifier}}/api/api.h"
-        - source: "api/api.cpp.liquid"
-          target: "{{module.name|identifier}}/api/api.cpp"
-        - source: "api/json.adapter.h.liquid"
-          target: "{{module.name|identifier}}/api/json.adapter.h"
-        - source: "api/apifactory.h.liquid"
-          target: "{{module.name|identifier}}/api/apifactory.h"
-        - source: "api/apifactory.cpp.liquid"
-          target: "{{module.name|identifier}}/api/apifactory.cpp"
-        - source: "api/simu.h.liquid"
-          target: "{{module.name|identifier}}/api/simu.h"
-        - source: "api/simu.cpp.liquid"
-          target: "{{module.name|identifier}}/api/simu.cpp"
-        - source: "api/agent.h.liquid"
-          target: "{{module.name|identifier}}/api/agent.h"
-        - source: "api/agent.cpp.liquid"
-          target: "{{module.name|identifier}}/api/agent.cpp"
-  scaffold:
-    module:
-      documents:
-        - source: "library/CMakeLists.txt.liquid"
-          target: "{{module.name|identifier}}/lib/CMakeLists.txt"
-          overwrite: false
-        - source: "library/factory.h.liquid"
-          target: "{{module.name|identifier}}/lib/factory.h"
-          overwrite: false
-        - source: "library/factory.cpp.liquid"
-          target: "{{module.name|identifier}}/lib/factory.cpp"
-          overwrite: false
-    interface:
-      documents:
-        - source: "library/interface.h.liquid"
-          target: "{{module.name|identifier}}/lib/{{interface.name|lower}}.h"
-          overwrite: false
-        - source: "library/interface.cpp.liquid"
-          target: "{{module.name|identifier}}/lib/{{interface.name|lower}}.cpp"
-          overwrite: false
-        - source: "library/qmlinterface.h.liquid"
-          target: "{{module.name|identifier}}/lib/qml{{interface.name|lower}}.h"
-          overwrite: false
-        - source: "library/qmlinterface.cpp.liquid"
-          target: "{{module.name|identifier}}/lib/qml{{interface.name|lower}}.cpp"
-          overwrite: false
-        - source: "library/tst_interface.h.liquid"
-          target: "{{module.name|identifier}}/lib/tst_{{interface.name|lower}}.h"
-          overwrite: false
-        - source: "library/tst_interface.cpp.liquid"
-          target: "{{module.name|identifier}}/lib/tst_{{interface.name|lower}}.cpp"
-          overwrite: false
-  plugin:
-    module:
-      documents:
-        - source: "plugin/CMakeLists.txt.liquid"
-          target: "{{module.name|identifier}}/plugin/CMakeLists.txt"
-          overwrite: false
-        - source: "plugin/plugin.h.liquid"
-          target: "{{module.name|identifier}}/plugin/plugin.h"
-          overwrite: false
-        - source: "plugin/plugin.cpp.liquid"
-          target: "{{module.name|identifier}}/plugin/plugin.cpp"
-          overwrite: false
-        - source: "plugin/qmldir.liquid"
-          target: "{{module.name|identifier}}/plugin/qmldir"
-  http:
-    module:
-      documents:
-        - source: "http/CMakeLists.txt.liquid"
-          target: "{{module.name|identifier}}/http/CMakeLists.txt"
-        - source: "http/httpfactory.h.liquid"
-          target: "{{module.name|identifier}}/http/httpfactory.h"
-        - source: "http/httpfactory.cpp.liquid"
-          target: "{{module.name|identifier}}/http/httpfactory.cpp"
-    interface:
-      documents:
-        - source: "http/httpinterface.h.liquid"
-          target: "{{module.name|identifier}}/http/http{{interface.name|lower}}.h"
-        - source: "http/httpinterface.cpp.liquid"
-          target: "{{module.name|identifier}}/http/http{{interface.name|lower}}.cpp"
-  wamp:
-    system:
-      documents:
-        - source: shared/wampclient.h
-          raw: true
-        - source: shared/wampclient.cpp
-          raw: true
-        - source: thirdparty/wamp/CMakeLists.txt
-          raw: true
-        - source: thirdparty/wamp/listeners.cpp
-          raw: true
-        - source: thirdparty/wamp/listeners.h
-          raw: true
-        - source: thirdparty/wamp/messages.cpp
-          raw: true
-        - source: thirdparty/wamp/messages.h
-          raw: true
-        - source: thirdparty/wamp/protocol.cpp
-          raw: true
-        - source: thirdparty/wamp/protocol.h
-          raw: true
-        - source: thirdparty/wamp/session.cpp
-          raw: true
-        - source: thirdparty/wamp/session.h
-          raw: true
-        - source: thirdparty/wamp/stdoutlogger.h
-          raw: true
-        - source: thirdparty/wamp/types.cpp
-          raw: true
-        - source: thirdparty/wamp/types.h
-          raw: true      
-    module:
-      documents:
-        - source: "wamp/CMakeLists.txt.liquid"
-          target: "{{module.name|identifier}}/wamp/CMakeLists.txt"
-        - source: "wamp/wampfactory.h.liquid"
-          target: "{{module.name|identifier}}/wamp/wampfactory.h"
-        - source: "wamp/wampfactory.cpp.liquid"
-          target: "{{module.name|identifier}}/wamp/wampfactory.cpp"
-    interface:
-      documents:
-        - source: "wamp/wampinterface.h.liquid"
-          target: "{{module.name|identifier}}/wamp/wamp{{interface.name|lower}}.h"
-        - source: "wamp/wampinterface.cpp.liquid"
-          target: "{{module.name|identifier}}/wamp/wamp{{interface.name|lower}}.cpp"            
-        - source: "wamp/wampadapter.h.liquid"
-          target: "{{module.name|identifier}}/wamp/wamp{{interface.name|lower}}adapter.h"
-        - source: "wamp/wampadapter.cpp.liquid"
-          target: "{{module.name|identifier}}/wamp/wamp{{interface.name|lower}}adapter.cpp"            
-  olink:
-    system:
-      documents:
-        - source: shared/olinkclient.h
-          raw: true
-        - source: shared/olinkclient.cpp
-          raw: true
-        - source: shared/olinkhost.h
-          raw: true
-        - source: shared/olinkhost.cpp
-          raw: true
-        - source: shared/olinkremote.h
-          raw: true
-        - source: shared/olinkremote.cpp
-          raw: true
-        - source: thirdparty/objectlink/src/CMakeLists.txt
-          target: thirdparty/objectlink/CMakeLists.txt
-          raw: true
-        - source: thirdparty/objectlink/src/olink/core/types.cpp
-          target: thirdparty/objectlink/olink/core/types.cpp
-          raw: true
-        - source: thirdparty/objectlink/src/olink/core/node.cpp
-          target: thirdparty/objectlink/olink/core/node.cpp
-          raw: true
-        - source: thirdparty/objectlink/src/olink/core/protocol.cpp
-          target: thirdparty/objectlink/olink/core/protocol.cpp
-          raw: true
-        - source: thirdparty/objectlink/src/olink/consolelogger.cpp
-          target: thirdparty/objectlink/olink/consolelogger.cpp
-          raw: true
-        - source: thirdparty/objectlink/src/olink/clientnode.cpp
-          target: thirdparty/objectlink/olink/clientnode.cpp
-          raw: true
-        - source: thirdparty/objectlink/src/olink/remotenode.cpp
-          target: thirdparty/objectlink/olink/remotenode.cpp
-          raw: true
-        - source: thirdparty/objectlink/src/olink/core/types.h
-          target: thirdparty/objectlink/olink/core/types.h
-          raw: true
-        - source: thirdparty/objectlink/src/olink/core/node.h
-          target: thirdparty/objectlink/olink/core/node.h
-          raw: true
-        - source: thirdparty/objectlink/src/olink/core/protocol.h
-          target: thirdparty/objectlink/olink/core/protocol.h
-          raw: true
-        - source: thirdparty/objectlink/src/olink/consolelogger.h
-          target: thirdparty/objectlink/olink/consolelogger.h
-          raw: true
-        - source: thirdparty/objectlink/src/olink/clientnode.h
-          target: thirdparty/objectlink/olink/clientnode.h
-          raw: true
-        - source: thirdparty/objectlink/src/olink/remotenode.h
-          target: thirdparty/objectlink/olink/remotenode.h
-          raw: true
-    module:
-      documents:
-        - source: "olink/CMakeLists.txt.liquid"
-          target: "{{module.name|identifier}}/olink/CMakeLists.txt"
-        - source: "olink/olinkfactory.h.liquid"
-          target: "{{module.name|identifier}}/olink/olinkfactory.h"
-        - source: "olink/olinkfactory.cpp.liquid"
-          target: "{{module.name|identifier}}/olink/olinkfactory.cpp"
-    interface:
-      documents:
-        - source: "olink/olinkinterface.h.liquid"
-          target: "{{module.name|identifier}}/olink/olink{{interface.name|lower}}.h"
-        - source: "olink/olinkinterface.cpp.liquid"
-          target: "{{module.name|identifier}}/olink/olink{{interface.name|lower}}.cpp"            
-        - source: "olink/olinkadapter.h.liquid"
-          target: "{{module.name|identifier}}/olink/olink{{interface.name|lower}}adapter.h"
-        - source: "olink/olinkadapter.cpp.liquid"
-          target: "{{module.name|identifier}}/olink/olink{{interface.name|lower}}adapter.cpp"            
+  - name: api
+    scopes:
+      - match: system
+        documents:
+          - source: CMakeLists.txt.tpl
+            target: CMakeLists.txt
+          - source: "shared/agentclient.h"
+            raw: true
+          - source: "shared/agentclient.cpp"
+            raw: true
+          - source: "shared/simulationclient.h"
+            raw: true
+          - source: "shared/simulationclient.cpp"
+            raw: true
+          - source: thirdparty/jsonrpc/CMakeLists.txt
+            raw: true
+          - source: thirdparty/jsonrpc/jsonrpc.cpp
+            raw: true
+          - source: thirdparty/jsonrpc/jsonrpc.h
+            raw: true
+          - source: thirdparty/jsonrpc/rpcprotocol.cpp
+            raw: true
+          - source: thirdparty/jsonrpc/rpcprotocol.h
+            raw: true
+          - source: thirdparty/jsonrpc/stdoutlogger.h
+            raw: true
+          - source: thirdparty/jsonrpc/types.cpp
+            raw: true
+          - source: thirdparty/jsonrpc/types.h
+            raw: true
+          - source: thirdparty/nlohmann/CMakeLists.txt
+            raw: true
+          - source: thirdparty/nlohmann/json.hpp
+            raw: true
+          - source: thirdparty/qtpromise/CMakeLists.txt
+            raw: true
+      - match: module
+        prefix: "{{snake .Module.Name}}/"
+        documents:
+          - source: "api/CMakeLists.txt.tpl"
+            target: "api/CMakeLists.txt"
+          - source: "api/api.h.tpl"
+            target: "api/api.h"
+          - source: "api/api.cpp.tpl"
+            target: "api/api.cpp"
+          - source: "api/json.adapter.h.tpl"
+            target: "api/json.adapter.h"
+          - source: "api/apifactory.h.tpl"
+            target: "api/apifactory.h"
+          - source: "api/apifactory.cpp.tpl"
+            target: "api/apifactory.cpp"
+          - source: "api/simu.h.tpl"
+            target: "api/simu.h"
+#         - source: "api/simu.cpp.liquid"
+#           target: "{{module.name|identifier}}/api/simu.cpp"
+#         - source: "api/agent.h.liquid"
+#           target: "{{module.name|identifier}}/api/agent.h"
+#         - source: "api/agent.cpp.liquid"
+#           target: "{{module.name|identifier}}/api/agent.cpp"
+#   scaffold:
+#     module:
+#       documents:
+#         - source: "library/CMakeLists.txt.liquid"
+#           target: "{{module.name|identifier}}/lib/CMakeLists.txt"
+#           overwrite: false
+#         - source: "library/factory.h.liquid"
+#           target: "{{module.name|identifier}}/lib/factory.h"
+#           overwrite: false
+#         - source: "library/factory.cpp.liquid"
+#           target: "{{module.name|identifier}}/lib/factory.cpp"
+#           overwrite: false
+#     interface:
+#       documents:
+#         - source: "library/interface.h.liquid"
+#           target: "{{module.name|identifier}}/lib/{{interface.name|lower}}.h"
+#           overwrite: false
+#         - source: "library/interface.cpp.liquid"
+#           target: "{{module.name|identifier}}/lib/{{interface.name|lower}}.cpp"
+#           overwrite: false
+#         - source: "library/qmlinterface.h.liquid"
+#           target: "{{module.name|identifier}}/lib/qml{{interface.name|lower}}.h"
+#           overwrite: false
+#         - source: "library/qmlinterface.cpp.liquid"
+#           target: "{{module.name|identifier}}/lib/qml{{interface.name|lower}}.cpp"
+#           overwrite: false
+#         - source: "library/tst_interface.h.liquid"
+#           target: "{{module.name|identifier}}/lib/tst_{{interface.name|lower}}.h"
+#           overwrite: false
+#         - source: "library/tst_interface.cpp.liquid"
+#           target: "{{module.name|identifier}}/lib/tst_{{interface.name|lower}}.cpp"
+#           overwrite: false
+#   plugin:
+#     module:
+#       documents:
+#         - source: "plugin/CMakeLists.txt.liquid"
+#           target: "{{module.name|identifier}}/plugin/CMakeLists.txt"
+#           overwrite: false
+#         - source: "plugin/plugin.h.liquid"
+#           target: "{{module.name|identifier}}/plugin/plugin.h"
+#           overwrite: false
+#         - source: "plugin/plugin.cpp.liquid"
+#           target: "{{module.name|identifier}}/plugin/plugin.cpp"
+#           overwrite: false
+#         - source: "plugin/qmldir.liquid"
+#           target: "{{module.name|identifier}}/plugin/qmldir"
+#   http:
+#     module:
+#       documents:
+#         - source: "http/CMakeLists.txt.liquid"
+#           target: "{{module.name|identifier}}/http/CMakeLists.txt"
+#         - source: "http/httpfactory.h.liquid"
+#           target: "{{module.name|identifier}}/http/httpfactory.h"
+#         - source: "http/httpfactory.cpp.liquid"
+#           target: "{{module.name|identifier}}/http/httpfactory.cpp"
+#     interface:
+#       documents:
+#         - source: "http/httpinterface.h.liquid"
+#           target: "{{module.name|identifier}}/http/http{{interface.name|lower}}.h"
+#         - source: "http/httpinterface.cpp.liquid"
+#           target: "{{module.name|identifier}}/http/http{{interface.name|lower}}.cpp"
+#   wamp:
+#     system:
+#       documents:
+#         - source: shared/wampclient.h
+#           raw: true
+#         - source: shared/wampclient.cpp
+#           raw: true
+#         - source: thirdparty/wamp/CMakeLists.txt
+#           raw: true
+#         - source: thirdparty/wamp/listeners.cpp
+#           raw: true
+#         - source: thirdparty/wamp/listeners.h
+#           raw: true
+#         - source: thirdparty/wamp/messages.cpp
+#           raw: true
+#         - source: thirdparty/wamp/messages.h
+#           raw: true
+#         - source: thirdparty/wamp/protocol.cpp
+#           raw: true
+#         - source: thirdparty/wamp/protocol.h
+#           raw: true
+#         - source: thirdparty/wamp/session.cpp
+#           raw: true
+#         - source: thirdparty/wamp/session.h
+#           raw: true
+#         - source: thirdparty/wamp/stdoutlogger.h
+#           raw: true
+#         - source: thirdparty/wamp/types.cpp
+#           raw: true
+#         - source: thirdparty/wamp/types.h
+#           raw: true      
+#     module:
+#       documents:
+#         - source: "wamp/CMakeLists.txt.liquid"
+#           target: "{{module.name|identifier}}/wamp/CMakeLists.txt"
+#         - source: "wamp/wampfactory.h.liquid"
+#           target: "{{module.name|identifier}}/wamp/wampfactory.h"
+#         - source: "wamp/wampfactory.cpp.liquid"
+#           target: "{{module.name|identifier}}/wamp/wampfactory.cpp"
+#     interface:
+#       documents:
+#         - source: "wamp/wampinterface.h.liquid"
+#           target: "{{module.name|identifier}}/wamp/wamp{{interface.name|lower}}.h"
+#         - source: "wamp/wampinterface.cpp.liquid"
+#           target: "{{module.name|identifier}}/wamp/wamp{{interface.name|lower}}.cpp"            
+#         - source: "wamp/wampadapter.h.liquid"
+#           target: "{{module.name|identifier}}/wamp/wamp{{interface.name|lower}}adapter.h"
+#         - source: "wamp/wampadapter.cpp.liquid"
+#           target: "{{module.name|identifier}}/wamp/wamp{{interface.name|lower}}adapter.cpp"            
+#   olink:
+#     system:
+#       documents:
+#         - source: shared/olinkclient.h
+#           raw: true
+#         - source: shared/olinkclient.cpp
+#           raw: true
+#         - source: shared/olinkhost.h
+#           raw: true
+#         - source: shared/olinkhost.cpp
+#           raw: true
+#         - source: shared/olinkremote.h
+#           raw: true
+#         - source: shared/olinkremote.cpp
+#           raw: true
+#         - source: thirdparty/objectlink/src/CMakeLists.txt
+#           target: thirdparty/objectlink/CMakeLists.txt
+#           raw: true
+#         - source: thirdparty/objectlink/src/olink/core/types.cpp
+#           target: thirdparty/objectlink/olink/core/types.cpp
+#           raw: true
+#         - source: thirdparty/objectlink/src/olink/core/node.cpp
+#           target: thirdparty/objectlink/olink/core/node.cpp
+#           raw: true
+#         - source: thirdparty/objectlink/src/olink/core/protocol.cpp
+#           target: thirdparty/objectlink/olink/core/protocol.cpp
+#           raw: true
+#         - source: thirdparty/objectlink/src/olink/consolelogger.cpp
+#           target: thirdparty/objectlink/olink/consolelogger.cpp
+#           raw: true
+#         - source: thirdparty/objectlink/src/olink/clientnode.cpp
+#           target: thirdparty/objectlink/olink/clientnode.cpp
+#           raw: true
+#         - source: thirdparty/objectlink/src/olink/remotenode.cpp
+#           target: thirdparty/objectlink/olink/remotenode.cpp
+#           raw: true
+#         - source: thirdparty/objectlink/src/olink/core/types.h
+#           target: thirdparty/objectlink/olink/core/types.h
+#           raw: true
+#         - source: thirdparty/objectlink/src/olink/core/node.h
+#           target: thirdparty/objectlink/olink/core/node.h
+#           raw: true
+#         - source: thirdparty/objectlink/src/olink/core/protocol.h
+#           target: thirdparty/objectlink/olink/core/protocol.h
+#           raw: true
+#         - source: thirdparty/objectlink/src/olink/consolelogger.h
+#           target: thirdparty/objectlink/olink/consolelogger.h
+#           raw: true
+#         - source: thirdparty/objectlink/src/olink/clientnode.h
+#           target: thirdparty/objectlink/olink/clientnode.h
+#           raw: true
+#         - source: thirdparty/objectlink/src/olink/remotenode.h
+#           target: thirdparty/objectlink/olink/remotenode.h
+#           raw: true
+#     module:
+#       documents:
+#         - source: "olink/CMakeLists.txt.liquid"
+#           target: "{{module.name|identifier}}/olink/CMakeLists.txt"
+#         - source: "olink/olinkfactory.h.liquid"
+#           target: "{{module.name|identifier}}/olink/olinkfactory.h"
+#         - source: "olink/olinkfactory.cpp.liquid"
+#           target: "{{module.name|identifier}}/olink/olinkfactory.cpp"
+#     interface:
+#       documents:
+#         - source: "olink/olinkinterface.h.liquid"
+#           target: "{{module.name|identifier}}/olink/olink{{interface.name|lower}}.h"
+#         - source: "olink/olinkinterface.cpp.liquid"
+#           target: "{{module.name|identifier}}/olink/olink{{interface.name|lower}}.cpp"            
+#         - source: "olink/olinkadapter.h.liquid"
+#           target: "{{module.name|identifier}}/olink/olink{{interface.name|lower}}adapter.h"
+#         - source: "olink/olinkadapter.cpp.liquid"
+#           target: "{{module.name|identifier}}/olink/olink{{interface.name|lower}}adapter.cpp"            

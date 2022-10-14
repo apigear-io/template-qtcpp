@@ -1,0 +1,66 @@
+{% comment %} // Copyright (c) ApiGear UG 2020 {% endcomment -%}
+{{ cppGpl .Module }}
+
+#include "tst_{{.Name|lower}}.h"
+#include "{{.Name|lower}}.h"
+
+{{- $class := .Name }}
+
+/**
+ *  will be called before the first test function is executed.
+*/
+void Test{{$class}}::initTestCase(){
+
+}
+
+/**
+ *  will be called to create a global test data table.
+*/
+void Test{{$class}}::initTestCase_data(){
+
+}
+
+/**
+ *  will be called after the last test function was executed.
+*/
+void Test{{$class}}::cleanupTestCase(){
+
+}
+
+/**
+ *  will be called before each test function is executed.
+*/
+void Test{{$class}}::init(){
+
+}
+
+/**
+ *  will be called after every test function.
+*/
+void Test{{$class}}::cleanup(){
+
+}
+
+{{- range .Operations }}
+/**
+ *  Test operation {{.Name}}
+*/
+void Test{{$class}}::{{.Name}}(){
+    {{$class}} test{{Camel $class}};
+    // Do implement test here
+}
+{{- end }}
+
+{{- range .Properties }}
+/**
+ *  Test proptery {{.Name}}
+*/
+void Test{{$class}}::{{.Name}}(){
+    {{$class}} test{{Camel $class}};
+    // Do implement test here
+}
+{{- end }}
+
+QTEST_MAIN(Test{{$class}});
+
+

@@ -10,72 +10,72 @@ version: "1.0"
 interfaces:
   - name: SameStruct1Interface
     properties:
-      - { name: prop1, type: { ref: Struct1 } }
+      - { name: prop1, type: Struct1 }
     operations:
       - name: func1
         params:
-          - { name: param1, type: { ref: Struct1 } }
-        type: { ref: Struct1 }
+          - { name: param1, type: Struct1 }
+        return: { type: Struct1 }
     signals:
       - name: sig1
         params:
-          - { name: param1, type: { ref: Struct1 } }
+          - { name: param1, type: Struct1 }
   - name: SameStruct2Interface
     properties:
-      - { name: prop1, type: { ref: Struct2 } }
-      - { name: prop2, type: { ref: Struct2 } }
+      - { name: prop1, type: Struct2 }
+      - { name: prop2, type: Struct2 }
     operations:
       - name: func1
         params:
-          - { name: param1, type: { ref: Struct1 } }
-        type: { ref: Struct1 }
+          - { name: param1, type: Struct1 }
+        return: { type: Struct1 }
       - name: func2
         params:
-          - { name: param1, type: { ref: Struct1 } }
-          - { name: param2, type: { ref: Struct2 } }
-        type: { ref: Struct1 }
+          - { name: param1, type: Struct1 }
+          - { name: param2, type: Struct2 }
+        return: { type: Struct1 }
     signals:
       - name: sig1
         params:
-          - { name: param1, type: { ref: Struct1 } }
+          - { name: param1, type: Struct1 }
       - name: sig2
         params:
-          - { name: param1, type: { ref: Struct1 } }
-          - { name: param2, type: { ref: Struct2 } }
+          - { name: param1, type: Struct1 }
+          - { name: param2, type: Struct2 }
   - name: SameEnum1Interface
     properties:
-      - { name: prop1, type: { ref: Enum1 } }
+      - { name: prop1, type: Enum1 }
     operations:
       - name: func1
         params:
-          - { name: param1, type: { ref: Enum1 } }
-        type: { ref: Enum1 }
+          - { name: param1, type: Enum1 }
+        return: { type: Enum1 }
     signals:
       - name: sig1
         params:
-          - { name: param1, type: { ref: Enum1 } }
+          - { name: param1, type: Enum1 }
   - name: SameEnum2Interface
     properties:
-      - { name: prop1, type: { ref: Enum1 } }
-      - { name: prop2, type: { ref: Enum2 } }
+      - { name: prop1, type: Enum1 }
+      - { name: prop2, type: Enum2 }
     operations:
       - name: func1
         params:
-          - { name: param1, type: { ref: Enum1 } }
-        type: { ref: Enum1 }
+          - { name: param1, type: Enum1 }
+        return: { type: Enum1 }
       - name: func2
         params:
-          - { name: param1, type: { ref: Enum1 } }
-          - { name: param2, type: { ref: Enum2 } }
-        type: { ref: Enum1 }
+          - { name: param1, type: Enum1 }
+          - { name: param2, type: Enum2 }
+        return: { type: Enum1 }
     signals:
       - name: sig1
         params:
-          - { name: param1, type: { ref: Enum1 } }
+          - { name: param1, type: Enum1 }
       - name: sig2
         params:
-          - { name: param1, type: { ref: Enum1 } }
-          - { name: param2, type: { ref: Enum2 } }
+          - { name: param1, type: Enum1 }
+          - { name: param2, type: Enum2 }
 
 structs:
   - name: Struct1

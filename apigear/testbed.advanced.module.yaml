@@ -17,25 +17,25 @@ interfaces:
       - name: func1
         params:
           - { name: param1, type: int }
-        type: int
+        return : { type: int }
       - name: func2
         params:
           - { name: param1, type: int }
           - { name: param2, type: int }
-        type: int
+        return: { type: int }
       - name: func3
         params:
           - { name: param1, type: int }
           - { name: param2, type: int }
           - { name: param3, type: int }
-        type: int
+        return: { type: int }
       - name: func4
         params:
           - { name: param1, type: int }
           - { name: param2, type: int }
           - { name: param3, type: int }
           - { name: param4, type: int }
-        type: int
+        return: { type: int }
     signals:
       - name: sig1
         params:
@@ -57,72 +57,72 @@ interfaces:
           - { name: param4, type: int }
   - name: NestedStruct1Interface
     properties:
-      - { name: prop1, type: { ref: NestedStruct1 } }
+      - { name: prop1, type: NestedStruct1 }
     operations:
       - name: func1
         params:
-          - { name: param1, type: { ref: NestedStruct1 } }
-        type: { ref: NestedStruct1 }
+          - { name: param1, type: NestedStruct1 }
+        return: { type: NestedStruct1 }
     signals:
       - name: sig1
         params:
-          - { name: param1, type: { ref: NestedStruct1 } }
+          - { name: param1, type: NestedStruct1 }
   - name: NestedStruct2Interface
     properties:
-      - { name: prop1, type: { ref: NestedStruct1 } }
-      - { name: prop2, type: { ref: NestedStruct2 } }
+      - { name: prop1, type: NestedStruct1 }
+      - { name: prop2, type: NestedStruct2 }
     operations:
       - name: func1
         params:
-          - { name: param1, type: { ref: NestedStruct1 } }
-        type: { ref: NestedStruct1 }
+          - { name: param1, type: NestedStruct1 }
+        return: { type: NestedStruct1 }
       - name: func2
         params:
-          - { name: param1, type: { ref: NestedStruct1 } }
-          - { name: param2, type: { ref: NestedStruct2 } }
-        type: { ref: NestedStruct1 }
+          - { name: param1, type: NestedStruct1 }
+          - { name: param2, type: NestedStruct2 }
+        return: { type: NestedStruct1 }
     signals:
       - name: sig1
         params:
-          - { name: param1, type: { ref: NestedStruct1 } }
+          - { name: param1, type: NestedStruct1 }
       - name: sig2
         params:
-          - { name: param1, type: { ref: NestedStruct1 } }
-          - { name: param2, type: { ref: NestedStruct2 } }
+          - { name: param1, type: NestedStruct1 }
+          - { name: param2, type: NestedStruct2 }
   - name: NestedStruct3Interface
     properties:
-      - { name: prop1, type: { ref: NestedStruct1 } }
-      - { name: prop2, type: { ref: NestedStruct2 } }
-      - { name: prop3, type: { ref: NestedStruct3 } }
+      - { name: prop1, type: NestedStruct1 }
+      - { name: prop2, type: NestedStruct2 }
+      - { name: prop3, type: NestedStruct3 }
     operations:
       - name: func1
         params:
-          - { name: param1, type: { ref: NestedStruct1 } }
-        type: { ref: NestedStruct1 }
+          - { name: param1, type: NestedStruct1 }
+        return: { type: NestedStruct1 }
       - name: func2
         params:
-          - { name: param1, type: { ref: NestedStruct1 } }
-          - { name: param2, type: { ref: NestedStruct2 } }
-        type: { ref: NestedStruct1 }
+          - { name: param1, type: NestedStruct1 }
+          - { name: param2, type: NestedStruct2 }
+        return: { type: NestedStruct1 }
       - name: func3
         params:
-          - { name: param1, type: { ref: NestedStruct1 } }
-          - { name: param2, type: { ref: NestedStruct2 } }
-          - { name: param3, type: { ref: NestedStruct3 } }
-        type: { ref: NestedStruct1 }
+          - { name: param1, type: NestedStruct1 }
+          - { name: param2, type: NestedStruct2 }
+          - { name: param3, type: NestedStruct3 }
+        return: { type: NestedStruct1 }
     signals:
       - name: sig1
         params:
-          - { name: param1, type: { ref: NestedStruct1 } }
+          - { name: param1, type: NestedStruct1 }
       - name: sig2
         params:
-          - { name: param1, type: { ref: NestedStruct1 } }
-          - { name: param2, type: { ref: NestedStruct2 } }
+          - { name: param1, type: NestedStruct1 }
+          - { name: param2, type: NestedStruct2 }
       - name: sig3
         params:
-          - { name: param1, type: { ref: NestedStruct1 } }
-          - { name: param2, type: { ref: NestedStruct2 } }
-          - { name: param3, type: { ref: NestedStruct3 } }
+          - { name: param1, type: NestedStruct1 }
+          - { name: param2, type: NestedStruct2 }
+          - { name: param3, type: NestedStruct3 }
 structs:
   - name: Struct1
     fields:
@@ -144,17 +144,17 @@ structs:
       - { name: field4, type: int }
   - name: NestedStruct1
     fields:
-      - { name: field1, type: { ref: Struct1 } }
+      - { name: field1, type: Struct1 }
   - name: NestedStruct2
     fields:
-      - { name: field1, type: { ref: Struct1 } }
-      - { name: field2, type: { ref: Struct2 } }
+      - { name: field1, type: Struct1 }
+      - { name: field2, type: Struct2 }
 
   - name: NestedStruct3
     fields:
-      - { name: field1, type: { ref: Struct1 } }
-      - { name: field2, type: { ref: Struct2 } }
-      - { name: field3, type: { ref: Struct3 } }
+      - { name: field1, type: Struct1 }
+      - { name: field2, type: Struct2 }
+      - { name: field3, type: Struct3 }
 enums:
   - name: Enum1
     members:

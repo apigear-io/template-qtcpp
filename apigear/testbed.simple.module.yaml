@@ -22,19 +22,19 @@ interfaces:
       - name: funcBool
         params:
           - { name: paramBool, type: bool }
-        type: bool
+        return: { type: bool }
       - name: funcInt
         params:
           - { name: paramInt, type: int }
-        type: int
+        return: { type: int }
       - name: funcFloat
         params:
           - { name: paramFloat, type: float }
-        type: float
+        return: { type: float }
       - name: funcString
         params:
           - { name: paramString, type: string }
-        type: string
+        return: { type: string }
     signals:
       - name: sigBool
         params:
@@ -50,41 +50,40 @@ interfaces:
           - { name: paramString, type: string }
   - name: SimpleArrayInterface
     properties:
-      - { name: propBool, type: array, items: bool }
-      - { name: propInt, type: array, items: int }
-      - { name: propFloat, type: array, items: float }
-      - { name: propString, type: array, items: string }
+      - { name: propBool, type: bool, array: true }
+      - { name: propInt, type: int, array: true }
+      - { name: propFloat, type: float, array: true }
+      - { name: propString, type: string, array: true }
     operations:
       - name: funcBool
         params:
-          - { name: paramBool, type: array, items: bool }
-        type: array
-        items: bool
+          - { name: paramBool, type: bool, array: true }
+        return: { type: bool, array: true }
       - name: funcInt
         params:
-          - { name: paramInt, type: array, items: int }
-        type: array
-        items: int
+          - { name: paramInt, type: int, array: true }
+
+        return: { type: int, array: true }
       - name: funcFloat
         params:
-          - { name: paramFloat, type: array, items: float }
-        type: array
-        items: float
+          - { name: paramFloat, type: float, array: true }
+
+        return: { type: float, array: true }
       - name: funcString
         params:
-          - { name: paramString, type: array, items: string }
-        type: array
-        items: string
+          - { name: paramString, type: string, array: true }
+
+        return: { type: string, array: true }
     signals:
       - name: sigBool
         params:
-          - { name: paramBool, type: array, items: bool }
+          - { name: paramBool, type: bool, array: true }
       - name: sigInt
         params:
-          - { name: paramInt, type: array, items: int }
+          - { name: paramInt, type: int, array: true }
       - name: sigFloat
         params:
-          - { name: paramFloat, type: array, items: float }
+          - { name: paramFloat, type: float, array: true }
       - name: sigString
         params:
-          - { name: paramString, type: array, items: string }
+          - { name: paramString, type: string, array: true }

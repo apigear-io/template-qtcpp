@@ -3,8 +3,8 @@ name: demo
 version: "0.1"
 
 layers:
-  - name: goldenmaster
-    modules:
+  - name: test
+    inputs:
       - testbed.advanced.module.yaml
       - testbed.enum.module.yaml
       - testbed.same1.module.yaml
@@ -12,8 +12,5 @@ layers:
       - testbed.simple.module.yaml
       - testbed.struct.module.yaml
     output: ../test
-    blueprint:
-      package: ""
-      rules: ../rules.yaml
-      features:
-        - all
+    template: ..
+    features: [all]

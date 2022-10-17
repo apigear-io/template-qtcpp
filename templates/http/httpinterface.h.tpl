@@ -1,7 +1,6 @@
-{% comment %} // Copyright (c) ApiGear UG 2020 {% endcomment -%}
+{{- /* Copyright (c) ApiGear UG 2020 */ -}}
 {{ cppGpl .Module }}
-{{- $class := printf "%sHttp" .Name }}
-
+{{- $class := printf "Http%s" .Interface.Name }}
 #pragma once
 
 #include <QtCore>
@@ -9,19 +8,19 @@
 
 #include "../api/api.h"
 
-class {{$class}} : public Abstract{{.Name}}
+class {{$class}} : public Abstract{{.Interface.Name}}
 {
     Q_OBJECT
 public:
     explicit {{$class}}(QNetworkAccessManager *network, QObject *parent = nullptr);
     virtual ~{{$class}}() override;
 
-{{- range .Properties }}
+{{- range .Interface.Properties }}
     {{qtReturn "" .}} {{.Name}}() const override;
     void set{{Camel .Name}}({{qtParam "" .}}) override;
 {{- end }}
 
-{{- range .Operations }}
+{{- range .Interface.Operations }}
     {{qtReturn "" .Return}} {{.Name}}({{qtParams "" .Params}}) override;
 {{- end }}
 private:
@@ -29,7 +28,7 @@ private:
     void applyState(const QJsonObject &state);
 private:
     QNetworkAccessManager *m_network;
-{{- range .Properties }}
+{{- range .Interface.Properties }}
     {{qtReturn "" .}} m_{{.Name}};
 {{- end }}
 };

@@ -1,6 +1,6 @@
 #include "olinkfactory.h"
 
-{{ range .Module.Interfaces }}
+{{- range .Module.Interfaces }}
 #include "olink{{.Name|lower}}.h"
 {{- end }}
 
@@ -10,7 +10,7 @@ OLinkFactory::OLinkFactory(QObject *parent)
     qDebug() << Q_FUNC_INFO;
 }
 
-{{ range .Module.Interfaces }}
+{{- range .Module.Interfaces }}
 
 Abstract{{.Name}}* OLinkFactory::create{{Camel .Name}}(QObject *parent)
 {

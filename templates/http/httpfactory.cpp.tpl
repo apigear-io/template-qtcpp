@@ -1,6 +1,6 @@
 #include "httpfactory.h"
 
-{{ range .Module.Interfaces }}
+{{- range .Module.Interfaces }}
 #include "http{{.Name|lower}}.h"
 {{- end }}
 
@@ -10,7 +10,7 @@ HttpFactory::HttpFactory(QObject *parent)
 {
 }
 
-{{ range .Module.Interfaces }}
+{{- range .Module.Interfaces }}
 
 Abstract{{.Name}}* HttpFactory::create{{Camel .Name}}(QObject *parent)
 {

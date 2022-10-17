@@ -1,6 +1,6 @@
 #include "factory.h"
 
-{{ range .Module.Interfaces }}
+{{- range .Module.Interfaces }}
 #include "{{.Name|lower}}.h"
 {{- end }}
 
@@ -9,7 +9,7 @@ Factory::Factory(QObject *parent)
 {
 }
 
-{{ range .Module.Interfaces }}
+{{- range .Module.Interfaces }}
 
 Abstract{{.Name}}* Factory::create{{Camel .Name}}(QObject *parent)
 {

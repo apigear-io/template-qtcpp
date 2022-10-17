@@ -1,4 +1,4 @@
-{% comment %} // Copyright (c) ApiGear UG 2020 {% endcomment -%}
+{{- /* Copyright (c) ApiGear UG 2020 */ -}}
 {{ cppGpl .Module }}
 #pragma once
 

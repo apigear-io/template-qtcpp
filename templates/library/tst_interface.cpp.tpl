@@ -1,10 +1,9 @@
-{% comment %} // Copyright (c) ApiGear UG 2020 {% endcomment -%}
-{{ cppGpl .Module }}
+{{- /* Copyright (c) ApiGear UG 2020 */ -}}
+{{- cppGpl .Module }}
+#include "tst_{{.Interface.Name|lower}}.h"
+#include "{{.Interface.Name|lower}}.h"
 
-#include "tst_{{.Name|lower}}.h"
-#include "{{.Name|lower}}.h"
-
-{{- $class := .Name }}
+{{- $class := .Interface.Name }}
 
 /**
  *  will be called before the first test function is executed.
@@ -41,22 +40,22 @@ void Test{{$class}}::cleanup(){
 
 }
 
-{{- range .Operations }}
+{{- range .Interface.Operations }}
 /**
  *  Test operation {{.Name}}
 */
 void Test{{$class}}::{{.Name}}(){
-    {{$class}} test{{Camel $class}};
+    {{$class}} test{{upper1 (lower $class)}};
     // Do implement test here
 }
 {{- end }}
 
-{{- range .Properties }}
+{{- range .Interface.Properties }}
 /**
  *  Test proptery {{.Name}}
 */
 void Test{{$class}}::{{.Name}}(){
-    {{$class}} test{{Camel $class}};
+    {{$class}} test{{upper1 (lower $class)}};
     // Do implement test here
 }
 {{- end }}

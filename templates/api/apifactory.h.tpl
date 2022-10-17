@@ -1,4 +1,4 @@
-{{- $MODULE_ID := (SNAKE .Module.Name) }}
+{{- $MODULE_ID := (SNAKE .Module.Name) -}}
 #pragma once
 
 #include <QtCore>

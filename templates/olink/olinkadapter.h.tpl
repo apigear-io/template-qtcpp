@@ -1,6 +1,7 @@
-{% comment %} // Copyright (c) ApiGear UG 2020 {% endcomment -%}
+{{- /* Copyright (c) ApiGear UG 2020 */ -}}
 {{ cppGpl .Module }}
-{{- $class := printf "OLink%sAdapter" .Name }}
+{{- $class := printf "OLink%sAdapter" .Interface.Name }}
+
 #pragma once
 
 #include <QtCore>
@@ -16,7 +17,7 @@ class {{$class}} : public QObject, public IObjectSource
 {
     Q_OBJECT
 public:
-    explicit {{$class}}(Abstract{{.Name}}* impl, QObject *parent = nullptr);
+    explicit {{$class}}(Abstract{{.Interface.Name}}* impl, QObject *parent = nullptr);
     virtual ~{{$class}}() override;
 public:
     void publishState();
@@ -32,6 +33,6 @@ public: // IObjectSource interface
     json olinkCollectProperties() override;
 
 private:
-    Abstract{{.Name}}* m_impl;
+    Abstract{{.Interface.Name}}* m_impl;
     IRemoteNode *m_node;
 };

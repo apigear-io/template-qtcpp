@@ -5,7 +5,7 @@
 
 
 {{- range .Module.Interfaces }}
-{{- $class := printf "%sSimulation" .Name }}
+{{- $class := printf "Simulation%s" .Name }}
 
 // ********************************************************************
 // {{$class}} simulation interface
@@ -25,7 +25,7 @@ public:
 {{- end }}
 
 {{- range .Operations }}
-    {{qtReturn "" .}} {{.Name}}({{qtParams "" .Params}}) override;
+    {{qtReturn "" .Return}} {{.Name}}({{qtParams "" .Params}}) override;
 {{- end }}
 
 private:

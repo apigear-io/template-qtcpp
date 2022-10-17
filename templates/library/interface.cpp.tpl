@@ -1,6 +1,7 @@
-{% comment %} // Copyright (c) ApiGear UG 2020 {% endcomment -%}
-{{ cppGpl .Module }}
-{{ $class := .Name }}
+{{- /* Copyright (c) ApiGear UG 2020 */ -}}
+{{- cppGpl .Module }}
+{{- $class := .Interface.Name }}
+
 
 #include "{{lower $class}}.h"
 
@@ -10,7 +11,7 @@
 
 {{$class}}::{{$class}}(QObject *parent)
     : Abstract{{$class}}(parent)
-{{- range .Properties }}
+{{- range .Interface.Properties }}
     , m_{{.Name}}({{qtDefault "" .}})
 {{- end }}
 {
@@ -20,14 +21,14 @@
 {
 }
 
-{{- range .Properties }}
+{{- range .Interface.Properties }}
 
 void {{$class}}::set{{Camel .Name}}({{qtParam "" .}})
 {
     if (m_{{.Name}} != {{.Name}}) {
         m_{{.Name}} = {{.Name}};
         emit {{.Name}}Changed({{.Name}});
-        {{.Name}}Agent::trace_state(this);
+        {{$class}}Agent::trace_state(this);
     }
 }
 
@@ -37,12 +38,12 @@ void {{$class}}::set{{Camel .Name}}({{qtParam "" .}})
 }
 
 {{- end }}
-{{- range .Operations }}
+{{- range .Interface.Operations }}
 
 {{qtReturn "" .Return}} {{$class}}::{{.Name}}({{qtParams "" .Params}})
 {
-    qDebug() << Q_FUNC_INFO;    
-    {{.Name}}Agent::trace_{{.Name}}(this, {{.join ", " .Params}});
+    qDebug() << Q_FUNC_INFO;
+    {{$class}}Agent::trace_{{.Name}}(this, {{qtVars .Params}});
     return {{qtDefault "" .Return}};
 }
 {{- end }}

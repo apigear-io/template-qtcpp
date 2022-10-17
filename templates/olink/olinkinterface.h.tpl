@@ -1,9 +1,9 @@
-{% comment %} // Copyright (c) ApiGear UG 2020 {% endcomment -%}
+{{- /* Copyright (c) ApiGear UG 2020 */ -}}
 {{ cppGpl .Module }}
 {{- $module_id := (snake .Module.Name)}}
-{{- $class := printf "Olink%s" .Name }}
+{{- $class := printf "OLink%s" .Interface.Name }}
 {{- $module := .Module.Name }}
-{{- $iface := .Name }}
+{{- $iface := .Interface.Name }}
 #pragma once
 
 #include <QtCore>
@@ -15,7 +15,7 @@
 using namespace ApiGear;
 using namespace ApiGear::ObjectLink;
 
-class {{$class}} : public Abstract{{.Name}}, public IObjectSink
+class {{$class}} : public Abstract{{.Interface.Name}}, public IObjectSink
 {
     Q_OBJECT
 public:
@@ -24,13 +24,13 @@ public:
 
     void applyState(const json& fields);
 
-{{- range .Properties }}
+{{- range .Interface.Properties }}
     {{qtReturn "" .}} {{.Name}}() const override;
     void set{{Camel .Name}}({{qtParam "" .}}) override;
     void set{{Camel .Name}}Local({{qtParam "" .}});
 {{- end }}
 
-{{- range .Operations }}
+{{- range .Interface.Operations }}
     {{qtReturn "" .Return}} {{.Name}}({{qtParams "" .Params}}) override;
     QtPromise::QPromise<{{qtReturn "" .Return}}> {{.Name}}Async({{qtParams "" .Params}});
 {{- end }}
@@ -43,7 +43,7 @@ public:
     virtual void olinkOnInit(std::string name, json props, IClientNode *node) override;
     virtual void olinkOnRelease() override;
 private:
-{{- range .Properties }}
+{{- range .Interface.Properties }}
     {{qtReturn "" .}} m_{{.Name}};
 {{- end }}
     bool m_isReady;

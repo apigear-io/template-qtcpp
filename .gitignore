@@ -22,3 +22,6 @@ build*/
 ######################
 .DS_Store
 .DS_Store?
+
+tmp/
+testbed-apis/

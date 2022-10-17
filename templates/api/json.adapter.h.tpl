@@ -1,4 +1,4 @@
-{{- /* Copyright (c) ApiGear UG 2020 */}}
+{{- /* Copyright (c) ApiGear UG 2020 */ -}}
 #pragma once
 
 #ifndef JSON_USE_IMPLICIT_CONVERSIONS
@@ -14,11 +14,12 @@ inline void from_json(const nlohmann::json& j, QString& p) {
 inline void to_json(nlohmann::json& j, const QString& value) {
     j = value.toStdString();
 }
-{{ range .Module.Structs }}
-{{ $class := .Name }}
+
+{{- range .Module.Structs }}
+{{- $class := .Name }}
 
 inline void from_json(const nlohmann::json& j, {{$class}}& p) {
-{{ range .Fields }}
+{{- range .Fields }}
     if(j.contains("{{.Name}}")) {
         p.set{{Camel .Name}}(j["{{.Name}}"].get<{{qtReturn "" .}}>());
     }
@@ -27,8 +28,8 @@ inline void from_json(const nlohmann::json& j, {{$class}}& p) {
 
 inline void to_json(nlohmann::json& j, const {{$class}}& p) {
     j = nlohmann::json{
-{{ range $i, $e := .Fields }}
-        {{if $i}}, {{end}}{"{{.Name}}", p.{{.Name}}()}
+{{- range $i, $e := .Fields }}{{if $i}},{{end}}
+        {"{{.Name}}", p.{{.Name}}()}
 {{- end }}
         };
 }

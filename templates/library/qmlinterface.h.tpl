@@ -1,39 +1,38 @@
-{% comment %} // Copyright (c) ApiGear UG 2020 {% endcomment -%}
+{{- /* Copyright (c) ApiGear UG 2020 */ -}}
 {{ cppGpl .Module }}
-{{- $class := .Name }}
+{{- $class := .Interface.Name }}
 {{- $MODULE_ID := printf "%s_LIB" (SNAKE .Module.Name) }}
 
 #pragma once
 
 #include <QtCore>
 
-#include "{{.Name|lower}}.h"
+#include "{{.Interface.Name|lower}}.h"
 
 class {{$MODULE_ID}}_EXPORT Qml{{$class}} : public Abstract{{$class}}
 {
     Q_OBJECT
-{{- range .Properties }}
-{% assign name = property.name %}
+{{- range .Interface.Properties }}
     Q_PROPERTY({{qtReturn "" .}} {{.Name}} READ {{.Name}} NOTIFY {{.Name}}Changed)
 {{- end }}
 public:
     explicit Qml{{$class}}(QObject *parent = nullptr);
     virtual ~Qml{{$class}}() override;
 
-{{- range .Properties }}
+{{- range .Interface.Properties }}
     {{qtReturn "" .}} {{.Name}}() const override;
     void set{{Camel .Name}}({{qtParam "" .}}) override;
 {{- end }}
 
-{{- range .Operations }}
+{{- range .Interface.Operations }}
     Q_INVOKABLE {{qtReturn "" .Return}} {{.Name}}({{qtParams "" .Params}}) override;
 {{- end }}
 
 Q_SIGNALS:
-{{- range .Signals }}
+{{- range .Interface.Signals }}
     void {{.Name}}({{qtParams "" .Params}});
 {{- end }}
-{{- range .Properties }}
+{{- range .Interface.Properties }}
     void {{.Name}}Changed({{qtParam "" .}});
 {{- end }}
 private:

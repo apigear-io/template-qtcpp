@@ -1,4 +1,4 @@
-{% comment %} // Copyright (c) ApiGear UG 2020 {% endcomment -%}
+{{- /* Copyright (c) ApiGear UG 2020 */ -}}
 {{ cppGpl .Module }}
 {{- $class := .Interface.Name }}
 {{- $MODULE_ID := printf "%s_LIB" (SNAKE .Module.Name) }}
@@ -22,17 +22,17 @@ public:
     explicit {{$class}}(QObject *parent = nullptr);
     virtual ~{{$class}}() override;
 
-{{- range .Properties }}
+{{- range .Interface.Properties }}
     {{qtReturn "" .}} {{.Name}}() const override;
     void set{{Camel .Name}}({{qtParam "" .}}) override;
 {{- end }}
 
-{{- range .Operations }}
+{{- range .Interface.Operations }}
     {{qtReturn "" .Return}} {{.Name}}({{qtParams "" .Params}}) override;
 {{- end }}
 
 private:
-{{- range .Properties }}
+{{- range .Interface.Properties }}
     {{qtReturn "" .}} m_{{.Name}};
 {{- end }}
 };

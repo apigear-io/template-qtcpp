@@ -1,11 +1,11 @@
-{% comment %} // Copyright (c) ApiGear UG 2020 {% endcomment -%}
-{{- $module := .Module.Name }}
+{{- /* Copyright (c) ApiGear UG 2020 */ -}}
+{{- $module := .Module.Name -}}
 #include "agent.h"
 #include "../../shared/agentclient.h"
 
-
 {{- range .Module.Interfaces }}
-{{ $class := printf "%aAgent" .Name }}
+{{- $class := printf "%sAgent" .Name }}
+{{- $iface := .Name }}
 
 {{$class}}::{{$class}}()
 {
@@ -23,11 +23,11 @@ QVariantMap {{$class}}::capture_state(Abstract{{.Name}}* obj)
 void {{$class}}::trace_state(Abstract{{.Name}}* obj)
 {
     const QVariantMap &fields_ = capture_state(obj);
-    AgentClient::instance()->traceState("{{.Module.Name}}.{{.Name}}", fields_);
+    AgentClient::instance()->traceState("{{$module}}.{{.Name}}", fields_);
 }
-{{ $iface := .Name }}
+{{- $iface := .Name }}
 {{- range .Operations }}
-void {{$class}}::trace_{{.Name}}(Abstract{{.Name}}* obj{{qtParams "" .Params}})
+void {{$class}}::trace_{{.Name}}(Abstract{{$iface}}* obj, {{qtParams "" .Params}})
 {
     const QVariantMap &params_ {
         {{- range  .Params }}

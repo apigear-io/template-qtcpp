@@ -1,9 +1,9 @@
-{% comment %} // Copyright (c) ApiGear UG 2020 {% endcomment -%}
+{{- /* Copyright (c) ApiGear UG 2020 */ -}}
 {{ cppGpl .Module }}
 {{- $module_id := (snake .Module.Name)}}
-{{- $class := printf "Olink%s" .Name }}
+{{- $class := printf "OLink%s" .Interface.Name }}
 {{- $module := .Module.Name }}
-{{- $iface := .Name }}
+{{- $iface := .Interface.Name }}
 #include "{{lower $class}}.h"
 
 #include "../api/agent.h"
@@ -13,8 +13,8 @@
 using namespace ApiGear;
 
 {{$class}}::{{$class}}(QObject *parent)
-    : Abstract{{.Name}}(parent)
-{{- range .Properties }}
+    : Abstract{{.Interface.Name}}(parent)
+{{- range .Interface.Properties }}
     , m_{{.Name}}({{qtDefault "" .}})
 {{- end }}
     , m_isReady(false)
@@ -32,14 +32,14 @@ using namespace ApiGear;
 void {{$class}}::applyState(const json& fields) 
 {
     qDebug() << Q_FUNC_INFO;
-{{- range .Properties }}
+{{- range .Interface.Properties }}
     if(fields.contains("{{.Name}}")) {
         set{{Camel .Name}}Local(fields["{{.Name}}"].get<{{qtReturn "" .}}>());
     }
 {{- end }}
 }
 
-{{- range .Properties }}
+{{- range .Interface.Properties }}
 
 void {{$class}}::set{{Camel .Name}}({{qtParam "" .}})
 {
@@ -56,7 +56,7 @@ void {{$class}}::set{{Camel .Name}}Local({{qtParam "" .}})
     if (m_{{.Name}} != {{.Name}}) {
         m_{{.Name}} = {{.Name}};
         emit {{.Name}}Changed({{.Name}});
-        {{.Name}}Agent::trace_state(this);
+        {{$iface}}Agent::trace_state(this);
     }
 }
 
@@ -68,7 +68,7 @@ void {{$class}}::set{{Camel .Name}}Local({{qtParam "" .}})
 {{- end }}
 
 
-{{- range .Operations }}
+{{- range .Interface.Operations }}
 {{- $return := (qtReturn "" .Return)}}
 
 {{$return}} {{$class}}::{{.Name}}({{qtParams "" .Params}})
@@ -77,15 +77,15 @@ void {{$class}}::set{{Camel .Name}}Local({{qtParam "" .}})
     if(!m_node) {
         return {{qtDefault "" .Return}};
     }
-    {{ if .Return.IsVoid }}
+    {{- if .Return.IsVoid }}
     InvokeReplyFunc func = [this](InvokeReplyArg arg) {};
     const json &args = json::array({
         {{ .Params }}
     });
     m_node->invokeRemote("{{$module_id}}.{{$iface}}/{{.Name}}", args, func);
-    {% else %}
+    {{- else }}
     {{$return}} value{ {{qtDefault "" .Return}} };
-    {{.Name}}Async({{ .Params }})
+    {{.Name}}Async({{ qtVars .Params }})
         .then([&]({{$return}} result) {
             value = result;
         })
@@ -100,18 +100,17 @@ QtPromise::QPromise<{{$return}}> {{$class}}::{{.Name}}Async({{qtParams "" .Param
     if(!m_node) {
         return QtPromise::QPromise<{{$return}}>::reject("not initialized");
     }
-    {{ if .Return.IsVoid }}
+    {{- if .Return.IsVoid }}
     m_node->invokeRemote("{{$module}}.{{$iface}}/{{.Name}}", json::array({
             {{ range $i, $e := .Params }}{{if $i}}, {{end}}
                 {{.Name}}
             {{- end }}}));
     return QtPromise::QPromise<void>::resolve();
-    {{- else}}
+    {{- else }}
     return QtPromise::QPromise<{{$return}}>{[&](
         const QtPromise::QPromiseResolve<{{$return}}>& resolve) {
             m_node->invokeRemote("{{$module}}.{{$iface}}/{{.Name}}", json::array({
-            {{- range $i, $e := .Params }}
-                {{if $i}}, {{end}}{{.Name}}
+            {{- range $i, $e := .Params }}{{if $i}},{{end}}{{.Name}}
             {{- end }}}), [resolve](InvokeReplyArg arg) {                
                 const {{$return}}& value = arg.value.get<{{$return}}>();
                 resolve(value);
@@ -133,12 +132,12 @@ void {{$class}}::olinkOnSignal(std::string name, json args)
 {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
     std::string path = Name::pathFromName(name);
-{{- range .Signals }}
+{{- range .Interface.Signals }}
     if(path == "{{.Name}}") {
         emit {{.Name}}(
-{{- range $i, $e := .Params }}
-        {{if $i}}, {{end}}args[{{$i}}].get<{{qtReturn "" .}}>()
-{{- end }}
+{{- range $i, $e := .Params }}{{if $i}},{{end -}}
+    args[{{$i}}].get<{{qtReturn "" .}}>()
+{{- end -}}
         );   
         return;
     }

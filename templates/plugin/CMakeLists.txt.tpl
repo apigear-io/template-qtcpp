@@ -1,11 +1,11 @@
 {{- $module_id := printf "%s" (snake .Module.Name) }}
 {{- $MODULE_ID := printf "%s" (SNAKE .Module.Name) }}
 {{- $module_path := (path .Module.Name) }}
-{{- $SOURCES := printf "%s_SOURCES" $MODULE_ID -}}
+{{- $SOURCES := printf "PLUGIN_%s_SOURCES" $MODULE_ID -}}
 
 find_package(Qt5 REQUIRED COMPONENTS Core Qml WebSockets)
 
-set (PLUGIN_{{$SOURCES}}
+set ({{$SOURCES}}
     plugin.cpp
 )
 

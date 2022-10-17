@@ -1,8 +1,8 @@
-{% comment %} // Copyright (c) ApiGear UG 2020 {% endcomment -%}
+{{- /* Copyright (c) ApiGear UG 2020 */ -}}
 {{ cppGpl .Module }}
 #include <QtTest/QtTest>
 
-{{ $class := .Name }}
+{{- $class := .Interface.Name }}
 
 class Test{{$class}}: public QObject
 {
@@ -15,11 +15,10 @@ class Test{{$class}}: public QObject
     void cleanup();
 
 private slots:
-{{- range .Operations }}
+{{- range .Interface.Operations }}
     void {{.Name}}();
 {{- end }}
-{% comment %} line seperator {% endcomment %}
-{{- range .Properties }}
+{{- range .Interface.Properties }}
     void {{.Name}}();
 {{- end }}
 };

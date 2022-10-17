@@ -1,16 +1,17 @@
-{% comment %} // Copyright (c) ApiGear UG 2020 {% endcomment -%}
+{{- /* Copyright (c) ApiGear UG 2020 */ -}}
 {{ cppGpl .Module }}
-{{- $class := printf "%sHttp" .Name }}
+{{- $class := printf "Http%s" .Interface.Name }}
 {{- $module := .Module.Name }}
+{{- $iface := .Interface.Name }}
 #include "{{lower $class}}.h"
 
 #include "../api/agent.h"
 #include <QtQml>
 
 {{$class}}::{{$class}}(QNetworkAccessManager *network, QObject *parent)
-    : Abstract{{.Name}}(parent)
+    : Abstract{{.Interface.Name}}(parent)
     , m_network(network)
-{{- range .Properties }}
+{{- range .Interface.Properties }}
     , m_{{.Name}}({{qtDefault "" .}})
 {{- end }}
 {
@@ -20,14 +21,14 @@
 {
 }
 
-{{- range .Properties }}
+{{- range .Interface.Properties }}
 
 void {{$class}}::set{{Camel .Name}}({{qtParam "" .}})
 {
     if (m_{{.Name}} != {{.Name}}) {
         m_{{.Name}} = {{.Name}};
         emit {{.Name}}Changed({{.Name}});
-        {{.Name}}Agent::trace_state(this);
+        {{$iface}}Agent::trace_state(this);
     }
 }
 
@@ -37,7 +38,7 @@ void {{$class}}::set{{Camel .Name}}({{qtParam "" .}})
 }
 
 {{- end }}
-{{- range .Operations }}
+{{- range .Interface.Operations }}
 
 {{qtReturn "" .Return}} {{$class}}::{{.Name}}({{qtParams "" .Params}})
 {
@@ -47,11 +48,9 @@ void {{$class}}::set{{Camel .Name}}({{qtParam "" .}})
 {{- range  .Params }}
     payload["{{.Name}}"] = QJsonValue::fromVariant(QVariant::fromValue< {{qtReturn "" .}} >({{.Name}}));
 {{- end }}
-    QJsonObject reply = post("{{$module}}/{{.Interface.Name}}/{{.Name}}", payload);
+    QJsonObject reply = post("{{$module}}/{{$iface}}/{{.Name}}", payload);
     qDebug() << QJsonDocument(reply).toJson();
-
-    
-    {{.Name}}Agent::trace_{{.Name}}(this, "{{join ", " .Params }});
+    {{$iface}}Agent::trace_{{.Name}}(this, {{qtVars .Params }});
     return {{qtDefault "" .Return}};
 }
 {{- end }}
@@ -83,7 +82,7 @@ QJsonObject {{$class}}::post(const QString& path, const QJsonObject &payload)
 
 void {{$class}}::applyState(const QJsonObject &state)
 {
-  {{- range .Properties }}
+  {{- range .Interface.Properties }}
   if(state.contains("{{.Name}}")) {
     const QJsonValue &jsValue = state.value("{{.Name}}");
     set{{Camel .Name}}(jsValue.toVariant().value<{{qtReturn "" .}}>());

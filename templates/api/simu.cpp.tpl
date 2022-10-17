@@ -2,13 +2,12 @@
 #include "jsonrpc/types.h"
 #include "json.adapter.h"
 #include "../../shared/simulationclient.h"
-{{ $module := .Module.Name }}
+{{- $module := .Module.Name }}
 
 using namespace ApiGear::JSONRPC;
-
 {{- range .Module.Interfaces }}
 {{- $iface := .Name }}
-{{ $class := printf "%sSimulation" .Name }}
+{{- $class := printf "Simulation%s" .Name }}
 // ********************************************************************
 // {{$class}} simulation interface
 // ********************************************************************
@@ -43,9 +42,9 @@ using namespace ApiGear::JSONRPC;
 
     NotifyRequestFunc {{.Name}}Func = [this](NotifyRequestArg arg) { 
         emit {{.Name}}(
-        {{- range $i, $e := .Params }}
-            {{if $i}}, {{end}}arg.params["{{.Name}}"].get<{{qtReturn "" .}}>()
-        {{- end }}
+        {{- range $i, $e := .Params -}}
+            {{if $i}},{{end}}arg.params["{{.Name}}"].get<{{qtReturn "" .}}>()
+        {{- end -}}
         );
     };
     SimulationClient::instance()->onNotify("{{$module}}/{{$iface}}#{{.Name}}", {{.Name}}Func);

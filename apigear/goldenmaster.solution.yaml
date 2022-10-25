@@ -13,4 +13,4 @@ layers:
       - testbed.struct.module.yaml
     output: ../tmp
     template: ..
-    features: [ all ]
+    features: [all]

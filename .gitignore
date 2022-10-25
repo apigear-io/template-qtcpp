@@ -25,3 +25,4 @@ build*/
 
 tmp/
 testbed-apis/
+bin/

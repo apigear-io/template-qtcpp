@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"path/filepath"
@@ -11,28 +10,27 @@ import (
 )
 
 var (
-	tmpDir    string
 	goldenDir string
-	apisDir   string
-	binDir    string
-	tplDir    string
+	tmpDir    string
+	solFile   string
 	apigear   string
-	input     string
+	binDir    string
 )
 
 func init() {
-	wd, err := os.Getwd()
-	must(err)
-	binDir = filepath.Join(wd, "bin")
-	tmpDir = filepath.Join(wd, "tmp")
-	goldenDir = filepath.Join(wd, "goldenmaster")
-	apisDir = filepath.Join(wd, "testbed-apis")
-	tplDir = filepath.Join(wd)
-	apigear = filepath.Join(binDir, "apigear")
-	if runtime.GOOS == "windows" {
-		apigear = filepath.Join(binDir, "apigear.exe")
+	cwd, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
 	}
-	input = filepath.Join(apisDir, "apigear")
+	if runtime.GOOS == "windows" {
+		apigear = filepath.Join(cwd, "bin", "apigear.exe")
+	} else {
+		apigear = filepath.Join(cwd, "bin", "apigear")
+	}
+	tmpDir = filepath.Join(cwd, "tmp")
+	goldenDir = filepath.Join(cwd, "goldenmaster")
+	binDir = filepath.Join(cwd, "bin")
+	solFile = filepath.Join(cwd, "apigear", "goldenmaster.solution.yaml")
 }
 
 func must(err error) {
@@ -41,56 +39,43 @@ func must(err error) {
 	}
 }
 
-func gitClone(url, dir string) error {
-	return sh.RunV("git", "clone", "--depth=1", url, dir)
-}
-
-func runDiff(dir1, dir2 string) error {
-	return sh.RunV("git", "--no-pager", "diff", "--no-index", dir1, dir2)
-}
-
-func goInstall(pkg string) error {
+func goInstall(pkg string) {
 	env := map[string]string{
 		"GOBIN": binDir,
 	}
-	return sh.RunWithV(env, "go", "install", pkg)
+	must(sh.RunWithV(env, "go", "install", pkg))
 }
 
-func genX(target string) error {
-	fmt.Printf("using apigear: %s\n", apigear)
-	return sh.RunV(apigear, "g", "x", "-t", tplDir, "-o", target, "-i", input, "--force")
+func genSolution(sol string) {
+	must(sh.RunV(apigear, "generate", "solution", sol))
 }
 
 func rmDir(dir string) {
 	must(sh.Rm(dir))
 }
 
+func mvDir(src, dst string) {
+	must(os.Rename(src, dst))
+}
+
 // Install installs the apigear cli and testbed-apis.
 func Install() {
-	rmDir("testbed-apis")
 	goInstall("github.com/apigear-io/cli/cmd/apigear@latest")
-	gitClone("https://github.com/apigear-io/go-testbed-apis.git", "testbed-apis")
 }
 
-// Golden generates the golden master.
-func Golden() {
+func GenGolden() {
 	rmDir(goldenDir)
-	genX(goldenDir)
-}
-
-// Diff runs the generator and compares the output with the golden master.
-func Diff() {
 	rmDir(tmpDir)
-	genX(tmpDir)
-	runDiff(goldenDir, tmpDir)
+	genSolution(solFile)
+	mvDir(tmpDir, goldenDir)
 }
 
-func Gen() {
-	genX(tmpDir)
+func GenTest() {
+	rmDir(tmpDir)
+	genSolution(solFile)
 }
 
 // Clean removes all generated files.
 func Clean() {
 	rmDir(tmpDir)
-	rmDir(apisDir)
 }

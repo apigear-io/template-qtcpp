@@ -32,13 +32,13 @@ public:
     void setPropBool(const QList<bool>& propBool) override;
     QList<int> propInt() const override;
     void setPropInt(const QList<int>& propInt) override;
-    QList<qreal> propFloat() const override;
-    void setPropFloat(const QList<qreal>& propFloat) override;
+    QList<double> propFloat() const override;
+    void setPropFloat(const QList<double>& propFloat) override;
     QList<QString> propString() const override;
     void setPropString(const QList<QString>& propString) override;
     QList<bool> funcBool(const QList<bool>& paramBool) override;
     QList<int> funcInt(const QList<int>& paramInt) override;
-    QList<qreal> funcFloat(const QList<qreal>& paramFloat) override;
+    QList<double> funcFloat(const QList<double>& paramFloat) override;
     QList<QString> funcString(const QList<QString>& paramString) override;
 private:
     QJsonObject post(const QString& path, const QJsonObject &payload);
@@ -47,6 +47,6 @@ private:
     QNetworkAccessManager *m_network;
     QList<bool> m_propBool;
     QList<int> m_propInt;
-    QList<qreal> m_propFloat;
+    QList<double> m_propFloat;
     QList<QString> m_propString;
 };

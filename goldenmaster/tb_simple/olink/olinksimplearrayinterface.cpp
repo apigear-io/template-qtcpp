@@ -27,7 +27,7 @@ OLinkSimpleArrayInterface::OLinkSimpleArrayInterface(QObject *parent)
     : AbstractSimpleArrayInterface(parent)
     , m_propBool(QList<bool>())
     , m_propInt(QList<int>())
-    , m_propFloat(QList<qreal>())
+    , m_propFloat(QList<double>())
     , m_propString(QList<QString>())
     , m_isReady(false)
     , m_node(nullptr)
@@ -51,7 +51,7 @@ void OLinkSimpleArrayInterface::applyState(const json& fields)
         setPropIntLocal(fields["propInt"].get<QList<int>>());
     }
     if(fields.contains("propFloat")) {
-        setPropFloatLocal(fields["propFloat"].get<QList<qreal>>());
+        setPropFloatLocal(fields["propFloat"].get<QList<double>>());
     }
     if(fields.contains("propString")) {
         setPropStringLocal(fields["propString"].get<QList<QString>>());
@@ -106,7 +106,7 @@ QList<int> OLinkSimpleArrayInterface::propInt() const
     return m_propInt;
 }
 
-void OLinkSimpleArrayInterface::setPropFloat(const QList<qreal>& propFloat)
+void OLinkSimpleArrayInterface::setPropFloat(const QList<double>& propFloat)
 {
     qDebug() << Q_FUNC_INFO;
     if(!m_node) {
@@ -115,7 +115,7 @@ void OLinkSimpleArrayInterface::setPropFloat(const QList<qreal>& propFloat)
     m_node->setRemoteProperty("tb.simple.SimpleArrayInterface/propFloat", propFloat);
 }
 
-void OLinkSimpleArrayInterface::setPropFloatLocal(const QList<qreal>& propFloat)
+void OLinkSimpleArrayInterface::setPropFloatLocal(const QList<double>& propFloat)
 {
     qDebug() << Q_FUNC_INFO;
     if (m_propFloat != propFloat) {
@@ -125,7 +125,7 @@ void OLinkSimpleArrayInterface::setPropFloatLocal(const QList<qreal>& propFloat)
     }
 }
 
-QList<qreal> OLinkSimpleArrayInterface::propFloat() const
+QList<double> OLinkSimpleArrayInterface::propFloat() const
 {
     return m_propFloat;
 }
@@ -216,31 +216,31 @@ QtPromise::QPromise<QList<int>> OLinkSimpleArrayInterface::funcIntAsync(const QL
     };
 }
 
-QList<qreal> OLinkSimpleArrayInterface::funcFloat(const QList<qreal>& paramFloat)
+QList<double> OLinkSimpleArrayInterface::funcFloat(const QList<double>& paramFloat)
 {
     qDebug() << Q_FUNC_INFO;
     if(!m_node) {
-        return QList<qreal>();
+        return QList<double>();
     }
-    QList<qreal> value{ QList<qreal>() };
+    QList<double> value{ QList<double>() };
     funcFloatAsync(paramFloat)
-        .then([&](QList<qreal> result) {
+        .then([&](QList<double> result) {
             value = result;
         })
         .wait();
     return value;
 }
 
-QtPromise::QPromise<QList<qreal>> OLinkSimpleArrayInterface::funcFloatAsync(const QList<qreal>& paramFloat)
+QtPromise::QPromise<QList<double>> OLinkSimpleArrayInterface::funcFloatAsync(const QList<double>& paramFloat)
 {
     qDebug() << Q_FUNC_INFO;
     if(!m_node) {
-        return QtPromise::QPromise<QList<qreal>>::reject("not initialized");
+        return QtPromise::QPromise<QList<double>>::reject("not initialized");
     }
-    return QtPromise::QPromise<QList<qreal>>{[&](
-        const QtPromise::QPromiseResolve<QList<qreal>>& resolve) {
+    return QtPromise::QPromise<QList<double>>{[&](
+        const QtPromise::QPromiseResolve<QList<double>>& resolve) {
             m_node->invokeRemote("tb.simple.SimpleArrayInterface/funcFloat", json::array({paramFloat}), [resolve](InvokeReplyArg arg) {                
-                const QList<qreal>& value = arg.value.get<QList<qreal>>();
+                const QList<double>& value = arg.value.get<QList<double>>();
                 resolve(value);
             });
         }
@@ -297,7 +297,7 @@ void OLinkSimpleArrayInterface::olinkOnSignal(std::string name, json args)
         return;
     }
     if(path == "sigFloat") {
-        emit sigFloat(args[0].get<QList<qreal>>());   
+        emit sigFloat(args[0].get<QList<double>>());   
         return;
     }
     if(path == "sigString") {

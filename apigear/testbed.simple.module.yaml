@@ -62,17 +62,17 @@ interfaces:
       - name: funcInt
         params:
           - { name: paramInt, type: int, array: true }
-        
+
         return: { type: int, array: true }
       - name: funcFloat
         params:
           - { name: paramFloat, type: float, array: true }
-        
+
         return: { type: float, array: true }
       - name: funcString
         params:
           - { name: paramString, type: string, array: true }
-        
+
         return: { type: string, array: true }
     signals:
       - name: sigBool

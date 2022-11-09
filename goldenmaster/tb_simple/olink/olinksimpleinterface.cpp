@@ -51,7 +51,7 @@ void OLinkSimpleInterface::applyState(const json& fields)
         setPropIntLocal(fields["propInt"].get<int>());
     }
     if(fields.contains("propFloat")) {
-        setPropFloatLocal(fields["propFloat"].get<qreal>());
+        setPropFloatLocal(fields["propFloat"].get<double>());
     }
     if(fields.contains("propString")) {
         setPropStringLocal(fields["propString"].get<QString>());
@@ -106,7 +106,7 @@ int OLinkSimpleInterface::propInt() const
     return m_propInt;
 }
 
-void OLinkSimpleInterface::setPropFloat(qreal propFloat)
+void OLinkSimpleInterface::setPropFloat(double propFloat)
 {
     qDebug() << Q_FUNC_INFO;
     if(!m_node) {
@@ -115,7 +115,7 @@ void OLinkSimpleInterface::setPropFloat(qreal propFloat)
     m_node->setRemoteProperty("tb.simple.SimpleInterface/propFloat", propFloat);
 }
 
-void OLinkSimpleInterface::setPropFloatLocal(qreal propFloat)
+void OLinkSimpleInterface::setPropFloatLocal(double propFloat)
 {
     qDebug() << Q_FUNC_INFO;
     if (m_propFloat != propFloat) {
@@ -125,7 +125,7 @@ void OLinkSimpleInterface::setPropFloatLocal(qreal propFloat)
     }
 }
 
-qreal OLinkSimpleInterface::propFloat() const
+double OLinkSimpleInterface::propFloat() const
 {
     return m_propFloat;
 }
@@ -216,31 +216,31 @@ QtPromise::QPromise<int> OLinkSimpleInterface::funcIntAsync(int paramInt)
     };
 }
 
-qreal OLinkSimpleInterface::funcFloat(qreal paramFloat)
+double OLinkSimpleInterface::funcFloat(double paramFloat)
 {
     qDebug() << Q_FUNC_INFO;
     if(!m_node) {
         return 0.0;
     }
-    qreal value{ 0.0 };
+    double value{ 0.0 };
     funcFloatAsync(paramFloat)
-        .then([&](qreal result) {
+        .then([&](double result) {
             value = result;
         })
         .wait();
     return value;
 }
 
-QtPromise::QPromise<qreal> OLinkSimpleInterface::funcFloatAsync(qreal paramFloat)
+QtPromise::QPromise<double> OLinkSimpleInterface::funcFloatAsync(double paramFloat)
 {
     qDebug() << Q_FUNC_INFO;
     if(!m_node) {
-        return QtPromise::QPromise<qreal>::reject("not initialized");
+        return QtPromise::QPromise<double>::reject("not initialized");
     }
-    return QtPromise::QPromise<qreal>{[&](
-        const QtPromise::QPromiseResolve<qreal>& resolve) {
+    return QtPromise::QPromise<double>{[&](
+        const QtPromise::QPromiseResolve<double>& resolve) {
             m_node->invokeRemote("tb.simple.SimpleInterface/funcFloat", json::array({paramFloat}), [resolve](InvokeReplyArg arg) {                
-                const qreal& value = arg.value.get<qreal>();
+                const double& value = arg.value.get<double>();
                 resolve(value);
             });
         }
@@ -297,7 +297,7 @@ void OLinkSimpleInterface::olinkOnSignal(std::string name, json args)
         return;
     }
     if(path == "sigFloat") {
-        emit sigFloat(args[0].get<qreal>());   
+        emit sigFloat(args[0].get<double>());   
         return;
     }
     if(path == "sigString") {

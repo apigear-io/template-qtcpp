@@ -62,7 +62,7 @@ int HttpSimpleInterface::propInt() const
     return m_propInt;
 }
 
-void HttpSimpleInterface::setPropFloat(qreal propFloat)
+void HttpSimpleInterface::setPropFloat(double propFloat)
 {
     if (m_propFloat != propFloat) {
         m_propFloat = propFloat;
@@ -71,7 +71,7 @@ void HttpSimpleInterface::setPropFloat(qreal propFloat)
     }
 }
 
-qreal HttpSimpleInterface::propFloat() const
+double HttpSimpleInterface::propFloat() const
 {
     return m_propFloat;
 }
@@ -114,12 +114,12 @@ int HttpSimpleInterface::funcInt(int paramInt)
     return 0;
 }
 
-qreal HttpSimpleInterface::funcFloat(qreal paramFloat)
+double HttpSimpleInterface::funcFloat(double paramFloat)
 {
     qDebug() << Q_FUNC_INFO;
 
     QJsonObject payload;
-    payload["paramFloat"] = QJsonValue::fromVariant(QVariant::fromValue< qreal >(paramFloat));
+    payload["paramFloat"] = QJsonValue::fromVariant(QVariant::fromValue< double >(paramFloat));
     QJsonObject reply = post("tb.simple/SimpleInterface/funcFloat", payload);
     qDebug() << QJsonDocument(reply).toJson();
     SimpleInterfaceAgent::trace_funcFloat(this, paramFloat);
@@ -175,7 +175,7 @@ void HttpSimpleInterface::applyState(const QJsonObject &state)
   }
   if(state.contains("propFloat")) {
     const QJsonValue &jsValue = state.value("propFloat");
-    setPropFloat(jsValue.toVariant().value<qreal>());
+    setPropFloat(jsValue.toVariant().value<double>());
   }
   if(state.contains("propString")) {
     const QJsonValue &jsValue = state.value("propString");

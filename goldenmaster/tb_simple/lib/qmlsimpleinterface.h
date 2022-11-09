@@ -27,7 +27,7 @@ class TB_SIMPLE_LIB_EXPORT QmlSimpleInterface : public AbstractSimpleInterface
     Q_OBJECT
     Q_PROPERTY(bool propBool READ propBool NOTIFY propBoolChanged)
     Q_PROPERTY(int propInt READ propInt NOTIFY propIntChanged)
-    Q_PROPERTY(qreal propFloat READ propFloat NOTIFY propFloatChanged)
+    Q_PROPERTY(double propFloat READ propFloat NOTIFY propFloatChanged)
     Q_PROPERTY(QString propString READ propString NOTIFY propStringChanged)
 public:
     explicit QmlSimpleInterface(QObject *parent = nullptr);
@@ -36,23 +36,23 @@ public:
     void setPropBool(bool propBool) override;
     int propInt() const override;
     void setPropInt(int propInt) override;
-    qreal propFloat() const override;
-    void setPropFloat(qreal propFloat) override;
+    double propFloat() const override;
+    void setPropFloat(double propFloat) override;
     QString propString() const override;
     void setPropString(const QString& propString) override;
     Q_INVOKABLE bool funcBool(bool paramBool) override;
     Q_INVOKABLE int funcInt(int paramInt) override;
-    Q_INVOKABLE qreal funcFloat(qreal paramFloat) override;
+    Q_INVOKABLE double funcFloat(double paramFloat) override;
     Q_INVOKABLE QString funcString(const QString& paramString) override;
 
 Q_SIGNALS:
     void sigBool(bool paramBool);
     void sigInt(int paramInt);
-    void sigFloat(qreal paramFloat);
+    void sigFloat(double paramFloat);
     void sigString(const QString& paramString);
     void propBoolChanged(bool propBool);
     void propIntChanged(int propInt);
-    void propFloatChanged(qreal propFloat);
+    void propFloatChanged(double propFloat);
     void propStringChanged(const QString& propString);
 private:
 	AbstractSimpleInterface *m_obj;

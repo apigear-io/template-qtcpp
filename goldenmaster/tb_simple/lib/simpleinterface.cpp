@@ -64,7 +64,7 @@ int SimpleInterface::propInt() const
     return m_propInt;
 }
 
-void SimpleInterface::setPropFloat(qreal propFloat)
+void SimpleInterface::setPropFloat(double propFloat)
 {
     if (m_propFloat != propFloat) {
         m_propFloat = propFloat;
@@ -73,7 +73,7 @@ void SimpleInterface::setPropFloat(qreal propFloat)
     }
 }
 
-qreal SimpleInterface::propFloat() const
+double SimpleInterface::propFloat() const
 {
     return m_propFloat;
 }
@@ -106,7 +106,7 @@ int SimpleInterface::funcInt(int paramInt)
     return 0;
 }
 
-qreal SimpleInterface::funcFloat(qreal paramFloat)
+double SimpleInterface::funcFloat(double paramFloat)
 {
     qDebug() << Q_FUNC_INFO;
     SimpleInterfaceAgent::trace_funcFloat(this, paramFloat);

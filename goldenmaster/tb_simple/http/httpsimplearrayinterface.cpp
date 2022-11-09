@@ -25,7 +25,7 @@ HttpSimpleArrayInterface::HttpSimpleArrayInterface(QNetworkAccessManager *networ
     , m_network(network)
     , m_propBool(QList<bool>())
     , m_propInt(QList<int>())
-    , m_propFloat(QList<qreal>())
+    , m_propFloat(QList<double>())
     , m_propString(QList<QString>())
 {
 }
@@ -62,7 +62,7 @@ QList<int> HttpSimpleArrayInterface::propInt() const
     return m_propInt;
 }
 
-void HttpSimpleArrayInterface::setPropFloat(const QList<qreal>& propFloat)
+void HttpSimpleArrayInterface::setPropFloat(const QList<double>& propFloat)
 {
     if (m_propFloat != propFloat) {
         m_propFloat = propFloat;
@@ -71,7 +71,7 @@ void HttpSimpleArrayInterface::setPropFloat(const QList<qreal>& propFloat)
     }
 }
 
-QList<qreal> HttpSimpleArrayInterface::propFloat() const
+QList<double> HttpSimpleArrayInterface::propFloat() const
 {
     return m_propFloat;
 }
@@ -114,16 +114,16 @@ QList<int> HttpSimpleArrayInterface::funcInt(const QList<int>& paramInt)
     return QList<int>();
 }
 
-QList<qreal> HttpSimpleArrayInterface::funcFloat(const QList<qreal>& paramFloat)
+QList<double> HttpSimpleArrayInterface::funcFloat(const QList<double>& paramFloat)
 {
     qDebug() << Q_FUNC_INFO;
 
     QJsonObject payload;
-    payload["paramFloat"] = QJsonValue::fromVariant(QVariant::fromValue< QList<qreal> >(paramFloat));
+    payload["paramFloat"] = QJsonValue::fromVariant(QVariant::fromValue< QList<double> >(paramFloat));
     QJsonObject reply = post("tb.simple/SimpleArrayInterface/funcFloat", payload);
     qDebug() << QJsonDocument(reply).toJson();
     SimpleArrayInterfaceAgent::trace_funcFloat(this, paramFloat);
-    return QList<qreal>();
+    return QList<double>();
 }
 
 QList<QString> HttpSimpleArrayInterface::funcString(const QList<QString>& paramString)
@@ -175,7 +175,7 @@ void HttpSimpleArrayInterface::applyState(const QJsonObject &state)
   }
   if(state.contains("propFloat")) {
     const QJsonValue &jsValue = state.value("propFloat");
-    setPropFloat(jsValue.toVariant().value<QList<qreal>>());
+    setPropFloat(jsValue.toVariant().value<QList<double>>());
   }
   if(state.contains("propString")) {
     const QJsonValue &jsValue = state.value("propString");

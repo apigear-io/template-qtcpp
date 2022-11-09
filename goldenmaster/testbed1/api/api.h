@@ -102,18 +102,18 @@ public:
 class TESTBED1_EXPORT StructFloat
 {
     Q_GADGET
-    Q_PROPERTY(qreal fieldFloat READ fieldFloat WRITE setFieldFloat)
+    Q_PROPERTY(double fieldFloat READ fieldFloat WRITE setFieldFloat)
 
 public:
     StructFloat();
-    void setFieldFloat(qreal fieldFloat);
-    qreal fieldFloat() const;
+    void setFieldFloat(double fieldFloat);
+    double fieldFloat() const;
 
     bool operator==(const StructFloat &other) const;
     bool operator!=(const StructFloat &other) const;
 
 private:
-    qreal m_fieldFloat;
+    double m_fieldFloat;
 };
 
 Q_DECLARE_METATYPE(StructFloat)

@@ -40,7 +40,7 @@ inline void to_json(nlohmann::json& j, const StructInt& p) {
 
 inline void from_json(const nlohmann::json& j, StructFloat& p) {
     if(j.contains("fieldFloat")) {
-        p.setFieldFloat(j["fieldFloat"].get<qreal>());
+        p.setFieldFloat(j["fieldFloat"].get<double>());
     }
 }
 

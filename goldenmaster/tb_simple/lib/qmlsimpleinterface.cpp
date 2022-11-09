@@ -71,12 +71,12 @@ void QmlSimpleInterface::setPropInt(int propInt)
     return m_obj->setPropInt(propInt);
 }
 
-qreal QmlSimpleInterface::propFloat() const
+double QmlSimpleInterface::propFloat() const
 {
     return m_obj->propFloat();
 }
 
-void QmlSimpleInterface::setPropFloat(qreal propFloat)
+void QmlSimpleInterface::setPropFloat(double propFloat)
 {
     SimpleInterfaceAgent::capture_state(this);
     return m_obj->setPropFloat(propFloat);
@@ -107,7 +107,7 @@ int QmlSimpleInterface::funcInt(int paramInt)
     return m_obj->funcInt(paramInt);
 }
 
-qreal QmlSimpleInterface::funcFloat(qreal paramFloat)
+double QmlSimpleInterface::funcFloat(double paramFloat)
 {
     SimpleInterfaceAgent::trace_funcFloat(this, paramFloat);
 	

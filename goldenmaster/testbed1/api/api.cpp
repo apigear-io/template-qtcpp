@@ -133,12 +133,12 @@ StructFloat::StructFloat()
 {
 }
 
-void StructFloat::setFieldFloat(qreal fieldFloat)
+void StructFloat::setFieldFloat(double fieldFloat)
 {
   m_fieldFloat = fieldFloat;
 }
 
-qreal StructFloat::fieldFloat() const
+double StructFloat::fieldFloat() const
 {
   return m_fieldFloat;
 }
@@ -164,7 +164,7 @@ QDataStream &operator<<(QDataStream &stream, const StructFloat &obj)
 
 QDataStream &operator>>(QDataStream &stream, StructFloat &obj)
 {
-    qreal fieldFloatValue;
+    double fieldFloatValue;
     stream >> fieldFloatValue;
     obj.setFieldFloat(fieldFloatValue);
     return stream;

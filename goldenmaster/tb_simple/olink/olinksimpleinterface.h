@@ -40,9 +40,9 @@ public:
     int propInt() const override;
     void setPropInt(int propInt) override;
     void setPropIntLocal(int propInt);
-    qreal propFloat() const override;
-    void setPropFloat(qreal propFloat) override;
-    void setPropFloatLocal(qreal propFloat);
+    double propFloat() const override;
+    void setPropFloat(double propFloat) override;
+    void setPropFloatLocal(double propFloat);
     QString propString() const override;
     void setPropString(const QString& propString) override;
     void setPropStringLocal(const QString& propString);
@@ -50,8 +50,8 @@ public:
     QtPromise::QPromise<bool> funcBoolAsync(bool paramBool);
     int funcInt(int paramInt) override;
     QtPromise::QPromise<int> funcIntAsync(int paramInt);
-    qreal funcFloat(qreal paramFloat) override;
-    QtPromise::QPromise<qreal> funcFloatAsync(qreal paramFloat);
+    double funcFloat(double paramFloat) override;
+    QtPromise::QPromise<double> funcFloatAsync(double paramFloat);
     QString funcString(const QString& paramString) override;
     QtPromise::QPromise<QString> funcStringAsync(const QString& paramString);
 signals:
@@ -65,7 +65,7 @@ public:
 private:
     bool m_propBool;
     int m_propInt;
-    qreal m_propFloat;
+    double m_propFloat;
     QString m_propString;
     bool m_isReady;
     IClientNode *m_node;

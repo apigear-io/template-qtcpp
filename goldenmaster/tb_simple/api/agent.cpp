@@ -34,7 +34,7 @@ void SimpleInterfaceAgent::trace_funcInt(AbstractSimpleInterface* obj, int param
     };
     AgentClient::instance()->traceCall("tb.simple.SimpleInterface#funcInt", params_);
 }
-void SimpleInterfaceAgent::trace_funcFloat(AbstractSimpleInterface* obj, qreal paramFloat)
+void SimpleInterfaceAgent::trace_funcFloat(AbstractSimpleInterface* obj, double paramFloat)
 {
     const QVariantMap &params_ {
         { "paramFloat", QVariant::fromValue(paramFloat) },
@@ -82,7 +82,7 @@ void SimpleArrayInterfaceAgent::trace_funcInt(AbstractSimpleArrayInterface* obj,
     };
     AgentClient::instance()->traceCall("tb.simple.SimpleArrayInterface#funcInt", params_);
 }
-void SimpleArrayInterfaceAgent::trace_funcFloat(AbstractSimpleArrayInterface* obj, const QList<qreal>& paramFloat)
+void SimpleArrayInterfaceAgent::trace_funcFloat(AbstractSimpleArrayInterface* obj, const QList<double>& paramFloat)
 {
     const QVariantMap &params_ {
         { "paramFloat", QVariant::fromValue(paramFloat) },

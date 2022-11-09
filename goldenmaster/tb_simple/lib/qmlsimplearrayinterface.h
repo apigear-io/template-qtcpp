@@ -27,7 +27,7 @@ class TB_SIMPLE_LIB_EXPORT QmlSimpleArrayInterface : public AbstractSimpleArrayI
     Q_OBJECT
     Q_PROPERTY(QList<bool> propBool READ propBool NOTIFY propBoolChanged)
     Q_PROPERTY(QList<int> propInt READ propInt NOTIFY propIntChanged)
-    Q_PROPERTY(QList<qreal> propFloat READ propFloat NOTIFY propFloatChanged)
+    Q_PROPERTY(QList<double> propFloat READ propFloat NOTIFY propFloatChanged)
     Q_PROPERTY(QList<QString> propString READ propString NOTIFY propStringChanged)
 public:
     explicit QmlSimpleArrayInterface(QObject *parent = nullptr);
@@ -36,23 +36,23 @@ public:
     void setPropBool(const QList<bool>& propBool) override;
     QList<int> propInt() const override;
     void setPropInt(const QList<int>& propInt) override;
-    QList<qreal> propFloat() const override;
-    void setPropFloat(const QList<qreal>& propFloat) override;
+    QList<double> propFloat() const override;
+    void setPropFloat(const QList<double>& propFloat) override;
     QList<QString> propString() const override;
     void setPropString(const QList<QString>& propString) override;
     Q_INVOKABLE QList<bool> funcBool(const QList<bool>& paramBool) override;
     Q_INVOKABLE QList<int> funcInt(const QList<int>& paramInt) override;
-    Q_INVOKABLE QList<qreal> funcFloat(const QList<qreal>& paramFloat) override;
+    Q_INVOKABLE QList<double> funcFloat(const QList<double>& paramFloat) override;
     Q_INVOKABLE QList<QString> funcString(const QList<QString>& paramString) override;
 
 Q_SIGNALS:
     void sigBool(const QList<bool>& paramBool);
     void sigInt(const QList<int>& paramInt);
-    void sigFloat(const QList<qreal>& paramFloat);
+    void sigFloat(const QList<double>& paramFloat);
     void sigString(const QList<QString>& paramString);
     void propBoolChanged(const QList<bool>& propBool);
     void propIntChanged(const QList<int>& propInt);
-    void propFloatChanged(const QList<qreal>& propFloat);
+    void propFloatChanged(const QList<double>& propFloat);
     void propStringChanged(const QList<QString>& propString);
 private:
 	AbstractSimpleArrayInterface *m_obj;

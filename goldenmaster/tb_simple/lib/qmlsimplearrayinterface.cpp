@@ -71,12 +71,12 @@ void QmlSimpleArrayInterface::setPropInt(const QList<int>& propInt)
     return m_obj->setPropInt(propInt);
 }
 
-QList<qreal> QmlSimpleArrayInterface::propFloat() const
+QList<double> QmlSimpleArrayInterface::propFloat() const
 {
     return m_obj->propFloat();
 }
 
-void QmlSimpleArrayInterface::setPropFloat(const QList<qreal>& propFloat)
+void QmlSimpleArrayInterface::setPropFloat(const QList<double>& propFloat)
 {
     SimpleArrayInterfaceAgent::capture_state(this);
     return m_obj->setPropFloat(propFloat);
@@ -107,7 +107,7 @@ QList<int> QmlSimpleArrayInterface::funcInt(const QList<int>& paramInt)
     return m_obj->funcInt(paramInt);
 }
 
-QList<qreal> QmlSimpleArrayInterface::funcFloat(const QList<qreal>& paramFloat)
+QList<double> QmlSimpleArrayInterface::funcFloat(const QList<double>& paramFloat)
 {
     SimpleArrayInterfaceAgent::trace_funcFloat(this, paramFloat);
 	

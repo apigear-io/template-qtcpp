@@ -60,7 +60,7 @@ SimulationSimpleInterface::SimulationSimpleInterface(QObject *parent)
     SimulationClient::instance()->onNotify("tb.simple/SimpleInterface#sigInt", sigIntFunc);
 
     NotifyRequestFunc sigFloatFunc = [this](NotifyRequestArg arg) { 
-        emit sigFloat(arg.params["paramFloat"].get<qreal>());
+        emit sigFloat(arg.params["paramFloat"].get<double>());
     };
     SimulationClient::instance()->onNotify("tb.simple/SimpleInterface#sigFloat", sigFloatFunc);
 
@@ -100,7 +100,7 @@ int SimulationSimpleInterface::propInt() const
     return m_propInt;
 }
 
-void SimulationSimpleInterface::setPropFloat(qreal propFloat)
+void SimulationSimpleInterface::setPropFloat(double propFloat)
 {
     if (m_propFloat != propFloat) {
         m_propFloat = propFloat;
@@ -108,7 +108,7 @@ void SimulationSimpleInterface::setPropFloat(qreal propFloat)
     }
 }
 
-qreal SimulationSimpleInterface::propFloat() const
+double SimulationSimpleInterface::propFloat() const
 {
     return m_propFloat;
 }
@@ -146,7 +146,7 @@ int SimulationSimpleInterface::funcInt(int paramInt)
     return 0;
 }
 
-qreal SimulationSimpleInterface::funcFloat(qreal paramFloat)
+double SimulationSimpleInterface::funcFloat(double paramFloat)
 {
     qDebug() << "simu::" << Q_FUNC_INFO;
 
@@ -173,7 +173,7 @@ SimulationSimpleArrayInterface::SimulationSimpleArrayInterface(QObject *parent)
     : AbstractSimpleArrayInterface(parent)
     , m_propBool(QList<bool>())
     , m_propInt(QList<int>())
-    , m_propFloat(QList<qreal>())
+    , m_propFloat(QList<double>())
     , m_propString(QList<QString>())
 {
     NotifyRequestFunc serviceStateFunc = [this](NotifyRequestArg arg) {
@@ -221,7 +221,7 @@ SimulationSimpleArrayInterface::SimulationSimpleArrayInterface(QObject *parent)
     SimulationClient::instance()->onNotify("tb.simple/SimpleArrayInterface#sigInt", sigIntFunc);
 
     NotifyRequestFunc sigFloatFunc = [this](NotifyRequestArg arg) { 
-        emit sigFloat(arg.params["paramFloat"].get<QList<qreal>>());
+        emit sigFloat(arg.params["paramFloat"].get<QList<double>>());
     };
     SimulationClient::instance()->onNotify("tb.simple/SimpleArrayInterface#sigFloat", sigFloatFunc);
 
@@ -261,7 +261,7 @@ QList<int> SimulationSimpleArrayInterface::propInt() const
     return m_propInt;
 }
 
-void SimulationSimpleArrayInterface::setPropFloat(const QList<qreal>& propFloat)
+void SimulationSimpleArrayInterface::setPropFloat(const QList<double>& propFloat)
 {
     if (m_propFloat != propFloat) {
         m_propFloat = propFloat;
@@ -269,7 +269,7 @@ void SimulationSimpleArrayInterface::setPropFloat(const QList<qreal>& propFloat)
     }
 }
 
-QList<qreal> SimulationSimpleArrayInterface::propFloat() const
+QList<double> SimulationSimpleArrayInterface::propFloat() const
 {
     return m_propFloat;
 }
@@ -307,14 +307,14 @@ QList<int> SimulationSimpleArrayInterface::funcInt(const QList<int>& paramInt)
     return QList<int>();
 }
 
-QList<qreal> SimulationSimpleArrayInterface::funcFloat(const QList<qreal>& paramFloat)
+QList<double> SimulationSimpleArrayInterface::funcFloat(const QList<double>& paramFloat)
 {
     qDebug() << "simu::" << Q_FUNC_INFO;
 
     Params params;
     params["paramFloat"] = paramFloat;
     SimulationClient::instance()->doCall("tb.simple/SimpleArrayInterface", "funcFloat", params);
-    return QList<qreal>();
+    return QList<double>();
 }
 
 QList<QString> SimulationSimpleArrayInterface::funcString(const QList<QString>& paramString)

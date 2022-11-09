@@ -40,9 +40,9 @@ public:
     QList<int> propInt() const override;
     void setPropInt(const QList<int>& propInt) override;
     void setPropIntLocal(const QList<int>& propInt);
-    QList<qreal> propFloat() const override;
-    void setPropFloat(const QList<qreal>& propFloat) override;
-    void setPropFloatLocal(const QList<qreal>& propFloat);
+    QList<double> propFloat() const override;
+    void setPropFloat(const QList<double>& propFloat) override;
+    void setPropFloatLocal(const QList<double>& propFloat);
     QList<QString> propString() const override;
     void setPropString(const QList<QString>& propString) override;
     void setPropStringLocal(const QList<QString>& propString);
@@ -50,8 +50,8 @@ public:
     QtPromise::QPromise<QList<bool>> funcBoolAsync(const QList<bool>& paramBool);
     QList<int> funcInt(const QList<int>& paramInt) override;
     QtPromise::QPromise<QList<int>> funcIntAsync(const QList<int>& paramInt);
-    QList<qreal> funcFloat(const QList<qreal>& paramFloat) override;
-    QtPromise::QPromise<QList<qreal>> funcFloatAsync(const QList<qreal>& paramFloat);
+    QList<double> funcFloat(const QList<double>& paramFloat) override;
+    QtPromise::QPromise<QList<double>> funcFloatAsync(const QList<double>& paramFloat);
     QList<QString> funcString(const QList<QString>& paramString) override;
     QtPromise::QPromise<QList<QString>> funcStringAsync(const QList<QString>& paramString);
 signals:
@@ -65,7 +65,7 @@ public:
 private:
     QList<bool> m_propBool;
     QList<int> m_propInt;
-    QList<qreal> m_propFloat;
+    QList<double> m_propFloat;
     QList<QString> m_propString;
     bool m_isReady;
     IClientNode *m_node;

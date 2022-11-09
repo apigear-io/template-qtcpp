@@ -46,7 +46,7 @@ OLinkSimpleArrayInterfaceAdapter::OLinkSimpleArrayInterfaceAdapter(AbstractSimpl
             m_node->notifyPropertyChange("tb.simple.SimpleArrayInterface/propInt", propInt);
         }
     });
-    connect(m_impl, &AbstractSimpleArrayInterface::propFloatChanged, this, [=](const QList<qreal>& propFloat) {
+    connect(m_impl, &AbstractSimpleArrayInterface::propFloatChanged, this, [=](const QList<double>& propFloat) {
         if(m_node) {
             m_node->notifyPropertyChange("tb.simple.SimpleArrayInterface/propFloat", propFloat);
         }
@@ -68,7 +68,7 @@ OLinkSimpleArrayInterfaceAdapter::OLinkSimpleArrayInterfaceAdapter(AbstractSimpl
             m_node->notifySignal("tb.simple.SimpleArrayInterface/sigInt", args);
         }
     });
-    connect(m_impl, &AbstractSimpleArrayInterface::sigFloat, this, [=](const QList<qreal>& paramFloat) {
+    connect(m_impl, &AbstractSimpleArrayInterface::sigFloat, this, [=](const QList<double>& paramFloat) {
         if(m_node) {
             const json& args = { paramFloat };
             m_node->notifySignal("tb.simple.SimpleArrayInterface/sigFloat", args);
@@ -132,8 +132,8 @@ json OLinkSimpleArrayInterfaceAdapter::olinkInvoke(std::string name, json args) 
         return result;
     }
     if(path == "funcFloat") {
-        const QList<qreal>& paramFloat = args.at(0);
-        QList<qreal> result = m_impl->funcFloat(paramFloat);
+        const QList<double>& paramFloat = args.at(0);
+        QList<double> result = m_impl->funcFloat(paramFloat);
         return result;
     }
     if(path == "funcString") {
@@ -156,7 +156,7 @@ void OLinkSimpleArrayInterfaceAdapter::olinkSetProperty(std::string name, json v
         m_impl->setPropInt(propInt);
     }
     if(path == "propFloat") {
-        QList<qreal> propFloat = value.get<QList<qreal>>();
+        QList<double> propFloat = value.get<QList<double>>();
         m_impl->setPropFloat(propFloat);
     }
     if(path == "propString") {

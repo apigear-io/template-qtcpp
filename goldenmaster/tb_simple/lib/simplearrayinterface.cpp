@@ -27,7 +27,7 @@ SimpleArrayInterface::SimpleArrayInterface(QObject *parent)
     : AbstractSimpleArrayInterface(parent)
     , m_propBool(QList<bool>())
     , m_propInt(QList<int>())
-    , m_propFloat(QList<qreal>())
+    , m_propFloat(QList<double>())
     , m_propString(QList<QString>())
 {
 }
@@ -64,7 +64,7 @@ QList<int> SimpleArrayInterface::propInt() const
     return m_propInt;
 }
 
-void SimpleArrayInterface::setPropFloat(const QList<qreal>& propFloat)
+void SimpleArrayInterface::setPropFloat(const QList<double>& propFloat)
 {
     if (m_propFloat != propFloat) {
         m_propFloat = propFloat;
@@ -73,7 +73,7 @@ void SimpleArrayInterface::setPropFloat(const QList<qreal>& propFloat)
     }
 }
 
-QList<qreal> SimpleArrayInterface::propFloat() const
+QList<double> SimpleArrayInterface::propFloat() const
 {
     return m_propFloat;
 }
@@ -106,11 +106,11 @@ QList<int> SimpleArrayInterface::funcInt(const QList<int>& paramInt)
     return QList<int>();
 }
 
-QList<qreal> SimpleArrayInterface::funcFloat(const QList<qreal>& paramFloat)
+QList<double> SimpleArrayInterface::funcFloat(const QList<double>& paramFloat)
 {
     qDebug() << Q_FUNC_INFO;
     SimpleArrayInterfaceAgent::trace_funcFloat(this, paramFloat);
-    return QList<qreal>();
+    return QList<double>();
 }
 
 QList<QString> SimpleArrayInterface::funcString(const QList<QString>& paramString)

@@ -38,18 +38,18 @@ public:
     void setPropBool(bool propBool) override;
     int propInt() const override;
     void setPropInt(int propInt) override;
-    qreal propFloat() const override;
-    void setPropFloat(qreal propFloat) override;
+    double propFloat() const override;
+    void setPropFloat(double propFloat) override;
     QString propString() const override;
     void setPropString(const QString& propString) override;
     bool funcBool(bool paramBool) override;
     int funcInt(int paramInt) override;
-    qreal funcFloat(qreal paramFloat) override;
+    double funcFloat(double paramFloat) override;
     QString funcString(const QString& paramString) override;
 
 private:
     bool m_propBool;
     int m_propInt;
-    qreal m_propFloat;
+    double m_propFloat;
     QString m_propString;
 };

@@ -35,16 +35,16 @@ public:
     virtual ~OLinkSameEnum1InterfaceAdapter() override;
 public:
     void publishState();
-    json captureState();
-    void applyState(const json& state);
+    nlohmann::json captureState();
+    void applyState(const nlohmann::json& state);
     
 public: // IObjectSource interface
     std::string olinkObjectName() override;
-    json olinkInvoke(std::string name, json args) override;
-    void olinkSetProperty(std::string name, json value) override;
+    nlohmann::json olinkInvoke(std::string name, nlohmann::json args) override;
+    void olinkSetProperty(std::string name, nlohmann::json value) override;
     void olinkLinked(std::string name, IRemoteNode *node) override;
     void olinkUnlinked(std::string name) override;
-    json olinkCollectProperties() override;
+    nlohmann::json olinkCollectProperties() override;
 
 private:
     AbstractSameEnum1Interface* m_impl;

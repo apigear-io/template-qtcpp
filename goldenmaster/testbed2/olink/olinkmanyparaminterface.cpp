@@ -41,7 +41,7 @@ OLinkManyParamInterface::~OLinkManyParamInterface()
     ClientRegistry::get().removeObjectSink(this);
 }
 
-void OLinkManyParamInterface::applyState(const json& fields) 
+void OLinkManyParamInterface::applyState(const nlohmann::json& fields) 
 {
     qDebug() << Q_FUNC_INFO;
     if(fields.contains("prop1")) {
@@ -177,7 +177,7 @@ QtPromise::QPromise<int> OLinkManyParamInterface::func1Async(int param1)
     }
     return QtPromise::QPromise<int>{[&](
         const QtPromise::QPromiseResolve<int>& resolve) {
-            m_node->invokeRemote("testbed2.ManyParamInterface/func1", json::array({param1}), [resolve](InvokeReplyArg arg) {                
+            m_node->invokeRemote("testbed2.ManyParamInterface/func1", nlohmann::json::array({param1}), [resolve](InvokeReplyArg arg) {                
                 const int& value = arg.value.get<int>();
                 resolve(value);
             });
@@ -208,7 +208,7 @@ QtPromise::QPromise<int> OLinkManyParamInterface::func2Async(int param1, int par
     }
     return QtPromise::QPromise<int>{[&](
         const QtPromise::QPromiseResolve<int>& resolve) {
-            m_node->invokeRemote("testbed2.ManyParamInterface/func2", json::array({param1,param2}), [resolve](InvokeReplyArg arg) {                
+            m_node->invokeRemote("testbed2.ManyParamInterface/func2", nlohmann::json::array({param1,param2}), [resolve](InvokeReplyArg arg) {                
                 const int& value = arg.value.get<int>();
                 resolve(value);
             });
@@ -239,7 +239,7 @@ QtPromise::QPromise<int> OLinkManyParamInterface::func3Async(int param1, int par
     }
     return QtPromise::QPromise<int>{[&](
         const QtPromise::QPromiseResolve<int>& resolve) {
-            m_node->invokeRemote("testbed2.ManyParamInterface/func3", json::array({param1,param2,param3}), [resolve](InvokeReplyArg arg) {                
+            m_node->invokeRemote("testbed2.ManyParamInterface/func3", nlohmann::json::array({param1,param2,param3}), [resolve](InvokeReplyArg arg) {                
                 const int& value = arg.value.get<int>();
                 resolve(value);
             });
@@ -270,7 +270,7 @@ QtPromise::QPromise<int> OLinkManyParamInterface::func4Async(int param1, int par
     }
     return QtPromise::QPromise<int>{[&](
         const QtPromise::QPromiseResolve<int>& resolve) {
-            m_node->invokeRemote("testbed2.ManyParamInterface/func4", json::array({param1,param2,param3,param4}), [resolve](InvokeReplyArg arg) {                
+            m_node->invokeRemote("testbed2.ManyParamInterface/func4", nlohmann::json::array({param1,param2,param3,param4}), [resolve](InvokeReplyArg arg) {                
                 const int& value = arg.value.get<int>();
                 resolve(value);
             });
@@ -284,7 +284,7 @@ std::string OLinkManyParamInterface::olinkObjectName()
     return "testbed2.ManyParamInterface";
 }
 
-void OLinkManyParamInterface::olinkOnSignal(std::string name, json args)
+void OLinkManyParamInterface::olinkOnSignal(std::string name, nlohmann::json args)
 {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
     std::string path = Name::pathFromName(name);
@@ -306,13 +306,13 @@ void OLinkManyParamInterface::olinkOnSignal(std::string name, json args)
     }
 }
 
-void OLinkManyParamInterface::olinkOnPropertyChanged(std::string name, json value)
+void OLinkManyParamInterface::olinkOnPropertyChanged(std::string name, nlohmann::json value)
 {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
     std::string path = Name::pathFromName(name);
     applyState({ {path, value} });
 }
-void OLinkManyParamInterface::olinkOnInit(std::string name, json props, IClientNode *node)
+void OLinkManyParamInterface::olinkOnInit(std::string name, nlohmann::json props, IClientNode *node)
 {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
     m_isReady = true;

@@ -13,26 +13,6 @@ features:
             raw: true
           - source: "shared/simulationclient.cpp"
             raw: true
-          - source: thirdparty/jsonrpc/CMakeLists.txt
-            raw: true
-          - source: thirdparty/jsonrpc/jsonrpc.cpp
-            raw: true
-          - source: thirdparty/jsonrpc/jsonrpc.h
-            raw: true
-          - source: thirdparty/jsonrpc/rpcprotocol.cpp
-            raw: true
-          - source: thirdparty/jsonrpc/rpcprotocol.h
-            raw: true
-          - source: thirdparty/jsonrpc/stdoutlogger.h
-            raw: true
-          - source: thirdparty/jsonrpc/types.cpp
-            raw: true
-          - source: thirdparty/jsonrpc/types.h
-            raw: true
-          - source: thirdparty/nlohmann/CMakeLists.txt
-            raw: true
-          - source: thirdparty/nlohmann/json.hpp
-            raw: true
           - source: thirdparty/qtpromise/CMakeLists.txt
             raw: true
       - match: module

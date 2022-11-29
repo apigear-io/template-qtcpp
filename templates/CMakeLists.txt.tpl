@@ -7,6 +7,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
+set(JSON_BuildTests OFF)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -21,8 +22,6 @@ set(IMPORTS_PATH "${CMAKE_BINARY_DIR}/imports" CACHE STRING "Path where the plug
 
 include_directories(thirdparty)
 
-add_subdirectory(thirdparty/jsonrpc)
-add_subdirectory(thirdparty/nlohmann)
 add_subdirectory(thirdparty/qtpromise)
 add_subdirectory(thirdparty/objectlink)
 {{- range .System.Modules }}

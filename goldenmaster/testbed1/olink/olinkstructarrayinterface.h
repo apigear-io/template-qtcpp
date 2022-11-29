@@ -33,7 +33,7 @@ public:
     explicit OLinkStructArrayInterface(QObject *parent = nullptr);
     virtual ~OLinkStructArrayInterface() override;
 
-    void applyState(const json& fields);
+    void applyState(const nlohmann::json& fields);
     QList<StructBool> propBool() const override;
     void setPropBool(const QList<StructBool>& propBool) override;
     void setPropBoolLocal(const QList<StructBool>& propBool);
@@ -58,9 +58,9 @@ signals:
     void isReady();
 public:
     virtual std::string olinkObjectName() override;
-    virtual void olinkOnSignal(std::string name, json args) override;
-    virtual void olinkOnPropertyChanged(std::string name, json value) override;
-    virtual void olinkOnInit(std::string name, json props, IClientNode *node) override;
+    virtual void olinkOnSignal(std::string name, nlohmann::json args) override;
+    virtual void olinkOnPropertyChanged(std::string name, nlohmann::json value) override;
+    virtual void olinkOnInit(std::string name, nlohmann::json props, IClientNode *node) override;
     virtual void olinkOnRelease() override;
 private:
     QList<StructBool> m_propBool;

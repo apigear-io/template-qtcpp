@@ -33,7 +33,7 @@ public:
     explicit OLinkEnumInterface(QObject *parent = nullptr);
     virtual ~OLinkEnumInterface() override;
 
-    void applyState(const json& fields);
+    void applyState(const nlohmann::json& fields);
     Enum0::Enum0Enum prop0() const override;
     void setProp0(const Enum0::Enum0Enum prop0) override;
     void setProp0Local(const Enum0::Enum0Enum prop0);
@@ -58,9 +58,9 @@ signals:
     void isReady();
 public:
     virtual std::string olinkObjectName() override;
-    virtual void olinkOnSignal(std::string name, json args) override;
-    virtual void olinkOnPropertyChanged(std::string name, json value) override;
-    virtual void olinkOnInit(std::string name, json props, IClientNode *node) override;
+    virtual void olinkOnSignal(std::string name, nlohmann::json args) override;
+    virtual void olinkOnPropertyChanged(std::string name, nlohmann::json value) override;
+    virtual void olinkOnInit(std::string name, nlohmann::json props, IClientNode *node) override;
     virtual void olinkOnRelease() override;
 private:
     Enum0::Enum0Enum m_prop0;

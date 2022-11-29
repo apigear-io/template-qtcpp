@@ -22,7 +22,7 @@ public:
     explicit {{$class}}(QObject *parent = nullptr);
     virtual ~{{$class}}() override;
 
-    void applyState(const json& fields);
+    void applyState(const nlohmann::json& fields);
 
 {{- range .Interface.Properties }}
     {{qtReturn "" .}} {{.Name}}() const override;
@@ -38,9 +38,9 @@ signals:
     void isReady();
 public:
     virtual std::string olinkObjectName() override;
-    virtual void olinkOnSignal(std::string name, json args) override;
-    virtual void olinkOnPropertyChanged(std::string name, json value) override;
-    virtual void olinkOnInit(std::string name, json props, IClientNode *node) override;
+    virtual void olinkOnSignal(std::string name, nlohmann::json args) override;
+    virtual void olinkOnPropertyChanged(std::string name, nlohmann::json value) override;
+    virtual void olinkOnInit(std::string name, nlohmann::json props, IClientNode *node) override;
     virtual void olinkOnRelease() override;
 private:
 {{- range .Interface.Properties }}

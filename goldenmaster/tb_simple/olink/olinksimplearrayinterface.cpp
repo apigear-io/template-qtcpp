@@ -41,7 +41,7 @@ OLinkSimpleArrayInterface::~OLinkSimpleArrayInterface()
     ClientRegistry::get().removeObjectSink(this);
 }
 
-void OLinkSimpleArrayInterface::applyState(const json& fields) 
+void OLinkSimpleArrayInterface::applyState(const nlohmann::json& fields) 
 {
     qDebug() << Q_FUNC_INFO;
     if(fields.contains("propBool")) {
@@ -177,7 +177,7 @@ QtPromise::QPromise<QList<bool>> OLinkSimpleArrayInterface::funcBoolAsync(const 
     }
     return QtPromise::QPromise<QList<bool>>{[&](
         const QtPromise::QPromiseResolve<QList<bool>>& resolve) {
-            m_node->invokeRemote("tb.simple.SimpleArrayInterface/funcBool", json::array({paramBool}), [resolve](InvokeReplyArg arg) {                
+            m_node->invokeRemote("tb.simple.SimpleArrayInterface/funcBool", nlohmann::json::array({paramBool}), [resolve](InvokeReplyArg arg) {                
                 const QList<bool>& value = arg.value.get<QList<bool>>();
                 resolve(value);
             });
@@ -208,7 +208,7 @@ QtPromise::QPromise<QList<int>> OLinkSimpleArrayInterface::funcIntAsync(const QL
     }
     return QtPromise::QPromise<QList<int>>{[&](
         const QtPromise::QPromiseResolve<QList<int>>& resolve) {
-            m_node->invokeRemote("tb.simple.SimpleArrayInterface/funcInt", json::array({paramInt}), [resolve](InvokeReplyArg arg) {                
+            m_node->invokeRemote("tb.simple.SimpleArrayInterface/funcInt", nlohmann::json::array({paramInt}), [resolve](InvokeReplyArg arg) {                
                 const QList<int>& value = arg.value.get<QList<int>>();
                 resolve(value);
             });
@@ -239,7 +239,7 @@ QtPromise::QPromise<QList<qreal>> OLinkSimpleArrayInterface::funcFloatAsync(cons
     }
     return QtPromise::QPromise<QList<qreal>>{[&](
         const QtPromise::QPromiseResolve<QList<qreal>>& resolve) {
-            m_node->invokeRemote("tb.simple.SimpleArrayInterface/funcFloat", json::array({paramFloat}), [resolve](InvokeReplyArg arg) {                
+            m_node->invokeRemote("tb.simple.SimpleArrayInterface/funcFloat", nlohmann::json::array({paramFloat}), [resolve](InvokeReplyArg arg) {                
                 const QList<qreal>& value = arg.value.get<QList<qreal>>();
                 resolve(value);
             });
@@ -270,7 +270,7 @@ QtPromise::QPromise<QList<QString>> OLinkSimpleArrayInterface::funcStringAsync(c
     }
     return QtPromise::QPromise<QList<QString>>{[&](
         const QtPromise::QPromiseResolve<QList<QString>>& resolve) {
-            m_node->invokeRemote("tb.simple.SimpleArrayInterface/funcString", json::array({paramString}), [resolve](InvokeReplyArg arg) {                
+            m_node->invokeRemote("tb.simple.SimpleArrayInterface/funcString", nlohmann::json::array({paramString}), [resolve](InvokeReplyArg arg) {                
                 const QList<QString>& value = arg.value.get<QList<QString>>();
                 resolve(value);
             });
@@ -284,7 +284,7 @@ std::string OLinkSimpleArrayInterface::olinkObjectName()
     return "tb.simple.SimpleArrayInterface";
 }
 
-void OLinkSimpleArrayInterface::olinkOnSignal(std::string name, json args)
+void OLinkSimpleArrayInterface::olinkOnSignal(std::string name, nlohmann::json args)
 {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
     std::string path = Name::pathFromName(name);
@@ -306,13 +306,13 @@ void OLinkSimpleArrayInterface::olinkOnSignal(std::string name, json args)
     }
 }
 
-void OLinkSimpleArrayInterface::olinkOnPropertyChanged(std::string name, json value)
+void OLinkSimpleArrayInterface::olinkOnPropertyChanged(std::string name, nlohmann::json value)
 {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
     std::string path = Name::pathFromName(name);
     applyState({ {path, value} });
 }
-void OLinkSimpleArrayInterface::olinkOnInit(std::string name, json props, IClientNode *node)
+void OLinkSimpleArrayInterface::olinkOnInit(std::string name, nlohmann::json props, IClientNode *node)
 {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
     m_isReady = true;

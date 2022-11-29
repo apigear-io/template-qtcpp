@@ -38,7 +38,7 @@ OLinkSameEnum1Interface::~OLinkSameEnum1Interface()
     ClientRegistry::get().removeObjectSink(this);
 }
 
-void OLinkSameEnum1Interface::applyState(const json& fields) 
+void OLinkSameEnum1Interface::applyState(const nlohmann::json& fields) 
 {
     qDebug() << Q_FUNC_INFO;
     if(fields.contains("prop1")) {
@@ -93,7 +93,7 @@ QtPromise::QPromise<Enum1::Enum1Enum> OLinkSameEnum1Interface::func1Async(const 
     }
     return QtPromise::QPromise<Enum1::Enum1Enum>{[&](
         const QtPromise::QPromiseResolve<Enum1::Enum1Enum>& resolve) {
-            m_node->invokeRemote("tb.same2.SameEnum1Interface/func1", json::array({param1}), [resolve](InvokeReplyArg arg) {                
+            m_node->invokeRemote("tb.same2.SameEnum1Interface/func1", nlohmann::json::array({param1}), [resolve](InvokeReplyArg arg) {                
                 const Enum1::Enum1Enum& value = arg.value.get<Enum1::Enum1Enum>();
                 resolve(value);
             });
@@ -107,7 +107,7 @@ std::string OLinkSameEnum1Interface::olinkObjectName()
     return "tb.same2.SameEnum1Interface";
 }
 
-void OLinkSameEnum1Interface::olinkOnSignal(std::string name, json args)
+void OLinkSameEnum1Interface::olinkOnSignal(std::string name, nlohmann::json args)
 {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
     std::string path = Name::pathFromName(name);
@@ -117,13 +117,13 @@ void OLinkSameEnum1Interface::olinkOnSignal(std::string name, json args)
     }
 }
 
-void OLinkSameEnum1Interface::olinkOnPropertyChanged(std::string name, json value)
+void OLinkSameEnum1Interface::olinkOnPropertyChanged(std::string name, nlohmann::json value)
 {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
     std::string path = Name::pathFromName(name);
     applyState({ {path, value} });
 }
-void OLinkSameEnum1Interface::olinkOnInit(std::string name, json props, IClientNode *node)
+void OLinkSameEnum1Interface::olinkOnInit(std::string name, nlohmann::json props, IClientNode *node)
 {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
     m_isReady = true;

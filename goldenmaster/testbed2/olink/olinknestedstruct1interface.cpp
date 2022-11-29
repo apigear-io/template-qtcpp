@@ -38,7 +38,7 @@ OLinkNestedStruct1Interface::~OLinkNestedStruct1Interface()
     ClientRegistry::get().removeObjectSink(this);
 }
 
-void OLinkNestedStruct1Interface::applyState(const json& fields) 
+void OLinkNestedStruct1Interface::applyState(const nlohmann::json& fields) 
 {
     qDebug() << Q_FUNC_INFO;
     if(fields.contains("prop1")) {
@@ -93,7 +93,7 @@ QtPromise::QPromise<NestedStruct1> OLinkNestedStruct1Interface::func1Async(const
     }
     return QtPromise::QPromise<NestedStruct1>{[&](
         const QtPromise::QPromiseResolve<NestedStruct1>& resolve) {
-            m_node->invokeRemote("testbed2.NestedStruct1Interface/func1", json::array({param1}), [resolve](InvokeReplyArg arg) {                
+            m_node->invokeRemote("testbed2.NestedStruct1Interface/func1", nlohmann::json::array({param1}), [resolve](InvokeReplyArg arg) {                
                 const NestedStruct1& value = arg.value.get<NestedStruct1>();
                 resolve(value);
             });
@@ -107,7 +107,7 @@ std::string OLinkNestedStruct1Interface::olinkObjectName()
     return "testbed2.NestedStruct1Interface";
 }
 
-void OLinkNestedStruct1Interface::olinkOnSignal(std::string name, json args)
+void OLinkNestedStruct1Interface::olinkOnSignal(std::string name, nlohmann::json args)
 {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
     std::string path = Name::pathFromName(name);
@@ -117,13 +117,13 @@ void OLinkNestedStruct1Interface::olinkOnSignal(std::string name, json args)
     }
 }
 
-void OLinkNestedStruct1Interface::olinkOnPropertyChanged(std::string name, json value)
+void OLinkNestedStruct1Interface::olinkOnPropertyChanged(std::string name, nlohmann::json value)
 {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
     std::string path = Name::pathFromName(name);
     applyState({ {path, value} });
 }
-void OLinkNestedStruct1Interface::olinkOnInit(std::string name, json props, IClientNode *node)
+void OLinkNestedStruct1Interface::olinkOnInit(std::string name, nlohmann::json props, IClientNode *node)
 {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
     m_isReady = true;

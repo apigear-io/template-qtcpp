@@ -41,7 +41,7 @@ OLinkStructArrayInterface::~OLinkStructArrayInterface()
     ClientRegistry::get().removeObjectSink(this);
 }
 
-void OLinkStructArrayInterface::applyState(const json& fields) 
+void OLinkStructArrayInterface::applyState(const nlohmann::json& fields) 
 {
     qDebug() << Q_FUNC_INFO;
     if(fields.contains("propBool")) {
@@ -177,7 +177,7 @@ QtPromise::QPromise<StructBool> OLinkStructArrayInterface::funcBoolAsync(const Q
     }
     return QtPromise::QPromise<StructBool>{[&](
         const QtPromise::QPromiseResolve<StructBool>& resolve) {
-            m_node->invokeRemote("testbed1.StructArrayInterface/funcBool", json::array({paramBool}), [resolve](InvokeReplyArg arg) {                
+            m_node->invokeRemote("testbed1.StructArrayInterface/funcBool", nlohmann::json::array({paramBool}), [resolve](InvokeReplyArg arg) {                
                 const StructBool& value = arg.value.get<StructBool>();
                 resolve(value);
             });
@@ -208,7 +208,7 @@ QtPromise::QPromise<StructBool> OLinkStructArrayInterface::funcIntAsync(const QL
     }
     return QtPromise::QPromise<StructBool>{[&](
         const QtPromise::QPromiseResolve<StructBool>& resolve) {
-            m_node->invokeRemote("testbed1.StructArrayInterface/funcInt", json::array({paramInt}), [resolve](InvokeReplyArg arg) {                
+            m_node->invokeRemote("testbed1.StructArrayInterface/funcInt", nlohmann::json::array({paramInt}), [resolve](InvokeReplyArg arg) {                
                 const StructBool& value = arg.value.get<StructBool>();
                 resolve(value);
             });
@@ -239,7 +239,7 @@ QtPromise::QPromise<StructBool> OLinkStructArrayInterface::funcFloatAsync(const 
     }
     return QtPromise::QPromise<StructBool>{[&](
         const QtPromise::QPromiseResolve<StructBool>& resolve) {
-            m_node->invokeRemote("testbed1.StructArrayInterface/funcFloat", json::array({paramFloat}), [resolve](InvokeReplyArg arg) {                
+            m_node->invokeRemote("testbed1.StructArrayInterface/funcFloat", nlohmann::json::array({paramFloat}), [resolve](InvokeReplyArg arg) {                
                 const StructBool& value = arg.value.get<StructBool>();
                 resolve(value);
             });
@@ -270,7 +270,7 @@ QtPromise::QPromise<StructBool> OLinkStructArrayInterface::funcStringAsync(const
     }
     return QtPromise::QPromise<StructBool>{[&](
         const QtPromise::QPromiseResolve<StructBool>& resolve) {
-            m_node->invokeRemote("testbed1.StructArrayInterface/funcString", json::array({paramString}), [resolve](InvokeReplyArg arg) {                
+            m_node->invokeRemote("testbed1.StructArrayInterface/funcString", nlohmann::json::array({paramString}), [resolve](InvokeReplyArg arg) {                
                 const StructBool& value = arg.value.get<StructBool>();
                 resolve(value);
             });
@@ -284,7 +284,7 @@ std::string OLinkStructArrayInterface::olinkObjectName()
     return "testbed1.StructArrayInterface";
 }
 
-void OLinkStructArrayInterface::olinkOnSignal(std::string name, json args)
+void OLinkStructArrayInterface::olinkOnSignal(std::string name, nlohmann::json args)
 {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
     std::string path = Name::pathFromName(name);
@@ -306,13 +306,13 @@ void OLinkStructArrayInterface::olinkOnSignal(std::string name, json args)
     }
 }
 
-void OLinkStructArrayInterface::olinkOnPropertyChanged(std::string name, json value)
+void OLinkStructArrayInterface::olinkOnPropertyChanged(std::string name, nlohmann::json value)
 {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
     std::string path = Name::pathFromName(name);
     applyState({ {path, value} });
 }
-void OLinkStructArrayInterface::olinkOnInit(std::string name, json props, IClientNode *node)
+void OLinkStructArrayInterface::olinkOnInit(std::string name, nlohmann::json props, IClientNode *node)
 {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
     m_isReady = true;

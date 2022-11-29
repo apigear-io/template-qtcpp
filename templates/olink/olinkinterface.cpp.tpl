@@ -29,7 +29,7 @@ using namespace ApiGear;
     ClientRegistry::get().removeObjectSink(this);
 }
 
-void {{$class}}::applyState(const json& fields) 
+void {{$class}}::applyState(const nlohmann::json& fields) 
 {
     qDebug() << Q_FUNC_INFO;
 {{- range .Interface.Properties }}
@@ -79,7 +79,7 @@ void {{$class}}::set{{Camel .Name}}Local({{qtParam "" .}})
     }
     {{- if .Return.IsVoid }}
     InvokeReplyFunc func = [this](InvokeReplyArg arg) {};
-    const json &args = json::array({
+    const nlohmann::json &args = nlohmann::json::array({
         {{ .Params }}
     });
     m_node->invokeRemote("{{$module_id}}.{{$iface}}/{{.Name}}", args, func);
@@ -101,7 +101,7 @@ QtPromise::QPromise<{{$return}}> {{$class}}::{{.Name}}Async({{qtParams "" .Param
         return QtPromise::QPromise<{{$return}}>::reject("not initialized");
     }
     {{- if .Return.IsVoid }}
-    m_node->invokeRemote("{{$module}}.{{$iface}}/{{.Name}}", json::array({
+    m_node->invokeRemote("{{$module}}.{{$iface}}/{{.Name}}", nlohmann::json::array({
             {{ range $i, $e := .Params }}{{if $i}}, {{end}}
                 {{.Name}}
             {{- end }}}));
@@ -109,7 +109,7 @@ QtPromise::QPromise<{{$return}}> {{$class}}::{{.Name}}Async({{qtParams "" .Param
     {{- else }}
     return QtPromise::QPromise<{{$return}}>{[&](
         const QtPromise::QPromiseResolve<{{$return}}>& resolve) {
-            m_node->invokeRemote("{{$module}}.{{$iface}}/{{.Name}}", json::array({
+            m_node->invokeRemote("{{$module}}.{{$iface}}/{{.Name}}", nlohmann::json::array({
             {{- range $i, $e := .Params }}{{if $i}},{{end}}{{.Name}}
             {{- end }}}), [resolve](InvokeReplyArg arg) {                
                 const {{$return}}& value = arg.value.get<{{$return}}>();
@@ -128,7 +128,7 @@ std::string {{$class}}::olinkObjectName()
     return "{{$module}}.{{$iface}}";
 }
 
-void {{$class}}::olinkOnSignal(std::string name, json args)
+void {{$class}}::olinkOnSignal(std::string name, nlohmann::json args)
 {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
     std::string path = Name::pathFromName(name);
@@ -144,13 +144,13 @@ void {{$class}}::olinkOnSignal(std::string name, json args)
 {{- end }}
 }
 
-void {{$class}}::olinkOnPropertyChanged(std::string name, json value)
+void {{$class}}::olinkOnPropertyChanged(std::string name, nlohmann::json value)
 {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
     std::string path = Name::pathFromName(name);
     applyState({ {path, value} });
 }
-void {{$class}}::olinkOnInit(std::string name, json props, IClientNode *node)
+void {{$class}}::olinkOnInit(std::string name, nlohmann::json props, IClientNode *node)
 {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
     m_isReady = true;

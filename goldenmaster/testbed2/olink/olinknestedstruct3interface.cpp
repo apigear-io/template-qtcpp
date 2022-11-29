@@ -40,7 +40,7 @@ OLinkNestedStruct3Interface::~OLinkNestedStruct3Interface()
     ClientRegistry::get().removeObjectSink(this);
 }
 
-void OLinkNestedStruct3Interface::applyState(const json& fields) 
+void OLinkNestedStruct3Interface::applyState(const nlohmann::json& fields) 
 {
     qDebug() << Q_FUNC_INFO;
     if(fields.contains("prop1")) {
@@ -149,7 +149,7 @@ QtPromise::QPromise<NestedStruct1> OLinkNestedStruct3Interface::func1Async(const
     }
     return QtPromise::QPromise<NestedStruct1>{[&](
         const QtPromise::QPromiseResolve<NestedStruct1>& resolve) {
-            m_node->invokeRemote("testbed2.NestedStruct3Interface/func1", json::array({param1}), [resolve](InvokeReplyArg arg) {                
+            m_node->invokeRemote("testbed2.NestedStruct3Interface/func1", nlohmann::json::array({param1}), [resolve](InvokeReplyArg arg) {                
                 const NestedStruct1& value = arg.value.get<NestedStruct1>();
                 resolve(value);
             });
@@ -180,7 +180,7 @@ QtPromise::QPromise<NestedStruct1> OLinkNestedStruct3Interface::func2Async(const
     }
     return QtPromise::QPromise<NestedStruct1>{[&](
         const QtPromise::QPromiseResolve<NestedStruct1>& resolve) {
-            m_node->invokeRemote("testbed2.NestedStruct3Interface/func2", json::array({param1,param2}), [resolve](InvokeReplyArg arg) {                
+            m_node->invokeRemote("testbed2.NestedStruct3Interface/func2", nlohmann::json::array({param1,param2}), [resolve](InvokeReplyArg arg) {                
                 const NestedStruct1& value = arg.value.get<NestedStruct1>();
                 resolve(value);
             });
@@ -211,7 +211,7 @@ QtPromise::QPromise<NestedStruct1> OLinkNestedStruct3Interface::func3Async(const
     }
     return QtPromise::QPromise<NestedStruct1>{[&](
         const QtPromise::QPromiseResolve<NestedStruct1>& resolve) {
-            m_node->invokeRemote("testbed2.NestedStruct3Interface/func3", json::array({param1,param2,param3}), [resolve](InvokeReplyArg arg) {                
+            m_node->invokeRemote("testbed2.NestedStruct3Interface/func3", nlohmann::json::array({param1,param2,param3}), [resolve](InvokeReplyArg arg) {                
                 const NestedStruct1& value = arg.value.get<NestedStruct1>();
                 resolve(value);
             });
@@ -225,7 +225,7 @@ std::string OLinkNestedStruct3Interface::olinkObjectName()
     return "testbed2.NestedStruct3Interface";
 }
 
-void OLinkNestedStruct3Interface::olinkOnSignal(std::string name, json args)
+void OLinkNestedStruct3Interface::olinkOnSignal(std::string name, nlohmann::json args)
 {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
     std::string path = Name::pathFromName(name);
@@ -243,13 +243,13 @@ void OLinkNestedStruct3Interface::olinkOnSignal(std::string name, json args)
     }
 }
 
-void OLinkNestedStruct3Interface::olinkOnPropertyChanged(std::string name, json value)
+void OLinkNestedStruct3Interface::olinkOnPropertyChanged(std::string name, nlohmann::json value)
 {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
     std::string path = Name::pathFromName(name);
     applyState({ {path, value} });
 }
-void OLinkNestedStruct3Interface::olinkOnInit(std::string name, json props, IClientNode *node)
+void OLinkNestedStruct3Interface::olinkOnInit(std::string name, nlohmann::json props, IClientNode *node)
 {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
     m_isReady = true;

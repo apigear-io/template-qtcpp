@@ -33,7 +33,7 @@ public:
     explicit OLinkSameStruct2Interface(QObject *parent = nullptr);
     virtual ~OLinkSameStruct2Interface() override;
 
-    void applyState(const json& fields);
+    void applyState(const nlohmann::json& fields);
     Struct2 prop1() const override;
     void setProp1(const Struct2& prop1) override;
     void setProp1Local(const Struct2& prop1);
@@ -48,9 +48,9 @@ signals:
     void isReady();
 public:
     virtual std::string olinkObjectName() override;
-    virtual void olinkOnSignal(std::string name, json args) override;
-    virtual void olinkOnPropertyChanged(std::string name, json value) override;
-    virtual void olinkOnInit(std::string name, json props, IClientNode *node) override;
+    virtual void olinkOnSignal(std::string name, nlohmann::json args) override;
+    virtual void olinkOnPropertyChanged(std::string name, nlohmann::json value) override;
+    virtual void olinkOnInit(std::string name, nlohmann::json props, IClientNode *node) override;
     virtual void olinkOnRelease() override;
 private:
     Struct2 m_prop1;

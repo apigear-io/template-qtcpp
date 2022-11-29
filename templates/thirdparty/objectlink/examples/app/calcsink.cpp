@@ -52,7 +52,7 @@ std::string CalcSink::olinkObjectName() {
     return "demo.Calc";
 }
 
-void CalcSink::olinkOnSignal(std::string name, json args)
+void CalcSink::olinkOnSignal(std::string name, nlohmann::json args)
 {
     std::string path = Name::pathFromName(name);
     if(path == "maxReached") {
@@ -64,7 +64,7 @@ void CalcSink::olinkOnSignal(std::string name, json args)
         emit minReached(value);
     }
 }
-void CalcSink::olinkOnPropertyChanged(std::string name, json value)
+void CalcSink::olinkOnPropertyChanged(std::string name, nlohmann::json value)
 {
     qDebug() << "property changed: " << QString::fromStdString(name);
     std::string path = Name::pathFromName(name);
@@ -76,7 +76,7 @@ void CalcSink::olinkOnPropertyChanged(std::string name, json value)
         }
     }
 }
-void CalcSink::olinkOnInit(std::string name, json props, IClientNode *node)
+void CalcSink::olinkOnInit(std::string name, nlohmann::json props, IClientNode *node)
 {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
     m_name = name;

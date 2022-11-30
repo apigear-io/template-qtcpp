@@ -23,20 +23,21 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using namespace ApiGear;
 
-OLinkNestedStruct2Interface::OLinkNestedStruct2Interface(QObject *parent)
+OLinkNestedStruct2Interface::OLinkNestedStruct2Interface(ClientRegistry& registry, QObject *parent)
     : AbstractNestedStruct2Interface(parent)
     , m_prop1(NestedStruct1())
     , m_prop2(NestedStruct2())
     , m_isReady(false)
-    , m_node(nullptr)
+    , m_node()
+    , m_registry(registry)
 {        
     qDebug() << Q_FUNC_INFO;
-    m_node = ClientRegistry::get().addObjectSink(this);
+    m_node = m_registry.addObjectSink(this);
 }
 
 OLinkNestedStruct2Interface::~OLinkNestedStruct2Interface()
 {
-    ClientRegistry::get().removeObjectSink(this);
+    m_registry.removeObjectSink(this);
 }
 
 void OLinkNestedStruct2Interface::applyState(const nlohmann::json& fields) 

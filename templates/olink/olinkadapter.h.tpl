@@ -8,7 +8,7 @@
 #include <nlohmann/json.hpp>
 
 #include "../api/api.h"
-#include "objectlink/olink/remotenode.h"
+#include "olink/remotenode.h"
 
 using namespace ApiGear;
 using namespace ApiGear::ObjectLink;
@@ -17,7 +17,7 @@ class {{$class}} : public QObject, public IObjectSource
 {
     Q_OBJECT
 public:
-    explicit {{$class}}(Abstract{{.Interface.Name}}* impl, QObject *parent = nullptr);
+    explicit {{$class}}(RemoteRegistry& registry, Abstract{{.Interface.Name}}* impl, QObject *parent = nullptr);
     virtual ~{{$class}}() override;
 public:
     void publishState();
@@ -34,5 +34,6 @@ public: // IObjectSource interface
 
 private:
     Abstract{{.Interface.Name}}* m_impl;
+    RemoteRegistry& m_registry;
     IRemoteNode *m_node;
 };

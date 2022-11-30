@@ -29,11 +29,12 @@ using namespace ApiGear::ObjectLink;
 
 
 
-OLinkHost::OLinkHost(QObject *parent)
+OLinkHost::OLinkHost(RemoteRegistry& registry, QObject *parent)
     : QObject(parent)
     , m_wss(new QWebSocketServer("olink", QWebSocketServer::NonSecureMode, this))
+    , m_registry(registry)
 {
-    RemoteRegistry::get().onLog(m_log.logFunc());
+    m_registry.onLog(m_log.logFunc());
 }
 
 OLinkHost::~OLinkHost()
@@ -64,6 +65,6 @@ void OLinkHost::onClosed()
 
 RemoteRegistry &OLinkHost::registry()
 {
-    return RemoteRegistry::get();
+    return m_registry;
 }
 

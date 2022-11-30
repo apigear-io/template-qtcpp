@@ -21,7 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <QtPromise>
 
 #include "../api/api.h"
-#include "objectlink/olink/clientnode.h"
+#include "olink/clientnode.h"
 
 using namespace ApiGear;
 using namespace ApiGear::ObjectLink;
@@ -30,7 +30,7 @@ class OLinkNestedStruct2Interface : public AbstractNestedStruct2Interface, publi
 {
     Q_OBJECT
 public:
-    explicit OLinkNestedStruct2Interface(QObject *parent = nullptr);
+    explicit OLinkNestedStruct2Interface(ClientRegistry& registry, QObject *parent = nullptr);
     virtual ~OLinkNestedStruct2Interface() override;
 
     void applyState(const nlohmann::json& fields);
@@ -57,4 +57,5 @@ private:
     NestedStruct2 m_prop2;
     bool m_isReady;
     IClientNode *m_node;
+    ClientRegistry& m_registry;
 };

@@ -23,7 +23,6 @@ set(IMPORTS_PATH "${CMAKE_BINARY_DIR}/imports" CACHE STRING "Path where the plug
 include_directories(thirdparty)
 
 add_subdirectory(thirdparty/qtpromise)
-add_subdirectory(thirdparty/objectlink)
 {{- range .System.Modules }}
 {{- $moduleId := snake .Name }}
 IF( IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/{{ $moduleId }}/api" )

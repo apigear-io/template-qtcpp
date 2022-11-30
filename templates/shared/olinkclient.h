@@ -3,8 +3,8 @@
 #include <QtCore>
 #include <QtWebSockets>
 
-#include "objectlink/olink/clientnode.h"
-#include "objectlink/olink/consolelogger.h"
+#include "olink/clientnode.h"
+#include "olink/consolelogger.h"
 
 using namespace ApiGear::ObjectLink;
 
@@ -32,4 +32,5 @@ private:
     ConsoleLogger m_logger;
     QUrl m_serverUrl;
     QTimer *m_retryTimer;
+    ClientRegistry& m_registry;
 };

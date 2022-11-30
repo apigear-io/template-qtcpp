@@ -23,22 +23,23 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using namespace ApiGear;
 
-OLinkStructInterface::OLinkStructInterface(QObject *parent)
+OLinkStructInterface::OLinkStructInterface(ClientRegistry& registry, QObject *parent)
     : AbstractStructInterface(parent)
     , m_propBool(StructBool())
     , m_propInt(StructInt())
     , m_propFloat(StructFloat())
     , m_propString(StructString())
     , m_isReady(false)
-    , m_node(nullptr)
+    , m_node()
+    , m_registry(registry)
 {        
     qDebug() << Q_FUNC_INFO;
-    m_node = ClientRegistry::get().addObjectSink(this);
+    m_node = m_registry.addObjectSink(this);
 }
 
 OLinkStructInterface::~OLinkStructInterface()
 {
-    ClientRegistry::get().removeObjectSink(this);
+    m_registry.removeObjectSink(this);
 }
 
 void OLinkStructInterface::applyState(const nlohmann::json& fields) 

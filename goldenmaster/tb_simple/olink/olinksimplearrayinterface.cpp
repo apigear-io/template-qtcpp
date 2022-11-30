@@ -23,22 +23,23 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using namespace ApiGear;
 
-OLinkSimpleArrayInterface::OLinkSimpleArrayInterface(QObject *parent)
+OLinkSimpleArrayInterface::OLinkSimpleArrayInterface(ClientRegistry& registry, QObject *parent)
     : AbstractSimpleArrayInterface(parent)
     , m_propBool(QList<bool>())
     , m_propInt(QList<int>())
     , m_propFloat(QList<qreal>())
     , m_propString(QList<QString>())
     , m_isReady(false)
-    , m_node(nullptr)
+    , m_node()
+    , m_registry(registry)
 {        
     qDebug() << Q_FUNC_INFO;
-    m_node = ClientRegistry::get().addObjectSink(this);
+    m_node = m_registry.addObjectSink(this);
 }
 
 OLinkSimpleArrayInterface::~OLinkSimpleArrayInterface()
 {
-    ClientRegistry::get().removeObjectSink(this);
+    m_registry.removeObjectSink(this);
 }
 
 void OLinkSimpleArrayInterface::applyState(const nlohmann::json& fields) 

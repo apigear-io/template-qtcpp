@@ -19,12 +19,13 @@ using namespace ApiGear::ObjectLink;
 
 using json = nlohmann::json;
 
-{{$class}}::{{$class}}(Abstract{{$iface}}* impl, QObject *parent)
+{{$class}}::{{$class}}(RemoteRegistry& registry, Abstract{{$iface}}* impl, QObject *parent)
     : QObject(parent)
     , m_impl(impl)
-    , m_node(nullptr)
+    , m_registry(registry)
+    , m_node()
 {
-    RemoteRegistry::get().addObjectSource(this);
+    m_registry.addObjectSource(this);
     
 {{- range .Interface.Properties }}
     connect(m_impl, &Abstract{{$iface}}::{{.Name}}Changed, this, [=]({{qtParam "" .}}) {
@@ -45,7 +46,7 @@ using json = nlohmann::json;
 
 {{$class}}::~{{$class}}()
 {
-    RemoteRegistry::get().removeObjectSource(this);
+    m_registry.removeObjectSource(this);
 }
 
 json {{$class}}::captureState()

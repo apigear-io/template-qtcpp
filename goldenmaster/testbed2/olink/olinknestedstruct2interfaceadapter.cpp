@@ -30,12 +30,13 @@ using namespace ApiGear::ObjectLink;
 
 using json = nlohmann::json;
 
-OLinkNestedStruct2InterfaceAdapter::OLinkNestedStruct2InterfaceAdapter(AbstractNestedStruct2Interface* impl, QObject *parent)
+OLinkNestedStruct2InterfaceAdapter::OLinkNestedStruct2InterfaceAdapter(RemoteRegistry& registry, AbstractNestedStruct2Interface* impl, QObject *parent)
     : QObject(parent)
     , m_impl(impl)
-    , m_node(nullptr)
+    , m_registry(registry)
+    , m_node()
 {
-    RemoteRegistry::get().addObjectSource(this);
+    m_registry.addObjectSource(this);
     connect(m_impl, &AbstractNestedStruct2Interface::prop1Changed, this, [=](const NestedStruct1& prop1) {
         if(m_node) {
             m_node->notifyPropertyChange("testbed2.NestedStruct2Interface/prop1", prop1);
@@ -62,7 +63,7 @@ OLinkNestedStruct2InterfaceAdapter::OLinkNestedStruct2InterfaceAdapter(AbstractN
 
 OLinkNestedStruct2InterfaceAdapter::~OLinkNestedStruct2InterfaceAdapter()
 {
-    RemoteRegistry::get().removeObjectSource(this);
+    m_registry.removeObjectSource(this);
 }
 
 json OLinkNestedStruct2InterfaceAdapter::captureState()

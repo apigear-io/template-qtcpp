@@ -12,21 +12,22 @@
 
 using namespace ApiGear;
 
-{{$class}}::{{$class}}(QObject *parent)
+{{$class}}::{{$class}}(ClientRegistry& registry, QObject *parent)
     : Abstract{{.Interface.Name}}(parent)
 {{- range .Interface.Properties }}
     , m_{{.Name}}({{qtDefault "" .}})
 {{- end }}
     , m_isReady(false)
-    , m_node(nullptr)
+    , m_node()
+    , m_registry(registry)
 {        
     qDebug() << Q_FUNC_INFO;
-    m_node = ClientRegistry::get().addObjectSink(this);
+    m_node = m_registry.addObjectSink(this);
 }
 
 {{$class}}::~{{$class}}()
 {
-    ClientRegistry::get().removeObjectSink(this);
+    m_registry.removeObjectSink(this);
 }
 
 void {{$class}}::applyState(const nlohmann::json& fields) 

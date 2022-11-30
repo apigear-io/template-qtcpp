@@ -120,45 +120,6 @@ features:
             raw: true
           - source: shared/olinkremote.cpp
             raw: true
-          - source: thirdparty/objectlink/src/CMakeLists.txt
-            target: thirdparty/objectlink/CMakeLists.txt
-            raw: true
-          - source: thirdparty/objectlink/src/olink/core/types.cpp
-            target: thirdparty/objectlink/olink/core/types.cpp
-            raw: true
-          - source: thirdparty/objectlink/src/olink/core/node.cpp
-            target: thirdparty/objectlink/olink/core/node.cpp
-            raw: true
-          - source: thirdparty/objectlink/src/olink/core/protocol.cpp
-            target: thirdparty/objectlink/olink/core/protocol.cpp
-            raw: true
-          - source: thirdparty/objectlink/src/olink/consolelogger.cpp
-            target: thirdparty/objectlink/olink/consolelogger.cpp
-            raw: true
-          - source: thirdparty/objectlink/src/olink/clientnode.cpp
-            target: thirdparty/objectlink/olink/clientnode.cpp
-            raw: true
-          - source: thirdparty/objectlink/src/olink/remotenode.cpp
-            target: thirdparty/objectlink/olink/remotenode.cpp
-            raw: true
-          - source: thirdparty/objectlink/src/olink/core/types.h
-            target: thirdparty/objectlink/olink/core/types.h
-            raw: true
-          - source: thirdparty/objectlink/src/olink/core/node.h
-            target: thirdparty/objectlink/olink/core/node.h
-            raw: true
-          - source: thirdparty/objectlink/src/olink/core/protocol.h
-            target: thirdparty/objectlink/olink/core/protocol.h
-            raw: true
-          - source: thirdparty/objectlink/src/olink/consolelogger.h
-            target: thirdparty/objectlink/olink/consolelogger.h
-            raw: true
-          - source: thirdparty/objectlink/src/olink/clientnode.h
-            target: thirdparty/objectlink/olink/clientnode.h
-            raw: true
-          - source: thirdparty/objectlink/src/olink/remotenode.h
-            target: thirdparty/objectlink/olink/remotenode.h
-            raw: true
       - match: module
         prefix: "{{snake .Module.Name}}/"
         documents:

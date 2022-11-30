@@ -23,22 +23,23 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using namespace ApiGear;
 
-OLinkManyParamInterface::OLinkManyParamInterface(QObject *parent)
+OLinkManyParamInterface::OLinkManyParamInterface(ClientRegistry& registry, QObject *parent)
     : AbstractManyParamInterface(parent)
     , m_prop1(0)
     , m_prop2(0)
     , m_prop3(0)
     , m_prop4(0)
     , m_isReady(false)
-    , m_node(nullptr)
+    , m_node()
+    , m_registry(registry)
 {        
     qDebug() << Q_FUNC_INFO;
-    m_node = ClientRegistry::get().addObjectSink(this);
+    m_node = m_registry.addObjectSink(this);
 }
 
 OLinkManyParamInterface::~OLinkManyParamInterface()
 {
-    ClientRegistry::get().removeObjectSink(this);
+    m_registry.removeObjectSink(this);
 }
 
 void OLinkManyParamInterface::applyState(const nlohmann::json& fields) 

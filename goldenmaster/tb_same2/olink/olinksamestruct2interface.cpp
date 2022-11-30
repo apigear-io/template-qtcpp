@@ -23,20 +23,21 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using namespace ApiGear;
 
-OLinkSameStruct2Interface::OLinkSameStruct2Interface(QObject *parent)
+OLinkSameStruct2Interface::OLinkSameStruct2Interface(ClientRegistry& registry, QObject *parent)
     : AbstractSameStruct2Interface(parent)
     , m_prop1(Struct2())
     , m_prop2(Struct2())
     , m_isReady(false)
-    , m_node(nullptr)
+    , m_node()
+    , m_registry(registry)
 {        
     qDebug() << Q_FUNC_INFO;
-    m_node = ClientRegistry::get().addObjectSink(this);
+    m_node = m_registry.addObjectSink(this);
 }
 
 OLinkSameStruct2Interface::~OLinkSameStruct2Interface()
 {
-    ClientRegistry::get().removeObjectSink(this);
+    m_registry.removeObjectSink(this);
 }
 
 void OLinkSameStruct2Interface::applyState(const nlohmann::json& fields) 

@@ -23,7 +23,6 @@ set(IMPORTS_PATH "${CMAKE_BINARY_DIR}/imports" CACHE STRING "Path where the plug
 include_directories(thirdparty)
 
 add_subdirectory(thirdparty/qtpromise)
-add_subdirectory(thirdparty/objectlink)
 IF( IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/testbed2/api" )
     add_subdirectory(testbed2/api)
 ENDIF()

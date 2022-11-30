@@ -22,7 +22,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <nlohmann/json.hpp>
 
 #include "../api/api.h"
-#include "objectlink/olink/remotenode.h"
+#include "olink/remotenode.h"
 
 using namespace ApiGear;
 using namespace ApiGear::ObjectLink;
@@ -31,7 +31,7 @@ class OLinkSameStruct2InterfaceAdapter : public QObject, public IObjectSource
 {
     Q_OBJECT
 public:
-    explicit OLinkSameStruct2InterfaceAdapter(AbstractSameStruct2Interface* impl, QObject *parent = nullptr);
+    explicit OLinkSameStruct2InterfaceAdapter(RemoteRegistry& registry, AbstractSameStruct2Interface* impl, QObject *parent = nullptr);
     virtual ~OLinkSameStruct2InterfaceAdapter() override;
 public:
     void publishState();
@@ -48,5 +48,6 @@ public: // IObjectSource interface
 
 private:
     AbstractSameStruct2Interface* m_impl;
+    RemoteRegistry& m_registry;
     IRemoteNode *m_node;
 };

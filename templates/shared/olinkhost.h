@@ -34,7 +34,7 @@ class OLinkHost :public QObject
 {
     Q_OBJECT
 public:
-    explicit OLinkHost(QObject *parent=nullptr);
+    explicit OLinkHost(RemoteRegistry& registry, QObject *parent=nullptr);
     virtual ~OLinkHost() override;
     void listen(const QString& host, int port);
     void onNewConnection();
@@ -46,4 +46,5 @@ public:
 private:
     QWebSocketServer* m_wss;
     ConsoleLogger m_log;
+    RemoteRegistry& m_registry;
 };

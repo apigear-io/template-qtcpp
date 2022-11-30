@@ -1,8 +1,9 @@
 #include "olinkfactory.h"
 #include "olinkenuminterface.h"
 
-OLinkFactory::OLinkFactory(QObject *parent)
+OLinkFactory::OLinkFactory(ApiGear::ObjectLink::ClientRegistry& registry, QObject *parent)
     : QObject(parent)
+    , m_registry(registry)
 {
     qDebug() << Q_FUNC_INFO;
 }
@@ -10,5 +11,5 @@ OLinkFactory::OLinkFactory(QObject *parent)
 AbstractEnumInterface* OLinkFactory::createEnumInterface(QObject *parent)
 {
     qDebug() << Q_FUNC_INFO;
-    return new OLinkEnumInterface(parent);
+    return new OLinkEnumInterface(m_registry, parent);
 }

@@ -23,22 +23,23 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using namespace ApiGear;
 
-OLinkEnumInterface::OLinkEnumInterface(QObject *parent)
+OLinkEnumInterface::OLinkEnumInterface(ClientRegistry& registry, QObject *parent)
     : AbstractEnumInterface(parent)
     , m_prop0(Enum0::value0)
     , m_prop1(Enum1::value1)
     , m_prop2(Enum2::value2)
     , m_prop3(Enum3::value3)
     , m_isReady(false)
-    , m_node(nullptr)
+    , m_node()
+    , m_registry(registry)
 {        
     qDebug() << Q_FUNC_INFO;
-    m_node = ClientRegistry::get().addObjectSink(this);
+    m_node = m_registry.addObjectSink(this);
 }
 
 OLinkEnumInterface::~OLinkEnumInterface()
 {
-    ClientRegistry::get().removeObjectSink(this);
+    m_registry.removeObjectSink(this);
 }
 
 void OLinkEnumInterface::applyState(const nlohmann::json& fields) 

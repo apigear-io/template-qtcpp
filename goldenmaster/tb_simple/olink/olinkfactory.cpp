@@ -2,8 +2,9 @@
 #include "olinksimpleinterface.h"
 #include "olinksimplearrayinterface.h"
 
-OLinkFactory::OLinkFactory(QObject *parent)
+OLinkFactory::OLinkFactory(ApiGear::ObjectLink::ClientRegistry& registry, QObject *parent)
     : QObject(parent)
+    , m_registry(registry)
 {
     qDebug() << Q_FUNC_INFO;
 }
@@ -11,11 +12,11 @@ OLinkFactory::OLinkFactory(QObject *parent)
 AbstractSimpleInterface* OLinkFactory::createSimpleInterface(QObject *parent)
 {
     qDebug() << Q_FUNC_INFO;
-    return new OLinkSimpleInterface(parent);
+    return new OLinkSimpleInterface(m_registry, parent);
 }
 
 AbstractSimpleArrayInterface* OLinkFactory::createSimpleArrayInterface(QObject *parent)
 {
     qDebug() << Q_FUNC_INFO;
-    return new OLinkSimpleArrayInterface(parent);
+    return new OLinkSimpleArrayInterface(m_registry, parent);
 }

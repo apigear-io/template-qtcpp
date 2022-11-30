@@ -30,12 +30,13 @@ using namespace ApiGear::ObjectLink;
 
 using json = nlohmann::json;
 
-OLinkSameEnum2InterfaceAdapter::OLinkSameEnum2InterfaceAdapter(AbstractSameEnum2Interface* impl, QObject *parent)
+OLinkSameEnum2InterfaceAdapter::OLinkSameEnum2InterfaceAdapter(RemoteRegistry& registry, AbstractSameEnum2Interface* impl, QObject *parent)
     : QObject(parent)
     , m_impl(impl)
-    , m_node(nullptr)
+    , m_registry(registry)
+    , m_node()
 {
-    RemoteRegistry::get().addObjectSource(this);
+    m_registry.addObjectSource(this);
     connect(m_impl, &AbstractSameEnum2Interface::prop1Changed, this, [=](const Enum1::Enum1Enum prop1) {
         if(m_node) {
             m_node->notifyPropertyChange("tb.same2.SameEnum2Interface/prop1", prop1);
@@ -62,7 +63,7 @@ OLinkSameEnum2InterfaceAdapter::OLinkSameEnum2InterfaceAdapter(AbstractSameEnum2
 
 OLinkSameEnum2InterfaceAdapter::~OLinkSameEnum2InterfaceAdapter()
 {
-    RemoteRegistry::get().removeObjectSource(this);
+    m_registry.removeObjectSource(this);
 }
 
 json OLinkSameEnum2InterfaceAdapter::captureState()

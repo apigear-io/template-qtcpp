@@ -30,12 +30,13 @@ using namespace ApiGear::ObjectLink;
 
 using json = nlohmann::json;
 
-OLinkEnumInterfaceAdapter::OLinkEnumInterfaceAdapter(AbstractEnumInterface* impl, QObject *parent)
+OLinkEnumInterfaceAdapter::OLinkEnumInterfaceAdapter(RemoteRegistry& registry, AbstractEnumInterface* impl, QObject *parent)
     : QObject(parent)
     , m_impl(impl)
-    , m_node(nullptr)
+    , m_registry(registry)
+    , m_node()
 {
-    RemoteRegistry::get().addObjectSource(this);
+    m_registry.addObjectSource(this);
     connect(m_impl, &AbstractEnumInterface::prop0Changed, this, [=](const Enum0::Enum0Enum prop0) {
         if(m_node) {
             m_node->notifyPropertyChange("tb.enum.EnumInterface/prop0", prop0);
@@ -84,7 +85,7 @@ OLinkEnumInterfaceAdapter::OLinkEnumInterfaceAdapter(AbstractEnumInterface* impl
 
 OLinkEnumInterfaceAdapter::~OLinkEnumInterfaceAdapter()
 {
-    RemoteRegistry::get().removeObjectSource(this);
+    m_registry.removeObjectSource(this);
 }
 
 json OLinkEnumInterfaceAdapter::captureState()

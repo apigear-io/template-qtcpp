@@ -2,14 +2,15 @@
 
 using namespace ApiGear::ObjectLink;
 
-OLinkClient::OLinkClient(QObject* parent)
+OLinkClient::OLinkClient(ClientRegistry& registry, QObject* parent)
     : QObject(parent)
     , m_socket(new QWebSocket(QString(), QWebSocketProtocol::VersionLatest, this))
     , m_retryTimer(new QTimer(this))
+    , m_registry(registry)
 {
     qDebug() << Q_FUNC_INFO;
     m_node.onLog(m_logger.logFunc());
-    ClientRegistry::get().onLog(m_logger.logFunc());
+    m_registry.onLog(m_logger.logFunc());
     connect(m_socket, &QWebSocket::connected, this, &OLinkClient::onConnected);
     connect(m_socket, &QWebSocket::disconnected, this, &OLinkClient::onDisconnected);
     connect(m_socket, &QWebSocket::textMessageReceived, this, &OLinkClient::handleTextMessage);

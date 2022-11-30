@@ -10,7 +10,7 @@
 #include <QtPromise>
 
 #include "../api/api.h"
-#include "objectlink/olink/clientnode.h"
+#include "olink/clientnode.h"
 
 using namespace ApiGear;
 using namespace ApiGear::ObjectLink;
@@ -19,7 +19,7 @@ class {{$class}} : public Abstract{{.Interface.Name}}, public IObjectSink
 {
     Q_OBJECT
 public:
-    explicit {{$class}}(QObject *parent = nullptr);
+    explicit {{$class}}(ClientRegistry& registry, QObject *parent = nullptr);
     virtual ~{{$class}}() override;
 
     void applyState(const nlohmann::json& fields);
@@ -48,4 +48,5 @@ private:
 {{- end }}
     bool m_isReady;
     IClientNode *m_node;
+    ClientRegistry& m_registry;
 };

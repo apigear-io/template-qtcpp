@@ -30,12 +30,13 @@ using namespace ApiGear::ObjectLink;
 
 using json = nlohmann::json;
 
-OLinkSameStruct1InterfaceAdapter::OLinkSameStruct1InterfaceAdapter(AbstractSameStruct1Interface* impl, QObject *parent)
+OLinkSameStruct1InterfaceAdapter::OLinkSameStruct1InterfaceAdapter(RemoteRegistry& registry, AbstractSameStruct1Interface* impl, QObject *parent)
     : QObject(parent)
     , m_impl(impl)
-    , m_node(nullptr)
+    , m_registry(registry)
+    , m_node()
 {
-    RemoteRegistry::get().addObjectSource(this);
+    m_registry.addObjectSource(this);
     connect(m_impl, &AbstractSameStruct1Interface::prop1Changed, this, [=](const Struct1& prop1) {
         if(m_node) {
             m_node->notifyPropertyChange("tb.same2.SameStruct1Interface/prop1", prop1);
@@ -51,7 +52,7 @@ OLinkSameStruct1InterfaceAdapter::OLinkSameStruct1InterfaceAdapter(AbstractSameS
 
 OLinkSameStruct1InterfaceAdapter::~OLinkSameStruct1InterfaceAdapter()
 {
-    RemoteRegistry::get().removeObjectSource(this);
+    m_registry.removeObjectSource(this);
 }
 
 json OLinkSameStruct1InterfaceAdapter::captureState()

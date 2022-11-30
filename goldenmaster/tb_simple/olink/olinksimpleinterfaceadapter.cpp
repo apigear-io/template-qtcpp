@@ -30,12 +30,13 @@ using namespace ApiGear::ObjectLink;
 
 using json = nlohmann::json;
 
-OLinkSimpleInterfaceAdapter::OLinkSimpleInterfaceAdapter(AbstractSimpleInterface* impl, QObject *parent)
+OLinkSimpleInterfaceAdapter::OLinkSimpleInterfaceAdapter(RemoteRegistry& registry, AbstractSimpleInterface* impl, QObject *parent)
     : QObject(parent)
     , m_impl(impl)
-    , m_node(nullptr)
+    , m_registry(registry)
+    , m_node()
 {
-    RemoteRegistry::get().addObjectSource(this);
+    m_registry.addObjectSource(this);
     connect(m_impl, &AbstractSimpleInterface::propBoolChanged, this, [=](bool propBool) {
         if(m_node) {
             m_node->notifyPropertyChange("tb.simple.SimpleInterface/propBool", propBool);
@@ -84,7 +85,7 @@ OLinkSimpleInterfaceAdapter::OLinkSimpleInterfaceAdapter(AbstractSimpleInterface
 
 OLinkSimpleInterfaceAdapter::~OLinkSimpleInterfaceAdapter()
 {
-    RemoteRegistry::get().removeObjectSource(this);
+    m_registry.removeObjectSource(this);
 }
 
 json OLinkSimpleInterfaceAdapter::captureState()

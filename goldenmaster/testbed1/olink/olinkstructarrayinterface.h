@@ -21,7 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <QtPromise>
 
 #include "../api/api.h"
-#include "objectlink/olink/clientnode.h"
+#include "olink/clientnode.h"
 
 using namespace ApiGear;
 using namespace ApiGear::ObjectLink;
@@ -30,7 +30,7 @@ class OLinkStructArrayInterface : public AbstractStructArrayInterface, public IO
 {
     Q_OBJECT
 public:
-    explicit OLinkStructArrayInterface(QObject *parent = nullptr);
+    explicit OLinkStructArrayInterface(ClientRegistry& registry, QObject *parent = nullptr);
     virtual ~OLinkStructArrayInterface() override;
 
     void applyState(const nlohmann::json& fields);
@@ -69,4 +69,5 @@ private:
     QList<StructString> m_propString;
     bool m_isReady;
     IClientNode *m_node;
+    ClientRegistry& m_registry;
 };

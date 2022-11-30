@@ -30,12 +30,13 @@ using namespace ApiGear::ObjectLink;
 
 using json = nlohmann::json;
 
-OLinkStructArrayInterfaceAdapter::OLinkStructArrayInterfaceAdapter(AbstractStructArrayInterface* impl, QObject *parent)
+OLinkStructArrayInterfaceAdapter::OLinkStructArrayInterfaceAdapter(RemoteRegistry& registry, AbstractStructArrayInterface* impl, QObject *parent)
     : QObject(parent)
     , m_impl(impl)
-    , m_node(nullptr)
+    , m_registry(registry)
+    , m_node()
 {
-    RemoteRegistry::get().addObjectSource(this);
+    m_registry.addObjectSource(this);
     connect(m_impl, &AbstractStructArrayInterface::propBoolChanged, this, [=](const QList<StructBool>& propBool) {
         if(m_node) {
             m_node->notifyPropertyChange("testbed1.StructArrayInterface/propBool", propBool);
@@ -84,7 +85,7 @@ OLinkStructArrayInterfaceAdapter::OLinkStructArrayInterfaceAdapter(AbstractStruc
 
 OLinkStructArrayInterfaceAdapter::~OLinkStructArrayInterfaceAdapter()
 {
-    RemoteRegistry::get().removeObjectSource(this);
+    m_registry.removeObjectSource(this);
 }
 
 json OLinkStructArrayInterfaceAdapter::captureState()

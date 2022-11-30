@@ -21,7 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <QtPromise>
 
 #include "../api/api.h"
-#include "objectlink/olink/clientnode.h"
+#include "olink/clientnode.h"
 
 using namespace ApiGear;
 using namespace ApiGear::ObjectLink;
@@ -30,7 +30,7 @@ class OLinkEnumInterface : public AbstractEnumInterface, public IObjectSink
 {
     Q_OBJECT
 public:
-    explicit OLinkEnumInterface(QObject *parent = nullptr);
+    explicit OLinkEnumInterface(ClientRegistry& registry, QObject *parent = nullptr);
     virtual ~OLinkEnumInterface() override;
 
     void applyState(const nlohmann::json& fields);
@@ -69,4 +69,5 @@ private:
     Enum3::Enum3Enum m_prop3;
     bool m_isReady;
     IClientNode *m_node;
+    ClientRegistry& m_registry;
 };

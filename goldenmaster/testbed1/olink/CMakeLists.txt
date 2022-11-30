@@ -12,8 +12,20 @@ if(NOT nlohmann_json_FOUND)
   FetchContent_MakeAvailable(json)
 endif()
 
+find_package(olink_core)
+if(NOT olink_core_FOUND)
+  # pull objectlink-core-cpp as dependency
+  message(STATUS "objectlink-core-cpp NOT FOUND, fetching the git repository")
+  FetchContent_Declare(olink_core
+      GIT_REPOSITORY https://github.com/apigear-io/objectlink-core-cpp.git
+      GIT_TAG v0.1.4
+      GIT_SHALLOW TRUE
+      EXCLUDE_FROM_ALL FALSE
+  )
+  FetchContent_MakeAvailable(olink_core)
+endif()
+
 set (TESTBED1_OLINK_SOURCES
-    ../../shared/olinkclient.cpp
     olinkfactory.cpp
     olinkstructinterface.cpp
     olinkstructinterfaceadapter.cpp
@@ -21,7 +33,14 @@ set (TESTBED1_OLINK_SOURCES
     olinkstructarrayinterfaceadapter.cpp
 )
 
-# dynamic library
 add_library(testbed1_olink STATIC ${TESTBED1_OLINK_SOURCES})
-target_include_directories(testbed1_olink PRIVATE ../testbed1)
-target_link_libraries(testbed1_olink PRIVATE Qt5::Core Qt5::Qml Qt5::WebSockets testbed1_api PUBLIC nlohmann_json::nlohmann_json olink_core qtpromise)
+target_include_directories(testbed1_olink
+    PRIVATE 
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+    INTERFACE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../../>
+    $<INSTALL_INTERFACE:include/testbed1>
+)
+
+target_link_libraries(testbed1_olink PRIVATE olink_core Qt5::Core Qt5::Qml Qt5::WebSockets testbed1_api PUBLIC nlohmann_json::nlohmann_json qtpromise)

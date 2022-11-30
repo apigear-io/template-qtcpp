@@ -4,8 +4,9 @@
 #include "olinknestedstruct2interface.h"
 #include "olinknestedstruct3interface.h"
 
-OLinkFactory::OLinkFactory(QObject *parent)
+OLinkFactory::OLinkFactory(ApiGear::ObjectLink::ClientRegistry& registry, QObject *parent)
     : QObject(parent)
+    , m_registry(registry)
 {
     qDebug() << Q_FUNC_INFO;
 }
@@ -13,23 +14,23 @@ OLinkFactory::OLinkFactory(QObject *parent)
 AbstractManyParamInterface* OLinkFactory::createManyParamInterface(QObject *parent)
 {
     qDebug() << Q_FUNC_INFO;
-    return new OLinkManyParamInterface(parent);
+    return new OLinkManyParamInterface(m_registry, parent);
 }
 
 AbstractNestedStruct1Interface* OLinkFactory::createNestedStruct1Interface(QObject *parent)
 {
     qDebug() << Q_FUNC_INFO;
-    return new OLinkNestedStruct1Interface(parent);
+    return new OLinkNestedStruct1Interface(m_registry, parent);
 }
 
 AbstractNestedStruct2Interface* OLinkFactory::createNestedStruct2Interface(QObject *parent)
 {
     qDebug() << Q_FUNC_INFO;
-    return new OLinkNestedStruct2Interface(parent);
+    return new OLinkNestedStruct2Interface(m_registry, parent);
 }
 
 AbstractNestedStruct3Interface* OLinkFactory::createNestedStruct3Interface(QObject *parent)
 {
     qDebug() << Q_FUNC_INFO;
-    return new OLinkNestedStruct3Interface(parent);
+    return new OLinkNestedStruct3Interface(m_registry, parent);
 }

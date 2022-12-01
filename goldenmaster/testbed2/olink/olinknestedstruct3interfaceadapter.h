@@ -22,17 +22,21 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <nlohmann/json.hpp>
 
 #include "testbed2/api/api.h"
-#include "olink/remotenode.h"
+#include "olink/iobjectsource.h"
 
-using namespace ApiGear;
-using namespace ApiGear::ObjectLink;
+namespace ApiGear {
+namespace ObjectLink {
+class RemoteRegistry;
+class IRemoteNode;
+}}
 
-class OLinkNestedStruct3InterfaceAdapter : public QObject, public IObjectSource
+
+class OLinkNestedStruct3InterfaceAdapter : public QObject, public ApiGear::ObjectLink::IObjectSource
 {
     Q_OBJECT
 public:
-    explicit OLinkNestedStruct3InterfaceAdapter(RemoteRegistry& registry, AbstractNestedStruct3Interface* impl, QObject *parent = nullptr);
-    virtual ~OLinkNestedStruct3InterfaceAdapter() override;
+    explicit OLinkNestedStruct3InterfaceAdapter(ApiGear::ObjectLink::RemoteRegistry& registry, AbstractNestedStruct3Interface* impl, QObject *parent = nullptr);
+    virtual ~OLinkNestedStruct3InterfaceAdapter() = default;
 public:
     void publishState();
     nlohmann::json captureState();
@@ -40,14 +44,14 @@ public:
     
 public: // IObjectSource interface
     std::string olinkObjectName() override;
-    nlohmann::json olinkInvoke(std::string name, nlohmann::json args) override;
-    void olinkSetProperty(std::string name, nlohmann::json value) override;
-    void olinkLinked(std::string name, IRemoteNode *node) override;
-    void olinkUnlinked(std::string name) override;
+    nlohmann::json olinkInvoke(const std::string& methodId, const nlohmann::json& args) override;
+    void olinkSetProperty(const std::string& propertyId, const nlohmann::json& value) override;
+    void olinkLinked(const std::string& objectId, ApiGear::ObjectLink::IRemoteNode *node) override;
+    void olinkUnlinked(const std::string& objectId) override;
     nlohmann::json olinkCollectProperties() override;
 
 private:
     AbstractNestedStruct3Interface* m_impl;
-    RemoteRegistry& m_registry;
-    IRemoteNode *m_node;
+    ApiGear::ObjectLink::RemoteRegistry& m_registry;
+    ApiGear::ObjectLink::IRemoteNode *m_node;
 };

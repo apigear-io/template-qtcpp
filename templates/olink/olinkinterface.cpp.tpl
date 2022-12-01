@@ -8,26 +8,23 @@
 
 #include "{{snake .Module.Name}}/api/agent.h"
 #include "{{snake .Module.Name}}/api/json.adapter.h"
+
+#include "olink/iclientnode.h"
+
 #include <QtCore>
 
 using namespace ApiGear;
+using namespace ApiGear::ObjectLink;
 
-{{$class}}::{{$class}}(ClientRegistry& registry, QObject *parent)
+{{$class}}::{{$class}}(QObject *parent)
     : Abstract{{.Interface.Name}}(parent)
 {{- range .Interface.Properties }}
     , m_{{.Name}}({{qtDefault "" .}})
 {{- end }}
     , m_isReady(false)
-    , m_node()
-    , m_registry(registry)
+    , m_node(nullptr)
 {        
     qDebug() << Q_FUNC_INFO;
-    m_node = m_registry.addObjectSink(this);
-}
-
-{{$class}}::~{{$class}}()
-{
-    m_registry.removeObjectSink(this);
 }
 
 void {{$class}}::applyState(const nlohmann::json& fields) 
@@ -110,7 +107,8 @@ QtPromise::QPromise<{{$return}}> {{$class}}::{{.Name}}Async({{qtParams "" .Param
     {{- else }}
     return QtPromise::QPromise<{{$return}}>{[&](
         const QtPromise::QPromiseResolve<{{$return}}>& resolve) {
-            m_node->invokeRemote("{{$module}}.{{$iface}}/{{.Name}}", nlohmann::json::array({
+            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "{{.Name}}");
+            m_node->invokeRemote(operationId, nlohmann::json::array({
             {{- range $i, $e := .Params }}{{if $i}},{{end}}{{.Name}}
             {{- end }}}), [resolve](InvokeReplyArg arg) {                
                 const {{$return}}& value = arg.value.get<{{$return}}>();
@@ -129,12 +127,12 @@ std::string {{$class}}::olinkObjectName()
     return "{{$module}}.{{$iface}}";
 }
 
-void {{$class}}::olinkOnSignal(std::string name, nlohmann::json args)
+void {{$class}}::olinkOnSignal(const std::string& signalId, const nlohmann::json& args)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
-    std::string path = Name::pathFromName(name);
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(signalId);
+    auto signalName = Name::getMemberName(signalId);
 {{- range .Interface.Signals }}
-    if(path == "{{.Name}}") {
+    if(signalName == "{{.Name}}") {
         emit {{.Name}}(
 {{- range $i, $e := .Params }}{{if $i}},{{end -}}
     args[{{$i}}].get<{{qtReturn "" .}}>()
@@ -145,15 +143,15 @@ void {{$class}}::olinkOnSignal(std::string name, nlohmann::json args)
 {{- end }}
 }
 
-void {{$class}}::olinkOnPropertyChanged(std::string name, nlohmann::json value)
+void {{$class}}::olinkOnPropertyChanged(const std::string& propertyId, const nlohmann::json& value)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
-    std::string path = Name::pathFromName(name);
-    applyState({ {path, value} });
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(propertyId);
+    std::string propertyName = Name::getMemberName(propertyId);
+    applyState({ {propertyName, value} });
 }
-void {{$class}}::olinkOnInit(std::string name, nlohmann::json props, IClientNode *node)
+void {{$class}}::olinkOnInit(const std::string& objectId, const nlohmann::json& props, IClientNode *node)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
     m_isReady = true;
     m_node = node;
     applyState(props);

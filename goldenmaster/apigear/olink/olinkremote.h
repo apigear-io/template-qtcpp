@@ -5,13 +5,14 @@
 
 #include "olink/consolelogger.h"
 #include "olink_common.h"
-#include "olink/remotenode.h"
+
 #include <memory>
 
 namespace ApiGear {
 namespace ObjectLink {
 
 class RemoteRegistry;
+class RemoteNode;
 
 class OLINKQT_EXPORT OLinkRemote : public QObject
 {
@@ -23,9 +24,10 @@ public:
 private:
     void socketDisconnected();
     QWebSocket* m_socket;
-    RemoteNode m_node;
+    std::shared_ptr<RemoteNode> m_node;
     ConsoleLogger m_log;
     RemoteRegistry& m_registry;
+
 };
 
 }} // namespace ApiGear::ObjectLink

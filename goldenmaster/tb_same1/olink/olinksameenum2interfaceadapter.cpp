@@ -24,6 +24,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "tb_same1/api/agent.h"
 #include "tb_same1/api/json.adapter.h"
 
+#include "olink/remoteregistry.h"
+#include "olink/iremotenode.h"
+
 #include <QtCore>
 
 using namespace ApiGear::ObjectLink;
@@ -36,34 +39,48 @@ OLinkSameEnum2InterfaceAdapter::OLinkSameEnum2InterfaceAdapter(RemoteRegistry& r
     , m_registry(registry)
     , m_node()
 {
-    m_registry.addObjectSource(this);
-    connect(m_impl, &AbstractSameEnum2Interface::prop1Changed, this, [=](const Enum1::Enum1Enum prop1) {
-        if(m_node) {
-            m_node->notifyPropertyChange("tb.same1.SameEnum2Interface/prop1", prop1);
+    connect(m_impl, &AbstractSameEnum2Interface::prop1Changed, this,
+        [=](const Enum1::Enum1Enum prop1) {
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "prop1)");
+        for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
+            auto lockedNode = node.lock();
+            if(lockedNode) {
+                lockedNode->notifyPropertyChange(propertyId, prop1);
+            }
         }
     });
-    connect(m_impl, &AbstractSameEnum2Interface::prop2Changed, this, [=](const Enum2::Enum2Enum prop2) {
-        if(m_node) {
-            m_node->notifyPropertyChange("tb.same1.SameEnum2Interface/prop2", prop2);
+    connect(m_impl, &AbstractSameEnum2Interface::prop2Changed, this,
+        [=](const Enum2::Enum2Enum prop2) {
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "prop2)");
+        for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
+            auto lockedNode = node.lock();
+            if(lockedNode) {
+                lockedNode->notifyPropertyChange(propertyId, prop2);
+            }
         }
     });
-    connect(m_impl, &AbstractSameEnum2Interface::sig1, this, [=](const Enum1::Enum1Enum param1) {
-        if(m_node) {
-            const json& args = { param1 };
-            m_node->notifySignal("tb.same1.SameEnum2Interface/sig1", args);
-        }
+        connect(m_impl, &AbstractSameEnum2Interface::sig1, this,
+            [=](const Enum1::Enum1Enum param1) {
+                const nlohmann::json& args = { param1 };
+                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sig1)");
+                for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
+                    auto lockedNode = node.lock();
+                    if(lockedNode) {
+                        lockedNode->notifySignal(signalId, args);
+                    }
+                }
     });
-    connect(m_impl, &AbstractSameEnum2Interface::sig2, this, [=](const Enum1::Enum1Enum param1, const Enum2::Enum2Enum param2) {
-        if(m_node) {
-            const json& args = { param1, param2 };
-            m_node->notifySignal("tb.same1.SameEnum2Interface/sig2", args);
-        }
+        connect(m_impl, &AbstractSameEnum2Interface::sig2, this,
+            [=](const Enum1::Enum1Enum param1, const Enum2::Enum2Enum param2) {
+                const nlohmann::json& args = { param1, param2 };
+                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sig2)");
+                for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
+                    auto lockedNode = node.lock();
+                    if(lockedNode) {
+                        lockedNode->notifySignal(signalId, args);
+                    }
+                }
     });
-}
-
-OLinkSameEnum2InterfaceAdapter::~OLinkSameEnum2InterfaceAdapter()
-{
-    m_registry.removeObjectSource(this);
 }
 
 json OLinkSameEnum2InterfaceAdapter::captureState()
@@ -89,9 +106,9 @@ std::string OLinkSameEnum2InterfaceAdapter::olinkObjectName() {
     return "tb.same1.SameEnum2Interface";
 }
 
-json OLinkSameEnum2InterfaceAdapter::olinkInvoke(std::string name, json args) {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
-    std::string path = Name::pathFromName(name);
+json OLinkSameEnum2InterfaceAdapter::olinkInvoke(const std::string& methodId, const nlohmann::json& args){
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(methodId);
+    std::string path = Name::getMemberName(methodId);
     if(path == "func1") {
         const Enum1::Enum1Enum& param1 = args.at(0);
         Enum1::Enum1Enum result = m_impl->func1(param1);
@@ -106,9 +123,9 @@ json OLinkSameEnum2InterfaceAdapter::olinkInvoke(std::string name, json args) {
     return json();
 }
 
-void OLinkSameEnum2InterfaceAdapter::olinkSetProperty(std::string name, json value) {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
-    std::string path = Name::pathFromName(name);
+void OLinkSameEnum2InterfaceAdapter::olinkSetProperty(const std::string& propertyId, const nlohmann::json& value){
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(propertyId);
+    std::string path = Name::getMemberName(propertyId);
     if(path == "prop1") {
         Enum1::Enum1Enum prop1 = value.get<Enum1::Enum1Enum>();
         m_impl->setProp1(prop1);
@@ -119,14 +136,14 @@ void OLinkSameEnum2InterfaceAdapter::olinkSetProperty(std::string name, json val
     }    
 }
 
-void OLinkSameEnum2InterfaceAdapter::olinkLinked(std::string name, IRemoteNode *node) {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
+void OLinkSameEnum2InterfaceAdapter::olinkLinked(const std::string& objectId, IRemoteNode *node) {
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
     m_node = node;
 }
 
-void OLinkSameEnum2InterfaceAdapter::olinkUnlinked(std::string name)
+void OLinkSameEnum2InterfaceAdapter::olinkUnlinked(const std::string& objectId)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
     m_node = nullptr;
 }
 

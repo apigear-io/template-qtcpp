@@ -4,9 +4,8 @@
 #include "olink{{.Name|lower}}.h"
 {{- end }}
 
-OLinkFactory::OLinkFactory(ApiGear::ObjectLink::ClientRegistry& registry, QObject *parent)
+OLinkFactory::OLinkFactory(QObject *parent)
     : QObject(parent)
-    , m_registry(registry)
 {
     qDebug() << Q_FUNC_INFO;
 }
@@ -16,7 +15,7 @@ OLinkFactory::OLinkFactory(ApiGear::ObjectLink::ClientRegistry& registry, QObjec
 Abstract{{.Name}}* OLinkFactory::create{{Camel .Name}}(QObject *parent)
 {
     qDebug() << Q_FUNC_INFO;
-    return new OLink{{.Name}}(m_registry, parent);
+    return new OLink{{.Name}}(parent);
 }
 
 {{- end }}

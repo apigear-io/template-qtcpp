@@ -19,27 +19,24 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "testbed1/api/agent.h"
 #include "testbed1/api/json.adapter.h"
+
+#include "olink/iclientnode.h"
+
 #include <QtCore>
 
 using namespace ApiGear;
+using namespace ApiGear::ObjectLink;
 
-OLinkStructInterface::OLinkStructInterface(ClientRegistry& registry, QObject *parent)
+OLinkStructInterface::OLinkStructInterface(QObject *parent)
     : AbstractStructInterface(parent)
     , m_propBool(StructBool())
     , m_propInt(StructInt())
     , m_propFloat(StructFloat())
     , m_propString(StructString())
     , m_isReady(false)
-    , m_node()
-    , m_registry(registry)
+    , m_node(nullptr)
 {        
     qDebug() << Q_FUNC_INFO;
-    m_node = m_registry.addObjectSink(this);
-}
-
-OLinkStructInterface::~OLinkStructInterface()
-{
-    m_registry.removeObjectSink(this);
 }
 
 void OLinkStructInterface::applyState(const nlohmann::json& fields) 
@@ -178,7 +175,8 @@ QtPromise::QPromise<StructBool> OLinkStructInterface::funcBoolAsync(const Struct
     }
     return QtPromise::QPromise<StructBool>{[&](
         const QtPromise::QPromiseResolve<StructBool>& resolve) {
-            m_node->invokeRemote("testbed1.StructInterface/funcBool", nlohmann::json::array({paramBool}), [resolve](InvokeReplyArg arg) {                
+            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcBool");
+            m_node->invokeRemote(operationId, nlohmann::json::array({paramBool}), [resolve](InvokeReplyArg arg) {                
                 const StructBool& value = arg.value.get<StructBool>();
                 resolve(value);
             });
@@ -209,7 +207,8 @@ QtPromise::QPromise<StructBool> OLinkStructInterface::funcIntAsync(const StructI
     }
     return QtPromise::QPromise<StructBool>{[&](
         const QtPromise::QPromiseResolve<StructBool>& resolve) {
-            m_node->invokeRemote("testbed1.StructInterface/funcInt", nlohmann::json::array({paramInt}), [resolve](InvokeReplyArg arg) {                
+            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcInt");
+            m_node->invokeRemote(operationId, nlohmann::json::array({paramInt}), [resolve](InvokeReplyArg arg) {                
                 const StructBool& value = arg.value.get<StructBool>();
                 resolve(value);
             });
@@ -240,7 +239,8 @@ QtPromise::QPromise<StructFloat> OLinkStructInterface::funcFloatAsync(const Stru
     }
     return QtPromise::QPromise<StructFloat>{[&](
         const QtPromise::QPromiseResolve<StructFloat>& resolve) {
-            m_node->invokeRemote("testbed1.StructInterface/funcFloat", nlohmann::json::array({paramFloat}), [resolve](InvokeReplyArg arg) {                
+            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcFloat");
+            m_node->invokeRemote(operationId, nlohmann::json::array({paramFloat}), [resolve](InvokeReplyArg arg) {                
                 const StructFloat& value = arg.value.get<StructFloat>();
                 resolve(value);
             });
@@ -271,7 +271,8 @@ QtPromise::QPromise<StructString> OLinkStructInterface::funcStringAsync(const St
     }
     return QtPromise::QPromise<StructString>{[&](
         const QtPromise::QPromiseResolve<StructString>& resolve) {
-            m_node->invokeRemote("testbed1.StructInterface/funcString", nlohmann::json::array({paramString}), [resolve](InvokeReplyArg arg) {                
+            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcString");
+            m_node->invokeRemote(operationId, nlohmann::json::array({paramString}), [resolve](InvokeReplyArg arg) {                
                 const StructString& value = arg.value.get<StructString>();
                 resolve(value);
             });
@@ -285,37 +286,37 @@ std::string OLinkStructInterface::olinkObjectName()
     return "testbed1.StructInterface";
 }
 
-void OLinkStructInterface::olinkOnSignal(std::string name, nlohmann::json args)
+void OLinkStructInterface::olinkOnSignal(const std::string& signalId, const nlohmann::json& args)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
-    std::string path = Name::pathFromName(name);
-    if(path == "sigBool") {
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(signalId);
+    auto signalName = Name::getMemberName(signalId);
+    if(signalName == "sigBool") {
         emit sigBool(args[0].get<StructBool>());   
         return;
     }
-    if(path == "sigInt") {
+    if(signalName == "sigInt") {
         emit sigInt(args[0].get<StructInt>());   
         return;
     }
-    if(path == "sigFloat") {
+    if(signalName == "sigFloat") {
         emit sigFloat(args[0].get<StructFloat>());   
         return;
     }
-    if(path == "sigString") {
+    if(signalName == "sigString") {
         emit sigString(args[0].get<StructString>());   
         return;
     }
 }
 
-void OLinkStructInterface::olinkOnPropertyChanged(std::string name, nlohmann::json value)
+void OLinkStructInterface::olinkOnPropertyChanged(const std::string& propertyId, const nlohmann::json& value)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
-    std::string path = Name::pathFromName(name);
-    applyState({ {path, value} });
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(propertyId);
+    std::string propertyName = Name::getMemberName(propertyId);
+    applyState({ {propertyName, value} });
 }
-void OLinkStructInterface::olinkOnInit(std::string name, nlohmann::json props, IClientNode *node)
+void OLinkStructInterface::olinkOnInit(const std::string& objectId, const nlohmann::json& props, IClientNode *node)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
     m_isReady = true;
     m_node = node;
     applyState(props);

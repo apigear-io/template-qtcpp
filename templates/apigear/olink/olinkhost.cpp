@@ -24,6 +24,7 @@
 #include "olinkhost.h"
 
 #include "olinkremote.h"
+#include "olink/remoteregistry.h"
 
 using namespace ApiGear::ObjectLink;
 

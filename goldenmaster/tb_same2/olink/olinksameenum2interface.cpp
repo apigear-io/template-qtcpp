@@ -19,25 +19,22 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "tb_same2/api/agent.h"
 #include "tb_same2/api/json.adapter.h"
+
+#include "olink/iclientnode.h"
+
 #include <QtCore>
 
 using namespace ApiGear;
+using namespace ApiGear::ObjectLink;
 
-OLinkSameEnum2Interface::OLinkSameEnum2Interface(ClientRegistry& registry, QObject *parent)
+OLinkSameEnum2Interface::OLinkSameEnum2Interface(QObject *parent)
     : AbstractSameEnum2Interface(parent)
     , m_prop1(Enum1::value1)
     , m_prop2(Enum2::value1)
     , m_isReady(false)
-    , m_node()
-    , m_registry(registry)
+    , m_node(nullptr)
 {        
     qDebug() << Q_FUNC_INFO;
-    m_node = m_registry.addObjectSink(this);
-}
-
-OLinkSameEnum2Interface::~OLinkSameEnum2Interface()
-{
-    m_registry.removeObjectSink(this);
 }
 
 void OLinkSameEnum2Interface::applyState(const nlohmann::json& fields) 
@@ -122,7 +119,8 @@ QtPromise::QPromise<Enum1::Enum1Enum> OLinkSameEnum2Interface::func1Async(const 
     }
     return QtPromise::QPromise<Enum1::Enum1Enum>{[&](
         const QtPromise::QPromiseResolve<Enum1::Enum1Enum>& resolve) {
-            m_node->invokeRemote("tb.same2.SameEnum2Interface/func1", nlohmann::json::array({param1}), [resolve](InvokeReplyArg arg) {                
+            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func1");
+            m_node->invokeRemote(operationId, nlohmann::json::array({param1}), [resolve](InvokeReplyArg arg) {                
                 const Enum1::Enum1Enum& value = arg.value.get<Enum1::Enum1Enum>();
                 resolve(value);
             });
@@ -153,7 +151,8 @@ QtPromise::QPromise<Enum1::Enum1Enum> OLinkSameEnum2Interface::func2Async(const 
     }
     return QtPromise::QPromise<Enum1::Enum1Enum>{[&](
         const QtPromise::QPromiseResolve<Enum1::Enum1Enum>& resolve) {
-            m_node->invokeRemote("tb.same2.SameEnum2Interface/func2", nlohmann::json::array({param1,param2}), [resolve](InvokeReplyArg arg) {                
+            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func2");
+            m_node->invokeRemote(operationId, nlohmann::json::array({param1,param2}), [resolve](InvokeReplyArg arg) {                
                 const Enum1::Enum1Enum& value = arg.value.get<Enum1::Enum1Enum>();
                 resolve(value);
             });
@@ -167,29 +166,29 @@ std::string OLinkSameEnum2Interface::olinkObjectName()
     return "tb.same2.SameEnum2Interface";
 }
 
-void OLinkSameEnum2Interface::olinkOnSignal(std::string name, nlohmann::json args)
+void OLinkSameEnum2Interface::olinkOnSignal(const std::string& signalId, const nlohmann::json& args)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
-    std::string path = Name::pathFromName(name);
-    if(path == "sig1") {
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(signalId);
+    auto signalName = Name::getMemberName(signalId);
+    if(signalName == "sig1") {
         emit sig1(args[0].get<Enum1::Enum1Enum>());   
         return;
     }
-    if(path == "sig2") {
+    if(signalName == "sig2") {
         emit sig2(args[0].get<Enum1::Enum1Enum>(),args[1].get<Enum2::Enum2Enum>());   
         return;
     }
 }
 
-void OLinkSameEnum2Interface::olinkOnPropertyChanged(std::string name, nlohmann::json value)
+void OLinkSameEnum2Interface::olinkOnPropertyChanged(const std::string& propertyId, const nlohmann::json& value)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
-    std::string path = Name::pathFromName(name);
-    applyState({ {path, value} });
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(propertyId);
+    std::string propertyName = Name::getMemberName(propertyId);
+    applyState({ {propertyName, value} });
 }
-void OLinkSameEnum2Interface::olinkOnInit(std::string name, nlohmann::json props, IClientNode *node)
+void OLinkSameEnum2Interface::olinkOnInit(const std::string& objectId, const nlohmann::json& props, IClientNode *node)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
     m_isReady = true;
     m_node = node;
     applyState(props);

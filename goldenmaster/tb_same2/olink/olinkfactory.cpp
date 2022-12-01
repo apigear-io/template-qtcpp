@@ -4,9 +4,8 @@
 #include "olinksameenum1interface.h"
 #include "olinksameenum2interface.h"
 
-OLinkFactory::OLinkFactory(ApiGear::ObjectLink::ClientRegistry& registry, QObject *parent)
+OLinkFactory::OLinkFactory(QObject *parent)
     : QObject(parent)
-    , m_registry(registry)
 {
     qDebug() << Q_FUNC_INFO;
 }
@@ -14,23 +13,23 @@ OLinkFactory::OLinkFactory(ApiGear::ObjectLink::ClientRegistry& registry, QObjec
 AbstractSameStruct1Interface* OLinkFactory::createSameStruct1Interface(QObject *parent)
 {
     qDebug() << Q_FUNC_INFO;
-    return new OLinkSameStruct1Interface(m_registry, parent);
+    return new OLinkSameStruct1Interface(parent);
 }
 
 AbstractSameStruct2Interface* OLinkFactory::createSameStruct2Interface(QObject *parent)
 {
     qDebug() << Q_FUNC_INFO;
-    return new OLinkSameStruct2Interface(m_registry, parent);
+    return new OLinkSameStruct2Interface(parent);
 }
 
 AbstractSameEnum1Interface* OLinkFactory::createSameEnum1Interface(QObject *parent)
 {
     qDebug() << Q_FUNC_INFO;
-    return new OLinkSameEnum1Interface(m_registry, parent);
+    return new OLinkSameEnum1Interface(parent);
 }
 
 AbstractSameEnum2Interface* OLinkFactory::createSameEnum2Interface(QObject *parent)
 {
     qDebug() << Q_FUNC_INFO;
-    return new OLinkSameEnum2Interface(m_registry, parent);
+    return new OLinkSameEnum2Interface(parent);
 }

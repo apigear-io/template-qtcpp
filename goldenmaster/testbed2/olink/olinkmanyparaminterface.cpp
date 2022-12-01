@@ -19,27 +19,24 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "testbed2/api/agent.h"
 #include "testbed2/api/json.adapter.h"
+
+#include "olink/iclientnode.h"
+
 #include <QtCore>
 
 using namespace ApiGear;
+using namespace ApiGear::ObjectLink;
 
-OLinkManyParamInterface::OLinkManyParamInterface(ClientRegistry& registry, QObject *parent)
+OLinkManyParamInterface::OLinkManyParamInterface(QObject *parent)
     : AbstractManyParamInterface(parent)
     , m_prop1(0)
     , m_prop2(0)
     , m_prop3(0)
     , m_prop4(0)
     , m_isReady(false)
-    , m_node()
-    , m_registry(registry)
+    , m_node(nullptr)
 {        
     qDebug() << Q_FUNC_INFO;
-    m_node = m_registry.addObjectSink(this);
-}
-
-OLinkManyParamInterface::~OLinkManyParamInterface()
-{
-    m_registry.removeObjectSink(this);
 }
 
 void OLinkManyParamInterface::applyState(const nlohmann::json& fields) 
@@ -178,7 +175,8 @@ QtPromise::QPromise<int> OLinkManyParamInterface::func1Async(int param1)
     }
     return QtPromise::QPromise<int>{[&](
         const QtPromise::QPromiseResolve<int>& resolve) {
-            m_node->invokeRemote("testbed2.ManyParamInterface/func1", nlohmann::json::array({param1}), [resolve](InvokeReplyArg arg) {                
+            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func1");
+            m_node->invokeRemote(operationId, nlohmann::json::array({param1}), [resolve](InvokeReplyArg arg) {                
                 const int& value = arg.value.get<int>();
                 resolve(value);
             });
@@ -209,7 +207,8 @@ QtPromise::QPromise<int> OLinkManyParamInterface::func2Async(int param1, int par
     }
     return QtPromise::QPromise<int>{[&](
         const QtPromise::QPromiseResolve<int>& resolve) {
-            m_node->invokeRemote("testbed2.ManyParamInterface/func2", nlohmann::json::array({param1,param2}), [resolve](InvokeReplyArg arg) {                
+            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func2");
+            m_node->invokeRemote(operationId, nlohmann::json::array({param1,param2}), [resolve](InvokeReplyArg arg) {                
                 const int& value = arg.value.get<int>();
                 resolve(value);
             });
@@ -240,7 +239,8 @@ QtPromise::QPromise<int> OLinkManyParamInterface::func3Async(int param1, int par
     }
     return QtPromise::QPromise<int>{[&](
         const QtPromise::QPromiseResolve<int>& resolve) {
-            m_node->invokeRemote("testbed2.ManyParamInterface/func3", nlohmann::json::array({param1,param2,param3}), [resolve](InvokeReplyArg arg) {                
+            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func3");
+            m_node->invokeRemote(operationId, nlohmann::json::array({param1,param2,param3}), [resolve](InvokeReplyArg arg) {                
                 const int& value = arg.value.get<int>();
                 resolve(value);
             });
@@ -271,7 +271,8 @@ QtPromise::QPromise<int> OLinkManyParamInterface::func4Async(int param1, int par
     }
     return QtPromise::QPromise<int>{[&](
         const QtPromise::QPromiseResolve<int>& resolve) {
-            m_node->invokeRemote("testbed2.ManyParamInterface/func4", nlohmann::json::array({param1,param2,param3,param4}), [resolve](InvokeReplyArg arg) {                
+            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func4");
+            m_node->invokeRemote(operationId, nlohmann::json::array({param1,param2,param3,param4}), [resolve](InvokeReplyArg arg) {                
                 const int& value = arg.value.get<int>();
                 resolve(value);
             });
@@ -285,37 +286,37 @@ std::string OLinkManyParamInterface::olinkObjectName()
     return "testbed2.ManyParamInterface";
 }
 
-void OLinkManyParamInterface::olinkOnSignal(std::string name, nlohmann::json args)
+void OLinkManyParamInterface::olinkOnSignal(const std::string& signalId, const nlohmann::json& args)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
-    std::string path = Name::pathFromName(name);
-    if(path == "sig1") {
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(signalId);
+    auto signalName = Name::getMemberName(signalId);
+    if(signalName == "sig1") {
         emit sig1(args[0].get<int>());   
         return;
     }
-    if(path == "sig2") {
+    if(signalName == "sig2") {
         emit sig2(args[0].get<int>(),args[1].get<int>());   
         return;
     }
-    if(path == "sig3") {
+    if(signalName == "sig3") {
         emit sig3(args[0].get<int>(),args[1].get<int>(),args[2].get<int>());   
         return;
     }
-    if(path == "sig4") {
+    if(signalName == "sig4") {
         emit sig4(args[0].get<int>(),args[1].get<int>(),args[2].get<int>(),args[3].get<int>());   
         return;
     }
 }
 
-void OLinkManyParamInterface::olinkOnPropertyChanged(std::string name, nlohmann::json value)
+void OLinkManyParamInterface::olinkOnPropertyChanged(const std::string& propertyId, const nlohmann::json& value)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
-    std::string path = Name::pathFromName(name);
-    applyState({ {path, value} });
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(propertyId);
+    std::string propertyName = Name::getMemberName(propertyId);
+    applyState({ {propertyName, value} });
 }
-void OLinkManyParamInterface::olinkOnInit(std::string name, nlohmann::json props, IClientNode *node)
+void OLinkManyParamInterface::olinkOnInit(const std::string& objectId, const nlohmann::json& props, IClientNode *node)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
     m_isReady = true;
     m_node = node;
     applyState(props);

@@ -5,6 +5,8 @@
 
 #include "tb_same2/api/apifactory.h"
 
+namespace tb_same2 {
+
 class HttpFactory : public QObject, public ApiFactoryInterface
 {
 public:
@@ -16,3 +18,5 @@ public:
 private:
     QNetworkAccessManager *m_network;
 };
+
+} // namespace tb_same2

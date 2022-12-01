@@ -21,94 +21,94 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 /**
  *  will be called before the first test function is executed.
 */
-void TestSimpleInterface::initTestCase(){
+void TestTbSimpleSimpleInterface::initTestCase(){
 
 }
 
 /**
  *  will be called to create a global test data table.
 */
-void TestSimpleInterface::initTestCase_data(){
+void TestTbSimpleSimpleInterface::initTestCase_data(){
 
 }
 
 /**
  *  will be called after the last test function was executed.
 */
-void TestSimpleInterface::cleanupTestCase(){
+void TestTbSimpleSimpleInterface::cleanupTestCase(){
 
 }
 
 /**
  *  will be called before each test function is executed.
 */
-void TestSimpleInterface::init(){
+void TestTbSimpleSimpleInterface::init(){
 
 }
 
 /**
  *  will be called after every test function.
 */
-void TestSimpleInterface::cleanup(){
+void TestTbSimpleSimpleInterface::cleanup(){
 
 }
 /**
  *  Test operation funcBool
 */
-void TestSimpleInterface::funcBool(){
-    SimpleInterface testSimpleinterface;
+void TestTbSimpleSimpleInterface::funcBool(){
+    tb.simple::SimpleInterface testTbsimplesimpleinterface;
     // Do implement test here
 }
 /**
  *  Test operation funcInt
 */
-void TestSimpleInterface::funcInt(){
-    SimpleInterface testSimpleinterface;
+void TestTbSimpleSimpleInterface::funcInt(){
+    tb.simple::SimpleInterface testTbsimplesimpleinterface;
     // Do implement test here
 }
 /**
  *  Test operation funcFloat
 */
-void TestSimpleInterface::funcFloat(){
-    SimpleInterface testSimpleinterface;
+void TestTbSimpleSimpleInterface::funcFloat(){
+    tb.simple::SimpleInterface testTbsimplesimpleinterface;
     // Do implement test here
 }
 /**
  *  Test operation funcString
 */
-void TestSimpleInterface::funcString(){
-    SimpleInterface testSimpleinterface;
+void TestTbSimpleSimpleInterface::funcString(){
+    tb.simple::SimpleInterface testTbsimplesimpleinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propBool
 */
-void TestSimpleInterface::propBool(){
-    SimpleInterface testSimpleinterface;
+void TestTbSimpleSimpleInterface::propBool(){
+    tb.simple::SimpleInterface testTbsimplesimpleinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propInt
 */
-void TestSimpleInterface::propInt(){
-    SimpleInterface testSimpleinterface;
+void TestTbSimpleSimpleInterface::propInt(){
+    tb.simple::SimpleInterface testTbsimplesimpleinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propFloat
 */
-void TestSimpleInterface::propFloat(){
-    SimpleInterface testSimpleinterface;
+void TestTbSimpleSimpleInterface::propFloat(){
+    tb.simple::SimpleInterface testTbsimplesimpleinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propString
 */
-void TestSimpleInterface::propString(){
-    SimpleInterface testSimpleinterface;
+void TestTbSimpleSimpleInterface::propString(){
+    tb.simple::SimpleInterface testTbsimplesimpleinterface;
     // Do implement test here
 }
 
-QTEST_MAIN(TestSimpleInterface);
+QTEST_MAIN(TestTbSimpleSimpleInterface);
 
 

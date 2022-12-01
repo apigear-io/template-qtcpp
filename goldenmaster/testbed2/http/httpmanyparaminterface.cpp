@@ -20,6 +20,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "testbed2/api/agent.h"
 #include <QtQml>
 
+namespace testbed2 {
+
 HttpManyParamInterface::HttpManyParamInterface(QNetworkAccessManager *network, QObject *parent)
     : AbstractManyParamInterface(parent)
     , m_network(network)
@@ -188,3 +190,5 @@ void HttpManyParamInterface::applyState(const QJsonObject &state)
     setProp4(jsValue.toVariant().value<int>());
   }
 }
+
+} // namespace testbed2 

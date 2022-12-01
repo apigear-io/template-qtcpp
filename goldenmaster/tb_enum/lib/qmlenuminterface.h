@@ -22,6 +22,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "enuminterface.h"
 
+namespace tb_enum {
+
 class TB_ENUM_LIB_EXPORT QmlEnumInterface : public AbstractEnumInterface
 {
     Q_OBJECT
@@ -57,3 +59,5 @@ Q_SIGNALS:
 private:
 	AbstractEnumInterface *m_obj;
 };
+
+} //namespace tb_enum

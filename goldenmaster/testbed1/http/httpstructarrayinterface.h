@@ -22,6 +22,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "testbed1/api/api.h"
 
+namespace testbed1 {
+
 class HttpStructArrayInterface : public AbstractStructArrayInterface
 {
     Q_OBJECT
@@ -50,3 +52,5 @@ private:
     QList<StructFloat> m_propFloat;
     QList<StructString> m_propString;
 };
+
+} // namespace testbed1 

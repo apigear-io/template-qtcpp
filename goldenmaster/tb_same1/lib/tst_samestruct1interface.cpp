@@ -21,52 +21,52 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 /**
  *  will be called before the first test function is executed.
 */
-void TestSameStruct1Interface::initTestCase(){
+void TestTbSame1SameStruct1Interface::initTestCase(){
 
 }
 
 /**
  *  will be called to create a global test data table.
 */
-void TestSameStruct1Interface::initTestCase_data(){
+void TestTbSame1SameStruct1Interface::initTestCase_data(){
 
 }
 
 /**
  *  will be called after the last test function was executed.
 */
-void TestSameStruct1Interface::cleanupTestCase(){
+void TestTbSame1SameStruct1Interface::cleanupTestCase(){
 
 }
 
 /**
  *  will be called before each test function is executed.
 */
-void TestSameStruct1Interface::init(){
+void TestTbSame1SameStruct1Interface::init(){
 
 }
 
 /**
  *  will be called after every test function.
 */
-void TestSameStruct1Interface::cleanup(){
+void TestTbSame1SameStruct1Interface::cleanup(){
 
 }
 /**
  *  Test operation func1
 */
-void TestSameStruct1Interface::func1(){
-    SameStruct1Interface testSamestruct1interface;
+void TestTbSame1SameStruct1Interface::func1(){
+    tb.same1::SameStruct1Interface testTbsame1samestruct1interface;
     // Do implement test here
 }
 /**
  *  Test proptery prop1
 */
-void TestSameStruct1Interface::prop1(){
-    SameStruct1Interface testSamestruct1interface;
+void TestTbSame1SameStruct1Interface::prop1(){
+    tb.same1::SameStruct1Interface testTbsame1samestruct1interface;
     // Do implement test here
 }
 
-QTEST_MAIN(TestSameStruct1Interface);
+QTEST_MAIN(TestTbSame1SameStruct1Interface);
 
 

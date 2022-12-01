@@ -23,6 +23,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <QtQml>
 
+namespace tb_same2 {
+
 QmlSameStruct1Interface::QmlSameStruct1Interface(QObject *parent)
     : AbstractSameStruct1Interface(parent)
 {
@@ -54,3 +56,5 @@ Struct1 QmlSameStruct1Interface::func1(const Struct1& param1)
 	
     return m_obj->func1(param1);
 }
+
+} //namespace tb_same2

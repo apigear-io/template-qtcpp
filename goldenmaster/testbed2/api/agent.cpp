@@ -1,6 +1,8 @@
 #include "agent.h"
 #include "apigear/monitor/agentclient.h"
 
+namespace testbed2 {
+
 ManyParamInterfaceAgent::ManyParamInterfaceAgent()
 {
 }
@@ -154,3 +156,5 @@ void NestedStruct3InterfaceAgent::trace_func3(AbstractNestedStruct3Interface* ob
     };
     ApiGear::Monitor::AgentClient::instance()->traceCall("testbed2.NestedStruct3Interface#func3", params_);
 }
+
+} // namespace testbed2

@@ -28,6 +28,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #  define TESTBED2_LIB_EXPORT Q_DECL_IMPORT
 #endif
 
+namespace testbed2 {
+
 class TESTBED2_LIB_EXPORT ManyParamInterface : public AbstractManyParamInterface
 {
     Q_OBJECT
@@ -53,3 +55,4 @@ private:
     int m_prop3;
     int m_prop4;
 };
+} //namespace testbed2

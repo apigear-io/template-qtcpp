@@ -23,6 +23,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <QtQml>
 
+namespace testbed1 {
+
 QmlStructInterface::QmlStructInterface(QObject *parent)
     : AbstractStructInterface(parent)
 {
@@ -120,3 +122,5 @@ StructString QmlStructInterface::funcString(const StructString& paramString)
 	
     return m_obj->funcString(paramString);
 }
+
+} //namespace testbed1

@@ -22,6 +22,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "testbed1/api/api.h"
 
+namespace testbed1 {
+
 class HttpStructInterface : public AbstractStructInterface
 {
     Q_OBJECT
@@ -50,3 +52,5 @@ private:
     StructFloat m_propFloat;
     StructString m_propString;
 };
+
+} // namespace testbed1 

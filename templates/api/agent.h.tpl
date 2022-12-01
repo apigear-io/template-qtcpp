@@ -6,6 +6,8 @@
 
 #include "api.h"
 
+namespace {{snake  .Module.Name }} {
+
 {{- range .Module.Interfaces }}
 {{- $class := printf "%sAgent" .Name }}
 {{- $iface := .Name }}
@@ -22,3 +24,5 @@ public:
   {{- end }}
 };
 {{- end }}
+
+} // namespace {{snake  .Module.Name }}

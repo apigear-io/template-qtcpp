@@ -3,6 +3,8 @@
 #include <QtCore>
 #include "api.h"
 
+namespace tb_simple {
+
 // ********************************************************************
 // SimulationSimpleInterface simulation interface
 // ********************************************************************
@@ -65,3 +67,4 @@ private:
     QList<QString> m_propString;
 };
 
+} // namespace tb_simple

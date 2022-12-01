@@ -20,6 +20,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "tb_simple/api/agent.h"
 #include <QtQml>
 
+namespace tb_simple {
+
 HttpSimpleInterface::HttpSimpleInterface(QNetworkAccessManager *network, QObject *parent)
     : AbstractSimpleInterface(parent)
     , m_network(network)
@@ -182,3 +184,5 @@ void HttpSimpleInterface::applyState(const QJsonObject &state)
     setPropString(jsValue.toVariant().value<QString>());
   }
 }
+
+} // namespace tb_simple 

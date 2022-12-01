@@ -5,6 +5,8 @@
 
 #include "{{snake .Module.Name}}/api/apifactory.h"
 
+namespace {{snake  .Module.Name }} {
+
 class HttpFactory : public QObject, public ApiFactoryInterface
 {
 public:
@@ -15,3 +17,5 @@ public:
 private:
     QNetworkAccessManager *m_network;
 };
+
+} // namespace {{snake  .Module.Name }}

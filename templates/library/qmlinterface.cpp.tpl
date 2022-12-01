@@ -9,6 +9,8 @@
 
 #include <QtQml>
 
+namespace {{snake  .Module.Name }} {
+
 Qml{{$class}}::Qml{{$class}}(QObject *parent)
     : Abstract{{$class}}(parent)
 {
@@ -51,3 +53,5 @@ void Qml{{$class}}::set{{Camel .Name}}({{qtParam "" .}})
     return m_obj->{{.Name}}({{range $i, $e := .Params}}{{if $i}},{{end}}{{.Name}}{{- end }});
 }
 {{- end }}
+
+} //namespace {{snake  .Module.Name }}

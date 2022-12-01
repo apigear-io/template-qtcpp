@@ -15,6 +15,8 @@ inline void to_json(nlohmann::json& j, const QString& value) {
     j = value.toStdString();
 }
 
+namespace {{snake  .Module.Name }} {
+
 {{- range .Module.Structs }}
 {{- $class := .Name }}
 
@@ -34,3 +36,4 @@ inline void to_json(nlohmann::json& j, const {{$class}}& p) {
         };
 }
 {{- end }}
+} //namespace {{snake  .Module.Name }}

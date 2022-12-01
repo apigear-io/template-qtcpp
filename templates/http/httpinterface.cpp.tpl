@@ -8,6 +8,8 @@
 #include "{{snake .Module.Name}}/api/agent.h"
 #include <QtQml>
 
+namespace {{snake  .Module.Name }} {
+
 {{$class}}::{{$class}}(QNetworkAccessManager *network, QObject *parent)
     : Abstract{{.Interface.Name}}(parent)
     , m_network(network)
@@ -89,3 +91,5 @@ void {{$class}}::applyState(const QJsonObject &state)
   }
   {{- end }}
 }
+
+} // namespace {{snake  .Module.Name }} 

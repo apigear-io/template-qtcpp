@@ -21,52 +21,52 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 /**
  *  will be called before the first test function is executed.
 */
-void TestSameEnum1Interface::initTestCase(){
+void TestTbSame1SameEnum1Interface::initTestCase(){
 
 }
 
 /**
  *  will be called to create a global test data table.
 */
-void TestSameEnum1Interface::initTestCase_data(){
+void TestTbSame1SameEnum1Interface::initTestCase_data(){
 
 }
 
 /**
  *  will be called after the last test function was executed.
 */
-void TestSameEnum1Interface::cleanupTestCase(){
+void TestTbSame1SameEnum1Interface::cleanupTestCase(){
 
 }
 
 /**
  *  will be called before each test function is executed.
 */
-void TestSameEnum1Interface::init(){
+void TestTbSame1SameEnum1Interface::init(){
 
 }
 
 /**
  *  will be called after every test function.
 */
-void TestSameEnum1Interface::cleanup(){
+void TestTbSame1SameEnum1Interface::cleanup(){
 
 }
 /**
  *  Test operation func1
 */
-void TestSameEnum1Interface::func1(){
-    SameEnum1Interface testSameenum1interface;
+void TestTbSame1SameEnum1Interface::func1(){
+    tb.same1::SameEnum1Interface testTbsame1sameenum1interface;
     // Do implement test here
 }
 /**
  *  Test proptery prop1
 */
-void TestSameEnum1Interface::prop1(){
-    SameEnum1Interface testSameenum1interface;
+void TestTbSame1SameEnum1Interface::prop1(){
+    tb.same1::SameEnum1Interface testTbsame1sameenum1interface;
     // Do implement test here
 }
 
-QTEST_MAIN(TestSameEnum1Interface);
+QTEST_MAIN(TestTbSame1SameEnum1Interface);
 
 

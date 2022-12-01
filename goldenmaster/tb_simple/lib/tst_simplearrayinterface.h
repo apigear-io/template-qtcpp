@@ -17,7 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include <QtTest/QtTest>
 
-class TestSimpleArrayInterface: public QObject
+class TestTbSimpleSimpleArrayInterface: public QObject
 {
     Q_OBJECT
     // setup your test

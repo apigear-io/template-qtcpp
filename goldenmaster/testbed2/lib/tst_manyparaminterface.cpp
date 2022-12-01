@@ -21,94 +21,94 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 /**
  *  will be called before the first test function is executed.
 */
-void TestManyParamInterface::initTestCase(){
+void TestTestbed2ManyParamInterface::initTestCase(){
 
 }
 
 /**
  *  will be called to create a global test data table.
 */
-void TestManyParamInterface::initTestCase_data(){
+void TestTestbed2ManyParamInterface::initTestCase_data(){
 
 }
 
 /**
  *  will be called after the last test function was executed.
 */
-void TestManyParamInterface::cleanupTestCase(){
+void TestTestbed2ManyParamInterface::cleanupTestCase(){
 
 }
 
 /**
  *  will be called before each test function is executed.
 */
-void TestManyParamInterface::init(){
+void TestTestbed2ManyParamInterface::init(){
 
 }
 
 /**
  *  will be called after every test function.
 */
-void TestManyParamInterface::cleanup(){
+void TestTestbed2ManyParamInterface::cleanup(){
 
 }
 /**
  *  Test operation func1
 */
-void TestManyParamInterface::func1(){
-    ManyParamInterface testManyparaminterface;
+void TestTestbed2ManyParamInterface::func1(){
+    testbed2::ManyParamInterface testTestbed2manyparaminterface;
     // Do implement test here
 }
 /**
  *  Test operation func2
 */
-void TestManyParamInterface::func2(){
-    ManyParamInterface testManyparaminterface;
+void TestTestbed2ManyParamInterface::func2(){
+    testbed2::ManyParamInterface testTestbed2manyparaminterface;
     // Do implement test here
 }
 /**
  *  Test operation func3
 */
-void TestManyParamInterface::func3(){
-    ManyParamInterface testManyparaminterface;
+void TestTestbed2ManyParamInterface::func3(){
+    testbed2::ManyParamInterface testTestbed2manyparaminterface;
     // Do implement test here
 }
 /**
  *  Test operation func4
 */
-void TestManyParamInterface::func4(){
-    ManyParamInterface testManyparaminterface;
+void TestTestbed2ManyParamInterface::func4(){
+    testbed2::ManyParamInterface testTestbed2manyparaminterface;
     // Do implement test here
 }
 /**
  *  Test proptery prop1
 */
-void TestManyParamInterface::prop1(){
-    ManyParamInterface testManyparaminterface;
+void TestTestbed2ManyParamInterface::prop1(){
+    testbed2::ManyParamInterface testTestbed2manyparaminterface;
     // Do implement test here
 }
 /**
  *  Test proptery prop2
 */
-void TestManyParamInterface::prop2(){
-    ManyParamInterface testManyparaminterface;
+void TestTestbed2ManyParamInterface::prop2(){
+    testbed2::ManyParamInterface testTestbed2manyparaminterface;
     // Do implement test here
 }
 /**
  *  Test proptery prop3
 */
-void TestManyParamInterface::prop3(){
-    ManyParamInterface testManyparaminterface;
+void TestTestbed2ManyParamInterface::prop3(){
+    testbed2::ManyParamInterface testTestbed2manyparaminterface;
     // Do implement test here
 }
 /**
  *  Test proptery prop4
 */
-void TestManyParamInterface::prop4(){
-    ManyParamInterface testManyparaminterface;
+void TestTestbed2ManyParamInterface::prop4(){
+    testbed2::ManyParamInterface testTestbed2manyparaminterface;
     // Do implement test here
 }
 
-QTEST_MAIN(TestManyParamInterface);
+QTEST_MAIN(TestTestbed2ManyParamInterface);
 
 

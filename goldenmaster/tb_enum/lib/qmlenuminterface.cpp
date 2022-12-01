@@ -23,6 +23,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <QtQml>
 
+namespace tb_enum {
+
 QmlEnumInterface::QmlEnumInterface(QObject *parent)
     : AbstractEnumInterface(parent)
 {
@@ -120,3 +122,5 @@ Enum3::Enum3Enum QmlEnumInterface::func3(const Enum3::Enum3Enum param3)
 	
     return m_obj->func3(param3);
 }
+
+} //namespace tb_enum

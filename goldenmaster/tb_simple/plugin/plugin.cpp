@@ -32,8 +32,8 @@ void Plugin::registerTypes(const char *uri)
     // register structs
 
     // register interfaces
-    qmlRegisterType<QmlSimpleInterface>(uri, 1, 0, "SimpleInterface");
-    qmlRegisterType<QmlSimpleArrayInterface>(uri, 1, 0, "SimpleArrayInterface");
+    qmlRegisterType<tb_simple::QmlSimpleInterface>(uri, 1, 0, "SimpleInterface");
+    qmlRegisterType<tb_simple::QmlSimpleArrayInterface>(uri, 1, 0, "SimpleArrayInterface");
 
 
 

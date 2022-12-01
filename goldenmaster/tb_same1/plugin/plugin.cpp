@@ -30,20 +30,20 @@ void Plugin::registerTypes(const char *uri)
 {
     // @uri tb.same1
     // register enum
-    qmlRegisterUncreatableType<Enum1>(uri, 1, 0, "Enum1", "An enum can not be created");
-    qmlRegisterUncreatableType<Enum2>(uri, 1, 0, "Enum2", "An enum can not be created");
+    qmlRegisterUncreatableType<tb_same1::Enum1>(uri, 1, 0, "Enum1", "An enum can not be created");
+    qmlRegisterUncreatableType<tb_same1::Enum2>(uri, 1, 0, "Enum2", "An enum can not be created");
 
     // register structs
-    qRegisterMetaType<Struct1>();
-    qmlRegisterUncreatableType<Struct1Factory>(uri, 1, 0, "Struct1Factory", "A struct factory can not be created");
-    qRegisterMetaType<Struct2>();
-    qmlRegisterUncreatableType<Struct2Factory>(uri, 1, 0, "Struct2Factory", "A struct factory can not be created");
+    qRegisterMetaType<tb_same1::Struct1>();
+    qmlRegisterUncreatableType<tb_same1::Struct1Factory>(uri, 1, 0, "Struct1Factory", "A struct factory can not be created");
+    qRegisterMetaType<tb_same1::Struct2>();
+    qmlRegisterUncreatableType<tb_same1::Struct2Factory>(uri, 1, 0, "Struct2Factory", "A struct factory can not be created");
 
     // register interfaces
-    qmlRegisterType<QmlSameStruct1Interface>(uri, 1, 0, "SameStruct1Interface");
-    qmlRegisterType<QmlSameStruct2Interface>(uri, 1, 0, "SameStruct2Interface");
-    qmlRegisterType<QmlSameEnum1Interface>(uri, 1, 0, "SameEnum1Interface");
-    qmlRegisterType<QmlSameEnum2Interface>(uri, 1, 0, "SameEnum2Interface");
+    qmlRegisterType<tb_same1::QmlSameStruct1Interface>(uri, 1, 0, "SameStruct1Interface");
+    qmlRegisterType<tb_same1::QmlSameStruct2Interface>(uri, 1, 0, "SameStruct2Interface");
+    qmlRegisterType<tb_same1::QmlSameEnum1Interface>(uri, 1, 0, "SameEnum1Interface");
+    qmlRegisterType<tb_same1::QmlSameEnum2Interface>(uri, 1, 0, "SameEnum2Interface");
 
 
 

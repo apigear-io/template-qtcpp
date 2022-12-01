@@ -23,6 +23,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "testbed2/api/agent.h"
 
+namespace testbed2 {
+
 ManyParamInterface::ManyParamInterface(QObject *parent)
     : AbstractManyParamInterface(parent)
     , m_prop1(0)
@@ -119,3 +121,4 @@ int ManyParamInterface::func4(int param1, int param2, int param3, int param4)
     ManyParamInterfaceAgent::trace_func4(this, param1, param2, param3, param4);
     return 0;
 }
+} //namespace testbed2

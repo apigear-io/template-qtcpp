@@ -20,6 +20,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "tb_enum/api/agent.h"
 #include <QtQml>
 
+namespace tb_enum {
+
 HttpEnumInterface::HttpEnumInterface(QNetworkAccessManager *network, QObject *parent)
     : AbstractEnumInterface(parent)
     , m_network(network)
@@ -182,3 +184,5 @@ void HttpEnumInterface::applyState(const QJsonObject &state)
     setProp3(jsValue.toVariant().value<Enum3::Enum3Enum>());
   }
 }
+
+} // namespace tb_enum 

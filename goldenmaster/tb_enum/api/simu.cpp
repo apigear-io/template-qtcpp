@@ -4,6 +4,8 @@
 #include "apigear/simulation/simulationclient.h"
 
 using namespace ApiGear::JSONRPC;
+
+namespace tb_enum {
 // ********************************************************************
 // SimulationEnumInterface simulation interface
 // ********************************************************************
@@ -165,3 +167,5 @@ Enum3::Enum3Enum SimulationEnumInterface::func3(const Enum3::Enum3Enum param3)
     ApiGear::SimulationClient::instance()->doCall("tb.enum/EnumInterface", "func3", params);
     return Enum3::value3;
 }
+
+} //namespace tb_enum

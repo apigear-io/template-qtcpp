@@ -23,6 +23,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "tb_enum/api/agent.h"
 
+namespace tb_enum {
+
 EnumInterface::EnumInterface(QObject *parent)
     : AbstractEnumInterface(parent)
     , m_prop0(Enum0::value0)
@@ -119,3 +121,4 @@ Enum3::Enum3Enum EnumInterface::func3(const Enum3::Enum3Enum param3)
     EnumInterfaceAgent::trace_func3(this, param3);
     return Enum3::value3;
 }
+} //namespace tb_enum

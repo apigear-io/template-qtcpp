@@ -4,6 +4,8 @@
 
 #include "api.h"
 
+namespace testbed2 {
+
 
 class TESTBED2_EXPORT ManyParamInterfaceAgent
 {
@@ -49,3 +51,5 @@ public:
   static void trace_func2(AbstractNestedStruct3Interface* obj, const NestedStruct1& param1, const NestedStruct2& param2);
   static void trace_func3(AbstractNestedStruct3Interface* obj, const NestedStruct1& param1, const NestedStruct2& param2, const NestedStruct3& param3);
 };
+
+} // namespace testbed2

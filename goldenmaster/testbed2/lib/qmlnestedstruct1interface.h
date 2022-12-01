@@ -22,6 +22,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "nestedstruct1interface.h"
 
+namespace testbed2 {
+
 class TESTBED2_LIB_EXPORT QmlNestedStruct1Interface : public AbstractNestedStruct1Interface
 {
     Q_OBJECT
@@ -39,3 +41,5 @@ Q_SIGNALS:
 private:
 	AbstractNestedStruct1Interface *m_obj;
 };
+
+} //namespace testbed2

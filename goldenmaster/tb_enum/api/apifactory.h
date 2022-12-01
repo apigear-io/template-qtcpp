@@ -3,6 +3,8 @@
 #include <QtCore>
 #include "api.h"
 
+namespace tb_enum {
+
 class TB_ENUM_EXPORT ApiFactory : public QObject, public ApiFactoryInterface
 {
     Q_OBJECT
@@ -14,3 +16,5 @@ public:
 private:
     static ApiFactoryInterface *s_instance;
 };
+
+} //namespace tb_enum

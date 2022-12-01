@@ -27,6 +27,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using namespace ApiGear;
 using namespace ApiGear::ObjectLink;
 
+namespace tb_same1 {
+
 OLinkSameEnum2Interface::OLinkSameEnum2Interface(QObject *parent)
     : AbstractSameEnum2Interface(parent)
     , m_prop1(Enum1::value1)
@@ -202,4 +204,4 @@ void OLinkSameEnum2Interface::olinkOnRelease()
     m_node = nullptr;
 }
 
-
+} //namespace tb_same1

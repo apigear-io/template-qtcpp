@@ -1,5 +1,6 @@
 {{- /* Copyright (c) ApiGear UG 2020 */}}
 {{- $MODULE_ID := SNAKE .Module.Name }}
+{{- $module_id := snake .Module.Name }}
 {{- cppGpl .Module }}
 #pragma once
 
@@ -11,6 +12,9 @@
 #else
 #  define {{ $MODULE_ID }}_EXPORT Q_DECL_IMPORT
 #endif
+
+namespace {{snake  .Module.Name }} {
+
 {{- range .Module.Enums }}
 {{- $class := .Name }}
 
@@ -33,7 +37,7 @@ public:
 
     static {{$class}}Enum toEnum(quint8 v, bool *ok);
 };
-Q_DECLARE_METATYPE({{$class}}::{{$class}}Enum)
+
 
 inline QDataStream &operator<<(QDataStream &ds, const {{$class}}::{{$class}}Enum &obj)
 {
@@ -83,8 +87,6 @@ private:
     {{qtReturn "" .}} m_{{.Name}};
 {{- end }}
 };
-
-Q_DECLARE_METATYPE({{$class}})
 
 QDataStream &operator<<(QDataStream &stream, const {{$class}} &obj);
 QDataStream &operator>>(QDataStream &stream, {{$class}} &obj);
@@ -142,3 +144,13 @@ public:
 {{- end }}
 };
 
+} //namespace {{snake  .Module.Name }}
+
+{{ range .Module.Enums }}
+{{- $class := .Name }}
+Q_DECLARE_METATYPE({{ $module_id }}::{{$class}}::{{$class}}Enum)
+{{- end }}
+{{- range .Module.Structs }}
+{{- $class := .Name }}
+Q_DECLARE_METATYPE({{ $module_id }}::{{$class}})
+{{- end }}

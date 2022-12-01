@@ -22,6 +22,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "testbed2/api/api.h"
 
+namespace testbed2 {
+
 class HttpNestedStruct1Interface : public AbstractNestedStruct1Interface
 {
     Q_OBJECT
@@ -38,3 +40,5 @@ private:
     QNetworkAccessManager *m_network;
     NestedStruct1 m_prop1;
 };
+
+} // namespace testbed2 

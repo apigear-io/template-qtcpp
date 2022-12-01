@@ -5,6 +5,8 @@
 
 #include "testbed2/api/apifactory.h"
 
+namespace testbed2 {
+
 class HttpFactory : public QObject, public ApiFactoryInterface
 {
 public:
@@ -16,3 +18,5 @@ public:
 private:
     QNetworkAccessManager *m_network;
 };
+
+} // namespace testbed2

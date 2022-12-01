@@ -4,6 +4,8 @@
 
 #include "tb_same2/api/apifactory.h"
 
+namespace tb_same2 {
+
 class Factory : public QObject, public ApiFactoryInterface
 {
 public:
@@ -13,3 +15,6 @@ public:
     AbstractSameEnum1Interface* createSameEnum1Interface(QObject *parent) override;
     AbstractSameEnum2Interface* createSameEnum2Interface(QObject *parent) override;
 };
+
+} // namespace tb_same2
+

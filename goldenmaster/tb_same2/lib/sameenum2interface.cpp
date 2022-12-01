@@ -23,6 +23,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "tb_same2/api/agent.h"
 
+namespace tb_same2 {
+
 SameEnum2Interface::SameEnum2Interface(QObject *parent)
     : AbstractSameEnum2Interface(parent)
     , m_prop1(Enum1::value1)
@@ -75,3 +77,4 @@ Enum1::Enum1Enum SameEnum2Interface::func2(const Enum1::Enum1Enum param1, const 
     SameEnum2InterfaceAgent::trace_func2(this, param1, param2);
     return Enum1::value1;
 }
+} //namespace tb_same2

@@ -27,6 +27,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using namespace ApiGear;
 using namespace ApiGear::ObjectLink;
 
+namespace tb_simple {
+
 OLinkSimpleArrayInterface::OLinkSimpleArrayInterface(QObject *parent)
     : AbstractSimpleArrayInterface(parent)
     , m_propBool(QList<bool>())
@@ -330,4 +332,4 @@ void OLinkSimpleArrayInterface::olinkOnRelease()
     m_node = nullptr;
 }
 
-
+} //namespace tb_simple

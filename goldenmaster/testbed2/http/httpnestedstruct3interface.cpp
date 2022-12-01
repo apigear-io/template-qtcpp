@@ -20,6 +20,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "testbed2/api/agent.h"
 #include <QtQml>
 
+namespace testbed2 {
+
 HttpNestedStruct3Interface::HttpNestedStruct3Interface(QNetworkAccessManager *network, QObject *parent)
     : AbstractNestedStruct3Interface(parent)
     , m_network(network)
@@ -154,3 +156,5 @@ void HttpNestedStruct3Interface::applyState(const QJsonObject &state)
     setProp3(jsValue.toVariant().value<NestedStruct3>());
   }
 }
+
+} // namespace testbed2 

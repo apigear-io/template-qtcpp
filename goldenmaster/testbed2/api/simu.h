@@ -3,6 +3,8 @@
 #include <QtCore>
 #include "api.h"
 
+namespace testbed2 {
+
 // ********************************************************************
 // SimulationManyParamInterface simulation interface
 // ********************************************************************
@@ -103,3 +105,4 @@ private:
     NestedStruct3 m_prop3;
 };
 
+} // namespace testbed2

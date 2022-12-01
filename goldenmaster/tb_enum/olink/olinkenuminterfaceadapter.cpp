@@ -33,6 +33,8 @@ using namespace ApiGear::ObjectLink;
 
 using json = nlohmann::json;
 
+namespace tb_enum {
+
 OLinkEnumInterfaceAdapter::OLinkEnumInterfaceAdapter(RemoteRegistry& registry, AbstractEnumInterface* impl, QObject *parent)
     : QObject(parent)
     , m_impl(impl)
@@ -219,6 +221,4 @@ json OLinkEnumInterfaceAdapter::olinkCollectProperties()
     return captureState();
 }
 
-
-
-
+} // namespace tb_enum

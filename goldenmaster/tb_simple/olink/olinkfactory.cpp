@@ -2,6 +2,8 @@
 #include "olinksimpleinterface.h"
 #include "olinksimplearrayinterface.h"
 
+namespace tb_simple {
+
 OLinkFactory::OLinkFactory(QObject *parent)
     : QObject(parent)
 {
@@ -19,3 +21,5 @@ AbstractSimpleArrayInterface* OLinkFactory::createSimpleArrayInterface(QObject *
     qDebug() << Q_FUNC_INFO;
     return new OLinkSimpleArrayInterface(parent);
 }
+
+} //namespace tb_simple

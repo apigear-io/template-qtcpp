@@ -9,6 +9,8 @@
 
 #include "{{.Interface.Name|lower}}.h"
 
+namespace {{snake  .Module.Name }} {
+
 class {{$MODULE_ID}}_EXPORT Qml{{$class}} : public Abstract{{$class}}
 {
     Q_OBJECT
@@ -38,3 +40,5 @@ Q_SIGNALS:
 private:
 	Abstract{{$class}} *m_obj;
 };
+
+} //namespace {{snake  .Module.Name }}

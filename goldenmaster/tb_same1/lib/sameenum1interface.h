@@ -28,6 +28,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #  define TB_SAME1_LIB_EXPORT Q_DECL_IMPORT
 #endif
 
+namespace tb_same1 {
+
 class TB_SAME1_LIB_EXPORT SameEnum1Interface : public AbstractSameEnum1Interface
 {
     Q_OBJECT
@@ -41,3 +43,4 @@ public:
 private:
     Enum1::Enum1Enum m_prop1;
 };
+} //namespace tb_same1

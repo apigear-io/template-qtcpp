@@ -4,6 +4,8 @@
 #include <QtCore>
 #include "api.h"
 
+namespace {{snake  .Module.Name }} {
+
 class {{ $MODULE_ID }}_EXPORT ApiFactory : public QObject, public ApiFactoryInterface
 {
     Q_OBJECT
@@ -18,3 +20,5 @@ public:
 private:
     static ApiFactoryInterface *s_instance;
 };
+
+} //namespace {{snake  .Module.Name }}

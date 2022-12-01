@@ -22,6 +22,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "tb_same2/api/api.h"
 
+namespace tb_same2 {
+
 class HttpSameStruct2Interface : public AbstractSameStruct2Interface
 {
     Q_OBJECT
@@ -42,3 +44,5 @@ private:
     Struct2 m_prop1;
     Struct2 m_prop2;
 };
+
+} // namespace tb_same2 

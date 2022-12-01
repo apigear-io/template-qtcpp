@@ -4,6 +4,8 @@
 #include "http{{.Name|lower}}.h"
 {{- end }}
 
+namespace {{snake  .Module.Name }} {
+
 HttpFactory::HttpFactory(QObject *parent)
     : QObject(parent)
     , m_network(new QNetworkAccessManager(this))
@@ -18,3 +20,6 @@ Abstract{{.Name}}* HttpFactory::create{{Camel .Name}}(QObject *parent)
 }
 
 {{- end }}
+
+
+} //namespace {{snake  .Module.Name }}

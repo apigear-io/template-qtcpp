@@ -23,6 +23,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "testbed1/api/agent.h"
 
+namespace testbed1 {
+
 StructArrayInterface::StructArrayInterface(QObject *parent)
     : AbstractStructArrayInterface(parent)
     , m_propBool(QList<StructBool>())
@@ -119,3 +121,4 @@ StructBool StructArrayInterface::funcString(const QList<StructString>& paramStri
     StructArrayInterfaceAgent::trace_funcString(this, paramString);
     return StructBool();
 }
+} //namespace testbed1

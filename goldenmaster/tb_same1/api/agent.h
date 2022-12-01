@@ -4,6 +4,8 @@
 
 #include "api.h"
 
+namespace tb_same1 {
+
 
 class TB_SAME1_EXPORT SameStruct1InterfaceAgent
 {
@@ -45,3 +47,5 @@ public:
   static void trace_func1(AbstractSameEnum2Interface* obj, const Enum1::Enum1Enum param1);
   static void trace_func2(AbstractSameEnum2Interface* obj, const Enum1::Enum1Enum param1, const Enum2::Enum2Enum param2);
 };
+
+} // namespace tb_same1

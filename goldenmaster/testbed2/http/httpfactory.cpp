@@ -4,6 +4,8 @@
 #include "httpnestedstruct2interface.h"
 #include "httpnestedstruct3interface.h"
 
+namespace testbed2 {
+
 HttpFactory::HttpFactory(QObject *parent)
     : QObject(parent)
     , m_network(new QNetworkAccessManager(this))
@@ -29,3 +31,6 @@ AbstractNestedStruct3Interface* HttpFactory::createNestedStruct3Interface(QObjec
 {
     return new HttpNestedStruct3Interface(m_network, parent);
 }
+
+
+} //namespace testbed2

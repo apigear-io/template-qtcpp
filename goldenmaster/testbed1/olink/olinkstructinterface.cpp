@@ -27,6 +27,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using namespace ApiGear;
 using namespace ApiGear::ObjectLink;
 
+namespace testbed1 {
+
 OLinkStructInterface::OLinkStructInterface(QObject *parent)
     : AbstractStructInterface(parent)
     , m_propBool(StructBool())
@@ -330,4 +332,4 @@ void OLinkStructInterface::olinkOnRelease()
     m_node = nullptr;
 }
 
-
+} //namespace testbed1

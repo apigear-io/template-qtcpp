@@ -17,7 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include <QtTest/QtTest>
 
-class TestEnumInterface: public QObject
+class TestTbEnumEnumInterface: public QObject
 {
     Q_OBJECT
     // setup your test

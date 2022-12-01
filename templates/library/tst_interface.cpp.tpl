@@ -3,7 +3,9 @@
 #include "tst_{{.Interface.Name|lower}}.h"
 #include "{{.Interface.Name|lower}}.h"
 
-{{- $class := .Interface.Name }}
+{{- $class :=  printf "%s%s" (Camel .Module.Name) .Interface.Name }}
+{{- $testedClass :=  .Interface.Name }}
+{{- $moduleName :=  .Module.Name }}
 
 /**
  *  will be called before the first test function is executed.
@@ -45,7 +47,7 @@ void Test{{$class}}::cleanup(){
  *  Test operation {{.Name}}
 */
 void Test{{$class}}::{{.Name}}(){
-    {{$class}} test{{upper1 (lower $class)}};
+    {{$moduleName}}::{{$testedClass}} test{{upper1 (lower $class)}};
     // Do implement test here
 }
 {{- end }}
@@ -55,7 +57,7 @@ void Test{{$class}}::{{.Name}}(){
  *  Test proptery {{.Name}}
 */
 void Test{{$class}}::{{.Name}}(){
-    {{$class}} test{{upper1 (lower $class)}};
+    {{$moduleName}}::{{$testedClass}} test{{upper1 (lower $class)}};
     // Do implement test here
 }
 {{- end }}

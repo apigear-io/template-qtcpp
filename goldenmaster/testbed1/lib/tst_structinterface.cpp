@@ -21,94 +21,94 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 /**
  *  will be called before the first test function is executed.
 */
-void TestStructInterface::initTestCase(){
+void TestTestbed1StructInterface::initTestCase(){
 
 }
 
 /**
  *  will be called to create a global test data table.
 */
-void TestStructInterface::initTestCase_data(){
+void TestTestbed1StructInterface::initTestCase_data(){
 
 }
 
 /**
  *  will be called after the last test function was executed.
 */
-void TestStructInterface::cleanupTestCase(){
+void TestTestbed1StructInterface::cleanupTestCase(){
 
 }
 
 /**
  *  will be called before each test function is executed.
 */
-void TestStructInterface::init(){
+void TestTestbed1StructInterface::init(){
 
 }
 
 /**
  *  will be called after every test function.
 */
-void TestStructInterface::cleanup(){
+void TestTestbed1StructInterface::cleanup(){
 
 }
 /**
  *  Test operation funcBool
 */
-void TestStructInterface::funcBool(){
-    StructInterface testStructinterface;
+void TestTestbed1StructInterface::funcBool(){
+    testbed1::StructInterface testTestbed1structinterface;
     // Do implement test here
 }
 /**
  *  Test operation funcInt
 */
-void TestStructInterface::funcInt(){
-    StructInterface testStructinterface;
+void TestTestbed1StructInterface::funcInt(){
+    testbed1::StructInterface testTestbed1structinterface;
     // Do implement test here
 }
 /**
  *  Test operation funcFloat
 */
-void TestStructInterface::funcFloat(){
-    StructInterface testStructinterface;
+void TestTestbed1StructInterface::funcFloat(){
+    testbed1::StructInterface testTestbed1structinterface;
     // Do implement test here
 }
 /**
  *  Test operation funcString
 */
-void TestStructInterface::funcString(){
-    StructInterface testStructinterface;
+void TestTestbed1StructInterface::funcString(){
+    testbed1::StructInterface testTestbed1structinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propBool
 */
-void TestStructInterface::propBool(){
-    StructInterface testStructinterface;
+void TestTestbed1StructInterface::propBool(){
+    testbed1::StructInterface testTestbed1structinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propInt
 */
-void TestStructInterface::propInt(){
-    StructInterface testStructinterface;
+void TestTestbed1StructInterface::propInt(){
+    testbed1::StructInterface testTestbed1structinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propFloat
 */
-void TestStructInterface::propFloat(){
-    StructInterface testStructinterface;
+void TestTestbed1StructInterface::propFloat(){
+    testbed1::StructInterface testTestbed1structinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propString
 */
-void TestStructInterface::propString(){
-    StructInterface testStructinterface;
+void TestTestbed1StructInterface::propString(){
+    testbed1::StructInterface testTestbed1structinterface;
     // Do implement test here
 }
 
-QTEST_MAIN(TestStructInterface);
+QTEST_MAIN(TestTestbed1StructInterface);
 
 

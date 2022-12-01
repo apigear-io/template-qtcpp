@@ -13,3 +13,6 @@ inline void from_json(const nlohmann::json& j, QString& p) {
 inline void to_json(nlohmann::json& j, const QString& value) {
     j = value.toStdString();
 }
+
+namespace tb_simple {
+} //namespace tb_simple

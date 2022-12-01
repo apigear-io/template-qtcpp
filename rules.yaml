@@ -148,3 +148,15 @@ features:
             target: "olink/olink{{lower .Interface.Name}}adapter.h"
           - source: "olink/olinkadapter.cpp.tpl"
             target: "olink/olink{{lower .Interface.Name}}adapter.cpp"            
+  - name: examples
+    scopes:
+    - match: system
+      documents:
+        - source: examples/olinkserver/CMakeLists.txt.tpl
+          target: examples/olinkserver/CMakeLists.txt
+        - source: examples/olinkserver/main.cpp.tpl
+          target: examples/olinkserver/main.cpp
+        - source: examples/olinkclient/CMakeLists.txt.tpl
+          target: examples/olinkclient/CMakeLists.txt
+        - source: examples/olinkclient/main.cpp.tpl
+          target: examples/olinkclient/main.cpp

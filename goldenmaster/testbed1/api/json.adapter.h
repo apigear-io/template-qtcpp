@@ -14,6 +14,8 @@ inline void to_json(nlohmann::json& j, const QString& value) {
     j = value.toStdString();
 }
 
+namespace testbed1 {
+
 inline void from_json(const nlohmann::json& j, StructBool& p) {
     if(j.contains("fieldBool")) {
         p.setFieldBool(j["fieldBool"].get<bool>());
@@ -61,3 +63,4 @@ inline void to_json(nlohmann::json& j, const StructString& p) {
         {"fieldString", p.fieldString()}
         };
 }
+} //namespace testbed1

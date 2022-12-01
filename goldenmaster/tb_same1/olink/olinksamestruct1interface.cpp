@@ -27,6 +27,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using namespace ApiGear;
 using namespace ApiGear::ObjectLink;
 
+namespace tb_same1 {
+
 OLinkSameStruct1Interface::OLinkSameStruct1Interface(QObject *parent)
     : AbstractSameStruct1Interface(parent)
     , m_prop1(Struct1())
@@ -138,4 +140,4 @@ void OLinkSameStruct1Interface::olinkOnRelease()
     m_node = nullptr;
 }
 
-
+} //namespace tb_same1

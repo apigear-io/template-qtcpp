@@ -22,6 +22,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "simplearrayinterface.h"
 
+namespace tb_simple {
+
 class TB_SIMPLE_LIB_EXPORT QmlSimpleArrayInterface : public AbstractSimpleArrayInterface
 {
     Q_OBJECT
@@ -57,3 +59,5 @@ Q_SIGNALS:
 private:
 	AbstractSimpleArrayInterface *m_obj;
 };
+
+} //namespace tb_simple

@@ -28,6 +28,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #  define TB_SIMPLE_LIB_EXPORT Q_DECL_IMPORT
 #endif
 
+namespace tb_simple {
+
 class TB_SIMPLE_LIB_EXPORT SimpleInterface : public AbstractSimpleInterface
 {
     Q_OBJECT
@@ -53,3 +55,4 @@ private:
     qreal m_propFloat;
     QString m_propString;
 };
+} //namespace tb_simple

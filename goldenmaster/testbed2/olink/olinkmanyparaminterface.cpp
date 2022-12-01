@@ -27,6 +27,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using namespace ApiGear;
 using namespace ApiGear::ObjectLink;
 
+namespace testbed2 {
+
 OLinkManyParamInterface::OLinkManyParamInterface(QObject *parent)
     : AbstractManyParamInterface(parent)
     , m_prop1(0)
@@ -330,4 +332,4 @@ void OLinkManyParamInterface::olinkOnRelease()
     m_node = nullptr;
 }
 
-
+} //namespace testbed2

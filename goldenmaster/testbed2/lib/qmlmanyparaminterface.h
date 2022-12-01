@@ -22,6 +22,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "manyparaminterface.h"
 
+namespace testbed2 {
+
 class TESTBED2_LIB_EXPORT QmlManyParamInterface : public AbstractManyParamInterface
 {
     Q_OBJECT
@@ -57,3 +59,5 @@ Q_SIGNALS:
 private:
 	AbstractManyParamInterface *m_obj;
 };
+
+} //namespace testbed2

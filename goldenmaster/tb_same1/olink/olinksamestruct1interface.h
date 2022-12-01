@@ -34,6 +34,8 @@ class IClientNode;
 using namespace ApiGear;
 using namespace ApiGear::ObjectLink;
 
+namespace tb_same1 {
+
 class OLinkSameStruct1Interface : public AbstractSameStruct1Interface, public IObjectSink
 {
     Q_OBJECT
@@ -60,3 +62,5 @@ private:
     bool m_isReady;
     IClientNode *m_node;
 };
+
+} //namespace tb_same1

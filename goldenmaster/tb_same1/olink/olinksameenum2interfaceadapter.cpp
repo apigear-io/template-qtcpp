@@ -33,6 +33,8 @@ using namespace ApiGear::ObjectLink;
 
 using json = nlohmann::json;
 
+namespace tb_same1 {
+
 OLinkSameEnum2InterfaceAdapter::OLinkSameEnum2InterfaceAdapter(RemoteRegistry& registry, AbstractSameEnum2Interface* impl, QObject *parent)
     : QObject(parent)
     , m_impl(impl)
@@ -152,6 +154,4 @@ json OLinkSameEnum2InterfaceAdapter::olinkCollectProperties()
     return captureState();
 }
 
-
-
-
+} // namespace tb_same1

@@ -4,6 +4,8 @@
 
 #include "api.h"
 
+namespace testbed1 {
+
 
 class TESTBED1_EXPORT StructInterfaceAgent
 {
@@ -29,3 +31,5 @@ public:
   static void trace_funcFloat(AbstractStructArrayInterface* obj, const QList<StructFloat>& paramFloat);
   static void trace_funcString(AbstractStructArrayInterface* obj, const QList<StructString>& paramString);
 };
+
+} // namespace testbed1

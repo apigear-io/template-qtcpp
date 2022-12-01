@@ -2,6 +2,8 @@
 #include "simpleinterface.h"
 #include "simplearrayinterface.h"
 
+namespace tb_simple {
+
 Factory::Factory(QObject *parent)
     : QObject(parent)
 {
@@ -16,3 +18,5 @@ AbstractSimpleArrayInterface* Factory::createSimpleArrayInterface(QObject *paren
 {
     return new SimpleArrayInterface(parent);
 }
+
+} // namespace tb_simple

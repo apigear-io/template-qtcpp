@@ -17,6 +17,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "api.h"
 
+namespace tb_simple {
+
 // ********************************************************************
 // AbstractSimpleInterface abstract interface
 // ********************************************************************
@@ -34,3 +36,5 @@ AbstractSimpleArrayInterface::AbstractSimpleArrayInterface(QObject *parent)
     : QObject(parent)
 {
 }
+
+} // namespace tb_simple

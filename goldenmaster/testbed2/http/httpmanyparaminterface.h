@@ -22,6 +22,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "testbed2/api/api.h"
 
+namespace testbed2 {
+
 class HttpManyParamInterface : public AbstractManyParamInterface
 {
     Q_OBJECT
@@ -50,3 +52,5 @@ private:
     int m_prop3;
     int m_prop4;
 };
+
+} // namespace testbed2 

@@ -15,6 +15,8 @@
 #  define {{ $MODULE_ID }}_EXPORT Q_DECL_IMPORT
 #endif
 
+namespace {{snake  .Module.Name }} {
+
 class {{ $MODULE_ID }}_EXPORT {{$class}} : public Abstract{{$class}}
 {
     Q_OBJECT
@@ -36,3 +38,4 @@ private:
     {{qtReturn "" .}} m_{{.Name}};
 {{- end }}
 };
+} //namespace {{snake  .Module.Name }}

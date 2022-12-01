@@ -22,6 +22,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "structarrayinterface.h"
 
+namespace testbed1 {
+
 class TESTBED1_LIB_EXPORT QmlStructArrayInterface : public AbstractStructArrayInterface
 {
     Q_OBJECT
@@ -57,3 +59,5 @@ Q_SIGNALS:
 private:
 	AbstractStructArrayInterface *m_obj;
 };
+
+} //namespace testbed1

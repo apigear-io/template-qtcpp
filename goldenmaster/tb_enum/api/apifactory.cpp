@@ -2,7 +2,9 @@
 #include "simu.h"
 
 
-ApiFactoryInterface *ApiFactory::s_instance(nullptr);
+tb_enum::ApiFactoryInterface* tb_enum::ApiFactory::s_instance(nullptr);
+
+namespace tb_enum {
 
 ApiFactory::ApiFactory(QObject *parent)
     : QObject(parent)
@@ -30,3 +32,5 @@ AbstractEnumInterface* ApiFactory::createEnumInterface(QObject *parent)
 {
     return new SimulationEnumInterface(parent);
 };
+
+} //namespace tb_enum

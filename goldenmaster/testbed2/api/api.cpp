@@ -16,6 +16,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "api.h"
+
+namespace testbed2 {
 // ********************************************************************
 // Enumeration Enum1
 // ********************************************************************
@@ -625,3 +627,5 @@ AbstractNestedStruct3Interface::AbstractNestedStruct3Interface(QObject *parent)
     : QObject(parent)
 {
 }
+
+} // namespace testbed2

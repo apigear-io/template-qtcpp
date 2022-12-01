@@ -21,80 +21,80 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 /**
  *  will be called before the first test function is executed.
 */
-void TestNestedStruct3Interface::initTestCase(){
+void TestTestbed2NestedStruct3Interface::initTestCase(){
 
 }
 
 /**
  *  will be called to create a global test data table.
 */
-void TestNestedStruct3Interface::initTestCase_data(){
+void TestTestbed2NestedStruct3Interface::initTestCase_data(){
 
 }
 
 /**
  *  will be called after the last test function was executed.
 */
-void TestNestedStruct3Interface::cleanupTestCase(){
+void TestTestbed2NestedStruct3Interface::cleanupTestCase(){
 
 }
 
 /**
  *  will be called before each test function is executed.
 */
-void TestNestedStruct3Interface::init(){
+void TestTestbed2NestedStruct3Interface::init(){
 
 }
 
 /**
  *  will be called after every test function.
 */
-void TestNestedStruct3Interface::cleanup(){
+void TestTestbed2NestedStruct3Interface::cleanup(){
 
 }
 /**
  *  Test operation func1
 */
-void TestNestedStruct3Interface::func1(){
-    NestedStruct3Interface testNestedstruct3interface;
+void TestTestbed2NestedStruct3Interface::func1(){
+    testbed2::NestedStruct3Interface testTestbed2nestedstruct3interface;
     // Do implement test here
 }
 /**
  *  Test operation func2
 */
-void TestNestedStruct3Interface::func2(){
-    NestedStruct3Interface testNestedstruct3interface;
+void TestTestbed2NestedStruct3Interface::func2(){
+    testbed2::NestedStruct3Interface testTestbed2nestedstruct3interface;
     // Do implement test here
 }
 /**
  *  Test operation func3
 */
-void TestNestedStruct3Interface::func3(){
-    NestedStruct3Interface testNestedstruct3interface;
+void TestTestbed2NestedStruct3Interface::func3(){
+    testbed2::NestedStruct3Interface testTestbed2nestedstruct3interface;
     // Do implement test here
 }
 /**
  *  Test proptery prop1
 */
-void TestNestedStruct3Interface::prop1(){
-    NestedStruct3Interface testNestedstruct3interface;
+void TestTestbed2NestedStruct3Interface::prop1(){
+    testbed2::NestedStruct3Interface testTestbed2nestedstruct3interface;
     // Do implement test here
 }
 /**
  *  Test proptery prop2
 */
-void TestNestedStruct3Interface::prop2(){
-    NestedStruct3Interface testNestedstruct3interface;
+void TestTestbed2NestedStruct3Interface::prop2(){
+    testbed2::NestedStruct3Interface testTestbed2nestedstruct3interface;
     // Do implement test here
 }
 /**
  *  Test proptery prop3
 */
-void TestNestedStruct3Interface::prop3(){
-    NestedStruct3Interface testNestedstruct3interface;
+void TestTestbed2NestedStruct3Interface::prop3(){
+    testbed2::NestedStruct3Interface testTestbed2nestedstruct3interface;
     // Do implement test here
 }
 
-QTEST_MAIN(TestNestedStruct3Interface);
+QTEST_MAIN(TestTestbed2NestedStruct3Interface);
 
 

@@ -8,6 +8,8 @@
 
 #include "{{snake .Module.Name}}/api/api.h"
 
+namespace {{snake  .Module.Name }} {
+
 class {{$class}} : public Abstract{{.Interface.Name}}
 {
     Q_OBJECT
@@ -32,3 +34,5 @@ private:
     {{qtReturn "" .}} m_{{.Name}};
 {{- end }}
 };
+
+} // namespace {{snake  .Module.Name }} 

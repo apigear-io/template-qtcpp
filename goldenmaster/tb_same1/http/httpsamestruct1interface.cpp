@@ -20,6 +20,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "tb_same1/api/agent.h"
 #include <QtQml>
 
+namespace tb_same1 {
+
 HttpSameStruct1Interface::HttpSameStruct1Interface(QNetworkAccessManager *network, QObject *parent)
     : AbstractSameStruct1Interface(parent)
     , m_network(network)
@@ -89,3 +91,5 @@ void HttpSameStruct1Interface::applyState(const QJsonObject &state)
     setProp1(jsValue.toVariant().value<Struct1>());
   }
 }
+
+} // namespace tb_same1 

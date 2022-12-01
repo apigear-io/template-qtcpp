@@ -30,18 +30,18 @@ void Plugin::registerTypes(const char *uri)
     // register enum
 
     // register structs
-    qRegisterMetaType<StructBool>();
-    qmlRegisterUncreatableType<StructBoolFactory>(uri, 1, 0, "StructBoolFactory", "A struct factory can not be created");
-    qRegisterMetaType<StructInt>();
-    qmlRegisterUncreatableType<StructIntFactory>(uri, 1, 0, "StructIntFactory", "A struct factory can not be created");
-    qRegisterMetaType<StructFloat>();
-    qmlRegisterUncreatableType<StructFloatFactory>(uri, 1, 0, "StructFloatFactory", "A struct factory can not be created");
-    qRegisterMetaType<StructString>();
-    qmlRegisterUncreatableType<StructStringFactory>(uri, 1, 0, "StructStringFactory", "A struct factory can not be created");
+    qRegisterMetaType<testbed1::StructBool>();
+    qmlRegisterUncreatableType<testbed1::StructBoolFactory>(uri, 1, 0, "StructBoolFactory", "A struct factory can not be created");
+    qRegisterMetaType<testbed1::StructInt>();
+    qmlRegisterUncreatableType<testbed1::StructIntFactory>(uri, 1, 0, "StructIntFactory", "A struct factory can not be created");
+    qRegisterMetaType<testbed1::StructFloat>();
+    qmlRegisterUncreatableType<testbed1::StructFloatFactory>(uri, 1, 0, "StructFloatFactory", "A struct factory can not be created");
+    qRegisterMetaType<testbed1::StructString>();
+    qmlRegisterUncreatableType<testbed1::StructStringFactory>(uri, 1, 0, "StructStringFactory", "A struct factory can not be created");
 
     // register interfaces
-    qmlRegisterType<QmlStructInterface>(uri, 1, 0, "StructInterface");
-    qmlRegisterType<QmlStructArrayInterface>(uri, 1, 0, "StructArrayInterface");
+    qmlRegisterType<testbed1::QmlStructInterface>(uri, 1, 0, "StructInterface");
+    qmlRegisterType<testbed1::QmlStructArrayInterface>(uri, 1, 0, "StructArrayInterface");
 
 
 

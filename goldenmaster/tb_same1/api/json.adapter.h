@@ -14,6 +14,8 @@ inline void to_json(nlohmann::json& j, const QString& value) {
     j = value.toStdString();
 }
 
+namespace tb_same1 {
+
 inline void from_json(const nlohmann::json& j, Struct1& p) {
     if(j.contains("field1")) {
         p.setField1(j["field1"].get<int>());
@@ -53,3 +55,4 @@ inline void to_json(nlohmann::json& j, const Struct2& p) {
         {"field3", p.field3()}
         };
 }
+} //namespace tb_same1

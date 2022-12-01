@@ -23,6 +23,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "tb_simple/api/agent.h"
 
+namespace tb_simple {
+
 SimpleInterface::SimpleInterface(QObject *parent)
     : AbstractSimpleInterface(parent)
     , m_propBool(false)
@@ -119,3 +121,4 @@ QString SimpleInterface::funcString(const QString& paramString)
     SimpleInterfaceAgent::trace_funcString(this, paramString);
     return QString();
 }
+} //namespace tb_simple

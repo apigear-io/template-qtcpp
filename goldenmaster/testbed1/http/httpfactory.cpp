@@ -2,6 +2,8 @@
 #include "httpstructinterface.h"
 #include "httpstructarrayinterface.h"
 
+namespace testbed1 {
+
 HttpFactory::HttpFactory(QObject *parent)
     : QObject(parent)
     , m_network(new QNetworkAccessManager(this))
@@ -17,3 +19,6 @@ AbstractStructArrayInterface* HttpFactory::createStructArrayInterface(QObject *p
 {
     return new HttpStructArrayInterface(m_network, parent);
 }
+
+
+} //namespace testbed1

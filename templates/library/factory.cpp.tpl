@@ -4,6 +4,8 @@
 #include "{{.Name|lower}}.h"
 {{- end }}
 
+namespace {{snake  .Module.Name }} {
+
 Factory::Factory(QObject *parent)
     : QObject(parent)
 {
@@ -17,3 +19,5 @@ Abstract{{.Name}}* Factory::create{{Camel .Name}}(QObject *parent)
 }
 
 {{- end }}
+
+} // namespace {{snake  .Module.Name }}

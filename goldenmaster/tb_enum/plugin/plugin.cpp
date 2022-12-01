@@ -27,15 +27,15 @@ void Plugin::registerTypes(const char *uri)
 {
     // @uri tb.enum
     // register enum
-    qmlRegisterUncreatableType<Enum0>(uri, 1, 0, "Enum0", "An enum can not be created");
-    qmlRegisterUncreatableType<Enum1>(uri, 1, 0, "Enum1", "An enum can not be created");
-    qmlRegisterUncreatableType<Enum2>(uri, 1, 0, "Enum2", "An enum can not be created");
-    qmlRegisterUncreatableType<Enum3>(uri, 1, 0, "Enum3", "An enum can not be created");
+    qmlRegisterUncreatableType<tb_enum::Enum0>(uri, 1, 0, "Enum0", "An enum can not be created");
+    qmlRegisterUncreatableType<tb_enum::Enum1>(uri, 1, 0, "Enum1", "An enum can not be created");
+    qmlRegisterUncreatableType<tb_enum::Enum2>(uri, 1, 0, "Enum2", "An enum can not be created");
+    qmlRegisterUncreatableType<tb_enum::Enum3>(uri, 1, 0, "Enum3", "An enum can not be created");
 
     // register structs
 
     // register interfaces
-    qmlRegisterType<QmlEnumInterface>(uri, 1, 0, "EnumInterface");
+    qmlRegisterType<tb_enum::QmlEnumInterface>(uri, 1, 0, "EnumInterface");
 
 
 

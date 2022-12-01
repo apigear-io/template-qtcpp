@@ -28,6 +28,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #  define TB_SAME2_LIB_EXPORT Q_DECL_IMPORT
 #endif
 
+namespace tb_same2 {
+
 class TB_SAME2_LIB_EXPORT SameStruct2Interface : public AbstractSameStruct2Interface
 {
     Q_OBJECT
@@ -45,3 +47,4 @@ private:
     Struct2 m_prop1;
     Struct2 m_prop2;
 };
+} //namespace tb_same2

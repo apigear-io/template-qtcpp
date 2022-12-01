@@ -22,6 +22,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "structinterface.h"
 
+namespace testbed1 {
+
 class TESTBED1_LIB_EXPORT QmlStructInterface : public AbstractStructInterface
 {
     Q_OBJECT
@@ -57,3 +59,5 @@ Q_SIGNALS:
 private:
 	AbstractStructInterface *m_obj;
 };
+
+} //namespace testbed1

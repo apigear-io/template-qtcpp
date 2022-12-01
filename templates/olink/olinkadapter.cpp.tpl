@@ -13,6 +13,9 @@
 #include "{{snake .Module.Name}}/api/agent.h"
 #include "{{snake .Module.Name}}/api/json.adapter.h"
 
+#include "olink/remoteregistry.h"
+#include "olink/iremotenode.h"
+
 #include <QtCore>
 
 using namespace ApiGear::ObjectLink;
@@ -25,28 +28,32 @@ using json = nlohmann::json;
     , m_registry(registry)
     , m_node()
 {
-    m_registry.addObjectSource(this);
-    
 {{- range .Interface.Properties }}
-    connect(m_impl, &Abstract{{$iface}}::{{.Name}}Changed, this, [=]({{qtParam "" .}}) {
-        if(m_node) {
-            m_node->notifyPropertyChange("{{.Module.Name}}.{{$iface}}/{{.Name}}", {{.Name}});
+    connect(m_impl, &Abstract{{$iface}}::{{.Name}}Changed, this,
+        [=]({{ qtParam "" . }}) {
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "{{.Name}})");
+        for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
+            auto lockedNode = node.lock();
+            if(lockedNode) {
+                lockedNode->notifyPropertyChange(propertyId, {{.Name}});
+            }
         }
     });
+       
 {{- end }}    
 {{- range .Interface.Signals }}
-    connect(m_impl, &Abstract{{$iface}}::{{.Name}}, this, [=]({{qtParams "" .Params}}) {
-        if(m_node) {
-            const json& args = { {{ qtVars .Params }} };
-            m_node->notifySignal("{{$module}}.{{$iface}}/{{.Name}}", args);
-        }
+        connect(m_impl, &Abstract{{$iface}}::{{.Name}}, this,
+            [=]({{qtParams "" .Params}}) {
+                const nlohmann::json& args = { {{ qtVars .Params }} };
+                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "{{.Name}})");
+                for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
+                    auto lockedNode = node.lock();
+                    if(lockedNode) {
+                        lockedNode->notifySignal(signalId, args);
+                    }
+                }
     });
 {{- end }}
-}
-
-{{$class}}::~{{$class}}()
-{
-    m_registry.removeObjectSource(this);
 }
 
 json {{$class}}::captureState()
@@ -72,9 +79,9 @@ std::string {{$class}}::olinkObjectName() {
     return "{{$module}}.{{$iface}}";
 }
 
-json {{$class}}::olinkInvoke(std::string name, json args) {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
-    std::string path = Name::pathFromName(name);
+json {{$class}}::olinkInvoke(const std::string& methodId, const nlohmann::json& args){
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(methodId);
+    std::string path = Name::getMemberName(methodId);
 {{- range .Interface.Operations }}
     if(path == "{{.Name}}") {
 {{- range  $i, $e := .Params }}
@@ -92,9 +99,9 @@ json {{$class}}::olinkInvoke(std::string name, json args) {
     return json();
 }
 
-void {{$class}}::olinkSetProperty(std::string name, json value) {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
-    std::string path = Name::pathFromName(name);
+void {{$class}}::olinkSetProperty(const std::string& propertyId, const nlohmann::json& value){
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(propertyId);
+    std::string path = Name::getMemberName(propertyId);
 {{- range .Interface.Properties }}
     if(path == "{{.Name}}") {
         {{qtReturn "" .}} {{.Name}} = value.get<{{qtReturn "" .}}>();
@@ -103,14 +110,14 @@ void {{$class}}::olinkSetProperty(std::string name, json value) {
 {{- end }}    
 }
 
-void {{$class}}::olinkLinked(std::string name, IRemoteNode *node) {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
+void {{$class}}::olinkLinked(const std::string& objectId, IRemoteNode *node) {
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
     m_node = node;
 }
 
-void {{$class}}::olinkUnlinked(std::string name)
+void {{$class}}::olinkUnlinked(const std::string& objectId)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
     m_node = nullptr;
 }
 

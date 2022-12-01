@@ -24,6 +24,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "testbed2/api/agent.h"
 #include "testbed2/api/json.adapter.h"
 
+#include "olink/remoteregistry.h"
+#include "olink/iremotenode.h"
+
 #include <QtCore>
 
 using namespace ApiGear::ObjectLink;
@@ -36,34 +39,48 @@ OLinkNestedStruct2InterfaceAdapter::OLinkNestedStruct2InterfaceAdapter(RemoteReg
     , m_registry(registry)
     , m_node()
 {
-    m_registry.addObjectSource(this);
-    connect(m_impl, &AbstractNestedStruct2Interface::prop1Changed, this, [=](const NestedStruct1& prop1) {
-        if(m_node) {
-            m_node->notifyPropertyChange("testbed2.NestedStruct2Interface/prop1", prop1);
+    connect(m_impl, &AbstractNestedStruct2Interface::prop1Changed, this,
+        [=](const NestedStruct1& prop1) {
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "prop1)");
+        for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
+            auto lockedNode = node.lock();
+            if(lockedNode) {
+                lockedNode->notifyPropertyChange(propertyId, prop1);
+            }
         }
     });
-    connect(m_impl, &AbstractNestedStruct2Interface::prop2Changed, this, [=](const NestedStruct2& prop2) {
-        if(m_node) {
-            m_node->notifyPropertyChange("testbed2.NestedStruct2Interface/prop2", prop2);
+    connect(m_impl, &AbstractNestedStruct2Interface::prop2Changed, this,
+        [=](const NestedStruct2& prop2) {
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "prop2)");
+        for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
+            auto lockedNode = node.lock();
+            if(lockedNode) {
+                lockedNode->notifyPropertyChange(propertyId, prop2);
+            }
         }
     });
-    connect(m_impl, &AbstractNestedStruct2Interface::sig1, this, [=](const NestedStruct1& param1) {
-        if(m_node) {
-            const json& args = { param1 };
-            m_node->notifySignal("testbed2.NestedStruct2Interface/sig1", args);
-        }
+        connect(m_impl, &AbstractNestedStruct2Interface::sig1, this,
+            [=](const NestedStruct1& param1) {
+                const nlohmann::json& args = { param1 };
+                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sig1)");
+                for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
+                    auto lockedNode = node.lock();
+                    if(lockedNode) {
+                        lockedNode->notifySignal(signalId, args);
+                    }
+                }
     });
-    connect(m_impl, &AbstractNestedStruct2Interface::sig2, this, [=](const NestedStruct1& param1, const NestedStruct2& param2) {
-        if(m_node) {
-            const json& args = { param1, param2 };
-            m_node->notifySignal("testbed2.NestedStruct2Interface/sig2", args);
-        }
+        connect(m_impl, &AbstractNestedStruct2Interface::sig2, this,
+            [=](const NestedStruct1& param1, const NestedStruct2& param2) {
+                const nlohmann::json& args = { param1, param2 };
+                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sig2)");
+                for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
+                    auto lockedNode = node.lock();
+                    if(lockedNode) {
+                        lockedNode->notifySignal(signalId, args);
+                    }
+                }
     });
-}
-
-OLinkNestedStruct2InterfaceAdapter::~OLinkNestedStruct2InterfaceAdapter()
-{
-    m_registry.removeObjectSource(this);
 }
 
 json OLinkNestedStruct2InterfaceAdapter::captureState()
@@ -89,9 +106,9 @@ std::string OLinkNestedStruct2InterfaceAdapter::olinkObjectName() {
     return "testbed2.NestedStruct2Interface";
 }
 
-json OLinkNestedStruct2InterfaceAdapter::olinkInvoke(std::string name, json args) {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
-    std::string path = Name::pathFromName(name);
+json OLinkNestedStruct2InterfaceAdapter::olinkInvoke(const std::string& methodId, const nlohmann::json& args){
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(methodId);
+    std::string path = Name::getMemberName(methodId);
     if(path == "func1") {
         const NestedStruct1& param1 = args.at(0);
         NestedStruct1 result = m_impl->func1(param1);
@@ -106,9 +123,9 @@ json OLinkNestedStruct2InterfaceAdapter::olinkInvoke(std::string name, json args
     return json();
 }
 
-void OLinkNestedStruct2InterfaceAdapter::olinkSetProperty(std::string name, json value) {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
-    std::string path = Name::pathFromName(name);
+void OLinkNestedStruct2InterfaceAdapter::olinkSetProperty(const std::string& propertyId, const nlohmann::json& value){
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(propertyId);
+    std::string path = Name::getMemberName(propertyId);
     if(path == "prop1") {
         NestedStruct1 prop1 = value.get<NestedStruct1>();
         m_impl->setProp1(prop1);
@@ -119,14 +136,14 @@ void OLinkNestedStruct2InterfaceAdapter::olinkSetProperty(std::string name, json
     }    
 }
 
-void OLinkNestedStruct2InterfaceAdapter::olinkLinked(std::string name, IRemoteNode *node) {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
+void OLinkNestedStruct2InterfaceAdapter::olinkLinked(const std::string& objectId, IRemoteNode *node) {
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
     m_node = node;
 }
 
-void OLinkNestedStruct2InterfaceAdapter::olinkUnlinked(std::string name)
+void OLinkNestedStruct2InterfaceAdapter::olinkUnlinked(const std::string& objectId)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
     m_node = nullptr;
 }
 

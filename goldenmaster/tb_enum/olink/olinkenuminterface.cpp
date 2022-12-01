@@ -19,27 +19,24 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "tb_enum/api/agent.h"
 #include "tb_enum/api/json.adapter.h"
+
+#include "olink/iclientnode.h"
+
 #include <QtCore>
 
 using namespace ApiGear;
+using namespace ApiGear::ObjectLink;
 
-OLinkEnumInterface::OLinkEnumInterface(ClientRegistry& registry, QObject *parent)
+OLinkEnumInterface::OLinkEnumInterface(QObject *parent)
     : AbstractEnumInterface(parent)
     , m_prop0(Enum0::value0)
     , m_prop1(Enum1::value1)
     , m_prop2(Enum2::value2)
     , m_prop3(Enum3::value3)
     , m_isReady(false)
-    , m_node()
-    , m_registry(registry)
+    , m_node(nullptr)
 {        
     qDebug() << Q_FUNC_INFO;
-    m_node = m_registry.addObjectSink(this);
-}
-
-OLinkEnumInterface::~OLinkEnumInterface()
-{
-    m_registry.removeObjectSink(this);
 }
 
 void OLinkEnumInterface::applyState(const nlohmann::json& fields) 
@@ -178,7 +175,8 @@ QtPromise::QPromise<Enum0::Enum0Enum> OLinkEnumInterface::func0Async(const Enum0
     }
     return QtPromise::QPromise<Enum0::Enum0Enum>{[&](
         const QtPromise::QPromiseResolve<Enum0::Enum0Enum>& resolve) {
-            m_node->invokeRemote("tb.enum.EnumInterface/func0", nlohmann::json::array({param0}), [resolve](InvokeReplyArg arg) {                
+            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func0");
+            m_node->invokeRemote(operationId, nlohmann::json::array({param0}), [resolve](InvokeReplyArg arg) {                
                 const Enum0::Enum0Enum& value = arg.value.get<Enum0::Enum0Enum>();
                 resolve(value);
             });
@@ -209,7 +207,8 @@ QtPromise::QPromise<Enum1::Enum1Enum> OLinkEnumInterface::func1Async(const Enum1
     }
     return QtPromise::QPromise<Enum1::Enum1Enum>{[&](
         const QtPromise::QPromiseResolve<Enum1::Enum1Enum>& resolve) {
-            m_node->invokeRemote("tb.enum.EnumInterface/func1", nlohmann::json::array({param1}), [resolve](InvokeReplyArg arg) {                
+            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func1");
+            m_node->invokeRemote(operationId, nlohmann::json::array({param1}), [resolve](InvokeReplyArg arg) {                
                 const Enum1::Enum1Enum& value = arg.value.get<Enum1::Enum1Enum>();
                 resolve(value);
             });
@@ -240,7 +239,8 @@ QtPromise::QPromise<Enum2::Enum2Enum> OLinkEnumInterface::func2Async(const Enum2
     }
     return QtPromise::QPromise<Enum2::Enum2Enum>{[&](
         const QtPromise::QPromiseResolve<Enum2::Enum2Enum>& resolve) {
-            m_node->invokeRemote("tb.enum.EnumInterface/func2", nlohmann::json::array({param2}), [resolve](InvokeReplyArg arg) {                
+            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func2");
+            m_node->invokeRemote(operationId, nlohmann::json::array({param2}), [resolve](InvokeReplyArg arg) {                
                 const Enum2::Enum2Enum& value = arg.value.get<Enum2::Enum2Enum>();
                 resolve(value);
             });
@@ -271,7 +271,8 @@ QtPromise::QPromise<Enum3::Enum3Enum> OLinkEnumInterface::func3Async(const Enum3
     }
     return QtPromise::QPromise<Enum3::Enum3Enum>{[&](
         const QtPromise::QPromiseResolve<Enum3::Enum3Enum>& resolve) {
-            m_node->invokeRemote("tb.enum.EnumInterface/func3", nlohmann::json::array({param3}), [resolve](InvokeReplyArg arg) {                
+            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func3");
+            m_node->invokeRemote(operationId, nlohmann::json::array({param3}), [resolve](InvokeReplyArg arg) {                
                 const Enum3::Enum3Enum& value = arg.value.get<Enum3::Enum3Enum>();
                 resolve(value);
             });
@@ -285,37 +286,37 @@ std::string OLinkEnumInterface::olinkObjectName()
     return "tb.enum.EnumInterface";
 }
 
-void OLinkEnumInterface::olinkOnSignal(std::string name, nlohmann::json args)
+void OLinkEnumInterface::olinkOnSignal(const std::string& signalId, const nlohmann::json& args)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
-    std::string path = Name::pathFromName(name);
-    if(path == "sig0") {
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(signalId);
+    auto signalName = Name::getMemberName(signalId);
+    if(signalName == "sig0") {
         emit sig0(args[0].get<Enum0::Enum0Enum>());   
         return;
     }
-    if(path == "sig1") {
+    if(signalName == "sig1") {
         emit sig1(args[0].get<Enum1::Enum1Enum>());   
         return;
     }
-    if(path == "sig2") {
+    if(signalName == "sig2") {
         emit sig2(args[0].get<Enum2::Enum2Enum>());   
         return;
     }
-    if(path == "sig3") {
+    if(signalName == "sig3") {
         emit sig3(args[0].get<Enum3::Enum3Enum>());   
         return;
     }
 }
 
-void OLinkEnumInterface::olinkOnPropertyChanged(std::string name, nlohmann::json value)
+void OLinkEnumInterface::olinkOnPropertyChanged(const std::string& propertyId, const nlohmann::json& value)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
-    std::string path = Name::pathFromName(name);
-    applyState({ {path, value} });
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(propertyId);
+    std::string propertyName = Name::getMemberName(propertyId);
+    applyState({ {propertyName, value} });
 }
-void OLinkEnumInterface::olinkOnInit(std::string name, nlohmann::json props, IClientNode *node)
+void OLinkEnumInterface::olinkOnInit(const std::string& objectId, const nlohmann::json& props, IClientNode *node)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
     m_isReady = true;
     m_node = node;
     applyState(props);

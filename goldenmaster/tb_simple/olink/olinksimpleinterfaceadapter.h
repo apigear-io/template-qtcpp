@@ -22,17 +22,21 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <nlohmann/json.hpp>
 
 #include "tb_simple/api/api.h"
-#include "olink/remotenode.h"
+#include "olink/iobjectsource.h"
 
-using namespace ApiGear;
-using namespace ApiGear::ObjectLink;
+namespace ApiGear {
+namespace ObjectLink {
+class RemoteRegistry;
+class IRemoteNode;
+}}
 
-class OLinkSimpleInterfaceAdapter : public QObject, public IObjectSource
+
+class OLinkSimpleInterfaceAdapter : public QObject, public ApiGear::ObjectLink::IObjectSource
 {
     Q_OBJECT
 public:
-    explicit OLinkSimpleInterfaceAdapter(RemoteRegistry& registry, AbstractSimpleInterface* impl, QObject *parent = nullptr);
-    virtual ~OLinkSimpleInterfaceAdapter() override;
+    explicit OLinkSimpleInterfaceAdapter(ApiGear::ObjectLink::RemoteRegistry& registry, AbstractSimpleInterface* impl, QObject *parent = nullptr);
+    virtual ~OLinkSimpleInterfaceAdapter() = default;
 public:
     void publishState();
     nlohmann::json captureState();
@@ -40,14 +44,14 @@ public:
     
 public: // IObjectSource interface
     std::string olinkObjectName() override;
-    nlohmann::json olinkInvoke(std::string name, nlohmann::json args) override;
-    void olinkSetProperty(std::string name, nlohmann::json value) override;
-    void olinkLinked(std::string name, IRemoteNode *node) override;
-    void olinkUnlinked(std::string name) override;
+    nlohmann::json olinkInvoke(const std::string& methodId, const nlohmann::json& args) override;
+    void olinkSetProperty(const std::string& propertyId, const nlohmann::json& value) override;
+    void olinkLinked(const std::string& objectId, ApiGear::ObjectLink::IRemoteNode *node) override;
+    void olinkUnlinked(const std::string& objectId) override;
     nlohmann::json olinkCollectProperties() override;
 
 private:
     AbstractSimpleInterface* m_impl;
-    RemoteRegistry& m_registry;
-    IRemoteNode *m_node;
+    ApiGear::ObjectLink::RemoteRegistry& m_registry;
+    ApiGear::ObjectLink::IRemoteNode *m_node;
 };

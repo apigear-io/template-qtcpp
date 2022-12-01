@@ -19,27 +19,24 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "testbed1/api/agent.h"
 #include "testbed1/api/json.adapter.h"
+
+#include "olink/iclientnode.h"
+
 #include <QtCore>
 
 using namespace ApiGear;
+using namespace ApiGear::ObjectLink;
 
-OLinkStructArrayInterface::OLinkStructArrayInterface(ClientRegistry& registry, QObject *parent)
+OLinkStructArrayInterface::OLinkStructArrayInterface(QObject *parent)
     : AbstractStructArrayInterface(parent)
     , m_propBool(QList<StructBool>())
     , m_propInt(QList<StructInt>())
     , m_propFloat(QList<StructFloat>())
     , m_propString(QList<StructString>())
     , m_isReady(false)
-    , m_node()
-    , m_registry(registry)
+    , m_node(nullptr)
 {        
     qDebug() << Q_FUNC_INFO;
-    m_node = m_registry.addObjectSink(this);
-}
-
-OLinkStructArrayInterface::~OLinkStructArrayInterface()
-{
-    m_registry.removeObjectSink(this);
 }
 
 void OLinkStructArrayInterface::applyState(const nlohmann::json& fields) 
@@ -178,7 +175,8 @@ QtPromise::QPromise<StructBool> OLinkStructArrayInterface::funcBoolAsync(const Q
     }
     return QtPromise::QPromise<StructBool>{[&](
         const QtPromise::QPromiseResolve<StructBool>& resolve) {
-            m_node->invokeRemote("testbed1.StructArrayInterface/funcBool", nlohmann::json::array({paramBool}), [resolve](InvokeReplyArg arg) {                
+            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcBool");
+            m_node->invokeRemote(operationId, nlohmann::json::array({paramBool}), [resolve](InvokeReplyArg arg) {                
                 const StructBool& value = arg.value.get<StructBool>();
                 resolve(value);
             });
@@ -209,7 +207,8 @@ QtPromise::QPromise<StructBool> OLinkStructArrayInterface::funcIntAsync(const QL
     }
     return QtPromise::QPromise<StructBool>{[&](
         const QtPromise::QPromiseResolve<StructBool>& resolve) {
-            m_node->invokeRemote("testbed1.StructArrayInterface/funcInt", nlohmann::json::array({paramInt}), [resolve](InvokeReplyArg arg) {                
+            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcInt");
+            m_node->invokeRemote(operationId, nlohmann::json::array({paramInt}), [resolve](InvokeReplyArg arg) {                
                 const StructBool& value = arg.value.get<StructBool>();
                 resolve(value);
             });
@@ -240,7 +239,8 @@ QtPromise::QPromise<StructBool> OLinkStructArrayInterface::funcFloatAsync(const 
     }
     return QtPromise::QPromise<StructBool>{[&](
         const QtPromise::QPromiseResolve<StructBool>& resolve) {
-            m_node->invokeRemote("testbed1.StructArrayInterface/funcFloat", nlohmann::json::array({paramFloat}), [resolve](InvokeReplyArg arg) {                
+            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcFloat");
+            m_node->invokeRemote(operationId, nlohmann::json::array({paramFloat}), [resolve](InvokeReplyArg arg) {                
                 const StructBool& value = arg.value.get<StructBool>();
                 resolve(value);
             });
@@ -271,7 +271,8 @@ QtPromise::QPromise<StructBool> OLinkStructArrayInterface::funcStringAsync(const
     }
     return QtPromise::QPromise<StructBool>{[&](
         const QtPromise::QPromiseResolve<StructBool>& resolve) {
-            m_node->invokeRemote("testbed1.StructArrayInterface/funcString", nlohmann::json::array({paramString}), [resolve](InvokeReplyArg arg) {                
+            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcString");
+            m_node->invokeRemote(operationId, nlohmann::json::array({paramString}), [resolve](InvokeReplyArg arg) {                
                 const StructBool& value = arg.value.get<StructBool>();
                 resolve(value);
             });
@@ -285,37 +286,37 @@ std::string OLinkStructArrayInterface::olinkObjectName()
     return "testbed1.StructArrayInterface";
 }
 
-void OLinkStructArrayInterface::olinkOnSignal(std::string name, nlohmann::json args)
+void OLinkStructArrayInterface::olinkOnSignal(const std::string& signalId, const nlohmann::json& args)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
-    std::string path = Name::pathFromName(name);
-    if(path == "sigBool") {
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(signalId);
+    auto signalName = Name::getMemberName(signalId);
+    if(signalName == "sigBool") {
         emit sigBool(args[0].get<QList<StructBool>>());   
         return;
     }
-    if(path == "sigInt") {
+    if(signalName == "sigInt") {
         emit sigInt(args[0].get<QList<StructInt>>());   
         return;
     }
-    if(path == "sigFloat") {
+    if(signalName == "sigFloat") {
         emit sigFloat(args[0].get<QList<StructFloat>>());   
         return;
     }
-    if(path == "sigString") {
+    if(signalName == "sigString") {
         emit sigString(args[0].get<QList<StructString>>());   
         return;
     }
 }
 
-void OLinkStructArrayInterface::olinkOnPropertyChanged(std::string name, nlohmann::json value)
+void OLinkStructArrayInterface::olinkOnPropertyChanged(const std::string& propertyId, const nlohmann::json& value)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
-    std::string path = Name::pathFromName(name);
-    applyState({ {path, value} });
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(propertyId);
+    std::string propertyName = Name::getMemberName(propertyId);
+    applyState({ {propertyName, value} });
 }
-void OLinkStructArrayInterface::olinkOnInit(std::string name, nlohmann::json props, IClientNode *node)
+void OLinkStructArrayInterface::olinkOnInit(const std::string& objectId, const nlohmann::json& props, IClientNode *node)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
     m_isReady = true;
     m_node = node;
     applyState(props);

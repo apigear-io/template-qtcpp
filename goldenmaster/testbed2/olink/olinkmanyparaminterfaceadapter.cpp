@@ -24,6 +24,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "testbed2/api/agent.h"
 #include "testbed2/api/json.adapter.h"
 
+#include "olink/remoteregistry.h"
+#include "olink/iremotenode.h"
+
 #include <QtCore>
 
 using namespace ApiGear::ObjectLink;
@@ -36,56 +39,90 @@ OLinkManyParamInterfaceAdapter::OLinkManyParamInterfaceAdapter(RemoteRegistry& r
     , m_registry(registry)
     , m_node()
 {
-    m_registry.addObjectSource(this);
-    connect(m_impl, &AbstractManyParamInterface::prop1Changed, this, [=](int prop1) {
-        if(m_node) {
-            m_node->notifyPropertyChange("testbed2.ManyParamInterface/prop1", prop1);
+    connect(m_impl, &AbstractManyParamInterface::prop1Changed, this,
+        [=](int prop1) {
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "prop1)");
+        for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
+            auto lockedNode = node.lock();
+            if(lockedNode) {
+                lockedNode->notifyPropertyChange(propertyId, prop1);
+            }
         }
     });
-    connect(m_impl, &AbstractManyParamInterface::prop2Changed, this, [=](int prop2) {
-        if(m_node) {
-            m_node->notifyPropertyChange("testbed2.ManyParamInterface/prop2", prop2);
+    connect(m_impl, &AbstractManyParamInterface::prop2Changed, this,
+        [=](int prop2) {
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "prop2)");
+        for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
+            auto lockedNode = node.lock();
+            if(lockedNode) {
+                lockedNode->notifyPropertyChange(propertyId, prop2);
+            }
         }
     });
-    connect(m_impl, &AbstractManyParamInterface::prop3Changed, this, [=](int prop3) {
-        if(m_node) {
-            m_node->notifyPropertyChange("testbed2.ManyParamInterface/prop3", prop3);
+    connect(m_impl, &AbstractManyParamInterface::prop3Changed, this,
+        [=](int prop3) {
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "prop3)");
+        for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
+            auto lockedNode = node.lock();
+            if(lockedNode) {
+                lockedNode->notifyPropertyChange(propertyId, prop3);
+            }
         }
     });
-    connect(m_impl, &AbstractManyParamInterface::prop4Changed, this, [=](int prop4) {
-        if(m_node) {
-            m_node->notifyPropertyChange("testbed2.ManyParamInterface/prop4", prop4);
+    connect(m_impl, &AbstractManyParamInterface::prop4Changed, this,
+        [=](int prop4) {
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "prop4)");
+        for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
+            auto lockedNode = node.lock();
+            if(lockedNode) {
+                lockedNode->notifyPropertyChange(propertyId, prop4);
+            }
         }
     });
-    connect(m_impl, &AbstractManyParamInterface::sig1, this, [=](int param1) {
-        if(m_node) {
-            const json& args = { param1 };
-            m_node->notifySignal("testbed2.ManyParamInterface/sig1", args);
-        }
+        connect(m_impl, &AbstractManyParamInterface::sig1, this,
+            [=](int param1) {
+                const nlohmann::json& args = { param1 };
+                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sig1)");
+                for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
+                    auto lockedNode = node.lock();
+                    if(lockedNode) {
+                        lockedNode->notifySignal(signalId, args);
+                    }
+                }
     });
-    connect(m_impl, &AbstractManyParamInterface::sig2, this, [=](int param1, int param2) {
-        if(m_node) {
-            const json& args = { param1, param2 };
-            m_node->notifySignal("testbed2.ManyParamInterface/sig2", args);
-        }
+        connect(m_impl, &AbstractManyParamInterface::sig2, this,
+            [=](int param1, int param2) {
+                const nlohmann::json& args = { param1, param2 };
+                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sig2)");
+                for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
+                    auto lockedNode = node.lock();
+                    if(lockedNode) {
+                        lockedNode->notifySignal(signalId, args);
+                    }
+                }
     });
-    connect(m_impl, &AbstractManyParamInterface::sig3, this, [=](int param1, int param2, int param3) {
-        if(m_node) {
-            const json& args = { param1, param2, param3 };
-            m_node->notifySignal("testbed2.ManyParamInterface/sig3", args);
-        }
+        connect(m_impl, &AbstractManyParamInterface::sig3, this,
+            [=](int param1, int param2, int param3) {
+                const nlohmann::json& args = { param1, param2, param3 };
+                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sig3)");
+                for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
+                    auto lockedNode = node.lock();
+                    if(lockedNode) {
+                        lockedNode->notifySignal(signalId, args);
+                    }
+                }
     });
-    connect(m_impl, &AbstractManyParamInterface::sig4, this, [=](int param1, int param2, int param3, int param4) {
-        if(m_node) {
-            const json& args = { param1, param2, param3, param4 };
-            m_node->notifySignal("testbed2.ManyParamInterface/sig4", args);
-        }
+        connect(m_impl, &AbstractManyParamInterface::sig4, this,
+            [=](int param1, int param2, int param3, int param4) {
+                const nlohmann::json& args = { param1, param2, param3, param4 };
+                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sig4)");
+                for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
+                    auto lockedNode = node.lock();
+                    if(lockedNode) {
+                        lockedNode->notifySignal(signalId, args);
+                    }
+                }
     });
-}
-
-OLinkManyParamInterfaceAdapter::~OLinkManyParamInterfaceAdapter()
-{
-    m_registry.removeObjectSource(this);
 }
 
 json OLinkManyParamInterfaceAdapter::captureState()
@@ -119,9 +156,9 @@ std::string OLinkManyParamInterfaceAdapter::olinkObjectName() {
     return "testbed2.ManyParamInterface";
 }
 
-json OLinkManyParamInterfaceAdapter::olinkInvoke(std::string name, json args) {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
-    std::string path = Name::pathFromName(name);
+json OLinkManyParamInterfaceAdapter::olinkInvoke(const std::string& methodId, const nlohmann::json& args){
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(methodId);
+    std::string path = Name::getMemberName(methodId);
     if(path == "func1") {
         const int& param1 = args.at(0);
         int result = m_impl->func1(param1);
@@ -151,9 +188,9 @@ json OLinkManyParamInterfaceAdapter::olinkInvoke(std::string name, json args) {
     return json();
 }
 
-void OLinkManyParamInterfaceAdapter::olinkSetProperty(std::string name, json value) {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
-    std::string path = Name::pathFromName(name);
+void OLinkManyParamInterfaceAdapter::olinkSetProperty(const std::string& propertyId, const nlohmann::json& value){
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(propertyId);
+    std::string path = Name::getMemberName(propertyId);
     if(path == "prop1") {
         int prop1 = value.get<int>();
         m_impl->setProp1(prop1);
@@ -172,14 +209,14 @@ void OLinkManyParamInterfaceAdapter::olinkSetProperty(std::string name, json val
     }    
 }
 
-void OLinkManyParamInterfaceAdapter::olinkLinked(std::string name, IRemoteNode *node) {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
+void OLinkManyParamInterfaceAdapter::olinkLinked(const std::string& objectId, IRemoteNode *node) {
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
     m_node = node;
 }
 
-void OLinkManyParamInterfaceAdapter::olinkUnlinked(std::string name)
+void OLinkManyParamInterfaceAdapter::olinkUnlinked(const std::string& objectId)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
     m_node = nullptr;
 }
 

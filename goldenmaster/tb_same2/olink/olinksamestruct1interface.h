@@ -21,7 +21,15 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <QtPromise>
 
 #include "tb_same2/api/api.h"
-#include "olink/clientnode.h"
+#include "olink/iobjectsink.h"
+
+#include <nlohmann/json.hpp>
+
+namespace ApiGear {
+namespace ObjectLink {
+class IClientNode;
+}}
+
 
 using namespace ApiGear;
 using namespace ApiGear::ObjectLink;
@@ -30,8 +38,8 @@ class OLinkSameStruct1Interface : public AbstractSameStruct1Interface, public IO
 {
     Q_OBJECT
 public:
-    explicit OLinkSameStruct1Interface(ClientRegistry& registry, QObject *parent = nullptr);
-    virtual ~OLinkSameStruct1Interface() override;
+    explicit OLinkSameStruct1Interface(QObject *parent = nullptr);
+    virtual ~OLinkSameStruct1Interface() = default;
 
     void applyState(const nlohmann::json& fields);
     Struct1 prop1() const override;
@@ -43,13 +51,12 @@ signals:
     void isReady();
 public:
     virtual std::string olinkObjectName() override;
-    virtual void olinkOnSignal(std::string name, nlohmann::json args) override;
-    virtual void olinkOnPropertyChanged(std::string name, nlohmann::json value) override;
-    virtual void olinkOnInit(std::string name, nlohmann::json props, IClientNode *node) override;
+    virtual void olinkOnSignal(const std::string& signalId, const nlohmann::json& args) override;
+    virtual void olinkOnPropertyChanged(const std::string& propertyId, const nlohmann::json& value) override;
+    virtual void olinkOnInit(const std::string& objectId, const nlohmann::json& props, ::ApiGear::ObjectLink::IClientNode *node) override;
     virtual void olinkOnRelease() override;
 private:
     Struct1 m_prop1;
     bool m_isReady;
     IClientNode *m_node;
-    ClientRegistry& m_registry;
 };

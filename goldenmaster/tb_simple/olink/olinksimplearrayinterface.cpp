@@ -19,27 +19,24 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "tb_simple/api/agent.h"
 #include "tb_simple/api/json.adapter.h"
+
+#include "olink/iclientnode.h"
+
 #include <QtCore>
 
 using namespace ApiGear;
+using namespace ApiGear::ObjectLink;
 
-OLinkSimpleArrayInterface::OLinkSimpleArrayInterface(ClientRegistry& registry, QObject *parent)
+OLinkSimpleArrayInterface::OLinkSimpleArrayInterface(QObject *parent)
     : AbstractSimpleArrayInterface(parent)
     , m_propBool(QList<bool>())
     , m_propInt(QList<int>())
     , m_propFloat(QList<qreal>())
     , m_propString(QList<QString>())
     , m_isReady(false)
-    , m_node()
-    , m_registry(registry)
+    , m_node(nullptr)
 {        
     qDebug() << Q_FUNC_INFO;
-    m_node = m_registry.addObjectSink(this);
-}
-
-OLinkSimpleArrayInterface::~OLinkSimpleArrayInterface()
-{
-    m_registry.removeObjectSink(this);
 }
 
 void OLinkSimpleArrayInterface::applyState(const nlohmann::json& fields) 
@@ -178,7 +175,8 @@ QtPromise::QPromise<QList<bool>> OLinkSimpleArrayInterface::funcBoolAsync(const 
     }
     return QtPromise::QPromise<QList<bool>>{[&](
         const QtPromise::QPromiseResolve<QList<bool>>& resolve) {
-            m_node->invokeRemote("tb.simple.SimpleArrayInterface/funcBool", nlohmann::json::array({paramBool}), [resolve](InvokeReplyArg arg) {                
+            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcBool");
+            m_node->invokeRemote(operationId, nlohmann::json::array({paramBool}), [resolve](InvokeReplyArg arg) {                
                 const QList<bool>& value = arg.value.get<QList<bool>>();
                 resolve(value);
             });
@@ -209,7 +207,8 @@ QtPromise::QPromise<QList<int>> OLinkSimpleArrayInterface::funcIntAsync(const QL
     }
     return QtPromise::QPromise<QList<int>>{[&](
         const QtPromise::QPromiseResolve<QList<int>>& resolve) {
-            m_node->invokeRemote("tb.simple.SimpleArrayInterface/funcInt", nlohmann::json::array({paramInt}), [resolve](InvokeReplyArg arg) {                
+            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcInt");
+            m_node->invokeRemote(operationId, nlohmann::json::array({paramInt}), [resolve](InvokeReplyArg arg) {                
                 const QList<int>& value = arg.value.get<QList<int>>();
                 resolve(value);
             });
@@ -240,7 +239,8 @@ QtPromise::QPromise<QList<qreal>> OLinkSimpleArrayInterface::funcFloatAsync(cons
     }
     return QtPromise::QPromise<QList<qreal>>{[&](
         const QtPromise::QPromiseResolve<QList<qreal>>& resolve) {
-            m_node->invokeRemote("tb.simple.SimpleArrayInterface/funcFloat", nlohmann::json::array({paramFloat}), [resolve](InvokeReplyArg arg) {                
+            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcFloat");
+            m_node->invokeRemote(operationId, nlohmann::json::array({paramFloat}), [resolve](InvokeReplyArg arg) {                
                 const QList<qreal>& value = arg.value.get<QList<qreal>>();
                 resolve(value);
             });
@@ -271,7 +271,8 @@ QtPromise::QPromise<QList<QString>> OLinkSimpleArrayInterface::funcStringAsync(c
     }
     return QtPromise::QPromise<QList<QString>>{[&](
         const QtPromise::QPromiseResolve<QList<QString>>& resolve) {
-            m_node->invokeRemote("tb.simple.SimpleArrayInterface/funcString", nlohmann::json::array({paramString}), [resolve](InvokeReplyArg arg) {                
+            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcString");
+            m_node->invokeRemote(operationId, nlohmann::json::array({paramString}), [resolve](InvokeReplyArg arg) {                
                 const QList<QString>& value = arg.value.get<QList<QString>>();
                 resolve(value);
             });
@@ -285,37 +286,37 @@ std::string OLinkSimpleArrayInterface::olinkObjectName()
     return "tb.simple.SimpleArrayInterface";
 }
 
-void OLinkSimpleArrayInterface::olinkOnSignal(std::string name, nlohmann::json args)
+void OLinkSimpleArrayInterface::olinkOnSignal(const std::string& signalId, const nlohmann::json& args)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
-    std::string path = Name::pathFromName(name);
-    if(path == "sigBool") {
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(signalId);
+    auto signalName = Name::getMemberName(signalId);
+    if(signalName == "sigBool") {
         emit sigBool(args[0].get<QList<bool>>());   
         return;
     }
-    if(path == "sigInt") {
+    if(signalName == "sigInt") {
         emit sigInt(args[0].get<QList<int>>());   
         return;
     }
-    if(path == "sigFloat") {
+    if(signalName == "sigFloat") {
         emit sigFloat(args[0].get<QList<qreal>>());   
         return;
     }
-    if(path == "sigString") {
+    if(signalName == "sigString") {
         emit sigString(args[0].get<QList<QString>>());   
         return;
     }
 }
 
-void OLinkSimpleArrayInterface::olinkOnPropertyChanged(std::string name, nlohmann::json value)
+void OLinkSimpleArrayInterface::olinkOnPropertyChanged(const std::string& propertyId, const nlohmann::json& value)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
-    std::string path = Name::pathFromName(name);
-    applyState({ {path, value} });
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(propertyId);
+    std::string propertyName = Name::getMemberName(propertyId);
+    applyState({ {propertyName, value} });
 }
-void OLinkSimpleArrayInterface::olinkOnInit(std::string name, nlohmann::json props, IClientNode *node)
+void OLinkSimpleArrayInterface::olinkOnInit(const std::string& objectId, const nlohmann::json& props, IClientNode *node)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
     m_isReady = true;
     m_node = node;
     applyState(props);

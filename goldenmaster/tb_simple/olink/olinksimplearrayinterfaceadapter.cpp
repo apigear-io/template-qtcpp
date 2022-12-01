@@ -24,6 +24,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "tb_simple/api/agent.h"
 #include "tb_simple/api/json.adapter.h"
 
+#include "olink/remoteregistry.h"
+#include "olink/iremotenode.h"
+
 #include <QtCore>
 
 using namespace ApiGear::ObjectLink;
@@ -36,56 +39,90 @@ OLinkSimpleArrayInterfaceAdapter::OLinkSimpleArrayInterfaceAdapter(RemoteRegistr
     , m_registry(registry)
     , m_node()
 {
-    m_registry.addObjectSource(this);
-    connect(m_impl, &AbstractSimpleArrayInterface::propBoolChanged, this, [=](const QList<bool>& propBool) {
-        if(m_node) {
-            m_node->notifyPropertyChange("tb.simple.SimpleArrayInterface/propBool", propBool);
+    connect(m_impl, &AbstractSimpleArrayInterface::propBoolChanged, this,
+        [=](const QList<bool>& propBool) {
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "propBool)");
+        for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
+            auto lockedNode = node.lock();
+            if(lockedNode) {
+                lockedNode->notifyPropertyChange(propertyId, propBool);
+            }
         }
     });
-    connect(m_impl, &AbstractSimpleArrayInterface::propIntChanged, this, [=](const QList<int>& propInt) {
-        if(m_node) {
-            m_node->notifyPropertyChange("tb.simple.SimpleArrayInterface/propInt", propInt);
+    connect(m_impl, &AbstractSimpleArrayInterface::propIntChanged, this,
+        [=](const QList<int>& propInt) {
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "propInt)");
+        for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
+            auto lockedNode = node.lock();
+            if(lockedNode) {
+                lockedNode->notifyPropertyChange(propertyId, propInt);
+            }
         }
     });
-    connect(m_impl, &AbstractSimpleArrayInterface::propFloatChanged, this, [=](const QList<qreal>& propFloat) {
-        if(m_node) {
-            m_node->notifyPropertyChange("tb.simple.SimpleArrayInterface/propFloat", propFloat);
+    connect(m_impl, &AbstractSimpleArrayInterface::propFloatChanged, this,
+        [=](const QList<qreal>& propFloat) {
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "propFloat)");
+        for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
+            auto lockedNode = node.lock();
+            if(lockedNode) {
+                lockedNode->notifyPropertyChange(propertyId, propFloat);
+            }
         }
     });
-    connect(m_impl, &AbstractSimpleArrayInterface::propStringChanged, this, [=](const QList<QString>& propString) {
-        if(m_node) {
-            m_node->notifyPropertyChange("tb.simple.SimpleArrayInterface/propString", propString);
+    connect(m_impl, &AbstractSimpleArrayInterface::propStringChanged, this,
+        [=](const QList<QString>& propString) {
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "propString)");
+        for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
+            auto lockedNode = node.lock();
+            if(lockedNode) {
+                lockedNode->notifyPropertyChange(propertyId, propString);
+            }
         }
     });
-    connect(m_impl, &AbstractSimpleArrayInterface::sigBool, this, [=](const QList<bool>& paramBool) {
-        if(m_node) {
-            const json& args = { paramBool };
-            m_node->notifySignal("tb.simple.SimpleArrayInterface/sigBool", args);
-        }
+        connect(m_impl, &AbstractSimpleArrayInterface::sigBool, this,
+            [=](const QList<bool>& paramBool) {
+                const nlohmann::json& args = { paramBool };
+                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sigBool)");
+                for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
+                    auto lockedNode = node.lock();
+                    if(lockedNode) {
+                        lockedNode->notifySignal(signalId, args);
+                    }
+                }
     });
-    connect(m_impl, &AbstractSimpleArrayInterface::sigInt, this, [=](const QList<int>& paramInt) {
-        if(m_node) {
-            const json& args = { paramInt };
-            m_node->notifySignal("tb.simple.SimpleArrayInterface/sigInt", args);
-        }
+        connect(m_impl, &AbstractSimpleArrayInterface::sigInt, this,
+            [=](const QList<int>& paramInt) {
+                const nlohmann::json& args = { paramInt };
+                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sigInt)");
+                for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
+                    auto lockedNode = node.lock();
+                    if(lockedNode) {
+                        lockedNode->notifySignal(signalId, args);
+                    }
+                }
     });
-    connect(m_impl, &AbstractSimpleArrayInterface::sigFloat, this, [=](const QList<qreal>& paramFloat) {
-        if(m_node) {
-            const json& args = { paramFloat };
-            m_node->notifySignal("tb.simple.SimpleArrayInterface/sigFloat", args);
-        }
+        connect(m_impl, &AbstractSimpleArrayInterface::sigFloat, this,
+            [=](const QList<qreal>& paramFloat) {
+                const nlohmann::json& args = { paramFloat };
+                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sigFloat)");
+                for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
+                    auto lockedNode = node.lock();
+                    if(lockedNode) {
+                        lockedNode->notifySignal(signalId, args);
+                    }
+                }
     });
-    connect(m_impl, &AbstractSimpleArrayInterface::sigString, this, [=](const QList<QString>& paramString) {
-        if(m_node) {
-            const json& args = { paramString };
-            m_node->notifySignal("tb.simple.SimpleArrayInterface/sigString", args);
-        }
+        connect(m_impl, &AbstractSimpleArrayInterface::sigString, this,
+            [=](const QList<QString>& paramString) {
+                const nlohmann::json& args = { paramString };
+                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sigString)");
+                for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
+                    auto lockedNode = node.lock();
+                    if(lockedNode) {
+                        lockedNode->notifySignal(signalId, args);
+                    }
+                }
     });
-}
-
-OLinkSimpleArrayInterfaceAdapter::~OLinkSimpleArrayInterfaceAdapter()
-{
-    m_registry.removeObjectSource(this);
 }
 
 json OLinkSimpleArrayInterfaceAdapter::captureState()
@@ -119,9 +156,9 @@ std::string OLinkSimpleArrayInterfaceAdapter::olinkObjectName() {
     return "tb.simple.SimpleArrayInterface";
 }
 
-json OLinkSimpleArrayInterfaceAdapter::olinkInvoke(std::string name, json args) {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
-    std::string path = Name::pathFromName(name);
+json OLinkSimpleArrayInterfaceAdapter::olinkInvoke(const std::string& methodId, const nlohmann::json& args){
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(methodId);
+    std::string path = Name::getMemberName(methodId);
     if(path == "funcBool") {
         const QList<bool>& paramBool = args.at(0);
         QList<bool> result = m_impl->funcBool(paramBool);
@@ -145,9 +182,9 @@ json OLinkSimpleArrayInterfaceAdapter::olinkInvoke(std::string name, json args) 
     return json();
 }
 
-void OLinkSimpleArrayInterfaceAdapter::olinkSetProperty(std::string name, json value) {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
-    std::string path = Name::pathFromName(name);
+void OLinkSimpleArrayInterfaceAdapter::olinkSetProperty(const std::string& propertyId, const nlohmann::json& value){
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(propertyId);
+    std::string path = Name::getMemberName(propertyId);
     if(path == "propBool") {
         QList<bool> propBool = value.get<QList<bool>>();
         m_impl->setPropBool(propBool);
@@ -166,14 +203,14 @@ void OLinkSimpleArrayInterfaceAdapter::olinkSetProperty(std::string name, json v
     }    
 }
 
-void OLinkSimpleArrayInterfaceAdapter::olinkLinked(std::string name, IRemoteNode *node) {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
+void OLinkSimpleArrayInterfaceAdapter::olinkLinked(const std::string& objectId, IRemoteNode *node) {
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
     m_node = node;
 }
 
-void OLinkSimpleArrayInterfaceAdapter::olinkUnlinked(std::string name)
+void OLinkSimpleArrayInterfaceAdapter::olinkUnlinked(const std::string& objectId)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
     m_node = nullptr;
 }
 

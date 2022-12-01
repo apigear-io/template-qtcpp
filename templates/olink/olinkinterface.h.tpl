@@ -10,7 +10,15 @@
 #include <QtPromise>
 
 #include "{{snake .Module.Name}}/api/api.h"
-#include "olink/clientnode.h"
+#include "olink/iobjectsink.h"
+
+#include <nlohmann/json.hpp>
+
+namespace ApiGear {
+namespace ObjectLink {
+class IClientNode;
+}}
+
 
 using namespace ApiGear;
 using namespace ApiGear::ObjectLink;
@@ -19,8 +27,8 @@ class {{$class}} : public Abstract{{.Interface.Name}}, public IObjectSink
 {
     Q_OBJECT
 public:
-    explicit {{$class}}(ClientRegistry& registry, QObject *parent = nullptr);
-    virtual ~{{$class}}() override;
+    explicit {{$class}}(QObject *parent = nullptr);
+    virtual ~{{$class}}() = default;
 
     void applyState(const nlohmann::json& fields);
 
@@ -38,9 +46,9 @@ signals:
     void isReady();
 public:
     virtual std::string olinkObjectName() override;
-    virtual void olinkOnSignal(std::string name, nlohmann::json args) override;
-    virtual void olinkOnPropertyChanged(std::string name, nlohmann::json value) override;
-    virtual void olinkOnInit(std::string name, nlohmann::json props, IClientNode *node) override;
+    virtual void olinkOnSignal(const std::string& signalId, const nlohmann::json& args) override;
+    virtual void olinkOnPropertyChanged(const std::string& propertyId, const nlohmann::json& value) override;
+    virtual void olinkOnInit(const std::string& objectId, const nlohmann::json& props, ::ApiGear::ObjectLink::IClientNode *node) override;
     virtual void olinkOnRelease() override;
 private:
 {{- range .Interface.Properties }}
@@ -48,5 +56,4 @@ private:
 {{- end }}
     bool m_isReady;
     IClientNode *m_node;
-    ClientRegistry& m_registry;
 };

@@ -24,6 +24,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "tb_enum/api/agent.h"
 #include "tb_enum/api/json.adapter.h"
 
+#include "olink/remoteregistry.h"
+#include "olink/iremotenode.h"
+
 #include <QtCore>
 
 using namespace ApiGear::ObjectLink;
@@ -36,56 +39,90 @@ OLinkEnumInterfaceAdapter::OLinkEnumInterfaceAdapter(RemoteRegistry& registry, A
     , m_registry(registry)
     , m_node()
 {
-    m_registry.addObjectSource(this);
-    connect(m_impl, &AbstractEnumInterface::prop0Changed, this, [=](const Enum0::Enum0Enum prop0) {
-        if(m_node) {
-            m_node->notifyPropertyChange("tb.enum.EnumInterface/prop0", prop0);
+    connect(m_impl, &AbstractEnumInterface::prop0Changed, this,
+        [=](const Enum0::Enum0Enum prop0) {
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "prop0)");
+        for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
+            auto lockedNode = node.lock();
+            if(lockedNode) {
+                lockedNode->notifyPropertyChange(propertyId, prop0);
+            }
         }
     });
-    connect(m_impl, &AbstractEnumInterface::prop1Changed, this, [=](const Enum1::Enum1Enum prop1) {
-        if(m_node) {
-            m_node->notifyPropertyChange("tb.enum.EnumInterface/prop1", prop1);
+    connect(m_impl, &AbstractEnumInterface::prop1Changed, this,
+        [=](const Enum1::Enum1Enum prop1) {
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "prop1)");
+        for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
+            auto lockedNode = node.lock();
+            if(lockedNode) {
+                lockedNode->notifyPropertyChange(propertyId, prop1);
+            }
         }
     });
-    connect(m_impl, &AbstractEnumInterface::prop2Changed, this, [=](const Enum2::Enum2Enum prop2) {
-        if(m_node) {
-            m_node->notifyPropertyChange("tb.enum.EnumInterface/prop2", prop2);
+    connect(m_impl, &AbstractEnumInterface::prop2Changed, this,
+        [=](const Enum2::Enum2Enum prop2) {
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "prop2)");
+        for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
+            auto lockedNode = node.lock();
+            if(lockedNode) {
+                lockedNode->notifyPropertyChange(propertyId, prop2);
+            }
         }
     });
-    connect(m_impl, &AbstractEnumInterface::prop3Changed, this, [=](const Enum3::Enum3Enum prop3) {
-        if(m_node) {
-            m_node->notifyPropertyChange("tb.enum.EnumInterface/prop3", prop3);
+    connect(m_impl, &AbstractEnumInterface::prop3Changed, this,
+        [=](const Enum3::Enum3Enum prop3) {
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "prop3)");
+        for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
+            auto lockedNode = node.lock();
+            if(lockedNode) {
+                lockedNode->notifyPropertyChange(propertyId, prop3);
+            }
         }
     });
-    connect(m_impl, &AbstractEnumInterface::sig0, this, [=](const Enum0::Enum0Enum param0) {
-        if(m_node) {
-            const json& args = { param0 };
-            m_node->notifySignal("tb.enum.EnumInterface/sig0", args);
-        }
+        connect(m_impl, &AbstractEnumInterface::sig0, this,
+            [=](const Enum0::Enum0Enum param0) {
+                const nlohmann::json& args = { param0 };
+                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sig0)");
+                for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
+                    auto lockedNode = node.lock();
+                    if(lockedNode) {
+                        lockedNode->notifySignal(signalId, args);
+                    }
+                }
     });
-    connect(m_impl, &AbstractEnumInterface::sig1, this, [=](const Enum1::Enum1Enum param1) {
-        if(m_node) {
-            const json& args = { param1 };
-            m_node->notifySignal("tb.enum.EnumInterface/sig1", args);
-        }
+        connect(m_impl, &AbstractEnumInterface::sig1, this,
+            [=](const Enum1::Enum1Enum param1) {
+                const nlohmann::json& args = { param1 };
+                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sig1)");
+                for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
+                    auto lockedNode = node.lock();
+                    if(lockedNode) {
+                        lockedNode->notifySignal(signalId, args);
+                    }
+                }
     });
-    connect(m_impl, &AbstractEnumInterface::sig2, this, [=](const Enum2::Enum2Enum param2) {
-        if(m_node) {
-            const json& args = { param2 };
-            m_node->notifySignal("tb.enum.EnumInterface/sig2", args);
-        }
+        connect(m_impl, &AbstractEnumInterface::sig2, this,
+            [=](const Enum2::Enum2Enum param2) {
+                const nlohmann::json& args = { param2 };
+                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sig2)");
+                for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
+                    auto lockedNode = node.lock();
+                    if(lockedNode) {
+                        lockedNode->notifySignal(signalId, args);
+                    }
+                }
     });
-    connect(m_impl, &AbstractEnumInterface::sig3, this, [=](const Enum3::Enum3Enum param3) {
-        if(m_node) {
-            const json& args = { param3 };
-            m_node->notifySignal("tb.enum.EnumInterface/sig3", args);
-        }
+        connect(m_impl, &AbstractEnumInterface::sig3, this,
+            [=](const Enum3::Enum3Enum param3) {
+                const nlohmann::json& args = { param3 };
+                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sig3)");
+                for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
+                    auto lockedNode = node.lock();
+                    if(lockedNode) {
+                        lockedNode->notifySignal(signalId, args);
+                    }
+                }
     });
-}
-
-OLinkEnumInterfaceAdapter::~OLinkEnumInterfaceAdapter()
-{
-    m_registry.removeObjectSource(this);
 }
 
 json OLinkEnumInterfaceAdapter::captureState()
@@ -119,9 +156,9 @@ std::string OLinkEnumInterfaceAdapter::olinkObjectName() {
     return "tb.enum.EnumInterface";
 }
 
-json OLinkEnumInterfaceAdapter::olinkInvoke(std::string name, json args) {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
-    std::string path = Name::pathFromName(name);
+json OLinkEnumInterfaceAdapter::olinkInvoke(const std::string& methodId, const nlohmann::json& args){
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(methodId);
+    std::string path = Name::getMemberName(methodId);
     if(path == "func0") {
         const Enum0::Enum0Enum& param0 = args.at(0);
         Enum0::Enum0Enum result = m_impl->func0(param0);
@@ -145,9 +182,9 @@ json OLinkEnumInterfaceAdapter::olinkInvoke(std::string name, json args) {
     return json();
 }
 
-void OLinkEnumInterfaceAdapter::olinkSetProperty(std::string name, json value) {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
-    std::string path = Name::pathFromName(name);
+void OLinkEnumInterfaceAdapter::olinkSetProperty(const std::string& propertyId, const nlohmann::json& value){
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(propertyId);
+    std::string path = Name::getMemberName(propertyId);
     if(path == "prop0") {
         Enum0::Enum0Enum prop0 = value.get<Enum0::Enum0Enum>();
         m_impl->setProp0(prop0);
@@ -166,14 +203,14 @@ void OLinkEnumInterfaceAdapter::olinkSetProperty(std::string name, json value) {
     }    
 }
 
-void OLinkEnumInterfaceAdapter::olinkLinked(std::string name, IRemoteNode *node) {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
+void OLinkEnumInterfaceAdapter::olinkLinked(const std::string& objectId, IRemoteNode *node) {
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
     m_node = node;
 }
 
-void OLinkEnumInterfaceAdapter::olinkUnlinked(std::string name)
+void OLinkEnumInterfaceAdapter::olinkUnlinked(const std::string& objectId)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
     m_node = nullptr;
 }
 

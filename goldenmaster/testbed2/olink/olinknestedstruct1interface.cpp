@@ -19,24 +19,21 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "testbed2/api/agent.h"
 #include "testbed2/api/json.adapter.h"
+
+#include "olink/iclientnode.h"
+
 #include <QtCore>
 
 using namespace ApiGear;
+using namespace ApiGear::ObjectLink;
 
-OLinkNestedStruct1Interface::OLinkNestedStruct1Interface(ClientRegistry& registry, QObject *parent)
+OLinkNestedStruct1Interface::OLinkNestedStruct1Interface(QObject *parent)
     : AbstractNestedStruct1Interface(parent)
     , m_prop1(NestedStruct1())
     , m_isReady(false)
-    , m_node()
-    , m_registry(registry)
+    , m_node(nullptr)
 {        
     qDebug() << Q_FUNC_INFO;
-    m_node = m_registry.addObjectSink(this);
-}
-
-OLinkNestedStruct1Interface::~OLinkNestedStruct1Interface()
-{
-    m_registry.removeObjectSink(this);
 }
 
 void OLinkNestedStruct1Interface::applyState(const nlohmann::json& fields) 
@@ -94,7 +91,8 @@ QtPromise::QPromise<NestedStruct1> OLinkNestedStruct1Interface::func1Async(const
     }
     return QtPromise::QPromise<NestedStruct1>{[&](
         const QtPromise::QPromiseResolve<NestedStruct1>& resolve) {
-            m_node->invokeRemote("testbed2.NestedStruct1Interface/func1", nlohmann::json::array({param1}), [resolve](InvokeReplyArg arg) {                
+            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func1");
+            m_node->invokeRemote(operationId, nlohmann::json::array({param1}), [resolve](InvokeReplyArg arg) {                
                 const NestedStruct1& value = arg.value.get<NestedStruct1>();
                 resolve(value);
             });
@@ -108,25 +106,25 @@ std::string OLinkNestedStruct1Interface::olinkObjectName()
     return "testbed2.NestedStruct1Interface";
 }
 
-void OLinkNestedStruct1Interface::olinkOnSignal(std::string name, nlohmann::json args)
+void OLinkNestedStruct1Interface::olinkOnSignal(const std::string& signalId, const nlohmann::json& args)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
-    std::string path = Name::pathFromName(name);
-    if(path == "sig1") {
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(signalId);
+    auto signalName = Name::getMemberName(signalId);
+    if(signalName == "sig1") {
         emit sig1(args[0].get<NestedStruct1>());   
         return;
     }
 }
 
-void OLinkNestedStruct1Interface::olinkOnPropertyChanged(std::string name, nlohmann::json value)
+void OLinkNestedStruct1Interface::olinkOnPropertyChanged(const std::string& propertyId, const nlohmann::json& value)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
-    std::string path = Name::pathFromName(name);
-    applyState({ {path, value} });
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(propertyId);
+    std::string propertyName = Name::getMemberName(propertyId);
+    applyState({ {propertyName, value} });
 }
-void OLinkNestedStruct1Interface::olinkOnInit(std::string name, nlohmann::json props, IClientNode *node)
+void OLinkNestedStruct1Interface::olinkOnInit(const std::string& objectId, const nlohmann::json& props, IClientNode *node)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
     m_isReady = true;
     m_node = node;
     applyState(props);

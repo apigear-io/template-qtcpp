@@ -1,17 +1,20 @@
 #include "olinkclient.h"
-#include "olink_common.h"
+#include "olink/clientregistry.h"
+#include "olink/clientnode.h"
+#include "olink/iobjectsink.h"
+#include <memory>
 
 using namespace ApiGear::ObjectLink;
 
 OLinkClient::OLinkClient(ClientRegistry& registry, QObject* parent)
     : QObject(parent)
-    , m_socket(new QWebSocket(QString(), QWebSocketProtocol::VersionLatest, this))
-    , m_retryTimer(new QTimer(this))
-    , m_node(registry)
     , m_registry(registry)
+    , m_socket(new QWebSocket(QString(), QWebSocketProtocol::VersionLatest, this))
+    , m_node(ClientNode::create(registry))
+    , m_retryTimer(new QTimer(this))
 {
     qDebug() << Q_FUNC_INFO;
-    m_node.onLog(m_logger.logFunc());
+    m_node->onLog(m_logger.logFunc());
     m_registry.onLog(m_logger.logFunc());
     connect(m_socket, &QWebSocket::connected, this, &OLinkClient::onConnected);
     connect(m_socket, &QWebSocket::disconnected, this, &OLinkClient::onDisconnected);
@@ -20,7 +23,7 @@ OLinkClient::OLinkClient(ClientRegistry& registry, QObject* parent)
         m_queue << msg;
         processMessages();
     };
-    m_node.onWrite(func);
+    m_node->onWrite(func);
 
     // socket connection retry
     m_retryTimer->setInterval(5000);
@@ -30,6 +33,10 @@ OLinkClient::OLinkClient(ClientRegistry& registry, QObject* parent)
 
 OLinkClient::~OLinkClient()
 {
+    auto copyObjectLinkStatus = m_objectLinkStatus;
+    for (auto& object : copyObjectLinkStatus){
+        unlinkObjectSource(object.first);
+    }
 }
 
 
@@ -46,40 +53,84 @@ void OLinkClient::connectToHost(QUrl url)
     m_socket->open(m_serverUrl);
 }
 
+void OLinkClient::disconnect()
+{
+    for (auto& object : m_objectLinkStatus){
+        if (object.second != LinkStatus::NotLinked){
+            m_node->unlinkRemote(object.first);
+        }
+    }
+    m_socket->close();
+}
+
 ClientRegistry& OLinkClient::registry()
 {
-    return m_node.registry();
+    return m_registry;
 }
 
-ClientNode& OLinkClient::node()
+ClientNode* OLinkClient::node()
 {
-    return m_node;
+    return m_node.get();
 }
 
-void OLinkClient::linkObjectSource(std::string name)
+void OLinkClient::linkObjectSource(std::weak_ptr<IObjectSink> objectSink)
 {
+    auto objectSinkLocked = objectSink.lock();
+    if (!objectSinkLocked)
+    {
+        qDebug() << Q_FUNC_INFO << "Invalid object sink. Sink not linked.";
+        return;
+    }
+    auto name = objectSinkLocked->olinkObjectName();
+    m_node->registry().addSink(objectSink);
+
     qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
-    m_node.registry().linkClientNode(name, &m_node);
-    m_node.linkRemote(name);
+    if (m_socket && m_socket->state() == QAbstractSocket::ConnectedState){
+        m_node->linkRemote(name);
+        m_objectLinkStatus[name] = LinkStatus::Linked;
+    }
+    else
+    {
+        m_objectLinkStatus[name] = LinkStatus::NotLinked;
+    }
+}
+
+void OLinkClient::unlinkObjectSource(std::string objectId)
+{
+    auto objectStatus = m_objectLinkStatus.find(objectId);
+    if (objectStatus != m_objectLinkStatus.end()) {
+        if (objectStatus->second != LinkStatus::NotLinked){
+            m_node->unlinkRemote(objectId);
+        }
+        m_objectLinkStatus.erase(objectStatus);
+    }
+    m_node->registry().removeSink(objectId);
 }
 
 void OLinkClient::onConnected()
 {
     qDebug() << Q_FUNC_INFO << " socket connected";
-    // m_node->hello();
     m_retryTimer->stop();
+    for (auto& object : m_objectLinkStatus)
+    {
+        m_node->linkRemote(object.first);
+        object.second = LinkStatus::Linked;
+    }
     processMessages();
 }
 
 void OLinkClient::onDisconnected()
 {
+    for (auto& object : m_objectLinkStatus)
+    {
+        object.second = LinkStatus::NotLinked;
+    }
     qDebug() << Q_FUNC_INFO << " socket disconnected";
-    // m_node->goodbye();
 }
 
 void OLinkClient::handleTextMessage(const QString& message)
 {
-    m_node.handleMessage(message.toStdString());
+    m_node->handleMessage(message.toStdString());
 }
 
 void OLinkClient::processMessages()
@@ -110,3 +161,6 @@ void OLinkClient::processMessages()
         }
     }
 }
+
+
+

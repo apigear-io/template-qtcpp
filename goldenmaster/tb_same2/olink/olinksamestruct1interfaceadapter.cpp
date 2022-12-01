@@ -24,6 +24,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "tb_same2/api/agent.h"
 #include "tb_same2/api/json.adapter.h"
 
+#include "olink/remoteregistry.h"
+#include "olink/iremotenode.h"
+
 #include <QtCore>
 
 using namespace ApiGear::ObjectLink;
@@ -36,23 +39,27 @@ OLinkSameStruct1InterfaceAdapter::OLinkSameStruct1InterfaceAdapter(RemoteRegistr
     , m_registry(registry)
     , m_node()
 {
-    m_registry.addObjectSource(this);
-    connect(m_impl, &AbstractSameStruct1Interface::prop1Changed, this, [=](const Struct1& prop1) {
-        if(m_node) {
-            m_node->notifyPropertyChange("tb.same2.SameStruct1Interface/prop1", prop1);
+    connect(m_impl, &AbstractSameStruct1Interface::prop1Changed, this,
+        [=](const Struct1& prop1) {
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "prop1)");
+        for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
+            auto lockedNode = node.lock();
+            if(lockedNode) {
+                lockedNode->notifyPropertyChange(propertyId, prop1);
+            }
         }
     });
-    connect(m_impl, &AbstractSameStruct1Interface::sig1, this, [=](const Struct1& param1) {
-        if(m_node) {
-            const json& args = { param1 };
-            m_node->notifySignal("tb.same2.SameStruct1Interface/sig1", args);
-        }
+        connect(m_impl, &AbstractSameStruct1Interface::sig1, this,
+            [=](const Struct1& param1) {
+                const nlohmann::json& args = { param1 };
+                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sig1)");
+                for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
+                    auto lockedNode = node.lock();
+                    if(lockedNode) {
+                        lockedNode->notifySignal(signalId, args);
+                    }
+                }
     });
-}
-
-OLinkSameStruct1InterfaceAdapter::~OLinkSameStruct1InterfaceAdapter()
-{
-    m_registry.removeObjectSource(this);
 }
 
 json OLinkSameStruct1InterfaceAdapter::captureState()
@@ -74,9 +81,9 @@ std::string OLinkSameStruct1InterfaceAdapter::olinkObjectName() {
     return "tb.same2.SameStruct1Interface";
 }
 
-json OLinkSameStruct1InterfaceAdapter::olinkInvoke(std::string name, json args) {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
-    std::string path = Name::pathFromName(name);
+json OLinkSameStruct1InterfaceAdapter::olinkInvoke(const std::string& methodId, const nlohmann::json& args){
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(methodId);
+    std::string path = Name::getMemberName(methodId);
     if(path == "func1") {
         const Struct1& param1 = args.at(0);
         Struct1 result = m_impl->func1(param1);
@@ -85,23 +92,23 @@ json OLinkSameStruct1InterfaceAdapter::olinkInvoke(std::string name, json args) 
     return json();
 }
 
-void OLinkSameStruct1InterfaceAdapter::olinkSetProperty(std::string name, json value) {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
-    std::string path = Name::pathFromName(name);
+void OLinkSameStruct1InterfaceAdapter::olinkSetProperty(const std::string& propertyId, const nlohmann::json& value){
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(propertyId);
+    std::string path = Name::getMemberName(propertyId);
     if(path == "prop1") {
         Struct1 prop1 = value.get<Struct1>();
         m_impl->setProp1(prop1);
     }    
 }
 
-void OLinkSameStruct1InterfaceAdapter::olinkLinked(std::string name, IRemoteNode *node) {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
+void OLinkSameStruct1InterfaceAdapter::olinkLinked(const std::string& objectId, IRemoteNode *node) {
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
     m_node = node;
 }
 
-void OLinkSameStruct1InterfaceAdapter::olinkUnlinked(std::string name)
+void OLinkSameStruct1InterfaceAdapter::olinkUnlinked(const std::string& objectId)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
+    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
     m_node = nullptr;
 }
 

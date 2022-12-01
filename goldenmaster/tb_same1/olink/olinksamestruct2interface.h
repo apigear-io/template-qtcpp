@@ -20,7 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <QtCore>
 #include <QtPromise>
 
-#include "../api/api.h"
+#include "tb_same1/api/api.h"
 #include "olink/clientnode.h"
 
 using namespace ApiGear;

@@ -2,6 +2,8 @@
 
 #include <QtNetwork>
 
+using namespace ApiGear::Monitor;
+
 AgentClient* AgentClient::s_instance(nullptr);
 
 

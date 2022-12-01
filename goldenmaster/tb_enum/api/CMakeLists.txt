@@ -1,4 +1,8 @@
 find_package(Qt5 REQUIRED COMPONENTS Core Qml WebSockets)
+find_package(apigear QUIET COMPONENTS monitor_qt simulation_qt)
+find_package(monitor_qt)
+find_package(simulation_qt)
+
 set(OUTPUT_PATH ${LIBRARY_PATH}/)
 
 find_package(nlohmann_json QUIET)
@@ -19,6 +23,7 @@ if(NOT jsonrpc_core)
   set(JSONRPC_Install ON)
     FetchContent_Declare(jsonrpc_core
       GIT_REPOSITORY https://github.com/apigear-io/jsonrpc-core-cpp.git
+      GIT_TAG v0.1.1
       GIT_SHALLOW TRUE
       EXCLUDE_FROM_ALL FALSE
   )
@@ -30,12 +35,21 @@ set (TB_ENUM_API_SOURCES
     apifactory.cpp
     simu.cpp
     agent.cpp
-    ../../shared/agentclient.cpp
-    ../../shared/simulationclient.cpp
 )
 
 # dynamic library
 
 add_library(tb_enum_api SHARED ${TB_ENUM_API_SOURCES})
-target_link_libraries(tb_enum_api PUBLIC nlohmann_json::nlohmann_json jsonrpc_core PRIVATE Qt5::Core Qt5::Qml Qt5::WebSockets)
+add_library(tb_enum::tb_enum_api ALIAS tb_enum_api)
+
+target_include_directories(tb_enum_api
+    PRIVATE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+    INTERFACE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../..>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/..>
+    $<INSTALL_INTERFACE:include>
+)
+
+target_link_libraries(tb_enum_api PRIVATE  Qt5::Core Qt5::Qml Qt5::WebSockets jsonrpc_core nlohmann_json::nlohmann_json monitor_qt simulation_qt)
 target_compile_definitions(tb_enum_api PRIVATE TB_ENUM_LIBRARY)

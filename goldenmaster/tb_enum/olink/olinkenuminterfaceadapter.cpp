@@ -21,8 +21,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "olinkenuminterfaceadapter.h"
 
 #include <nlohmann/json.hpp>
-#include "../api/agent.h"
-#include "../api/json.adapter.h"
+#include "tb_enum/api/agent.h"
+#include "tb_enum/api/json.adapter.h"
 
 #include <QtCore>
 

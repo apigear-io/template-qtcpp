@@ -20,11 +20,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <QtQml>
 
-#include "../api/api.h"
-#include "../lib/qmlmanyparaminterface.h"
-#include "../lib/qmlnestedstruct1interface.h"
-#include "../lib/qmlnestedstruct2interface.h"
-#include "../lib/qmlnestedstruct3interface.h"
+#include "testbed2/api/api.h"
+#include "testbed2/lib/qmlmanyparaminterface.h"
+#include "testbed2/lib/qmlnestedstruct1interface.h"
+#include "testbed2/lib/qmlnestedstruct2interface.h"
+#include "testbed2/lib/qmlnestedstruct3interface.h"
 
 void Plugin::registerTypes(const char *uri)
 {

@@ -17,8 +17,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "olinkstructarrayinterface.h"
 
-#include "../api/agent.h"
-#include "../api/json.adapter.h"
+#include "testbed1/api/agent.h"
+#include "testbed1/api/json.adapter.h"
 #include <QtCore>
 
 using namespace ApiGear;

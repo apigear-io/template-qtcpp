@@ -31,8 +31,8 @@ using namespace ApiGear::ObjectLink;
 
 OLinkHost::OLinkHost(RemoteRegistry& registry, QObject *parent)
     : QObject(parent)
-    , m_wss(new QWebSocketServer("olink", QWebSocketServer::NonSecureMode, this))
     , m_registry(registry)
+    , m_wss(new QWebSocketServer("olink", QWebSocketServer::NonSecureMode, this))
 {
     m_registry.onLog(m_log.logFunc());
 }
@@ -53,15 +53,17 @@ void OLinkHost::listen(const QString& host, int port)
 void OLinkHost::onNewConnection()
 {
     qDebug() << "wss.newConnection()";
-    QWebSocket *ws = m_wss->nextPendingConnection();
-    new OLinkRemote(ws);
+    auto ws = m_wss->nextPendingConnection();
+    OLinkRemote* connectionUser = new OLinkRemote(m_registry, ws);
+    ws->setParent(connectionUser);
+    // make sure gets cleaned up, latest with this object deletion.
+    connectionUser->setParent(this);
 }
 
 void OLinkHost::onClosed()
 {
     qDebug() << "wss.closed()";
 }
-
 
 RemoteRegistry &OLinkHost::registry()
 {

@@ -7,7 +7,7 @@
 #include <QtCore>
 #include <nlohmann/json.hpp>
 
-#include "../api/api.h"
+#include "{{snake .Module.Name}}/api/api.h"
 #include "olink/remotenode.h"
 
 using namespace ApiGear;

@@ -9,7 +9,7 @@
 #include <QtCore>
 #include <QtPromise>
 
-#include "../api/api.h"
+#include "{{snake .Module.Name}}/api/api.h"
 #include "olink/clientnode.h"
 
 using namespace ApiGear;

@@ -20,7 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <QtCore>
 
-#include "../api/api.h"
+#include "testbed1/api/api.h"
 
 #if defined(TESTBED1_LIB_LIBRARY)
 #  define TESTBED1_LIB_EXPORT Q_DECL_EXPORT

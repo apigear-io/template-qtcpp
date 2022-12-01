@@ -21,7 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <QtQml>
 
-#include "../api/agent.h"
+#include "tb_enum/api/agent.h"
 
 EnumInterface::EnumInterface(QObject *parent)
     : AbstractEnumInterface(parent)

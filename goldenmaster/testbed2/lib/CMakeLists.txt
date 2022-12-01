@@ -15,7 +15,18 @@ set (TESTBED2_LIB_SOURCES
 
 # dynamic library
 add_library(testbed2_lib STATIC ${TESTBED2_LIB_SOURCES})
-target_link_libraries(testbed2_lib PRIVATE Qt5::Core Qt5::Qml Qt5::WebSockets testbed2_api)
+add_library(testbed2::testbed2_lib ALIAS testbed2_lib)
+
+target_include_directories(testbed2_lib
+    PRIVATE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+    INTERFACE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../..>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/..>
+    $<INSTALL_INTERFACE:include>
+)
+
+target_link_libraries(testbed2_lib PRIVATE Qt5::Core Qt5::Qml Qt5::WebSockets testbed2::testbed2_api)
 target_compile_definitions(testbed2_lib PRIVATE TESTBED2_LIB_LIBRARY)
 
 # add test targets
@@ -25,7 +36,7 @@ add_executable(test_testbed2_lib_manyparaminterface
     tst_manyparaminterface.cpp
 )
 
-target_link_libraries(test_testbed2_lib_manyparaminterface PRIVATE Qt5::Test testbed2_lib)
+target_link_libraries(test_testbed2_lib_manyparaminterface PRIVATE Qt5::Test testbed2::testbed2_lib)
 target_compile_definitions(test_testbed2_lib_manyparaminterface PRIVATE TESTBED2_LIB_LIBRARY)
 add_test(test_testbed2_lib_manyparaminterface test_testbed2_lib_manyparaminterface)
 
@@ -34,7 +45,7 @@ add_executable(test_testbed2_lib_nestedstruct1interface
     tst_nestedstruct1interface.cpp
 )
 
-target_link_libraries(test_testbed2_lib_nestedstruct1interface PRIVATE Qt5::Test testbed2_lib)
+target_link_libraries(test_testbed2_lib_nestedstruct1interface PRIVATE Qt5::Test testbed2::testbed2_lib)
 target_compile_definitions(test_testbed2_lib_nestedstruct1interface PRIVATE TESTBED2_LIB_LIBRARY)
 add_test(test_testbed2_lib_nestedstruct1interface test_testbed2_lib_nestedstruct1interface)
 
@@ -43,7 +54,7 @@ add_executable(test_testbed2_lib_nestedstruct2interface
     tst_nestedstruct2interface.cpp
 )
 
-target_link_libraries(test_testbed2_lib_nestedstruct2interface PRIVATE Qt5::Test testbed2_lib)
+target_link_libraries(test_testbed2_lib_nestedstruct2interface PRIVATE Qt5::Test testbed2::testbed2_lib)
 target_compile_definitions(test_testbed2_lib_nestedstruct2interface PRIVATE TESTBED2_LIB_LIBRARY)
 add_test(test_testbed2_lib_nestedstruct2interface test_testbed2_lib_nestedstruct2interface)
 
@@ -52,6 +63,6 @@ add_executable(test_testbed2_lib_nestedstruct3interface
     tst_nestedstruct3interface.cpp
 )
 
-target_link_libraries(test_testbed2_lib_nestedstruct3interface PRIVATE Qt5::Test testbed2_lib)
+target_link_libraries(test_testbed2_lib_nestedstruct3interface PRIVATE Qt5::Test testbed2::testbed2_lib)
 target_compile_definitions(test_testbed2_lib_nestedstruct3interface PRIVATE TESTBED2_LIB_LIBRARY)
 add_test(test_testbed2_lib_nestedstruct3interface test_testbed2_lib_nestedstruct3interface)

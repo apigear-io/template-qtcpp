@@ -2,7 +2,7 @@
 
 #include <QtCore>
 
-#include "../api/apifactory.h"
+#include "tb_simple/api/apifactory.h"
 
 class Factory : public QObject, public ApiFactoryInterface
 {

@@ -1,3 +1,5 @@
+project(tb_same2_olink)
+
 find_package(Qt5 REQUIRED COMPONENTS Core Qml Network WebSockets)
 
 find_package(nlohmann_json QUIET)
@@ -37,6 +39,7 @@ set (TB_SAME2_OLINK_SOURCES
     olinksameenum2interfaceadapter.cpp
 )
 
+# dynamic library
 add_library(tb_same2_olink STATIC ${TB_SAME2_OLINK_SOURCES})
 target_include_directories(tb_same2_olink
     PRIVATE 
@@ -47,4 +50,4 @@ target_include_directories(tb_same2_olink
     $<INSTALL_INTERFACE:include/tb_same2>
 )
 
-target_link_libraries(tb_same2_olink PRIVATE olink_core Qt5::Core Qt5::Qml Qt5::WebSockets tb_same2_api PUBLIC nlohmann_json::nlohmann_json qtpromise)
+target_link_libraries(tb_same2_olink PRIVATE olink_core Qt5::Core Qt5::Qml Qt5::WebSockets tb_same2::tb_same2_api PUBLIC nlohmann_json::nlohmann_json qtpromise)

@@ -7,7 +7,7 @@
 
 #include <QtCore>
 
-#include "../api/api.h"
+#include "{{snake .Module.Name}}/api/api.h"
 
 #if defined({{ $MODULE_ID }}_LIBRARY)
 #  define {{ $MODULE_ID }}_EXPORT Q_DECL_EXPORT

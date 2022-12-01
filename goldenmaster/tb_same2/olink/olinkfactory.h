@@ -2,7 +2,7 @@
 
 #include <QtCore>
 
-#include "../api/apifactory.h"
+#include "tb_same2/api/apifactory.h"
 #include "olink/clientnode.h"
 
 class OLinkFactory : public QObject, public ApiFactoryInterface

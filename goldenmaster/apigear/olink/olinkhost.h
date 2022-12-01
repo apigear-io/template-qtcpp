@@ -25,12 +25,15 @@
 
 #include <QtCore>
 #include <QtWebSockets>
-#include "olink/remotenode.h"
 #include "olink/consolelogger.h"
+#include "olink_common.h"
 
-using namespace ApiGear::ObjectLink;
+namespace ApiGear {
+namespace ObjectLink {
 
-class OLinkHost :public QObject
+class RemoteRegistry;
+
+class OLINKQT_EXPORT OLinkHost :public QObject
 {
     Q_OBJECT
 public:
@@ -44,7 +47,9 @@ public:
     RemoteRegistry &registry();
 
 private:
+    RemoteRegistry& m_registry;
     QWebSocketServer* m_wss;
     ConsoleLogger m_log;
-    RemoteRegistry& m_registry;
 };
+
+}} // namespace ApiGear::ObjectLink

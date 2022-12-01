@@ -17,7 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "httpsamestruct2interface.h"
 
-#include "../api/agent.h"
+#include "tb_same2/api/agent.h"
 #include <QtQml>
 
 HttpSameStruct2Interface::HttpSameStruct2Interface(QNetworkAccessManager *network, QObject *parent)

@@ -21,7 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <QtQml>
 
-#include "../api/agent.h"
+#include "testbed2/api/agent.h"
 
 ManyParamInterface::ManyParamInterface(QObject *parent)
     : AbstractManyParamInterface(parent)

@@ -17,7 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "httpnestedstruct2interface.h"
 
-#include "../api/agent.h"
+#include "testbed2/api/agent.h"
 #include <QtQml>
 
 HttpNestedStruct2Interface::HttpNestedStruct2Interface(QNetworkAccessManager *network, QObject *parent)

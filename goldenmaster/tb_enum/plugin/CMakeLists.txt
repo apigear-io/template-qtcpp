@@ -13,6 +13,6 @@ set_target_properties(plugin_tb_enum PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_PATH}
 )
 
-target_link_libraries(plugin_tb_enum PRIVATE Qt5::Core Qt5::Qml tb_enum_lib tb_enum_api)
+target_link_libraries(plugin_tb_enum PRIVATE Qt5::Core Qt5::Qml tb_enum::tb_enum_lib tb_enum::tb_enum_api)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qmldir ${OUTPUT_PATH}/qmldir COPYONLY)

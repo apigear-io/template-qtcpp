@@ -17,7 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "httpsameenum2interface.h"
 
-#include "../api/agent.h"
+#include "tb_same1/api/agent.h"
 #include <QtQml>
 
 HttpSameEnum2Interface::HttpSameEnum2Interface(QNetworkAccessManager *network, QObject *parent)

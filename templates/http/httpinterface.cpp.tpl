@@ -5,7 +5,7 @@
 {{- $iface := .Interface.Name }}
 #include "{{lower $class}}.h"
 
-#include "../api/agent.h"
+#include "{{snake .Module.Name}}/api/agent.h"
 #include <QtQml>
 
 {{$class}}::{{$class}}(QNetworkAccessManager *network, QObject *parent)

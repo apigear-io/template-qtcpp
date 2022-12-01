@@ -1,7 +1,7 @@
 #include "simu.h"
 #include "jsonrpc/types.h"
 #include "json.adapter.h"
-#include "../../shared/simulationclient.h"
+#include "apigear/simulation/simulationclient.h"
 
 using namespace ApiGear::JSONRPC;
 // ********************************************************************
@@ -30,7 +30,7 @@ SimulationEnumInterface::SimulationEnumInterface(QObject *parent)
         setProp3(arg.params["prop3"]);
       }
     };
-    SimulationClient::instance()->onNotifyState("tb.enum/EnumInterface", serviceStateFunc);
+    ApiGear::SimulationClient::instance()->onNotifyState("tb.enum/EnumInterface", serviceStateFunc);
 
     CallResponseFunc fetchStateFunc = [this](CallResponseArg arg) {
       qDebug() << "SimulationEnumInterface service fetch state: " << QString::fromStdString(arg.result.dump());
@@ -47,27 +47,27 @@ SimulationEnumInterface::SimulationEnumInterface(QObject *parent)
         setProp3(arg.result["prop3"]);
       }
     };
-    SimulationClient::instance()->doFetchState("tb.enum/EnumInterface", fetchStateFunc);
+    ApiGear::SimulationClient::instance()->doFetchState("tb.enum/EnumInterface", fetchStateFunc);
 
     NotifyRequestFunc sig0Func = [this](NotifyRequestArg arg) { 
         emit sig0(arg.params["param0"].get<Enum0::Enum0Enum>());
     };
-    SimulationClient::instance()->onNotify("tb.enum/EnumInterface#sig0", sig0Func);
+    ApiGear::SimulationClient::instance()->onNotify("tb.enum/EnumInterface#sig0", sig0Func);
 
     NotifyRequestFunc sig1Func = [this](NotifyRequestArg arg) { 
         emit sig1(arg.params["param1"].get<Enum1::Enum1Enum>());
     };
-    SimulationClient::instance()->onNotify("tb.enum/EnumInterface#sig1", sig1Func);
+    ApiGear::SimulationClient::instance()->onNotify("tb.enum/EnumInterface#sig1", sig1Func);
 
     NotifyRequestFunc sig2Func = [this](NotifyRequestArg arg) { 
         emit sig2(arg.params["param2"].get<Enum2::Enum2Enum>());
     };
-    SimulationClient::instance()->onNotify("tb.enum/EnumInterface#sig2", sig2Func);
+    ApiGear::SimulationClient::instance()->onNotify("tb.enum/EnumInterface#sig2", sig2Func);
 
     NotifyRequestFunc sig3Func = [this](NotifyRequestArg arg) { 
         emit sig3(arg.params["param3"].get<Enum3::Enum3Enum>());
     };
-    SimulationClient::instance()->onNotify("tb.enum/EnumInterface#sig3", sig3Func);
+    ApiGear::SimulationClient::instance()->onNotify("tb.enum/EnumInterface#sig3", sig3Func);
 }
 
 SimulationEnumInterface::~SimulationEnumInterface()
@@ -132,7 +132,7 @@ Enum0::Enum0Enum SimulationEnumInterface::func0(const Enum0::Enum0Enum param0)
 
     Params params;
     params["param0"] = param0;
-    SimulationClient::instance()->doCall("tb.enum/EnumInterface", "func0", params);
+    ApiGear::SimulationClient::instance()->doCall("tb.enum/EnumInterface", "func0", params);
     return Enum0::value0;
 }
 
@@ -142,7 +142,7 @@ Enum1::Enum1Enum SimulationEnumInterface::func1(const Enum1::Enum1Enum param1)
 
     Params params;
     params["param1"] = param1;
-    SimulationClient::instance()->doCall("tb.enum/EnumInterface", "func1", params);
+    ApiGear::SimulationClient::instance()->doCall("tb.enum/EnumInterface", "func1", params);
     return Enum1::value1;
 }
 
@@ -152,7 +152,7 @@ Enum2::Enum2Enum SimulationEnumInterface::func2(const Enum2::Enum2Enum param2)
 
     Params params;
     params["param2"] = param2;
-    SimulationClient::instance()->doCall("tb.enum/EnumInterface", "func2", params);
+    ApiGear::SimulationClient::instance()->doCall("tb.enum/EnumInterface", "func2", params);
     return Enum2::value2;
 }
 
@@ -162,6 +162,6 @@ Enum3::Enum3Enum SimulationEnumInterface::func3(const Enum3::Enum3Enum param3)
 
     Params params;
     params["param3"] = param3;
-    SimulationClient::instance()->doCall("tb.enum/EnumInterface", "func3", params);
+    ApiGear::SimulationClient::instance()->doCall("tb.enum/EnumInterface", "func3", params);
     return Enum3::value3;
 }

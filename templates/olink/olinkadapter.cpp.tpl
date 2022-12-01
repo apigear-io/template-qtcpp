@@ -10,8 +10,8 @@
 {{- $iface := .Interface.Name }}
 
 #include <nlohmann/json.hpp>
-#include "../api/agent.h"
-#include "../api/json.adapter.h"
+#include "{{snake .Module.Name}}/api/agent.h"
+#include "{{snake .Module.Name}}/api/json.adapter.h"
 
 #include <QtCore>
 

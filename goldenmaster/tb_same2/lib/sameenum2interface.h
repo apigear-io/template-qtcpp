@@ -20,7 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <QtCore>
 
-#include "../api/api.h"
+#include "tb_same2/api/api.h"
 
 #if defined(TB_SAME2_LIB_LIBRARY)
 #  define TB_SAME2_LIB_EXPORT Q_DECL_EXPORT

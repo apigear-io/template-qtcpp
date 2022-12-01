@@ -5,13 +5,17 @@ features:
         documents:
           - source: CMakeLists.txt.tpl
             target: CMakeLists.txt
-          - source: "shared/agentclient.h"
+          - source: "apigear/monitor/CMakeLists.txt"
             raw: true
-          - source: "shared/agentclient.cpp"
+          - source: "apigear/monitor/agentclient.h"
             raw: true
-          - source: "shared/simulationclient.h"
+          - source: "apigear/monitor/agentclient.cpp"
             raw: true
-          - source: "shared/simulationclient.cpp"
+          - source: "apigear/simulation/CMakeLists.txt"
+            raw: true
+          - source: "apigear/simulation/simulationclient.h"
+            raw: true
+          - source: "apigear/simulation/simulationclient.cpp"
             raw: true
           - source: thirdparty/qtpromise/CMakeLists.txt
             raw: true
@@ -108,17 +112,21 @@ features:
     scopes:
       - match: system
         documents:
-          - source: shared/olinkclient.h
+          - source: apigear/olink/CMakeLists.txt
             raw: true
-          - source: shared/olinkclient.cpp
+          - source: apigear/olink/olink_common.h
             raw: true
-          - source: shared/olinkhost.h
+          - source: apigear/olink/olinkclient.h
             raw: true
-          - source: shared/olinkhost.cpp
+          - source: apigear/olink/olinkclient.cpp
             raw: true
-          - source: shared/olinkremote.h
+          - source: apigear/olink/olinkhost.h
             raw: true
-          - source: shared/olinkremote.cpp
+          - source: apigear/olink/olinkhost.cpp
+            raw: true
+          - source: apigear/olink/olinkremote.h
+            raw: true
+          - source: apigear/olink/olinkremote.cpp
             raw: true
       - match: module
         prefix: "{{snake .Module.Name}}/"

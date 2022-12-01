@@ -17,8 +17,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "olinknestedstruct1interface.h"
 
-#include "../api/agent.h"
-#include "../api/json.adapter.h"
+#include "testbed2/api/agent.h"
+#include "testbed2/api/json.adapter.h"
 #include <QtCore>
 
 using namespace ApiGear;

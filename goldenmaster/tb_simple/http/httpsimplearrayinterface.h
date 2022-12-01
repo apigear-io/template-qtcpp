@@ -20,7 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <QtCore>
 #include <QtNetwork>
 
-#include "../api/api.h"
+#include "tb_simple/api/api.h"
 
 class HttpSimpleArrayInterface : public AbstractSimpleArrayInterface
 {

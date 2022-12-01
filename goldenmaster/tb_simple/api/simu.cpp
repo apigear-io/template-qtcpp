@@ -1,7 +1,7 @@
 #include "simu.h"
 #include "jsonrpc/types.h"
 #include "json.adapter.h"
-#include "../../shared/simulationclient.h"
+#include "apigear/simulation/simulationclient.h"
 
 using namespace ApiGear::JSONRPC;
 // ********************************************************************
@@ -30,7 +30,7 @@ SimulationSimpleInterface::SimulationSimpleInterface(QObject *parent)
         setPropString(arg.params["propString"]);
       }
     };
-    SimulationClient::instance()->onNotifyState("tb.simple/SimpleInterface", serviceStateFunc);
+    ApiGear::SimulationClient::instance()->onNotifyState("tb.simple/SimpleInterface", serviceStateFunc);
 
     CallResponseFunc fetchStateFunc = [this](CallResponseArg arg) {
       qDebug() << "SimulationSimpleInterface service fetch state: " << QString::fromStdString(arg.result.dump());
@@ -47,27 +47,27 @@ SimulationSimpleInterface::SimulationSimpleInterface(QObject *parent)
         setPropString(arg.result["propString"]);
       }
     };
-    SimulationClient::instance()->doFetchState("tb.simple/SimpleInterface", fetchStateFunc);
+    ApiGear::SimulationClient::instance()->doFetchState("tb.simple/SimpleInterface", fetchStateFunc);
 
     NotifyRequestFunc sigBoolFunc = [this](NotifyRequestArg arg) { 
         emit sigBool(arg.params["paramBool"].get<bool>());
     };
-    SimulationClient::instance()->onNotify("tb.simple/SimpleInterface#sigBool", sigBoolFunc);
+    ApiGear::SimulationClient::instance()->onNotify("tb.simple/SimpleInterface#sigBool", sigBoolFunc);
 
     NotifyRequestFunc sigIntFunc = [this](NotifyRequestArg arg) { 
         emit sigInt(arg.params["paramInt"].get<int>());
     };
-    SimulationClient::instance()->onNotify("tb.simple/SimpleInterface#sigInt", sigIntFunc);
+    ApiGear::SimulationClient::instance()->onNotify("tb.simple/SimpleInterface#sigInt", sigIntFunc);
 
     NotifyRequestFunc sigFloatFunc = [this](NotifyRequestArg arg) { 
         emit sigFloat(arg.params["paramFloat"].get<qreal>());
     };
-    SimulationClient::instance()->onNotify("tb.simple/SimpleInterface#sigFloat", sigFloatFunc);
+    ApiGear::SimulationClient::instance()->onNotify("tb.simple/SimpleInterface#sigFloat", sigFloatFunc);
 
     NotifyRequestFunc sigStringFunc = [this](NotifyRequestArg arg) { 
         emit sigString(arg.params["paramString"].get<QString>());
     };
-    SimulationClient::instance()->onNotify("tb.simple/SimpleInterface#sigString", sigStringFunc);
+    ApiGear::SimulationClient::instance()->onNotify("tb.simple/SimpleInterface#sigString", sigStringFunc);
 }
 
 SimulationSimpleInterface::~SimulationSimpleInterface()
@@ -132,7 +132,7 @@ bool SimulationSimpleInterface::funcBool(bool paramBool)
 
     Params params;
     params["paramBool"] = paramBool;
-    SimulationClient::instance()->doCall("tb.simple/SimpleInterface", "funcBool", params);
+    ApiGear::SimulationClient::instance()->doCall("tb.simple/SimpleInterface", "funcBool", params);
     return false;
 }
 
@@ -142,7 +142,7 @@ int SimulationSimpleInterface::funcInt(int paramInt)
 
     Params params;
     params["paramInt"] = paramInt;
-    SimulationClient::instance()->doCall("tb.simple/SimpleInterface", "funcInt", params);
+    ApiGear::SimulationClient::instance()->doCall("tb.simple/SimpleInterface", "funcInt", params);
     return 0;
 }
 
@@ -152,7 +152,7 @@ qreal SimulationSimpleInterface::funcFloat(qreal paramFloat)
 
     Params params;
     params["paramFloat"] = paramFloat;
-    SimulationClient::instance()->doCall("tb.simple/SimpleInterface", "funcFloat", params);
+    ApiGear::SimulationClient::instance()->doCall("tb.simple/SimpleInterface", "funcFloat", params);
     return 0.0;
 }
 
@@ -162,7 +162,7 @@ QString SimulationSimpleInterface::funcString(const QString& paramString)
 
     Params params;
     params["paramString"] = paramString;
-    SimulationClient::instance()->doCall("tb.simple/SimpleInterface", "funcString", params);
+    ApiGear::SimulationClient::instance()->doCall("tb.simple/SimpleInterface", "funcString", params);
     return QString();
 }
 // ********************************************************************
@@ -191,7 +191,7 @@ SimulationSimpleArrayInterface::SimulationSimpleArrayInterface(QObject *parent)
         setPropString(arg.params["propString"]);
       }
     };
-    SimulationClient::instance()->onNotifyState("tb.simple/SimpleArrayInterface", serviceStateFunc);
+    ApiGear::SimulationClient::instance()->onNotifyState("tb.simple/SimpleArrayInterface", serviceStateFunc);
 
     CallResponseFunc fetchStateFunc = [this](CallResponseArg arg) {
       qDebug() << "SimulationSimpleArrayInterface service fetch state: " << QString::fromStdString(arg.result.dump());
@@ -208,27 +208,27 @@ SimulationSimpleArrayInterface::SimulationSimpleArrayInterface(QObject *parent)
         setPropString(arg.result["propString"]);
       }
     };
-    SimulationClient::instance()->doFetchState("tb.simple/SimpleArrayInterface", fetchStateFunc);
+    ApiGear::SimulationClient::instance()->doFetchState("tb.simple/SimpleArrayInterface", fetchStateFunc);
 
     NotifyRequestFunc sigBoolFunc = [this](NotifyRequestArg arg) { 
         emit sigBool(arg.params["paramBool"].get<QList<bool>>());
     };
-    SimulationClient::instance()->onNotify("tb.simple/SimpleArrayInterface#sigBool", sigBoolFunc);
+    ApiGear::SimulationClient::instance()->onNotify("tb.simple/SimpleArrayInterface#sigBool", sigBoolFunc);
 
     NotifyRequestFunc sigIntFunc = [this](NotifyRequestArg arg) { 
         emit sigInt(arg.params["paramInt"].get<QList<int>>());
     };
-    SimulationClient::instance()->onNotify("tb.simple/SimpleArrayInterface#sigInt", sigIntFunc);
+    ApiGear::SimulationClient::instance()->onNotify("tb.simple/SimpleArrayInterface#sigInt", sigIntFunc);
 
     NotifyRequestFunc sigFloatFunc = [this](NotifyRequestArg arg) { 
         emit sigFloat(arg.params["paramFloat"].get<QList<qreal>>());
     };
-    SimulationClient::instance()->onNotify("tb.simple/SimpleArrayInterface#sigFloat", sigFloatFunc);
+    ApiGear::SimulationClient::instance()->onNotify("tb.simple/SimpleArrayInterface#sigFloat", sigFloatFunc);
 
     NotifyRequestFunc sigStringFunc = [this](NotifyRequestArg arg) { 
         emit sigString(arg.params["paramString"].get<QList<QString>>());
     };
-    SimulationClient::instance()->onNotify("tb.simple/SimpleArrayInterface#sigString", sigStringFunc);
+    ApiGear::SimulationClient::instance()->onNotify("tb.simple/SimpleArrayInterface#sigString", sigStringFunc);
 }
 
 SimulationSimpleArrayInterface::~SimulationSimpleArrayInterface()
@@ -293,7 +293,7 @@ QList<bool> SimulationSimpleArrayInterface::funcBool(const QList<bool>& paramBoo
 
     Params params;
     params["paramBool"] = paramBool;
-    SimulationClient::instance()->doCall("tb.simple/SimpleArrayInterface", "funcBool", params);
+    ApiGear::SimulationClient::instance()->doCall("tb.simple/SimpleArrayInterface", "funcBool", params);
     return QList<bool>();
 }
 
@@ -303,7 +303,7 @@ QList<int> SimulationSimpleArrayInterface::funcInt(const QList<int>& paramInt)
 
     Params params;
     params["paramInt"] = paramInt;
-    SimulationClient::instance()->doCall("tb.simple/SimpleArrayInterface", "funcInt", params);
+    ApiGear::SimulationClient::instance()->doCall("tb.simple/SimpleArrayInterface", "funcInt", params);
     return QList<int>();
 }
 
@@ -313,7 +313,7 @@ QList<qreal> SimulationSimpleArrayInterface::funcFloat(const QList<qreal>& param
 
     Params params;
     params["paramFloat"] = paramFloat;
-    SimulationClient::instance()->doCall("tb.simple/SimpleArrayInterface", "funcFloat", params);
+    ApiGear::SimulationClient::instance()->doCall("tb.simple/SimpleArrayInterface", "funcFloat", params);
     return QList<qreal>();
 }
 
@@ -323,6 +323,6 @@ QList<QString> SimulationSimpleArrayInterface::funcString(const QList<QString>& 
 
     Params params;
     params["paramString"] = paramString;
-    SimulationClient::instance()->doCall("tb.simple/SimpleArrayInterface", "funcString", params);
+    ApiGear::SimulationClient::instance()->doCall("tb.simple/SimpleArrayInterface", "funcString", params);
     return QList<QString>();
 }

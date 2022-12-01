@@ -3,7 +3,7 @@
 #include <QtCore>
 #include <QtNetwork>
 
-#include "../api/apifactory.h"
+#include "testbed2/api/apifactory.h"
 
 class HttpFactory : public QObject, public ApiFactoryInterface
 {

@@ -1,5 +1,5 @@
 #include "agent.h"
-#include "../../shared/agentclient.h"
+#include "apigear/monitor/agentclient.h"
 
 SameStruct1InterfaceAgent::SameStruct1InterfaceAgent()
 {
@@ -15,14 +15,14 @@ QVariantMap SameStruct1InterfaceAgent::capture_state(AbstractSameStruct1Interfac
 void SameStruct1InterfaceAgent::trace_state(AbstractSameStruct1Interface* obj)
 {
     const QVariantMap &fields_ = capture_state(obj);
-    AgentClient::instance()->traceState("tb.same2.SameStruct1Interface", fields_);
+    ApiGear::Monitor::AgentClient::instance()->traceState("tb.same2.SameStruct1Interface", fields_);
 }
 void SameStruct1InterfaceAgent::trace_func1(AbstractSameStruct1Interface* obj, const Struct1& param1)
 {
     const QVariantMap &params_ {
         { "param1", QVariant::fromValue(param1) },
     };
-    AgentClient::instance()->traceCall("tb.same2.SameStruct1Interface#func1", params_);
+    ApiGear::Monitor::AgentClient::instance()->traceCall("tb.same2.SameStruct1Interface#func1", params_);
 }
 
 SameStruct2InterfaceAgent::SameStruct2InterfaceAgent()
@@ -40,14 +40,14 @@ QVariantMap SameStruct2InterfaceAgent::capture_state(AbstractSameStruct2Interfac
 void SameStruct2InterfaceAgent::trace_state(AbstractSameStruct2Interface* obj)
 {
     const QVariantMap &fields_ = capture_state(obj);
-    AgentClient::instance()->traceState("tb.same2.SameStruct2Interface", fields_);
+    ApiGear::Monitor::AgentClient::instance()->traceState("tb.same2.SameStruct2Interface", fields_);
 }
 void SameStruct2InterfaceAgent::trace_func1(AbstractSameStruct2Interface* obj, const Struct1& param1)
 {
     const QVariantMap &params_ {
         { "param1", QVariant::fromValue(param1) },
     };
-    AgentClient::instance()->traceCall("tb.same2.SameStruct2Interface#func1", params_);
+    ApiGear::Monitor::AgentClient::instance()->traceCall("tb.same2.SameStruct2Interface#func1", params_);
 }
 void SameStruct2InterfaceAgent::trace_func2(AbstractSameStruct2Interface* obj, const Struct1& param1, const Struct2& param2)
 {
@@ -55,7 +55,7 @@ void SameStruct2InterfaceAgent::trace_func2(AbstractSameStruct2Interface* obj, c
         { "param1", QVariant::fromValue(param1) },
         { "param2", QVariant::fromValue(param2) },
     };
-    AgentClient::instance()->traceCall("tb.same2.SameStruct2Interface#func2", params_);
+    ApiGear::Monitor::AgentClient::instance()->traceCall("tb.same2.SameStruct2Interface#func2", params_);
 }
 
 SameEnum1InterfaceAgent::SameEnum1InterfaceAgent()
@@ -72,14 +72,14 @@ QVariantMap SameEnum1InterfaceAgent::capture_state(AbstractSameEnum1Interface* o
 void SameEnum1InterfaceAgent::trace_state(AbstractSameEnum1Interface* obj)
 {
     const QVariantMap &fields_ = capture_state(obj);
-    AgentClient::instance()->traceState("tb.same2.SameEnum1Interface", fields_);
+    ApiGear::Monitor::AgentClient::instance()->traceState("tb.same2.SameEnum1Interface", fields_);
 }
 void SameEnum1InterfaceAgent::trace_func1(AbstractSameEnum1Interface* obj, const Enum1::Enum1Enum param1)
 {
     const QVariantMap &params_ {
         { "param1", QVariant::fromValue(param1) },
     };
-    AgentClient::instance()->traceCall("tb.same2.SameEnum1Interface#func1", params_);
+    ApiGear::Monitor::AgentClient::instance()->traceCall("tb.same2.SameEnum1Interface#func1", params_);
 }
 
 SameEnum2InterfaceAgent::SameEnum2InterfaceAgent()
@@ -97,14 +97,14 @@ QVariantMap SameEnum2InterfaceAgent::capture_state(AbstractSameEnum2Interface* o
 void SameEnum2InterfaceAgent::trace_state(AbstractSameEnum2Interface* obj)
 {
     const QVariantMap &fields_ = capture_state(obj);
-    AgentClient::instance()->traceState("tb.same2.SameEnum2Interface", fields_);
+    ApiGear::Monitor::AgentClient::instance()->traceState("tb.same2.SameEnum2Interface", fields_);
 }
 void SameEnum2InterfaceAgent::trace_func1(AbstractSameEnum2Interface* obj, const Enum1::Enum1Enum param1)
 {
     const QVariantMap &params_ {
         { "param1", QVariant::fromValue(param1) },
     };
-    AgentClient::instance()->traceCall("tb.same2.SameEnum2Interface#func1", params_);
+    ApiGear::Monitor::AgentClient::instance()->traceCall("tb.same2.SameEnum2Interface#func1", params_);
 }
 void SameEnum2InterfaceAgent::trace_func2(AbstractSameEnum2Interface* obj, const Enum1::Enum1Enum param1, const Enum2::Enum2Enum param2)
 {
@@ -112,5 +112,5 @@ void SameEnum2InterfaceAgent::trace_func2(AbstractSameEnum2Interface* obj, const
         { "param1", QVariant::fromValue(param1) },
         { "param2", QVariant::fromValue(param2) },
     };
-    AgentClient::instance()->traceCall("tb.same2.SameEnum2Interface#func2", params_);
+    ApiGear::Monitor::AgentClient::instance()->traceCall("tb.same2.SameEnum2Interface#func2", params_);
 }

@@ -7,7 +7,7 @@
 
 #include <QtQml>
 
-#include "../api/agent.h"
+#include "{{snake .Module.Name}}/api/agent.h"
 
 {{$class}}::{{$class}}(QObject *parent)
     : Abstract{{$class}}(parent)

@@ -18,8 +18,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
 #include "qmlenuminterface.h"
-#include "../api/apifactory.h"
-#include "../api/agent.h"
+#include "tb_enum/api/apifactory.h"
+#include "tb_enum/api/agent.h"
 
 #include <QtQml>
 

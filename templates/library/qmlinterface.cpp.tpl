@@ -4,8 +4,8 @@
 
 
 #include "qml{{lower $class}}.h"
-#include "../api/apifactory.h"
-#include "../api/agent.h"
+#include "{{snake .Module.Name}}/api/apifactory.h"
+#include "{{snake .Module.Name}}/api/agent.h"
 
 #include <QtQml>
 

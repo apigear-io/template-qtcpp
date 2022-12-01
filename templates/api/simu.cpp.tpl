@@ -1,7 +1,7 @@
 #include "simu.h"
 #include "jsonrpc/types.h"
 #include "json.adapter.h"
-#include "../../shared/simulationclient.h"
+#include "apigear/simulation/simulationclient.h"
 {{- $module := .Module.Name }}
 
 using namespace ApiGear::JSONRPC;
@@ -26,7 +26,7 @@ using namespace ApiGear::JSONRPC;
       }
       {{- end }}
     };
-    SimulationClient::instance()->onNotifyState("{{$module}}/{{.Name}}", serviceStateFunc);
+    ApiGear::SimulationClient::instance()->onNotifyState("{{$module}}/{{.Name}}", serviceStateFunc);
 
     CallResponseFunc fetchStateFunc = [this](CallResponseArg arg) {
       qDebug() << "{{$class}} service fetch state: " << QString::fromStdString(arg.result.dump());
@@ -36,7 +36,7 @@ using namespace ApiGear::JSONRPC;
       }
       {{- end }}
     };
-    SimulationClient::instance()->doFetchState("{{$module}}/{{$iface}}", fetchStateFunc);
+    ApiGear::SimulationClient::instance()->doFetchState("{{$module}}/{{$iface}}", fetchStateFunc);
 
 {{- range .Signals }}
 
@@ -47,7 +47,7 @@ using namespace ApiGear::JSONRPC;
         {{- end -}}
         );
     };
-    SimulationClient::instance()->onNotify("{{$module}}/{{$iface}}#{{.Name}}", {{.Name}}Func);
+    ApiGear::SimulationClient::instance()->onNotify("{{$module}}/{{$iface}}#{{.Name}}", {{.Name}}Func);
 {{- end }}
 }
 
@@ -81,7 +81,7 @@ void {{$class}}::set{{Camel .Name}}({{qtParam "" .}})
     {{- range  .Params }}
     params["{{.Name}}"] = {{.Name}};
     {{- end }}
-    SimulationClient::instance()->doCall("{{$module}}/{{$iface}}", "{{.Name}}", params);
+    ApiGear::SimulationClient::instance()->doCall("{{$module}}/{{$iface}}", "{{.Name}}", params);
     return {{qtDefault "" .Return}};
 }
 {{- end }}

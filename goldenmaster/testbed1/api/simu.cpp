@@ -1,7 +1,7 @@
 #include "simu.h"
 #include "jsonrpc/types.h"
 #include "json.adapter.h"
-#include "../../shared/simulationclient.h"
+#include "apigear/simulation/simulationclient.h"
 
 using namespace ApiGear::JSONRPC;
 // ********************************************************************
@@ -30,7 +30,7 @@ SimulationStructInterface::SimulationStructInterface(QObject *parent)
         setPropString(arg.params["propString"]);
       }
     };
-    SimulationClient::instance()->onNotifyState("testbed1/StructInterface", serviceStateFunc);
+    ApiGear::SimulationClient::instance()->onNotifyState("testbed1/StructInterface", serviceStateFunc);
 
     CallResponseFunc fetchStateFunc = [this](CallResponseArg arg) {
       qDebug() << "SimulationStructInterface service fetch state: " << QString::fromStdString(arg.result.dump());
@@ -47,27 +47,27 @@ SimulationStructInterface::SimulationStructInterface(QObject *parent)
         setPropString(arg.result["propString"]);
       }
     };
-    SimulationClient::instance()->doFetchState("testbed1/StructInterface", fetchStateFunc);
+    ApiGear::SimulationClient::instance()->doFetchState("testbed1/StructInterface", fetchStateFunc);
 
     NotifyRequestFunc sigBoolFunc = [this](NotifyRequestArg arg) { 
         emit sigBool(arg.params["paramBool"].get<StructBool>());
     };
-    SimulationClient::instance()->onNotify("testbed1/StructInterface#sigBool", sigBoolFunc);
+    ApiGear::SimulationClient::instance()->onNotify("testbed1/StructInterface#sigBool", sigBoolFunc);
 
     NotifyRequestFunc sigIntFunc = [this](NotifyRequestArg arg) { 
         emit sigInt(arg.params["paramInt"].get<StructInt>());
     };
-    SimulationClient::instance()->onNotify("testbed1/StructInterface#sigInt", sigIntFunc);
+    ApiGear::SimulationClient::instance()->onNotify("testbed1/StructInterface#sigInt", sigIntFunc);
 
     NotifyRequestFunc sigFloatFunc = [this](NotifyRequestArg arg) { 
         emit sigFloat(arg.params["paramFloat"].get<StructFloat>());
     };
-    SimulationClient::instance()->onNotify("testbed1/StructInterface#sigFloat", sigFloatFunc);
+    ApiGear::SimulationClient::instance()->onNotify("testbed1/StructInterface#sigFloat", sigFloatFunc);
 
     NotifyRequestFunc sigStringFunc = [this](NotifyRequestArg arg) { 
         emit sigString(arg.params["paramString"].get<StructString>());
     };
-    SimulationClient::instance()->onNotify("testbed1/StructInterface#sigString", sigStringFunc);
+    ApiGear::SimulationClient::instance()->onNotify("testbed1/StructInterface#sigString", sigStringFunc);
 }
 
 SimulationStructInterface::~SimulationStructInterface()
@@ -132,7 +132,7 @@ StructBool SimulationStructInterface::funcBool(const StructBool& paramBool)
 
     Params params;
     params["paramBool"] = paramBool;
-    SimulationClient::instance()->doCall("testbed1/StructInterface", "funcBool", params);
+    ApiGear::SimulationClient::instance()->doCall("testbed1/StructInterface", "funcBool", params);
     return StructBool();
 }
 
@@ -142,7 +142,7 @@ StructBool SimulationStructInterface::funcInt(const StructInt& paramInt)
 
     Params params;
     params["paramInt"] = paramInt;
-    SimulationClient::instance()->doCall("testbed1/StructInterface", "funcInt", params);
+    ApiGear::SimulationClient::instance()->doCall("testbed1/StructInterface", "funcInt", params);
     return StructBool();
 }
 
@@ -152,7 +152,7 @@ StructFloat SimulationStructInterface::funcFloat(const StructFloat& paramFloat)
 
     Params params;
     params["paramFloat"] = paramFloat;
-    SimulationClient::instance()->doCall("testbed1/StructInterface", "funcFloat", params);
+    ApiGear::SimulationClient::instance()->doCall("testbed1/StructInterface", "funcFloat", params);
     return StructFloat();
 }
 
@@ -162,7 +162,7 @@ StructString SimulationStructInterface::funcString(const StructString& paramStri
 
     Params params;
     params["paramString"] = paramString;
-    SimulationClient::instance()->doCall("testbed1/StructInterface", "funcString", params);
+    ApiGear::SimulationClient::instance()->doCall("testbed1/StructInterface", "funcString", params);
     return StructString();
 }
 // ********************************************************************
@@ -191,7 +191,7 @@ SimulationStructArrayInterface::SimulationStructArrayInterface(QObject *parent)
         setPropString(arg.params["propString"]);
       }
     };
-    SimulationClient::instance()->onNotifyState("testbed1/StructArrayInterface", serviceStateFunc);
+    ApiGear::SimulationClient::instance()->onNotifyState("testbed1/StructArrayInterface", serviceStateFunc);
 
     CallResponseFunc fetchStateFunc = [this](CallResponseArg arg) {
       qDebug() << "SimulationStructArrayInterface service fetch state: " << QString::fromStdString(arg.result.dump());
@@ -208,27 +208,27 @@ SimulationStructArrayInterface::SimulationStructArrayInterface(QObject *parent)
         setPropString(arg.result["propString"]);
       }
     };
-    SimulationClient::instance()->doFetchState("testbed1/StructArrayInterface", fetchStateFunc);
+    ApiGear::SimulationClient::instance()->doFetchState("testbed1/StructArrayInterface", fetchStateFunc);
 
     NotifyRequestFunc sigBoolFunc = [this](NotifyRequestArg arg) { 
         emit sigBool(arg.params["paramBool"].get<QList<StructBool>>());
     };
-    SimulationClient::instance()->onNotify("testbed1/StructArrayInterface#sigBool", sigBoolFunc);
+    ApiGear::SimulationClient::instance()->onNotify("testbed1/StructArrayInterface#sigBool", sigBoolFunc);
 
     NotifyRequestFunc sigIntFunc = [this](NotifyRequestArg arg) { 
         emit sigInt(arg.params["paramInt"].get<QList<StructInt>>());
     };
-    SimulationClient::instance()->onNotify("testbed1/StructArrayInterface#sigInt", sigIntFunc);
+    ApiGear::SimulationClient::instance()->onNotify("testbed1/StructArrayInterface#sigInt", sigIntFunc);
 
     NotifyRequestFunc sigFloatFunc = [this](NotifyRequestArg arg) { 
         emit sigFloat(arg.params["paramFloat"].get<QList<StructFloat>>());
     };
-    SimulationClient::instance()->onNotify("testbed1/StructArrayInterface#sigFloat", sigFloatFunc);
+    ApiGear::SimulationClient::instance()->onNotify("testbed1/StructArrayInterface#sigFloat", sigFloatFunc);
 
     NotifyRequestFunc sigStringFunc = [this](NotifyRequestArg arg) { 
         emit sigString(arg.params["paramString"].get<QList<StructString>>());
     };
-    SimulationClient::instance()->onNotify("testbed1/StructArrayInterface#sigString", sigStringFunc);
+    ApiGear::SimulationClient::instance()->onNotify("testbed1/StructArrayInterface#sigString", sigStringFunc);
 }
 
 SimulationStructArrayInterface::~SimulationStructArrayInterface()
@@ -293,7 +293,7 @@ StructBool SimulationStructArrayInterface::funcBool(const QList<StructBool>& par
 
     Params params;
     params["paramBool"] = paramBool;
-    SimulationClient::instance()->doCall("testbed1/StructArrayInterface", "funcBool", params);
+    ApiGear::SimulationClient::instance()->doCall("testbed1/StructArrayInterface", "funcBool", params);
     return StructBool();
 }
 
@@ -303,7 +303,7 @@ StructBool SimulationStructArrayInterface::funcInt(const QList<StructInt>& param
 
     Params params;
     params["paramInt"] = paramInt;
-    SimulationClient::instance()->doCall("testbed1/StructArrayInterface", "funcInt", params);
+    ApiGear::SimulationClient::instance()->doCall("testbed1/StructArrayInterface", "funcInt", params);
     return StructBool();
 }
 
@@ -313,7 +313,7 @@ StructBool SimulationStructArrayInterface::funcFloat(const QList<StructFloat>& p
 
     Params params;
     params["paramFloat"] = paramFloat;
-    SimulationClient::instance()->doCall("testbed1/StructArrayInterface", "funcFloat", params);
+    ApiGear::SimulationClient::instance()->doCall("testbed1/StructArrayInterface", "funcFloat", params);
     return StructBool();
 }
 
@@ -323,6 +323,6 @@ StructBool SimulationStructArrayInterface::funcString(const QList<StructString>&
 
     Params params;
     params["paramString"] = paramString;
-    SimulationClient::instance()->doCall("testbed1/StructArrayInterface", "funcString", params);
+    ApiGear::SimulationClient::instance()->doCall("testbed1/StructArrayInterface", "funcString", params);
     return StructBool();
 }

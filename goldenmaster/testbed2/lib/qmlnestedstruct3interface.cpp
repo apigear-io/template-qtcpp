@@ -18,8 +18,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
 #include "qmlnestedstruct3interface.h"
-#include "../api/apifactory.h"
-#include "../api/agent.h"
+#include "testbed2/api/apifactory.h"
+#include "testbed2/api/agent.h"
 
 #include <QtQml>
 

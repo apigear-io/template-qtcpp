@@ -21,7 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <QtQml>
 
-#include "../api/agent.h"
+#include "testbed1/api/agent.h"
 
 StructInterface::StructInterface(QObject *parent)
     : AbstractStructInterface(parent)

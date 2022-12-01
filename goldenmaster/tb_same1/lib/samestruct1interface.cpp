@@ -21,7 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <QtQml>
 
-#include "../api/agent.h"
+#include "tb_same1/api/agent.h"
 
 SameStruct1Interface::SameStruct1Interface(QObject *parent)
     : AbstractSameStruct1Interface(parent)

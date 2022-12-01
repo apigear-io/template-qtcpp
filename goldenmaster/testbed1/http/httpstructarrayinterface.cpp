@@ -17,7 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "httpstructarrayinterface.h"
 
-#include "../api/agent.h"
+#include "testbed1/api/agent.h"
 #include <QtQml>
 
 HttpStructArrayInterface::HttpStructArrayInterface(QNetworkAccessManager *network, QObject *parent)

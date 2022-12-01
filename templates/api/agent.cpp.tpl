@@ -1,7 +1,7 @@
 {{- /* Copyright (c) ApiGear UG 2020 */ -}}
 {{- $module := .Module.Name -}}
 #include "agent.h"
-#include "../../shared/agentclient.h"
+#include "apigear/monitor/agentclient.h"
 
 {{- range .Module.Interfaces }}
 {{- $class := printf "%sAgent" .Name }}
@@ -23,7 +23,7 @@ QVariantMap {{$class}}::capture_state(Abstract{{.Name}}* obj)
 void {{$class}}::trace_state(Abstract{{.Name}}* obj)
 {
     const QVariantMap &fields_ = capture_state(obj);
-    AgentClient::instance()->traceState("{{$module}}.{{.Name}}", fields_);
+    ApiGear::Monitor::AgentClient::instance()->traceState("{{$module}}.{{.Name}}", fields_);
 }
 {{- $iface := .Name }}
 {{- range .Operations }}
@@ -34,7 +34,7 @@ void {{$class}}::trace_{{.Name}}(Abstract{{$iface}}* obj, {{qtParams "" .Params}
         { "{{.Name}}", QVariant::fromValue({{.Name}}) },
         {{- end }}
     };
-    AgentClient::instance()->traceCall("{{$module}}.{{$iface}}#{{.Name}}", params_);
+    ApiGear::Monitor::AgentClient::instance()->traceCall("{{$module}}.{{$iface}}#{{.Name}}", params_);
 }
 {{- end }}
 {{- end }}

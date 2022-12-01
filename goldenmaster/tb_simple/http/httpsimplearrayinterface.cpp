@@ -17,7 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "httpsimplearrayinterface.h"
 
-#include "../api/agent.h"
+#include "tb_simple/api/agent.h"
 #include <QtQml>
 
 HttpSimpleArrayInterface::HttpSimpleArrayInterface(QNetworkAccessManager *network, QObject *parent)

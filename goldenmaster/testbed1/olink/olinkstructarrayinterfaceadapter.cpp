@@ -21,8 +21,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "olinkstructarrayinterfaceadapter.h"
 
 #include <nlohmann/json.hpp>
-#include "../api/agent.h"
-#include "../api/json.adapter.h"
+#include "testbed1/api/agent.h"
+#include "testbed1/api/json.adapter.h"
 
 #include <QtCore>
 

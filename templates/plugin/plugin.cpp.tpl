@@ -1,15 +1,16 @@
 {{- /* Copyright (c) ApiGear UG 2020 */ -}}
 {{- cppGpl .Module }}
+{{- $module_id := snake .Module.Name }}
 {{- $version := .Module.Version }}
 
 #include "plugin.h"
 
 #include <QtQml>
 
-#include "../api/api.h"
+#include "{{snake .Module.Name}}/api/api.h"
 
 {{- range .Module.Interfaces }}
-#include "../lib/qml{{lower .Name}}.h"
+#include "{{$module_id}}/lib/qml{{lower .Name}}.h"
 {{- end }}
 
 void Plugin::registerTypes(const char *uri)

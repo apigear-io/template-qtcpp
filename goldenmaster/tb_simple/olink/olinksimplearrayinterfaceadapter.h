@@ -21,7 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <QtCore>
 #include <nlohmann/json.hpp>
 
-#include "../api/api.h"
+#include "tb_simple/api/api.h"
 #include "olink/remotenode.h"
 
 using namespace ApiGear;

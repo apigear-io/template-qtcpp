@@ -13,6 +13,6 @@ set_target_properties(plugin_tb_simple PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_PATH}
 )
 
-target_link_libraries(plugin_tb_simple PRIVATE Qt5::Core Qt5::Qml tb_simple_lib tb_simple_api)
+target_link_libraries(plugin_tb_simple PRIVATE Qt5::Core Qt5::Qml tb_simple::tb_simple_lib tb_simple::tb_simple_api)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qmldir ${OUTPUT_PATH}/qmldir COPYONLY)

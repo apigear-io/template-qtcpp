@@ -13,6 +13,6 @@ set_target_properties(plugin_testbed2 PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_PATH}
 )
 
-target_link_libraries(plugin_testbed2 PRIVATE Qt5::Core Qt5::Qml testbed2_lib testbed2_api)
+target_link_libraries(plugin_testbed2 PRIVATE Qt5::Core Qt5::Qml testbed2::testbed2_lib testbed2::testbed2_api)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qmldir ${OUTPUT_PATH}/qmldir COPYONLY)

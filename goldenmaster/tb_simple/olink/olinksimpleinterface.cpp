@@ -17,8 +17,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "olinksimpleinterface.h"
 
-#include "../api/agent.h"
-#include "../api/json.adapter.h"
+#include "tb_simple/api/agent.h"
+#include "tb_simple/api/json.adapter.h"
 #include <QtCore>
 
 using namespace ApiGear;

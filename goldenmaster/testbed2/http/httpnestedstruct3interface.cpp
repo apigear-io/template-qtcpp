@@ -17,7 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "httpnestedstruct3interface.h"
 
-#include "../api/agent.h"
+#include "testbed2/api/agent.h"
 #include <QtQml>
 
 HttpNestedStruct3Interface::HttpNestedStruct3Interface(QNetworkAccessManager *network, QObject *parent)

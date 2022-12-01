@@ -20,8 +20,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <QtQml>
 
-#include "../api/api.h"
-#include "../lib/qmlenuminterface.h"
+#include "tb_enum/api/api.h"
+#include "tb_enum/lib/qmlenuminterface.h"
 
 void Plugin::registerTypes(const char *uri)
 {

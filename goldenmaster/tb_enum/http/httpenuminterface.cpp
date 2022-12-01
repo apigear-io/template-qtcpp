@@ -17,7 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "httpenuminterface.h"
 
-#include "../api/agent.h"
+#include "tb_enum/api/agent.h"
 #include <QtQml>
 
 HttpEnumInterface::HttpEnumInterface(QNetworkAccessManager *network, QObject *parent)

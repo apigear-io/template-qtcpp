@@ -1,18 +1,22 @@
 #pragma once
 
+#if defined(COMPILING_SIMULATION_QT)
+#  define SIMULATIONQT_EXPORT Q_DECL_EXPORT
+#else
+#  define SIMULATIONQT_EXPORT Q_DECL_IMPORT
+#endif
+
 #include <QtCore>
 #include <QtWebSockets>
 
 #include "jsonrpc/types.h"
 
-using namespace ApiGear;
-
-namespace ApiGear { namespace JSONRPC {
+namespace ApiGear
+{
+namespace JSONRPC {
 class RpcProtocol;
-} }
-
-
-class SimulationClient : public QObject, public JSONRPC::IMessageWriter, public JSONRPC::IRpcProtocolListener, public JSONRPC::ILogger
+}
+class SIMULATIONQT_EXPORT SimulationClient : public QObject, public JSONRPC::IMessageWriter, public JSONRPC::IRpcProtocolListener, public JSONRPC::ILogger
 {
     Q_OBJECT
 public:
@@ -48,9 +52,11 @@ public:
     QWebSocket *m_socket;
     QTimer *m_retryTimer;
     QTimer *m_delayTimer;
-    ApiGear::JSONRPC::RpcProtocol *m_session;
+    JSONRPC::RpcProtocol *m_session;
     std::map<std::string, JSONRPC::NotifyRequestFunc> m_notifyRegistry;
     std::map<std::string, JSONRPC::NotifyRequestFunc> m_notifyStateRegistry;
     bool m_loggingDisabled;
 
 };
+
+}

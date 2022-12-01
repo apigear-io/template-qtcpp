@@ -20,9 +20,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <QtQml>
 
-#include "../api/api.h"
-#include "../lib/qmlstructinterface.h"
-#include "../lib/qmlstructarrayinterface.h"
+#include "testbed1/api/api.h"
+#include "testbed1/lib/qmlstructinterface.h"
+#include "testbed1/lib/qmlstructarrayinterface.h"
 
 void Plugin::registerTypes(const char *uri)
 {

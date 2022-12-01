@@ -6,7 +6,7 @@
 #include <QtCore>
 #include <QtNetwork>
 
-#include "../api/api.h"
+#include "{{snake .Module.Name}}/api/api.h"
 
 class {{$class}} : public Abstract{{.Interface.Name}}
 {

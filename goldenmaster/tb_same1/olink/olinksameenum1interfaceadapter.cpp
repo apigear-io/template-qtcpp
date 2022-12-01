@@ -21,8 +21,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "olinksameenum1interfaceadapter.h"
 
 #include <nlohmann/json.hpp>
-#include "../api/agent.h"
-#include "../api/json.adapter.h"
+#include "tb_same1/api/agent.h"
+#include "tb_same1/api/json.adapter.h"
 
 #include <QtCore>
 

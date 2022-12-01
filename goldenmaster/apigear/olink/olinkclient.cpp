@@ -1,4 +1,5 @@
 #include "olinkclient.h"
+#include "olink_common.h"
 
 using namespace ApiGear::ObjectLink;
 
@@ -6,6 +7,7 @@ OLinkClient::OLinkClient(ClientRegistry& registry, QObject* parent)
     : QObject(parent)
     , m_socket(new QWebSocket(QString(), QWebSocketProtocol::VersionLatest, this))
     , m_retryTimer(new QTimer(this))
+    , m_node(registry)
     , m_registry(registry)
 {
     qDebug() << Q_FUNC_INFO;
@@ -34,21 +36,22 @@ OLinkClient::~OLinkClient()
 void OLinkClient::connectToHost(QUrl url)
 {
     qDebug() << Q_FUNC_INFO << url;
-    if(url.isEmpty()) {
+    if (url.isEmpty()) {
         QString serverUrl = qEnvironmentVariable("OLINK_SERVER", "ws://127.0.0.1:8182");
         m_serverUrl = QUrl(serverUrl);
-    } else {
+    }
+    else {
         m_serverUrl = url;
     }
     m_socket->open(m_serverUrl);
 }
 
-ClientRegistry &OLinkClient::registry()
+ClientRegistry& OLinkClient::registry()
 {
     return m_node.registry();
 }
 
-ClientNode &OLinkClient::node()
+ClientNode& OLinkClient::node()
 {
     return m_node;
 }
@@ -74,7 +77,7 @@ void OLinkClient::onDisconnected()
     // m_node->goodbye();
 }
 
-void OLinkClient::handleTextMessage(const QString &message)
+void OLinkClient::handleTextMessage(const QString& message)
 {
     m_node.handleMessage(message.toStdString());
 }
@@ -84,7 +87,8 @@ void OLinkClient::processMessages()
     qDebug() << Q_FUNC_INFO;
     if (m_socket->state() == QAbstractSocket::ConnectedState) {
         m_retryTimer->stop();
-    } else if (m_retryTimer->isActive()) {
+    }
+    else if (m_retryTimer->isActive()) {
         return;
     }
     qDebug() << "001";
@@ -95,7 +99,7 @@ void OLinkClient::processMessages()
     qDebug() << "002";
     if (m_socket->state() == QAbstractSocket::ConnectedState) {
         qDebug() << "002.1";
-        while(!m_queue.isEmpty()) {
+        while (!m_queue.isEmpty()) {
             qDebug() << "003";
             // if we are using JSON we need to use txt message
             // otherwise binary messages
@@ -106,6 +110,3 @@ void OLinkClient::processMessages()
         }
     }
 }
-
-
-

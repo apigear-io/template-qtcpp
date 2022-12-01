@@ -1,7 +1,9 @@
 {{- $module_id := printf "%s" (snake .Module.Name) }}
+{{- $lib_id := printf "%s_olink" (snake .Module.Name) }}
 {{- $MODULE_ID := printf "%s" (SNAKE .Module.Name) }}
 {{- $module_path := (path .Module.Name) }}
 {{- $SOURCES := printf "%s_OLINK_SOURCES" $MODULE_ID -}}
+project({{$lib_id}})
 
 find_package(Qt5 REQUIRED COMPONENTS Core Qml Network WebSockets)
 
@@ -38,8 +40,9 @@ set ({{$MODULE_ID}}_OLINK_SOURCES
 {{- end }}
 )
 
-add_library({{$module_id}}_olink STATIC ${ {{- $MODULE_ID}}_OLINK_SOURCES})
-target_include_directories({{$module_id}}_olink
+# dynamic library
+add_library({{$lib_id}} STATIC ${ {{- $SOURCES -}} })
+target_include_directories({{$lib_id}}
     PRIVATE 
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     INTERFACE
@@ -48,4 +51,4 @@ target_include_directories({{$module_id}}_olink
     $<INSTALL_INTERFACE:include/{{$module_id}}>
 )
 
-target_link_libraries({{$module_id}}_olink PRIVATE olink_core Qt5::Core Qt5::Qml Qt5::WebSockets {{$module_id}}_api PUBLIC nlohmann_json::nlohmann_json qtpromise)
+target_link_libraries({{$lib_id}} PRIVATE olink_core Qt5::Core Qt5::Qml Qt5::WebSockets {{$module_id}}::{{$module_id}}_api PUBLIC nlohmann_json::nlohmann_json qtpromise)

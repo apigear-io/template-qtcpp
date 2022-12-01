@@ -1,6 +1,7 @@
 #include "simulationclient.h"
 #include "jsonrpc/rpcprotocol.h"
 
+using namespace ApiGear;
 using namespace ApiGear::JSONRPC;
 
 SimulationClient* SimulationClient::s_instance(nullptr);
@@ -41,7 +42,7 @@ SimulationClient *SimulationClient::instance()
     return s_instance;
 }
 
-void SimulationClient::doFetchState(string service, CallResponseFunc &func)
+void SimulationClient::doFetchState(std::string service, CallResponseFunc &func)
 {
     qDebug() << Q_FUNC_INFO;
     Params params;

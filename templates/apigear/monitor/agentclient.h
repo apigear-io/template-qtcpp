@@ -1,9 +1,19 @@
 #pragma once
 
+#if defined(COMPILING_MONITOR_QT)
+#  define MONITORQT_EXPORT Q_DECL_EXPORT
+#else
+#  define MONITORQT_EXPORT Q_DECL_IMPORT
+#endif
+
+
 #include <QtCore>
 #include <QtWebSockets>
 
-class AgentClient : public QObject
+namespace ApiGear {
+namespace Monitor {
+
+class MONITORQT_EXPORT AgentClient : public QObject
 {
     Q_OBJECT
 public:
@@ -38,3 +48,5 @@ private:
     QQueue<QJsonObject> m_traceQueue;
     QTimer *m_delayTimer;
 };
+
+}} //namespace ApiGear::Monitor

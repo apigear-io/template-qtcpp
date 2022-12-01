@@ -1,8 +1,14 @@
-{{- $module_id := printf "%s_api" (snake .Module.Name) }}
+{{- $module_id := printf "%s" (snake .Module.Name) }}
+{{- $lib_id := printf "%s_api" (snake .Module.Name) }}
 {{- $MODULE_ID := printf "%s_API" (SNAKE .Module.Name) }}
 {{- $module_path := (path .Module.Name) }}
 {{- $SOURCES := printf "%s_SOURCES" $MODULE_ID -}}
+
 find_package(Qt5 REQUIRED COMPONENTS Core Qml WebSockets)
+find_package(apigear QUIET COMPONENTS monitor_qt simulation_qt)
+find_package(monitor_qt)
+find_package(simulation_qt)
+
 set(OUTPUT_PATH ${LIBRARY_PATH}/)
 
 find_package(nlohmann_json QUIET)
@@ -23,6 +29,7 @@ if(NOT jsonrpc_core)
   set(JSONRPC_Install ON)
     FetchContent_Declare(jsonrpc_core
       GIT_REPOSITORY https://github.com/apigear-io/jsonrpc-core-cpp.git
+      GIT_TAG v0.1.1
       GIT_SHALLOW TRUE
       EXCLUDE_FROM_ALL FALSE
   )
@@ -34,12 +41,21 @@ set ({{$SOURCES}}
     apifactory.cpp
     simu.cpp
     agent.cpp
-    ../../shared/agentclient.cpp
-    ../../shared/simulationclient.cpp
 )
 
 # dynamic library
 
-add_library({{$module_id}} SHARED ${ {{- $SOURCES -}} })
-target_link_libraries({{$module_id}} PUBLIC nlohmann_json::nlohmann_json jsonrpc_core PRIVATE Qt5::Core Qt5::Qml Qt5::WebSockets)
-target_compile_definitions({{$module_id}} PRIVATE {{ SNAKE .Module.Name }}_LIBRARY)
+add_library({{$lib_id}} SHARED ${ {{- $SOURCES -}} })
+add_library({{$module_id}}::{{$lib_id}} ALIAS {{$lib_id}})
+
+target_include_directories({{$lib_id}}
+    PRIVATE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+    INTERFACE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../..>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/..>
+    $<INSTALL_INTERFACE:include>
+)
+
+target_link_libraries({{$lib_id}} PRIVATE  Qt5::Core Qt5::Qml Qt5::WebSockets jsonrpc_core nlohmann_json::nlohmann_json monitor_qt simulation_qt)
+target_compile_definitions({{$lib_id}} PRIVATE {{ SNAKE .Module.Name }}_LIBRARY)

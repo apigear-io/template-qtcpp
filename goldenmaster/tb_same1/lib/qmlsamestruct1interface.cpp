@@ -18,8 +18,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
 #include "qmlsamestruct1interface.h"
-#include "../api/apifactory.h"
-#include "../api/agent.h"
+#include "tb_same1/api/apifactory.h"
+#include "tb_same1/api/agent.h"
 
 #include <QtQml>
 

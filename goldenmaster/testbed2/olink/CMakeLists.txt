@@ -1,3 +1,5 @@
+project(testbed2_olink)
+
 find_package(Qt5 REQUIRED COMPONENTS Core Qml Network WebSockets)
 
 find_package(nlohmann_json QUIET)
@@ -37,6 +39,7 @@ set (TESTBED2_OLINK_SOURCES
     olinknestedstruct3interfaceadapter.cpp
 )
 
+# dynamic library
 add_library(testbed2_olink STATIC ${TESTBED2_OLINK_SOURCES})
 target_include_directories(testbed2_olink
     PRIVATE 
@@ -47,4 +50,4 @@ target_include_directories(testbed2_olink
     $<INSTALL_INTERFACE:include/testbed2>
 )
 
-target_link_libraries(testbed2_olink PRIVATE olink_core Qt5::Core Qt5::Qml Qt5::WebSockets testbed2_api PUBLIC nlohmann_json::nlohmann_json qtpromise)
+target_link_libraries(testbed2_olink PRIVATE olink_core Qt5::Core Qt5::Qml Qt5::WebSockets testbed2::testbed2_api PUBLIC nlohmann_json::nlohmann_json qtpromise)

@@ -20,7 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <QtCore>
 #include <QtNetwork>
 
-#include "../api/api.h"
+#include "tb_same2/api/api.h"
 
 class HttpSameStruct2Interface : public AbstractSameStruct2Interface
 {

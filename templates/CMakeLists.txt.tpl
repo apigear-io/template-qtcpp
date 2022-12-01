@@ -21,7 +21,9 @@ set(LIBRARY_PATH "${CMAKE_BINARY_DIR}/libs" CACHE STRING "Path where the librari
 set(IMPORTS_PATH "${CMAKE_BINARY_DIR}/imports" CACHE STRING "Path where the plugins are deployed")
 
 include_directories(thirdparty)
-
+add_subdirectory(apigear/olink)
+add_subdirectory(apigear/monitor)
+add_subdirectory(apigear/simulation)
 add_subdirectory(thirdparty/qtpromise)
 {{- range .System.Modules }}
 {{- $moduleId := snake .Name }}

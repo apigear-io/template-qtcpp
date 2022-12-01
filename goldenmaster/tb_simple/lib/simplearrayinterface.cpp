@@ -23,6 +23,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "tb_simple/api/agent.h"
 
+namespace tb_simple {
+
 SimpleArrayInterface::SimpleArrayInterface(QObject *parent)
     : AbstractSimpleArrayInterface(parent)
     , m_propBool(QList<bool>())
@@ -119,3 +121,4 @@ QList<QString> SimpleArrayInterface::funcString(const QList<QString>& paramStrin
     SimpleArrayInterfaceAgent::trace_funcString(this, paramString);
     return QList<QString>();
 }
+} //namespace tb_simple

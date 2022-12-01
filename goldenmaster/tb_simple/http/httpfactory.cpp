@@ -2,6 +2,8 @@
 #include "httpsimpleinterface.h"
 #include "httpsimplearrayinterface.h"
 
+namespace tb_simple {
+
 HttpFactory::HttpFactory(QObject *parent)
     : QObject(parent)
     , m_network(new QNetworkAccessManager(this))
@@ -17,3 +19,6 @@ AbstractSimpleArrayInterface* HttpFactory::createSimpleArrayInterface(QObject *p
 {
     return new HttpSimpleArrayInterface(m_network, parent);
 }
+
+
+} //namespace tb_simple

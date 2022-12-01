@@ -34,6 +34,8 @@ class IClientNode;
 using namespace ApiGear;
 using namespace ApiGear::ObjectLink;
 
+namespace testbed1 {
+
 class OLinkStructInterface : public AbstractStructInterface, public IObjectSink
 {
     Q_OBJECT
@@ -78,3 +80,5 @@ private:
     bool m_isReady;
     IClientNode *m_node;
 };
+
+} //namespace testbed1

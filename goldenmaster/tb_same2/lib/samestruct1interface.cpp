@@ -23,6 +23,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "tb_same2/api/agent.h"
 
+namespace tb_same2 {
+
 SameStruct1Interface::SameStruct1Interface(QObject *parent)
     : AbstractSameStruct1Interface(parent)
     , m_prop1(Struct1())
@@ -53,3 +55,4 @@ Struct1 SameStruct1Interface::func1(const Struct1& param1)
     SameStruct1InterfaceAgent::trace_func1(this, param1);
     return Struct1();
 }
+} //namespace tb_same2

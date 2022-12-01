@@ -2,7 +2,9 @@
 #include "simu.h"
 
 
-ApiFactoryInterface *ApiFactory::s_instance(nullptr);
+testbed1::ApiFactoryInterface* testbed1::ApiFactory::s_instance(nullptr);
+
+namespace testbed1 {
 
 ApiFactory::ApiFactory(QObject *parent)
     : QObject(parent)
@@ -35,3 +37,5 @@ AbstractStructArrayInterface* ApiFactory::createStructArrayInterface(QObject *pa
 {
     return new SimulationStructArrayInterface(parent);
 };
+
+} //namespace testbed1

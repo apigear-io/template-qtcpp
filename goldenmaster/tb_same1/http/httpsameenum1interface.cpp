@@ -20,6 +20,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "tb_same1/api/agent.h"
 #include <QtQml>
 
+namespace tb_same1 {
+
 HttpSameEnum1Interface::HttpSameEnum1Interface(QNetworkAccessManager *network, QObject *parent)
     : AbstractSameEnum1Interface(parent)
     , m_network(network)
@@ -89,3 +91,5 @@ void HttpSameEnum1Interface::applyState(const QJsonObject &state)
     setProp1(jsValue.toVariant().value<Enum1::Enum1Enum>());
   }
 }
+
+} // namespace tb_same1 

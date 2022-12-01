@@ -21,66 +21,66 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 /**
  *  will be called before the first test function is executed.
 */
-void TestSameEnum2Interface::initTestCase(){
+void TestTbSame1SameEnum2Interface::initTestCase(){
 
 }
 
 /**
  *  will be called to create a global test data table.
 */
-void TestSameEnum2Interface::initTestCase_data(){
+void TestTbSame1SameEnum2Interface::initTestCase_data(){
 
 }
 
 /**
  *  will be called after the last test function was executed.
 */
-void TestSameEnum2Interface::cleanupTestCase(){
+void TestTbSame1SameEnum2Interface::cleanupTestCase(){
 
 }
 
 /**
  *  will be called before each test function is executed.
 */
-void TestSameEnum2Interface::init(){
+void TestTbSame1SameEnum2Interface::init(){
 
 }
 
 /**
  *  will be called after every test function.
 */
-void TestSameEnum2Interface::cleanup(){
+void TestTbSame1SameEnum2Interface::cleanup(){
 
 }
 /**
  *  Test operation func1
 */
-void TestSameEnum2Interface::func1(){
-    SameEnum2Interface testSameenum2interface;
+void TestTbSame1SameEnum2Interface::func1(){
+    tb.same1::SameEnum2Interface testTbsame1sameenum2interface;
     // Do implement test here
 }
 /**
  *  Test operation func2
 */
-void TestSameEnum2Interface::func2(){
-    SameEnum2Interface testSameenum2interface;
+void TestTbSame1SameEnum2Interface::func2(){
+    tb.same1::SameEnum2Interface testTbsame1sameenum2interface;
     // Do implement test here
 }
 /**
  *  Test proptery prop1
 */
-void TestSameEnum2Interface::prop1(){
-    SameEnum2Interface testSameenum2interface;
+void TestTbSame1SameEnum2Interface::prop1(){
+    tb.same1::SameEnum2Interface testTbsame1sameenum2interface;
     // Do implement test here
 }
 /**
  *  Test proptery prop2
 */
-void TestSameEnum2Interface::prop2(){
-    SameEnum2Interface testSameenum2interface;
+void TestTbSame1SameEnum2Interface::prop2(){
+    tb.same1::SameEnum2Interface testTbsame1sameenum2interface;
     // Do implement test here
 }
 
-QTEST_MAIN(TestSameEnum2Interface);
+QTEST_MAIN(TestTbSame1SameEnum2Interface);
 
 

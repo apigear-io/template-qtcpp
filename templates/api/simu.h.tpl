@@ -3,6 +3,7 @@
 #include <QtCore>
 #include "api.h"
 
+namespace {{snake  .Module.Name }} {
 
 {{- range .Module.Interfaces }}
 {{- $class := printf "Simulation%s" .Name }}
@@ -35,3 +36,4 @@ private:
 };
 {{- end }}
 
+} // namespace {{snake  .Module.Name }}

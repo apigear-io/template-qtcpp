@@ -21,94 +21,94 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 /**
  *  will be called before the first test function is executed.
 */
-void TestEnumInterface::initTestCase(){
+void TestTbEnumEnumInterface::initTestCase(){
 
 }
 
 /**
  *  will be called to create a global test data table.
 */
-void TestEnumInterface::initTestCase_data(){
+void TestTbEnumEnumInterface::initTestCase_data(){
 
 }
 
 /**
  *  will be called after the last test function was executed.
 */
-void TestEnumInterface::cleanupTestCase(){
+void TestTbEnumEnumInterface::cleanupTestCase(){
 
 }
 
 /**
  *  will be called before each test function is executed.
 */
-void TestEnumInterface::init(){
+void TestTbEnumEnumInterface::init(){
 
 }
 
 /**
  *  will be called after every test function.
 */
-void TestEnumInterface::cleanup(){
+void TestTbEnumEnumInterface::cleanup(){
 
 }
 /**
  *  Test operation func0
 */
-void TestEnumInterface::func0(){
-    EnumInterface testEnuminterface;
+void TestTbEnumEnumInterface::func0(){
+    tb.enum::EnumInterface testTbenumenuminterface;
     // Do implement test here
 }
 /**
  *  Test operation func1
 */
-void TestEnumInterface::func1(){
-    EnumInterface testEnuminterface;
+void TestTbEnumEnumInterface::func1(){
+    tb.enum::EnumInterface testTbenumenuminterface;
     // Do implement test here
 }
 /**
  *  Test operation func2
 */
-void TestEnumInterface::func2(){
-    EnumInterface testEnuminterface;
+void TestTbEnumEnumInterface::func2(){
+    tb.enum::EnumInterface testTbenumenuminterface;
     // Do implement test here
 }
 /**
  *  Test operation func3
 */
-void TestEnumInterface::func3(){
-    EnumInterface testEnuminterface;
+void TestTbEnumEnumInterface::func3(){
+    tb.enum::EnumInterface testTbenumenuminterface;
     // Do implement test here
 }
 /**
  *  Test proptery prop0
 */
-void TestEnumInterface::prop0(){
-    EnumInterface testEnuminterface;
+void TestTbEnumEnumInterface::prop0(){
+    tb.enum::EnumInterface testTbenumenuminterface;
     // Do implement test here
 }
 /**
  *  Test proptery prop1
 */
-void TestEnumInterface::prop1(){
-    EnumInterface testEnuminterface;
+void TestTbEnumEnumInterface::prop1(){
+    tb.enum::EnumInterface testTbenumenuminterface;
     // Do implement test here
 }
 /**
  *  Test proptery prop2
 */
-void TestEnumInterface::prop2(){
-    EnumInterface testEnuminterface;
+void TestTbEnumEnumInterface::prop2(){
+    tb.enum::EnumInterface testTbenumenuminterface;
     // Do implement test here
 }
 /**
  *  Test proptery prop3
 */
-void TestEnumInterface::prop3(){
-    EnumInterface testEnuminterface;
+void TestTbEnumEnumInterface::prop3(){
+    tb.enum::EnumInterface testTbenumenuminterface;
     // Do implement test here
 }
 
-QTEST_MAIN(TestEnumInterface);
+QTEST_MAIN(TestTbEnumEnumInterface);
 
 

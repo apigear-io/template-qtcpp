@@ -4,6 +4,8 @@
 #include "apigear/simulation/simulationclient.h"
 
 using namespace ApiGear::JSONRPC;
+
+namespace testbed2 {
 // ********************************************************************
 // SimulationManyParamInterface simulation interface
 // ********************************************************************
@@ -448,3 +450,5 @@ NestedStruct1 SimulationNestedStruct3Interface::func3(const NestedStruct1& param
     ApiGear::SimulationClient::instance()->doCall("testbed2/NestedStruct3Interface", "func3", params);
     return NestedStruct1();
 }
+
+} //namespace testbed2

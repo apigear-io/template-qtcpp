@@ -22,6 +22,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "tb_same1/api/api.h"
 
+namespace tb_same1 {
+
 class HttpSameEnum1Interface : public AbstractSameEnum1Interface
 {
     Q_OBJECT
@@ -38,3 +40,5 @@ private:
     QNetworkAccessManager *m_network;
     Enum1::Enum1Enum m_prop1;
 };
+
+} // namespace tb_same1 

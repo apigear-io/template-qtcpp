@@ -5,6 +5,8 @@
 
 #include "tb_enum/api/apifactory.h"
 
+namespace tb_enum {
+
 class HttpFactory : public QObject, public ApiFactoryInterface
 {
 public:
@@ -13,3 +15,5 @@ public:
 private:
     QNetworkAccessManager *m_network;
 };
+
+} // namespace tb_enum

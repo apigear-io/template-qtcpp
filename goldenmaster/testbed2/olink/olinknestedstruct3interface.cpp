@@ -27,6 +27,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using namespace ApiGear;
 using namespace ApiGear::ObjectLink;
 
+namespace testbed2 {
+
 OLinkNestedStruct3Interface::OLinkNestedStruct3Interface(QObject *parent)
     : AbstractNestedStruct3Interface(parent)
     , m_prop1(NestedStruct1())
@@ -266,4 +268,4 @@ void OLinkNestedStruct3Interface::olinkOnRelease()
     m_node = nullptr;
 }
 
-
+} //namespace testbed2

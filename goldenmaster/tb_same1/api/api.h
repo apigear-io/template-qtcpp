@@ -26,6 +26,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #  define TB_SAME1_EXPORT Q_DECL_IMPORT
 #endif
 
+namespace tb_same1 {
+
 // ********************************************************************
 // Enumeration Enum1
 // ********************************************************************
@@ -44,7 +46,7 @@ public:
 
     static Enum1Enum toEnum(quint8 v, bool *ok);
 };
-Q_DECLARE_METATYPE(Enum1::Enum1Enum)
+
 
 inline QDataStream &operator<<(QDataStream &ds, const Enum1::Enum1Enum &obj)
 {
@@ -82,7 +84,7 @@ public:
 
     static Enum2Enum toEnum(quint8 v, bool *ok);
 };
-Q_DECLARE_METATYPE(Enum2::Enum2Enum)
+
 
 inline QDataStream &operator<<(QDataStream &ds, const Enum2::Enum2Enum &obj)
 {
@@ -130,8 +132,6 @@ private:
     int m_field3;
 };
 
-Q_DECLARE_METATYPE(Struct1)
-
 QDataStream &operator<<(QDataStream &stream, const Struct1 &obj);
 QDataStream &operator>>(QDataStream &stream, Struct1 &obj);
 
@@ -172,8 +172,6 @@ private:
     int m_field2;
     int m_field3;
 };
-
-Q_DECLARE_METATYPE(Struct2)
 
 QDataStream &operator<<(QDataStream &stream, const Struct2 &obj);
 QDataStream &operator>>(QDataStream &stream, Struct2 &obj);
@@ -280,3 +278,10 @@ public:
     virtual AbstractSameEnum2Interface* createSameEnum2Interface(QObject *parent) = 0;
 };
 
+} //namespace tb_same1
+
+
+Q_DECLARE_METATYPE(tb_same1::Enum1::Enum1Enum)
+Q_DECLARE_METATYPE(tb_same1::Enum2::Enum2Enum)
+Q_DECLARE_METATYPE(tb_same1::Struct1)
+Q_DECLARE_METATYPE(tb_same1::Struct2)

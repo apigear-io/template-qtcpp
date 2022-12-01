@@ -22,6 +22,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "samestruct2interface.h"
 
+namespace tb_same1 {
+
 class TB_SAME1_LIB_EXPORT QmlSameStruct2Interface : public AbstractSameStruct2Interface
 {
     Q_OBJECT
@@ -45,3 +47,5 @@ Q_SIGNALS:
 private:
 	AbstractSameStruct2Interface *m_obj;
 };
+
+} //namespace tb_same1

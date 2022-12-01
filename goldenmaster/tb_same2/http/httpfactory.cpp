@@ -4,6 +4,8 @@
 #include "httpsameenum1interface.h"
 #include "httpsameenum2interface.h"
 
+namespace tb_same2 {
+
 HttpFactory::HttpFactory(QObject *parent)
     : QObject(parent)
     , m_network(new QNetworkAccessManager(this))
@@ -29,3 +31,6 @@ AbstractSameEnum2Interface* HttpFactory::createSameEnum2Interface(QObject *paren
 {
     return new HttpSameEnum2Interface(m_network, parent);
 }
+
+
+} //namespace tb_same2

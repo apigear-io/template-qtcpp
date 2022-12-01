@@ -23,6 +23,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "testbed1/api/agent.h"
 
+namespace testbed1 {
+
 StructInterface::StructInterface(QObject *parent)
     : AbstractStructInterface(parent)
     , m_propBool(StructBool())
@@ -119,3 +121,4 @@ StructString StructInterface::funcString(const StructString& paramString)
     StructInterfaceAgent::trace_funcString(this, paramString);
     return StructString();
 }
+} //namespace testbed1

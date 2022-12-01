@@ -26,6 +26,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #  define TB_ENUM_EXPORT Q_DECL_IMPORT
 #endif
 
+namespace tb_enum {
+
 // ********************************************************************
 // Enumeration Enum0
 // ********************************************************************
@@ -45,7 +47,7 @@ public:
 
     static Enum0Enum toEnum(quint8 v, bool *ok);
 };
-Q_DECLARE_METATYPE(Enum0::Enum0Enum)
+
 
 inline QDataStream &operator<<(QDataStream &ds, const Enum0::Enum0Enum &obj)
 {
@@ -84,7 +86,7 @@ public:
 
     static Enum1Enum toEnum(quint8 v, bool *ok);
 };
-Q_DECLARE_METATYPE(Enum1::Enum1Enum)
+
 
 inline QDataStream &operator<<(QDataStream &ds, const Enum1::Enum1Enum &obj)
 {
@@ -123,7 +125,7 @@ public:
 
     static Enum2Enum toEnum(quint8 v, bool *ok);
 };
-Q_DECLARE_METATYPE(Enum2::Enum2Enum)
+
 
 inline QDataStream &operator<<(QDataStream &ds, const Enum2::Enum2Enum &obj)
 {
@@ -162,7 +164,7 @@ public:
 
     static Enum3Enum toEnum(quint8 v, bool *ok);
 };
-Q_DECLARE_METATYPE(Enum3::Enum3Enum)
+
 
 inline QDataStream &operator<<(QDataStream &ds, const Enum3::Enum3Enum &obj)
 {
@@ -225,3 +227,10 @@ public:
     virtual AbstractEnumInterface* createEnumInterface(QObject *parent) = 0;
 };
 
+} //namespace tb_enum
+
+
+Q_DECLARE_METATYPE(tb_enum::Enum0::Enum0Enum)
+Q_DECLARE_METATYPE(tb_enum::Enum1::Enum1Enum)
+Q_DECLARE_METATYPE(tb_enum::Enum2::Enum2Enum)
+Q_DECLARE_METATYPE(tb_enum::Enum3::Enum3Enum)

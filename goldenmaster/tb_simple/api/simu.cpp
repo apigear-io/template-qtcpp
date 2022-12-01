@@ -4,6 +4,8 @@
 #include "apigear/simulation/simulationclient.h"
 
 using namespace ApiGear::JSONRPC;
+
+namespace tb_simple {
 // ********************************************************************
 // SimulationSimpleInterface simulation interface
 // ********************************************************************
@@ -326,3 +328,5 @@ QList<QString> SimulationSimpleArrayInterface::funcString(const QList<QString>& 
     ApiGear::SimulationClient::instance()->doCall("tb.simple/SimpleArrayInterface", "funcString", params);
     return QList<QString>();
 }
+
+} //namespace tb_simple

@@ -23,6 +23,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "testbed2/api/agent.h"
 
+namespace testbed2 {
+
 NestedStruct3Interface::NestedStruct3Interface(QObject *parent)
     : AbstractNestedStruct3Interface(parent)
     , m_prop1(NestedStruct1())
@@ -97,3 +99,4 @@ NestedStruct1 NestedStruct3Interface::func3(const NestedStruct1& param1, const N
     NestedStruct3InterfaceAgent::trace_func3(this, param1, param2, param3);
     return NestedStruct1();
 }
+} //namespace testbed2

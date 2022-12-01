@@ -4,6 +4,8 @@
 #include "sameenum1interface.h"
 #include "sameenum2interface.h"
 
+namespace tb_same1 {
+
 Factory::Factory(QObject *parent)
     : QObject(parent)
 {
@@ -28,3 +30,5 @@ AbstractSameEnum2Interface* Factory::createSameEnum2Interface(QObject *parent)
 {
     return new SameEnum2Interface(parent);
 }
+
+} // namespace tb_same1

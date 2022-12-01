@@ -23,6 +23,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <QtQml>
 
+namespace testbed2 {
+
 QmlNestedStruct2Interface::QmlNestedStruct2Interface(QObject *parent)
     : AbstractNestedStruct2Interface(parent)
 {
@@ -76,3 +78,5 @@ NestedStruct1 QmlNestedStruct2Interface::func2(const NestedStruct1& param1, cons
 	
     return m_obj->func2(param1,param2);
 }
+
+} //namespace testbed2

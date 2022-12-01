@@ -30,6 +30,7 @@ class RemoteRegistry;
 class IRemoteNode;
 }}
 
+namespace testbed2 {
 
 class OLinkNestedStruct3InterfaceAdapter : public QObject, public ApiGear::ObjectLink::IObjectSource
 {
@@ -55,3 +56,5 @@ private:
     ApiGear::ObjectLink::RemoteRegistry& m_registry;
     ApiGear::ObjectLink::IRemoteNode *m_node;
 };
+
+} // namespace testbed2

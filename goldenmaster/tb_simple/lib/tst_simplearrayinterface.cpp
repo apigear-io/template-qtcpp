@@ -21,94 +21,94 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 /**
  *  will be called before the first test function is executed.
 */
-void TestSimpleArrayInterface::initTestCase(){
+void TestTbSimpleSimpleArrayInterface::initTestCase(){
 
 }
 
 /**
  *  will be called to create a global test data table.
 */
-void TestSimpleArrayInterface::initTestCase_data(){
+void TestTbSimpleSimpleArrayInterface::initTestCase_data(){
 
 }
 
 /**
  *  will be called after the last test function was executed.
 */
-void TestSimpleArrayInterface::cleanupTestCase(){
+void TestTbSimpleSimpleArrayInterface::cleanupTestCase(){
 
 }
 
 /**
  *  will be called before each test function is executed.
 */
-void TestSimpleArrayInterface::init(){
+void TestTbSimpleSimpleArrayInterface::init(){
 
 }
 
 /**
  *  will be called after every test function.
 */
-void TestSimpleArrayInterface::cleanup(){
+void TestTbSimpleSimpleArrayInterface::cleanup(){
 
 }
 /**
  *  Test operation funcBool
 */
-void TestSimpleArrayInterface::funcBool(){
-    SimpleArrayInterface testSimplearrayinterface;
+void TestTbSimpleSimpleArrayInterface::funcBool(){
+    tb.simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
     // Do implement test here
 }
 /**
  *  Test operation funcInt
 */
-void TestSimpleArrayInterface::funcInt(){
-    SimpleArrayInterface testSimplearrayinterface;
+void TestTbSimpleSimpleArrayInterface::funcInt(){
+    tb.simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
     // Do implement test here
 }
 /**
  *  Test operation funcFloat
 */
-void TestSimpleArrayInterface::funcFloat(){
-    SimpleArrayInterface testSimplearrayinterface;
+void TestTbSimpleSimpleArrayInterface::funcFloat(){
+    tb.simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
     // Do implement test here
 }
 /**
  *  Test operation funcString
 */
-void TestSimpleArrayInterface::funcString(){
-    SimpleArrayInterface testSimplearrayinterface;
+void TestTbSimpleSimpleArrayInterface::funcString(){
+    tb.simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propBool
 */
-void TestSimpleArrayInterface::propBool(){
-    SimpleArrayInterface testSimplearrayinterface;
+void TestTbSimpleSimpleArrayInterface::propBool(){
+    tb.simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propInt
 */
-void TestSimpleArrayInterface::propInt(){
-    SimpleArrayInterface testSimplearrayinterface;
+void TestTbSimpleSimpleArrayInterface::propInt(){
+    tb.simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propFloat
 */
-void TestSimpleArrayInterface::propFloat(){
-    SimpleArrayInterface testSimplearrayinterface;
+void TestTbSimpleSimpleArrayInterface::propFloat(){
+    tb.simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propString
 */
-void TestSimpleArrayInterface::propString(){
-    SimpleArrayInterface testSimplearrayinterface;
+void TestTbSimpleSimpleArrayInterface::propString(){
+    tb.simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
     // Do implement test here
 }
 
-QTEST_MAIN(TestSimpleArrayInterface);
+QTEST_MAIN(TestTbSimpleSimpleArrayInterface);
 
 

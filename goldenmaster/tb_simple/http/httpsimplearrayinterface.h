@@ -22,6 +22,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "tb_simple/api/api.h"
 
+namespace tb_simple {
+
 class HttpSimpleArrayInterface : public AbstractSimpleArrayInterface
 {
     Q_OBJECT
@@ -50,3 +52,5 @@ private:
     QList<qreal> m_propFloat;
     QList<QString> m_propString;
 };
+
+} // namespace tb_simple 

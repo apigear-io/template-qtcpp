@@ -1,6 +1,8 @@
 #include "agent.h"
 #include "apigear/monitor/agentclient.h"
 
+namespace tb_enum {
+
 EnumInterfaceAgent::EnumInterfaceAgent()
 {
 }
@@ -48,3 +50,5 @@ void EnumInterfaceAgent::trace_func3(AbstractEnumInterface* obj, const Enum3::En
     };
     ApiGear::Monitor::AgentClient::instance()->traceCall("tb.enum.EnumInterface#func3", params_);
 }
+
+} // namespace tb_enum

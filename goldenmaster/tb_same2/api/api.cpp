@@ -16,6 +16,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "api.h"
+
+namespace tb_same2 {
 // ********************************************************************
 // Enumeration Enum1
 // ********************************************************************
@@ -256,3 +258,5 @@ AbstractSameEnum2Interface::AbstractSameEnum2Interface(QObject *parent)
     : QObject(parent)
 {
 }
+
+} // namespace tb_same2

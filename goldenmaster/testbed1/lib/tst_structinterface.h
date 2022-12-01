@@ -17,7 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include <QtTest/QtTest>
 
-class TestStructInterface: public QObject
+class TestTestbed1StructInterface: public QObject
 {
     Q_OBJECT
     // setup your test

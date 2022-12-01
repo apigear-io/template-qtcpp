@@ -4,6 +4,8 @@
 
 #include "api.h"
 
+namespace tb_enum {
+
 
 class TB_ENUM_EXPORT EnumInterfaceAgent
 {
@@ -16,3 +18,5 @@ public:
   static void trace_func2(AbstractEnumInterface* obj, const Enum2::Enum2Enum param2);
   static void trace_func3(AbstractEnumInterface* obj, const Enum3::Enum3Enum param3);
 };
+
+} // namespace tb_enum

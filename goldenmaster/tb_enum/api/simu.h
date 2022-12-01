@@ -3,6 +3,8 @@
 #include <QtCore>
 #include "api.h"
 
+namespace tb_enum {
+
 // ********************************************************************
 // SimulationEnumInterface simulation interface
 // ********************************************************************
@@ -34,3 +36,4 @@ private:
     Enum3::Enum3Enum m_prop3;
 };
 
+} // namespace tb_enum

@@ -4,6 +4,8 @@
 #include "olink{{.Name|lower}}.h"
 {{- end }}
 
+namespace {{snake  .Module.Name }} {
+
 OLinkFactory::OLinkFactory(QObject *parent)
     : QObject(parent)
 {
@@ -19,3 +21,5 @@ Abstract{{.Name}}* OLinkFactory::create{{Camel .Name}}(QObject *parent)
 }
 
 {{- end }}
+
+} //namespace {{snake  .Module.Name }}

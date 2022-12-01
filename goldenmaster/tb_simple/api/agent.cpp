@@ -1,6 +1,8 @@
 #include "agent.h"
 #include "apigear/monitor/agentclient.h"
 
+namespace tb_simple {
+
 SimpleInterfaceAgent::SimpleInterfaceAgent()
 {
 }
@@ -96,3 +98,5 @@ void SimpleArrayInterfaceAgent::trace_funcString(AbstractSimpleArrayInterface* o
     };
     ApiGear::Monitor::AgentClient::instance()->traceCall("tb.simple.SimpleArrayInterface#funcString", params_);
 }
+
+} // namespace tb_simple

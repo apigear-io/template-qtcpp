@@ -16,6 +16,7 @@ class RemoteRegistry;
 class IRemoteNode;
 }}
 
+namespace {{snake  .Module.Name }} {
 
 class {{$class}} : public QObject, public ApiGear::ObjectLink::IObjectSource
 {
@@ -41,3 +42,5 @@ private:
     ApiGear::ObjectLink::RemoteRegistry& m_registry;
     ApiGear::ObjectLink::IRemoteNode *m_node;
 };
+
+} // namespace {{snake  .Module.Name }}

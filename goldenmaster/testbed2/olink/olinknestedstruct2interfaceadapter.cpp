@@ -33,6 +33,8 @@ using namespace ApiGear::ObjectLink;
 
 using json = nlohmann::json;
 
+namespace testbed2 {
+
 OLinkNestedStruct2InterfaceAdapter::OLinkNestedStruct2InterfaceAdapter(RemoteRegistry& registry, AbstractNestedStruct2Interface* impl, QObject *parent)
     : QObject(parent)
     , m_impl(impl)
@@ -152,6 +154,4 @@ json OLinkNestedStruct2InterfaceAdapter::olinkCollectProperties()
     return captureState();
 }
 
-
-
-
+} // namespace testbed2

@@ -22,6 +22,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "tb_same2/api/api.h"
 
+namespace tb_same2 {
+
 class HttpSameStruct1Interface : public AbstractSameStruct1Interface
 {
     Q_OBJECT
@@ -38,3 +40,5 @@ private:
     QNetworkAccessManager *m_network;
     Struct1 m_prop1;
 };
+
+} // namespace tb_same2 

@@ -30,6 +30,7 @@ class RemoteRegistry;
 class IRemoteNode;
 }}
 
+namespace tb_enum {
 
 class OLinkEnumInterfaceAdapter : public QObject, public ApiGear::ObjectLink::IObjectSource
 {
@@ -55,3 +56,5 @@ private:
     ApiGear::ObjectLink::RemoteRegistry& m_registry;
     ApiGear::ObjectLink::IRemoteNode *m_node;
 };
+
+} // namespace tb_enum

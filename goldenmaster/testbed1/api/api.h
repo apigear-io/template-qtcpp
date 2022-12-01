@@ -25,6 +25,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #else
 #  define TESTBED1_EXPORT Q_DECL_IMPORT
 #endif
+
+namespace testbed1 {
 // ********************************************************************
 // StructBool struct
 // ********************************************************************
@@ -45,8 +47,6 @@ public:
 private:
     bool m_fieldBool;
 };
-
-Q_DECLARE_METATYPE(StructBool)
 
 QDataStream &operator<<(QDataStream &stream, const StructBool &obj);
 QDataStream &operator>>(QDataStream &stream, StructBool &obj);
@@ -81,8 +81,6 @@ private:
     int m_fieldInt;
 };
 
-Q_DECLARE_METATYPE(StructInt)
-
 QDataStream &operator<<(QDataStream &stream, const StructInt &obj);
 QDataStream &operator>>(QDataStream &stream, StructInt &obj);
 
@@ -116,8 +114,6 @@ private:
     qreal m_fieldFloat;
 };
 
-Q_DECLARE_METATYPE(StructFloat)
-
 QDataStream &operator<<(QDataStream &stream, const StructFloat &obj);
 QDataStream &operator>>(QDataStream &stream, StructFloat &obj);
 
@@ -150,8 +146,6 @@ public:
 private:
     QString m_fieldString;
 };
-
-Q_DECLARE_METATYPE(StructString)
 
 QDataStream &operator<<(QDataStream &stream, const StructString &obj);
 QDataStream &operator>>(QDataStream &stream, StructString &obj);
@@ -242,3 +236,10 @@ public:
     virtual AbstractStructArrayInterface* createStructArrayInterface(QObject *parent) = 0;
 };
 
+} //namespace testbed1
+
+
+Q_DECLARE_METATYPE(testbed1::StructBool)
+Q_DECLARE_METATYPE(testbed1::StructInt)
+Q_DECLARE_METATYPE(testbed1::StructFloat)
+Q_DECLARE_METATYPE(testbed1::StructString)

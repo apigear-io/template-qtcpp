@@ -27,6 +27,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using namespace ApiGear;
 using namespace ApiGear::ObjectLink;
 
+namespace tb_enum {
+
 OLinkEnumInterface::OLinkEnumInterface(QObject *parent)
     : AbstractEnumInterface(parent)
     , m_prop0(Enum0::value0)
@@ -330,4 +332,4 @@ void OLinkEnumInterface::olinkOnRelease()
     m_node = nullptr;
 }
 
-
+} //namespace tb_enum

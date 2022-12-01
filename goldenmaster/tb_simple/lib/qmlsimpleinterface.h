@@ -22,6 +22,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "simpleinterface.h"
 
+namespace tb_simple {
+
 class TB_SIMPLE_LIB_EXPORT QmlSimpleInterface : public AbstractSimpleInterface
 {
     Q_OBJECT
@@ -57,3 +59,5 @@ Q_SIGNALS:
 private:
 	AbstractSimpleInterface *m_obj;
 };
+
+} //namespace tb_simple

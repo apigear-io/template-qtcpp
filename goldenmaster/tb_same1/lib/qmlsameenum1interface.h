@@ -22,6 +22,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "sameenum1interface.h"
 
+namespace tb_same1 {
+
 class TB_SAME1_LIB_EXPORT QmlSameEnum1Interface : public AbstractSameEnum1Interface
 {
     Q_OBJECT
@@ -39,3 +41,5 @@ Q_SIGNALS:
 private:
 	AbstractSameEnum1Interface *m_obj;
 };
+
+} //namespace tb_same1

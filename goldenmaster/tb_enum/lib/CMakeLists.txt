@@ -8,7 +8,7 @@ set (TB_ENUM_LIB_SOURCES
 )
 
 # dynamic library
-add_library(tb_enum_lib STATIC ${TB_ENUM_LIB_SOURCES})
+add_library(tb_enum_lib SHARED ${TB_ENUM_LIB_SOURCES})
 add_library(tb_enum::tb_enum_lib ALIAS tb_enum_lib)
 
 target_include_directories(tb_enum_lib
@@ -25,11 +25,12 @@ target_compile_definitions(tb_enum_lib PRIVATE TB_ENUM_LIB_LIBRARY)
 
 # add test targets
 
-# test for EnumInterface
-add_executable(test_tb_enum_lib_enuminterface
-    tst_enuminterface.cpp
-)
-
-target_link_libraries(test_tb_enum_lib_enuminterface PRIVATE Qt5::Test tb_enum::tb_enum_lib)
-target_compile_definitions(test_tb_enum_lib_enuminterface PRIVATE TB_ENUM_LIB_LIBRARY)
-add_test(test_tb_enum_lib_enuminterface test_tb_enum_lib_enuminterface)
+## test for EnumInterface
+#add_executable(test_tb_enum_lib_enuminterface
+#    tst_enuminterface.cpp
+#)
+#
+#target_link_libraries(test_tb_enum_lib_enuminterface PRIVATE Qt5::Test tb_enum::tb_enum_lib)
+#target_compile_definitions(test_tb_enum_lib_enuminterface PRIVATE TB_ENUM_LIB_LIBRARY)
+#add_test(test_tb_enum_lib_enuminterface test_tb_enum_lib_enuminterface)
+#

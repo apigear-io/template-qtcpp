@@ -28,6 +28,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #  define TESTBED2_LIB_EXPORT Q_DECL_IMPORT
 #endif
 
+namespace testbed2 {
+
 class TESTBED2_LIB_EXPORT NestedStruct1Interface : public AbstractNestedStruct1Interface
 {
     Q_OBJECT
@@ -41,3 +43,4 @@ public:
 private:
     NestedStruct1 m_prop1;
 };
+} //namespace testbed2

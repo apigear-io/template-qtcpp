@@ -16,6 +16,8 @@
 using namespace ApiGear;
 using namespace ApiGear::ObjectLink;
 
+namespace {{snake  .Module.Name }} {
+
 {{$class}}::{{$class}}(QObject *parent)
     : Abstract{{.Interface.Name}}(parent)
 {{- range .Interface.Properties }}
@@ -165,4 +167,4 @@ void {{$class}}::olinkOnRelease()
     m_node = nullptr;
 }
 
-
+} //namespace {{snake  .Module.Name }}

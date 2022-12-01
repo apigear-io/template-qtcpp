@@ -2,7 +2,9 @@
 #include "simu.h"
 
 
-ApiFactoryInterface *ApiFactory::s_instance(nullptr);
+{{ snake .Module.Name }}::ApiFactoryInterface* {{ snake .Module.Name }}::ApiFactory::s_instance(nullptr);
+
+namespace {{snake  .Module.Name }} {
 
 ApiFactory::ApiFactory(QObject *parent)
     : QObject(parent)
@@ -33,3 +35,5 @@ Abstract{{.Name}}* ApiFactory::create{{Camel .Name}}(QObject *parent)
     return new Simulation{{.Name}}(parent);
 };
 {{- end }}
+
+} //namespace {{snake  .Module.Name }}

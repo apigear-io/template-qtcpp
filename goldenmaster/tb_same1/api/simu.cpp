@@ -4,6 +4,8 @@
 #include "apigear/simulation/simulationclient.h"
 
 using namespace ApiGear::JSONRPC;
+
+namespace tb_same1 {
 // ********************************************************************
 // SimulationSameStruct1Interface simulation interface
 // ********************************************************************
@@ -300,3 +302,5 @@ Enum1::Enum1Enum SimulationSameEnum2Interface::func2(const Enum1::Enum1Enum para
     ApiGear::SimulationClient::instance()->doCall("tb.same1/SameEnum2Interface", "func2", params);
     return Enum1::value1;
 }
+
+} //namespace tb_same1

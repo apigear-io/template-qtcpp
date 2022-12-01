@@ -26,6 +26,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #  define TESTBED2_EXPORT Q_DECL_IMPORT
 #endif
 
+namespace testbed2 {
+
 // ********************************************************************
 // Enumeration Enum1
 // ********************************************************************
@@ -46,7 +48,7 @@ public:
 
     static Enum1Enum toEnum(quint8 v, bool *ok);
 };
-Q_DECLARE_METATYPE(Enum1::Enum1Enum)
+
 
 inline QDataStream &operator<<(QDataStream &ds, const Enum1::Enum1Enum &obj)
 {
@@ -86,7 +88,7 @@ public:
 
     static Enum2Enum toEnum(quint8 v, bool *ok);
 };
-Q_DECLARE_METATYPE(Enum2::Enum2Enum)
+
 
 inline QDataStream &operator<<(QDataStream &ds, const Enum2::Enum2Enum &obj)
 {
@@ -126,7 +128,7 @@ public:
 
     static Enum3Enum toEnum(quint8 v, bool *ok);
 };
-Q_DECLARE_METATYPE(Enum3::Enum3Enum)
+
 
 inline QDataStream &operator<<(QDataStream &ds, const Enum3::Enum3Enum &obj)
 {
@@ -166,8 +168,6 @@ private:
     int m_field1;
 };
 
-Q_DECLARE_METATYPE(Struct1)
-
 QDataStream &operator<<(QDataStream &stream, const Struct1 &obj);
 QDataStream &operator>>(QDataStream &stream, Struct1 &obj);
 
@@ -204,8 +204,6 @@ private:
     int m_field1;
     int m_field2;
 };
-
-Q_DECLARE_METATYPE(Struct2)
 
 QDataStream &operator<<(QDataStream &stream, const Struct2 &obj);
 QDataStream &operator>>(QDataStream &stream, Struct2 &obj);
@@ -247,8 +245,6 @@ private:
     int m_field2;
     int m_field3;
 };
-
-Q_DECLARE_METATYPE(Struct3)
 
 QDataStream &operator<<(QDataStream &stream, const Struct3 &obj);
 QDataStream &operator>>(QDataStream &stream, Struct3 &obj);
@@ -295,8 +291,6 @@ private:
     int m_field4;
 };
 
-Q_DECLARE_METATYPE(Struct4)
-
 QDataStream &operator<<(QDataStream &stream, const Struct4 &obj);
 QDataStream &operator>>(QDataStream &stream, Struct4 &obj);
 
@@ -329,8 +323,6 @@ public:
 private:
     Struct1 m_field1;
 };
-
-Q_DECLARE_METATYPE(NestedStruct1)
 
 QDataStream &operator<<(QDataStream &stream, const NestedStruct1 &obj);
 QDataStream &operator>>(QDataStream &stream, NestedStruct1 &obj);
@@ -368,8 +360,6 @@ private:
     Struct1 m_field1;
     Struct2 m_field2;
 };
-
-Q_DECLARE_METATYPE(NestedStruct2)
 
 QDataStream &operator<<(QDataStream &stream, const NestedStruct2 &obj);
 QDataStream &operator>>(QDataStream &stream, NestedStruct2 &obj);
@@ -411,8 +401,6 @@ private:
     Struct2 m_field2;
     Struct3 m_field3;
 };
-
-Q_DECLARE_METATYPE(NestedStruct3)
 
 QDataStream &operator<<(QDataStream &stream, const NestedStruct3 &obj);
 QDataStream &operator>>(QDataStream &stream, NestedStruct3 &obj);
@@ -539,3 +527,16 @@ public:
     virtual AbstractNestedStruct3Interface* createNestedStruct3Interface(QObject *parent) = 0;
 };
 
+} //namespace testbed2
+
+
+Q_DECLARE_METATYPE(testbed2::Enum1::Enum1Enum)
+Q_DECLARE_METATYPE(testbed2::Enum2::Enum2Enum)
+Q_DECLARE_METATYPE(testbed2::Enum3::Enum3Enum)
+Q_DECLARE_METATYPE(testbed2::Struct1)
+Q_DECLARE_METATYPE(testbed2::Struct2)
+Q_DECLARE_METATYPE(testbed2::Struct3)
+Q_DECLARE_METATYPE(testbed2::Struct4)
+Q_DECLARE_METATYPE(testbed2::NestedStruct1)
+Q_DECLARE_METATYPE(testbed2::NestedStruct2)
+Q_DECLARE_METATYPE(testbed2::NestedStruct3)

@@ -2,6 +2,8 @@
 #include "olinkstructinterface.h"
 #include "olinkstructarrayinterface.h"
 
+namespace testbed1 {
+
 OLinkFactory::OLinkFactory(QObject *parent)
     : QObject(parent)
 {
@@ -19,3 +21,5 @@ AbstractStructArrayInterface* OLinkFactory::createStructArrayInterface(QObject *
     qDebug() << Q_FUNC_INFO;
     return new OLinkStructArrayInterface(parent);
 }
+
+} //namespace testbed1

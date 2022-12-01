@@ -3,6 +3,8 @@
 #include <QtCore>
 #include "api.h"
 
+namespace tb_same1 {
+
 // ********************************************************************
 // SimulationSameStruct1Interface simulation interface
 // ********************************************************************
@@ -87,3 +89,4 @@ private:
     Enum2::Enum2Enum m_prop2;
 };
 
+} // namespace tb_same1

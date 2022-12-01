@@ -3,6 +3,8 @@
 #include "agent.h"
 #include "apigear/monitor/agentclient.h"
 
+namespace {{snake  .Module.Name }} {
+
 {{- range .Module.Interfaces }}
 {{- $class := printf "%sAgent" .Name }}
 {{- $iface := .Name }}
@@ -38,3 +40,5 @@ void {{$class}}::trace_{{.Name}}(Abstract{{$iface}}* obj, {{qtParams "" .Params}
 }
 {{- end }}
 {{- end }}
+
+} // namespace {{snake  .Module.Name }}

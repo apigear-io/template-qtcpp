@@ -5,6 +5,9 @@
 {{- $module := .Module.Name }}
 
 using namespace ApiGear::JSONRPC;
+
+namespace {{snake  .Module.Name }} {
+
 {{- range .Module.Interfaces }}
 {{- $iface := .Name }}
 {{- $class := printf "Simulation%s" .Name }}
@@ -86,3 +89,5 @@ void {{$class}}::set{{Camel .Name}}({{qtParam "" .}})
 }
 {{- end }}
 {{- end }}
+
+} //namespace {{snake  .Module.Name }}

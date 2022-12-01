@@ -1,6 +1,8 @@
 #include "agent.h"
 #include "apigear/monitor/agentclient.h"
 
+namespace tb_same2 {
+
 SameStruct1InterfaceAgent::SameStruct1InterfaceAgent()
 {
 }
@@ -114,3 +116,5 @@ void SameEnum2InterfaceAgent::trace_func2(AbstractSameEnum2Interface* obj, const
     };
     ApiGear::Monitor::AgentClient::instance()->traceCall("tb.same2.SameEnum2Interface#func2", params_);
 }
+
+} // namespace tb_same2

@@ -23,6 +23,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <QtQml>
 
+namespace tb_simple {
+
 QmlSimpleInterface::QmlSimpleInterface(QObject *parent)
     : AbstractSimpleInterface(parent)
 {
@@ -120,3 +122,5 @@ QString QmlSimpleInterface::funcString(const QString& paramString)
 	
     return m_obj->funcString(paramString);
 }
+
+} //namespace tb_simple

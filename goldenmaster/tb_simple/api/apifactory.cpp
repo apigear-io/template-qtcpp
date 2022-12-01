@@ -2,7 +2,9 @@
 #include "simu.h"
 
 
-ApiFactoryInterface *ApiFactory::s_instance(nullptr);
+tb_simple::ApiFactoryInterface* tb_simple::ApiFactory::s_instance(nullptr);
+
+namespace tb_simple {
 
 ApiFactory::ApiFactory(QObject *parent)
     : QObject(parent)
@@ -35,3 +37,5 @@ AbstractSimpleArrayInterface* ApiFactory::createSimpleArrayInterface(QObject *pa
 {
     return new SimulationSimpleArrayInterface(parent);
 };
+
+} //namespace tb_simple

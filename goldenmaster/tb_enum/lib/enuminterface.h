@@ -28,6 +28,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #  define TB_ENUM_LIB_EXPORT Q_DECL_IMPORT
 #endif
 
+namespace tb_enum {
+
 class TB_ENUM_LIB_EXPORT EnumInterface : public AbstractEnumInterface
 {
     Q_OBJECT
@@ -53,3 +55,4 @@ private:
     Enum2::Enum2Enum m_prop2;
     Enum3::Enum3Enum m_prop3;
 };
+} //namespace tb_enum

@@ -23,6 +23,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <QtQml>
 
+namespace testbed2 {
+
 QmlManyParamInterface::QmlManyParamInterface(QObject *parent)
     : AbstractManyParamInterface(parent)
 {
@@ -120,3 +122,5 @@ int QmlManyParamInterface::func4(int param1, int param2, int param3, int param4)
 	
     return m_obj->func4(param1,param2,param3,param4);
 }
+
+} //namespace testbed2

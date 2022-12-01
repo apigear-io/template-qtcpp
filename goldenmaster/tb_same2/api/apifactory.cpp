@@ -2,7 +2,9 @@
 #include "simu.h"
 
 
-ApiFactoryInterface *ApiFactory::s_instance(nullptr);
+tb_same2::ApiFactoryInterface* tb_same2::ApiFactory::s_instance(nullptr);
+
+namespace tb_same2 {
 
 ApiFactory::ApiFactory(QObject *parent)
     : QObject(parent)
@@ -45,3 +47,5 @@ AbstractSameEnum2Interface* ApiFactory::createSameEnum2Interface(QObject *parent
 {
     return new SimulationSameEnum2Interface(parent);
 };
+
+} //namespace tb_same2

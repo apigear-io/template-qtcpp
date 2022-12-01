@@ -23,6 +23,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <QtQml>
 
+namespace tb_simple {
+
 QmlSimpleArrayInterface::QmlSimpleArrayInterface(QObject *parent)
     : AbstractSimpleArrayInterface(parent)
 {
@@ -120,3 +122,5 @@ QList<QString> QmlSimpleArrayInterface::funcString(const QList<QString>& paramSt
 	
     return m_obj->funcString(paramString);
 }
+
+} //namespace tb_simple

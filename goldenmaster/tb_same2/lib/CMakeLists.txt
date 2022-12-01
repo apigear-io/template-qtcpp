@@ -14,7 +14,7 @@ set (TB_SAME2_LIB_SOURCES
 )
 
 # dynamic library
-add_library(tb_same2_lib STATIC ${TB_SAME2_LIB_SOURCES})
+add_library(tb_same2_lib SHARED ${TB_SAME2_LIB_SOURCES})
 add_library(tb_same2::tb_same2_lib ALIAS tb_same2_lib)
 
 target_include_directories(tb_same2_lib
@@ -31,38 +31,42 @@ target_compile_definitions(tb_same2_lib PRIVATE TB_SAME2_LIB_LIBRARY)
 
 # add test targets
 
-# test for SameStruct1Interface
-add_executable(test_tb_same2_lib_samestruct1interface
-    tst_samestruct1interface.cpp
-)
+## test for SameStruct1Interface
+#add_executable(test_tb_same2_lib_samestruct1interface
+#    tst_samestruct1interface.cpp
+#)
+#
+#target_link_libraries(test_tb_same2_lib_samestruct1interface PRIVATE Qt5::Test tb_same2::tb_same2_lib)
+#target_compile_definitions(test_tb_same2_lib_samestruct1interface PRIVATE TB_SAME2_LIB_LIBRARY)
+#add_test(test_tb_same2_lib_samestruct1interface test_tb_same2_lib_samestruct1interface)
+#
 
-target_link_libraries(test_tb_same2_lib_samestruct1interface PRIVATE Qt5::Test tb_same2::tb_same2_lib)
-target_compile_definitions(test_tb_same2_lib_samestruct1interface PRIVATE TB_SAME2_LIB_LIBRARY)
-add_test(test_tb_same2_lib_samestruct1interface test_tb_same2_lib_samestruct1interface)
+## test for SameStruct2Interface
+#add_executable(test_tb_same2_lib_samestruct2interface
+#    tst_samestruct2interface.cpp
+#)
+#
+#target_link_libraries(test_tb_same2_lib_samestruct2interface PRIVATE Qt5::Test tb_same2::tb_same2_lib)
+#target_compile_definitions(test_tb_same2_lib_samestruct2interface PRIVATE TB_SAME2_LIB_LIBRARY)
+#add_test(test_tb_same2_lib_samestruct2interface test_tb_same2_lib_samestruct2interface)
+#
 
-# test for SameStruct2Interface
-add_executable(test_tb_same2_lib_samestruct2interface
-    tst_samestruct2interface.cpp
-)
+## test for SameEnum1Interface
+#add_executable(test_tb_same2_lib_sameenum1interface
+#    tst_sameenum1interface.cpp
+#)
+#
+#target_link_libraries(test_tb_same2_lib_sameenum1interface PRIVATE Qt5::Test tb_same2::tb_same2_lib)
+#target_compile_definitions(test_tb_same2_lib_sameenum1interface PRIVATE TB_SAME2_LIB_LIBRARY)
+#add_test(test_tb_same2_lib_sameenum1interface test_tb_same2_lib_sameenum1interface)
+#
 
-target_link_libraries(test_tb_same2_lib_samestruct2interface PRIVATE Qt5::Test tb_same2::tb_same2_lib)
-target_compile_definitions(test_tb_same2_lib_samestruct2interface PRIVATE TB_SAME2_LIB_LIBRARY)
-add_test(test_tb_same2_lib_samestruct2interface test_tb_same2_lib_samestruct2interface)
-
-# test for SameEnum1Interface
-add_executable(test_tb_same2_lib_sameenum1interface
-    tst_sameenum1interface.cpp
-)
-
-target_link_libraries(test_tb_same2_lib_sameenum1interface PRIVATE Qt5::Test tb_same2::tb_same2_lib)
-target_compile_definitions(test_tb_same2_lib_sameenum1interface PRIVATE TB_SAME2_LIB_LIBRARY)
-add_test(test_tb_same2_lib_sameenum1interface test_tb_same2_lib_sameenum1interface)
-
-# test for SameEnum2Interface
-add_executable(test_tb_same2_lib_sameenum2interface
-    tst_sameenum2interface.cpp
-)
-
-target_link_libraries(test_tb_same2_lib_sameenum2interface PRIVATE Qt5::Test tb_same2::tb_same2_lib)
-target_compile_definitions(test_tb_same2_lib_sameenum2interface PRIVATE TB_SAME2_LIB_LIBRARY)
-add_test(test_tb_same2_lib_sameenum2interface test_tb_same2_lib_sameenum2interface)
+## test for SameEnum2Interface
+#add_executable(test_tb_same2_lib_sameenum2interface
+#    tst_sameenum2interface.cpp
+#)
+#
+#target_link_libraries(test_tb_same2_lib_sameenum2interface PRIVATE Qt5::Test tb_same2::tb_same2_lib)
+#target_compile_definitions(test_tb_same2_lib_sameenum2interface PRIVATE TB_SAME2_LIB_LIBRARY)
+#add_test(test_tb_same2_lib_sameenum2interface test_tb_same2_lib_sameenum2interface)
+#

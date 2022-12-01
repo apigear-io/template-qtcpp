@@ -4,6 +4,8 @@
 
 #include "api.h"
 
+namespace tb_simple {
+
 
 class TB_SIMPLE_EXPORT SimpleInterfaceAgent
 {
@@ -29,3 +31,5 @@ public:
   static void trace_funcFloat(AbstractSimpleArrayInterface* obj, const QList<qreal>& paramFloat);
   static void trace_funcString(AbstractSimpleArrayInterface* obj, const QList<QString>& paramString);
 };
+
+} // namespace tb_simple

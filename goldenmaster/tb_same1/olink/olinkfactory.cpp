@@ -4,6 +4,8 @@
 #include "olinksameenum1interface.h"
 #include "olinksameenum2interface.h"
 
+namespace tb_same1 {
+
 OLinkFactory::OLinkFactory(QObject *parent)
     : QObject(parent)
 {
@@ -33,3 +35,5 @@ AbstractSameEnum2Interface* OLinkFactory::createSameEnum2Interface(QObject *pare
     qDebug() << Q_FUNC_INFO;
     return new OLinkSameEnum2Interface(parent);
 }
+
+} //namespace tb_same1

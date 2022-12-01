@@ -23,6 +23,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <QtQml>
 
+namespace tb_same2 {
+
 QmlSameEnum1Interface::QmlSameEnum1Interface(QObject *parent)
     : AbstractSameEnum1Interface(parent)
 {
@@ -54,3 +56,5 @@ Enum1::Enum1Enum QmlSameEnum1Interface::func1(const Enum1::Enum1Enum param1)
 	
     return m_obj->func1(param1);
 }
+
+} //namespace tb_same2

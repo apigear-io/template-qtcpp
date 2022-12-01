@@ -2,6 +2,8 @@
 #include "structinterface.h"
 #include "structarrayinterface.h"
 
+namespace testbed1 {
+
 Factory::Factory(QObject *parent)
     : QObject(parent)
 {
@@ -16,3 +18,5 @@ AbstractStructArrayInterface* Factory::createStructArrayInterface(QObject *paren
 {
     return new StructArrayInterface(parent);
 }
+
+} // namespace testbed1

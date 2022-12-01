@@ -18,18 +18,18 @@ void Plugin::registerTypes(const char *uri)
     // @uri {{.Module.Name}}
     // register enum
 {{- range .Module.Enums }}
-    qmlRegisterUncreatableType<{{.Name}}>(uri, {{$version.Major}}, {{$version.Minor}}, "{{.Name}}", "An enum can not be created");
+    qmlRegisterUncreatableType<{{$module_id}}::{{.Name}}>(uri, {{$version.Major}}, {{$version.Minor}}, "{{.Name}}", "An enum can not be created");
 {{- end }}
 
     // register structs
 {{- range .Module.Structs }}
-    qRegisterMetaType<{{.Name}}>();
-    qmlRegisterUncreatableType<{{.Name}}Factory>(uri, {{$version.Major}}, {{$version.Minor}}, "{{.Name}}Factory", "A struct factory can not be created");
+    qRegisterMetaType<{{$module_id}}::{{.Name}}>();
+    qmlRegisterUncreatableType<{{$module_id}}::{{.Name}}Factory>(uri, {{$version.Major}}, {{$version.Minor}}, "{{.Name}}Factory", "A struct factory can not be created");
 {{- end }}
 
     // register interfaces
 {{- range .Module.Interfaces }}
-    qmlRegisterType<Qml{{.Name}}>(uri, {{$version.Major}}, {{$version.Minor}}, "{{.Name}}");
+    qmlRegisterType<{{$module_id}}::Qml{{.Name}}>(uri, {{$version.Major}}, {{$version.Minor}}, "{{.Name}}");
 {{- end }}
 
 

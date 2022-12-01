@@ -21,94 +21,94 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 /**
  *  will be called before the first test function is executed.
 */
-void TestStructArrayInterface::initTestCase(){
+void TestTestbed1StructArrayInterface::initTestCase(){
 
 }
 
 /**
  *  will be called to create a global test data table.
 */
-void TestStructArrayInterface::initTestCase_data(){
+void TestTestbed1StructArrayInterface::initTestCase_data(){
 
 }
 
 /**
  *  will be called after the last test function was executed.
 */
-void TestStructArrayInterface::cleanupTestCase(){
+void TestTestbed1StructArrayInterface::cleanupTestCase(){
 
 }
 
 /**
  *  will be called before each test function is executed.
 */
-void TestStructArrayInterface::init(){
+void TestTestbed1StructArrayInterface::init(){
 
 }
 
 /**
  *  will be called after every test function.
 */
-void TestStructArrayInterface::cleanup(){
+void TestTestbed1StructArrayInterface::cleanup(){
 
 }
 /**
  *  Test operation funcBool
 */
-void TestStructArrayInterface::funcBool(){
-    StructArrayInterface testStructarrayinterface;
+void TestTestbed1StructArrayInterface::funcBool(){
+    testbed1::StructArrayInterface testTestbed1structarrayinterface;
     // Do implement test here
 }
 /**
  *  Test operation funcInt
 */
-void TestStructArrayInterface::funcInt(){
-    StructArrayInterface testStructarrayinterface;
+void TestTestbed1StructArrayInterface::funcInt(){
+    testbed1::StructArrayInterface testTestbed1structarrayinterface;
     // Do implement test here
 }
 /**
  *  Test operation funcFloat
 */
-void TestStructArrayInterface::funcFloat(){
-    StructArrayInterface testStructarrayinterface;
+void TestTestbed1StructArrayInterface::funcFloat(){
+    testbed1::StructArrayInterface testTestbed1structarrayinterface;
     // Do implement test here
 }
 /**
  *  Test operation funcString
 */
-void TestStructArrayInterface::funcString(){
-    StructArrayInterface testStructarrayinterface;
+void TestTestbed1StructArrayInterface::funcString(){
+    testbed1::StructArrayInterface testTestbed1structarrayinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propBool
 */
-void TestStructArrayInterface::propBool(){
-    StructArrayInterface testStructarrayinterface;
+void TestTestbed1StructArrayInterface::propBool(){
+    testbed1::StructArrayInterface testTestbed1structarrayinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propInt
 */
-void TestStructArrayInterface::propInt(){
-    StructArrayInterface testStructarrayinterface;
+void TestTestbed1StructArrayInterface::propInt(){
+    testbed1::StructArrayInterface testTestbed1structarrayinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propFloat
 */
-void TestStructArrayInterface::propFloat(){
-    StructArrayInterface testStructarrayinterface;
+void TestTestbed1StructArrayInterface::propFloat(){
+    testbed1::StructArrayInterface testTestbed1structarrayinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propString
 */
-void TestStructArrayInterface::propString(){
-    StructArrayInterface testStructarrayinterface;
+void TestTestbed1StructArrayInterface::propString(){
+    testbed1::StructArrayInterface testTestbed1structarrayinterface;
     // Do implement test here
 }
 
-QTEST_MAIN(TestStructArrayInterface);
+QTEST_MAIN(TestTestbed1StructArrayInterface);
 
 

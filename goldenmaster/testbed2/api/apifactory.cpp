@@ -2,7 +2,9 @@
 #include "simu.h"
 
 
-ApiFactoryInterface *ApiFactory::s_instance(nullptr);
+testbed2::ApiFactoryInterface* testbed2::ApiFactory::s_instance(nullptr);
+
+namespace testbed2 {
 
 ApiFactory::ApiFactory(QObject *parent)
     : QObject(parent)
@@ -45,3 +47,5 @@ AbstractNestedStruct3Interface* ApiFactory::createNestedStruct3Interface(QObject
 {
     return new SimulationNestedStruct3Interface(parent);
 };
+
+} //namespace testbed2

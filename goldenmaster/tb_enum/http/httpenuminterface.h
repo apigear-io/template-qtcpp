@@ -22,6 +22,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "tb_enum/api/api.h"
 
+namespace tb_enum {
+
 class HttpEnumInterface : public AbstractEnumInterface
 {
     Q_OBJECT
@@ -50,3 +52,5 @@ private:
     Enum2::Enum2Enum m_prop2;
     Enum3::Enum3Enum m_prop3;
 };
+
+} // namespace tb_enum 

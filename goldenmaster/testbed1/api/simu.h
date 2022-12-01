@@ -3,6 +3,8 @@
 #include <QtCore>
 #include "api.h"
 
+namespace testbed1 {
+
 // ********************************************************************
 // SimulationStructInterface simulation interface
 // ********************************************************************
@@ -65,3 +67,4 @@ private:
     QList<StructString> m_propString;
 };
 
+} // namespace testbed1

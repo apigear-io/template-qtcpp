@@ -23,6 +23,8 @@ class IClientNode;
 using namespace ApiGear;
 using namespace ApiGear::ObjectLink;
 
+namespace {{snake  .Module.Name }} {
+
 class {{$class}} : public Abstract{{.Interface.Name}}, public IObjectSink
 {
     Q_OBJECT
@@ -57,3 +59,5 @@ private:
     bool m_isReady;
     IClientNode *m_node;
 };
+
+} //namespace {{snake  .Module.Name }}

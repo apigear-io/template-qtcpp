@@ -21,66 +21,66 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 /**
  *  will be called before the first test function is executed.
 */
-void TestSameStruct2Interface::initTestCase(){
+void TestTbSame1SameStruct2Interface::initTestCase(){
 
 }
 
 /**
  *  will be called to create a global test data table.
 */
-void TestSameStruct2Interface::initTestCase_data(){
+void TestTbSame1SameStruct2Interface::initTestCase_data(){
 
 }
 
 /**
  *  will be called after the last test function was executed.
 */
-void TestSameStruct2Interface::cleanupTestCase(){
+void TestTbSame1SameStruct2Interface::cleanupTestCase(){
 
 }
 
 /**
  *  will be called before each test function is executed.
 */
-void TestSameStruct2Interface::init(){
+void TestTbSame1SameStruct2Interface::init(){
 
 }
 
 /**
  *  will be called after every test function.
 */
-void TestSameStruct2Interface::cleanup(){
+void TestTbSame1SameStruct2Interface::cleanup(){
 
 }
 /**
  *  Test operation func1
 */
-void TestSameStruct2Interface::func1(){
-    SameStruct2Interface testSamestruct2interface;
+void TestTbSame1SameStruct2Interface::func1(){
+    tb.same1::SameStruct2Interface testTbsame1samestruct2interface;
     // Do implement test here
 }
 /**
  *  Test operation func2
 */
-void TestSameStruct2Interface::func2(){
-    SameStruct2Interface testSamestruct2interface;
+void TestTbSame1SameStruct2Interface::func2(){
+    tb.same1::SameStruct2Interface testTbsame1samestruct2interface;
     // Do implement test here
 }
 /**
  *  Test proptery prop1
 */
-void TestSameStruct2Interface::prop1(){
-    SameStruct2Interface testSamestruct2interface;
+void TestTbSame1SameStruct2Interface::prop1(){
+    tb.same1::SameStruct2Interface testTbsame1samestruct2interface;
     // Do implement test here
 }
 /**
  *  Test proptery prop2
 */
-void TestSameStruct2Interface::prop2(){
-    SameStruct2Interface testSamestruct2interface;
+void TestTbSame1SameStruct2Interface::prop2(){
+    tb.same1::SameStruct2Interface testTbsame1samestruct2interface;
     // Do implement test here
 }
 
-QTEST_MAIN(TestSameStruct2Interface);
+QTEST_MAIN(TestTbSame1SameStruct2Interface);
 
 

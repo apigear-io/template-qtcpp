@@ -26,6 +26,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #  define TB_SIMPLE_EXPORT Q_DECL_IMPORT
 #endif
 
+namespace tb_simple {
+
 // ********************************************************************
 // AbstractSimpleInterface pure interface
 // ********************************************************************
@@ -101,4 +103,6 @@ public:
     virtual AbstractSimpleInterface* createSimpleInterface(QObject *parent) = 0;
     virtual AbstractSimpleArrayInterface* createSimpleArrayInterface(QObject *parent) = 0;
 };
+
+} //namespace tb_simple
 

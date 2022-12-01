@@ -21,52 +21,52 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 /**
  *  will be called before the first test function is executed.
 */
-void TestNestedStruct1Interface::initTestCase(){
+void TestTestbed2NestedStruct1Interface::initTestCase(){
 
 }
 
 /**
  *  will be called to create a global test data table.
 */
-void TestNestedStruct1Interface::initTestCase_data(){
+void TestTestbed2NestedStruct1Interface::initTestCase_data(){
 
 }
 
 /**
  *  will be called after the last test function was executed.
 */
-void TestNestedStruct1Interface::cleanupTestCase(){
+void TestTestbed2NestedStruct1Interface::cleanupTestCase(){
 
 }
 
 /**
  *  will be called before each test function is executed.
 */
-void TestNestedStruct1Interface::init(){
+void TestTestbed2NestedStruct1Interface::init(){
 
 }
 
 /**
  *  will be called after every test function.
 */
-void TestNestedStruct1Interface::cleanup(){
+void TestTestbed2NestedStruct1Interface::cleanup(){
 
 }
 /**
  *  Test operation func1
 */
-void TestNestedStruct1Interface::func1(){
-    NestedStruct1Interface testNestedstruct1interface;
+void TestTestbed2NestedStruct1Interface::func1(){
+    testbed2::NestedStruct1Interface testTestbed2nestedstruct1interface;
     // Do implement test here
 }
 /**
  *  Test proptery prop1
 */
-void TestNestedStruct1Interface::prop1(){
-    NestedStruct1Interface testNestedstruct1interface;
+void TestTestbed2NestedStruct1Interface::prop1(){
+    testbed2::NestedStruct1Interface testTestbed2nestedstruct1interface;
     // Do implement test here
 }
 
-QTEST_MAIN(TestNestedStruct1Interface);
+QTEST_MAIN(TestTestbed2NestedStruct1Interface);
 
 

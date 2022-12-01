@@ -1,6 +1,8 @@
 #include "agent.h"
 #include "apigear/monitor/agentclient.h"
 
+namespace testbed1 {
+
 StructInterfaceAgent::StructInterfaceAgent()
 {
 }
@@ -96,3 +98,5 @@ void StructArrayInterfaceAgent::trace_funcString(AbstractStructArrayInterface* o
     };
     ApiGear::Monitor::AgentClient::instance()->traceCall("testbed1.StructArrayInterface#funcString", params_);
 }
+
+} // namespace testbed1

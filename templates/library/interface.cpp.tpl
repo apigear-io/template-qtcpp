@@ -9,6 +9,8 @@
 
 #include "{{snake .Module.Name}}/api/agent.h"
 
+namespace {{snake  .Module.Name }} {
+
 {{$class}}::{{$class}}(QObject *parent)
     : Abstract{{$class}}(parent)
 {{- range .Interface.Properties }}
@@ -47,3 +49,4 @@ void {{$class}}::set{{Camel .Name}}({{qtParam "" .}})
     return {{qtDefault "" .Return}};
 }
 {{- end }}
+} //namespace {{snake  .Module.Name }}

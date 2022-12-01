@@ -3,6 +3,8 @@
 #include <QtCore>
 #include "api.h"
 
+namespace testbed2 {
+
 class TESTBED2_EXPORT ApiFactory : public QObject, public ApiFactoryInterface
 {
     Q_OBJECT
@@ -17,3 +19,5 @@ public:
 private:
     static ApiFactoryInterface *s_instance;
 };
+
+} //namespace testbed2

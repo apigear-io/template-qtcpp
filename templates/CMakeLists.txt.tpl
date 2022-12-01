@@ -43,4 +43,9 @@ IF( IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/{{ $moduleId }}/olink" )
     add_subdirectory({{ $moduleId }}/olink)
 ENDIF()
 {{- end }}
-
+IF( IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/examples/olinkserver" )
+add_subdirectory(examples/olinkserver)
+ENDIF()
+IF( IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/examples/olinkclient" )
+add_subdirectory(examples/olinkclient)
+ENDIF()

@@ -22,6 +22,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "tb_same2/api/api.h"
 
+namespace tb_same2 {
+
 class HttpSameEnum2Interface : public AbstractSameEnum2Interface
 {
     Q_OBJECT
@@ -42,3 +44,5 @@ private:
     Enum1::Enum1Enum m_prop1;
     Enum2::Enum2Enum m_prop2;
 };
+
+} // namespace tb_same2 

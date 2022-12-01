@@ -28,6 +28,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #  define TESTBED1_LIB_EXPORT Q_DECL_IMPORT
 #endif
 
+namespace testbed1 {
+
 class TESTBED1_LIB_EXPORT StructArrayInterface : public AbstractStructArrayInterface
 {
     Q_OBJECT
@@ -53,3 +55,4 @@ private:
     QList<StructFloat> m_propFloat;
     QList<StructString> m_propString;
 };
+} //namespace testbed1

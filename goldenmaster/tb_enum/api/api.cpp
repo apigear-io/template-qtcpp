@@ -16,6 +16,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "api.h"
+
+namespace tb_enum {
 // ********************************************************************
 // Enumeration Enum0
 // ********************************************************************
@@ -101,3 +103,5 @@ AbstractEnumInterface::AbstractEnumInterface(QObject *parent)
     : QObject(parent)
 {
 }
+
+} // namespace tb_enum

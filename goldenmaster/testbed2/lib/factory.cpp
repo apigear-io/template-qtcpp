@@ -4,6 +4,8 @@
 #include "nestedstruct2interface.h"
 #include "nestedstruct3interface.h"
 
+namespace testbed2 {
+
 Factory::Factory(QObject *parent)
     : QObject(parent)
 {
@@ -28,3 +30,5 @@ AbstractNestedStruct3Interface* Factory::createNestedStruct3Interface(QObject *p
 {
     return new NestedStruct3Interface(parent);
 }
+
+} // namespace testbed2

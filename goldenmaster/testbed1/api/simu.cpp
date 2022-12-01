@@ -4,6 +4,8 @@
 #include "apigear/simulation/simulationclient.h"
 
 using namespace ApiGear::JSONRPC;
+
+namespace testbed1 {
 // ********************************************************************
 // SimulationStructInterface simulation interface
 // ********************************************************************
@@ -326,3 +328,5 @@ StructBool SimulationStructArrayInterface::funcString(const QList<StructString>&
     ApiGear::SimulationClient::instance()->doCall("testbed1/StructArrayInterface", "funcString", params);
     return StructBool();
 }
+
+} //namespace testbed1

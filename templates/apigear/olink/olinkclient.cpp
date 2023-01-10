@@ -26,7 +26,7 @@ OLinkClient::OLinkClient(ClientRegistry& registry, QObject* parent)
     m_node->onWrite(func);
 
     // socket connection retry
-    m_retryTimer->setInterval(5000);
+    m_retryTimer->setInterval(999);
 
     processMessages();
 }
@@ -142,16 +142,12 @@ void OLinkClient::processMessages()
     else if (m_retryTimer->isActive()) {
         return;
     }
-    qDebug() << "001";
     if (m_socket->state() == QAbstractSocket::UnconnectedState) {
         m_socket->open(m_serverUrl);
         m_retryTimer->start();
     }
-    qDebug() << "002";
     if (m_socket->state() == QAbstractSocket::ConnectedState) {
-        qDebug() << "002.1";
         while (!m_queue.isEmpty()) {
-            qDebug() << "003";
             // if we are using JSON we need to use txt message
             // otherwise binary messages
             //    m_socket->sendBinaryMessage(QByteArray::fromStdString(message));

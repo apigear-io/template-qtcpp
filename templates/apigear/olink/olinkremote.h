@@ -21,8 +21,9 @@ public:
     explicit OLinkRemote(RemoteRegistry& registry, QWebSocket* socket);
     void writeMessage(const std::string msg);
     void handleMessage(const QString& msg);
-private:
+public slots:
     void socketDisconnected();
+private:
     QWebSocket* m_socket;
     std::shared_ptr<RemoteNode> m_node;
     ConsoleLogger m_log;

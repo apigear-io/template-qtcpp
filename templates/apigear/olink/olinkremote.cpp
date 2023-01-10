@@ -14,17 +14,16 @@ OLinkRemote::OLinkRemote(RemoteRegistry& registry, QWebSocket* socket)
     m_node->onLog(m_log.logFunc());
     connect(m_socket, &QWebSocket::textMessageReceived, this, &OLinkRemote::handleMessage);
     QObject::connect(socket, SIGNAL(disconnected()), this, SLOT(socketDisconnected()));
-    WriteMessageFunc writeFunc = [this](std::string msg) {
-        writeMessage(msg);
-    };
-    m_node->onWrite(writeFunc);
+    connect(this, &OLinkRemote::messageToWrite, this, &OLinkRemote::writeMessage);
+
+    m_node->onWrite([this](std::string msg){messageToWrite(QString::fromStdString(msg));});
 }
 
-void OLinkRemote::writeMessage(const std::string msg)
+void OLinkRemote::writeMessage(const QString &msg)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(msg);
+    qDebug() << Q_FUNC_INFO << msg;
     if(m_socket) {
-        m_socket->sendTextMessage(QString::fromStdString(msg));
+        m_socket->sendTextMessage(msg);
     }
 }
 
@@ -39,7 +38,7 @@ void OLinkRemote::socketDisconnected()
 {
     qDebug() << "Client disconnected, connection closed";
     auto objectsUsingNode = m_registry.getObjectIds(m_node);
-    for (auto objectId : objectsUsingNode)
+    for (const auto objectId : objectsUsingNode)
     {
         m_registry.removeNodeFromSource(m_node, objectId);
     }

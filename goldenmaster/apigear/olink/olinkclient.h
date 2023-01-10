@@ -4,7 +4,7 @@
 #include <QtWebSockets>
 
 #include "olink/consolelogger.h"
-#include "olink_common.h" 
+#include "olink_common.h"
 
 #include <memory>
 namespace ApiGear {
@@ -19,6 +19,13 @@ class OLINKQT_EXPORT OLinkClient : public QObject {
 public:
     OLinkClient(ClientRegistry& registry, QObject *parent= nullptr);
     virtual ~OLinkClient() override;
+public slots:
+    void onConnected();
+    void onDisconnected();
+    void handleTextMessage(const QString& message);
+    void writeMessage(const QString& message);
+signals:
+    void messageToWrite(const QString& message);
 public:
     void connectToHost(QUrl url=QUrl());
     void disconnect();
@@ -30,10 +37,8 @@ public:
     void linkObjectSource(std::weak_ptr<IObjectSink> objectSink);
     void unlinkObjectSource(std::string objectId);
 
-    void onConnected();
-    void onDisconnected();
-    void handleTextMessage(const QString& message);
     void processMessages();
+    QAbstractSocket::SocketState getConnectionState();
 private:
     enum class LinkStatus
     {
@@ -45,7 +50,7 @@ private:
     ClientRegistry& m_registry;
     QWebSocket* m_socket;
     std::shared_ptr<ClientNode> m_node;
-    QQueue<std::string> m_queue;
+    QQueue<QString>  m_queue;
     ConsoleLogger m_logger;
     QUrl m_serverUrl;
     QTimer* m_retryTimer;

@@ -19,14 +19,12 @@ OLinkClient::OLinkClient(ClientRegistry& registry, QObject* parent)
     connect(m_socket, &QWebSocket::connected, this, &OLinkClient::onConnected);
     connect(m_socket, &QWebSocket::disconnected, this, &OLinkClient::onDisconnected);
     connect(m_socket, &QWebSocket::textMessageReceived, this, &OLinkClient::handleTextMessage);
-    WriteMessageFunc func = [this](std::string msg) {
-        m_queue << msg;
-        processMessages();
-    };
-    m_node->onWrite(func);
+    connect(this, &OLinkClient::messageToWrite, this, &OLinkClient::writeMessage);
 
-    // socket connection retry
-    m_retryTimer->setInterval(5000);
+    m_node->onWrite([this](std::string msg){messageToWrite(QString::fromStdString(msg));});
+
+    // Socket connection retry was chosen for 1sec.
+    m_retryTimer->setInterval(1000);
 
     processMessages();
 }
@@ -55,12 +53,17 @@ void OLinkClient::connectToHost(QUrl url)
 
 void OLinkClient::disconnect()
 {
-    for (auto& object : m_objectLinkStatus){
+    for (const auto& object : m_objectLinkStatus){
         if (object.second != LinkStatus::NotLinked){
             m_node->unlinkRemote(object.first);
         }
     }
     m_socket->close();
+}
+
+void OLinkClient::writeMessage(const QString& msg) {
+    m_queue.push_back(msg);
+    processMessages();
 }
 
 ClientRegistry& OLinkClient::registry()
@@ -142,24 +145,33 @@ void OLinkClient::processMessages()
     else if (m_retryTimer->isActive()) {
         return;
     }
-    qDebug() << "001";
     if (m_socket->state() == QAbstractSocket::UnconnectedState) {
         m_socket->open(m_serverUrl);
         m_retryTimer->start();
     }
-    qDebug() << "002";
     if (m_socket->state() == QAbstractSocket::ConnectedState) {
-        qDebug() << "002.1";
+
         while (!m_queue.isEmpty()) {
-            qDebug() << "003";
-            // if we are using JSON we need to use txt message
-            // otherwise binary messages
-            //    m_socket->sendBinaryMessage(QByteArray::fromStdString(message));
-            const QString& msg = QString::fromStdString(m_queue.dequeue());
-            qDebug() << "write message to socket" << msg;
-            m_socket->sendTextMessage(msg);
+            // text message should be used for JSON format, binary messages for others
+            auto message = m_queue.front();
+            auto sentBytes = m_socket->sendTextMessage(message);
+            if (sentBytes != 0){
+                qDebug() << "write message to socket " << message;
+                m_queue.pop_front();
+            }
+            else {
+                if (!m_retryTimer->isActive()) {
+                    m_retryTimer->start();
+                }
+                break;
+            }
         }
     }
+}
+
+QAbstractSocket::SocketState OLinkClient::getConnectionState()
+{
+    return m_socket ? m_socket->state() : QAbstractSocket::UnconnectedState;
 }
 
 

@@ -19,10 +19,13 @@ class OLINKQT_EXPORT OLinkRemote : public QObject
     Q_OBJECT
 public:
     explicit OLinkRemote(RemoteRegistry& registry, QWebSocket* socket);
-    void writeMessage(const std::string msg);
     void handleMessage(const QString& msg);
-private:
+signals:
+    void messageToWrite(const QString& message);
+public slots:
+    void writeMessage(const QString& message);
     void socketDisconnected();
+private:
     QWebSocket* m_socket;
     std::shared_ptr<RemoteNode> m_node;
     ConsoleLogger m_log;

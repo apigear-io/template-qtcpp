@@ -5,6 +5,8 @@ features:
         documents:
           - source: CMakeLists.txt.tpl
             target: CMakeLists.txt
+          - source: "apigear/CMakeLists.txt"
+            raw: true
           - source: "apigear/monitor/CMakeLists.txt"
             raw: true
           - source: "apigear/monitor/agentclient.h"
@@ -127,6 +129,26 @@ features:
           - source: apigear/olink/olinkremote.h
             raw: true
           - source: apigear/olink/olinkremote.cpp
+            raw: true
+          - source: apigear/tests/olink/CMakeLists.txt
+            raw: true
+          - source: apigear/tests/olink/olink_connection.test.cpp
+            raw: true
+          - source: apigear/tests/olink/olinkhost.test.cpp
+            raw: true
+          - source: apigear/tests/olink/test_main.cpp
+            raw: true
+          - source: apigear/tests/olink/private/messagestorage.h
+            raw: true
+          - source: apigear/tests/olink/private/messagestorage.cpp
+            raw: true
+          - source: apigear/tests/olink/private/sinkobjectmock.hpp
+            raw: true
+          - source: apigear/tests/olink/private/sourceobjectmock.hpp
+            raw: true
+          - source: apigear/tests/olink/private/test_server/testserver.h
+            raw: true
+          - source: apigear/tests/olink/private/test_server/testserver.cpp
             raw: true
       - match: module
         prefix: "{{snake .Module.Name}}/"

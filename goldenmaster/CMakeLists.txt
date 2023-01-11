@@ -9,7 +9,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(JSON_BuildTests OFF)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
@@ -21,9 +21,7 @@ set(LIBRARY_PATH "${CMAKE_BINARY_DIR}/libs" CACHE STRING "Path where the librari
 set(IMPORTS_PATH "${CMAKE_BINARY_DIR}/imports" CACHE STRING "Path where the plugins are deployed")
 
 include_directories(thirdparty)
-add_subdirectory(apigear/olink)
-add_subdirectory(apigear/monitor)
-add_subdirectory(apigear/simulation)
+add_subdirectory(apigear)
 add_subdirectory(thirdparty/qtpromise)
 IF( IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/testbed2/api" )
     add_subdirectory(testbed2/api)

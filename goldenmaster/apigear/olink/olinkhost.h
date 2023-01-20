@@ -33,22 +33,41 @@ namespace ObjectLink {
 
 class RemoteRegistry;
 
+/**
+* Class that hosts a server for olink services.
+* Stores connections requested by clients and provides connection endpoints used by sources to the registry.
+* May hold multiple connections.
+*/
 class OLINKQT_EXPORT OLinkHost :public QObject
 {
     Q_OBJECT
 public:
+    /**
+     * ctor
+    * @param registry A global registry to which network endpoints for sources are added.
+    */
     explicit OLinkHost(RemoteRegistry& registry, QObject *parent=nullptr);
+    /** dtor */
     virtual ~OLinkHost() override;
+    /** Starts a server and puts it in a listen state.
+    * @param host A host address should.
+    * @param port A port number on which the server should listen.
+    */
     void listen(const QString& host, int port);
-    void onNewConnection();
-    void onClosed();
-    const QString &name() const;
-
+    /** A getter to a registry it uses for nodes and sources */
     RemoteRegistry &registry();
 
 private:
+    /** Handler for new incoming connection */
+    void onNewConnection();
+    /** Handler for closing server */
+    void onClosed();
+
+    /** A global registry for sources and network endpoints.*/
     RemoteRegistry& m_registry;
+    /** A server used for connections.*/
     QWebSocketServer* m_wss;
+    /** Logger */
     ConsoleLogger m_log;
 };
 

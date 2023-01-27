@@ -19,7 +19,7 @@ using namespace ApiGear::ObjectLink;
 namespace {{snake  .Module.Name }} {
 
 {{$class}}::{{$class}}(QObject *parent)
-    : Abstract{{.Interface.Name}}(parent)
+    : Abstract{{Camel .Interface.Name}}(parent)
 {{- range .Interface.Properties }}
     , m_{{.Name}}({{qtDefault "" .}})
 {{- end }}

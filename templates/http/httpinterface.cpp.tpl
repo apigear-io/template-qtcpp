@@ -11,7 +11,7 @@
 namespace {{snake  .Module.Name }} {
 
 {{$class}}::{{$class}}(QNetworkAccessManager *network, QObject *parent)
-    : Abstract{{.Interface.Name}}(parent)
+    : Abstract{{Camel .Interface.Name}}(parent)
     , m_network(network)
 {{- range .Interface.Properties }}
     , m_{{.Name}}({{qtDefault "" .}})

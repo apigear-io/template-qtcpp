@@ -24,13 +24,18 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace testbed2 {
 
+/**
+* A QML wrapper of the NestedStruct1Interface implementation.
+* Uses a NestedStruct1Interface provided by an ApiFactory.
+* See ApiFactory and factories that implement the ApiFactoryInterface.
+*/
 class TESTBED2_LIB_EXPORT QmlNestedStruct1Interface : public AbstractNestedStruct1Interface
 {
     Q_OBJECT
     Q_PROPERTY(NestedStruct1 prop1 READ prop1 NOTIFY prop1Changed)
 public:
     explicit QmlNestedStruct1Interface(QObject *parent = nullptr);
-    virtual ~QmlNestedStruct1Interface() override;
+    ~QmlNestedStruct1Interface() override;
     NestedStruct1 prop1() const override;
     void setProp1(const NestedStruct1& prop1) override;
     Q_INVOKABLE NestedStruct1 func1(const NestedStruct1& param1) override;

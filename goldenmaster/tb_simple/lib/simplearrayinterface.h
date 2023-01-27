@@ -30,19 +30,38 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace tb_simple {
 
+/**
+* The SimpleArrayInterface implementation.
+*/
 class TB_SIMPLE_LIB_EXPORT SimpleArrayInterface : public AbstractSimpleArrayInterface
 {
     Q_OBJECT
 public:
     explicit SimpleArrayInterface(QObject *parent = nullptr);
     virtual ~SimpleArrayInterface() override;
+    /** @return value of the property propBool */
     QList<bool> propBool() const override;
+    /** Use to change a property value.
+    * if the property is changed, a signal {.Name}}Changed is emitted.
+    @param value to set for the property propBool */
     void setPropBool(const QList<bool>& propBool) override;
+    /** @return value of the property propInt */
     QList<int> propInt() const override;
+    /** Use to change a property value.
+    * if the property is changed, a signal {.Name}}Changed is emitted.
+    @param value to set for the property propInt */
     void setPropInt(const QList<int>& propInt) override;
+    /** @return value of the property propFloat */
     QList<qreal> propFloat() const override;
+    /** Use to change a property value.
+    * if the property is changed, a signal {.Name}}Changed is emitted.
+    @param value to set for the property propFloat */
     void setPropFloat(const QList<qreal>& propFloat) override;
+    /** @return value of the property propString */
     QList<QString> propString() const override;
+    /** Use to change a property value.
+    * if the property is changed, a signal {.Name}}Changed is emitted.
+    @param value to set for the property propString */
     void setPropString(const QList<QString>& propString) override;
     QList<bool> funcBool(const QList<bool>& paramBool) override;
     QList<int> funcInt(const QList<int>& paramInt) override;
@@ -50,9 +69,13 @@ public:
     QList<QString> funcString(const QList<QString>& paramString) override;
 
 private:
+    /** propBool property */
     QList<bool> m_propBool;
+    /** propInt property */
     QList<int> m_propInt;
+    /** propFloat property */
     QList<qreal> m_propFloat;
+    /** propString property */
     QList<QString> m_propString;
 };
 } //namespace tb_simple

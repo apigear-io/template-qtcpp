@@ -31,7 +31,6 @@ namespace testbed2 {
 // ********************************************************************
 // Enumeration Enum1
 // ********************************************************************
-
 class TESTBED2_EXPORT Enum1 : public QObject {
     Q_OBJECT
 public:
@@ -42,21 +41,27 @@ public:
         value1 = 1,
         value2 = 2,
         value3 = 3,
-        value4 = 4,
+        value4 = 4
     };
     Q_ENUM(Enum1Enum)
 
+    /**
+    * Converter for Enum1Enum
+    * @param v Value in quint8 format.
+    * @param ok. Write parameter, will be set to true if conversion was successful, false otherwise.
+    * @return An enum value for given quint8 or default value if in parameter is out of the enums range.
+    */
     static Enum1Enum toEnum(quint8 v, bool *ok);
 };
 
-
+/** ostream operator. Allows writing the Enum1Enum value to an text output*/
 inline QDataStream &operator<<(QDataStream &ds, const Enum1::Enum1Enum &obj)
 {
     quint8 val = obj;
     ds << val;
     return ds;
 }
-
+/** istream operator. Allows reading to Enum1Enum value from input text*/
 inline QDataStream &operator>>(QDataStream &ds, Enum1::Enum1Enum &obj) {
     bool ok;
     quint8 val;
@@ -71,7 +76,6 @@ inline QDataStream &operator>>(QDataStream &ds, Enum1::Enum1Enum &obj) {
 // ********************************************************************
 // Enumeration Enum2
 // ********************************************************************
-
 class TESTBED2_EXPORT Enum2 : public QObject {
     Q_OBJECT
 public:
@@ -82,21 +86,27 @@ public:
         value1 = 1,
         value2 = 2,
         value3 = 3,
-        value4 = 4,
+        value4 = 4
     };
     Q_ENUM(Enum2Enum)
 
+    /**
+    * Converter for Enum2Enum
+    * @param v Value in quint8 format.
+    * @param ok. Write parameter, will be set to true if conversion was successful, false otherwise.
+    * @return An enum value for given quint8 or default value if in parameter is out of the enums range.
+    */
     static Enum2Enum toEnum(quint8 v, bool *ok);
 };
 
-
+/** ostream operator. Allows writing the Enum2Enum value to an text output*/
 inline QDataStream &operator<<(QDataStream &ds, const Enum2::Enum2Enum &obj)
 {
     quint8 val = obj;
     ds << val;
     return ds;
 }
-
+/** istream operator. Allows reading to Enum2Enum value from input text*/
 inline QDataStream &operator>>(QDataStream &ds, Enum2::Enum2Enum &obj) {
     bool ok;
     quint8 val;
@@ -111,7 +121,6 @@ inline QDataStream &operator>>(QDataStream &ds, Enum2::Enum2Enum &obj) {
 // ********************************************************************
 // Enumeration Enum3
 // ********************************************************************
-
 class TESTBED2_EXPORT Enum3 : public QObject {
     Q_OBJECT
 public:
@@ -122,21 +131,27 @@ public:
         value1 = 1,
         value2 = 2,
         value3 = 3,
-        value4 = 4,
+        value4 = 4
     };
     Q_ENUM(Enum3Enum)
 
+    /**
+    * Converter for Enum3Enum
+    * @param v Value in quint8 format.
+    * @param ok. Write parameter, will be set to true if conversion was successful, false otherwise.
+    * @return An enum value for given quint8 or default value if in parameter is out of the enums range.
+    */
     static Enum3Enum toEnum(quint8 v, bool *ok);
 };
 
-
+/** ostream operator. Allows writing the Enum3Enum value to an text output*/
 inline QDataStream &operator<<(QDataStream &ds, const Enum3::Enum3Enum &obj)
 {
     quint8 val = obj;
     ds << val;
     return ds;
 }
-
+/** istream operator. Allows reading to Enum3Enum value from input text*/
 inline QDataStream &operator>>(QDataStream &ds, Enum3::Enum3Enum &obj) {
     bool ok;
     quint8 val;
@@ -150,31 +165,27 @@ inline QDataStream &operator>>(QDataStream &ds, Enum3::Enum3Enum &obj) {
 // ********************************************************************
 // Struct1 struct
 // ********************************************************************
-
-class TESTBED2_EXPORT Struct1
+struct TESTBED2_EXPORT Struct1
 {
     Q_GADGET
-    Q_PROPERTY(int field1 READ field1 WRITE setField1)
+    Q_PROPERTY(int field1 MEMBER m_field1 )
 
 public:
     Struct1();
-    void setField1(int field1);
-    int field1() const;
-
     bool operator==(const Struct1 &other) const;
     bool operator!=(const Struct1 &other) const;
-
-private:
     int m_field1;
 };
 
+/** ostream operator. Allows writing the Struct1 value to an text output*/
 QDataStream &operator<<(QDataStream &stream, const Struct1 &obj);
+/** istream operator. Allows reading to Struct1 value from input text*/
 QDataStream &operator>>(QDataStream &stream, Struct1 &obj);
 
 // ********************************************************************
 // Struct1 struct factory
+// Registered by plugin to allow creating this type of objects in qml. 
 // ********************************************************************
-
 class TESTBED2_EXPORT Struct1Factory : public QObject {
     Q_OBJECT
 public:
@@ -183,35 +194,29 @@ public:
 // ********************************************************************
 // Struct2 struct
 // ********************************************************************
-
-class TESTBED2_EXPORT Struct2
+struct TESTBED2_EXPORT Struct2
 {
     Q_GADGET
-    Q_PROPERTY(int field1 READ field1 WRITE setField1)
-    Q_PROPERTY(int field2 READ field2 WRITE setField2)
+    Q_PROPERTY(int field1 MEMBER m_field1 )
+    Q_PROPERTY(int field2 MEMBER m_field2 )
 
 public:
     Struct2();
-    void setField1(int field1);
-    int field1() const;
-    void setField2(int field2);
-    int field2() const;
-
     bool operator==(const Struct2 &other) const;
     bool operator!=(const Struct2 &other) const;
-
-private:
     int m_field1;
     int m_field2;
 };
 
+/** ostream operator. Allows writing the Struct2 value to an text output*/
 QDataStream &operator<<(QDataStream &stream, const Struct2 &obj);
+/** istream operator. Allows reading to Struct2 value from input text*/
 QDataStream &operator>>(QDataStream &stream, Struct2 &obj);
 
 // ********************************************************************
 // Struct2 struct factory
+// Registered by plugin to allow creating this type of objects in qml. 
 // ********************************************************************
-
 class TESTBED2_EXPORT Struct2Factory : public QObject {
     Q_OBJECT
 public:
@@ -220,39 +225,31 @@ public:
 // ********************************************************************
 // Struct3 struct
 // ********************************************************************
-
-class TESTBED2_EXPORT Struct3
+struct TESTBED2_EXPORT Struct3
 {
     Q_GADGET
-    Q_PROPERTY(int field1 READ field1 WRITE setField1)
-    Q_PROPERTY(int field2 READ field2 WRITE setField2)
-    Q_PROPERTY(int field3 READ field3 WRITE setField3)
+    Q_PROPERTY(int field1 MEMBER m_field1 )
+    Q_PROPERTY(int field2 MEMBER m_field2 )
+    Q_PROPERTY(int field3 MEMBER m_field3 )
 
 public:
     Struct3();
-    void setField1(int field1);
-    int field1() const;
-    void setField2(int field2);
-    int field2() const;
-    void setField3(int field3);
-    int field3() const;
-
     bool operator==(const Struct3 &other) const;
     bool operator!=(const Struct3 &other) const;
-
-private:
     int m_field1;
     int m_field2;
     int m_field3;
 };
 
+/** ostream operator. Allows writing the Struct3 value to an text output*/
 QDataStream &operator<<(QDataStream &stream, const Struct3 &obj);
+/** istream operator. Allows reading to Struct3 value from input text*/
 QDataStream &operator>>(QDataStream &stream, Struct3 &obj);
 
 // ********************************************************************
 // Struct3 struct factory
+// Registered by plugin to allow creating this type of objects in qml. 
 // ********************************************************************
-
 class TESTBED2_EXPORT Struct3Factory : public QObject {
     Q_OBJECT
 public:
@@ -261,43 +258,33 @@ public:
 // ********************************************************************
 // Struct4 struct
 // ********************************************************************
-
-class TESTBED2_EXPORT Struct4
+struct TESTBED2_EXPORT Struct4
 {
     Q_GADGET
-    Q_PROPERTY(int field1 READ field1 WRITE setField1)
-    Q_PROPERTY(int field2 READ field2 WRITE setField2)
-    Q_PROPERTY(int field3 READ field3 WRITE setField3)
-    Q_PROPERTY(int field4 READ field4 WRITE setField4)
+    Q_PROPERTY(int field1 MEMBER m_field1 )
+    Q_PROPERTY(int field2 MEMBER m_field2 )
+    Q_PROPERTY(int field3 MEMBER m_field3 )
+    Q_PROPERTY(int field4 MEMBER m_field4 )
 
 public:
     Struct4();
-    void setField1(int field1);
-    int field1() const;
-    void setField2(int field2);
-    int field2() const;
-    void setField3(int field3);
-    int field3() const;
-    void setField4(int field4);
-    int field4() const;
-
     bool operator==(const Struct4 &other) const;
     bool operator!=(const Struct4 &other) const;
-
-private:
     int m_field1;
     int m_field2;
     int m_field3;
     int m_field4;
 };
 
+/** ostream operator. Allows writing the Struct4 value to an text output*/
 QDataStream &operator<<(QDataStream &stream, const Struct4 &obj);
+/** istream operator. Allows reading to Struct4 value from input text*/
 QDataStream &operator>>(QDataStream &stream, Struct4 &obj);
 
 // ********************************************************************
 // Struct4 struct factory
+// Registered by plugin to allow creating this type of objects in qml. 
 // ********************************************************************
-
 class TESTBED2_EXPORT Struct4Factory : public QObject {
     Q_OBJECT
 public:
@@ -306,31 +293,27 @@ public:
 // ********************************************************************
 // NestedStruct1 struct
 // ********************************************************************
-
-class TESTBED2_EXPORT NestedStruct1
+struct TESTBED2_EXPORT NestedStruct1
 {
     Q_GADGET
-    Q_PROPERTY(Struct1 field1 READ field1 WRITE setField1)
+    Q_PROPERTY(Struct1 field1 MEMBER m_field1 )
 
 public:
     NestedStruct1();
-    void setField1(const Struct1& field1);
-    Struct1 field1() const;
-
     bool operator==(const NestedStruct1 &other) const;
     bool operator!=(const NestedStruct1 &other) const;
-
-private:
     Struct1 m_field1;
 };
 
+/** ostream operator. Allows writing the NestedStruct1 value to an text output*/
 QDataStream &operator<<(QDataStream &stream, const NestedStruct1 &obj);
+/** istream operator. Allows reading to NestedStruct1 value from input text*/
 QDataStream &operator>>(QDataStream &stream, NestedStruct1 &obj);
 
 // ********************************************************************
 // NestedStruct1 struct factory
+// Registered by plugin to allow creating this type of objects in qml. 
 // ********************************************************************
-
 class TESTBED2_EXPORT NestedStruct1Factory : public QObject {
     Q_OBJECT
 public:
@@ -339,35 +322,29 @@ public:
 // ********************************************************************
 // NestedStruct2 struct
 // ********************************************************************
-
-class TESTBED2_EXPORT NestedStruct2
+struct TESTBED2_EXPORT NestedStruct2
 {
     Q_GADGET
-    Q_PROPERTY(Struct1 field1 READ field1 WRITE setField1)
-    Q_PROPERTY(Struct2 field2 READ field2 WRITE setField2)
+    Q_PROPERTY(Struct1 field1 MEMBER m_field1 )
+    Q_PROPERTY(Struct2 field2 MEMBER m_field2 )
 
 public:
     NestedStruct2();
-    void setField1(const Struct1& field1);
-    Struct1 field1() const;
-    void setField2(const Struct2& field2);
-    Struct2 field2() const;
-
     bool operator==(const NestedStruct2 &other) const;
     bool operator!=(const NestedStruct2 &other) const;
-
-private:
     Struct1 m_field1;
     Struct2 m_field2;
 };
 
+/** ostream operator. Allows writing the NestedStruct2 value to an text output*/
 QDataStream &operator<<(QDataStream &stream, const NestedStruct2 &obj);
+/** istream operator. Allows reading to NestedStruct2 value from input text*/
 QDataStream &operator>>(QDataStream &stream, NestedStruct2 &obj);
 
 // ********************************************************************
 // NestedStruct2 struct factory
+// Registered by plugin to allow creating this type of objects in qml. 
 // ********************************************************************
-
 class TESTBED2_EXPORT NestedStruct2Factory : public QObject {
     Q_OBJECT
 public:
@@ -376,39 +353,31 @@ public:
 // ********************************************************************
 // NestedStruct3 struct
 // ********************************************************************
-
-class TESTBED2_EXPORT NestedStruct3
+struct TESTBED2_EXPORT NestedStruct3
 {
     Q_GADGET
-    Q_PROPERTY(Struct1 field1 READ field1 WRITE setField1)
-    Q_PROPERTY(Struct2 field2 READ field2 WRITE setField2)
-    Q_PROPERTY(Struct3 field3 READ field3 WRITE setField3)
+    Q_PROPERTY(Struct1 field1 MEMBER m_field1 )
+    Q_PROPERTY(Struct2 field2 MEMBER m_field2 )
+    Q_PROPERTY(Struct3 field3 MEMBER m_field3 )
 
 public:
     NestedStruct3();
-    void setField1(const Struct1& field1);
-    Struct1 field1() const;
-    void setField2(const Struct2& field2);
-    Struct2 field2() const;
-    void setField3(const Struct3& field3);
-    Struct3 field3() const;
-
     bool operator==(const NestedStruct3 &other) const;
     bool operator!=(const NestedStruct3 &other) const;
-
-private:
     Struct1 m_field1;
     Struct2 m_field2;
     Struct3 m_field3;
 };
 
+/** ostream operator. Allows writing the NestedStruct3 value to an text output*/
 QDataStream &operator<<(QDataStream &stream, const NestedStruct3 &obj);
+/** istream operator. Allows reading to NestedStruct3 value from input text*/
 QDataStream &operator>>(QDataStream &stream, NestedStruct3 &obj);
 
 // ********************************************************************
 // NestedStruct3 struct factory
+// Registered by plugin to allow creating this type of objects in qml. 
 // ********************************************************************
-
 class TESTBED2_EXPORT NestedStruct3Factory : public QObject {
     Q_OBJECT
 public:
@@ -416,7 +385,15 @@ public:
 };
 
 // ********************************************************************
-// AbstractManyParamInterface pure interface
+/**
+*
+* AbstractManyParamInterface is a pure interface QObject class.
+* Declares:
+*  - Methods defined for ManyParamInterface interface
+*  - Property setters and getters for defined properties
+*  - Property changed singals for properties of your interface.
+*  - Signals described for ManyParamInterface interface.
+*/
 // ********************************************************************
 
 
@@ -424,31 +401,97 @@ class TESTBED2_EXPORT AbstractManyParamInterface : public QObject {
     Q_OBJECT
 public:
     AbstractManyParamInterface(QObject * parent=nullptr);
+    /**
+    * Sets the value of the prop1 property.
+    */
     virtual void setProp1(int prop1) = 0;
+    /**
+    * Gets the value of the prop1 property.
+    */
     virtual int prop1() const = 0;
+    /**
+    * Sets the value of the prop2 property.
+    */
     virtual void setProp2(int prop2) = 0;
+    /**
+    * Gets the value of the prop2 property.
+    */
     virtual int prop2() const = 0;
+    /**
+    * Sets the value of the prop3 property.
+    */
     virtual void setProp3(int prop3) = 0;
+    /**
+    * Gets the value of the prop3 property.
+    */
     virtual int prop3() const = 0;
+    /**
+    * Sets the value of the prop4 property.
+    */
     virtual void setProp4(int prop4) = 0;
+    /**
+    * Gets the value of the prop4 property.
+    */
     virtual int prop4() const = 0;
+
     virtual int func1(int param1) = 0;
+
     virtual int func2(int param1, int param2) = 0;
+
     virtual int func3(int param1, int param2, int param3) = 0;
+
     virtual int func4(int param1, int param2, int param3, int param4) = 0;
 signals:
+    /**
+    * @param param1 
+    */
     void sig1(int param1);
+    /**
+    * @param param1 
+    * @param param2 
+    */
     void sig2(int param1, int param2);
+    /**
+    * @param param1 
+    * @param param2 
+    * @param param3 
+    */
     void sig3(int param1, int param2, int param3);
+    /**
+    * @param param1 
+    * @param param2 
+    * @param param3 
+    * @param param4 
+    */
     void sig4(int param1, int param2, int param3, int param4);
+    /**
+    * Emitted when prop1 value has changed.
+    */
     void prop1Changed(int prop1);
+    /**
+    * Emitted when prop2 value has changed.
+    */
     void prop2Changed(int prop2);
+    /**
+    * Emitted when prop3 value has changed.
+    */
     void prop3Changed(int prop3);
+    /**
+    * Emitted when prop4 value has changed.
+    */
     void prop4Changed(int prop4);
 };
 
 // ********************************************************************
-// AbstractNestedStruct1Interface pure interface
+/**
+*
+* AbstractNestedStruct1Interface is a pure interface QObject class.
+* Declares:
+*  - Methods defined for NestedStruct1Interface interface
+*  - Property setters and getters for defined properties
+*  - Property changed singals for properties of your interface.
+*  - Signals described for NestedStruct1Interface interface.
+*/
 // ********************************************************************
 
 
@@ -456,16 +499,37 @@ class TESTBED2_EXPORT AbstractNestedStruct1Interface : public QObject {
     Q_OBJECT
 public:
     AbstractNestedStruct1Interface(QObject * parent=nullptr);
+    /**
+    * Sets the value of the prop1 property.
+    */
     virtual void setProp1(const NestedStruct1& prop1) = 0;
+    /**
+    * Gets the value of the prop1 property.
+    */
     virtual NestedStruct1 prop1() const = 0;
+
     virtual NestedStruct1 func1(const NestedStruct1& param1) = 0;
 signals:
+    /**
+    * @param param1 
+    */
     void sig1(const NestedStruct1& param1);
+    /**
+    * Emitted when prop1 value has changed.
+    */
     void prop1Changed(const NestedStruct1& prop1);
 };
 
 // ********************************************************************
-// AbstractNestedStruct2Interface pure interface
+/**
+*
+* AbstractNestedStruct2Interface is a pure interface QObject class.
+* Declares:
+*  - Methods defined for NestedStruct2Interface interface
+*  - Property setters and getters for defined properties
+*  - Property changed singals for properties of your interface.
+*  - Signals described for NestedStruct2Interface interface.
+*/
 // ********************************************************************
 
 
@@ -473,21 +537,56 @@ class TESTBED2_EXPORT AbstractNestedStruct2Interface : public QObject {
     Q_OBJECT
 public:
     AbstractNestedStruct2Interface(QObject * parent=nullptr);
+    /**
+    * Sets the value of the prop1 property.
+    */
     virtual void setProp1(const NestedStruct1& prop1) = 0;
+    /**
+    * Gets the value of the prop1 property.
+    */
     virtual NestedStruct1 prop1() const = 0;
+    /**
+    * Sets the value of the prop2 property.
+    */
     virtual void setProp2(const NestedStruct2& prop2) = 0;
+    /**
+    * Gets the value of the prop2 property.
+    */
     virtual NestedStruct2 prop2() const = 0;
+
     virtual NestedStruct1 func1(const NestedStruct1& param1) = 0;
+
     virtual NestedStruct1 func2(const NestedStruct1& param1, const NestedStruct2& param2) = 0;
 signals:
+    /**
+    * @param param1 
+    */
     void sig1(const NestedStruct1& param1);
+    /**
+    * @param param1 
+    * @param param2 
+    */
     void sig2(const NestedStruct1& param1, const NestedStruct2& param2);
+    /**
+    * Emitted when prop1 value has changed.
+    */
     void prop1Changed(const NestedStruct1& prop1);
+    /**
+    * Emitted when prop2 value has changed.
+    */
     void prop2Changed(const NestedStruct2& prop2);
 };
 
 // ********************************************************************
-// AbstractNestedStruct3Interface pure interface
+/**
+*
+* AbstractNestedStruct3Interface is a pure interface QObject class.
+* Declares:
+*  - Methods defined for NestedStruct3Interface interface
+*  - Property setters and getters for defined properties
+*  - Property changed singals for properties of your interface.
+*  - Signals described for NestedStruct3Interface interface.
+*/
 // ********************************************************************
 
 
@@ -495,21 +594,63 @@ class TESTBED2_EXPORT AbstractNestedStruct3Interface : public QObject {
     Q_OBJECT
 public:
     AbstractNestedStruct3Interface(QObject * parent=nullptr);
+    /**
+    * Sets the value of the prop1 property.
+    */
     virtual void setProp1(const NestedStruct1& prop1) = 0;
+    /**
+    * Gets the value of the prop1 property.
+    */
     virtual NestedStruct1 prop1() const = 0;
+    /**
+    * Sets the value of the prop2 property.
+    */
     virtual void setProp2(const NestedStruct2& prop2) = 0;
+    /**
+    * Gets the value of the prop2 property.
+    */
     virtual NestedStruct2 prop2() const = 0;
+    /**
+    * Sets the value of the prop3 property.
+    */
     virtual void setProp3(const NestedStruct3& prop3) = 0;
+    /**
+    * Gets the value of the prop3 property.
+    */
     virtual NestedStruct3 prop3() const = 0;
+
     virtual NestedStruct1 func1(const NestedStruct1& param1) = 0;
+
     virtual NestedStruct1 func2(const NestedStruct1& param1, const NestedStruct2& param2) = 0;
+
     virtual NestedStruct1 func3(const NestedStruct1& param1, const NestedStruct2& param2, const NestedStruct3& param3) = 0;
 signals:
+    /**
+    * @param param1 
+    */
     void sig1(const NestedStruct1& param1);
+    /**
+    * @param param1 
+    * @param param2 
+    */
     void sig2(const NestedStruct1& param1, const NestedStruct2& param2);
+    /**
+    * @param param1 
+    * @param param2 
+    * @param param3 
+    */
     void sig3(const NestedStruct1& param1, const NestedStruct2& param2, const NestedStruct3& param3);
+    /**
+    * Emitted when prop1 value has changed.
+    */
     void prop1Changed(const NestedStruct1& prop1);
+    /**
+    * Emitted when prop2 value has changed.
+    */
     void prop2Changed(const NestedStruct2& prop2);
+    /**
+    * Emitted when prop3 value has changed.
+    */
     void prop3Changed(const NestedStruct3& prop3);
 };
 
@@ -518,12 +659,30 @@ signals:
 // Interface Factory
 // ********************************************************************
 
+/**
+* An interface for a Factory of interfaces in testbed2
+* May be used to provide different implementations of your interfaces.
+* Check the usage of ApiFactoryInterface in Qml versions of interface implementation.
+* See also the ApiFactory, where you can set this factory as an ApiFactoryInterface implementation.
+*/
 class TESTBED2_EXPORT ApiFactoryInterface
 {
 public:
+/** Create an instance of ManyParamInterface
+* @return The implementation of a AbstractManyParamInterface, of which user should take ownership.
+*/
     virtual AbstractManyParamInterface* createManyParamInterface(QObject *parent) = 0;
+/** Create an instance of NestedStruct1Interface
+* @return The implementation of a AbstractNestedStruct1Interface, of which user should take ownership.
+*/
     virtual AbstractNestedStruct1Interface* createNestedStruct1Interface(QObject *parent) = 0;
+/** Create an instance of NestedStruct2Interface
+* @return The implementation of a AbstractNestedStruct2Interface, of which user should take ownership.
+*/
     virtual AbstractNestedStruct2Interface* createNestedStruct2Interface(QObject *parent) = 0;
+/** Create an instance of NestedStruct3Interface
+* @return The implementation of a AbstractNestedStruct3Interface, of which user should take ownership.
+*/
     virtual AbstractNestedStruct3Interface* createNestedStruct3Interface(QObject *parent) = 0;
 };
 

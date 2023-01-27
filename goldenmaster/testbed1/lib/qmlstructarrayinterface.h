@@ -24,6 +24,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace testbed1 {
 
+/**
+* A QML wrapper of the StructArrayInterface implementation.
+* Uses a StructArrayInterface provided by an ApiFactory.
+* See ApiFactory and factories that implement the ApiFactoryInterface.
+*/
 class TESTBED1_LIB_EXPORT QmlStructArrayInterface : public AbstractStructArrayInterface
 {
     Q_OBJECT
@@ -33,7 +38,7 @@ class TESTBED1_LIB_EXPORT QmlStructArrayInterface : public AbstractStructArrayIn
     Q_PROPERTY(QList<StructString> propString READ propString NOTIFY propStringChanged)
 public:
     explicit QmlStructArrayInterface(QObject *parent = nullptr);
-    virtual ~QmlStructArrayInterface() override;
+    ~QmlStructArrayInterface() override;
     QList<StructBool> propBool() const override;
     void setPropBool(const QList<StructBool>& propBool) override;
     QList<StructInt> propInt() const override;

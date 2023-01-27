@@ -1,6 +1,6 @@
 {{- /* Copyright (c) ApiGear UG 2020 */ -}}
 {{- cppGpl .Module }}
-{{- $class := .Interface.Name }}
+{{- $class := Camel .Interface.Name }}
 
 
 #include "{{lower $class}}.h"

@@ -1,6 +1,6 @@
 {{- /* Copyright (c) ApiGear UG 2020 */ -}}
 {{ cppGpl .Module }}
-{{- $class := .Interface.Name }}
+{{- $class := Camel .Interface.Name }}
 {{- $MODULE_ID := printf "%s_LIB" (SNAKE .Module.Name) }}
 
 #pragma once
@@ -11,6 +11,11 @@
 
 namespace {{snake  .Module.Name }} {
 
+/**
+* A QML wrapper of the {{$class}} implementation.
+* Uses a {{$class}} provided by an ApiFactory.
+* See ApiFactory and factories that implement the ApiFactoryInterface.
+*/
 class {{$MODULE_ID}}_EXPORT Qml{{$class}} : public Abstract{{$class}}
 {
     Q_OBJECT
@@ -19,7 +24,7 @@ class {{$MODULE_ID}}_EXPORT Qml{{$class}} : public Abstract{{$class}}
 {{- end }}
 public:
     explicit Qml{{$class}}(QObject *parent = nullptr);
-    virtual ~Qml{{$class}}() override;
+    ~Qml{{$class}}() override;
 
 {{- range .Interface.Properties }}
     {{qtReturn "" .}} {{.Name}}() const override;

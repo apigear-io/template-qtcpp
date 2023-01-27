@@ -24,6 +24,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace tb_same2 {
 
+/**
+* A QML wrapper of the SameEnum2Interface implementation.
+* Uses a SameEnum2Interface provided by an ApiFactory.
+* See ApiFactory and factories that implement the ApiFactoryInterface.
+*/
 class TB_SAME2_LIB_EXPORT QmlSameEnum2Interface : public AbstractSameEnum2Interface
 {
     Q_OBJECT
@@ -31,7 +36,7 @@ class TB_SAME2_LIB_EXPORT QmlSameEnum2Interface : public AbstractSameEnum2Interf
     Q_PROPERTY(Enum2::Enum2Enum prop2 READ prop2 NOTIFY prop2Changed)
 public:
     explicit QmlSameEnum2Interface(QObject *parent = nullptr);
-    virtual ~QmlSameEnum2Interface() override;
+    ~QmlSameEnum2Interface() override;
     Enum1::Enum1Enum prop1() const override;
     void setProp1(const Enum1::Enum1Enum prop1) override;
     Enum2::Enum2Enum prop2() const override;

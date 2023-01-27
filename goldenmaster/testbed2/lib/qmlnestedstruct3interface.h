@@ -24,6 +24,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace testbed2 {
 
+/**
+* A QML wrapper of the NestedStruct3Interface implementation.
+* Uses a NestedStruct3Interface provided by an ApiFactory.
+* See ApiFactory and factories that implement the ApiFactoryInterface.
+*/
 class TESTBED2_LIB_EXPORT QmlNestedStruct3Interface : public AbstractNestedStruct3Interface
 {
     Q_OBJECT
@@ -32,7 +37,7 @@ class TESTBED2_LIB_EXPORT QmlNestedStruct3Interface : public AbstractNestedStruc
     Q_PROPERTY(NestedStruct3 prop3 READ prop3 NOTIFY prop3Changed)
 public:
     explicit QmlNestedStruct3Interface(QObject *parent = nullptr);
-    virtual ~QmlNestedStruct3Interface() override;
+    ~QmlNestedStruct3Interface() override;
     NestedStruct1 prop1() const override;
     void setProp1(const NestedStruct1& prop1) override;
     NestedStruct2 prop2() const override;

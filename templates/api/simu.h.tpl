@@ -13,7 +13,7 @@ namespace {{snake  .Module.Name }} {
 // ********************************************************************
 
 
-class {{$class}} : public Abstract{{.Name}}
+class {{$class}} : public Abstract{{Camel .Name}}
 {
     Q_OBJECT
 public:

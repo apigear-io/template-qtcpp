@@ -1,13 +1,12 @@
 {{- /* Copyright (c) ApiGear UG 2020 */ -}}
 {{ cppGpl .Module }}
 {{- $class := printf "OLink%sAdapter" .Interface.Name }}
-{{- $iface := .Interface.Name }}
+{{- $iface := Camel .Interface.Name }}
 {{- $module := .Module.Name }}
 
 
 
 #include "{{lower $class}}.h"
-{{- $iface := .Interface.Name }}
 
 #include <nlohmann/json.hpp>
 #include "{{snake .Module.Name}}/api/agent.h"
@@ -28,7 +27,6 @@ namespace {{snake  .Module.Name }} {
     : QObject(parent)
     , m_impl(impl)
     , m_registry(registry)
-    , m_node()
 {
 {{- range .Interface.Properties }}
     connect(m_impl, &Abstract{{$iface}}::{{.Name}}Changed, this,
@@ -114,13 +112,11 @@ void {{$class}}::olinkSetProperty(const std::string& propertyId, const nlohmann:
 
 void {{$class}}::olinkLinked(const std::string& objectId, IRemoteNode *node) {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
-    m_node = node;
 }
 
 void {{$class}}::olinkUnlinked(const std::string& objectId)
 {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
-    m_node = nullptr;
 }
 
 json {{$class}}::olinkCollectProperties()

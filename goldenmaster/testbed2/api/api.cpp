@@ -87,20 +87,10 @@ Struct1::Struct1()
 {
 }
 
-void Struct1::setField1(int field1)
-{
-  m_field1 = field1;
-}
-
-int Struct1::field1() const
-{
-  return m_field1;
-}
-
 bool Struct1::operator==(const Struct1 &other) const
 {
     return (
-        field1() == other.field1()
+        m_field1 == other.m_field1
     );
 }
 
@@ -111,7 +101,7 @@ bool Struct1::operator!=(const Struct1 &other) const
 
 QDataStream &operator<<(QDataStream &stream, const Struct1 &obj)
 {
-    stream << obj.field1();
+    stream << obj.m_field1;
 
     return stream;
 }
@@ -120,7 +110,7 @@ QDataStream &operator>>(QDataStream &stream, Struct1 &obj)
 {
     int field1Value;
     stream >> field1Value;
-    obj.setField1(field1Value);
+    obj.m_field1 = field1Value;
     return stream;
 }
 
@@ -141,31 +131,11 @@ Struct2::Struct2()
 {
 }
 
-void Struct2::setField1(int field1)
-{
-  m_field1 = field1;
-}
-
-int Struct2::field1() const
-{
-  return m_field1;
-}
-
-void Struct2::setField2(int field2)
-{
-  m_field2 = field2;
-}
-
-int Struct2::field2() const
-{
-  return m_field2;
-}
-
 bool Struct2::operator==(const Struct2 &other) const
 {
     return (
-        field1() == other.field1() &&
-        field2() == other.field2()
+        m_field1 == other.m_field1 &&
+        m_field2 == other.m_field2
     );
 }
 
@@ -176,8 +146,8 @@ bool Struct2::operator!=(const Struct2 &other) const
 
 QDataStream &operator<<(QDataStream &stream, const Struct2 &obj)
 {
-    stream << obj.field1();
-    stream << obj.field2();
+    stream << obj.m_field1;
+    stream << obj.m_field2;
 
     return stream;
 }
@@ -186,10 +156,10 @@ QDataStream &operator>>(QDataStream &stream, Struct2 &obj)
 {
     int field1Value;
     stream >> field1Value;
-    obj.setField1(field1Value);
+    obj.m_field1 = field1Value;
     int field2Value;
     stream >> field2Value;
-    obj.setField2(field2Value);
+    obj.m_field2 = field2Value;
     return stream;
 }
 
@@ -210,42 +180,12 @@ Struct3::Struct3()
 {
 }
 
-void Struct3::setField1(int field1)
-{
-  m_field1 = field1;
-}
-
-int Struct3::field1() const
-{
-  return m_field1;
-}
-
-void Struct3::setField2(int field2)
-{
-  m_field2 = field2;
-}
-
-int Struct3::field2() const
-{
-  return m_field2;
-}
-
-void Struct3::setField3(int field3)
-{
-  m_field3 = field3;
-}
-
-int Struct3::field3() const
-{
-  return m_field3;
-}
-
 bool Struct3::operator==(const Struct3 &other) const
 {
     return (
-        field1() == other.field1() &&
-        field2() == other.field2() &&
-        field3() == other.field3()
+        m_field1 == other.m_field1 &&
+        m_field2 == other.m_field2 &&
+        m_field3 == other.m_field3
     );
 }
 
@@ -256,9 +196,9 @@ bool Struct3::operator!=(const Struct3 &other) const
 
 QDataStream &operator<<(QDataStream &stream, const Struct3 &obj)
 {
-    stream << obj.field1();
-    stream << obj.field2();
-    stream << obj.field3();
+    stream << obj.m_field1;
+    stream << obj.m_field2;
+    stream << obj.m_field3;
 
     return stream;
 }
@@ -267,13 +207,13 @@ QDataStream &operator>>(QDataStream &stream, Struct3 &obj)
 {
     int field1Value;
     stream >> field1Value;
-    obj.setField1(field1Value);
+    obj.m_field1 = field1Value;
     int field2Value;
     stream >> field2Value;
-    obj.setField2(field2Value);
+    obj.m_field2 = field2Value;
     int field3Value;
     stream >> field3Value;
-    obj.setField3(field3Value);
+    obj.m_field3 = field3Value;
     return stream;
 }
 
@@ -294,53 +234,13 @@ Struct4::Struct4()
 {
 }
 
-void Struct4::setField1(int field1)
-{
-  m_field1 = field1;
-}
-
-int Struct4::field1() const
-{
-  return m_field1;
-}
-
-void Struct4::setField2(int field2)
-{
-  m_field2 = field2;
-}
-
-int Struct4::field2() const
-{
-  return m_field2;
-}
-
-void Struct4::setField3(int field3)
-{
-  m_field3 = field3;
-}
-
-int Struct4::field3() const
-{
-  return m_field3;
-}
-
-void Struct4::setField4(int field4)
-{
-  m_field4 = field4;
-}
-
-int Struct4::field4() const
-{
-  return m_field4;
-}
-
 bool Struct4::operator==(const Struct4 &other) const
 {
     return (
-        field1() == other.field1() &&
-        field2() == other.field2() &&
-        field3() == other.field3() &&
-        field4() == other.field4()
+        m_field1 == other.m_field1 &&
+        m_field2 == other.m_field2 &&
+        m_field3 == other.m_field3 &&
+        m_field4 == other.m_field4
     );
 }
 
@@ -351,10 +251,10 @@ bool Struct4::operator!=(const Struct4 &other) const
 
 QDataStream &operator<<(QDataStream &stream, const Struct4 &obj)
 {
-    stream << obj.field1();
-    stream << obj.field2();
-    stream << obj.field3();
-    stream << obj.field4();
+    stream << obj.m_field1;
+    stream << obj.m_field2;
+    stream << obj.m_field3;
+    stream << obj.m_field4;
 
     return stream;
 }
@@ -363,16 +263,16 @@ QDataStream &operator>>(QDataStream &stream, Struct4 &obj)
 {
     int field1Value;
     stream >> field1Value;
-    obj.setField1(field1Value);
+    obj.m_field1 = field1Value;
     int field2Value;
     stream >> field2Value;
-    obj.setField2(field2Value);
+    obj.m_field2 = field2Value;
     int field3Value;
     stream >> field3Value;
-    obj.setField3(field3Value);
+    obj.m_field3 = field3Value;
     int field4Value;
     stream >> field4Value;
-    obj.setField4(field4Value);
+    obj.m_field4 = field4Value;
     return stream;
 }
 
@@ -393,20 +293,10 @@ NestedStruct1::NestedStruct1()
 {
 }
 
-void NestedStruct1::setField1(const Struct1& field1)
-{
-  m_field1 = field1;
-}
-
-Struct1 NestedStruct1::field1() const
-{
-  return m_field1;
-}
-
 bool NestedStruct1::operator==(const NestedStruct1 &other) const
 {
     return (
-        field1() == other.field1()
+        m_field1 == other.m_field1
     );
 }
 
@@ -417,7 +307,7 @@ bool NestedStruct1::operator!=(const NestedStruct1 &other) const
 
 QDataStream &operator<<(QDataStream &stream, const NestedStruct1 &obj)
 {
-    stream << obj.field1();
+    stream << obj.m_field1;
 
     return stream;
 }
@@ -426,7 +316,7 @@ QDataStream &operator>>(QDataStream &stream, NestedStruct1 &obj)
 {
     Struct1 field1Value;
     stream >> field1Value;
-    obj.setField1(field1Value);
+    obj.m_field1 = field1Value;
     return stream;
 }
 
@@ -447,31 +337,11 @@ NestedStruct2::NestedStruct2()
 {
 }
 
-void NestedStruct2::setField1(const Struct1& field1)
-{
-  m_field1 = field1;
-}
-
-Struct1 NestedStruct2::field1() const
-{
-  return m_field1;
-}
-
-void NestedStruct2::setField2(const Struct2& field2)
-{
-  m_field2 = field2;
-}
-
-Struct2 NestedStruct2::field2() const
-{
-  return m_field2;
-}
-
 bool NestedStruct2::operator==(const NestedStruct2 &other) const
 {
     return (
-        field1() == other.field1() &&
-        field2() == other.field2()
+        m_field1 == other.m_field1 &&
+        m_field2 == other.m_field2
     );
 }
 
@@ -482,8 +352,8 @@ bool NestedStruct2::operator!=(const NestedStruct2 &other) const
 
 QDataStream &operator<<(QDataStream &stream, const NestedStruct2 &obj)
 {
-    stream << obj.field1();
-    stream << obj.field2();
+    stream << obj.m_field1;
+    stream << obj.m_field2;
 
     return stream;
 }
@@ -492,10 +362,10 @@ QDataStream &operator>>(QDataStream &stream, NestedStruct2 &obj)
 {
     Struct1 field1Value;
     stream >> field1Value;
-    obj.setField1(field1Value);
+    obj.m_field1 = field1Value;
     Struct2 field2Value;
     stream >> field2Value;
-    obj.setField2(field2Value);
+    obj.m_field2 = field2Value;
     return stream;
 }
 
@@ -516,42 +386,12 @@ NestedStruct3::NestedStruct3()
 {
 }
 
-void NestedStruct3::setField1(const Struct1& field1)
-{
-  m_field1 = field1;
-}
-
-Struct1 NestedStruct3::field1() const
-{
-  return m_field1;
-}
-
-void NestedStruct3::setField2(const Struct2& field2)
-{
-  m_field2 = field2;
-}
-
-Struct2 NestedStruct3::field2() const
-{
-  return m_field2;
-}
-
-void NestedStruct3::setField3(const Struct3& field3)
-{
-  m_field3 = field3;
-}
-
-Struct3 NestedStruct3::field3() const
-{
-  return m_field3;
-}
-
 bool NestedStruct3::operator==(const NestedStruct3 &other) const
 {
     return (
-        field1() == other.field1() &&
-        field2() == other.field2() &&
-        field3() == other.field3()
+        m_field1 == other.m_field1 &&
+        m_field2 == other.m_field2 &&
+        m_field3 == other.m_field3
     );
 }
 
@@ -562,9 +402,9 @@ bool NestedStruct3::operator!=(const NestedStruct3 &other) const
 
 QDataStream &operator<<(QDataStream &stream, const NestedStruct3 &obj)
 {
-    stream << obj.field1();
-    stream << obj.field2();
-    stream << obj.field3();
+    stream << obj.m_field1;
+    stream << obj.m_field2;
+    stream << obj.m_field3;
 
     return stream;
 }
@@ -573,13 +413,13 @@ QDataStream &operator>>(QDataStream &stream, NestedStruct3 &obj)
 {
     Struct1 field1Value;
     stream >> field1Value;
-    obj.setField1(field1Value);
+    obj.m_field1 = field1Value;
     Struct2 field2Value;
     stream >> field2Value;
-    obj.setField2(field2Value);
+    obj.m_field2 = field2Value;
     Struct3 field3Value;
     stream >> field3Value;
-    obj.setField3(field3Value);
+    obj.m_field3 = field3Value;
     return stream;
 }
 

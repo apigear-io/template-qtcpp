@@ -30,17 +30,25 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace tb_same1 {
 
+/**
+* The SameEnum1Interface implementation.
+*/
 class TB_SAME1_LIB_EXPORT SameEnum1Interface : public AbstractSameEnum1Interface
 {
     Q_OBJECT
 public:
     explicit SameEnum1Interface(QObject *parent = nullptr);
     virtual ~SameEnum1Interface() override;
+    /** @return value of the property prop1 */
     Enum1::Enum1Enum prop1() const override;
+    /** Use to change a property value.
+    * if the property is changed, a signal {.Name}}Changed is emitted.
+    @param value to set for the property prop1 */
     void setProp1(const Enum1::Enum1Enum prop1) override;
     Enum1::Enum1Enum func1(const Enum1::Enum1Enum param1) override;
 
 private:
+    /** prop1 property */
     Enum1::Enum1Enum m_prop1;
 };
 } //namespace tb_same1

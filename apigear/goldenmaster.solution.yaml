@@ -12,5 +12,5 @@ layers:
       - testbed.simple.module.yaml
       - testbed.struct.module.yaml
     output: ../test
-    template: ..
+    template: ../
     features: [all]

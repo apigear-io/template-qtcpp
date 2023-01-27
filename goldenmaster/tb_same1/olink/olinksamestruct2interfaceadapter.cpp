@@ -39,7 +39,6 @@ OLinkSameStruct2InterfaceAdapter::OLinkSameStruct2InterfaceAdapter(RemoteRegistr
     : QObject(parent)
     , m_impl(impl)
     , m_registry(registry)
-    , m_node()
 {
     connect(m_impl, &AbstractSameStruct2Interface::prop1Changed, this,
         [=](const Struct2& prop1) {
@@ -140,13 +139,11 @@ void OLinkSameStruct2InterfaceAdapter::olinkSetProperty(const std::string& prope
 
 void OLinkSameStruct2InterfaceAdapter::olinkLinked(const std::string& objectId, IRemoteNode *node) {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
-    m_node = node;
 }
 
 void OLinkSameStruct2InterfaceAdapter::olinkUnlinked(const std::string& objectId)
 {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
-    m_node = nullptr;
 }
 
 json OLinkSameStruct2InterfaceAdapter::olinkCollectProperties()

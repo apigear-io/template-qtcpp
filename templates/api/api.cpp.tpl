@@ -42,26 +42,13 @@ namespace {{snake  .Module.Name }} {
 {
 }
 
-{{- range .Fields }}
-
-void {{$class}}::set{{Camel .Name}}({{qtParam "" .}})
-{
-  m_{{.Name}} = {{.Name}};
-}
-
-{{ qtReturn "" . }} {{$class}}::{{.Name}}() const
-{
-  return m_{{.Name}};
-}
-{{- end }}
-
 bool {{$class}}::operator==(const {{$class}} &other) const
 {
     return (
 {{- range $i, $e := .Fields }}
 {{- if $i }} &&
 {{- end }}
-        {{.Name}}() == other.{{.Name}}()
+        m_{{.Name}} == other.m_{{.Name}}
 {{- end }}
     );
 }
@@ -74,7 +61,7 @@ bool {{$class}}::operator!=(const {{$class}} &other) const
 QDataStream &operator<<(QDataStream &stream, const {{$class}} &obj)
 {
     {{- range .Fields }}
-    stream << obj.{{.Name}}();
+    stream << obj.m_{{.Name}};
     {{- end }}
 
     return stream;
@@ -85,7 +72,7 @@ QDataStream &operator>>(QDataStream &stream, {{$class}} &obj)
     {{- range .Fields }}
     {{ qtReturn "" . }} {{.Name}}Value;
     stream >> {{.Name}}Value;
-    obj.set{{Camel .Name}}({{.Name}}Value);
+    obj.m_{{.Name}} = {{.Name}}Value;
 
     {{- end }}
     return stream;
@@ -103,7 +90,7 @@ QDataStream &operator>>(QDataStream &stream, {{$class}} &obj)
 
 {{- range .Module.Interfaces }}
 
-{{- $class := printf "Abstract%s" .Name }}
+{{- $class := printf "Abstract%s" (Camel .Name) }}
 
 // ********************************************************************
 // {{$class}} abstract interface

@@ -42,7 +42,7 @@ void {{$class}}::set{{Camel .Name}}({{qtParam "" .}})
 {{- end }}
 {{- range .Interface.Operations }}
 
-{{qtReturn "" .Return}} {{$class}}::{{.Name}}({{qtParams "" .Params}})
+{{qtReturn "" .Return}} {{$class}}::{{camel .Name}}({{qtParams "" .Params}})
 {
     qDebug() << Q_FUNC_INFO;
 

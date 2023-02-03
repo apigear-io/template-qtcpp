@@ -58,7 +58,7 @@ void OLinkEnumInterface::applyState(const nlohmann::json& fields)
     }
 }
 
-void OLinkEnumInterface::setProp0(const Enum0::Enum0Enum prop0)
+void OLinkEnumInterface::setProp0(Enum0::Enum0Enum prop0)
 {
     qDebug() << Q_FUNC_INFO;
     if(!m_node) {
@@ -67,7 +67,7 @@ void OLinkEnumInterface::setProp0(const Enum0::Enum0Enum prop0)
     m_node->setRemoteProperty("tb.enum.EnumInterface/prop0", prop0);
 }
 
-void OLinkEnumInterface::setProp0Local(const Enum0::Enum0Enum prop0)
+void OLinkEnumInterface::setProp0Local(Enum0::Enum0Enum prop0)
 {
     qDebug() << Q_FUNC_INFO;
     if (m_prop0 != prop0) {
@@ -82,7 +82,7 @@ Enum0::Enum0Enum OLinkEnumInterface::prop0() const
     return m_prop0;
 }
 
-void OLinkEnumInterface::setProp1(const Enum1::Enum1Enum prop1)
+void OLinkEnumInterface::setProp1(Enum1::Enum1Enum prop1)
 {
     qDebug() << Q_FUNC_INFO;
     if(!m_node) {
@@ -91,7 +91,7 @@ void OLinkEnumInterface::setProp1(const Enum1::Enum1Enum prop1)
     m_node->setRemoteProperty("tb.enum.EnumInterface/prop1", prop1);
 }
 
-void OLinkEnumInterface::setProp1Local(const Enum1::Enum1Enum prop1)
+void OLinkEnumInterface::setProp1Local(Enum1::Enum1Enum prop1)
 {
     qDebug() << Q_FUNC_INFO;
     if (m_prop1 != prop1) {
@@ -106,7 +106,7 @@ Enum1::Enum1Enum OLinkEnumInterface::prop1() const
     return m_prop1;
 }
 
-void OLinkEnumInterface::setProp2(const Enum2::Enum2Enum prop2)
+void OLinkEnumInterface::setProp2(Enum2::Enum2Enum prop2)
 {
     qDebug() << Q_FUNC_INFO;
     if(!m_node) {
@@ -115,7 +115,7 @@ void OLinkEnumInterface::setProp2(const Enum2::Enum2Enum prop2)
     m_node->setRemoteProperty("tb.enum.EnumInterface/prop2", prop2);
 }
 
-void OLinkEnumInterface::setProp2Local(const Enum2::Enum2Enum prop2)
+void OLinkEnumInterface::setProp2Local(Enum2::Enum2Enum prop2)
 {
     qDebug() << Q_FUNC_INFO;
     if (m_prop2 != prop2) {
@@ -130,7 +130,7 @@ Enum2::Enum2Enum OLinkEnumInterface::prop2() const
     return m_prop2;
 }
 
-void OLinkEnumInterface::setProp3(const Enum3::Enum3Enum prop3)
+void OLinkEnumInterface::setProp3(Enum3::Enum3Enum prop3)
 {
     qDebug() << Q_FUNC_INFO;
     if(!m_node) {
@@ -139,7 +139,7 @@ void OLinkEnumInterface::setProp3(const Enum3::Enum3Enum prop3)
     m_node->setRemoteProperty("tb.enum.EnumInterface/prop3", prop3);
 }
 
-void OLinkEnumInterface::setProp3Local(const Enum3::Enum3Enum prop3)
+void OLinkEnumInterface::setProp3Local(Enum3::Enum3Enum prop3)
 {
     qDebug() << Q_FUNC_INFO;
     if (m_prop3 != prop3) {
@@ -154,7 +154,7 @@ Enum3::Enum3Enum OLinkEnumInterface::prop3() const
     return m_prop3;
 }
 
-Enum0::Enum0Enum OLinkEnumInterface::func0(const Enum0::Enum0Enum param0)
+Enum0::Enum0Enum OLinkEnumInterface::func0(Enum0::Enum0Enum param0)
 {
     qDebug() << Q_FUNC_INFO;
     if(!m_node) {
@@ -169,7 +169,7 @@ Enum0::Enum0Enum OLinkEnumInterface::func0(const Enum0::Enum0Enum param0)
     return value;
 }
 
-QtPromise::QPromise<Enum0::Enum0Enum> OLinkEnumInterface::func0Async(const Enum0::Enum0Enum param0)
+QtPromise::QPromise<Enum0::Enum0Enum> OLinkEnumInterface::func0Async(Enum0::Enum0Enum param0)
 {
     qDebug() << Q_FUNC_INFO;
     if(!m_node) {
@@ -186,7 +186,7 @@ QtPromise::QPromise<Enum0::Enum0Enum> OLinkEnumInterface::func0Async(const Enum0
     };
 }
 
-Enum1::Enum1Enum OLinkEnumInterface::func1(const Enum1::Enum1Enum param1)
+Enum1::Enum1Enum OLinkEnumInterface::func1(Enum1::Enum1Enum param1)
 {
     qDebug() << Q_FUNC_INFO;
     if(!m_node) {
@@ -201,7 +201,7 @@ Enum1::Enum1Enum OLinkEnumInterface::func1(const Enum1::Enum1Enum param1)
     return value;
 }
 
-QtPromise::QPromise<Enum1::Enum1Enum> OLinkEnumInterface::func1Async(const Enum1::Enum1Enum param1)
+QtPromise::QPromise<Enum1::Enum1Enum> OLinkEnumInterface::func1Async(Enum1::Enum1Enum param1)
 {
     qDebug() << Q_FUNC_INFO;
     if(!m_node) {
@@ -218,7 +218,7 @@ QtPromise::QPromise<Enum1::Enum1Enum> OLinkEnumInterface::func1Async(const Enum1
     };
 }
 
-Enum2::Enum2Enum OLinkEnumInterface::func2(const Enum2::Enum2Enum param2)
+Enum2::Enum2Enum OLinkEnumInterface::func2(Enum2::Enum2Enum param2)
 {
     qDebug() << Q_FUNC_INFO;
     if(!m_node) {
@@ -233,7 +233,7 @@ Enum2::Enum2Enum OLinkEnumInterface::func2(const Enum2::Enum2Enum param2)
     return value;
 }
 
-QtPromise::QPromise<Enum2::Enum2Enum> OLinkEnumInterface::func2Async(const Enum2::Enum2Enum param2)
+QtPromise::QPromise<Enum2::Enum2Enum> OLinkEnumInterface::func2Async(Enum2::Enum2Enum param2)
 {
     qDebug() << Q_FUNC_INFO;
     if(!m_node) {
@@ -250,7 +250,7 @@ QtPromise::QPromise<Enum2::Enum2Enum> OLinkEnumInterface::func2Async(const Enum2
     };
 }
 
-Enum3::Enum3Enum OLinkEnumInterface::func3(const Enum3::Enum3Enum param3)
+Enum3::Enum3Enum OLinkEnumInterface::func3(Enum3::Enum3Enum param3)
 {
     qDebug() << Q_FUNC_INFO;
     if(!m_node) {
@@ -265,7 +265,7 @@ Enum3::Enum3Enum OLinkEnumInterface::func3(const Enum3::Enum3Enum param3)
     return value;
 }
 
-QtPromise::QPromise<Enum3::Enum3Enum> OLinkEnumInterface::func3Async(const Enum3::Enum3Enum param3)
+QtPromise::QPromise<Enum3::Enum3Enum> OLinkEnumInterface::func3Async(Enum3::Enum3Enum param3)
 {
     qDebug() << Q_FUNC_INFO;
     if(!m_node) {

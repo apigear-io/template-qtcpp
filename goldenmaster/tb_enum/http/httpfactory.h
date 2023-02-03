@@ -11,7 +11,7 @@ class HttpFactory : public QObject, public ApiFactoryInterface
 {
 public:
     HttpFactory(QObject *parent = nullptr);
-    AbstractEnumInterface* createEnumInterface(QObject *parent) override;
+    std::shared_ptr<AbstractEnumInterface> createEnumInterface(QObject *parent) override;
 private:
     QNetworkAccessManager *m_network;
 };

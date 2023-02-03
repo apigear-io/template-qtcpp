@@ -20,6 +20,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <QtCore>
 #include <QtCore/QtGlobal>
 
+#include <memory>
+
 #if defined(TB_ENUM_LIBRARY)
 #  define TB_ENUM_EXPORT Q_DECL_EXPORT
 #else
@@ -224,7 +226,7 @@ public:
     /**
     * Sets the value of the prop0 property.
     */
-    virtual void setProp0(const Enum0::Enum0Enum prop0) = 0;
+    virtual void setProp0(Enum0::Enum0Enum prop0) = 0;
     /**
     * Gets the value of the prop0 property.
     */
@@ -232,7 +234,7 @@ public:
     /**
     * Sets the value of the prop1 property.
     */
-    virtual void setProp1(const Enum1::Enum1Enum prop1) = 0;
+    virtual void setProp1(Enum1::Enum1Enum prop1) = 0;
     /**
     * Gets the value of the prop1 property.
     */
@@ -240,7 +242,7 @@ public:
     /**
     * Sets the value of the prop2 property.
     */
-    virtual void setProp2(const Enum2::Enum2Enum prop2) = 0;
+    virtual void setProp2(Enum2::Enum2Enum prop2) = 0;
     /**
     * Gets the value of the prop2 property.
     */
@@ -248,52 +250,52 @@ public:
     /**
     * Sets the value of the prop3 property.
     */
-    virtual void setProp3(const Enum3::Enum3Enum prop3) = 0;
+    virtual void setProp3(Enum3::Enum3Enum prop3) = 0;
     /**
     * Gets the value of the prop3 property.
     */
     virtual Enum3::Enum3Enum prop3() const = 0;
 
-    virtual Enum0::Enum0Enum func0(const Enum0::Enum0Enum param0) = 0;
+    virtual Enum0::Enum0Enum func0(Enum0::Enum0Enum param0) = 0;
 
-    virtual Enum1::Enum1Enum func1(const Enum1::Enum1Enum param1) = 0;
+    virtual Enum1::Enum1Enum func1(Enum1::Enum1Enum param1) = 0;
 
-    virtual Enum2::Enum2Enum func2(const Enum2::Enum2Enum param2) = 0;
+    virtual Enum2::Enum2Enum func2(Enum2::Enum2Enum param2) = 0;
 
-    virtual Enum3::Enum3Enum func3(const Enum3::Enum3Enum param3) = 0;
+    virtual Enum3::Enum3Enum func3(Enum3::Enum3Enum param3) = 0;
 signals:
     /**
     * @param param0 
     */
-    void sig0(const Enum0::Enum0Enum param0);
+    void sig0(Enum0::Enum0Enum param0);
     /**
     * @param param1 
     */
-    void sig1(const Enum1::Enum1Enum param1);
+    void sig1(Enum1::Enum1Enum param1);
     /**
     * @param param2 
     */
-    void sig2(const Enum2::Enum2Enum param2);
+    void sig2(Enum2::Enum2Enum param2);
     /**
     * @param param3 
     */
-    void sig3(const Enum3::Enum3Enum param3);
+    void sig3(Enum3::Enum3Enum param3);
     /**
     * Emitted when prop0 value has changed.
     */
-    void prop0Changed(const Enum0::Enum0Enum prop0);
+    void prop0Changed(Enum0::Enum0Enum prop0);
     /**
     * Emitted when prop1 value has changed.
     */
-    void prop1Changed(const Enum1::Enum1Enum prop1);
+    void prop1Changed(Enum1::Enum1Enum prop1);
     /**
     * Emitted when prop2 value has changed.
     */
-    void prop2Changed(const Enum2::Enum2Enum prop2);
+    void prop2Changed(Enum2::Enum2Enum prop2);
     /**
     * Emitted when prop3 value has changed.
     */
-    void prop3Changed(const Enum3::Enum3Enum prop3);
+    void prop3Changed(Enum3::Enum3Enum prop3);
 };
 
 
@@ -310,10 +312,11 @@ signals:
 class TB_ENUM_EXPORT ApiFactoryInterface
 {
 public:
-/** Create an instance of EnumInterface
-* @return The implementation of a AbstractEnumInterface, of which user should take ownership.
-*/
-    virtual AbstractEnumInterface* createEnumInterface(QObject *parent) = 0;
+    /** 
+    * Create an instance of EnumInterface
+    * @return The implementation of a AbstractEnumInterface.
+    */
+    virtual std::shared_ptr<AbstractEnumInterface> createEnumInterface(QObject *parent = nullptr) = 0;
 };
 
 } //namespace tb_enum

@@ -42,7 +42,7 @@ OLinkSimpleInterfaceAdapter::OLinkSimpleInterfaceAdapter(RemoteRegistry& registr
 {
     connect(m_impl, &AbstractSimpleInterface::propBoolChanged, this,
         [=](bool propBool) {
-        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "propBool)");
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "propBool");
         for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
             auto lockedNode = node.lock();
             if(lockedNode) {
@@ -52,7 +52,7 @@ OLinkSimpleInterfaceAdapter::OLinkSimpleInterfaceAdapter(RemoteRegistry& registr
     });
     connect(m_impl, &AbstractSimpleInterface::propIntChanged, this,
         [=](int propInt) {
-        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "propInt)");
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "propInt");
         for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
             auto lockedNode = node.lock();
             if(lockedNode) {
@@ -62,7 +62,7 @@ OLinkSimpleInterfaceAdapter::OLinkSimpleInterfaceAdapter(RemoteRegistry& registr
     });
     connect(m_impl, &AbstractSimpleInterface::propFloatChanged, this,
         [=](qreal propFloat) {
-        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "propFloat)");
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "propFloat");
         for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
             auto lockedNode = node.lock();
             if(lockedNode) {
@@ -72,7 +72,7 @@ OLinkSimpleInterfaceAdapter::OLinkSimpleInterfaceAdapter(RemoteRegistry& registr
     });
     connect(m_impl, &AbstractSimpleInterface::propStringChanged, this,
         [=](const QString& propString) {
-        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "propString)");
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "propString");
         for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
             auto lockedNode = node.lock();
             if(lockedNode) {
@@ -83,7 +83,7 @@ OLinkSimpleInterfaceAdapter::OLinkSimpleInterfaceAdapter(RemoteRegistry& registr
         connect(m_impl, &AbstractSimpleInterface::sigBool, this,
             [=](bool paramBool) {
                 const nlohmann::json& args = { paramBool };
-                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sigBool)");
+                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sigBool");
                 for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
                     auto lockedNode = node.lock();
                     if(lockedNode) {
@@ -94,7 +94,7 @@ OLinkSimpleInterfaceAdapter::OLinkSimpleInterfaceAdapter(RemoteRegistry& registr
         connect(m_impl, &AbstractSimpleInterface::sigInt, this,
             [=](int paramInt) {
                 const nlohmann::json& args = { paramInt };
-                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sigInt)");
+                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sigInt");
                 for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
                     auto lockedNode = node.lock();
                     if(lockedNode) {
@@ -105,7 +105,7 @@ OLinkSimpleInterfaceAdapter::OLinkSimpleInterfaceAdapter(RemoteRegistry& registr
         connect(m_impl, &AbstractSimpleInterface::sigFloat, this,
             [=](qreal paramFloat) {
                 const nlohmann::json& args = { paramFloat };
-                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sigFloat)");
+                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sigFloat");
                 for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
                     auto lockedNode = node.lock();
                     if(lockedNode) {
@@ -116,7 +116,7 @@ OLinkSimpleInterfaceAdapter::OLinkSimpleInterfaceAdapter(RemoteRegistry& registr
         connect(m_impl, &AbstractSimpleInterface::sigString, this,
             [=](const QString& paramString) {
                 const nlohmann::json& args = { paramString };
-                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sigString)");
+                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sigString");
                 for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
                     auto lockedNode = node.lock();
                     if(lockedNode) {

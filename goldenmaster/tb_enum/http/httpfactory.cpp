@@ -9,9 +9,9 @@ HttpFactory::HttpFactory(QObject *parent)
 {
 }
 
-AbstractEnumInterface* HttpFactory::createEnumInterface(QObject *parent)
+std::shared_ptr<AbstractEnumInterface> HttpFactory::createEnumInterface(QObject *parent)
 {
-    return new HttpEnumInterface(m_network, parent);
+    return std::make_shared<HttpEnumInterface>(m_network, parent);
 }
 
 

@@ -23,7 +23,7 @@ public:
 {{- end }}
 
 {{- range .Interface.Operations }}
-    {{qtReturn "" .Return}} {{.Name}}({{qtParams "" .Params}}) override;
+    {{qtReturn "" .Return}} {{camel .Name}}({{qtParams "" .Params}}) override;
 {{- end }}
 private:
     QJsonObject post(const QString& path, const QJsonObject &payload);

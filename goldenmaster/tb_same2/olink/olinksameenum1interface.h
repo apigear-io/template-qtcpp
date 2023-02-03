@@ -64,16 +64,16 @@ public:
     * Request setting a property on the SameEnum1Interface service.
     * @param The value to which set request is send for the Prop1.
     */
-    void setProp1(const Enum1::Enum1Enum prop1) override;
+    void setProp1(Enum1::Enum1Enum prop1) override;
     /**
     * Remote call of ISameEnum1Interface::func1 on the SameEnum1Interface service.
     * Uses func1Async
     */
-    Enum1::Enum1Enum func1(const Enum1::Enum1Enum param1) override;
+    Enum1::Enum1Enum func1(Enum1::Enum1Enum param1) override;
     /**
     * Remote call of ISameEnum1Interface::func1 on the SameEnum1Interface service.
     */
-    QtPromise::QPromise<Enum1::Enum1Enum> func1Async(const Enum1::Enum1Enum param1);
+    QtPromise::QPromise<Enum1::Enum1Enum> func1Async(Enum1::Enum1Enum param1);
 
 signals:
 
@@ -122,7 +122,7 @@ private:
     */
     void applyState(const nlohmann::json& fields);
     /**  Updates local value for Prop1 and informs subscriber about the change with emit property changed signal. */
-    void setProp1Local(const Enum1::Enum1Enum prop1);
+    void setProp1Local(Enum1::Enum1Enum prop1);
     /** A local value for prop1 */
     Enum1::Enum1Enum m_prop1;
     /** An indicator if the object is linked with the service. */

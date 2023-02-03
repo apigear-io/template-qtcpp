@@ -42,7 +42,7 @@ OLinkSameStruct2InterfaceAdapter::OLinkSameStruct2InterfaceAdapter(RemoteRegistr
 {
     connect(m_impl, &AbstractSameStruct2Interface::prop1Changed, this,
         [=](const Struct2& prop1) {
-        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "prop1)");
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "prop1");
         for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
             auto lockedNode = node.lock();
             if(lockedNode) {
@@ -52,7 +52,7 @@ OLinkSameStruct2InterfaceAdapter::OLinkSameStruct2InterfaceAdapter(RemoteRegistr
     });
     connect(m_impl, &AbstractSameStruct2Interface::prop2Changed, this,
         [=](const Struct2& prop2) {
-        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "prop2)");
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "prop2");
         for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
             auto lockedNode = node.lock();
             if(lockedNode) {
@@ -63,7 +63,7 @@ OLinkSameStruct2InterfaceAdapter::OLinkSameStruct2InterfaceAdapter(RemoteRegistr
         connect(m_impl, &AbstractSameStruct2Interface::sig1, this,
             [=](const Struct1& param1) {
                 const nlohmann::json& args = { param1 };
-                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sig1)");
+                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sig1");
                 for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
                     auto lockedNode = node.lock();
                     if(lockedNode) {
@@ -74,7 +74,7 @@ OLinkSameStruct2InterfaceAdapter::OLinkSameStruct2InterfaceAdapter(RemoteRegistr
         connect(m_impl, &AbstractSameStruct2Interface::sig2, this,
             [=](const Struct1& param1, const Struct2& param2) {
                 const nlohmann::json& args = { param1, param2 };
-                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sig2)");
+                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sig2");
                 for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
                     auto lockedNode = node.lock();
                     if(lockedNode) {

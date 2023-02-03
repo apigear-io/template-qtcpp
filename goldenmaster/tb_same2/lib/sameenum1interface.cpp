@@ -35,7 +35,7 @@ SameEnum1Interface::~SameEnum1Interface()
 {
 }
 
-void SameEnum1Interface::setProp1(const Enum1::Enum1Enum prop1)
+void SameEnum1Interface::setProp1(Enum1::Enum1Enum prop1)
 {
     if (m_prop1 != prop1) {
         m_prop1 = prop1;
@@ -49,7 +49,7 @@ Enum1::Enum1Enum SameEnum1Interface::prop1() const
     return m_prop1;
 }
 
-Enum1::Enum1Enum SameEnum1Interface::func1(const Enum1::Enum1Enum param1)
+Enum1::Enum1Enum SameEnum1Interface::func1(Enum1::Enum1Enum param1)
 {
     qDebug() << Q_FUNC_INFO;
     SameEnum1InterfaceAgent::trace_func1(this, param1);

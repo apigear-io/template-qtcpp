@@ -20,6 +20,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <QtCore>
 #include <QtCore/QtGlobal>
 
+#include <memory>
+
 #if defined(TESTBED2_LIBRARY)
 #  define TESTBED2_EXPORT Q_DECL_EXPORT
 #else
@@ -668,22 +670,26 @@ signals:
 class TESTBED2_EXPORT ApiFactoryInterface
 {
 public:
-/** Create an instance of ManyParamInterface
-* @return The implementation of a AbstractManyParamInterface, of which user should take ownership.
-*/
-    virtual AbstractManyParamInterface* createManyParamInterface(QObject *parent) = 0;
-/** Create an instance of NestedStruct1Interface
-* @return The implementation of a AbstractNestedStruct1Interface, of which user should take ownership.
-*/
-    virtual AbstractNestedStruct1Interface* createNestedStruct1Interface(QObject *parent) = 0;
-/** Create an instance of NestedStruct2Interface
-* @return The implementation of a AbstractNestedStruct2Interface, of which user should take ownership.
-*/
-    virtual AbstractNestedStruct2Interface* createNestedStruct2Interface(QObject *parent) = 0;
-/** Create an instance of NestedStruct3Interface
-* @return The implementation of a AbstractNestedStruct3Interface, of which user should take ownership.
-*/
-    virtual AbstractNestedStruct3Interface* createNestedStruct3Interface(QObject *parent) = 0;
+    /** 
+    * Create an instance of ManyParamInterface
+    * @return The implementation of a AbstractManyParamInterface.
+    */
+    virtual std::shared_ptr<AbstractManyParamInterface> createManyParamInterface(QObject *parent = nullptr) = 0;
+    /** 
+    * Create an instance of NestedStruct1Interface
+    * @return The implementation of a AbstractNestedStruct1Interface.
+    */
+    virtual std::shared_ptr<AbstractNestedStruct1Interface> createNestedStruct1Interface(QObject *parent = nullptr) = 0;
+    /** 
+    * Create an instance of NestedStruct2Interface
+    * @return The implementation of a AbstractNestedStruct2Interface.
+    */
+    virtual std::shared_ptr<AbstractNestedStruct2Interface> createNestedStruct2Interface(QObject *parent = nullptr) = 0;
+    /** 
+    * Create an instance of NestedStruct3Interface
+    * @return The implementation of a AbstractNestedStruct3Interface.
+    */
+    virtual std::shared_ptr<AbstractNestedStruct3Interface> createNestedStruct3Interface(QObject *parent = nullptr) = 0;
 };
 
 } //namespace testbed2

@@ -39,29 +39,35 @@ class TESTBED2_LIB_EXPORT ManyParamInterface : public AbstractManyParamInterface
 public:
     explicit ManyParamInterface(QObject *parent = nullptr);
     virtual ~ManyParamInterface() override;
+
+
     /** @return value of the property prop1 */
     int prop1() const override;
     /** Use to change a property value.
     * if the property is changed, a signal {.Name}}Changed is emitted.
-    @param value to set for the property prop1 */
+    * @param value to set for the property prop1 
+    */
     void setProp1(int prop1) override;
     /** @return value of the property prop2 */
     int prop2() const override;
     /** Use to change a property value.
     * if the property is changed, a signal {.Name}}Changed is emitted.
-    @param value to set for the property prop2 */
+    * @param value to set for the property prop2 
+    */
     void setProp2(int prop2) override;
     /** @return value of the property prop3 */
     int prop3() const override;
     /** Use to change a property value.
     * if the property is changed, a signal {.Name}}Changed is emitted.
-    @param value to set for the property prop3 */
+    * @param value to set for the property prop3 
+    */
     void setProp3(int prop3) override;
     /** @return value of the property prop4 */
     int prop4() const override;
     /** Use to change a property value.
     * if the property is changed, a signal {.Name}}Changed is emitted.
-    @param value to set for the property prop4 */
+    * @param value to set for the property prop4 
+    */
     void setProp4(int prop4) override;
     int func1(int param1) override;
     int func2(int param1, int param2) override;

@@ -34,7 +34,7 @@ public:
   SameEnum1InterfaceAgent();
   static QVariantMap capture_state(AbstractSameEnum1Interface* obj);
   static void trace_state(AbstractSameEnum1Interface* obj);
-  static void trace_func1(AbstractSameEnum1Interface* obj, const Enum1::Enum1Enum param1);
+  static void trace_func1(AbstractSameEnum1Interface* obj, Enum1::Enum1Enum param1);
 };
 
 
@@ -44,8 +44,8 @@ public:
   SameEnum2InterfaceAgent();
   static QVariantMap capture_state(AbstractSameEnum2Interface* obj);
   static void trace_state(AbstractSameEnum2Interface* obj);
-  static void trace_func1(AbstractSameEnum2Interface* obj, const Enum1::Enum1Enum param1);
-  static void trace_func2(AbstractSameEnum2Interface* obj, const Enum1::Enum1Enum param1, const Enum2::Enum2Enum param2);
+  static void trace_func1(AbstractSameEnum2Interface* obj, Enum1::Enum1Enum param1);
+  static void trace_func2(AbstractSameEnum2Interface* obj, Enum1::Enum1Enum param1, Enum2::Enum2Enum param2);
 };
 
 } // namespace tb_same2

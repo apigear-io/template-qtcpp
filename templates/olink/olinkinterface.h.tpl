@@ -67,11 +67,11 @@ public:
     * Remote call of {{$interfaceClass}}::{{$operation.Name}} on the {{$interfaceNameOriginal}} service.
     * Uses {{$operation.Name}}Async
     */
-    {{qtReturn "" .Return}} {{.Name}}({{qtParams "" .Params}}) override;
+    {{qtReturn "" .Return}} {{camel .Name}}({{qtParams "" .Params}}) override;
     /**
     * Remote call of {{$interfaceClass}}::{{$operation.Name}} on the {{$interfaceNameOriginal}} service.
     */
-    QtPromise::QPromise<{{qtReturn "" .Return}}> {{.Name}}Async({{qtParams "" .Params}});
+    QtPromise::QPromise<{{qtReturn "" .Return}}> {{camel .Name}}Async({{qtParams "" .Params}});
 {{- end }}
 
 signals:

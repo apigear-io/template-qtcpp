@@ -34,7 +34,7 @@ HttpSameEnum2Interface::~HttpSameEnum2Interface()
 {
 }
 
-void HttpSameEnum2Interface::setProp1(const Enum1::Enum1Enum prop1)
+void HttpSameEnum2Interface::setProp1(Enum1::Enum1Enum prop1)
 {
     if (m_prop1 != prop1) {
         m_prop1 = prop1;
@@ -48,7 +48,7 @@ Enum1::Enum1Enum HttpSameEnum2Interface::prop1() const
     return m_prop1;
 }
 
-void HttpSameEnum2Interface::setProp2(const Enum2::Enum2Enum prop2)
+void HttpSameEnum2Interface::setProp2(Enum2::Enum2Enum prop2)
 {
     if (m_prop2 != prop2) {
         m_prop2 = prop2;
@@ -62,7 +62,7 @@ Enum2::Enum2Enum HttpSameEnum2Interface::prop2() const
     return m_prop2;
 }
 
-Enum1::Enum1Enum HttpSameEnum2Interface::func1(const Enum1::Enum1Enum param1)
+Enum1::Enum1Enum HttpSameEnum2Interface::func1(Enum1::Enum1Enum param1)
 {
     qDebug() << Q_FUNC_INFO;
 
@@ -74,7 +74,7 @@ Enum1::Enum1Enum HttpSameEnum2Interface::func1(const Enum1::Enum1Enum param1)
     return Enum1::value1;
 }
 
-Enum1::Enum1Enum HttpSameEnum2Interface::func2(const Enum1::Enum1Enum param1, const Enum2::Enum2Enum param2)
+Enum1::Enum1Enum HttpSameEnum2Interface::func2(Enum1::Enum1Enum param1, Enum2::Enum2Enum param2)
 {
     qDebug() << Q_FUNC_INFO;
 

@@ -64,7 +64,7 @@ public:
     * Request setting a property on the SameEnum2Interface service.
     * @param The value to which set request is send for the Prop1.
     */
-    void setProp1(const Enum1::Enum1Enum prop1) override;
+    void setProp1(Enum1::Enum1Enum prop1) override;
     /**
     * Property getter
     * @return Locally stored recent value for Prop2.
@@ -74,25 +74,25 @@ public:
     * Request setting a property on the SameEnum2Interface service.
     * @param The value to which set request is send for the Prop2.
     */
-    void setProp2(const Enum2::Enum2Enum prop2) override;
+    void setProp2(Enum2::Enum2Enum prop2) override;
     /**
     * Remote call of ISameEnum2Interface::func1 on the SameEnum2Interface service.
     * Uses func1Async
     */
-    Enum1::Enum1Enum func1(const Enum1::Enum1Enum param1) override;
+    Enum1::Enum1Enum func1(Enum1::Enum1Enum param1) override;
     /**
     * Remote call of ISameEnum2Interface::func1 on the SameEnum2Interface service.
     */
-    QtPromise::QPromise<Enum1::Enum1Enum> func1Async(const Enum1::Enum1Enum param1);
+    QtPromise::QPromise<Enum1::Enum1Enum> func1Async(Enum1::Enum1Enum param1);
     /**
     * Remote call of ISameEnum2Interface::func2 on the SameEnum2Interface service.
     * Uses func2Async
     */
-    Enum1::Enum1Enum func2(const Enum1::Enum1Enum param1, const Enum2::Enum2Enum param2) override;
+    Enum1::Enum1Enum func2(Enum1::Enum1Enum param1, Enum2::Enum2Enum param2) override;
     /**
     * Remote call of ISameEnum2Interface::func2 on the SameEnum2Interface service.
     */
-    QtPromise::QPromise<Enum1::Enum1Enum> func2Async(const Enum1::Enum1Enum param1, const Enum2::Enum2Enum param2);
+    QtPromise::QPromise<Enum1::Enum1Enum> func2Async(Enum1::Enum1Enum param1, Enum2::Enum2Enum param2);
 
 signals:
 
@@ -141,11 +141,11 @@ private:
     */
     void applyState(const nlohmann::json& fields);
     /**  Updates local value for Prop1 and informs subscriber about the change with emit property changed signal. */
-    void setProp1Local(const Enum1::Enum1Enum prop1);
+    void setProp1Local(Enum1::Enum1Enum prop1);
     /** A local value for prop1 */
     Enum1::Enum1Enum m_prop1;
     /**  Updates local value for Prop2 and informs subscriber about the change with emit property changed signal. */
-    void setProp2Local(const Enum2::Enum2Enum prop2);
+    void setProp2Local(Enum2::Enum2Enum prop2);
     /** A local value for prop2 */
     Enum2::Enum2Enum m_prop2;
     /** An indicator if the object is linked with the service. */

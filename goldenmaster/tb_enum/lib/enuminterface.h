@@ -39,34 +39,40 @@ class TB_ENUM_LIB_EXPORT EnumInterface : public AbstractEnumInterface
 public:
     explicit EnumInterface(QObject *parent = nullptr);
     virtual ~EnumInterface() override;
+
+
     /** @return value of the property prop0 */
     Enum0::Enum0Enum prop0() const override;
     /** Use to change a property value.
     * if the property is changed, a signal {.Name}}Changed is emitted.
-    @param value to set for the property prop0 */
-    void setProp0(const Enum0::Enum0Enum prop0) override;
+    * @param value to set for the property prop0 
+    */
+    void setProp0(Enum0::Enum0Enum prop0) override;
     /** @return value of the property prop1 */
     Enum1::Enum1Enum prop1() const override;
     /** Use to change a property value.
     * if the property is changed, a signal {.Name}}Changed is emitted.
-    @param value to set for the property prop1 */
-    void setProp1(const Enum1::Enum1Enum prop1) override;
+    * @param value to set for the property prop1 
+    */
+    void setProp1(Enum1::Enum1Enum prop1) override;
     /** @return value of the property prop2 */
     Enum2::Enum2Enum prop2() const override;
     /** Use to change a property value.
     * if the property is changed, a signal {.Name}}Changed is emitted.
-    @param value to set for the property prop2 */
-    void setProp2(const Enum2::Enum2Enum prop2) override;
+    * @param value to set for the property prop2 
+    */
+    void setProp2(Enum2::Enum2Enum prop2) override;
     /** @return value of the property prop3 */
     Enum3::Enum3Enum prop3() const override;
     /** Use to change a property value.
     * if the property is changed, a signal {.Name}}Changed is emitted.
-    @param value to set for the property prop3 */
-    void setProp3(const Enum3::Enum3Enum prop3) override;
-    Enum0::Enum0Enum func0(const Enum0::Enum0Enum param0) override;
-    Enum1::Enum1Enum func1(const Enum1::Enum1Enum param1) override;
-    Enum2::Enum2Enum func2(const Enum2::Enum2Enum param2) override;
-    Enum3::Enum3Enum func3(const Enum3::Enum3Enum param3) override;
+    * @param value to set for the property prop3 
+    */
+    void setProp3(Enum3::Enum3Enum prop3) override;
+    Enum0::Enum0Enum func0(Enum0::Enum0Enum param0) override;
+    Enum1::Enum1Enum func1(Enum1::Enum1Enum param1) override;
+    Enum2::Enum2Enum func2(Enum2::Enum2Enum param2) override;
+    Enum3::Enum3Enum func3(Enum3::Enum3Enum param3) override;
 
 private:
     /** prop0 property */

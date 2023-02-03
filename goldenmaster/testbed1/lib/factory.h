@@ -17,9 +17,9 @@ class Factory : public QObject, public ApiFactoryInterface
 public:
     Factory(QObject *parent = nullptr);
     /** @return implementation of StructInterface */
-    AbstractStructInterface* createStructInterface(QObject *parent) override;
+    std::shared_ptr<AbstractStructInterface> createStructInterface(QObject *parent) override;
     /** @return implementation of StructArrayInterface */
-    AbstractStructArrayInterface* createStructArrayInterface(QObject *parent) override;
+    std::shared_ptr<AbstractStructArrayInterface> createStructArrayInterface(QObject *parent) override;
 };
 
 } // namespace testbed1

@@ -42,7 +42,7 @@ OLinkManyParamInterfaceAdapter::OLinkManyParamInterfaceAdapter(RemoteRegistry& r
 {
     connect(m_impl, &AbstractManyParamInterface::prop1Changed, this,
         [=](int prop1) {
-        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "prop1)");
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "prop1");
         for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
             auto lockedNode = node.lock();
             if(lockedNode) {
@@ -52,7 +52,7 @@ OLinkManyParamInterfaceAdapter::OLinkManyParamInterfaceAdapter(RemoteRegistry& r
     });
     connect(m_impl, &AbstractManyParamInterface::prop2Changed, this,
         [=](int prop2) {
-        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "prop2)");
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "prop2");
         for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
             auto lockedNode = node.lock();
             if(lockedNode) {
@@ -62,7 +62,7 @@ OLinkManyParamInterfaceAdapter::OLinkManyParamInterfaceAdapter(RemoteRegistry& r
     });
     connect(m_impl, &AbstractManyParamInterface::prop3Changed, this,
         [=](int prop3) {
-        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "prop3)");
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "prop3");
         for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
             auto lockedNode = node.lock();
             if(lockedNode) {
@@ -72,7 +72,7 @@ OLinkManyParamInterfaceAdapter::OLinkManyParamInterfaceAdapter(RemoteRegistry& r
     });
     connect(m_impl, &AbstractManyParamInterface::prop4Changed, this,
         [=](int prop4) {
-        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "prop4)");
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "prop4");
         for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
             auto lockedNode = node.lock();
             if(lockedNode) {
@@ -83,7 +83,7 @@ OLinkManyParamInterfaceAdapter::OLinkManyParamInterfaceAdapter(RemoteRegistry& r
         connect(m_impl, &AbstractManyParamInterface::sig1, this,
             [=](int param1) {
                 const nlohmann::json& args = { param1 };
-                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sig1)");
+                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sig1");
                 for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
                     auto lockedNode = node.lock();
                     if(lockedNode) {
@@ -94,7 +94,7 @@ OLinkManyParamInterfaceAdapter::OLinkManyParamInterfaceAdapter(RemoteRegistry& r
         connect(m_impl, &AbstractManyParamInterface::sig2, this,
             [=](int param1, int param2) {
                 const nlohmann::json& args = { param1, param2 };
-                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sig2)");
+                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sig2");
                 for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
                     auto lockedNode = node.lock();
                     if(lockedNode) {
@@ -105,7 +105,7 @@ OLinkManyParamInterfaceAdapter::OLinkManyParamInterfaceAdapter(RemoteRegistry& r
         connect(m_impl, &AbstractManyParamInterface::sig3, this,
             [=](int param1, int param2, int param3) {
                 const nlohmann::json& args = { param1, param2, param3 };
-                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sig3)");
+                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sig3");
                 for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
                     auto lockedNode = node.lock();
                     if(lockedNode) {
@@ -116,7 +116,7 @@ OLinkManyParamInterfaceAdapter::OLinkManyParamInterfaceAdapter(RemoteRegistry& r
         connect(m_impl, &AbstractManyParamInterface::sig4, this,
             [=](int param1, int param2, int param3, int param4) {
                 const nlohmann::json& args = { param1, param2, param3, param4 };
-                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sig4)");
+                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sig4");
                 for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
                     auto lockedNode = node.lock();
                     if(lockedNode) {

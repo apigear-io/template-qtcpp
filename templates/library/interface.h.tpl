@@ -33,7 +33,7 @@ public:
     explicit {{$class}}(QObject *parent = nullptr);
     virtual ~{{$class}}() override;
 
-{{- range .Interface.Properties }}
+{{ range .Interface.Properties }}
 {{- $property := . }}
     {{- if $property.Description }}
     /**
@@ -44,7 +44,8 @@ public:
     {{qtReturn "" .}} {{.Name}}() const override;
     /** Use to change a property value.
     * if the property is changed, a signal {.Name}}Changed is emitted.
-    @param value to set for the property {{.Name}} */
+    * @param value to set for the property {{.Name}} 
+    */
     void set{{Camel .Name}}({{qtParam "" .}}) override;
 {{- end }}
 
@@ -55,7 +56,7 @@ public:
     * {{$operation.Description}}
     */
 {{- end }}
-    {{qtReturn "" .Return}} {{.Name}}({{qtParams "" .Params}}) override;
+    {{qtReturn "" .Return}} {{camel .Name}}({{qtParams "" .Params}}) override;
 {{- end }}
 
 private:

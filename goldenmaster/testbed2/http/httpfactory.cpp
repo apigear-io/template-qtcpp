@@ -12,24 +12,24 @@ HttpFactory::HttpFactory(QObject *parent)
 {
 }
 
-AbstractManyParamInterface* HttpFactory::createManyParamInterface(QObject *parent)
+std::shared_ptr<AbstractManyParamInterface> HttpFactory::createManyParamInterface(QObject *parent)
 {
-    return new HttpManyParamInterface(m_network, parent);
+    return std::make_shared<HttpManyParamInterface>(m_network, parent);
 }
 
-AbstractNestedStruct1Interface* HttpFactory::createNestedStruct1Interface(QObject *parent)
+std::shared_ptr<AbstractNestedStruct1Interface> HttpFactory::createNestedStruct1Interface(QObject *parent)
 {
-    return new HttpNestedStruct1Interface(m_network, parent);
+    return std::make_shared<HttpNestedStruct1Interface>(m_network, parent);
 }
 
-AbstractNestedStruct2Interface* HttpFactory::createNestedStruct2Interface(QObject *parent)
+std::shared_ptr<AbstractNestedStruct2Interface> HttpFactory::createNestedStruct2Interface(QObject *parent)
 {
-    return new HttpNestedStruct2Interface(m_network, parent);
+    return std::make_shared<HttpNestedStruct2Interface>(m_network, parent);
 }
 
-AbstractNestedStruct3Interface* HttpFactory::createNestedStruct3Interface(QObject *parent)
+std::shared_ptr<AbstractNestedStruct3Interface> HttpFactory::createNestedStruct3Interface(QObject *parent)
 {
-    return new HttpNestedStruct3Interface(m_network, parent);
+    return std::make_shared<HttpNestedStruct3Interface>(m_network, parent);
 }
 
 

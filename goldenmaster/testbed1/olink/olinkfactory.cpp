@@ -1,25 +1,30 @@
 #include "olinkfactory.h"
-#include "olinkstructinterface.h"
-#include "olinkstructarrayinterface.h"
+#include "olink/olinkstructinterface.h"
+#include "olink/olinkstructarrayinterface.h"
 
 namespace testbed1 {
 
-OLinkFactory::OLinkFactory(QObject *parent)
-    : QObject(parent)
+OLinkFactory::OLinkFactory(ApiGear::ObjectLink::OLinkClient& client, QObject *parent)
+    : QObject(parent),
+      m_client(client)
 {
     qDebug() << Q_FUNC_INFO;
 }
 
-AbstractStructInterface* OLinkFactory::createStructInterface(QObject *parent)
+std::shared_ptr<AbstractStructInterface> OLinkFactory::createStructInterface(QObject *parent)
 {
     qDebug() << Q_FUNC_INFO;
-    return new OLinkStructInterface(parent);
+    auto struct_interface = std::make_shared<OLinkStructInterface>();
+    m_client.linkObjectSource(struct_interface);
+    return struct_interface;
 }
 
-AbstractStructArrayInterface* OLinkFactory::createStructArrayInterface(QObject *parent)
+std::shared_ptr<AbstractStructArrayInterface> OLinkFactory::createStructArrayInterface(QObject *parent)
 {
     qDebug() << Q_FUNC_INFO;
-    return new OLinkStructArrayInterface(parent);
+    auto struct_array_interface = std::make_shared<OLinkStructArrayInterface>();
+    m_client.linkObjectSource(struct_array_interface);
+    return struct_array_interface;
 }
 
 } //namespace testbed1

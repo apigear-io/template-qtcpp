@@ -1,39 +1,48 @@
 #include "olinkfactory.h"
-#include "olinkmanyparaminterface.h"
-#include "olinknestedstruct1interface.h"
-#include "olinknestedstruct2interface.h"
-#include "olinknestedstruct3interface.h"
+#include "olink/olinkmanyparaminterface.h"
+#include "olink/olinknestedstruct1interface.h"
+#include "olink/olinknestedstruct2interface.h"
+#include "olink/olinknestedstruct3interface.h"
 
 namespace testbed2 {
 
-OLinkFactory::OLinkFactory(QObject *parent)
-    : QObject(parent)
+OLinkFactory::OLinkFactory(ApiGear::ObjectLink::OLinkClient& client, QObject *parent)
+    : QObject(parent),
+      m_client(client)
 {
     qDebug() << Q_FUNC_INFO;
 }
 
-AbstractManyParamInterface* OLinkFactory::createManyParamInterface(QObject *parent)
+std::shared_ptr<AbstractManyParamInterface> OLinkFactory::createManyParamInterface(QObject *parent)
 {
     qDebug() << Q_FUNC_INFO;
-    return new OLinkManyParamInterface(parent);
+    auto many_param_interface = std::make_shared<OLinkManyParamInterface>();
+    m_client.linkObjectSource(many_param_interface);
+    return many_param_interface;
 }
 
-AbstractNestedStruct1Interface* OLinkFactory::createNestedStruct1Interface(QObject *parent)
+std::shared_ptr<AbstractNestedStruct1Interface> OLinkFactory::createNestedStruct1Interface(QObject *parent)
 {
     qDebug() << Q_FUNC_INFO;
-    return new OLinkNestedStruct1Interface(parent);
+    auto nested_struct1_interface = std::make_shared<OLinkNestedStruct1Interface>();
+    m_client.linkObjectSource(nested_struct1_interface);
+    return nested_struct1_interface;
 }
 
-AbstractNestedStruct2Interface* OLinkFactory::createNestedStruct2Interface(QObject *parent)
+std::shared_ptr<AbstractNestedStruct2Interface> OLinkFactory::createNestedStruct2Interface(QObject *parent)
 {
     qDebug() << Q_FUNC_INFO;
-    return new OLinkNestedStruct2Interface(parent);
+    auto nested_struct2_interface = std::make_shared<OLinkNestedStruct2Interface>();
+    m_client.linkObjectSource(nested_struct2_interface);
+    return nested_struct2_interface;
 }
 
-AbstractNestedStruct3Interface* OLinkFactory::createNestedStruct3Interface(QObject *parent)
+std::shared_ptr<AbstractNestedStruct3Interface> OLinkFactory::createNestedStruct3Interface(QObject *parent)
 {
     qDebug() << Q_FUNC_INFO;
-    return new OLinkNestedStruct3Interface(parent);
+    auto nested_struct3_interface = std::make_shared<OLinkNestedStruct3Interface>();
+    m_client.linkObjectSource(nested_struct3_interface);
+    return nested_struct3_interface;
 }
 
 } //namespace testbed2

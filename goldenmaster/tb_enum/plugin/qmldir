@@ -1,2 +1,2 @@
-module tb.enum
+module tb_enum
 plugin plugin_tb_enum

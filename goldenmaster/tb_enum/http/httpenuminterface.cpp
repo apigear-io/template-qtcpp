@@ -36,7 +36,7 @@ HttpEnumInterface::~HttpEnumInterface()
 {
 }
 
-void HttpEnumInterface::setProp0(const Enum0::Enum0Enum prop0)
+void HttpEnumInterface::setProp0(Enum0::Enum0Enum prop0)
 {
     if (m_prop0 != prop0) {
         m_prop0 = prop0;
@@ -50,7 +50,7 @@ Enum0::Enum0Enum HttpEnumInterface::prop0() const
     return m_prop0;
 }
 
-void HttpEnumInterface::setProp1(const Enum1::Enum1Enum prop1)
+void HttpEnumInterface::setProp1(Enum1::Enum1Enum prop1)
 {
     if (m_prop1 != prop1) {
         m_prop1 = prop1;
@@ -64,7 +64,7 @@ Enum1::Enum1Enum HttpEnumInterface::prop1() const
     return m_prop1;
 }
 
-void HttpEnumInterface::setProp2(const Enum2::Enum2Enum prop2)
+void HttpEnumInterface::setProp2(Enum2::Enum2Enum prop2)
 {
     if (m_prop2 != prop2) {
         m_prop2 = prop2;
@@ -78,7 +78,7 @@ Enum2::Enum2Enum HttpEnumInterface::prop2() const
     return m_prop2;
 }
 
-void HttpEnumInterface::setProp3(const Enum3::Enum3Enum prop3)
+void HttpEnumInterface::setProp3(Enum3::Enum3Enum prop3)
 {
     if (m_prop3 != prop3) {
         m_prop3 = prop3;
@@ -92,7 +92,7 @@ Enum3::Enum3Enum HttpEnumInterface::prop3() const
     return m_prop3;
 }
 
-Enum0::Enum0Enum HttpEnumInterface::func0(const Enum0::Enum0Enum param0)
+Enum0::Enum0Enum HttpEnumInterface::func0(Enum0::Enum0Enum param0)
 {
     qDebug() << Q_FUNC_INFO;
 
@@ -104,7 +104,7 @@ Enum0::Enum0Enum HttpEnumInterface::func0(const Enum0::Enum0Enum param0)
     return Enum0::value0;
 }
 
-Enum1::Enum1Enum HttpEnumInterface::func1(const Enum1::Enum1Enum param1)
+Enum1::Enum1Enum HttpEnumInterface::func1(Enum1::Enum1Enum param1)
 {
     qDebug() << Q_FUNC_INFO;
 
@@ -116,7 +116,7 @@ Enum1::Enum1Enum HttpEnumInterface::func1(const Enum1::Enum1Enum param1)
     return Enum1::value1;
 }
 
-Enum2::Enum2Enum HttpEnumInterface::func2(const Enum2::Enum2Enum param2)
+Enum2::Enum2Enum HttpEnumInterface::func2(Enum2::Enum2Enum param2)
 {
     qDebug() << Q_FUNC_INFO;
 
@@ -128,7 +128,7 @@ Enum2::Enum2Enum HttpEnumInterface::func2(const Enum2::Enum2Enum param2)
     return Enum2::value2;
 }
 
-Enum3::Enum3Enum HttpEnumInterface::func3(const Enum3::Enum3Enum param3)
+Enum3::Enum3Enum HttpEnumInterface::func3(Enum3::Enum3Enum param3)
 {
     qDebug() << Q_FUNC_INFO;
 

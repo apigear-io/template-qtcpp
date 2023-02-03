@@ -28,24 +28,24 @@ ApiFactoryInterface * ApiFactory::get()
     return s_instance;
 }
 
-AbstractSameStruct1Interface* ApiFactory::createSameStruct1Interface(QObject *parent) 
+std::shared_ptr<AbstractSameStruct1Interface> ApiFactory::createSameStruct1Interface(QObject *parent) 
 {
-    return new SimulationSameStruct1Interface(parent);
+    return std::make_shared<SimulationSameStruct1Interface>(parent);
 };
 
-AbstractSameStruct2Interface* ApiFactory::createSameStruct2Interface(QObject *parent) 
+std::shared_ptr<AbstractSameStruct2Interface> ApiFactory::createSameStruct2Interface(QObject *parent) 
 {
-    return new SimulationSameStruct2Interface(parent);
+    return std::make_shared<SimulationSameStruct2Interface>(parent);
 };
 
-AbstractSameEnum1Interface* ApiFactory::createSameEnum1Interface(QObject *parent) 
+std::shared_ptr<AbstractSameEnum1Interface> ApiFactory::createSameEnum1Interface(QObject *parent) 
 {
-    return new SimulationSameEnum1Interface(parent);
+    return std::make_shared<SimulationSameEnum1Interface>(parent);
 };
 
-AbstractSameEnum2Interface* ApiFactory::createSameEnum2Interface(QObject *parent) 
+std::shared_ptr<AbstractSameEnum2Interface> ApiFactory::createSameEnum2Interface(QObject *parent) 
 {
-    return new SimulationSameEnum2Interface(parent);
+    return std::make_shared<SimulationSameEnum2Interface>(parent);
 };
 
 } //namespace tb_same2

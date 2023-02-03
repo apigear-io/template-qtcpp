@@ -50,22 +50,18 @@ SimulationEnumInterface::SimulationEnumInterface(QObject *parent)
       }
     };
     ApiGear::SimulationClient::instance()->doFetchState("tb.enum/EnumInterface", fetchStateFunc);
-
     NotifyRequestFunc sig0Func = [this](NotifyRequestArg arg) { 
         emit sig0(arg.params["param0"].get<Enum0::Enum0Enum>());
     };
     ApiGear::SimulationClient::instance()->onNotify("tb.enum/EnumInterface#sig0", sig0Func);
-
     NotifyRequestFunc sig1Func = [this](NotifyRequestArg arg) { 
         emit sig1(arg.params["param1"].get<Enum1::Enum1Enum>());
     };
     ApiGear::SimulationClient::instance()->onNotify("tb.enum/EnumInterface#sig1", sig1Func);
-
     NotifyRequestFunc sig2Func = [this](NotifyRequestArg arg) { 
         emit sig2(arg.params["param2"].get<Enum2::Enum2Enum>());
     };
     ApiGear::SimulationClient::instance()->onNotify("tb.enum/EnumInterface#sig2", sig2Func);
-
     NotifyRequestFunc sig3Func = [this](NotifyRequestArg arg) { 
         emit sig3(arg.params["param3"].get<Enum3::Enum3Enum>());
     };
@@ -76,7 +72,7 @@ SimulationEnumInterface::~SimulationEnumInterface()
 {
 }
 
-void SimulationEnumInterface::setProp0(const Enum0::Enum0Enum prop0)
+void SimulationEnumInterface::setProp0(Enum0::Enum0Enum prop0)
 {
     if (m_prop0 != prop0) {
         m_prop0 = prop0;
@@ -89,7 +85,7 @@ Enum0::Enum0Enum SimulationEnumInterface::prop0() const
     return m_prop0;
 }
 
-void SimulationEnumInterface::setProp1(const Enum1::Enum1Enum prop1)
+void SimulationEnumInterface::setProp1(Enum1::Enum1Enum prop1)
 {
     if (m_prop1 != prop1) {
         m_prop1 = prop1;
@@ -102,7 +98,7 @@ Enum1::Enum1Enum SimulationEnumInterface::prop1() const
     return m_prop1;
 }
 
-void SimulationEnumInterface::setProp2(const Enum2::Enum2Enum prop2)
+void SimulationEnumInterface::setProp2(Enum2::Enum2Enum prop2)
 {
     if (m_prop2 != prop2) {
         m_prop2 = prop2;
@@ -115,7 +111,7 @@ Enum2::Enum2Enum SimulationEnumInterface::prop2() const
     return m_prop2;
 }
 
-void SimulationEnumInterface::setProp3(const Enum3::Enum3Enum prop3)
+void SimulationEnumInterface::setProp3(Enum3::Enum3Enum prop3)
 {
     if (m_prop3 != prop3) {
         m_prop3 = prop3;
@@ -128,7 +124,7 @@ Enum3::Enum3Enum SimulationEnumInterface::prop3() const
     return m_prop3;
 }
 
-Enum0::Enum0Enum SimulationEnumInterface::func0(const Enum0::Enum0Enum param0)
+Enum0::Enum0Enum SimulationEnumInterface::func0(Enum0::Enum0Enum param0)
 {
     qDebug() << "simu::" << Q_FUNC_INFO;
 
@@ -138,7 +134,7 @@ Enum0::Enum0Enum SimulationEnumInterface::func0(const Enum0::Enum0Enum param0)
     return Enum0::value0;
 }
 
-Enum1::Enum1Enum SimulationEnumInterface::func1(const Enum1::Enum1Enum param1)
+Enum1::Enum1Enum SimulationEnumInterface::func1(Enum1::Enum1Enum param1)
 {
     qDebug() << "simu::" << Q_FUNC_INFO;
 
@@ -148,7 +144,7 @@ Enum1::Enum1Enum SimulationEnumInterface::func1(const Enum1::Enum1Enum param1)
     return Enum1::value1;
 }
 
-Enum2::Enum2Enum SimulationEnumInterface::func2(const Enum2::Enum2Enum param2)
+Enum2::Enum2Enum SimulationEnumInterface::func2(Enum2::Enum2Enum param2)
 {
     qDebug() << "simu::" << Q_FUNC_INFO;
 
@@ -158,7 +154,7 @@ Enum2::Enum2Enum SimulationEnumInterface::func2(const Enum2::Enum2Enum param2)
     return Enum2::value2;
 }
 
-Enum3::Enum3Enum SimulationEnumInterface::func3(const Enum3::Enum3Enum param3)
+Enum3::Enum3Enum SimulationEnumInterface::func3(Enum3::Enum3Enum param3)
 {
     qDebug() << "simu::" << Q_FUNC_INFO;
 

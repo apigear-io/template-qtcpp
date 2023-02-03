@@ -11,8 +11,8 @@ class HttpFactory : public QObject, public ApiFactoryInterface
 {
 public:
     HttpFactory(QObject *parent = nullptr);
-    AbstractSimpleInterface* createSimpleInterface(QObject *parent) override;
-    AbstractSimpleArrayInterface* createSimpleArrayInterface(QObject *parent) override;
+    std::shared_ptr<AbstractSimpleInterface> createSimpleInterface(QObject *parent) override;
+    std::shared_ptr<AbstractSimpleArrayInterface> createSimpleArrayInterface(QObject *parent) override;
 private:
     QNetworkAccessManager *m_network;
 };

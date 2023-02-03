@@ -30,9 +30,9 @@ ApiFactoryInterface * ApiFactory::get()
 
 {{- range .Module.Interfaces }}
 
-Abstract{{.Name}}* ApiFactory::create{{Camel .Name}}(QObject *parent) 
+std::shared_ptr<Abstract{{Camel .Name}}> ApiFactory::create{{Camel .Name}}(QObject *parent) 
 {
-    return new Simulation{{.Name}}(parent);
+    return std::make_shared<Simulation{{Camel .Name}}>(parent);
 };
 {{- end }}
 

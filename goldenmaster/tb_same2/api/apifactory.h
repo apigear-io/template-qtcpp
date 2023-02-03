@@ -29,10 +29,10 @@ public:
     * @return An ApiFactoryInterface implementation used to create objects.
     */
     static ApiFactoryInterface *get();
-    virtual AbstractSameStruct1Interface* createSameStruct1Interface(QObject *parent);
-    virtual AbstractSameStruct2Interface* createSameStruct2Interface(QObject *parent);
-    virtual AbstractSameEnum1Interface* createSameEnum1Interface(QObject *parent);
-    virtual AbstractSameEnum2Interface* createSameEnum2Interface(QObject *parent);
+    std::shared_ptr<AbstractSameStruct1Interface> createSameStruct1Interface(QObject *parent) override;
+    std::shared_ptr<AbstractSameStruct2Interface> createSameStruct2Interface(QObject *parent) override;
+    std::shared_ptr<AbstractSameEnum1Interface> createSameEnum1Interface(QObject *parent) override;
+    std::shared_ptr<AbstractSameEnum2Interface> createSameEnum2Interface(QObject *parent) override;
 private:
     static ApiFactoryInterface *s_instance;
 };

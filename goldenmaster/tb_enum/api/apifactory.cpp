@@ -28,9 +28,9 @@ ApiFactoryInterface * ApiFactory::get()
     return s_instance;
 }
 
-AbstractEnumInterface* ApiFactory::createEnumInterface(QObject *parent) 
+std::shared_ptr<AbstractEnumInterface> ApiFactory::createEnumInterface(QObject *parent) 
 {
-    return new SimulationEnumInterface(parent);
+    return std::make_shared<SimulationEnumInterface>(parent);
 };
 
 } //namespace tb_enum

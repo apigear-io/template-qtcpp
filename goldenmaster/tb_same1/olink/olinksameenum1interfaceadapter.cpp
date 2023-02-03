@@ -41,8 +41,8 @@ OLinkSameEnum1InterfaceAdapter::OLinkSameEnum1InterfaceAdapter(RemoteRegistry& r
     , m_registry(registry)
 {
     connect(m_impl, &AbstractSameEnum1Interface::prop1Changed, this,
-        [=](const Enum1::Enum1Enum prop1) {
-        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "prop1)");
+        [=](Enum1::Enum1Enum prop1) {
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "prop1");
         for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
             auto lockedNode = node.lock();
             if(lockedNode) {
@@ -51,9 +51,9 @@ OLinkSameEnum1InterfaceAdapter::OLinkSameEnum1InterfaceAdapter(RemoteRegistry& r
         }
     });
         connect(m_impl, &AbstractSameEnum1Interface::sig1, this,
-            [=](const Enum1::Enum1Enum param1) {
+            [=](Enum1::Enum1Enum param1) {
                 const nlohmann::json& args = { param1 };
-                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sig1)");
+                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sig1");
                 for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
                     auto lockedNode = node.lock();
                     if(lockedNode) {

@@ -18,7 +18,7 @@ public:
     Factory(QObject *parent = nullptr);
 {{- range .Module.Interfaces }}
     /** @return implementation of {{.Name}} */
-    Abstract{{Camel .Name}}* create{{Camel .Name}}(QObject *parent) override;
+    std::shared_ptr<Abstract{{Camel .Name}}> create{{Camel .Name}}(QObject *parent) override;
 {{- end }}
 };
 

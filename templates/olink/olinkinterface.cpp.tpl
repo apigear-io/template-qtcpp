@@ -71,7 +71,7 @@ void {{$class}}::set{{Camel .Name}}Local({{qtParam "" .}})
 {{- range .Interface.Operations }}
 {{- $return := (qtReturn "" .Return)}}
 
-{{$return}} {{$class}}::{{.Name}}({{qtParams "" .Params}})
+{{$return}} {{$class}}::{{camel .Name}}({{qtParams "" .Params}})
 {
     qDebug() << Q_FUNC_INFO;
     if(!m_node) {
@@ -85,7 +85,7 @@ void {{$class}}::set{{Camel .Name}}Local({{qtParam "" .}})
     m_node->invokeRemote("{{$module_id}}.{{$iface}}/{{.Name}}", args, func);
     {{- else }}
     {{$return}} value{ {{qtDefault "" .Return}} };
-    {{.Name}}Async({{ qtVars .Params }})
+    {{camel .Name}}Async({{ qtVars .Params }})
         .then([&]({{$return}} result) {
             value = result;
         })
@@ -94,7 +94,7 @@ void {{$class}}::set{{Camel .Name}}Local({{qtParam "" .}})
     {{- end }}
 }
 
-QtPromise::QPromise<{{$return}}> {{$class}}::{{.Name}}Async({{qtParams "" .Params}})
+QtPromise::QPromise<{{$return}}> {{$class}}::{{camel .Name}}Async({{qtParams "" .Params}})
 {
     qDebug() << Q_FUNC_INFO;
     if(!m_node) {
@@ -134,8 +134,9 @@ void {{$class}}::olinkOnSignal(const std::string& signalId, const nlohmann::json
     qDebug() << Q_FUNC_INFO << QString::fromStdString(signalId);
     auto signalName = Name::getMemberName(signalId);
 {{- range .Interface.Signals }}
+{{- $signalName := camel .Name }}
     if(signalName == "{{.Name}}") {
-        emit {{.Name}}(
+        emit {{$signalName}}(
 {{- range $i, $e := .Params }}{{if $i}},{{end -}}
     args[{{$i}}].get<{{qtReturn "" .}}>()
 {{- end -}}

@@ -20,6 +20,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <QtCore>
 #include <QtCore/QtGlobal>
 
+#include <memory>
+
 #if defined(TB_SAME1_LIBRARY)
 #  define TB_SAME1_EXPORT Q_DECL_EXPORT
 #else
@@ -295,22 +297,22 @@ public:
     /**
     * Sets the value of the prop1 property.
     */
-    virtual void setProp1(const Enum1::Enum1Enum prop1) = 0;
+    virtual void setProp1(Enum1::Enum1Enum prop1) = 0;
     /**
     * Gets the value of the prop1 property.
     */
     virtual Enum1::Enum1Enum prop1() const = 0;
 
-    virtual Enum1::Enum1Enum func1(const Enum1::Enum1Enum param1) = 0;
+    virtual Enum1::Enum1Enum func1(Enum1::Enum1Enum param1) = 0;
 signals:
     /**
     * @param param1 
     */
-    void sig1(const Enum1::Enum1Enum param1);
+    void sig1(Enum1::Enum1Enum param1);
     /**
     * Emitted when prop1 value has changed.
     */
-    void prop1Changed(const Enum1::Enum1Enum prop1);
+    void prop1Changed(Enum1::Enum1Enum prop1);
 };
 
 // ********************************************************************
@@ -333,7 +335,7 @@ public:
     /**
     * Sets the value of the prop1 property.
     */
-    virtual void setProp1(const Enum1::Enum1Enum prop1) = 0;
+    virtual void setProp1(Enum1::Enum1Enum prop1) = 0;
     /**
     * Gets the value of the prop1 property.
     */
@@ -341,33 +343,33 @@ public:
     /**
     * Sets the value of the prop2 property.
     */
-    virtual void setProp2(const Enum2::Enum2Enum prop2) = 0;
+    virtual void setProp2(Enum2::Enum2Enum prop2) = 0;
     /**
     * Gets the value of the prop2 property.
     */
     virtual Enum2::Enum2Enum prop2() const = 0;
 
-    virtual Enum1::Enum1Enum func1(const Enum1::Enum1Enum param1) = 0;
+    virtual Enum1::Enum1Enum func1(Enum1::Enum1Enum param1) = 0;
 
-    virtual Enum1::Enum1Enum func2(const Enum1::Enum1Enum param1, const Enum2::Enum2Enum param2) = 0;
+    virtual Enum1::Enum1Enum func2(Enum1::Enum1Enum param1, Enum2::Enum2Enum param2) = 0;
 signals:
     /**
     * @param param1 
     */
-    void sig1(const Enum1::Enum1Enum param1);
+    void sig1(Enum1::Enum1Enum param1);
     /**
     * @param param1 
     * @param param2 
     */
-    void sig2(const Enum1::Enum1Enum param1, const Enum2::Enum2Enum param2);
+    void sig2(Enum1::Enum1Enum param1, Enum2::Enum2Enum param2);
     /**
     * Emitted when prop1 value has changed.
     */
-    void prop1Changed(const Enum1::Enum1Enum prop1);
+    void prop1Changed(Enum1::Enum1Enum prop1);
     /**
     * Emitted when prop2 value has changed.
     */
-    void prop2Changed(const Enum2::Enum2Enum prop2);
+    void prop2Changed(Enum2::Enum2Enum prop2);
 };
 
 
@@ -384,22 +386,26 @@ signals:
 class TB_SAME1_EXPORT ApiFactoryInterface
 {
 public:
-/** Create an instance of SameStruct1Interface
-* @return The implementation of a AbstractSameStruct1Interface, of which user should take ownership.
-*/
-    virtual AbstractSameStruct1Interface* createSameStruct1Interface(QObject *parent) = 0;
-/** Create an instance of SameStruct2Interface
-* @return The implementation of a AbstractSameStruct2Interface, of which user should take ownership.
-*/
-    virtual AbstractSameStruct2Interface* createSameStruct2Interface(QObject *parent) = 0;
-/** Create an instance of SameEnum1Interface
-* @return The implementation of a AbstractSameEnum1Interface, of which user should take ownership.
-*/
-    virtual AbstractSameEnum1Interface* createSameEnum1Interface(QObject *parent) = 0;
-/** Create an instance of SameEnum2Interface
-* @return The implementation of a AbstractSameEnum2Interface, of which user should take ownership.
-*/
-    virtual AbstractSameEnum2Interface* createSameEnum2Interface(QObject *parent) = 0;
+    /** 
+    * Create an instance of SameStruct1Interface
+    * @return The implementation of a AbstractSameStruct1Interface.
+    */
+    virtual std::shared_ptr<AbstractSameStruct1Interface> createSameStruct1Interface(QObject *parent = nullptr) = 0;
+    /** 
+    * Create an instance of SameStruct2Interface
+    * @return The implementation of a AbstractSameStruct2Interface.
+    */
+    virtual std::shared_ptr<AbstractSameStruct2Interface> createSameStruct2Interface(QObject *parent = nullptr) = 0;
+    /** 
+    * Create an instance of SameEnum1Interface
+    * @return The implementation of a AbstractSameEnum1Interface.
+    */
+    virtual std::shared_ptr<AbstractSameEnum1Interface> createSameEnum1Interface(QObject *parent = nullptr) = 0;
+    /** 
+    * Create an instance of SameEnum2Interface
+    * @return The implementation of a AbstractSameEnum2Interface.
+    */
+    virtual std::shared_ptr<AbstractSameEnum2Interface> createSameEnum2Interface(QObject *parent = nullptr) = 0;
 };
 
 } //namespace tb_same1

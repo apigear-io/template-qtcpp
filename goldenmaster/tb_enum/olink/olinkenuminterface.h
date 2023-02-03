@@ -64,7 +64,7 @@ public:
     * Request setting a property on the EnumInterface service.
     * @param The value to which set request is send for the Prop0.
     */
-    void setProp0(const Enum0::Enum0Enum prop0) override;
+    void setProp0(Enum0::Enum0Enum prop0) override;
     /**
     * Property getter
     * @return Locally stored recent value for Prop1.
@@ -74,7 +74,7 @@ public:
     * Request setting a property on the EnumInterface service.
     * @param The value to which set request is send for the Prop1.
     */
-    void setProp1(const Enum1::Enum1Enum prop1) override;
+    void setProp1(Enum1::Enum1Enum prop1) override;
     /**
     * Property getter
     * @return Locally stored recent value for Prop2.
@@ -84,7 +84,7 @@ public:
     * Request setting a property on the EnumInterface service.
     * @param The value to which set request is send for the Prop2.
     */
-    void setProp2(const Enum2::Enum2Enum prop2) override;
+    void setProp2(Enum2::Enum2Enum prop2) override;
     /**
     * Property getter
     * @return Locally stored recent value for Prop3.
@@ -94,43 +94,43 @@ public:
     * Request setting a property on the EnumInterface service.
     * @param The value to which set request is send for the Prop3.
     */
-    void setProp3(const Enum3::Enum3Enum prop3) override;
+    void setProp3(Enum3::Enum3Enum prop3) override;
     /**
     * Remote call of IEnumInterface::func0 on the EnumInterface service.
     * Uses func0Async
     */
-    Enum0::Enum0Enum func0(const Enum0::Enum0Enum param0) override;
+    Enum0::Enum0Enum func0(Enum0::Enum0Enum param0) override;
     /**
     * Remote call of IEnumInterface::func0 on the EnumInterface service.
     */
-    QtPromise::QPromise<Enum0::Enum0Enum> func0Async(const Enum0::Enum0Enum param0);
+    QtPromise::QPromise<Enum0::Enum0Enum> func0Async(Enum0::Enum0Enum param0);
     /**
     * Remote call of IEnumInterface::func1 on the EnumInterface service.
     * Uses func1Async
     */
-    Enum1::Enum1Enum func1(const Enum1::Enum1Enum param1) override;
+    Enum1::Enum1Enum func1(Enum1::Enum1Enum param1) override;
     /**
     * Remote call of IEnumInterface::func1 on the EnumInterface service.
     */
-    QtPromise::QPromise<Enum1::Enum1Enum> func1Async(const Enum1::Enum1Enum param1);
+    QtPromise::QPromise<Enum1::Enum1Enum> func1Async(Enum1::Enum1Enum param1);
     /**
     * Remote call of IEnumInterface::func2 on the EnumInterface service.
     * Uses func2Async
     */
-    Enum2::Enum2Enum func2(const Enum2::Enum2Enum param2) override;
+    Enum2::Enum2Enum func2(Enum2::Enum2Enum param2) override;
     /**
     * Remote call of IEnumInterface::func2 on the EnumInterface service.
     */
-    QtPromise::QPromise<Enum2::Enum2Enum> func2Async(const Enum2::Enum2Enum param2);
+    QtPromise::QPromise<Enum2::Enum2Enum> func2Async(Enum2::Enum2Enum param2);
     /**
     * Remote call of IEnumInterface::func3 on the EnumInterface service.
     * Uses func3Async
     */
-    Enum3::Enum3Enum func3(const Enum3::Enum3Enum param3) override;
+    Enum3::Enum3Enum func3(Enum3::Enum3Enum param3) override;
     /**
     * Remote call of IEnumInterface::func3 on the EnumInterface service.
     */
-    QtPromise::QPromise<Enum3::Enum3Enum> func3Async(const Enum3::Enum3Enum param3);
+    QtPromise::QPromise<Enum3::Enum3Enum> func3Async(Enum3::Enum3Enum param3);
 
 signals:
 
@@ -179,19 +179,19 @@ private:
     */
     void applyState(const nlohmann::json& fields);
     /**  Updates local value for Prop0 and informs subscriber about the change with emit property changed signal. */
-    void setProp0Local(const Enum0::Enum0Enum prop0);
+    void setProp0Local(Enum0::Enum0Enum prop0);
     /** A local value for prop0 */
     Enum0::Enum0Enum m_prop0;
     /**  Updates local value for Prop1 and informs subscriber about the change with emit property changed signal. */
-    void setProp1Local(const Enum1::Enum1Enum prop1);
+    void setProp1Local(Enum1::Enum1Enum prop1);
     /** A local value for prop1 */
     Enum1::Enum1Enum m_prop1;
     /**  Updates local value for Prop2 and informs subscriber about the change with emit property changed signal. */
-    void setProp2Local(const Enum2::Enum2Enum prop2);
+    void setProp2Local(Enum2::Enum2Enum prop2);
     /** A local value for prop2 */
     Enum2::Enum2Enum m_prop2;
     /**  Updates local value for Prop3 and informs subscriber about the change with emit property changed signal. */
-    void setProp3Local(const Enum3::Enum3Enum prop3);
+    void setProp3Local(Enum3::Enum3Enum prop3);
     /** A local value for prop3 */
     Enum3::Enum3Enum m_prop3;
     /** An indicator if the object is linked with the service. */

@@ -12,24 +12,24 @@ HttpFactory::HttpFactory(QObject *parent)
 {
 }
 
-AbstractSameStruct1Interface* HttpFactory::createSameStruct1Interface(QObject *parent)
+std::shared_ptr<AbstractSameStruct1Interface> HttpFactory::createSameStruct1Interface(QObject *parent)
 {
-    return new HttpSameStruct1Interface(m_network, parent);
+    return std::make_shared<HttpSameStruct1Interface>(m_network, parent);
 }
 
-AbstractSameStruct2Interface* HttpFactory::createSameStruct2Interface(QObject *parent)
+std::shared_ptr<AbstractSameStruct2Interface> HttpFactory::createSameStruct2Interface(QObject *parent)
 {
-    return new HttpSameStruct2Interface(m_network, parent);
+    return std::make_shared<HttpSameStruct2Interface>(m_network, parent);
 }
 
-AbstractSameEnum1Interface* HttpFactory::createSameEnum1Interface(QObject *parent)
+std::shared_ptr<AbstractSameEnum1Interface> HttpFactory::createSameEnum1Interface(QObject *parent)
 {
-    return new HttpSameEnum1Interface(m_network, parent);
+    return std::make_shared<HttpSameEnum1Interface>(m_network, parent);
 }
 
-AbstractSameEnum2Interface* HttpFactory::createSameEnum2Interface(QObject *parent)
+std::shared_ptr<AbstractSameEnum2Interface> HttpFactory::createSameEnum2Interface(QObject *parent)
 {
-    return new HttpSameEnum2Interface(m_network, parent);
+    return std::make_shared<HttpSameEnum2Interface>(m_network, parent);
 }
 
 

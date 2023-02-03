@@ -28,15 +28,21 @@ namespace tb_same1 {
 QmlSameStruct2Interface::QmlSameStruct2Interface(QObject *parent)
     : AbstractSameStruct2Interface(parent)
 {
-    m_obj = ApiFactory::get()->createSameStruct2Interface(this);
-    connect(m_obj, &AbstractSameStruct2Interface::prop1Changed, this, &QmlSameStruct2Interface::prop1Changed);
-    connect(m_obj, &AbstractSameStruct2Interface::prop1Changed, this, &AbstractSameStruct2Interface::prop1Changed);
-    connect(m_obj, &AbstractSameStruct2Interface::prop2Changed, this, &QmlSameStruct2Interface::prop2Changed);
-    connect(m_obj, &AbstractSameStruct2Interface::prop2Changed, this, &AbstractSameStruct2Interface::prop2Changed);
-    connect(m_obj, &AbstractSameStruct2Interface::sig1, this, &QmlSameStruct2Interface::sig1);
-    connect(m_obj, &AbstractSameStruct2Interface::sig1, this, &AbstractSameStruct2Interface::sig1);
-    connect(m_obj, &AbstractSameStruct2Interface::sig2, this, &QmlSameStruct2Interface::sig2);
-    connect(m_obj, &AbstractSameStruct2Interface::sig2, this, &AbstractSameStruct2Interface::sig2);
+    m_obj = ApiFactory::get()->createSameStruct2Interface();
+    // Connection to forward backend implementation singal to wrapper:
+    // - Forward the Property Changed singal emitted by backend implementation, as QmlSameStruct2Interface::Property Changed signal for qml property changed notification.
+    // - Forward the  Property Changed singal emitted by backend implementation, as AbstractSameStruct2Interface::Property Changed signal
+    // for usage, where QmlSameStruct2Interface is used by the AbstractTuner interface and for connections with AbstractSameStruct2Interface::Property Changed signal
+    connect(m_obj.get(), &AbstractSameStruct2Interface::prop1Changed, this, &QmlSameStruct2Interface::prop1Changed);
+    connect(m_obj.get(), &AbstractSameStruct2Interface::prop1Changed, this, &AbstractSameStruct2Interface::prop1Changed);
+    connect(m_obj.get(), &AbstractSameStruct2Interface::prop2Changed, this, &QmlSameStruct2Interface::prop2Changed);
+    connect(m_obj.get(), &AbstractSameStruct2Interface::prop2Changed, this, &AbstractSameStruct2Interface::prop2Changed);
+
+    // Forward the singals emitted by backend implementation to QmlSameStruct2Interface wrapper.
+    //  Have in mind that there is no forwarding from the QmlSameStruct2Interface wrapper to backend implementation.
+    //  This signal is designed to be emitted from backend only.
+    connect(m_obj.get(), &AbstractSameStruct2Interface::sig1, this, &AbstractSameStruct2Interface::sig1);
+    connect(m_obj.get(), &AbstractSameStruct2Interface::sig2, this, &AbstractSameStruct2Interface::sig2);
 }
 
 QmlSameStruct2Interface::~QmlSameStruct2Interface()

@@ -11,24 +11,24 @@ Factory::Factory(QObject *parent)
 {
 }
 
-AbstractManyParamInterface* Factory::createManyParamInterface(QObject *parent)
+std::shared_ptr<AbstractManyParamInterface> Factory::createManyParamInterface(QObject *parent)
 {
-    return new ManyParamInterface(parent);
+    return std::make_shared<ManyParamInterface>(parent);
 }
 
-AbstractNestedStruct1Interface* Factory::createNestedStruct1Interface(QObject *parent)
+std::shared_ptr<AbstractNestedStruct1Interface> Factory::createNestedStruct1Interface(QObject *parent)
 {
-    return new NestedStruct1Interface(parent);
+    return std::make_shared<NestedStruct1Interface>(parent);
 }
 
-AbstractNestedStruct2Interface* Factory::createNestedStruct2Interface(QObject *parent)
+std::shared_ptr<AbstractNestedStruct2Interface> Factory::createNestedStruct2Interface(QObject *parent)
 {
-    return new NestedStruct2Interface(parent);
+    return std::make_shared<NestedStruct2Interface>(parent);
 }
 
-AbstractNestedStruct3Interface* Factory::createNestedStruct3Interface(QObject *parent)
+std::shared_ptr<AbstractNestedStruct3Interface> Factory::createNestedStruct3Interface(QObject *parent)
 {
-    return new NestedStruct3Interface(parent);
+    return std::make_shared<NestedStruct3Interface>(parent);
 }
 
 } // namespace testbed2

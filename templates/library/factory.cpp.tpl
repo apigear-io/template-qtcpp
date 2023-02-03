@@ -13,9 +13,9 @@ Factory::Factory(QObject *parent)
 
 {{- range .Module.Interfaces }}
 
-Abstract{{Camel .Name}}* Factory::create{{Camel .Name}}(QObject *parent)
+std::shared_ptr<Abstract{{Camel .Name}}> Factory::create{{Camel .Name}}(QObject *parent)
 {
-    return new {{.Name}}(parent);
+    return std::make_shared<{{Camel .Name}}>(parent);
 }
 
 {{- end }}

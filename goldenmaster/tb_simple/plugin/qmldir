@@ -1,2 +1,2 @@
-module tb.simple
+module tb_simple
 plugin plugin_tb_simple

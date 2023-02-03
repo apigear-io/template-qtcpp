@@ -28,23 +28,27 @@ namespace testbed2 {
 QmlManyParamInterface::QmlManyParamInterface(QObject *parent)
     : AbstractManyParamInterface(parent)
 {
-    m_obj = ApiFactory::get()->createManyParamInterface(this);
-    connect(m_obj, &AbstractManyParamInterface::prop1Changed, this, &QmlManyParamInterface::prop1Changed);
-    connect(m_obj, &AbstractManyParamInterface::prop1Changed, this, &AbstractManyParamInterface::prop1Changed);
-    connect(m_obj, &AbstractManyParamInterface::prop2Changed, this, &QmlManyParamInterface::prop2Changed);
-    connect(m_obj, &AbstractManyParamInterface::prop2Changed, this, &AbstractManyParamInterface::prop2Changed);
-    connect(m_obj, &AbstractManyParamInterface::prop3Changed, this, &QmlManyParamInterface::prop3Changed);
-    connect(m_obj, &AbstractManyParamInterface::prop3Changed, this, &AbstractManyParamInterface::prop3Changed);
-    connect(m_obj, &AbstractManyParamInterface::prop4Changed, this, &QmlManyParamInterface::prop4Changed);
-    connect(m_obj, &AbstractManyParamInterface::prop4Changed, this, &AbstractManyParamInterface::prop4Changed);
-    connect(m_obj, &AbstractManyParamInterface::sig1, this, &QmlManyParamInterface::sig1);
-    connect(m_obj, &AbstractManyParamInterface::sig1, this, &AbstractManyParamInterface::sig1);
-    connect(m_obj, &AbstractManyParamInterface::sig2, this, &QmlManyParamInterface::sig2);
-    connect(m_obj, &AbstractManyParamInterface::sig2, this, &AbstractManyParamInterface::sig2);
-    connect(m_obj, &AbstractManyParamInterface::sig3, this, &QmlManyParamInterface::sig3);
-    connect(m_obj, &AbstractManyParamInterface::sig3, this, &AbstractManyParamInterface::sig3);
-    connect(m_obj, &AbstractManyParamInterface::sig4, this, &QmlManyParamInterface::sig4);
-    connect(m_obj, &AbstractManyParamInterface::sig4, this, &AbstractManyParamInterface::sig4);
+    m_obj = ApiFactory::get()->createManyParamInterface();
+    // Connection to forward backend implementation singal to wrapper:
+    // - Forward the Property Changed singal emitted by backend implementation, as QmlManyParamInterface::Property Changed signal for qml property changed notification.
+    // - Forward the  Property Changed singal emitted by backend implementation, as AbstractManyParamInterface::Property Changed signal
+    // for usage, where QmlManyParamInterface is used by the AbstractTuner interface and for connections with AbstractManyParamInterface::Property Changed signal
+    connect(m_obj.get(), &AbstractManyParamInterface::prop1Changed, this, &QmlManyParamInterface::prop1Changed);
+    connect(m_obj.get(), &AbstractManyParamInterface::prop1Changed, this, &AbstractManyParamInterface::prop1Changed);
+    connect(m_obj.get(), &AbstractManyParamInterface::prop2Changed, this, &QmlManyParamInterface::prop2Changed);
+    connect(m_obj.get(), &AbstractManyParamInterface::prop2Changed, this, &AbstractManyParamInterface::prop2Changed);
+    connect(m_obj.get(), &AbstractManyParamInterface::prop3Changed, this, &QmlManyParamInterface::prop3Changed);
+    connect(m_obj.get(), &AbstractManyParamInterface::prop3Changed, this, &AbstractManyParamInterface::prop3Changed);
+    connect(m_obj.get(), &AbstractManyParamInterface::prop4Changed, this, &QmlManyParamInterface::prop4Changed);
+    connect(m_obj.get(), &AbstractManyParamInterface::prop4Changed, this, &AbstractManyParamInterface::prop4Changed);
+
+    // Forward the singals emitted by backend implementation to QmlManyParamInterface wrapper.
+    //  Have in mind that there is no forwarding from the QmlManyParamInterface wrapper to backend implementation.
+    //  This signal is designed to be emitted from backend only.
+    connect(m_obj.get(), &AbstractManyParamInterface::sig1, this, &AbstractManyParamInterface::sig1);
+    connect(m_obj.get(), &AbstractManyParamInterface::sig2, this, &AbstractManyParamInterface::sig2);
+    connect(m_obj.get(), &AbstractManyParamInterface::sig3, this, &AbstractManyParamInterface::sig3);
+    connect(m_obj.get(), &AbstractManyParamInterface::sig4, this, &AbstractManyParamInterface::sig4);
 }
 
 QmlManyParamInterface::~QmlManyParamInterface()

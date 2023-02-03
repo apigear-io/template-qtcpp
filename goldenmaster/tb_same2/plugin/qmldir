@@ -1,2 +1,2 @@
-module tb.same2
+module tb_same2
 plugin plugin_tb_same2

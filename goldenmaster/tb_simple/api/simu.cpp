@@ -50,22 +50,18 @@ SimulationSimpleInterface::SimulationSimpleInterface(QObject *parent)
       }
     };
     ApiGear::SimulationClient::instance()->doFetchState("tb.simple/SimpleInterface", fetchStateFunc);
-
     NotifyRequestFunc sigBoolFunc = [this](NotifyRequestArg arg) { 
         emit sigBool(arg.params["paramBool"].get<bool>());
     };
     ApiGear::SimulationClient::instance()->onNotify("tb.simple/SimpleInterface#sigBool", sigBoolFunc);
-
     NotifyRequestFunc sigIntFunc = [this](NotifyRequestArg arg) { 
         emit sigInt(arg.params["paramInt"].get<int>());
     };
     ApiGear::SimulationClient::instance()->onNotify("tb.simple/SimpleInterface#sigInt", sigIntFunc);
-
     NotifyRequestFunc sigFloatFunc = [this](NotifyRequestArg arg) { 
         emit sigFloat(arg.params["paramFloat"].get<qreal>());
     };
     ApiGear::SimulationClient::instance()->onNotify("tb.simple/SimpleInterface#sigFloat", sigFloatFunc);
-
     NotifyRequestFunc sigStringFunc = [this](NotifyRequestArg arg) { 
         emit sigString(arg.params["paramString"].get<QString>());
     };
@@ -211,22 +207,18 @@ SimulationSimpleArrayInterface::SimulationSimpleArrayInterface(QObject *parent)
       }
     };
     ApiGear::SimulationClient::instance()->doFetchState("tb.simple/SimpleArrayInterface", fetchStateFunc);
-
     NotifyRequestFunc sigBoolFunc = [this](NotifyRequestArg arg) { 
         emit sigBool(arg.params["paramBool"].get<QList<bool>>());
     };
     ApiGear::SimulationClient::instance()->onNotify("tb.simple/SimpleArrayInterface#sigBool", sigBoolFunc);
-
     NotifyRequestFunc sigIntFunc = [this](NotifyRequestArg arg) { 
         emit sigInt(arg.params["paramInt"].get<QList<int>>());
     };
     ApiGear::SimulationClient::instance()->onNotify("tb.simple/SimpleArrayInterface#sigInt", sigIntFunc);
-
     NotifyRequestFunc sigFloatFunc = [this](NotifyRequestArg arg) { 
         emit sigFloat(arg.params["paramFloat"].get<QList<qreal>>());
     };
     ApiGear::SimulationClient::instance()->onNotify("tb.simple/SimpleArrayInterface#sigFloat", sigFloatFunc);
-
     NotifyRequestFunc sigStringFunc = [this](NotifyRequestArg arg) { 
         emit sigString(arg.params["paramString"].get<QList<QString>>());
     };

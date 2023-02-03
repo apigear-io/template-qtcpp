@@ -28,14 +28,14 @@ ApiFactoryInterface * ApiFactory::get()
     return s_instance;
 }
 
-AbstractSimpleInterface* ApiFactory::createSimpleInterface(QObject *parent) 
+std::shared_ptr<AbstractSimpleInterface> ApiFactory::createSimpleInterface(QObject *parent) 
 {
-    return new SimulationSimpleInterface(parent);
+    return std::make_shared<SimulationSimpleInterface>(parent);
 };
 
-AbstractSimpleArrayInterface* ApiFactory::createSimpleArrayInterface(QObject *parent) 
+std::shared_ptr<AbstractSimpleArrayInterface> ApiFactory::createSimpleArrayInterface(QObject *parent) 
 {
-    return new SimulationSimpleArrayInterface(parent);
+    return std::make_shared<SimulationSimpleArrayInterface>(parent);
 };
 
 } //namespace tb_simple

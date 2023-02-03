@@ -28,23 +28,27 @@ namespace tb_simple {
 QmlSimpleArrayInterface::QmlSimpleArrayInterface(QObject *parent)
     : AbstractSimpleArrayInterface(parent)
 {
-    m_obj = ApiFactory::get()->createSimpleArrayInterface(this);
-    connect(m_obj, &AbstractSimpleArrayInterface::propBoolChanged, this, &QmlSimpleArrayInterface::propBoolChanged);
-    connect(m_obj, &AbstractSimpleArrayInterface::propBoolChanged, this, &AbstractSimpleArrayInterface::propBoolChanged);
-    connect(m_obj, &AbstractSimpleArrayInterface::propIntChanged, this, &QmlSimpleArrayInterface::propIntChanged);
-    connect(m_obj, &AbstractSimpleArrayInterface::propIntChanged, this, &AbstractSimpleArrayInterface::propIntChanged);
-    connect(m_obj, &AbstractSimpleArrayInterface::propFloatChanged, this, &QmlSimpleArrayInterface::propFloatChanged);
-    connect(m_obj, &AbstractSimpleArrayInterface::propFloatChanged, this, &AbstractSimpleArrayInterface::propFloatChanged);
-    connect(m_obj, &AbstractSimpleArrayInterface::propStringChanged, this, &QmlSimpleArrayInterface::propStringChanged);
-    connect(m_obj, &AbstractSimpleArrayInterface::propStringChanged, this, &AbstractSimpleArrayInterface::propStringChanged);
-    connect(m_obj, &AbstractSimpleArrayInterface::sigBool, this, &QmlSimpleArrayInterface::sigBool);
-    connect(m_obj, &AbstractSimpleArrayInterface::sigBool, this, &AbstractSimpleArrayInterface::sigBool);
-    connect(m_obj, &AbstractSimpleArrayInterface::sigInt, this, &QmlSimpleArrayInterface::sigInt);
-    connect(m_obj, &AbstractSimpleArrayInterface::sigInt, this, &AbstractSimpleArrayInterface::sigInt);
-    connect(m_obj, &AbstractSimpleArrayInterface::sigFloat, this, &QmlSimpleArrayInterface::sigFloat);
-    connect(m_obj, &AbstractSimpleArrayInterface::sigFloat, this, &AbstractSimpleArrayInterface::sigFloat);
-    connect(m_obj, &AbstractSimpleArrayInterface::sigString, this, &QmlSimpleArrayInterface::sigString);
-    connect(m_obj, &AbstractSimpleArrayInterface::sigString, this, &AbstractSimpleArrayInterface::sigString);
+    m_obj = ApiFactory::get()->createSimpleArrayInterface();
+    // Connection to forward backend implementation singal to wrapper:
+    // - Forward the Property Changed singal emitted by backend implementation, as QmlSimpleArrayInterface::Property Changed signal for qml property changed notification.
+    // - Forward the  Property Changed singal emitted by backend implementation, as AbstractSimpleArrayInterface::Property Changed signal
+    // for usage, where QmlSimpleArrayInterface is used by the AbstractTuner interface and for connections with AbstractSimpleArrayInterface::Property Changed signal
+    connect(m_obj.get(), &AbstractSimpleArrayInterface::propBoolChanged, this, &QmlSimpleArrayInterface::propBoolChanged);
+    connect(m_obj.get(), &AbstractSimpleArrayInterface::propBoolChanged, this, &AbstractSimpleArrayInterface::propBoolChanged);
+    connect(m_obj.get(), &AbstractSimpleArrayInterface::propIntChanged, this, &QmlSimpleArrayInterface::propIntChanged);
+    connect(m_obj.get(), &AbstractSimpleArrayInterface::propIntChanged, this, &AbstractSimpleArrayInterface::propIntChanged);
+    connect(m_obj.get(), &AbstractSimpleArrayInterface::propFloatChanged, this, &QmlSimpleArrayInterface::propFloatChanged);
+    connect(m_obj.get(), &AbstractSimpleArrayInterface::propFloatChanged, this, &AbstractSimpleArrayInterface::propFloatChanged);
+    connect(m_obj.get(), &AbstractSimpleArrayInterface::propStringChanged, this, &QmlSimpleArrayInterface::propStringChanged);
+    connect(m_obj.get(), &AbstractSimpleArrayInterface::propStringChanged, this, &AbstractSimpleArrayInterface::propStringChanged);
+
+    // Forward the singals emitted by backend implementation to QmlSimpleArrayInterface wrapper.
+    //  Have in mind that there is no forwarding from the QmlSimpleArrayInterface wrapper to backend implementation.
+    //  This signal is designed to be emitted from backend only.
+    connect(m_obj.get(), &AbstractSimpleArrayInterface::sigBool, this, &AbstractSimpleArrayInterface::sigBool);
+    connect(m_obj.get(), &AbstractSimpleArrayInterface::sigInt, this, &AbstractSimpleArrayInterface::sigInt);
+    connect(m_obj.get(), &AbstractSimpleArrayInterface::sigFloat, this, &AbstractSimpleArrayInterface::sigFloat);
+    connect(m_obj.get(), &AbstractSimpleArrayInterface::sigString, this, &AbstractSimpleArrayInterface::sigString);
 }
 
 QmlSimpleArrayInterface::~QmlSimpleArrayInterface()

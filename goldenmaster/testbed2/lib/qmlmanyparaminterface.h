@@ -24,6 +24,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace testbed2 {
 
+/**
+* A QML wrapper of the ManyParamInterface implementation.
+* Uses a ManyParamInterface provided by an ApiFactory.
+* See ApiFactory and factories that implement the ApiFactoryInterface.
+*/
 class TESTBED2_LIB_EXPORT QmlManyParamInterface : public AbstractManyParamInterface
 {
     Q_OBJECT
@@ -33,7 +38,7 @@ class TESTBED2_LIB_EXPORT QmlManyParamInterface : public AbstractManyParamInterf
     Q_PROPERTY(int prop4 READ prop4 NOTIFY prop4Changed)
 public:
     explicit QmlManyParamInterface(QObject *parent = nullptr);
-    virtual ~QmlManyParamInterface() override;
+    ~QmlManyParamInterface() override;
     int prop1() const override;
     void setProp1(int prop1) override;
     int prop2() const override;

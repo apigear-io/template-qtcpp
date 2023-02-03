@@ -24,6 +24,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace tb_simple {
 
+/**
+* A QML wrapper of the SimpleArrayInterface implementation.
+* Uses a SimpleArrayInterface provided by an ApiFactory.
+* See ApiFactory and factories that implement the ApiFactoryInterface.
+*/
 class TB_SIMPLE_LIB_EXPORT QmlSimpleArrayInterface : public AbstractSimpleArrayInterface
 {
     Q_OBJECT
@@ -33,7 +38,7 @@ class TB_SIMPLE_LIB_EXPORT QmlSimpleArrayInterface : public AbstractSimpleArrayI
     Q_PROPERTY(QList<QString> propString READ propString NOTIFY propStringChanged)
 public:
     explicit QmlSimpleArrayInterface(QObject *parent = nullptr);
-    virtual ~QmlSimpleArrayInterface() override;
+    ~QmlSimpleArrayInterface() override;
     QList<bool> propBool() const override;
     void setPropBool(const QList<bool>& propBool) override;
     QList<int> propInt() const override;

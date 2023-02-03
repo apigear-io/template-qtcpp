@@ -30,31 +30,27 @@ namespace testbed1 {
 // ********************************************************************
 // StructBool struct
 // ********************************************************************
-
-class TESTBED1_EXPORT StructBool
+struct TESTBED1_EXPORT StructBool
 {
     Q_GADGET
-    Q_PROPERTY(bool fieldBool READ fieldBool WRITE setFieldBool)
+    Q_PROPERTY(bool fieldBool MEMBER m_fieldBool )
 
 public:
     StructBool();
-    void setFieldBool(bool fieldBool);
-    bool fieldBool() const;
-
     bool operator==(const StructBool &other) const;
     bool operator!=(const StructBool &other) const;
-
-private:
     bool m_fieldBool;
 };
 
+/** ostream operator. Allows writing the StructBool value to an text output*/
 QDataStream &operator<<(QDataStream &stream, const StructBool &obj);
+/** istream operator. Allows reading to StructBool value from input text*/
 QDataStream &operator>>(QDataStream &stream, StructBool &obj);
 
 // ********************************************************************
 // StructBool struct factory
+// Registered by plugin to allow creating this type of objects in qml. 
 // ********************************************************************
-
 class TESTBED1_EXPORT StructBoolFactory : public QObject {
     Q_OBJECT
 public:
@@ -63,31 +59,27 @@ public:
 // ********************************************************************
 // StructInt struct
 // ********************************************************************
-
-class TESTBED1_EXPORT StructInt
+struct TESTBED1_EXPORT StructInt
 {
     Q_GADGET
-    Q_PROPERTY(int fieldInt READ fieldInt WRITE setFieldInt)
+    Q_PROPERTY(int fieldInt MEMBER m_fieldInt )
 
 public:
     StructInt();
-    void setFieldInt(int fieldInt);
-    int fieldInt() const;
-
     bool operator==(const StructInt &other) const;
     bool operator!=(const StructInt &other) const;
-
-private:
     int m_fieldInt;
 };
 
+/** ostream operator. Allows writing the StructInt value to an text output*/
 QDataStream &operator<<(QDataStream &stream, const StructInt &obj);
+/** istream operator. Allows reading to StructInt value from input text*/
 QDataStream &operator>>(QDataStream &stream, StructInt &obj);
 
 // ********************************************************************
 // StructInt struct factory
+// Registered by plugin to allow creating this type of objects in qml. 
 // ********************************************************************
-
 class TESTBED1_EXPORT StructIntFactory : public QObject {
     Q_OBJECT
 public:
@@ -96,31 +88,27 @@ public:
 // ********************************************************************
 // StructFloat struct
 // ********************************************************************
-
-class TESTBED1_EXPORT StructFloat
+struct TESTBED1_EXPORT StructFloat
 {
     Q_GADGET
-    Q_PROPERTY(qreal fieldFloat READ fieldFloat WRITE setFieldFloat)
+    Q_PROPERTY(qreal fieldFloat MEMBER m_fieldFloat )
 
 public:
     StructFloat();
-    void setFieldFloat(qreal fieldFloat);
-    qreal fieldFloat() const;
-
     bool operator==(const StructFloat &other) const;
     bool operator!=(const StructFloat &other) const;
-
-private:
     qreal m_fieldFloat;
 };
 
+/** ostream operator. Allows writing the StructFloat value to an text output*/
 QDataStream &operator<<(QDataStream &stream, const StructFloat &obj);
+/** istream operator. Allows reading to StructFloat value from input text*/
 QDataStream &operator>>(QDataStream &stream, StructFloat &obj);
 
 // ********************************************************************
 // StructFloat struct factory
+// Registered by plugin to allow creating this type of objects in qml. 
 // ********************************************************************
-
 class TESTBED1_EXPORT StructFloatFactory : public QObject {
     Q_OBJECT
 public:
@@ -129,31 +117,27 @@ public:
 // ********************************************************************
 // StructString struct
 // ********************************************************************
-
-class TESTBED1_EXPORT StructString
+struct TESTBED1_EXPORT StructString
 {
     Q_GADGET
-    Q_PROPERTY(QString fieldString READ fieldString WRITE setFieldString)
+    Q_PROPERTY(QString fieldString MEMBER m_fieldString )
 
 public:
     StructString();
-    void setFieldString(const QString& fieldString);
-    QString fieldString() const;
-
     bool operator==(const StructString &other) const;
     bool operator!=(const StructString &other) const;
-
-private:
     QString m_fieldString;
 };
 
+/** ostream operator. Allows writing the StructString value to an text output*/
 QDataStream &operator<<(QDataStream &stream, const StructString &obj);
+/** istream operator. Allows reading to StructString value from input text*/
 QDataStream &operator>>(QDataStream &stream, StructString &obj);
 
 // ********************************************************************
 // StructString struct factory
+// Registered by plugin to allow creating this type of objects in qml. 
 // ********************************************************************
-
 class TESTBED1_EXPORT StructStringFactory : public QObject {
     Q_OBJECT
 public:
@@ -161,7 +145,15 @@ public:
 };
 
 // ********************************************************************
-// AbstractStructInterface pure interface
+/**
+*
+* AbstractStructInterface is a pure interface QObject class.
+* Declares:
+*  - Methods defined for StructInterface interface
+*  - Property setters and getters for defined properties
+*  - Property changed singals for properties of your interface.
+*  - Signals described for StructInterface interface.
+*/
 // ********************************************************************
 
 
@@ -169,31 +161,91 @@ class TESTBED1_EXPORT AbstractStructInterface : public QObject {
     Q_OBJECT
 public:
     AbstractStructInterface(QObject * parent=nullptr);
+    /**
+    * Sets the value of the propBool property.
+    */
     virtual void setPropBool(const StructBool& propBool) = 0;
+    /**
+    * Gets the value of the propBool property.
+    */
     virtual StructBool propBool() const = 0;
+    /**
+    * Sets the value of the propInt property.
+    */
     virtual void setPropInt(const StructInt& propInt) = 0;
+    /**
+    * Gets the value of the propInt property.
+    */
     virtual StructInt propInt() const = 0;
+    /**
+    * Sets the value of the propFloat property.
+    */
     virtual void setPropFloat(const StructFloat& propFloat) = 0;
+    /**
+    * Gets the value of the propFloat property.
+    */
     virtual StructFloat propFloat() const = 0;
+    /**
+    * Sets the value of the propString property.
+    */
     virtual void setPropString(const StructString& propString) = 0;
+    /**
+    * Gets the value of the propString property.
+    */
     virtual StructString propString() const = 0;
+
     virtual StructBool funcBool(const StructBool& paramBool) = 0;
+
     virtual StructBool funcInt(const StructInt& paramInt) = 0;
+
     virtual StructFloat funcFloat(const StructFloat& paramFloat) = 0;
+
     virtual StructString funcString(const StructString& paramString) = 0;
 signals:
+    /**
+    * @param paramBool 
+    */
     void sigBool(const StructBool& paramBool);
+    /**
+    * @param paramInt 
+    */
     void sigInt(const StructInt& paramInt);
+    /**
+    * @param paramFloat 
+    */
     void sigFloat(const StructFloat& paramFloat);
+    /**
+    * @param paramString 
+    */
     void sigString(const StructString& paramString);
+    /**
+    * Emitted when propBool value has changed.
+    */
     void propBoolChanged(const StructBool& propBool);
+    /**
+    * Emitted when propInt value has changed.
+    */
     void propIntChanged(const StructInt& propInt);
+    /**
+    * Emitted when propFloat value has changed.
+    */
     void propFloatChanged(const StructFloat& propFloat);
+    /**
+    * Emitted when propString value has changed.
+    */
     void propStringChanged(const StructString& propString);
 };
 
 // ********************************************************************
-// AbstractStructArrayInterface pure interface
+/**
+*
+* AbstractStructArrayInterface is a pure interface QObject class.
+* Declares:
+*  - Methods defined for StructArrayInterface interface
+*  - Property setters and getters for defined properties
+*  - Property changed singals for properties of your interface.
+*  - Signals described for StructArrayInterface interface.
+*/
 // ********************************************************************
 
 
@@ -201,26 +253,78 @@ class TESTBED1_EXPORT AbstractStructArrayInterface : public QObject {
     Q_OBJECT
 public:
     AbstractStructArrayInterface(QObject * parent=nullptr);
+    /**
+    * Sets the value of the propBool property.
+    */
     virtual void setPropBool(const QList<StructBool>& propBool) = 0;
+    /**
+    * Gets the value of the propBool property.
+    */
     virtual QList<StructBool> propBool() const = 0;
+    /**
+    * Sets the value of the propInt property.
+    */
     virtual void setPropInt(const QList<StructInt>& propInt) = 0;
+    /**
+    * Gets the value of the propInt property.
+    */
     virtual QList<StructInt> propInt() const = 0;
+    /**
+    * Sets the value of the propFloat property.
+    */
     virtual void setPropFloat(const QList<StructFloat>& propFloat) = 0;
+    /**
+    * Gets the value of the propFloat property.
+    */
     virtual QList<StructFloat> propFloat() const = 0;
+    /**
+    * Sets the value of the propString property.
+    */
     virtual void setPropString(const QList<StructString>& propString) = 0;
+    /**
+    * Gets the value of the propString property.
+    */
     virtual QList<StructString> propString() const = 0;
+
     virtual StructBool funcBool(const QList<StructBool>& paramBool) = 0;
+
     virtual StructBool funcInt(const QList<StructInt>& paramInt) = 0;
+
     virtual StructBool funcFloat(const QList<StructFloat>& paramFloat) = 0;
+
     virtual StructBool funcString(const QList<StructString>& paramString) = 0;
 signals:
+    /**
+    * @param paramBool 
+    */
     void sigBool(const QList<StructBool>& paramBool);
+    /**
+    * @param paramInt 
+    */
     void sigInt(const QList<StructInt>& paramInt);
+    /**
+    * @param paramFloat 
+    */
     void sigFloat(const QList<StructFloat>& paramFloat);
+    /**
+    * @param paramString 
+    */
     void sigString(const QList<StructString>& paramString);
+    /**
+    * Emitted when propBool value has changed.
+    */
     void propBoolChanged(const QList<StructBool>& propBool);
+    /**
+    * Emitted when propInt value has changed.
+    */
     void propIntChanged(const QList<StructInt>& propInt);
+    /**
+    * Emitted when propFloat value has changed.
+    */
     void propFloatChanged(const QList<StructFloat>& propFloat);
+    /**
+    * Emitted when propString value has changed.
+    */
     void propStringChanged(const QList<StructString>& propString);
 };
 
@@ -229,10 +333,22 @@ signals:
 // Interface Factory
 // ********************************************************************
 
+/**
+* An interface for a Factory of interfaces in testbed1
+* May be used to provide different implementations of your interfaces.
+* Check the usage of ApiFactoryInterface in Qml versions of interface implementation.
+* See also the ApiFactory, where you can set this factory as an ApiFactoryInterface implementation.
+*/
 class TESTBED1_EXPORT ApiFactoryInterface
 {
 public:
+/** Create an instance of StructInterface
+* @return The implementation of a AbstractStructInterface, of which user should take ownership.
+*/
     virtual AbstractStructInterface* createStructInterface(QObject *parent) = 0;
+/** Create an instance of StructArrayInterface
+* @return The implementation of a AbstractStructArrayInterface, of which user should take ownership.
+*/
     virtual AbstractStructArrayInterface* createStructArrayInterface(QObject *parent) = 0;
 };
 

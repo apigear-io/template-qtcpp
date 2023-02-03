@@ -27,20 +27,10 @@ StructBool::StructBool()
 {
 }
 
-void StructBool::setFieldBool(bool fieldBool)
-{
-  m_fieldBool = fieldBool;
-}
-
-bool StructBool::fieldBool() const
-{
-  return m_fieldBool;
-}
-
 bool StructBool::operator==(const StructBool &other) const
 {
     return (
-        fieldBool() == other.fieldBool()
+        m_fieldBool == other.m_fieldBool
     );
 }
 
@@ -51,7 +41,7 @@ bool StructBool::operator!=(const StructBool &other) const
 
 QDataStream &operator<<(QDataStream &stream, const StructBool &obj)
 {
-    stream << obj.fieldBool();
+    stream << obj.m_fieldBool;
 
     return stream;
 }
@@ -60,7 +50,7 @@ QDataStream &operator>>(QDataStream &stream, StructBool &obj)
 {
     bool fieldBoolValue;
     stream >> fieldBoolValue;
-    obj.setFieldBool(fieldBoolValue);
+    obj.m_fieldBool = fieldBoolValue;
     return stream;
 }
 
@@ -81,20 +71,10 @@ StructInt::StructInt()
 {
 }
 
-void StructInt::setFieldInt(int fieldInt)
-{
-  m_fieldInt = fieldInt;
-}
-
-int StructInt::fieldInt() const
-{
-  return m_fieldInt;
-}
-
 bool StructInt::operator==(const StructInt &other) const
 {
     return (
-        fieldInt() == other.fieldInt()
+        m_fieldInt == other.m_fieldInt
     );
 }
 
@@ -105,7 +85,7 @@ bool StructInt::operator!=(const StructInt &other) const
 
 QDataStream &operator<<(QDataStream &stream, const StructInt &obj)
 {
-    stream << obj.fieldInt();
+    stream << obj.m_fieldInt;
 
     return stream;
 }
@@ -114,7 +94,7 @@ QDataStream &operator>>(QDataStream &stream, StructInt &obj)
 {
     int fieldIntValue;
     stream >> fieldIntValue;
-    obj.setFieldInt(fieldIntValue);
+    obj.m_fieldInt = fieldIntValue;
     return stream;
 }
 
@@ -135,20 +115,10 @@ StructFloat::StructFloat()
 {
 }
 
-void StructFloat::setFieldFloat(qreal fieldFloat)
-{
-  m_fieldFloat = fieldFloat;
-}
-
-qreal StructFloat::fieldFloat() const
-{
-  return m_fieldFloat;
-}
-
 bool StructFloat::operator==(const StructFloat &other) const
 {
     return (
-        fieldFloat() == other.fieldFloat()
+        m_fieldFloat == other.m_fieldFloat
     );
 }
 
@@ -159,7 +129,7 @@ bool StructFloat::operator!=(const StructFloat &other) const
 
 QDataStream &operator<<(QDataStream &stream, const StructFloat &obj)
 {
-    stream << obj.fieldFloat();
+    stream << obj.m_fieldFloat;
 
     return stream;
 }
@@ -168,7 +138,7 @@ QDataStream &operator>>(QDataStream &stream, StructFloat &obj)
 {
     qreal fieldFloatValue;
     stream >> fieldFloatValue;
-    obj.setFieldFloat(fieldFloatValue);
+    obj.m_fieldFloat = fieldFloatValue;
     return stream;
 }
 
@@ -189,20 +159,10 @@ StructString::StructString()
 {
 }
 
-void StructString::setFieldString(const QString& fieldString)
-{
-  m_fieldString = fieldString;
-}
-
-QString StructString::fieldString() const
-{
-  return m_fieldString;
-}
-
 bool StructString::operator==(const StructString &other) const
 {
     return (
-        fieldString() == other.fieldString()
+        m_fieldString == other.m_fieldString
     );
 }
 
@@ -213,7 +173,7 @@ bool StructString::operator!=(const StructString &other) const
 
 QDataStream &operator<<(QDataStream &stream, const StructString &obj)
 {
-    stream << obj.fieldString();
+    stream << obj.m_fieldString;
 
     return stream;
 }
@@ -222,7 +182,7 @@ QDataStream &operator>>(QDataStream &stream, StructString &obj)
 {
     QString fieldStringValue;
     stream >> fieldStringValue;
-    obj.setFieldString(fieldStringValue);
+    obj.m_fieldString = fieldStringValue;
     return stream;
 }
 

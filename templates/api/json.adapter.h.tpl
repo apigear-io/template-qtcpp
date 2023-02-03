@@ -4,6 +4,7 @@
 #ifndef JSON_USE_IMPLICIT_CONVERSIONS
 #define JSON_USE_IMPLICIT_CONVERSIONS 0
 #endif
+#include "api.h"
 #include <nlohmann/json.hpp>
 #include <QtCore>
 
@@ -23,7 +24,7 @@ namespace {{snake  .Module.Name }} {
 inline void from_json(const nlohmann::json& j, {{$class}}& p) {
 {{- range .Fields }}
     if(j.contains("{{.Name}}")) {
-        p.set{{Camel .Name}}(j["{{.Name}}"].get<{{qtReturn "" .}}>());
+        p.m_{{.Name}} = j["{{.Name}}"].get<{{qtReturn "" .}}>();
     }
 {{- end }}
 }
@@ -31,7 +32,7 @@ inline void from_json(const nlohmann::json& j, {{$class}}& p) {
 inline void to_json(nlohmann::json& j, const {{$class}}& p) {
     j = nlohmann::json{
 {{- range $i, $e := .Fields }}{{if $i}},{{end}}
-        {"{{.Name}}", p.{{.Name}}()}
+        {"{{.Name}}", p.m_{{.Name}} }
 {{- end }}
         };
 }

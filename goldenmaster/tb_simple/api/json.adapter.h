@@ -3,6 +3,7 @@
 #ifndef JSON_USE_IMPLICIT_CONVERSIONS
 #define JSON_USE_IMPLICIT_CONVERSIONS 0
 #endif
+#include "api.h"
 #include <nlohmann/json.hpp>
 #include <QtCore>
 

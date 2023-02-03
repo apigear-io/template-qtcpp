@@ -13,7 +13,7 @@ namespace {{snake  .Module.Name }} {
 {
 }
 
-QVariantMap {{$class}}::capture_state(Abstract{{.Name}}* obj)
+QVariantMap {{$class}}::capture_state(Abstract{{Camel .Name}}* obj)
 {
     return QVariantMap{
     {{- range .Properties }}
@@ -22,12 +22,12 @@ QVariantMap {{$class}}::capture_state(Abstract{{.Name}}* obj)
     };
 }
 
-void {{$class}}::trace_state(Abstract{{.Name}}* obj)
+void {{$class}}::trace_state(Abstract{{Camel .Name}}* obj)
 {
     const QVariantMap &fields_ = capture_state(obj);
     ApiGear::Monitor::AgentClient::instance()->traceState("{{$module}}.{{.Name}}", fields_);
 }
-{{- $iface := .Name }}
+{{- $iface := Camel .Name }}
 {{- range .Operations }}
 void {{$class}}::trace_{{.Name}}(Abstract{{$iface}}* obj, {{qtParams "" .Params}})
 {

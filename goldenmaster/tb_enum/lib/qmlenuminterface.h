@@ -24,6 +24,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace tb_enum {
 
+/**
+* A QML wrapper of the EnumInterface implementation.
+* Uses a EnumInterface provided by an ApiFactory.
+* See ApiFactory and factories that implement the ApiFactoryInterface.
+*/
 class TB_ENUM_LIB_EXPORT QmlEnumInterface : public AbstractEnumInterface
 {
     Q_OBJECT
@@ -33,7 +38,7 @@ class TB_ENUM_LIB_EXPORT QmlEnumInterface : public AbstractEnumInterface
     Q_PROPERTY(Enum3::Enum3Enum prop3 READ prop3 NOTIFY prop3Changed)
 public:
     explicit QmlEnumInterface(QObject *parent = nullptr);
-    virtual ~QmlEnumInterface() override;
+    ~QmlEnumInterface() override;
     Enum0::Enum0Enum prop0() const override;
     void setProp0(const Enum0::Enum0Enum prop0) override;
     Enum1::Enum1Enum prop1() const override;

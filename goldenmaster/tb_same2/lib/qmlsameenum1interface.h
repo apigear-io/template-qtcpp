@@ -24,13 +24,18 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace tb_same2 {
 
+/**
+* A QML wrapper of the SameEnum1Interface implementation.
+* Uses a SameEnum1Interface provided by an ApiFactory.
+* See ApiFactory and factories that implement the ApiFactoryInterface.
+*/
 class TB_SAME2_LIB_EXPORT QmlSameEnum1Interface : public AbstractSameEnum1Interface
 {
     Q_OBJECT
     Q_PROPERTY(Enum1::Enum1Enum prop1 READ prop1 NOTIFY prop1Changed)
 public:
     explicit QmlSameEnum1Interface(QObject *parent = nullptr);
-    virtual ~QmlSameEnum1Interface() override;
+    ~QmlSameEnum1Interface() override;
     Enum1::Enum1Enum prop1() const override;
     void setProp1(const Enum1::Enum1Enum prop1) override;
     Q_INVOKABLE Enum1::Enum1Enum func1(const Enum1::Enum1Enum param1) override;

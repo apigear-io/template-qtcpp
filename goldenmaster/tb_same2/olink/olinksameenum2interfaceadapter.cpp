@@ -39,7 +39,6 @@ OLinkSameEnum2InterfaceAdapter::OLinkSameEnum2InterfaceAdapter(RemoteRegistry& r
     : QObject(parent)
     , m_impl(impl)
     , m_registry(registry)
-    , m_node()
 {
     connect(m_impl, &AbstractSameEnum2Interface::prop1Changed, this,
         [=](const Enum1::Enum1Enum prop1) {
@@ -140,13 +139,11 @@ void OLinkSameEnum2InterfaceAdapter::olinkSetProperty(const std::string& propert
 
 void OLinkSameEnum2InterfaceAdapter::olinkLinked(const std::string& objectId, IRemoteNode *node) {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
-    m_node = node;
 }
 
 void OLinkSameEnum2InterfaceAdapter::olinkUnlinked(const std::string& objectId)
 {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
-    m_node = nullptr;
 }
 
 json OLinkSameEnum2InterfaceAdapter::olinkCollectProperties()

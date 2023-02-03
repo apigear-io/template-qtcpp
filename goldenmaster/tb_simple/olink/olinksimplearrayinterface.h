@@ -36,48 +36,171 @@ using namespace ApiGear::ObjectLink;
 
 namespace tb_simple {
 
+/**
+* Adapts the general OLink Client handler to a SimpleArrayInterface in a way it provides access 
+* to remote specific for SimpleArrayInterface services (properties, signals, methods). 
+* Sends and receives data over the network with ObjectLink protocol, through the communication node. 
+* see https://objectlinkprotocol.net for ObjectLink details.
+* see https://github.com/apigear-io/objectlink-core-cpp.git for olink client node - abstraction over the network.
+* see Apigear::ObjectLink::OlinkClient for general Olink Client Handler implementation.
+*     It provides a network implementation and tools to connect OLinkSimpleArrayInterface to it.
+* Use on client side to request changes of the SimpleArrayInterface on the server side 
+* and to subscribe for the SimpleArrayInterface changes.
+*/
 class OLinkSimpleArrayInterface : public AbstractSimpleArrayInterface, public IObjectSink
 {
     Q_OBJECT
 public:
+    /** ctor */
     explicit OLinkSimpleArrayInterface(QObject *parent = nullptr);
-    virtual ~OLinkSimpleArrayInterface() = default;
-
-    void applyState(const nlohmann::json& fields);
+    /** dtor */
+    ~OLinkSimpleArrayInterface() override = default;
+    /**
+    * Property getter
+    * @return Locally stored recent value for PropBool.
+    */
     QList<bool> propBool() const override;
+    /**
+    * Request setting a property on the SimpleArrayInterface service.
+    * @param The value to which set request is send for the PropBool.
+    */
     void setPropBool(const QList<bool>& propBool) override;
-    void setPropBoolLocal(const QList<bool>& propBool);
+    /**
+    * Property getter
+    * @return Locally stored recent value for PropInt.
+    */
     QList<int> propInt() const override;
+    /**
+    * Request setting a property on the SimpleArrayInterface service.
+    * @param The value to which set request is send for the PropInt.
+    */
     void setPropInt(const QList<int>& propInt) override;
-    void setPropIntLocal(const QList<int>& propInt);
+    /**
+    * Property getter
+    * @return Locally stored recent value for PropFloat.
+    */
     QList<qreal> propFloat() const override;
+    /**
+    * Request setting a property on the SimpleArrayInterface service.
+    * @param The value to which set request is send for the PropFloat.
+    */
     void setPropFloat(const QList<qreal>& propFloat) override;
-    void setPropFloatLocal(const QList<qreal>& propFloat);
+    /**
+    * Property getter
+    * @return Locally stored recent value for PropString.
+    */
     QList<QString> propString() const override;
+    /**
+    * Request setting a property on the SimpleArrayInterface service.
+    * @param The value to which set request is send for the PropString.
+    */
     void setPropString(const QList<QString>& propString) override;
-    void setPropStringLocal(const QList<QString>& propString);
+    /**
+    * Remote call of ISimpleArrayInterface::funcBool on the SimpleArrayInterface service.
+    * Uses funcBoolAsync
+    */
     QList<bool> funcBool(const QList<bool>& paramBool) override;
+    /**
+    * Remote call of ISimpleArrayInterface::funcBool on the SimpleArrayInterface service.
+    */
     QtPromise::QPromise<QList<bool>> funcBoolAsync(const QList<bool>& paramBool);
+    /**
+    * Remote call of ISimpleArrayInterface::funcInt on the SimpleArrayInterface service.
+    * Uses funcIntAsync
+    */
     QList<int> funcInt(const QList<int>& paramInt) override;
+    /**
+    * Remote call of ISimpleArrayInterface::funcInt on the SimpleArrayInterface service.
+    */
     QtPromise::QPromise<QList<int>> funcIntAsync(const QList<int>& paramInt);
+    /**
+    * Remote call of ISimpleArrayInterface::funcFloat on the SimpleArrayInterface service.
+    * Uses funcFloatAsync
+    */
     QList<qreal> funcFloat(const QList<qreal>& paramFloat) override;
+    /**
+    * Remote call of ISimpleArrayInterface::funcFloat on the SimpleArrayInterface service.
+    */
     QtPromise::QPromise<QList<qreal>> funcFloatAsync(const QList<qreal>& paramFloat);
+    /**
+    * Remote call of ISimpleArrayInterface::funcString on the SimpleArrayInterface service.
+    * Uses funcStringAsync
+    */
     QList<QString> funcString(const QList<QString>& paramString) override;
+    /**
+    * Remote call of ISimpleArrayInterface::funcString on the SimpleArrayInterface service.
+    */
     QtPromise::QPromise<QList<QString>> funcStringAsync(const QList<QString>& paramString);
+
 signals:
+
+    /**
+    * Informs if the OLinkSimpleArrayInterface is ready to send and receive messages.
+    * @return true if SimpleArrayInterface is operable, false otherwise.
+    */
     void isReady();
 public:
-    virtual std::string olinkObjectName() override;
-    virtual void olinkOnSignal(const std::string& signalId, const nlohmann::json& args) override;
-    virtual void olinkOnPropertyChanged(const std::string& propertyId, const nlohmann::json& value) override;
-    virtual void olinkOnInit(const std::string& objectId, const nlohmann::json& props, ::ApiGear::ObjectLink::IClientNode *node) override;
-    virtual void olinkOnRelease() override;
+
+    /**
+    * The name of the object for which this sink is created, object on server side has to have the same name.
+    * It serves as an identifier for the client registry, it has to be unique for the pair sink object - client node.
+    * Passed in the olink messages as an object identifier.
+    */
+    std::string olinkObjectName() override;
+
+    /**
+    * Information about signal emission on a server side to all subscribers.
+    * @param signalId Unique identifier for the signal emitted from object.
+    * @param args The arguments for the signal.
+    */
+    void olinkOnSignal(const std::string& signalId, const nlohmann::json& args) override;
+
+    /**
+    * Applies the information about the property changed on server side.
+    * @param propertyId Unique identifier of a changed property in object .
+    * @param value The value of the property.
+    */
+    void olinkOnPropertyChanged(const std::string& propertyId, const nlohmann::json& value) override;
+
+    /** Informs this object sink that connection was is established.
+    * @param interfaceId The name of the object for which link was established.
+    * @param props Initial values obtained from the SimpleArrayInterface service
+    * @param the initialized link endpoint for this sink.
+    */
+    void olinkOnInit(const std::string& objectId, const nlohmann::json& props, ::ApiGear::ObjectLink::IClientNode *node) override;
+    /**
+    * Informs this object sink that the link was disconnected and cannot be used anymore.
+    */
+    void olinkOnRelease() override;
 private:
+    /**
+    * Applies received data to local state and publishes changes to subscribers.
+    * @param the data received from SimpleArrayInterface service.
+    */
+    void applyState(const nlohmann::json& fields);
+    /**  Updates local value for PropBool and informs subscriber about the change with emit property changed signal. */
+    void setPropBoolLocal(const QList<bool>& propBool);
+    /** A local value for propBool */
     QList<bool> m_propBool;
+    /**  Updates local value for PropInt and informs subscriber about the change with emit property changed signal. */
+    void setPropIntLocal(const QList<int>& propInt);
+    /** A local value for propInt */
     QList<int> m_propInt;
+    /**  Updates local value for PropFloat and informs subscriber about the change with emit property changed signal. */
+    void setPropFloatLocal(const QList<qreal>& propFloat);
+    /** A local value for propFloat */
     QList<qreal> m_propFloat;
+    /**  Updates local value for PropString and informs subscriber about the change with emit property changed signal. */
+    void setPropStringLocal(const QList<QString>& propString);
+    /** A local value for propString */
     QList<QString> m_propString;
+    /** An indicator if the object is linked with the service. */
     bool m_isReady;
+    /** 
+    * An abstraction layer over the connection with service for the OLinkSimpleArrayInterface.
+    * Handles incoming and outgoing messages.
+    * Is given when object is linked with the service.
+    */
     IClientNode *m_node;
 };
 

@@ -13,7 +13,7 @@ Factory::Factory(QObject *parent)
 
 {{- range .Module.Interfaces }}
 
-Abstract{{.Name}}* Factory::create{{Camel .Name}}(QObject *parent)
+Abstract{{Camel .Name}}* Factory::create{{Camel .Name}}(QObject *parent)
 {
     return new {{.Name}}(parent);
 }

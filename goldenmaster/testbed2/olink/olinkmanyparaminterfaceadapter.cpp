@@ -39,7 +39,6 @@ OLinkManyParamInterfaceAdapter::OLinkManyParamInterfaceAdapter(RemoteRegistry& r
     : QObject(parent)
     , m_impl(impl)
     , m_registry(registry)
-    , m_node()
 {
     connect(m_impl, &AbstractManyParamInterface::prop1Changed, this,
         [=](int prop1) {
@@ -213,13 +212,11 @@ void OLinkManyParamInterfaceAdapter::olinkSetProperty(const std::string& propert
 
 void OLinkManyParamInterfaceAdapter::olinkLinked(const std::string& objectId, IRemoteNode *node) {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
-    m_node = node;
 }
 
 void OLinkManyParamInterfaceAdapter::olinkUnlinked(const std::string& objectId)
 {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
-    m_node = nullptr;
 }
 
 json OLinkManyParamInterfaceAdapter::olinkCollectProperties()

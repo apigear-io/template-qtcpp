@@ -10,7 +10,7 @@
 
 namespace {{snake  .Module.Name }} {
 
-class {{$class}} : public Abstract{{.Interface.Name}}
+class {{$class}} : public Abstract{{Camel .Interface.Name}}
 {
     Q_OBJECT
 public:

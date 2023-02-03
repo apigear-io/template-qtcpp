@@ -24,6 +24,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace testbed1 {
 
+/**
+* A QML wrapper of the StructInterface implementation.
+* Uses a StructInterface provided by an ApiFactory.
+* See ApiFactory and factories that implement the ApiFactoryInterface.
+*/
 class TESTBED1_LIB_EXPORT QmlStructInterface : public AbstractStructInterface
 {
     Q_OBJECT
@@ -33,7 +38,7 @@ class TESTBED1_LIB_EXPORT QmlStructInterface : public AbstractStructInterface
     Q_PROPERTY(StructString propString READ propString NOTIFY propStringChanged)
 public:
     explicit QmlStructInterface(QObject *parent = nullptr);
-    virtual ~QmlStructInterface() override;
+    ~QmlStructInterface() override;
     StructBool propBool() const override;
     void setPropBool(const StructBool& propBool) override;
     StructInt propInt() const override;

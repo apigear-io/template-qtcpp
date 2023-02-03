@@ -4,10 +4,12 @@ node_modules/
 out/
 dist/
 coverage/
+*.user
 *.log
 *.local.json
 tsconfig.tsbuildinfo
 demo/
+**/.vs/*
 
 # do not add temporary test folder
 test/

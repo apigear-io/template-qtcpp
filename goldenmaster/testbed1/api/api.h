@@ -20,6 +20,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <QtCore>
 #include <QtCore/QtGlobal>
 
+#include <memory>
+
 #if defined(TESTBED1_LIBRARY)
 #  define TESTBED1_EXPORT Q_DECL_EXPORT
 #else
@@ -342,14 +344,16 @@ signals:
 class TESTBED1_EXPORT ApiFactoryInterface
 {
 public:
-/** Create an instance of StructInterface
-* @return The implementation of a AbstractStructInterface, of which user should take ownership.
-*/
-    virtual AbstractStructInterface* createStructInterface(QObject *parent) = 0;
-/** Create an instance of StructArrayInterface
-* @return The implementation of a AbstractStructArrayInterface, of which user should take ownership.
-*/
-    virtual AbstractStructArrayInterface* createStructArrayInterface(QObject *parent) = 0;
+    /** 
+    * Create an instance of StructInterface
+    * @return The implementation of a AbstractStructInterface.
+    */
+    virtual std::shared_ptr<AbstractStructInterface> createStructInterface(QObject *parent = nullptr) = 0;
+    /** 
+    * Create an instance of StructArrayInterface
+    * @return The implementation of a AbstractStructArrayInterface.
+    */
+    virtual std::shared_ptr<AbstractStructArrayInterface> createStructArrayInterface(QObject *parent = nullptr) = 0;
 };
 
 } //namespace testbed1

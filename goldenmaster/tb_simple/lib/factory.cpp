@@ -9,14 +9,14 @@ Factory::Factory(QObject *parent)
 {
 }
 
-AbstractSimpleInterface* Factory::createSimpleInterface(QObject *parent)
+std::shared_ptr<AbstractSimpleInterface> Factory::createSimpleInterface(QObject *parent)
 {
-    return new SimpleInterface(parent);
+    return std::make_shared<SimpleInterface>(parent);
 }
 
-AbstractSimpleArrayInterface* Factory::createSimpleArrayInterface(QObject *parent)
+std::shared_ptr<AbstractSimpleArrayInterface> Factory::createSimpleArrayInterface(QObject *parent)
 {
-    return new SimpleArrayInterface(parent);
+    return std::make_shared<SimpleArrayInterface>(parent);
 }
 
 } // namespace tb_simple

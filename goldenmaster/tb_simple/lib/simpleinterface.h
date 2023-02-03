@@ -39,29 +39,35 @@ class TB_SIMPLE_LIB_EXPORT SimpleInterface : public AbstractSimpleInterface
 public:
     explicit SimpleInterface(QObject *parent = nullptr);
     virtual ~SimpleInterface() override;
+
+
     /** @return value of the property propBool */
     bool propBool() const override;
     /** Use to change a property value.
     * if the property is changed, a signal {.Name}}Changed is emitted.
-    @param value to set for the property propBool */
+    * @param value to set for the property propBool 
+    */
     void setPropBool(bool propBool) override;
     /** @return value of the property propInt */
     int propInt() const override;
     /** Use to change a property value.
     * if the property is changed, a signal {.Name}}Changed is emitted.
-    @param value to set for the property propInt */
+    * @param value to set for the property propInt 
+    */
     void setPropInt(int propInt) override;
     /** @return value of the property propFloat */
     qreal propFloat() const override;
     /** Use to change a property value.
     * if the property is changed, a signal {.Name}}Changed is emitted.
-    @param value to set for the property propFloat */
+    * @param value to set for the property propFloat 
+    */
     void setPropFloat(qreal propFloat) override;
     /** @return value of the property propString */
     QString propString() const override;
     /** Use to change a property value.
     * if the property is changed, a signal {.Name}}Changed is emitted.
-    @param value to set for the property propString */
+    * @param value to set for the property propString 
+    */
     void setPropString(const QString& propString) override;
     bool funcBool(bool paramBool) override;
     int funcInt(int paramInt) override;

@@ -29,8 +29,8 @@ public:
     * @return An ApiFactoryInterface implementation used to create objects.
     */
     static ApiFactoryInterface *get();
-    virtual AbstractSimpleInterface* createSimpleInterface(QObject *parent);
-    virtual AbstractSimpleArrayInterface* createSimpleArrayInterface(QObject *parent);
+    std::shared_ptr<AbstractSimpleInterface> createSimpleInterface(QObject *parent) override;
+    std::shared_ptr<AbstractSimpleArrayInterface> createSimpleArrayInterface(QObject *parent) override;
 private:
     static ApiFactoryInterface *s_instance;
 };

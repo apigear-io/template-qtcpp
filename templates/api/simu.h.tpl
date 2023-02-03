@@ -6,7 +6,7 @@
 namespace {{snake  .Module.Name }} {
 
 {{- range .Module.Interfaces }}
-{{- $class := printf "Simulation%s" .Name }}
+{{- $class := printf "Simulation%s" (Camel .Name) }}
 
 // ********************************************************************
 // {{$class}} simulation interface
@@ -26,7 +26,7 @@ public:
 {{- end }}
 
 {{- range .Operations }}
-    {{qtReturn "" .Return}} {{.Name}}({{qtParams "" .Params}}) override;
+    {{qtReturn "" .Return}} {{camel .Name}}({{qtParams "" .Params}}) override;
 {{- end }}
 
 private:

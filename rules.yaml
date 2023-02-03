@@ -182,3 +182,11 @@ features:
           target: "examples/olinkclient/CMakeLists.txt"
         - source: "examples/olinkclient/main.cpp.tpl"
           target: "examples/olinkclient/main.cpp"
+        - source: "examples/qml/CMakeLists.txt.tpl"
+          target: "examples/qml/CMakeLists.txt"
+        - source: "examples/qml/main.cpp.tpl"
+          target: "examples/qml/main.cpp"
+        - source: "examples/qml/resources.qrc"
+          raw: true
+        - source: "examples/qml/main.qml.tpl"
+          target: "examples/qml/main.qml"

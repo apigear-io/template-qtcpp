@@ -17,9 +17,9 @@ class Factory : public QObject, public ApiFactoryInterface
 public:
     Factory(QObject *parent = nullptr);
     /** @return implementation of SimpleInterface */
-    AbstractSimpleInterface* createSimpleInterface(QObject *parent) override;
+    std::shared_ptr<AbstractSimpleInterface> createSimpleInterface(QObject *parent) override;
     /** @return implementation of SimpleArrayInterface */
-    AbstractSimpleArrayInterface* createSimpleArrayInterface(QObject *parent) override;
+    std::shared_ptr<AbstractSimpleArrayInterface> createSimpleArrayInterface(QObject *parent) override;
 };
 
 } // namespace tb_simple

@@ -28,23 +28,27 @@ namespace testbed1 {
 QmlStructArrayInterface::QmlStructArrayInterface(QObject *parent)
     : AbstractStructArrayInterface(parent)
 {
-    m_obj = ApiFactory::get()->createStructArrayInterface(this);
-    connect(m_obj, &AbstractStructArrayInterface::propBoolChanged, this, &QmlStructArrayInterface::propBoolChanged);
-    connect(m_obj, &AbstractStructArrayInterface::propBoolChanged, this, &AbstractStructArrayInterface::propBoolChanged);
-    connect(m_obj, &AbstractStructArrayInterface::propIntChanged, this, &QmlStructArrayInterface::propIntChanged);
-    connect(m_obj, &AbstractStructArrayInterface::propIntChanged, this, &AbstractStructArrayInterface::propIntChanged);
-    connect(m_obj, &AbstractStructArrayInterface::propFloatChanged, this, &QmlStructArrayInterface::propFloatChanged);
-    connect(m_obj, &AbstractStructArrayInterface::propFloatChanged, this, &AbstractStructArrayInterface::propFloatChanged);
-    connect(m_obj, &AbstractStructArrayInterface::propStringChanged, this, &QmlStructArrayInterface::propStringChanged);
-    connect(m_obj, &AbstractStructArrayInterface::propStringChanged, this, &AbstractStructArrayInterface::propStringChanged);
-    connect(m_obj, &AbstractStructArrayInterface::sigBool, this, &QmlStructArrayInterface::sigBool);
-    connect(m_obj, &AbstractStructArrayInterface::sigBool, this, &AbstractStructArrayInterface::sigBool);
-    connect(m_obj, &AbstractStructArrayInterface::sigInt, this, &QmlStructArrayInterface::sigInt);
-    connect(m_obj, &AbstractStructArrayInterface::sigInt, this, &AbstractStructArrayInterface::sigInt);
-    connect(m_obj, &AbstractStructArrayInterface::sigFloat, this, &QmlStructArrayInterface::sigFloat);
-    connect(m_obj, &AbstractStructArrayInterface::sigFloat, this, &AbstractStructArrayInterface::sigFloat);
-    connect(m_obj, &AbstractStructArrayInterface::sigString, this, &QmlStructArrayInterface::sigString);
-    connect(m_obj, &AbstractStructArrayInterface::sigString, this, &AbstractStructArrayInterface::sigString);
+    m_obj = ApiFactory::get()->createStructArrayInterface();
+    // Connection to forward backend implementation singal to wrapper:
+    // - Forward the Property Changed singal emitted by backend implementation, as QmlStructArrayInterface::Property Changed signal for qml property changed notification.
+    // - Forward the  Property Changed singal emitted by backend implementation, as AbstractStructArrayInterface::Property Changed signal
+    // for usage, where QmlStructArrayInterface is used by the AbstractTuner interface and for connections with AbstractStructArrayInterface::Property Changed signal
+    connect(m_obj.get(), &AbstractStructArrayInterface::propBoolChanged, this, &QmlStructArrayInterface::propBoolChanged);
+    connect(m_obj.get(), &AbstractStructArrayInterface::propBoolChanged, this, &AbstractStructArrayInterface::propBoolChanged);
+    connect(m_obj.get(), &AbstractStructArrayInterface::propIntChanged, this, &QmlStructArrayInterface::propIntChanged);
+    connect(m_obj.get(), &AbstractStructArrayInterface::propIntChanged, this, &AbstractStructArrayInterface::propIntChanged);
+    connect(m_obj.get(), &AbstractStructArrayInterface::propFloatChanged, this, &QmlStructArrayInterface::propFloatChanged);
+    connect(m_obj.get(), &AbstractStructArrayInterface::propFloatChanged, this, &AbstractStructArrayInterface::propFloatChanged);
+    connect(m_obj.get(), &AbstractStructArrayInterface::propStringChanged, this, &QmlStructArrayInterface::propStringChanged);
+    connect(m_obj.get(), &AbstractStructArrayInterface::propStringChanged, this, &AbstractStructArrayInterface::propStringChanged);
+
+    // Forward the singals emitted by backend implementation to QmlStructArrayInterface wrapper.
+    //  Have in mind that there is no forwarding from the QmlStructArrayInterface wrapper to backend implementation.
+    //  This signal is designed to be emitted from backend only.
+    connect(m_obj.get(), &AbstractStructArrayInterface::sigBool, this, &AbstractStructArrayInterface::sigBool);
+    connect(m_obj.get(), &AbstractStructArrayInterface::sigInt, this, &AbstractStructArrayInterface::sigInt);
+    connect(m_obj.get(), &AbstractStructArrayInterface::sigFloat, this, &AbstractStructArrayInterface::sigFloat);
+    connect(m_obj.get(), &AbstractStructArrayInterface::sigString, this, &AbstractStructArrayInterface::sigString);
 }
 
 QmlStructArrayInterface::~QmlStructArrayInterface()

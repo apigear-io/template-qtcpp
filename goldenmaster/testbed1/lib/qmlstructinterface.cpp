@@ -28,23 +28,27 @@ namespace testbed1 {
 QmlStructInterface::QmlStructInterface(QObject *parent)
     : AbstractStructInterface(parent)
 {
-    m_obj = ApiFactory::get()->createStructInterface(this);
-    connect(m_obj, &AbstractStructInterface::propBoolChanged, this, &QmlStructInterface::propBoolChanged);
-    connect(m_obj, &AbstractStructInterface::propBoolChanged, this, &AbstractStructInterface::propBoolChanged);
-    connect(m_obj, &AbstractStructInterface::propIntChanged, this, &QmlStructInterface::propIntChanged);
-    connect(m_obj, &AbstractStructInterface::propIntChanged, this, &AbstractStructInterface::propIntChanged);
-    connect(m_obj, &AbstractStructInterface::propFloatChanged, this, &QmlStructInterface::propFloatChanged);
-    connect(m_obj, &AbstractStructInterface::propFloatChanged, this, &AbstractStructInterface::propFloatChanged);
-    connect(m_obj, &AbstractStructInterface::propStringChanged, this, &QmlStructInterface::propStringChanged);
-    connect(m_obj, &AbstractStructInterface::propStringChanged, this, &AbstractStructInterface::propStringChanged);
-    connect(m_obj, &AbstractStructInterface::sigBool, this, &QmlStructInterface::sigBool);
-    connect(m_obj, &AbstractStructInterface::sigBool, this, &AbstractStructInterface::sigBool);
-    connect(m_obj, &AbstractStructInterface::sigInt, this, &QmlStructInterface::sigInt);
-    connect(m_obj, &AbstractStructInterface::sigInt, this, &AbstractStructInterface::sigInt);
-    connect(m_obj, &AbstractStructInterface::sigFloat, this, &QmlStructInterface::sigFloat);
-    connect(m_obj, &AbstractStructInterface::sigFloat, this, &AbstractStructInterface::sigFloat);
-    connect(m_obj, &AbstractStructInterface::sigString, this, &QmlStructInterface::sigString);
-    connect(m_obj, &AbstractStructInterface::sigString, this, &AbstractStructInterface::sigString);
+    m_obj = ApiFactory::get()->createStructInterface();
+    // Connection to forward backend implementation singal to wrapper:
+    // - Forward the Property Changed singal emitted by backend implementation, as QmlStructInterface::Property Changed signal for qml property changed notification.
+    // - Forward the  Property Changed singal emitted by backend implementation, as AbstractStructInterface::Property Changed signal
+    // for usage, where QmlStructInterface is used by the AbstractTuner interface and for connections with AbstractStructInterface::Property Changed signal
+    connect(m_obj.get(), &AbstractStructInterface::propBoolChanged, this, &QmlStructInterface::propBoolChanged);
+    connect(m_obj.get(), &AbstractStructInterface::propBoolChanged, this, &AbstractStructInterface::propBoolChanged);
+    connect(m_obj.get(), &AbstractStructInterface::propIntChanged, this, &QmlStructInterface::propIntChanged);
+    connect(m_obj.get(), &AbstractStructInterface::propIntChanged, this, &AbstractStructInterface::propIntChanged);
+    connect(m_obj.get(), &AbstractStructInterface::propFloatChanged, this, &QmlStructInterface::propFloatChanged);
+    connect(m_obj.get(), &AbstractStructInterface::propFloatChanged, this, &AbstractStructInterface::propFloatChanged);
+    connect(m_obj.get(), &AbstractStructInterface::propStringChanged, this, &QmlStructInterface::propStringChanged);
+    connect(m_obj.get(), &AbstractStructInterface::propStringChanged, this, &AbstractStructInterface::propStringChanged);
+
+    // Forward the singals emitted by backend implementation to QmlStructInterface wrapper.
+    //  Have in mind that there is no forwarding from the QmlStructInterface wrapper to backend implementation.
+    //  This signal is designed to be emitted from backend only.
+    connect(m_obj.get(), &AbstractStructInterface::sigBool, this, &AbstractStructInterface::sigBool);
+    connect(m_obj.get(), &AbstractStructInterface::sigInt, this, &AbstractStructInterface::sigInt);
+    connect(m_obj.get(), &AbstractStructInterface::sigFloat, this, &AbstractStructInterface::sigFloat);
+    connect(m_obj.get(), &AbstractStructInterface::sigString, this, &AbstractStructInterface::sigString);
 }
 
 QmlStructInterface::~QmlStructInterface()

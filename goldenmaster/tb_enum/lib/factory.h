@@ -17,7 +17,7 @@ class Factory : public QObject, public ApiFactoryInterface
 public:
     Factory(QObject *parent = nullptr);
     /** @return implementation of EnumInterface */
-    AbstractEnumInterface* createEnumInterface(QObject *parent) override;
+    std::shared_ptr<AbstractEnumInterface> createEnumInterface(QObject *parent) override;
 };
 
 } // namespace tb_enum

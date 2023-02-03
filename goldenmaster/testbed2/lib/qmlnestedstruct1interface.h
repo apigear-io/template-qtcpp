@@ -21,30 +21,55 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <QtCore>
 
 #include "nestedstruct1interface.h"
+#include <memory>
 
 namespace testbed2 {
 
 /**
 * A QML wrapper of the NestedStruct1Interface implementation.
-* Uses a NestedStruct1Interface provided by an ApiFactory.
-* See ApiFactory and factories that implement the ApiFactoryInterface.
+* Uses a NestedStruct1Interface backend provided by an ApiFactory.
+* Use this class to easily bind to properties and signals provided by NestedStruct1Interface backend or
+* invoke operations on it. Have in mind that singals provided by NestedStruct1Interface backend should be
+* emitted only by NestedStruct1Interface backend, emitting it on qml will not reach the NestedStruct1Interface backend.
+* See ApiFactory and factories that implement the ApiFactoryInterface for other features.
 */
 class TESTBED2_LIB_EXPORT QmlNestedStruct1Interface : public AbstractNestedStruct1Interface
 {
     Q_OBJECT
-    Q_PROPERTY(NestedStruct1 prop1 READ prop1 NOTIFY prop1Changed)
+
+    /**
+    * Exposes prop1 property for qml.
+    */
+    Q_PROPERTY(NestedStruct1 prop1 READ prop1 WRITE setProp1 NOTIFY prop1Changed)
 public:
     explicit QmlNestedStruct1Interface(QObject *parent = nullptr);
     ~QmlNestedStruct1Interface() override;
+    /**
+    * Getter for a prop1 property
+    * @return A value for prop1 property provided by backend.
+    */
     NestedStruct1 prop1() const override;
+    /*
+    * Setter for a prop1 property, requests the backend to set the prop1 property
+    * @param const NestedStruct1& prop1  Value to set for  prop1 property.
+    */
     void setProp1(const NestedStruct1& prop1) override;
+
+    /**
+    * Exposes func1 of backend implementation to a qml.
+    *   
+    */
     Q_INVOKABLE NestedStruct1 func1(const NestedStruct1& param1) override;
 
 Q_SIGNALS:
-    void sig1(const NestedStruct1& param1);
+    /** Re-define singals for property changed notification, to make them are available for qml property */
     void prop1Changed(const NestedStruct1& prop1);
 private:
-	AbstractNestedStruct1Interface *m_obj;
+    /**
+    * Backend of AbstractNestedStruct1Interface type that provides properties on which methods will be invoked.
+    * Produced by a ApiFactory factory. 
+    */
+	std::shared_ptr<AbstractNestedStruct1Interface> m_obj;
 };
 
 } //namespace testbed2

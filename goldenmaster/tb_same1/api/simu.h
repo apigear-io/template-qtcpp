@@ -59,8 +59,8 @@ public:
     explicit SimulationSameEnum1Interface(QObject *parent = nullptr);
     virtual ~SimulationSameEnum1Interface() override;
     Enum1::Enum1Enum prop1() const override;
-    void setProp1(const Enum1::Enum1Enum prop1) override;
-    Enum1::Enum1Enum func1(const Enum1::Enum1Enum param1) override;
+    void setProp1(Enum1::Enum1Enum prop1) override;
+    Enum1::Enum1Enum func1(Enum1::Enum1Enum param1) override;
 
 private:
     Enum1::Enum1Enum m_prop1;
@@ -78,11 +78,11 @@ public:
     explicit SimulationSameEnum2Interface(QObject *parent = nullptr);
     virtual ~SimulationSameEnum2Interface() override;
     Enum1::Enum1Enum prop1() const override;
-    void setProp1(const Enum1::Enum1Enum prop1) override;
+    void setProp1(Enum1::Enum1Enum prop1) override;
     Enum2::Enum2Enum prop2() const override;
-    void setProp2(const Enum2::Enum2Enum prop2) override;
-    Enum1::Enum1Enum func1(const Enum1::Enum1Enum param1) override;
-    Enum1::Enum1Enum func2(const Enum1::Enum1Enum param1, const Enum2::Enum2Enum param2) override;
+    void setProp2(Enum2::Enum2Enum prop2) override;
+    Enum1::Enum1Enum func1(Enum1::Enum1Enum param1) override;
+    Enum1::Enum1Enum func2(Enum1::Enum1Enum param1, Enum2::Enum2Enum param2) override;
 
 private:
     Enum1::Enum1Enum m_prop1;

@@ -17,13 +17,13 @@ class Factory : public QObject, public ApiFactoryInterface
 public:
     Factory(QObject *parent = nullptr);
     /** @return implementation of ManyParamInterface */
-    AbstractManyParamInterface* createManyParamInterface(QObject *parent) override;
+    std::shared_ptr<AbstractManyParamInterface> createManyParamInterface(QObject *parent) override;
     /** @return implementation of NestedStruct1Interface */
-    AbstractNestedStruct1Interface* createNestedStruct1Interface(QObject *parent) override;
+    std::shared_ptr<AbstractNestedStruct1Interface> createNestedStruct1Interface(QObject *parent) override;
     /** @return implementation of NestedStruct2Interface */
-    AbstractNestedStruct2Interface* createNestedStruct2Interface(QObject *parent) override;
+    std::shared_ptr<AbstractNestedStruct2Interface> createNestedStruct2Interface(QObject *parent) override;
     /** @return implementation of NestedStruct3Interface */
-    AbstractNestedStruct3Interface* createNestedStruct3Interface(QObject *parent) override;
+    std::shared_ptr<AbstractNestedStruct3Interface> createNestedStruct3Interface(QObject *parent) override;
 };
 
 } // namespace testbed2

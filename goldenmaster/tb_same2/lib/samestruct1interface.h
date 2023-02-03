@@ -39,11 +39,14 @@ class TB_SAME2_LIB_EXPORT SameStruct1Interface : public AbstractSameStruct1Inter
 public:
     explicit SameStruct1Interface(QObject *parent = nullptr);
     virtual ~SameStruct1Interface() override;
+
+
     /** @return value of the property prop1 */
     Struct1 prop1() const override;
     /** Use to change a property value.
     * if the property is changed, a signal {.Name}}Changed is emitted.
-    @param value to set for the property prop1 */
+    * @param value to set for the property prop1 
+    */
     void setProp1(const Struct1& prop1) override;
     Struct1 func1(const Struct1& param1) override;
 

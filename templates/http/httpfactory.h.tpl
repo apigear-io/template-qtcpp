@@ -12,7 +12,7 @@ class HttpFactory : public QObject, public ApiFactoryInterface
 public:
     HttpFactory(QObject *parent = nullptr);
 {{- range .Module.Interfaces }}
-    Abstract{{Camel .Name}}* create{{Camel .Name}}(QObject *parent) override;
+    std::shared_ptr<Abstract{{Camel .Name}}> create{{Camel .Name}}(QObject *parent) override;
 {{- end }}
 private:
     QNetworkAccessManager *m_network;

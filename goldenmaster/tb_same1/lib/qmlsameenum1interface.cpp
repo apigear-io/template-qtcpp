@@ -28,11 +28,18 @@ namespace tb_same1 {
 QmlSameEnum1Interface::QmlSameEnum1Interface(QObject *parent)
     : AbstractSameEnum1Interface(parent)
 {
-    m_obj = ApiFactory::get()->createSameEnum1Interface(this);
-    connect(m_obj, &AbstractSameEnum1Interface::prop1Changed, this, &QmlSameEnum1Interface::prop1Changed);
-    connect(m_obj, &AbstractSameEnum1Interface::prop1Changed, this, &AbstractSameEnum1Interface::prop1Changed);
-    connect(m_obj, &AbstractSameEnum1Interface::sig1, this, &QmlSameEnum1Interface::sig1);
-    connect(m_obj, &AbstractSameEnum1Interface::sig1, this, &AbstractSameEnum1Interface::sig1);
+    m_obj = ApiFactory::get()->createSameEnum1Interface();
+    // Connection to forward backend implementation singal to wrapper:
+    // - Forward the Property Changed singal emitted by backend implementation, as QmlSameEnum1Interface::Property Changed signal for qml property changed notification.
+    // - Forward the  Property Changed singal emitted by backend implementation, as AbstractSameEnum1Interface::Property Changed signal
+    // for usage, where QmlSameEnum1Interface is used by the AbstractTuner interface and for connections with AbstractSameEnum1Interface::Property Changed signal
+    connect(m_obj.get(), &AbstractSameEnum1Interface::prop1Changed, this, &QmlSameEnum1Interface::prop1Changed);
+    connect(m_obj.get(), &AbstractSameEnum1Interface::prop1Changed, this, &AbstractSameEnum1Interface::prop1Changed);
+
+    // Forward the singals emitted by backend implementation to QmlSameEnum1Interface wrapper.
+    //  Have in mind that there is no forwarding from the QmlSameEnum1Interface wrapper to backend implementation.
+    //  This signal is designed to be emitted from backend only.
+    connect(m_obj.get(), &AbstractSameEnum1Interface::sig1, this, &AbstractSameEnum1Interface::sig1);
 }
 
 QmlSameEnum1Interface::~QmlSameEnum1Interface()
@@ -44,13 +51,13 @@ Enum1::Enum1Enum QmlSameEnum1Interface::prop1() const
     return m_obj->prop1();
 }
 
-void QmlSameEnum1Interface::setProp1(const Enum1::Enum1Enum prop1)
+void QmlSameEnum1Interface::setProp1(Enum1::Enum1Enum prop1)
 {
     SameEnum1InterfaceAgent::capture_state(this);
     return m_obj->setProp1(prop1);
 }
 
-Enum1::Enum1Enum QmlSameEnum1Interface::func1(const Enum1::Enum1Enum param1)
+Enum1::Enum1Enum QmlSameEnum1Interface::func1(Enum1::Enum1Enum param1)
 {
     SameEnum1InterfaceAgent::trace_func1(this, param1);
 	

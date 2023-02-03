@@ -28,15 +28,21 @@ namespace tb_same2 {
 QmlSameEnum2Interface::QmlSameEnum2Interface(QObject *parent)
     : AbstractSameEnum2Interface(parent)
 {
-    m_obj = ApiFactory::get()->createSameEnum2Interface(this);
-    connect(m_obj, &AbstractSameEnum2Interface::prop1Changed, this, &QmlSameEnum2Interface::prop1Changed);
-    connect(m_obj, &AbstractSameEnum2Interface::prop1Changed, this, &AbstractSameEnum2Interface::prop1Changed);
-    connect(m_obj, &AbstractSameEnum2Interface::prop2Changed, this, &QmlSameEnum2Interface::prop2Changed);
-    connect(m_obj, &AbstractSameEnum2Interface::prop2Changed, this, &AbstractSameEnum2Interface::prop2Changed);
-    connect(m_obj, &AbstractSameEnum2Interface::sig1, this, &QmlSameEnum2Interface::sig1);
-    connect(m_obj, &AbstractSameEnum2Interface::sig1, this, &AbstractSameEnum2Interface::sig1);
-    connect(m_obj, &AbstractSameEnum2Interface::sig2, this, &QmlSameEnum2Interface::sig2);
-    connect(m_obj, &AbstractSameEnum2Interface::sig2, this, &AbstractSameEnum2Interface::sig2);
+    m_obj = ApiFactory::get()->createSameEnum2Interface();
+    // Connection to forward backend implementation singal to wrapper:
+    // - Forward the Property Changed singal emitted by backend implementation, as QmlSameEnum2Interface::Property Changed signal for qml property changed notification.
+    // - Forward the  Property Changed singal emitted by backend implementation, as AbstractSameEnum2Interface::Property Changed signal
+    // for usage, where QmlSameEnum2Interface is used by the AbstractTuner interface and for connections with AbstractSameEnum2Interface::Property Changed signal
+    connect(m_obj.get(), &AbstractSameEnum2Interface::prop1Changed, this, &QmlSameEnum2Interface::prop1Changed);
+    connect(m_obj.get(), &AbstractSameEnum2Interface::prop1Changed, this, &AbstractSameEnum2Interface::prop1Changed);
+    connect(m_obj.get(), &AbstractSameEnum2Interface::prop2Changed, this, &QmlSameEnum2Interface::prop2Changed);
+    connect(m_obj.get(), &AbstractSameEnum2Interface::prop2Changed, this, &AbstractSameEnum2Interface::prop2Changed);
+
+    // Forward the singals emitted by backend implementation to QmlSameEnum2Interface wrapper.
+    //  Have in mind that there is no forwarding from the QmlSameEnum2Interface wrapper to backend implementation.
+    //  This signal is designed to be emitted from backend only.
+    connect(m_obj.get(), &AbstractSameEnum2Interface::sig1, this, &AbstractSameEnum2Interface::sig1);
+    connect(m_obj.get(), &AbstractSameEnum2Interface::sig2, this, &AbstractSameEnum2Interface::sig2);
 }
 
 QmlSameEnum2Interface::~QmlSameEnum2Interface()
@@ -48,7 +54,7 @@ Enum1::Enum1Enum QmlSameEnum2Interface::prop1() const
     return m_obj->prop1();
 }
 
-void QmlSameEnum2Interface::setProp1(const Enum1::Enum1Enum prop1)
+void QmlSameEnum2Interface::setProp1(Enum1::Enum1Enum prop1)
 {
     SameEnum2InterfaceAgent::capture_state(this);
     return m_obj->setProp1(prop1);
@@ -59,20 +65,20 @@ Enum2::Enum2Enum QmlSameEnum2Interface::prop2() const
     return m_obj->prop2();
 }
 
-void QmlSameEnum2Interface::setProp2(const Enum2::Enum2Enum prop2)
+void QmlSameEnum2Interface::setProp2(Enum2::Enum2Enum prop2)
 {
     SameEnum2InterfaceAgent::capture_state(this);
     return m_obj->setProp2(prop2);
 }
 
-Enum1::Enum1Enum QmlSameEnum2Interface::func1(const Enum1::Enum1Enum param1)
+Enum1::Enum1Enum QmlSameEnum2Interface::func1(Enum1::Enum1Enum param1)
 {
     SameEnum2InterfaceAgent::trace_func1(this, param1);
 	
     return m_obj->func1(param1);
 }
 
-Enum1::Enum1Enum QmlSameEnum2Interface::func2(const Enum1::Enum1Enum param1, const Enum2::Enum2Enum param2)
+Enum1::Enum1Enum QmlSameEnum2Interface::func2(Enum1::Enum1Enum param1, Enum2::Enum2Enum param2)
 {
     SameEnum2InterfaceAgent::trace_func2(this, param1, param2);
 	

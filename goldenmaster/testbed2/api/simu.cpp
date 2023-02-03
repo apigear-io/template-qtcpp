@@ -50,22 +50,18 @@ SimulationManyParamInterface::SimulationManyParamInterface(QObject *parent)
       }
     };
     ApiGear::SimulationClient::instance()->doFetchState("testbed2/ManyParamInterface", fetchStateFunc);
-
     NotifyRequestFunc sig1Func = [this](NotifyRequestArg arg) { 
         emit sig1(arg.params["param1"].get<int>());
     };
     ApiGear::SimulationClient::instance()->onNotify("testbed2/ManyParamInterface#sig1", sig1Func);
-
     NotifyRequestFunc sig2Func = [this](NotifyRequestArg arg) { 
         emit sig2(arg.params["param1"].get<int>(),arg.params["param2"].get<int>());
     };
     ApiGear::SimulationClient::instance()->onNotify("testbed2/ManyParamInterface#sig2", sig2Func);
-
     NotifyRequestFunc sig3Func = [this](NotifyRequestArg arg) { 
         emit sig3(arg.params["param1"].get<int>(),arg.params["param2"].get<int>(),arg.params["param3"].get<int>());
     };
     ApiGear::SimulationClient::instance()->onNotify("testbed2/ManyParamInterface#sig3", sig3Func);
-
     NotifyRequestFunc sig4Func = [this](NotifyRequestArg arg) { 
         emit sig4(arg.params["param1"].get<int>(),arg.params["param2"].get<int>(),arg.params["param3"].get<int>(),arg.params["param4"].get<int>());
     };
@@ -196,7 +192,6 @@ SimulationNestedStruct1Interface::SimulationNestedStruct1Interface(QObject *pare
       }
     };
     ApiGear::SimulationClient::instance()->doFetchState("testbed2/NestedStruct1Interface", fetchStateFunc);
-
     NotifyRequestFunc sig1Func = [this](NotifyRequestArg arg) { 
         emit sig1(arg.params["param1"].get<NestedStruct1>());
     };
@@ -259,12 +254,10 @@ SimulationNestedStruct2Interface::SimulationNestedStruct2Interface(QObject *pare
       }
     };
     ApiGear::SimulationClient::instance()->doFetchState("testbed2/NestedStruct2Interface", fetchStateFunc);
-
     NotifyRequestFunc sig1Func = [this](NotifyRequestArg arg) { 
         emit sig1(arg.params["param1"].get<NestedStruct1>());
     };
     ApiGear::SimulationClient::instance()->onNotify("testbed2/NestedStruct2Interface#sig1", sig1Func);
-
     NotifyRequestFunc sig2Func = [this](NotifyRequestArg arg) { 
         emit sig2(arg.params["param1"].get<NestedStruct1>(),arg.params["param2"].get<NestedStruct2>());
     };
@@ -358,17 +351,14 @@ SimulationNestedStruct3Interface::SimulationNestedStruct3Interface(QObject *pare
       }
     };
     ApiGear::SimulationClient::instance()->doFetchState("testbed2/NestedStruct3Interface", fetchStateFunc);
-
     NotifyRequestFunc sig1Func = [this](NotifyRequestArg arg) { 
         emit sig1(arg.params["param1"].get<NestedStruct1>());
     };
     ApiGear::SimulationClient::instance()->onNotify("testbed2/NestedStruct3Interface#sig1", sig1Func);
-
     NotifyRequestFunc sig2Func = [this](NotifyRequestArg arg) { 
         emit sig2(arg.params["param1"].get<NestedStruct1>(),arg.params["param2"].get<NestedStruct2>());
     };
     ApiGear::SimulationClient::instance()->onNotify("testbed2/NestedStruct3Interface#sig2", sig2Func);
-
     NotifyRequestFunc sig3Func = [this](NotifyRequestArg arg) { 
         emit sig3(arg.params["param1"].get<NestedStruct1>(),arg.params["param2"].get<NestedStruct2>(),arg.params["param3"].get<NestedStruct3>());
     };

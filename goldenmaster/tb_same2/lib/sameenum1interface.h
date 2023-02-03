@@ -39,13 +39,16 @@ class TB_SAME2_LIB_EXPORT SameEnum1Interface : public AbstractSameEnum1Interface
 public:
     explicit SameEnum1Interface(QObject *parent = nullptr);
     virtual ~SameEnum1Interface() override;
+
+
     /** @return value of the property prop1 */
     Enum1::Enum1Enum prop1() const override;
     /** Use to change a property value.
     * if the property is changed, a signal {.Name}}Changed is emitted.
-    @param value to set for the property prop1 */
-    void setProp1(const Enum1::Enum1Enum prop1) override;
-    Enum1::Enum1Enum func1(const Enum1::Enum1Enum param1) override;
+    * @param value to set for the property prop1 
+    */
+    void setProp1(Enum1::Enum1Enum prop1) override;
+    Enum1::Enum1Enum func1(Enum1::Enum1Enum param1) override;
 
 private:
     /** prop1 property */

@@ -42,7 +42,7 @@ OLinkNestedStruct1InterfaceAdapter::OLinkNestedStruct1InterfaceAdapter(RemoteReg
 {
     connect(m_impl, &AbstractNestedStruct1Interface::prop1Changed, this,
         [=](const NestedStruct1& prop1) {
-        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "prop1)");
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "prop1");
         for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
             auto lockedNode = node.lock();
             if(lockedNode) {
@@ -53,7 +53,7 @@ OLinkNestedStruct1InterfaceAdapter::OLinkNestedStruct1InterfaceAdapter(RemoteReg
         connect(m_impl, &AbstractNestedStruct1Interface::sig1, this,
             [=](const NestedStruct1& param1) {
                 const nlohmann::json& args = { param1 };
-                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sig1)");
+                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sig1");
                 for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
                     auto lockedNode = node.lock();
                     if(lockedNode) {

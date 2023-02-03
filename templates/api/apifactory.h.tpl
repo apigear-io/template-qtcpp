@@ -32,7 +32,7 @@ public:
     static ApiFactoryInterface *get();
 
 {{- range .Module.Interfaces }}
-    virtual Abstract{{.Name}}* create{{Camel .Name }}(QObject *parent);
+    std::shared_ptr<Abstract{{Camel .Name}}> create{{Camel .Name }}(QObject *parent) override;
 {{- end }}
 private:
     static ApiFactoryInterface *s_instance;

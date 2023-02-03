@@ -9,14 +9,14 @@ Factory::Factory(QObject *parent)
 {
 }
 
-AbstractStructInterface* Factory::createStructInterface(QObject *parent)
+std::shared_ptr<AbstractStructInterface> Factory::createStructInterface(QObject *parent)
 {
-    return new StructInterface(parent);
+    return std::make_shared<StructInterface>(parent);
 }
 
-AbstractStructArrayInterface* Factory::createStructArrayInterface(QObject *parent)
+std::shared_ptr<AbstractStructArrayInterface> Factory::createStructArrayInterface(QObject *parent)
 {
-    return new StructArrayInterface(parent);
+    return std::make_shared<StructArrayInterface>(parent);
 }
 
 } // namespace testbed1

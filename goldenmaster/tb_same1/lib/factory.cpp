@@ -11,24 +11,24 @@ Factory::Factory(QObject *parent)
 {
 }
 
-AbstractSameStruct1Interface* Factory::createSameStruct1Interface(QObject *parent)
+std::shared_ptr<AbstractSameStruct1Interface> Factory::createSameStruct1Interface(QObject *parent)
 {
-    return new SameStruct1Interface(parent);
+    return std::make_shared<SameStruct1Interface>(parent);
 }
 
-AbstractSameStruct2Interface* Factory::createSameStruct2Interface(QObject *parent)
+std::shared_ptr<AbstractSameStruct2Interface> Factory::createSameStruct2Interface(QObject *parent)
 {
-    return new SameStruct2Interface(parent);
+    return std::make_shared<SameStruct2Interface>(parent);
 }
 
-AbstractSameEnum1Interface* Factory::createSameEnum1Interface(QObject *parent)
+std::shared_ptr<AbstractSameEnum1Interface> Factory::createSameEnum1Interface(QObject *parent)
 {
-    return new SameEnum1Interface(parent);
+    return std::make_shared<SameEnum1Interface>(parent);
 }
 
-AbstractSameEnum2Interface* Factory::createSameEnum2Interface(QObject *parent)
+std::shared_ptr<AbstractSameEnum2Interface> Factory::createSameEnum2Interface(QObject *parent)
 {
-    return new SameEnum2Interface(parent);
+    return std::make_shared<SameEnum2Interface>(parent);
 }
 
 } // namespace tb_same1

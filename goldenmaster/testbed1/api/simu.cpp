@@ -50,22 +50,18 @@ SimulationStructInterface::SimulationStructInterface(QObject *parent)
       }
     };
     ApiGear::SimulationClient::instance()->doFetchState("testbed1/StructInterface", fetchStateFunc);
-
     NotifyRequestFunc sigBoolFunc = [this](NotifyRequestArg arg) { 
         emit sigBool(arg.params["paramBool"].get<StructBool>());
     };
     ApiGear::SimulationClient::instance()->onNotify("testbed1/StructInterface#sigBool", sigBoolFunc);
-
     NotifyRequestFunc sigIntFunc = [this](NotifyRequestArg arg) { 
         emit sigInt(arg.params["paramInt"].get<StructInt>());
     };
     ApiGear::SimulationClient::instance()->onNotify("testbed1/StructInterface#sigInt", sigIntFunc);
-
     NotifyRequestFunc sigFloatFunc = [this](NotifyRequestArg arg) { 
         emit sigFloat(arg.params["paramFloat"].get<StructFloat>());
     };
     ApiGear::SimulationClient::instance()->onNotify("testbed1/StructInterface#sigFloat", sigFloatFunc);
-
     NotifyRequestFunc sigStringFunc = [this](NotifyRequestArg arg) { 
         emit sigString(arg.params["paramString"].get<StructString>());
     };
@@ -211,22 +207,18 @@ SimulationStructArrayInterface::SimulationStructArrayInterface(QObject *parent)
       }
     };
     ApiGear::SimulationClient::instance()->doFetchState("testbed1/StructArrayInterface", fetchStateFunc);
-
     NotifyRequestFunc sigBoolFunc = [this](NotifyRequestArg arg) { 
         emit sigBool(arg.params["paramBool"].get<QList<StructBool>>());
     };
     ApiGear::SimulationClient::instance()->onNotify("testbed1/StructArrayInterface#sigBool", sigBoolFunc);
-
     NotifyRequestFunc sigIntFunc = [this](NotifyRequestArg arg) { 
         emit sigInt(arg.params["paramInt"].get<QList<StructInt>>());
     };
     ApiGear::SimulationClient::instance()->onNotify("testbed1/StructArrayInterface#sigInt", sigIntFunc);
-
     NotifyRequestFunc sigFloatFunc = [this](NotifyRequestArg arg) { 
         emit sigFloat(arg.params["paramFloat"].get<QList<StructFloat>>());
     };
     ApiGear::SimulationClient::instance()->onNotify("testbed1/StructArrayInterface#sigFloat", sigFloatFunc);
-
     NotifyRequestFunc sigStringFunc = [this](NotifyRequestArg arg) { 
         emit sigString(arg.params["paramString"].get<QList<StructString>>());
     };

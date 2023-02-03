@@ -21,30 +21,55 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <QtCore>
 
 #include "sameenum1interface.h"
+#include <memory>
 
 namespace tb_same1 {
 
 /**
 * A QML wrapper of the SameEnum1Interface implementation.
-* Uses a SameEnum1Interface provided by an ApiFactory.
-* See ApiFactory and factories that implement the ApiFactoryInterface.
+* Uses a SameEnum1Interface backend provided by an ApiFactory.
+* Use this class to easily bind to properties and signals provided by SameEnum1Interface backend or
+* invoke operations on it. Have in mind that singals provided by SameEnum1Interface backend should be
+* emitted only by SameEnum1Interface backend, emitting it on qml will not reach the SameEnum1Interface backend.
+* See ApiFactory and factories that implement the ApiFactoryInterface for other features.
 */
 class TB_SAME1_LIB_EXPORT QmlSameEnum1Interface : public AbstractSameEnum1Interface
 {
     Q_OBJECT
-    Q_PROPERTY(Enum1::Enum1Enum prop1 READ prop1 NOTIFY prop1Changed)
+
+    /**
+    * Exposes prop1 property for qml.
+    */
+    Q_PROPERTY(Enum1::Enum1Enum prop1 READ prop1 WRITE setProp1 NOTIFY prop1Changed)
 public:
     explicit QmlSameEnum1Interface(QObject *parent = nullptr);
     ~QmlSameEnum1Interface() override;
+    /**
+    * Getter for a prop1 property
+    * @return A value for prop1 property provided by backend.
+    */
     Enum1::Enum1Enum prop1() const override;
-    void setProp1(const Enum1::Enum1Enum prop1) override;
-    Q_INVOKABLE Enum1::Enum1Enum func1(const Enum1::Enum1Enum param1) override;
+    /*
+    * Setter for a prop1 property, requests the backend to set the prop1 property
+    * @param Enum1::Enum1Enum prop1  Value to set for  prop1 property.
+    */
+    void setProp1(Enum1::Enum1Enum prop1) override;
+
+    /**
+    * Exposes func1 of backend implementation to a qml.
+    *   
+    */
+    Q_INVOKABLE Enum1::Enum1Enum func1(Enum1::Enum1Enum param1) override;
 
 Q_SIGNALS:
-    void sig1(const Enum1::Enum1Enum param1);
-    void prop1Changed(const Enum1::Enum1Enum prop1);
+    /** Re-define singals for property changed notification, to make them are available for qml property */
+    void prop1Changed(Enum1::Enum1Enum prop1);
 private:
-	AbstractSameEnum1Interface *m_obj;
+    /**
+    * Backend of AbstractSameEnum1Interface type that provides properties on which methods will be invoked.
+    * Produced by a ApiFactory factory. 
+    */
+	std::shared_ptr<AbstractSameEnum1Interface> m_obj;
 };
 
 } //namespace tb_same1

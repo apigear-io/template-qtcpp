@@ -31,17 +31,17 @@ public:
     explicit HttpEnumInterface(QNetworkAccessManager *network, QObject *parent = nullptr);
     virtual ~HttpEnumInterface() override;
     Enum0::Enum0Enum prop0() const override;
-    void setProp0(const Enum0::Enum0Enum prop0) override;
+    void setProp0(Enum0::Enum0Enum prop0) override;
     Enum1::Enum1Enum prop1() const override;
-    void setProp1(const Enum1::Enum1Enum prop1) override;
+    void setProp1(Enum1::Enum1Enum prop1) override;
     Enum2::Enum2Enum prop2() const override;
-    void setProp2(const Enum2::Enum2Enum prop2) override;
+    void setProp2(Enum2::Enum2Enum prop2) override;
     Enum3::Enum3Enum prop3() const override;
-    void setProp3(const Enum3::Enum3Enum prop3) override;
-    Enum0::Enum0Enum func0(const Enum0::Enum0Enum param0) override;
-    Enum1::Enum1Enum func1(const Enum1::Enum1Enum param1) override;
-    Enum2::Enum2Enum func2(const Enum2::Enum2Enum param2) override;
-    Enum3::Enum3Enum func3(const Enum3::Enum3Enum param3) override;
+    void setProp3(Enum3::Enum3Enum prop3) override;
+    Enum0::Enum0Enum func0(Enum0::Enum0Enum param0) override;
+    Enum1::Enum1Enum func1(Enum1::Enum1Enum param1) override;
+    Enum2::Enum2Enum func2(Enum2::Enum2Enum param2) override;
+    Enum3::Enum3Enum func3(Enum3::Enum3Enum param3) override;
 private:
     QJsonObject post(const QString& path, const QJsonObject &payload);
     void applyState(const QJsonObject &state);

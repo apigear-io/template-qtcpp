@@ -10,14 +10,14 @@ HttpFactory::HttpFactory(QObject *parent)
 {
 }
 
-AbstractSimpleInterface* HttpFactory::createSimpleInterface(QObject *parent)
+std::shared_ptr<AbstractSimpleInterface> HttpFactory::createSimpleInterface(QObject *parent)
 {
-    return new HttpSimpleInterface(m_network, parent);
+    return std::make_shared<HttpSimpleInterface>(m_network, parent);
 }
 
-AbstractSimpleArrayInterface* HttpFactory::createSimpleArrayInterface(QObject *parent)
+std::shared_ptr<AbstractSimpleArrayInterface> HttpFactory::createSimpleArrayInterface(QObject *parent)
 {
-    return new HttpSimpleArrayInterface(m_network, parent);
+    return std::make_shared<HttpSimpleArrayInterface>(m_network, parent);
 }
 
 

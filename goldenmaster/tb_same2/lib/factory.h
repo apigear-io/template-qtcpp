@@ -17,13 +17,13 @@ class Factory : public QObject, public ApiFactoryInterface
 public:
     Factory(QObject *parent = nullptr);
     /** @return implementation of SameStruct1Interface */
-    AbstractSameStruct1Interface* createSameStruct1Interface(QObject *parent) override;
+    std::shared_ptr<AbstractSameStruct1Interface> createSameStruct1Interface(QObject *parent) override;
     /** @return implementation of SameStruct2Interface */
-    AbstractSameStruct2Interface* createSameStruct2Interface(QObject *parent) override;
+    std::shared_ptr<AbstractSameStruct2Interface> createSameStruct2Interface(QObject *parent) override;
     /** @return implementation of SameEnum1Interface */
-    AbstractSameEnum1Interface* createSameEnum1Interface(QObject *parent) override;
+    std::shared_ptr<AbstractSameEnum1Interface> createSameEnum1Interface(QObject *parent) override;
     /** @return implementation of SameEnum2Interface */
-    AbstractSameEnum2Interface* createSameEnum2Interface(QObject *parent) override;
+    std::shared_ptr<AbstractSameEnum2Interface> createSameEnum2Interface(QObject *parent) override;
 };
 
 } // namespace tb_same2

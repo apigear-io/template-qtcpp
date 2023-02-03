@@ -39,17 +39,21 @@ class TESTBED2_LIB_EXPORT NestedStruct2Interface : public AbstractNestedStruct2I
 public:
     explicit NestedStruct2Interface(QObject *parent = nullptr);
     virtual ~NestedStruct2Interface() override;
+
+
     /** @return value of the property prop1 */
     NestedStruct1 prop1() const override;
     /** Use to change a property value.
     * if the property is changed, a signal {.Name}}Changed is emitted.
-    @param value to set for the property prop1 */
+    * @param value to set for the property prop1 
+    */
     void setProp1(const NestedStruct1& prop1) override;
     /** @return value of the property prop2 */
     NestedStruct2 prop2() const override;
     /** Use to change a property value.
     * if the property is changed, a signal {.Name}}Changed is emitted.
-    @param value to set for the property prop2 */
+    * @param value to set for the property prop2 
+    */
     void setProp2(const NestedStruct2& prop2) override;
     NestedStruct1 func1(const NestedStruct1& param1) override;
     NestedStruct1 func2(const NestedStruct1& param1, const NestedStruct2& param2) override;

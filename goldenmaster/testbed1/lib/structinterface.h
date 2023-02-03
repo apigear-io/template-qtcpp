@@ -39,29 +39,35 @@ class TESTBED1_LIB_EXPORT StructInterface : public AbstractStructInterface
 public:
     explicit StructInterface(QObject *parent = nullptr);
     virtual ~StructInterface() override;
+
+
     /** @return value of the property propBool */
     StructBool propBool() const override;
     /** Use to change a property value.
     * if the property is changed, a signal {.Name}}Changed is emitted.
-    @param value to set for the property propBool */
+    * @param value to set for the property propBool 
+    */
     void setPropBool(const StructBool& propBool) override;
     /** @return value of the property propInt */
     StructInt propInt() const override;
     /** Use to change a property value.
     * if the property is changed, a signal {.Name}}Changed is emitted.
-    @param value to set for the property propInt */
+    * @param value to set for the property propInt 
+    */
     void setPropInt(const StructInt& propInt) override;
     /** @return value of the property propFloat */
     StructFloat propFloat() const override;
     /** Use to change a property value.
     * if the property is changed, a signal {.Name}}Changed is emitted.
-    @param value to set for the property propFloat */
+    * @param value to set for the property propFloat 
+    */
     void setPropFloat(const StructFloat& propFloat) override;
     /** @return value of the property propString */
     StructString propString() const override;
     /** Use to change a property value.
     * if the property is changed, a signal {.Name}}Changed is emitted.
-    @param value to set for the property propString */
+    * @param value to set for the property propString 
+    */
     void setPropString(const StructString& propString) override;
     StructBool funcBool(const StructBool& paramBool) override;
     StructBool funcInt(const StructInt& paramInt) override;

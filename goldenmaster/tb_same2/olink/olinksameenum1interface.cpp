@@ -46,7 +46,7 @@ void OLinkSameEnum1Interface::applyState(const nlohmann::json& fields)
     }
 }
 
-void OLinkSameEnum1Interface::setProp1(const Enum1::Enum1Enum prop1)
+void OLinkSameEnum1Interface::setProp1(Enum1::Enum1Enum prop1)
 {
     qDebug() << Q_FUNC_INFO;
     if(!m_node) {
@@ -55,7 +55,7 @@ void OLinkSameEnum1Interface::setProp1(const Enum1::Enum1Enum prop1)
     m_node->setRemoteProperty("tb.same2.SameEnum1Interface/prop1", prop1);
 }
 
-void OLinkSameEnum1Interface::setProp1Local(const Enum1::Enum1Enum prop1)
+void OLinkSameEnum1Interface::setProp1Local(Enum1::Enum1Enum prop1)
 {
     qDebug() << Q_FUNC_INFO;
     if (m_prop1 != prop1) {
@@ -70,7 +70,7 @@ Enum1::Enum1Enum OLinkSameEnum1Interface::prop1() const
     return m_prop1;
 }
 
-Enum1::Enum1Enum OLinkSameEnum1Interface::func1(const Enum1::Enum1Enum param1)
+Enum1::Enum1Enum OLinkSameEnum1Interface::func1(Enum1::Enum1Enum param1)
 {
     qDebug() << Q_FUNC_INFO;
     if(!m_node) {
@@ -85,7 +85,7 @@ Enum1::Enum1Enum OLinkSameEnum1Interface::func1(const Enum1::Enum1Enum param1)
     return value;
 }
 
-QtPromise::QPromise<Enum1::Enum1Enum> OLinkSameEnum1Interface::func1Async(const Enum1::Enum1Enum param1)
+QtPromise::QPromise<Enum1::Enum1Enum> OLinkSameEnum1Interface::func1Async(Enum1::Enum1Enum param1)
 {
     qDebug() << Q_FUNC_INFO;
     if(!m_node) {

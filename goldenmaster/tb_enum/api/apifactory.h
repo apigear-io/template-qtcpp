@@ -29,7 +29,7 @@ public:
     * @return An ApiFactoryInterface implementation used to create objects.
     */
     static ApiFactoryInterface *get();
-    virtual AbstractEnumInterface* createEnumInterface(QObject *parent);
+    std::shared_ptr<AbstractEnumInterface> createEnumInterface(QObject *parent) override;
 private:
     static ApiFactoryInterface *s_instance;
 };

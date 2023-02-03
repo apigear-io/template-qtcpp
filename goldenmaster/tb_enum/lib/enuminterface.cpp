@@ -38,7 +38,7 @@ EnumInterface::~EnumInterface()
 {
 }
 
-void EnumInterface::setProp0(const Enum0::Enum0Enum prop0)
+void EnumInterface::setProp0(Enum0::Enum0Enum prop0)
 {
     if (m_prop0 != prop0) {
         m_prop0 = prop0;
@@ -52,7 +52,7 @@ Enum0::Enum0Enum EnumInterface::prop0() const
     return m_prop0;
 }
 
-void EnumInterface::setProp1(const Enum1::Enum1Enum prop1)
+void EnumInterface::setProp1(Enum1::Enum1Enum prop1)
 {
     if (m_prop1 != prop1) {
         m_prop1 = prop1;
@@ -66,7 +66,7 @@ Enum1::Enum1Enum EnumInterface::prop1() const
     return m_prop1;
 }
 
-void EnumInterface::setProp2(const Enum2::Enum2Enum prop2)
+void EnumInterface::setProp2(Enum2::Enum2Enum prop2)
 {
     if (m_prop2 != prop2) {
         m_prop2 = prop2;
@@ -80,7 +80,7 @@ Enum2::Enum2Enum EnumInterface::prop2() const
     return m_prop2;
 }
 
-void EnumInterface::setProp3(const Enum3::Enum3Enum prop3)
+void EnumInterface::setProp3(Enum3::Enum3Enum prop3)
 {
     if (m_prop3 != prop3) {
         m_prop3 = prop3;
@@ -94,28 +94,28 @@ Enum3::Enum3Enum EnumInterface::prop3() const
     return m_prop3;
 }
 
-Enum0::Enum0Enum EnumInterface::func0(const Enum0::Enum0Enum param0)
+Enum0::Enum0Enum EnumInterface::func0(Enum0::Enum0Enum param0)
 {
     qDebug() << Q_FUNC_INFO;
     EnumInterfaceAgent::trace_func0(this, param0);
     return Enum0::value0;
 }
 
-Enum1::Enum1Enum EnumInterface::func1(const Enum1::Enum1Enum param1)
+Enum1::Enum1Enum EnumInterface::func1(Enum1::Enum1Enum param1)
 {
     qDebug() << Q_FUNC_INFO;
     EnumInterfaceAgent::trace_func1(this, param1);
     return Enum1::value1;
 }
 
-Enum2::Enum2Enum EnumInterface::func2(const Enum2::Enum2Enum param2)
+Enum2::Enum2Enum EnumInterface::func2(Enum2::Enum2Enum param2)
 {
     qDebug() << Q_FUNC_INFO;
     EnumInterfaceAgent::trace_func2(this, param2);
     return Enum2::value2;
 }
 
-Enum3::Enum3Enum EnumInterface::func3(const Enum3::Enum3Enum param3)
+Enum3::Enum3Enum EnumInterface::func3(Enum3::Enum3Enum param3)
 {
     qDebug() << Q_FUNC_INFO;
     EnumInterfaceAgent::trace_func3(this, param3);

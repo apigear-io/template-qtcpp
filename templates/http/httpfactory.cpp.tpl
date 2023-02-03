@@ -14,9 +14,9 @@ HttpFactory::HttpFactory(QObject *parent)
 
 {{- range .Module.Interfaces }}
 
-Abstract{{Camel .Name}}* HttpFactory::create{{Camel .Name}}(QObject *parent)
+std::shared_ptr<Abstract{{Camel .Name}}> HttpFactory::create{{Camel .Name}}(QObject *parent)
 {
-    return new Http{{.Name}}(m_network, parent);
+    return std::make_shared<Http{{.Name}}>(m_network, parent);
 }
 
 {{- end }}

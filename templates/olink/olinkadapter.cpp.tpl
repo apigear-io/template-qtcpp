@@ -31,7 +31,7 @@ namespace {{snake  .Module.Name }} {
 {{- range .Interface.Properties }}
     connect(m_impl, &Abstract{{$iface}}::{{.Name}}Changed, this,
         [=]({{ qtParam "" . }}) {
-        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "{{.Name}})");
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "{{.Name}}");
         for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
             auto lockedNode = node.lock();
             if(lockedNode) {
@@ -42,10 +42,11 @@ namespace {{snake  .Module.Name }} {
        
 {{- end }}    
 {{- range .Interface.Signals }}
-        connect(m_impl, &Abstract{{$iface}}::{{.Name}}, this,
+{{- $signalName := camel .Name }}
+        connect(m_impl, &Abstract{{$iface}}::{{$signalName}}, this,
             [=]({{qtParams "" .Params}}) {
                 const nlohmann::json& args = { {{ qtVars .Params }} };
-                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "{{.Name}})");
+                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "{{.Name}}");
                 for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
                     auto lockedNode = node.lock();
                     if(lockedNode) {
@@ -88,10 +89,10 @@ json {{$class}}::olinkInvoke(const std::string& methodId, const nlohmann::json& 
         const {{qtType "" .}}& {{.Name}} = args.at({{ $i }});      
 {{- end }}
 {{- if .Return.IsVoid }}
-        m_impl->{{.Name}}({{ .Params }});
+        m_impl->{{camel .Name}}({{ .Params }});
         return json{};
 {{- else }}
-        {{qtReturn "" .Return}} result = m_impl->{{.Name}}({{ qtVars .Params }});
+        {{qtReturn "" .Return}} result = m_impl->{{camel .Name}}({{ qtVars .Params }});
         return result;
 {{- end }}
     }

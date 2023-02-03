@@ -10,7 +10,7 @@ namespace {{snake  .Module.Name }} {
 
 {{- range .Module.Interfaces }}
 {{- $iface := .Name }}
-{{- $class := printf "Simulation%s" .Name }}
+{{- $class := printf "Simulation%s" (Camel .Name) }}
 // ********************************************************************
 // {{$class}} simulation interface
 // ********************************************************************
@@ -42,9 +42,9 @@ namespace {{snake  .Module.Name }} {
     ApiGear::SimulationClient::instance()->doFetchState("{{$module}}/{{$iface}}", fetchStateFunc);
 
 {{- range .Signals }}
-
+{{- $signalName := camel .Name }}
     NotifyRequestFunc {{.Name}}Func = [this](NotifyRequestArg arg) { 
-        emit {{.Name}}(
+        emit {{$signalName}}(
         {{- range $i, $e := .Params -}}
             {{if $i}},{{end}}arg.params["{{.Name}}"].get<{{qtReturn "" .}}>()
         {{- end -}}
@@ -76,7 +76,7 @@ void {{$class}}::set{{Camel .Name}}({{qtParam "" .}})
 {{- end }}
 {{- range .Operations }}
 
-{{qtReturn "" .Return}} {{$class}}::{{.Name}}({{qtParams "" .Params}})
+{{qtReturn "" .Return}} {{$class}}::{{camel .Name}}({{qtParams "" .Params}})
 {
     qDebug() << "simu::" << Q_FUNC_INFO;
 

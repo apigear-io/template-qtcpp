@@ -8,9 +8,9 @@ Factory::Factory(QObject *parent)
 {
 }
 
-AbstractEnumInterface* Factory::createEnumInterface(QObject *parent)
+std::shared_ptr<AbstractEnumInterface> Factory::createEnumInterface(QObject *parent)
 {
-    return new EnumInterface(parent);
+    return std::make_shared<EnumInterface>(parent);
 }
 
 } // namespace tb_enum

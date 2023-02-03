@@ -28,11 +28,18 @@ namespace testbed2 {
 QmlNestedStruct1Interface::QmlNestedStruct1Interface(QObject *parent)
     : AbstractNestedStruct1Interface(parent)
 {
-    m_obj = ApiFactory::get()->createNestedStruct1Interface(this);
-    connect(m_obj, &AbstractNestedStruct1Interface::prop1Changed, this, &QmlNestedStruct1Interface::prop1Changed);
-    connect(m_obj, &AbstractNestedStruct1Interface::prop1Changed, this, &AbstractNestedStruct1Interface::prop1Changed);
-    connect(m_obj, &AbstractNestedStruct1Interface::sig1, this, &QmlNestedStruct1Interface::sig1);
-    connect(m_obj, &AbstractNestedStruct1Interface::sig1, this, &AbstractNestedStruct1Interface::sig1);
+    m_obj = ApiFactory::get()->createNestedStruct1Interface();
+    // Connection to forward backend implementation singal to wrapper:
+    // - Forward the Property Changed singal emitted by backend implementation, as QmlNestedStruct1Interface::Property Changed signal for qml property changed notification.
+    // - Forward the  Property Changed singal emitted by backend implementation, as AbstractNestedStruct1Interface::Property Changed signal
+    // for usage, where QmlNestedStruct1Interface is used by the AbstractTuner interface and for connections with AbstractNestedStruct1Interface::Property Changed signal
+    connect(m_obj.get(), &AbstractNestedStruct1Interface::prop1Changed, this, &QmlNestedStruct1Interface::prop1Changed);
+    connect(m_obj.get(), &AbstractNestedStruct1Interface::prop1Changed, this, &AbstractNestedStruct1Interface::prop1Changed);
+
+    // Forward the singals emitted by backend implementation to QmlNestedStruct1Interface wrapper.
+    //  Have in mind that there is no forwarding from the QmlNestedStruct1Interface wrapper to backend implementation.
+    //  This signal is designed to be emitted from backend only.
+    connect(m_obj.get(), &AbstractNestedStruct1Interface::sig1, this, &AbstractNestedStruct1Interface::sig1);
 }
 
 QmlNestedStruct1Interface::~QmlNestedStruct1Interface()

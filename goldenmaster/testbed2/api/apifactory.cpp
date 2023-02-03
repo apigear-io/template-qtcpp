@@ -28,24 +28,24 @@ ApiFactoryInterface * ApiFactory::get()
     return s_instance;
 }
 
-AbstractManyParamInterface* ApiFactory::createManyParamInterface(QObject *parent) 
+std::shared_ptr<AbstractManyParamInterface> ApiFactory::createManyParamInterface(QObject *parent) 
 {
-    return new SimulationManyParamInterface(parent);
+    return std::make_shared<SimulationManyParamInterface>(parent);
 };
 
-AbstractNestedStruct1Interface* ApiFactory::createNestedStruct1Interface(QObject *parent) 
+std::shared_ptr<AbstractNestedStruct1Interface> ApiFactory::createNestedStruct1Interface(QObject *parent) 
 {
-    return new SimulationNestedStruct1Interface(parent);
+    return std::make_shared<SimulationNestedStruct1Interface>(parent);
 };
 
-AbstractNestedStruct2Interface* ApiFactory::createNestedStruct2Interface(QObject *parent) 
+std::shared_ptr<AbstractNestedStruct2Interface> ApiFactory::createNestedStruct2Interface(QObject *parent) 
 {
-    return new SimulationNestedStruct2Interface(parent);
+    return std::make_shared<SimulationNestedStruct2Interface>(parent);
 };
 
-AbstractNestedStruct3Interface* ApiFactory::createNestedStruct3Interface(QObject *parent) 
+std::shared_ptr<AbstractNestedStruct3Interface> ApiFactory::createNestedStruct3Interface(QObject *parent) 
 {
-    return new SimulationNestedStruct3Interface(parent);
+    return std::make_shared<SimulationNestedStruct3Interface>(parent);
 };
 
 } //namespace testbed2

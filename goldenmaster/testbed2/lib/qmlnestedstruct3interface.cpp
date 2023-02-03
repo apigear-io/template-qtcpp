@@ -28,19 +28,24 @@ namespace testbed2 {
 QmlNestedStruct3Interface::QmlNestedStruct3Interface(QObject *parent)
     : AbstractNestedStruct3Interface(parent)
 {
-    m_obj = ApiFactory::get()->createNestedStruct3Interface(this);
-    connect(m_obj, &AbstractNestedStruct3Interface::prop1Changed, this, &QmlNestedStruct3Interface::prop1Changed);
-    connect(m_obj, &AbstractNestedStruct3Interface::prop1Changed, this, &AbstractNestedStruct3Interface::prop1Changed);
-    connect(m_obj, &AbstractNestedStruct3Interface::prop2Changed, this, &QmlNestedStruct3Interface::prop2Changed);
-    connect(m_obj, &AbstractNestedStruct3Interface::prop2Changed, this, &AbstractNestedStruct3Interface::prop2Changed);
-    connect(m_obj, &AbstractNestedStruct3Interface::prop3Changed, this, &QmlNestedStruct3Interface::prop3Changed);
-    connect(m_obj, &AbstractNestedStruct3Interface::prop3Changed, this, &AbstractNestedStruct3Interface::prop3Changed);
-    connect(m_obj, &AbstractNestedStruct3Interface::sig1, this, &QmlNestedStruct3Interface::sig1);
-    connect(m_obj, &AbstractNestedStruct3Interface::sig1, this, &AbstractNestedStruct3Interface::sig1);
-    connect(m_obj, &AbstractNestedStruct3Interface::sig2, this, &QmlNestedStruct3Interface::sig2);
-    connect(m_obj, &AbstractNestedStruct3Interface::sig2, this, &AbstractNestedStruct3Interface::sig2);
-    connect(m_obj, &AbstractNestedStruct3Interface::sig3, this, &QmlNestedStruct3Interface::sig3);
-    connect(m_obj, &AbstractNestedStruct3Interface::sig3, this, &AbstractNestedStruct3Interface::sig3);
+    m_obj = ApiFactory::get()->createNestedStruct3Interface();
+    // Connection to forward backend implementation singal to wrapper:
+    // - Forward the Property Changed singal emitted by backend implementation, as QmlNestedStruct3Interface::Property Changed signal for qml property changed notification.
+    // - Forward the  Property Changed singal emitted by backend implementation, as AbstractNestedStruct3Interface::Property Changed signal
+    // for usage, where QmlNestedStruct3Interface is used by the AbstractTuner interface and for connections with AbstractNestedStruct3Interface::Property Changed signal
+    connect(m_obj.get(), &AbstractNestedStruct3Interface::prop1Changed, this, &QmlNestedStruct3Interface::prop1Changed);
+    connect(m_obj.get(), &AbstractNestedStruct3Interface::prop1Changed, this, &AbstractNestedStruct3Interface::prop1Changed);
+    connect(m_obj.get(), &AbstractNestedStruct3Interface::prop2Changed, this, &QmlNestedStruct3Interface::prop2Changed);
+    connect(m_obj.get(), &AbstractNestedStruct3Interface::prop2Changed, this, &AbstractNestedStruct3Interface::prop2Changed);
+    connect(m_obj.get(), &AbstractNestedStruct3Interface::prop3Changed, this, &QmlNestedStruct3Interface::prop3Changed);
+    connect(m_obj.get(), &AbstractNestedStruct3Interface::prop3Changed, this, &AbstractNestedStruct3Interface::prop3Changed);
+
+    // Forward the singals emitted by backend implementation to QmlNestedStruct3Interface wrapper.
+    //  Have in mind that there is no forwarding from the QmlNestedStruct3Interface wrapper to backend implementation.
+    //  This signal is designed to be emitted from backend only.
+    connect(m_obj.get(), &AbstractNestedStruct3Interface::sig1, this, &AbstractNestedStruct3Interface::sig1);
+    connect(m_obj.get(), &AbstractNestedStruct3Interface::sig2, this, &AbstractNestedStruct3Interface::sig2);
+    connect(m_obj.get(), &AbstractNestedStruct3Interface::sig3, this, &AbstractNestedStruct3Interface::sig3);
 }
 
 QmlNestedStruct3Interface::~QmlNestedStruct3Interface()

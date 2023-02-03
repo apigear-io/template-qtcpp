@@ -28,14 +28,14 @@ ApiFactoryInterface * ApiFactory::get()
     return s_instance;
 }
 
-AbstractStructInterface* ApiFactory::createStructInterface(QObject *parent) 
+std::shared_ptr<AbstractStructInterface> ApiFactory::createStructInterface(QObject *parent) 
 {
-    return new SimulationStructInterface(parent);
+    return std::make_shared<SimulationStructInterface>(parent);
 };
 
-AbstractStructArrayInterface* ApiFactory::createStructArrayInterface(QObject *parent) 
+std::shared_ptr<AbstractStructArrayInterface> ApiFactory::createStructArrayInterface(QObject *parent) 
 {
-    return new SimulationStructArrayInterface(parent);
+    return std::make_shared<SimulationStructArrayInterface>(parent);
 };
 
 } //namespace testbed1

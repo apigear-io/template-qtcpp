@@ -31,8 +31,8 @@ public:
     explicit HttpSameEnum1Interface(QNetworkAccessManager *network, QObject *parent = nullptr);
     virtual ~HttpSameEnum1Interface() override;
     Enum1::Enum1Enum prop1() const override;
-    void setProp1(const Enum1::Enum1Enum prop1) override;
-    Enum1::Enum1Enum func1(const Enum1::Enum1Enum param1) override;
+    void setProp1(Enum1::Enum1Enum prop1) override;
+    Enum1::Enum1Enum func1(Enum1::Enum1Enum param1) override;
 private:
     QJsonObject post(const QString& path, const QJsonObject &payload);
     void applyState(const QJsonObject &state);

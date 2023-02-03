@@ -29,7 +29,6 @@ SimulationSameStruct1Interface::SimulationSameStruct1Interface(QObject *parent)
       }
     };
     ApiGear::SimulationClient::instance()->doFetchState("tb.same2/SameStruct1Interface", fetchStateFunc);
-
     NotifyRequestFunc sig1Func = [this](NotifyRequestArg arg) { 
         emit sig1(arg.params["param1"].get<Struct1>());
     };
@@ -92,12 +91,10 @@ SimulationSameStruct2Interface::SimulationSameStruct2Interface(QObject *parent)
       }
     };
     ApiGear::SimulationClient::instance()->doFetchState("tb.same2/SameStruct2Interface", fetchStateFunc);
-
     NotifyRequestFunc sig1Func = [this](NotifyRequestArg arg) { 
         emit sig1(arg.params["param1"].get<Struct1>());
     };
     ApiGear::SimulationClient::instance()->onNotify("tb.same2/SameStruct2Interface#sig1", sig1Func);
-
     NotifyRequestFunc sig2Func = [this](NotifyRequestArg arg) { 
         emit sig2(arg.params["param1"].get<Struct1>(),arg.params["param2"].get<Struct2>());
     };
@@ -177,7 +174,6 @@ SimulationSameEnum1Interface::SimulationSameEnum1Interface(QObject *parent)
       }
     };
     ApiGear::SimulationClient::instance()->doFetchState("tb.same2/SameEnum1Interface", fetchStateFunc);
-
     NotifyRequestFunc sig1Func = [this](NotifyRequestArg arg) { 
         emit sig1(arg.params["param1"].get<Enum1::Enum1Enum>());
     };
@@ -188,7 +184,7 @@ SimulationSameEnum1Interface::~SimulationSameEnum1Interface()
 {
 }
 
-void SimulationSameEnum1Interface::setProp1(const Enum1::Enum1Enum prop1)
+void SimulationSameEnum1Interface::setProp1(Enum1::Enum1Enum prop1)
 {
     if (m_prop1 != prop1) {
         m_prop1 = prop1;
@@ -201,7 +197,7 @@ Enum1::Enum1Enum SimulationSameEnum1Interface::prop1() const
     return m_prop1;
 }
 
-Enum1::Enum1Enum SimulationSameEnum1Interface::func1(const Enum1::Enum1Enum param1)
+Enum1::Enum1Enum SimulationSameEnum1Interface::func1(Enum1::Enum1Enum param1)
 {
     qDebug() << "simu::" << Q_FUNC_INFO;
 
@@ -240,12 +236,10 @@ SimulationSameEnum2Interface::SimulationSameEnum2Interface(QObject *parent)
       }
     };
     ApiGear::SimulationClient::instance()->doFetchState("tb.same2/SameEnum2Interface", fetchStateFunc);
-
     NotifyRequestFunc sig1Func = [this](NotifyRequestArg arg) { 
         emit sig1(arg.params["param1"].get<Enum1::Enum1Enum>());
     };
     ApiGear::SimulationClient::instance()->onNotify("tb.same2/SameEnum2Interface#sig1", sig1Func);
-
     NotifyRequestFunc sig2Func = [this](NotifyRequestArg arg) { 
         emit sig2(arg.params["param1"].get<Enum1::Enum1Enum>(),arg.params["param2"].get<Enum2::Enum2Enum>());
     };
@@ -256,7 +250,7 @@ SimulationSameEnum2Interface::~SimulationSameEnum2Interface()
 {
 }
 
-void SimulationSameEnum2Interface::setProp1(const Enum1::Enum1Enum prop1)
+void SimulationSameEnum2Interface::setProp1(Enum1::Enum1Enum prop1)
 {
     if (m_prop1 != prop1) {
         m_prop1 = prop1;
@@ -269,7 +263,7 @@ Enum1::Enum1Enum SimulationSameEnum2Interface::prop1() const
     return m_prop1;
 }
 
-void SimulationSameEnum2Interface::setProp2(const Enum2::Enum2Enum prop2)
+void SimulationSameEnum2Interface::setProp2(Enum2::Enum2Enum prop2)
 {
     if (m_prop2 != prop2) {
         m_prop2 = prop2;
@@ -282,7 +276,7 @@ Enum2::Enum2Enum SimulationSameEnum2Interface::prop2() const
     return m_prop2;
 }
 
-Enum1::Enum1Enum SimulationSameEnum2Interface::func1(const Enum1::Enum1Enum param1)
+Enum1::Enum1Enum SimulationSameEnum2Interface::func1(Enum1::Enum1Enum param1)
 {
     qDebug() << "simu::" << Q_FUNC_INFO;
 
@@ -292,7 +286,7 @@ Enum1::Enum1Enum SimulationSameEnum2Interface::func1(const Enum1::Enum1Enum para
     return Enum1::value1;
 }
 
-Enum1::Enum1Enum SimulationSameEnum2Interface::func2(const Enum1::Enum1Enum param1, const Enum2::Enum2Enum param2)
+Enum1::Enum1Enum SimulationSameEnum2Interface::func2(Enum1::Enum1Enum param1, Enum2::Enum2Enum param2)
 {
     qDebug() << "simu::" << Q_FUNC_INFO;
 

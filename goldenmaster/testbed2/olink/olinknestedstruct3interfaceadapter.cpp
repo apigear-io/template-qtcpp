@@ -39,7 +39,6 @@ OLinkNestedStruct3InterfaceAdapter::OLinkNestedStruct3InterfaceAdapter(RemoteReg
     : QObject(parent)
     , m_impl(impl)
     , m_registry(registry)
-    , m_node()
 {
     connect(m_impl, &AbstractNestedStruct3Interface::prop1Changed, this,
         [=](const NestedStruct1& prop1) {
@@ -176,13 +175,11 @@ void OLinkNestedStruct3InterfaceAdapter::olinkSetProperty(const std::string& pro
 
 void OLinkNestedStruct3InterfaceAdapter::olinkLinked(const std::string& objectId, IRemoteNode *node) {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
-    m_node = node;
 }
 
 void OLinkNestedStruct3InterfaceAdapter::olinkUnlinked(const std::string& objectId)
 {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
-    m_node = nullptr;
 }
 
 json OLinkNestedStruct3InterfaceAdapter::olinkCollectProperties()

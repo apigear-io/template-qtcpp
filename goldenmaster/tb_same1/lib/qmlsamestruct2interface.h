@@ -24,6 +24,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace tb_same1 {
 
+/**
+* A QML wrapper of the SameStruct2Interface implementation.
+* Uses a SameStruct2Interface provided by an ApiFactory.
+* See ApiFactory and factories that implement the ApiFactoryInterface.
+*/
 class TB_SAME1_LIB_EXPORT QmlSameStruct2Interface : public AbstractSameStruct2Interface
 {
     Q_OBJECT
@@ -31,7 +36,7 @@ class TB_SAME1_LIB_EXPORT QmlSameStruct2Interface : public AbstractSameStruct2In
     Q_PROPERTY(Struct2 prop2 READ prop2 NOTIFY prop2Changed)
 public:
     explicit QmlSameStruct2Interface(QObject *parent = nullptr);
-    virtual ~QmlSameStruct2Interface() override;
+    ~QmlSameStruct2Interface() override;
     Struct2 prop1() const override;
     void setProp1(const Struct2& prop1) override;
     Struct2 prop2() const override;

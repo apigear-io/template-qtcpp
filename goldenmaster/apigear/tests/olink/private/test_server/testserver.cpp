@@ -38,6 +38,6 @@ void TestServer::closeSocket()
     if (m_socket)
     {
         m_socket->close();
-        QTest::qWaitFor([this](){return m_socket->state() == QAbstractSocket::UnconnectedState;}, 100);
+        (void) QTest::qWaitFor([this](){return m_socket->state() == QAbstractSocket::UnconnectedState;}, 100); // ignore result
     }
 }

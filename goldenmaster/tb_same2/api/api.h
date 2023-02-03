@@ -31,7 +31,6 @@ namespace tb_same2 {
 // ********************************************************************
 // Enumeration Enum1
 // ********************************************************************
-
 class TB_SAME2_EXPORT Enum1 : public QObject {
     Q_OBJECT
 public:
@@ -40,21 +39,27 @@ public:
         {}
     enum Enum1Enum {
         value1 = 1,
-        value2 = 2,
+        value2 = 2
     };
     Q_ENUM(Enum1Enum)
 
+    /**
+    * Converter for Enum1Enum
+    * @param v Value in quint8 format.
+    * @param ok. Write parameter, will be set to true if conversion was successful, false otherwise.
+    * @return An enum value for given quint8 or default value if in parameter is out of the enums range.
+    */
     static Enum1Enum toEnum(quint8 v, bool *ok);
 };
 
-
+/** ostream operator. Allows writing the Enum1Enum value to an text output*/
 inline QDataStream &operator<<(QDataStream &ds, const Enum1::Enum1Enum &obj)
 {
     quint8 val = obj;
     ds << val;
     return ds;
 }
-
+/** istream operator. Allows reading to Enum1Enum value from input text*/
 inline QDataStream &operator>>(QDataStream &ds, Enum1::Enum1Enum &obj) {
     bool ok;
     quint8 val;
@@ -69,7 +74,6 @@ inline QDataStream &operator>>(QDataStream &ds, Enum1::Enum1Enum &obj) {
 // ********************************************************************
 // Enumeration Enum2
 // ********************************************************************
-
 class TB_SAME2_EXPORT Enum2 : public QObject {
     Q_OBJECT
 public:
@@ -78,21 +82,27 @@ public:
         {}
     enum Enum2Enum {
         value1 = 1,
-        value2 = 2,
+        value2 = 2
     };
     Q_ENUM(Enum2Enum)
 
+    /**
+    * Converter for Enum2Enum
+    * @param v Value in quint8 format.
+    * @param ok. Write parameter, will be set to true if conversion was successful, false otherwise.
+    * @return An enum value for given quint8 or default value if in parameter is out of the enums range.
+    */
     static Enum2Enum toEnum(quint8 v, bool *ok);
 };
 
-
+/** ostream operator. Allows writing the Enum2Enum value to an text output*/
 inline QDataStream &operator<<(QDataStream &ds, const Enum2::Enum2Enum &obj)
 {
     quint8 val = obj;
     ds << val;
     return ds;
 }
-
+/** istream operator. Allows reading to Enum2Enum value from input text*/
 inline QDataStream &operator>>(QDataStream &ds, Enum2::Enum2Enum &obj) {
     bool ok;
     quint8 val;
@@ -106,39 +116,31 @@ inline QDataStream &operator>>(QDataStream &ds, Enum2::Enum2Enum &obj) {
 // ********************************************************************
 // Struct1 struct
 // ********************************************************************
-
-class TB_SAME2_EXPORT Struct1
+struct TB_SAME2_EXPORT Struct1
 {
     Q_GADGET
-    Q_PROPERTY(int field1 READ field1 WRITE setField1)
-    Q_PROPERTY(int field2 READ field2 WRITE setField2)
-    Q_PROPERTY(int field3 READ field3 WRITE setField3)
+    Q_PROPERTY(int field1 MEMBER m_field1 )
+    Q_PROPERTY(int field2 MEMBER m_field2 )
+    Q_PROPERTY(int field3 MEMBER m_field3 )
 
 public:
     Struct1();
-    void setField1(int field1);
-    int field1() const;
-    void setField2(int field2);
-    int field2() const;
-    void setField3(int field3);
-    int field3() const;
-
     bool operator==(const Struct1 &other) const;
     bool operator!=(const Struct1 &other) const;
-
-private:
     int m_field1;
     int m_field2;
     int m_field3;
 };
 
+/** ostream operator. Allows writing the Struct1 value to an text output*/
 QDataStream &operator<<(QDataStream &stream, const Struct1 &obj);
+/** istream operator. Allows reading to Struct1 value from input text*/
 QDataStream &operator>>(QDataStream &stream, Struct1 &obj);
 
 // ********************************************************************
 // Struct1 struct factory
+// Registered by plugin to allow creating this type of objects in qml. 
 // ********************************************************************
-
 class TB_SAME2_EXPORT Struct1Factory : public QObject {
     Q_OBJECT
 public:
@@ -147,39 +149,31 @@ public:
 // ********************************************************************
 // Struct2 struct
 // ********************************************************************
-
-class TB_SAME2_EXPORT Struct2
+struct TB_SAME2_EXPORT Struct2
 {
     Q_GADGET
-    Q_PROPERTY(int field1 READ field1 WRITE setField1)
-    Q_PROPERTY(int field2 READ field2 WRITE setField2)
-    Q_PROPERTY(int field3 READ field3 WRITE setField3)
+    Q_PROPERTY(int field1 MEMBER m_field1 )
+    Q_PROPERTY(int field2 MEMBER m_field2 )
+    Q_PROPERTY(int field3 MEMBER m_field3 )
 
 public:
     Struct2();
-    void setField1(int field1);
-    int field1() const;
-    void setField2(int field2);
-    int field2() const;
-    void setField3(int field3);
-    int field3() const;
-
     bool operator==(const Struct2 &other) const;
     bool operator!=(const Struct2 &other) const;
-
-private:
     int m_field1;
     int m_field2;
     int m_field3;
 };
 
+/** ostream operator. Allows writing the Struct2 value to an text output*/
 QDataStream &operator<<(QDataStream &stream, const Struct2 &obj);
+/** istream operator. Allows reading to Struct2 value from input text*/
 QDataStream &operator>>(QDataStream &stream, Struct2 &obj);
 
 // ********************************************************************
 // Struct2 struct factory
+// Registered by plugin to allow creating this type of objects in qml. 
 // ********************************************************************
-
 class TB_SAME2_EXPORT Struct2Factory : public QObject {
     Q_OBJECT
 public:
@@ -187,7 +181,15 @@ public:
 };
 
 // ********************************************************************
-// AbstractSameStruct1Interface pure interface
+/**
+*
+* AbstractSameStruct1Interface is a pure interface QObject class.
+* Declares:
+*  - Methods defined for SameStruct1Interface interface
+*  - Property setters and getters for defined properties
+*  - Property changed singals for properties of your interface.
+*  - Signals described for SameStruct1Interface interface.
+*/
 // ********************************************************************
 
 
@@ -195,16 +197,37 @@ class TB_SAME2_EXPORT AbstractSameStruct1Interface : public QObject {
     Q_OBJECT
 public:
     AbstractSameStruct1Interface(QObject * parent=nullptr);
+    /**
+    * Sets the value of the prop1 property.
+    */
     virtual void setProp1(const Struct1& prop1) = 0;
+    /**
+    * Gets the value of the prop1 property.
+    */
     virtual Struct1 prop1() const = 0;
+
     virtual Struct1 func1(const Struct1& param1) = 0;
 signals:
+    /**
+    * @param param1 
+    */
     void sig1(const Struct1& param1);
+    /**
+    * Emitted when prop1 value has changed.
+    */
     void prop1Changed(const Struct1& prop1);
 };
 
 // ********************************************************************
-// AbstractSameStruct2Interface pure interface
+/**
+*
+* AbstractSameStruct2Interface is a pure interface QObject class.
+* Declares:
+*  - Methods defined for SameStruct2Interface interface
+*  - Property setters and getters for defined properties
+*  - Property changed singals for properties of your interface.
+*  - Signals described for SameStruct2Interface interface.
+*/
 // ********************************************************************
 
 
@@ -212,21 +235,56 @@ class TB_SAME2_EXPORT AbstractSameStruct2Interface : public QObject {
     Q_OBJECT
 public:
     AbstractSameStruct2Interface(QObject * parent=nullptr);
+    /**
+    * Sets the value of the prop1 property.
+    */
     virtual void setProp1(const Struct2& prop1) = 0;
+    /**
+    * Gets the value of the prop1 property.
+    */
     virtual Struct2 prop1() const = 0;
+    /**
+    * Sets the value of the prop2 property.
+    */
     virtual void setProp2(const Struct2& prop2) = 0;
+    /**
+    * Gets the value of the prop2 property.
+    */
     virtual Struct2 prop2() const = 0;
+
     virtual Struct1 func1(const Struct1& param1) = 0;
+
     virtual Struct1 func2(const Struct1& param1, const Struct2& param2) = 0;
 signals:
+    /**
+    * @param param1 
+    */
     void sig1(const Struct1& param1);
+    /**
+    * @param param1 
+    * @param param2 
+    */
     void sig2(const Struct1& param1, const Struct2& param2);
+    /**
+    * Emitted when prop1 value has changed.
+    */
     void prop1Changed(const Struct2& prop1);
+    /**
+    * Emitted when prop2 value has changed.
+    */
     void prop2Changed(const Struct2& prop2);
 };
 
 // ********************************************************************
-// AbstractSameEnum1Interface pure interface
+/**
+*
+* AbstractSameEnum1Interface is a pure interface QObject class.
+* Declares:
+*  - Methods defined for SameEnum1Interface interface
+*  - Property setters and getters for defined properties
+*  - Property changed singals for properties of your interface.
+*  - Signals described for SameEnum1Interface interface.
+*/
 // ********************************************************************
 
 
@@ -234,16 +292,37 @@ class TB_SAME2_EXPORT AbstractSameEnum1Interface : public QObject {
     Q_OBJECT
 public:
     AbstractSameEnum1Interface(QObject * parent=nullptr);
+    /**
+    * Sets the value of the prop1 property.
+    */
     virtual void setProp1(const Enum1::Enum1Enum prop1) = 0;
+    /**
+    * Gets the value of the prop1 property.
+    */
     virtual Enum1::Enum1Enum prop1() const = 0;
+
     virtual Enum1::Enum1Enum func1(const Enum1::Enum1Enum param1) = 0;
 signals:
+    /**
+    * @param param1 
+    */
     void sig1(const Enum1::Enum1Enum param1);
+    /**
+    * Emitted when prop1 value has changed.
+    */
     void prop1Changed(const Enum1::Enum1Enum prop1);
 };
 
 // ********************************************************************
-// AbstractSameEnum2Interface pure interface
+/**
+*
+* AbstractSameEnum2Interface is a pure interface QObject class.
+* Declares:
+*  - Methods defined for SameEnum2Interface interface
+*  - Property setters and getters for defined properties
+*  - Property changed singals for properties of your interface.
+*  - Signals described for SameEnum2Interface interface.
+*/
 // ********************************************************************
 
 
@@ -251,16 +330,43 @@ class TB_SAME2_EXPORT AbstractSameEnum2Interface : public QObject {
     Q_OBJECT
 public:
     AbstractSameEnum2Interface(QObject * parent=nullptr);
+    /**
+    * Sets the value of the prop1 property.
+    */
     virtual void setProp1(const Enum1::Enum1Enum prop1) = 0;
+    /**
+    * Gets the value of the prop1 property.
+    */
     virtual Enum1::Enum1Enum prop1() const = 0;
+    /**
+    * Sets the value of the prop2 property.
+    */
     virtual void setProp2(const Enum2::Enum2Enum prop2) = 0;
+    /**
+    * Gets the value of the prop2 property.
+    */
     virtual Enum2::Enum2Enum prop2() const = 0;
+
     virtual Enum1::Enum1Enum func1(const Enum1::Enum1Enum param1) = 0;
+
     virtual Enum1::Enum1Enum func2(const Enum1::Enum1Enum param1, const Enum2::Enum2Enum param2) = 0;
 signals:
+    /**
+    * @param param1 
+    */
     void sig1(const Enum1::Enum1Enum param1);
+    /**
+    * @param param1 
+    * @param param2 
+    */
     void sig2(const Enum1::Enum1Enum param1, const Enum2::Enum2Enum param2);
+    /**
+    * Emitted when prop1 value has changed.
+    */
     void prop1Changed(const Enum1::Enum1Enum prop1);
+    /**
+    * Emitted when prop2 value has changed.
+    */
     void prop2Changed(const Enum2::Enum2Enum prop2);
 };
 
@@ -269,12 +375,30 @@ signals:
 // Interface Factory
 // ********************************************************************
 
+/**
+* An interface for a Factory of interfaces in tb.same2
+* May be used to provide different implementations of your interfaces.
+* Check the usage of ApiFactoryInterface in Qml versions of interface implementation.
+* See also the ApiFactory, where you can set this factory as an ApiFactoryInterface implementation.
+*/
 class TB_SAME2_EXPORT ApiFactoryInterface
 {
 public:
+/** Create an instance of SameStruct1Interface
+* @return The implementation of a AbstractSameStruct1Interface, of which user should take ownership.
+*/
     virtual AbstractSameStruct1Interface* createSameStruct1Interface(QObject *parent) = 0;
+/** Create an instance of SameStruct2Interface
+* @return The implementation of a AbstractSameStruct2Interface, of which user should take ownership.
+*/
     virtual AbstractSameStruct2Interface* createSameStruct2Interface(QObject *parent) = 0;
+/** Create an instance of SameEnum1Interface
+* @return The implementation of a AbstractSameEnum1Interface, of which user should take ownership.
+*/
     virtual AbstractSameEnum1Interface* createSameEnum1Interface(QObject *parent) = 0;
+/** Create an instance of SameEnum2Interface
+* @return The implementation of a AbstractSameEnum2Interface, of which user should take ownership.
+*/
     virtual AbstractSameEnum2Interface* createSameEnum2Interface(QObject *parent) = 0;
 };
 

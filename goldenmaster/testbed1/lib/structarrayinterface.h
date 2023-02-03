@@ -30,19 +30,38 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace testbed1 {
 
+/**
+* The StructArrayInterface implementation.
+*/
 class TESTBED1_LIB_EXPORT StructArrayInterface : public AbstractStructArrayInterface
 {
     Q_OBJECT
 public:
     explicit StructArrayInterface(QObject *parent = nullptr);
     virtual ~StructArrayInterface() override;
+    /** @return value of the property propBool */
     QList<StructBool> propBool() const override;
+    /** Use to change a property value.
+    * if the property is changed, a signal {.Name}}Changed is emitted.
+    @param value to set for the property propBool */
     void setPropBool(const QList<StructBool>& propBool) override;
+    /** @return value of the property propInt */
     QList<StructInt> propInt() const override;
+    /** Use to change a property value.
+    * if the property is changed, a signal {.Name}}Changed is emitted.
+    @param value to set for the property propInt */
     void setPropInt(const QList<StructInt>& propInt) override;
+    /** @return value of the property propFloat */
     QList<StructFloat> propFloat() const override;
+    /** Use to change a property value.
+    * if the property is changed, a signal {.Name}}Changed is emitted.
+    @param value to set for the property propFloat */
     void setPropFloat(const QList<StructFloat>& propFloat) override;
+    /** @return value of the property propString */
     QList<StructString> propString() const override;
+    /** Use to change a property value.
+    * if the property is changed, a signal {.Name}}Changed is emitted.
+    @param value to set for the property propString */
     void setPropString(const QList<StructString>& propString) override;
     StructBool funcBool(const QList<StructBool>& paramBool) override;
     StructBool funcInt(const QList<StructInt>& paramInt) override;
@@ -50,9 +69,13 @@ public:
     StructBool funcString(const QList<StructString>& paramString) override;
 
 private:
+    /** propBool property */
     QList<StructBool> m_propBool;
+    /** propInt property */
     QList<StructInt> m_propInt;
+    /** propFloat property */
     QList<StructFloat> m_propFloat;
+    /** propString property */
     QList<StructString> m_propString;
 };
 } //namespace testbed1

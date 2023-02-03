@@ -24,13 +24,18 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace tb_same1 {
 
+/**
+* A QML wrapper of the SameStruct1Interface implementation.
+* Uses a SameStruct1Interface provided by an ApiFactory.
+* See ApiFactory and factories that implement the ApiFactoryInterface.
+*/
 class TB_SAME1_LIB_EXPORT QmlSameStruct1Interface : public AbstractSameStruct1Interface
 {
     Q_OBJECT
     Q_PROPERTY(Struct1 prop1 READ prop1 NOTIFY prop1Changed)
 public:
     explicit QmlSameStruct1Interface(QObject *parent = nullptr);
-    virtual ~QmlSameStruct1Interface() override;
+    ~QmlSameStruct1Interface() override;
     Struct1 prop1() const override;
     void setProp1(const Struct1& prop1) override;
     Q_INVOKABLE Struct1 func1(const Struct1& param1) override;

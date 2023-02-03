@@ -14,7 +14,7 @@ OLinkFactory::OLinkFactory(QObject *parent)
 
 {{- range .Module.Interfaces }}
 
-Abstract{{.Name}}* OLinkFactory::create{{Camel .Name}}(QObject *parent)
+Abstract{{Camel .Name}}* OLinkFactory::create{{Camel .Name}}(QObject *parent)
 {
     qDebug() << Q_FUNC_INFO;
     return new OLink{{.Name}}(parent);

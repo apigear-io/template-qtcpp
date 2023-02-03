@@ -14,7 +14,7 @@ HttpFactory::HttpFactory(QObject *parent)
 
 {{- range .Module.Interfaces }}
 
-Abstract{{.Name}}* HttpFactory::create{{Camel .Name}}(QObject *parent)
+Abstract{{Camel .Name}}* HttpFactory::create{{Camel .Name}}(QObject *parent)
 {
     return new Http{{.Name}}(m_network, parent);
 }

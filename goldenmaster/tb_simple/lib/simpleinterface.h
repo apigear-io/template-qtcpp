@@ -30,19 +30,38 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace tb_simple {
 
+/**
+* The SimpleInterface implementation.
+*/
 class TB_SIMPLE_LIB_EXPORT SimpleInterface : public AbstractSimpleInterface
 {
     Q_OBJECT
 public:
     explicit SimpleInterface(QObject *parent = nullptr);
     virtual ~SimpleInterface() override;
+    /** @return value of the property propBool */
     bool propBool() const override;
+    /** Use to change a property value.
+    * if the property is changed, a signal {.Name}}Changed is emitted.
+    @param value to set for the property propBool */
     void setPropBool(bool propBool) override;
+    /** @return value of the property propInt */
     int propInt() const override;
+    /** Use to change a property value.
+    * if the property is changed, a signal {.Name}}Changed is emitted.
+    @param value to set for the property propInt */
     void setPropInt(int propInt) override;
+    /** @return value of the property propFloat */
     qreal propFloat() const override;
+    /** Use to change a property value.
+    * if the property is changed, a signal {.Name}}Changed is emitted.
+    @param value to set for the property propFloat */
     void setPropFloat(qreal propFloat) override;
+    /** @return value of the property propString */
     QString propString() const override;
+    /** Use to change a property value.
+    * if the property is changed, a signal {.Name}}Changed is emitted.
+    @param value to set for the property propString */
     void setPropString(const QString& propString) override;
     bool funcBool(bool paramBool) override;
     int funcInt(int paramInt) override;
@@ -50,9 +69,13 @@ public:
     QString funcString(const QString& paramString) override;
 
 private:
+    /** propBool property */
     bool m_propBool;
+    /** propInt property */
     int m_propInt;
+    /** propFloat property */
     qreal m_propFloat;
+    /** propString property */
     QString m_propString;
 };
 } //namespace tb_simple

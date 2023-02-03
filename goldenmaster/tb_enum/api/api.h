@@ -31,7 +31,6 @@ namespace tb_enum {
 // ********************************************************************
 // Enumeration Enum0
 // ********************************************************************
-
 class TB_ENUM_EXPORT Enum0 : public QObject {
     Q_OBJECT
 public:
@@ -41,21 +40,27 @@ public:
     enum Enum0Enum {
         value0 = 0,
         value1 = 1,
-        value2 = 2,
+        value2 = 2
     };
     Q_ENUM(Enum0Enum)
 
+    /**
+    * Converter for Enum0Enum
+    * @param v Value in quint8 format.
+    * @param ok. Write parameter, will be set to true if conversion was successful, false otherwise.
+    * @return An enum value for given quint8 or default value if in parameter is out of the enums range.
+    */
     static Enum0Enum toEnum(quint8 v, bool *ok);
 };
 
-
+/** ostream operator. Allows writing the Enum0Enum value to an text output*/
 inline QDataStream &operator<<(QDataStream &ds, const Enum0::Enum0Enum &obj)
 {
     quint8 val = obj;
     ds << val;
     return ds;
 }
-
+/** istream operator. Allows reading to Enum0Enum value from input text*/
 inline QDataStream &operator>>(QDataStream &ds, Enum0::Enum0Enum &obj) {
     bool ok;
     quint8 val;
@@ -70,7 +75,6 @@ inline QDataStream &operator>>(QDataStream &ds, Enum0::Enum0Enum &obj) {
 // ********************************************************************
 // Enumeration Enum1
 // ********************************************************************
-
 class TB_ENUM_EXPORT Enum1 : public QObject {
     Q_OBJECT
 public:
@@ -80,21 +84,27 @@ public:
     enum Enum1Enum {
         value1 = 1,
         value2 = 2,
-        value3 = 3,
+        value3 = 3
     };
     Q_ENUM(Enum1Enum)
 
+    /**
+    * Converter for Enum1Enum
+    * @param v Value in quint8 format.
+    * @param ok. Write parameter, will be set to true if conversion was successful, false otherwise.
+    * @return An enum value for given quint8 or default value if in parameter is out of the enums range.
+    */
     static Enum1Enum toEnum(quint8 v, bool *ok);
 };
 
-
+/** ostream operator. Allows writing the Enum1Enum value to an text output*/
 inline QDataStream &operator<<(QDataStream &ds, const Enum1::Enum1Enum &obj)
 {
     quint8 val = obj;
     ds << val;
     return ds;
 }
-
+/** istream operator. Allows reading to Enum1Enum value from input text*/
 inline QDataStream &operator>>(QDataStream &ds, Enum1::Enum1Enum &obj) {
     bool ok;
     quint8 val;
@@ -109,7 +119,6 @@ inline QDataStream &operator>>(QDataStream &ds, Enum1::Enum1Enum &obj) {
 // ********************************************************************
 // Enumeration Enum2
 // ********************************************************************
-
 class TB_ENUM_EXPORT Enum2 : public QObject {
     Q_OBJECT
 public:
@@ -119,21 +128,27 @@ public:
     enum Enum2Enum {
         value2 = 2,
         value1 = 1,
-        value0 = 0,
+        value0 = 0
     };
     Q_ENUM(Enum2Enum)
 
+    /**
+    * Converter for Enum2Enum
+    * @param v Value in quint8 format.
+    * @param ok. Write parameter, will be set to true if conversion was successful, false otherwise.
+    * @return An enum value for given quint8 or default value if in parameter is out of the enums range.
+    */
     static Enum2Enum toEnum(quint8 v, bool *ok);
 };
 
-
+/** ostream operator. Allows writing the Enum2Enum value to an text output*/
 inline QDataStream &operator<<(QDataStream &ds, const Enum2::Enum2Enum &obj)
 {
     quint8 val = obj;
     ds << val;
     return ds;
 }
-
+/** istream operator. Allows reading to Enum2Enum value from input text*/
 inline QDataStream &operator>>(QDataStream &ds, Enum2::Enum2Enum &obj) {
     bool ok;
     quint8 val;
@@ -148,7 +163,6 @@ inline QDataStream &operator>>(QDataStream &ds, Enum2::Enum2Enum &obj) {
 // ********************************************************************
 // Enumeration Enum3
 // ********************************************************************
-
 class TB_ENUM_EXPORT Enum3 : public QObject {
     Q_OBJECT
 public:
@@ -158,21 +172,27 @@ public:
     enum Enum3Enum {
         value3 = 3,
         value2 = 2,
-        value1 = 1,
+        value1 = 1
     };
     Q_ENUM(Enum3Enum)
 
+    /**
+    * Converter for Enum3Enum
+    * @param v Value in quint8 format.
+    * @param ok. Write parameter, will be set to true if conversion was successful, false otherwise.
+    * @return An enum value for given quint8 or default value if in parameter is out of the enums range.
+    */
     static Enum3Enum toEnum(quint8 v, bool *ok);
 };
 
-
+/** ostream operator. Allows writing the Enum3Enum value to an text output*/
 inline QDataStream &operator<<(QDataStream &ds, const Enum3::Enum3Enum &obj)
 {
     quint8 val = obj;
     ds << val;
     return ds;
 }
-
+/** istream operator. Allows reading to Enum3Enum value from input text*/
 inline QDataStream &operator>>(QDataStream &ds, Enum3::Enum3Enum &obj) {
     bool ok;
     quint8 val;
@@ -185,7 +205,15 @@ inline QDataStream &operator>>(QDataStream &ds, Enum3::Enum3Enum &obj) {
 }
 
 // ********************************************************************
-// AbstractEnumInterface pure interface
+/**
+*
+* AbstractEnumInterface is a pure interface QObject class.
+* Declares:
+*  - Methods defined for EnumInterface interface
+*  - Property setters and getters for defined properties
+*  - Property changed singals for properties of your interface.
+*  - Signals described for EnumInterface interface.
+*/
 // ********************************************************************
 
 
@@ -193,26 +221,78 @@ class TB_ENUM_EXPORT AbstractEnumInterface : public QObject {
     Q_OBJECT
 public:
     AbstractEnumInterface(QObject * parent=nullptr);
+    /**
+    * Sets the value of the prop0 property.
+    */
     virtual void setProp0(const Enum0::Enum0Enum prop0) = 0;
+    /**
+    * Gets the value of the prop0 property.
+    */
     virtual Enum0::Enum0Enum prop0() const = 0;
+    /**
+    * Sets the value of the prop1 property.
+    */
     virtual void setProp1(const Enum1::Enum1Enum prop1) = 0;
+    /**
+    * Gets the value of the prop1 property.
+    */
     virtual Enum1::Enum1Enum prop1() const = 0;
+    /**
+    * Sets the value of the prop2 property.
+    */
     virtual void setProp2(const Enum2::Enum2Enum prop2) = 0;
+    /**
+    * Gets the value of the prop2 property.
+    */
     virtual Enum2::Enum2Enum prop2() const = 0;
+    /**
+    * Sets the value of the prop3 property.
+    */
     virtual void setProp3(const Enum3::Enum3Enum prop3) = 0;
+    /**
+    * Gets the value of the prop3 property.
+    */
     virtual Enum3::Enum3Enum prop3() const = 0;
+
     virtual Enum0::Enum0Enum func0(const Enum0::Enum0Enum param0) = 0;
+
     virtual Enum1::Enum1Enum func1(const Enum1::Enum1Enum param1) = 0;
+
     virtual Enum2::Enum2Enum func2(const Enum2::Enum2Enum param2) = 0;
+
     virtual Enum3::Enum3Enum func3(const Enum3::Enum3Enum param3) = 0;
 signals:
+    /**
+    * @param param0 
+    */
     void sig0(const Enum0::Enum0Enum param0);
+    /**
+    * @param param1 
+    */
     void sig1(const Enum1::Enum1Enum param1);
+    /**
+    * @param param2 
+    */
     void sig2(const Enum2::Enum2Enum param2);
+    /**
+    * @param param3 
+    */
     void sig3(const Enum3::Enum3Enum param3);
+    /**
+    * Emitted when prop0 value has changed.
+    */
     void prop0Changed(const Enum0::Enum0Enum prop0);
+    /**
+    * Emitted when prop1 value has changed.
+    */
     void prop1Changed(const Enum1::Enum1Enum prop1);
+    /**
+    * Emitted when prop2 value has changed.
+    */
     void prop2Changed(const Enum2::Enum2Enum prop2);
+    /**
+    * Emitted when prop3 value has changed.
+    */
     void prop3Changed(const Enum3::Enum3Enum prop3);
 };
 
@@ -221,9 +301,18 @@ signals:
 // Interface Factory
 // ********************************************************************
 
+/**
+* An interface for a Factory of interfaces in tb.enum
+* May be used to provide different implementations of your interfaces.
+* Check the usage of ApiFactoryInterface in Qml versions of interface implementation.
+* See also the ApiFactory, where you can set this factory as an ApiFactoryInterface implementation.
+*/
 class TB_ENUM_EXPORT ApiFactoryInterface
 {
 public:
+/** Create an instance of EnumInterface
+* @return The implementation of a AbstractEnumInterface, of which user should take ownership.
+*/
     virtual AbstractEnumInterface* createEnumInterface(QObject *parent) = 0;
 };
 

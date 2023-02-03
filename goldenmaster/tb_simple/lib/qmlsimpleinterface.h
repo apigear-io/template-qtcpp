@@ -24,6 +24,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace tb_simple {
 
+/**
+* A QML wrapper of the SimpleInterface implementation.
+* Uses a SimpleInterface provided by an ApiFactory.
+* See ApiFactory and factories that implement the ApiFactoryInterface.
+*/
 class TB_SIMPLE_LIB_EXPORT QmlSimpleInterface : public AbstractSimpleInterface
 {
     Q_OBJECT
@@ -33,7 +38,7 @@ class TB_SIMPLE_LIB_EXPORT QmlSimpleInterface : public AbstractSimpleInterface
     Q_PROPERTY(QString propString READ propString NOTIFY propStringChanged)
 public:
     explicit QmlSimpleInterface(QObject *parent = nullptr);
-    virtual ~QmlSimpleInterface() override;
+    ~QmlSimpleInterface() override;
     bool propBool() const override;
     void setPropBool(bool propBool) override;
     int propInt() const override;

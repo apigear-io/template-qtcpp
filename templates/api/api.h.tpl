@@ -20,8 +20,11 @@ namespace {{snake  .Module.Name }} {
 
 // ********************************************************************
 // Enumeration {{ $class }}
+ {{- if .Description }}
+ *
+ * {{.Description}}
+{{- end }}
 // ********************************************************************
-
 class {{ $MODULE_ID }}_EXPORT {{ $class }} : public QObject {
     Q_OBJECT
 public:
@@ -29,23 +32,33 @@ public:
         : QObject(parent)
         {}
     enum {{ $class }}Enum {
-    {{- range .Members }}
-        {{.Name}} = {{ .Value }},
+    {{- range $idx, $elem := .Members }}
+        {{- if $idx}},{{end}}
+        {{ .Name }} = {{ .Value }} 
+        {{- if .Description -}}
+        /** .Description */
+        {{- end }}
     {{- end }}
     };
     Q_ENUM({{$class}}Enum)
 
+    /**
+    * Converter for {{$class}}Enum
+    * @param v Value in quint8 format.
+    * @param ok. Write parameter, will be set to true if conversion was successful, false otherwise.
+    * @return An enum value for given quint8 or default value if in parameter is out of the enums range.
+    */
     static {{$class}}Enum toEnum(quint8 v, bool *ok);
 };
 
-
+/** ostream operator. Allows writing the {{$class}}Enum value to an text output*/
 inline QDataStream &operator<<(QDataStream &ds, const {{$class}}::{{$class}}Enum &obj)
 {
     quint8 val = obj;
     ds << val;
     return ds;
 }
-
+/** istream operator. Allows reading to {{$class}}Enum value from input text*/
 inline QDataStream &operator>>(QDataStream &ds, {{$class}}::{{$class}}Enum &obj) {
     bool ok;
     quint8 val;
@@ -61,40 +74,41 @@ inline QDataStream &operator>>(QDataStream &ds, {{$class}}::{{$class}}Enum &obj)
 {{- $class := .Name }}
 // ********************************************************************
 // {{$class}} struct
+ {{- if .Description }}
+ * {{.Description}}
+{{- end }}
 // ********************************************************************
-
-class {{ $MODULE_ID }}_EXPORT {{$class}}
+struct {{ $MODULE_ID }}_EXPORT {{$class}}
 {
     Q_GADGET
 {{- range .Fields }}
-    Q_PROPERTY({{qtReturn "" .}} {{.Name}} READ {{.Name}} WRITE set{{Camel .Name}})
+    Q_PROPERTY({{qtReturn "" .}} {{.Name}} MEMBER m_{{.Name}} )
 {{- end }}
 
 public:
     {{$class}}();
-
-{{- range .Fields }}
-    void set{{Camel .Name}}({{qtParam "" .}});
-    {{qtReturn "" .}} {{.Name}}() const;
-
-{{- end }}
-
     bool operator==(const {{$class}} &other) const;
     bool operator!=(const {{$class}} &other) const;
 
-private:
 {{- range .Fields }}
+    {{- if .Description }}
+    /**
+     * {{.Description}}
+     */
+    {{- end }}
     {{qtReturn "" .}} m_{{.Name}};
 {{- end }}
 };
 
+/** ostream operator. Allows writing the {{$class}} value to an text output*/
 QDataStream &operator<<(QDataStream &stream, const {{$class}} &obj);
+/** istream operator. Allows reading to {{$class}} value from input text*/
 QDataStream &operator>>(QDataStream &stream, {{$class}} &obj);
 
 // ********************************************************************
 // {{$class}} struct factory
+// Registered by plugin to allow creating this type of objects in qml. 
 // ********************************************************************
-
 class {{ $MODULE_ID }}_EXPORT {{$class}}Factory : public QObject {
     Q_OBJECT
 public:
@@ -104,9 +118,20 @@ public:
 
 {{- end }}
 {{ range .Module.Interfaces }}
-{{- $class := printf "Abstract%s" .Name }}
+{{- $class := printf "Abstract%s" (Camel .Name) }}
 // ********************************************************************
-// {{$class}} pure interface
+/**
+{{- if .Description }}
+ * {{.Description}}
+{{- end }}   {{- /* end if interface description */}}
+*
+* {{$class}} is a pure interface QObject class.
+* Declares:
+*  - Methods defined for {{.Name}} interface
+*  - Property setters and getters for defined properties
+*  - Property changed singals for properties of your interface.
+*  - Signals described for {{.Name}} interface.
+*/
 // ********************************************************************
 
 
@@ -115,18 +140,60 @@ class {{ $MODULE_ID }}_EXPORT {{$class}} : public QObject {
 public:
     {{$class}}(QObject * parent=nullptr);
 {{- range .Properties }}
+{{- $property := . }}
+    /**
+    * Sets the value of the {{$property.Name}} property.
+    {{- if $property.Description }}
+    * @param {{$property.Name}} {{$property.Description}}
+    {{- end }}    {{- /* end if property.Description */}}
+    */
     virtual void set{{Camel .Name}}({{qtParam "" .}}) = 0;
+    /**
+    * Gets the value of the {{$property.Name}} property.
+    {{- if $property.Description }}
+    * @return {{$property.Description}}
+    {{- end }}    {{- /* end if property.Description */}}
+    */
     virtual {{qtReturn "" .}} {{.Name}}() const = 0;
 {{- end }}
 
 {{- range .Operations }}
+{{ $operation := . }}
+{{- if $operation.Description }}
+    /**
+    * {{ $operation.Description }}
+{{- range $operation.Params }}
+{{- $param := . }}
+{{- if $param.Description }}
+    * @param {{$param}} {{$param.Description}}
+{{- end }}   {{- /* end if param description */}}
+{{- end }}   {{- /* end range operation param*/}}  
+    */
+{{- end }}   {{- /* end if operations description */}}
     virtual {{qtReturn "" .Return }} {{.Name}}({{qtParams "" .Params}}) = 0;
 {{- end }}
 signals:
 {{- range .Signals }}
+{{- $signal := . }}
+    /**
+    {{- if $signal.Description }}
+    * {{$signal.Description}}
+    {{- end }}
+    {{- range $signal.Params }}
+    {{- $param := . }}
+    * @param {{$param.Name}} {{$param.Description}}
+    {{- end -}} {{/* range singal.Params */}}
+    */
     void {{.Name}}({{qtParams "" .Params}});
 {{- end }}
 {{- range .Properties }}
+{{- $property:= . }}
+    /**
+    * Emitted when {{$property.Name}} value has changed.
+    {{- if $property.Description }}
+    * @param {{$property.Name}} {{$property.Description}}
+    {{- end }}
+    */
     void {{.Name}}Changed({{qtParam "" .}});
 {{- end }}
 };
@@ -136,11 +203,20 @@ signals:
 // Interface Factory
 // ********************************************************************
 
+/**
+* An interface for a Factory of interfaces in {{ .Module.Name }}
+* May be used to provide different implementations of your interfaces.
+* Check the usage of ApiFactoryInterface in Qml versions of interface implementation.
+* See also the ApiFactory, where you can set this factory as an ApiFactoryInterface implementation.
+*/
 class {{ $MODULE_ID }}_EXPORT ApiFactoryInterface
 {
 public:
 {{- range .Module.Interfaces }}
-    virtual Abstract{{.Name}}* create{{Camel .Name}}(QObject *parent) = 0;
+/** Create an instance of {{Camel .Name}}
+* @return The implementation of a Abstract{{Camel .Name}}, of which user should take ownership.
+*/
+    virtual Abstract{{Camel .Name}}* create{{Camel .Name}}(QObject *parent) = 0;
 {{- end }}
 };
 

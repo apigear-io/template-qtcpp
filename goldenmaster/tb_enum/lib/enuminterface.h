@@ -30,19 +30,38 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace tb_enum {
 
+/**
+* The EnumInterface implementation.
+*/
 class TB_ENUM_LIB_EXPORT EnumInterface : public AbstractEnumInterface
 {
     Q_OBJECT
 public:
     explicit EnumInterface(QObject *parent = nullptr);
     virtual ~EnumInterface() override;
+    /** @return value of the property prop0 */
     Enum0::Enum0Enum prop0() const override;
+    /** Use to change a property value.
+    * if the property is changed, a signal {.Name}}Changed is emitted.
+    @param value to set for the property prop0 */
     void setProp0(const Enum0::Enum0Enum prop0) override;
+    /** @return value of the property prop1 */
     Enum1::Enum1Enum prop1() const override;
+    /** Use to change a property value.
+    * if the property is changed, a signal {.Name}}Changed is emitted.
+    @param value to set for the property prop1 */
     void setProp1(const Enum1::Enum1Enum prop1) override;
+    /** @return value of the property prop2 */
     Enum2::Enum2Enum prop2() const override;
+    /** Use to change a property value.
+    * if the property is changed, a signal {.Name}}Changed is emitted.
+    @param value to set for the property prop2 */
     void setProp2(const Enum2::Enum2Enum prop2) override;
+    /** @return value of the property prop3 */
     Enum3::Enum3Enum prop3() const override;
+    /** Use to change a property value.
+    * if the property is changed, a signal {.Name}}Changed is emitted.
+    @param value to set for the property prop3 */
     void setProp3(const Enum3::Enum3Enum prop3) override;
     Enum0::Enum0Enum func0(const Enum0::Enum0Enum param0) override;
     Enum1::Enum1Enum func1(const Enum1::Enum1Enum param1) override;
@@ -50,9 +69,13 @@ public:
     Enum3::Enum3Enum func3(const Enum3::Enum3Enum param3) override;
 
 private:
+    /** prop0 property */
     Enum0::Enum0Enum m_prop0;
+    /** prop1 property */
     Enum1::Enum1Enum m_prop1;
+    /** prop2 property */
     Enum2::Enum2Enum m_prop2;
+    /** prop3 property */
     Enum3::Enum3Enum m_prop3;
 };
 } //namespace tb_enum

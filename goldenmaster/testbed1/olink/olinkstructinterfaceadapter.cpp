@@ -39,7 +39,6 @@ OLinkStructInterfaceAdapter::OLinkStructInterfaceAdapter(RemoteRegistry& registr
     : QObject(parent)
     , m_impl(impl)
     , m_registry(registry)
-    , m_node()
 {
     connect(m_impl, &AbstractStructInterface::propBoolChanged, this,
         [=](const StructBool& propBool) {
@@ -207,13 +206,11 @@ void OLinkStructInterfaceAdapter::olinkSetProperty(const std::string& propertyId
 
 void OLinkStructInterfaceAdapter::olinkLinked(const std::string& objectId, IRemoteNode *node) {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
-    m_node = node;
 }
 
 void OLinkStructInterfaceAdapter::olinkUnlinked(const std::string& objectId)
 {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
-    m_node = nullptr;
 }
 
 json OLinkStructInterfaceAdapter::olinkCollectProperties()

@@ -39,7 +39,6 @@ OLinkEnumInterfaceAdapter::OLinkEnumInterfaceAdapter(RemoteRegistry& registry, A
     : QObject(parent)
     , m_impl(impl)
     , m_registry(registry)
-    , m_node()
 {
     connect(m_impl, &AbstractEnumInterface::prop0Changed, this,
         [=](const Enum0::Enum0Enum prop0) {
@@ -207,13 +206,11 @@ void OLinkEnumInterfaceAdapter::olinkSetProperty(const std::string& propertyId, 
 
 void OLinkEnumInterfaceAdapter::olinkLinked(const std::string& objectId, IRemoteNode *node) {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
-    m_node = node;
 }
 
 void OLinkEnumInterfaceAdapter::olinkUnlinked(const std::string& objectId)
 {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
-    m_node = nullptr;
 }
 
 json OLinkEnumInterfaceAdapter::olinkCollectProperties()

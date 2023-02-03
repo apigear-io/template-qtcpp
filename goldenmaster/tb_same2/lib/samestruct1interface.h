@@ -30,17 +30,25 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace tb_same2 {
 
+/**
+* The SameStruct1Interface implementation.
+*/
 class TB_SAME2_LIB_EXPORT SameStruct1Interface : public AbstractSameStruct1Interface
 {
     Q_OBJECT
 public:
     explicit SameStruct1Interface(QObject *parent = nullptr);
     virtual ~SameStruct1Interface() override;
+    /** @return value of the property prop1 */
     Struct1 prop1() const override;
+    /** Use to change a property value.
+    * if the property is changed, a signal {.Name}}Changed is emitted.
+    @param value to set for the property prop1 */
     void setProp1(const Struct1& prop1) override;
     Struct1 func1(const Struct1& param1) override;
 
 private:
+    /** prop1 property */
     Struct1 m_prop1;
 };
 } //namespace tb_same2

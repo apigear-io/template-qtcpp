@@ -30,17 +30,25 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace testbed2 {
 
+/**
+* The NestedStruct1Interface implementation.
+*/
 class TESTBED2_LIB_EXPORT NestedStruct1Interface : public AbstractNestedStruct1Interface
 {
     Q_OBJECT
 public:
     explicit NestedStruct1Interface(QObject *parent = nullptr);
     virtual ~NestedStruct1Interface() override;
+    /** @return value of the property prop1 */
     NestedStruct1 prop1() const override;
+    /** Use to change a property value.
+    * if the property is changed, a signal {.Name}}Changed is emitted.
+    @param value to set for the property prop1 */
     void setProp1(const NestedStruct1& prop1) override;
     NestedStruct1 func1(const NestedStruct1& param1) override;
 
 private:
+    /** prop1 property */
     NestedStruct1 m_prop1;
 };
 } //namespace testbed2

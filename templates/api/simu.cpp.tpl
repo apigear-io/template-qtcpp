@@ -16,7 +16,7 @@ namespace {{snake  .Module.Name }} {
 // ********************************************************************
 
 {{$class}}::{{$class}}(QObject *parent)
-    : Abstract{{.Name}}(parent)
+    : Abstract{{Camel .Name}}(parent)
 {{- range .Properties }}
     , m_{{.Name}}({{qtDefault "" .}})
 {{- end }}

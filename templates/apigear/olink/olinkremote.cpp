@@ -37,10 +37,5 @@ void OLinkRemote::handleMessage(const QString &msg)
 void OLinkRemote::socketDisconnected()
 {
     qDebug() << "Client disconnected, connection closed";
-    auto objectsUsingNode = m_registry.getObjectIds(m_node);
-    for (const auto objectId : objectsUsingNode)
-    {
-        m_registry.removeNodeFromSource(m_node, objectId);
-    }
     this->deleteLater();
 }

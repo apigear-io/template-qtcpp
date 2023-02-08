@@ -17,7 +17,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "olinksamestruct2interface.h"
 
-#include "tb_same2/api/agent.h"
 #include "tb_same2/api/json.adapter.h"
 
 #include "olink/iclientnode.h"
@@ -65,7 +64,6 @@ void OLinkSameStruct2Interface::setProp1Local(const Struct2& prop1)
     if (m_prop1 != prop1) {
         m_prop1 = prop1;
         emit prop1Changed(prop1);
-        SameStruct2InterfaceAgent::trace_state(this);
     }
 }
 
@@ -89,7 +87,6 @@ void OLinkSameStruct2Interface::setProp2Local(const Struct2& prop2)
     if (m_prop2 != prop2) {
         m_prop2 = prop2;
         emit prop2Changed(prop2);
-        SameStruct2InterfaceAgent::trace_state(this);
     }
 }
 

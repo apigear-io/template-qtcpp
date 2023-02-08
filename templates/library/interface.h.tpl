@@ -4,7 +4,7 @@
 {{- $class := Camel .Interface.Name  }}
 {{- $interfaceClass := printf "I%s" $class }}
 {{- $interfaceNameOriginal := .Interface.Name  }}
-{{- $MODULE_ID := printf "%s_LIB" (SNAKE .Module.Name) }}
+{{- $LIB_ID := printf "%s_IMPL" (SNAKE .Module.Name) }}
 
 #pragma once
 
@@ -12,10 +12,10 @@
 
 #include "{{snake .Module.Name}}/api/api.h"
 
-#if defined({{ $MODULE_ID }}_LIBRARY)
-#  define {{ $MODULE_ID }}_EXPORT Q_DECL_EXPORT
+#if defined({{ $LIB_ID }}_LIBRARY)
+#  define {{ $LIB_ID }}_EXPORT Q_DECL_EXPORT
 #else
-#  define {{ $MODULE_ID }}_EXPORT Q_DECL_IMPORT
+#  define {{ $LIB_ID }}_EXPORT Q_DECL_IMPORT
 #endif
 
 namespace {{snake  .Module.Name }} {
@@ -26,7 +26,7 @@ namespace {{snake  .Module.Name }} {
 *{{.Interface.Description}}
 {{- end }}
 */
-class {{ $MODULE_ID }}_EXPORT {{$class}} : public Abstract{{$class}}
+class {{ $LIB_ID }}_EXPORT {{$class}} : public Abstract{{$class}}
 {
     Q_OBJECT
 public:

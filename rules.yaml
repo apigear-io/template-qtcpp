@@ -1,18 +1,13 @@
 features:
   - name: api
+  # temporary requires apigear. This should be removed, when simulation is removed.
+    requires:
+      - apigear
     scopes:
       - match: system
         documents:
           - source: "CMakeLists.txt.tpl"
             target: "CMakeLists.txt"
-          - source: "apigear/CMakeLists.txt"
-            raw: true
-          - source: "apigear/monitor/CMakeLists.txt"
-            raw: true
-          - source: "apigear/monitor/agentclient.h"
-            raw: true
-          - source: "apigear/monitor/agentclient.cpp"
-            raw: true
           - source: "apigear/simulation/CMakeLists.txt"
             raw: true
           - source: "apigear/simulation/simulationclient.h"
@@ -22,44 +17,60 @@ features:
           - source: thirdparty/qtpromise/CMakeLists.txt
             raw: true
       - match: module
-        prefix: "{{snake .Module.Name}}/"
+        prefix: "{{snake .Module.Name}}/api/"
         documents:
           - source: "api/CMakeLists.txt.tpl"
-            target: "api/CMakeLists.txt"
+            target: "CMakeLists.txt"
+            force: true
           - source: "api/api.h.tpl"
-            target: "api/api.h"
+            target: "api.h"
+            force: true
           - source: "api/api.cpp.tpl"
-            target: "api/api.cpp"
+            target: "api.cpp"
+            force: true
+          - source: "api/iapifactory.h.tpl"
+            target: "iapifactory.h"
+            force: true
           - source: "api/json.adapter.h.tpl"
-            target: "api/json.adapter.h"
+            target: "json.adapter.h"
+            force: true
           - source: "api/apifactory.h.tpl"
-            target: "api/apifactory.h"
+            target: "apifactory.h"
+            force: true
           - source: "api/apifactory.cpp.tpl"
-            target: "api/apifactory.cpp"
+            target: "apifactory.cpp"
+            force: true
           - source: "api/simu.h.tpl"
-            target: "api/simu.h"
+            target: "simu.h"
           - source: "api/simu.cpp.tpl"
-            target: "api/simu.cpp"
-          - source: "api/agent.h.tpl"
-            target: "api/agent.h"
-          - source: "api/agent.cpp.tpl"
-            target: "api/agent.cpp"
-  - name: scaffold
+            target: "simu.cpp"
+      - match: interface
+        prefix: "{{snake .Module.Name}}/api/"
+        documents:
+          - source: "api/qmlinterface.h.tpl"
+            target: "qml{{lower .Interface.Name}}.h"
+            force: true
+          - source: "api/qmlinterface.cpp.tpl"
+            target: "qml{{lower .Interface.Name}}.cpp"
+            force: true
+  - name: stubs
+    requires:
+      - api
     scopes:
     - match: module
       prefix: "{{snake .Module.Name}}/"
       documents:
         - source: "library/CMakeLists.txt.tpl"
-          target: "lib/CMakeLists.txt"
+          target: "implementation/CMakeLists.txt"
           force: true
         - source: "library/factory.h.tpl"
-          target: "lib/factory.h"
+          target: "implementation/factory.h"
           force: true
         - source: "library/factory.cpp.tpl"
-          target: "lib/factory.cpp"
+          target: "implementation/factory.cpp"
           force: true
     - match: interface
-      prefix: "{{snake .Module.Name}}/lib/"
+      prefix: "{{snake .Module.Name}}/implementation/"
       documents:
         - source: "library/interface.h.tpl"
           target: "{{lower .Interface.Name}}.h"
@@ -67,19 +78,15 @@ features:
         - source: "library/interface.cpp.tpl"
           target: "{{lower .Interface.Name}}.cpp"
           force: true
-        - source: "library/qmlinterface.h.tpl"
-          target: "qml{{lower .Interface.Name}}.h"
-          force: true
-        - source: "library/qmlinterface.cpp.tpl"
-          target: "qml{{lower .Interface.Name}}.cpp"
-          force: true
         - source: "library/tst_interface.h.tpl"
           target: "tst_{{lower .Interface.Name}}.h"
           force: true
         - source: "library/tst_interface.cpp.tpl"
           target: "tst_{{lower .Interface.Name}}.cpp"
           force: true
-  - name: plugin
+  - name: qmlplugin
+    requires:
+      - api
     scopes:
     - match: module
       prefix: "{{snake .Module.Name}}/"
@@ -93,6 +100,8 @@ features:
         - source: "plugin/qmldir.tpl"
           target: "plugin/qmldir"
   - name: http
+    requires:
+      - api
     scopes:
       - match: module
         prefix: "{{snake .Module.Name}}/"
@@ -110,46 +119,83 @@ features:
             target: "http/http{{lower .Interface.Name}}.h"
           - source: "http/httpinterface.cpp.tpl"
             target: "http/http{{lower .Interface.Name}}.cpp"
-  - name: olink
+  - name: apigear
     scopes:
       - match: system
         documents:
-          - source: apigear/olink/CMakeLists.txt
-            raw: true
-          - source: apigear/olink/olink_common.h
-            raw: true
-          - source: apigear/olink/olinkclient.h
-            raw: true
-          - source: apigear/olink/olinkclient.cpp
-            raw: true
-          - source: apigear/olink/olinkhost.h
-            raw: true
-          - source: apigear/olink/olinkhost.cpp
-            raw: true
-          - source: apigear/olink/olinkremote.h
-            raw: true
-          - source: apigear/olink/olinkremote.cpp
-            raw: true
-          - source: apigear/tests/olink/CMakeLists.txt
-            raw: true
-          - source: apigear/tests/olink/olink_connection.test.cpp
-            raw: true
-          - source: apigear/tests/olink/olinkhost.test.cpp
-            raw: true
-          - source: apigear/tests/olink/test_main.cpp
-            raw: true
-          - source: apigear/tests/olink/private/messagestorage.h
-            raw: true
-          - source: apigear/tests/olink/private/messagestorage.cpp
-            raw: true
-          - source: apigear/tests/olink/private/sinkobjectmock.hpp
-            raw: true
-          - source: apigear/tests/olink/private/sourceobjectmock.hpp
-            raw: true
-          - source: apigear/tests/olink/private/test_server/testserver.h
-            raw: true
-          - source: apigear/tests/olink/private/test_server/testserver.cpp
-            raw: true
+           - source: "apigear/CMakeLists.txt"
+             raw: true
+           - source: "apigear/monitor/CMakeLists.txt"
+             raw: true
+           - source: "apigear/monitor/agentclient.h"
+             raw: true
+           - source: "apigear/monitor/agentclient.cpp"
+             raw: true
+           - source: apigear/olink/CMakeLists.txt
+             raw: true
+           - source: apigear/olink/olink_common.h
+             raw: true
+           - source: apigear/olink/olinkclient.h
+             raw: true
+           - source: apigear/olink/olinkclient.cpp
+             raw: true
+           - source: apigear/olink/olinkhost.h
+             raw: true
+           - source: apigear/olink/olinkhost.cpp
+             raw: true
+           - source: apigear/olink/olinkremote.h
+             raw: true
+           - source: apigear/olink/olinkremote.cpp
+             raw: true
+           - source: apigear/tests/olink/CMakeLists.txt
+             raw: true
+           - source: apigear/tests/olink/olink_connection.test.cpp
+             raw: true
+           - source: apigear/tests/olink/olinkhost.test.cpp
+             raw: true
+           - source: apigear/tests/olink/test_main.cpp
+             raw: true
+           - source: apigear/tests/olink/private/messagestorage.h
+             raw: true
+           - source: apigear/tests/olink/private/messagestorage.cpp
+             raw: true
+           - source: apigear/tests/olink/private/sinkobjectmock.hpp
+             raw: true
+           - source: apigear/tests/olink/private/sourceobjectmock.hpp
+             raw: true
+           - source: apigear/tests/olink/private/test_server/testserver.h
+             raw: true
+           - source: apigear/tests/olink/private/test_server/testserver.cpp
+             raw: true
+  - name: monitor
+    requires:
+      - api
+      - apigear
+    scopes:
+      - match: module
+        documents:
+          - source: "monitor/CMakeLists.txt.tpl"
+            target: "{{snake .Module.Name}}/monitor/CMakeLists.txt"
+          - source: "monitor/agent.h.tpl"
+            target: "{{snake .Module.Name}}/monitor/agent.h"
+          - source: "monitor/agent.cpp.tpl"
+            target: "{{snake .Module.Name}}/monitor/agent.cpp"
+          - source: "monitor/tracedapifactory.h.tpl"
+            target: "{{snake .Module.Name}}/monitor/tracedapifactory.h"
+          - source: "monitor/tracedapifactory.cpp.tpl"
+            target: "{{snake .Module.Name}}/monitor/tracedapifactory.cpp"
+      - match: interface
+        prefix: "{{snake .Module.Name}}/monitor/"
+        documents:
+          - source: "monitor/interfacetraced.h.tpl"
+            target: "{{lower .Interface.Name}}traced.h"
+          - source: "monitor/interfacetraced.cpp.tpl"
+            target: "{{lower .Interface.Name}}traced.cpp"
+  - name: olink
+    requires:
+      - api
+      - apigear
+    scopes:
       - match: module
         prefix: "{{snake .Module.Name}}/"
         documents:
@@ -171,6 +217,10 @@ features:
           - source: "olink/olinkadapter.cpp.tpl"
             target: "olink/olink{{lower .Interface.Name}}adapter.cpp"            
   - name: examples
+    requires:
+      - olink
+      - stubs
+      - qmlplugin
     scopes:
     - match: system
       documents:

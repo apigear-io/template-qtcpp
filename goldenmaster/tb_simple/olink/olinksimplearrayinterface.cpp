@@ -17,7 +17,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "olinksimplearrayinterface.h"
 
-#include "tb_simple/api/agent.h"
 #include "tb_simple/api/json.adapter.h"
 
 #include "olink/iclientnode.h"
@@ -89,7 +88,6 @@ void OLinkSimpleArrayInterface::setPropBoolLocal(const QList<bool>& propBool)
     if (m_propBool != propBool) {
         m_propBool = propBool;
         emit propBoolChanged(propBool);
-        SimpleArrayInterfaceAgent::trace_state(this);
     }
 }
 
@@ -113,7 +111,6 @@ void OLinkSimpleArrayInterface::setPropIntLocal(const QList<int>& propInt)
     if (m_propInt != propInt) {
         m_propInt = propInt;
         emit propIntChanged(propInt);
-        SimpleArrayInterfaceAgent::trace_state(this);
     }
 }
 
@@ -137,7 +134,6 @@ void OLinkSimpleArrayInterface::setPropInt32Local(const QList<qint32>& propInt32
     if (m_propInt32 != propInt32) {
         m_propInt32 = propInt32;
         emit propInt32Changed(propInt32);
-        SimpleArrayInterfaceAgent::trace_state(this);
     }
 }
 
@@ -161,7 +157,6 @@ void OLinkSimpleArrayInterface::setPropInt64Local(const QList<qint64>& propInt64
     if (m_propInt64 != propInt64) {
         m_propInt64 = propInt64;
         emit propInt64Changed(propInt64);
-        SimpleArrayInterfaceAgent::trace_state(this);
     }
 }
 
@@ -185,7 +180,6 @@ void OLinkSimpleArrayInterface::setPropFloatLocal(const QList<qreal>& propFloat)
     if (m_propFloat != propFloat) {
         m_propFloat = propFloat;
         emit propFloatChanged(propFloat);
-        SimpleArrayInterfaceAgent::trace_state(this);
     }
 }
 
@@ -209,7 +203,6 @@ void OLinkSimpleArrayInterface::setPropFloat32Local(const QList<float>& propFloa
     if (m_propFloat32 != propFloat32) {
         m_propFloat32 = propFloat32;
         emit propFloat32Changed(propFloat32);
-        SimpleArrayInterfaceAgent::trace_state(this);
     }
 }
 
@@ -233,7 +226,6 @@ void OLinkSimpleArrayInterface::setPropFloat64Local(const QList<double>& propFlo
     if (m_propFloat64 != propFloat64) {
         m_propFloat64 = propFloat64;
         emit propFloat64Changed(propFloat64);
-        SimpleArrayInterfaceAgent::trace_state(this);
     }
 }
 
@@ -257,7 +249,6 @@ void OLinkSimpleArrayInterface::setPropStringLocal(const QList<QString>& propStr
     if (m_propString != propString) {
         m_propString = propString;
         emit propStringChanged(propString);
-        SimpleArrayInterfaceAgent::trace_state(this);
     }
 }
 

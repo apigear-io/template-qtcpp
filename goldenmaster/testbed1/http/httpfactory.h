@@ -3,11 +3,11 @@
 #include <QtCore>
 #include <QtNetwork>
 
-#include "testbed1/api/apifactory.h"
+#include "testbed1/api/iapifactory.h"
 
 namespace testbed1 {
 
-class HttpFactory : public QObject, public ApiFactoryInterface
+class HttpFactory : public QObject, public IApiFactory
 {
 public:
     HttpFactory(QObject *parent = nullptr);

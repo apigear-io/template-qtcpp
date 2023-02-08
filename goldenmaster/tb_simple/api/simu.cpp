@@ -15,9 +15,9 @@ SimulationSimpleInterface::SimulationSimpleInterface(QObject *parent)
     , m_propBool(false)
     , m_propInt(0)
     , m_propInt32(0)
-    , m_propInt64(0)
-    , m_propFloat(0.0)
-    , m_propFloat32(0.0)
+    , m_propInt64(0LL)
+    , m_propFloat(0.0f)
+    , m_propFloat32(0.0f)
     , m_propFloat64(0.0)
     , m_propString(QString())
 {
@@ -257,7 +257,7 @@ qint64 SimulationSimpleInterface::funcInt64(qint64 paramInt64)
     Params params;
     params["paramInt64"] = paramInt64;
     ApiGear::SimulationClient::instance()->doCall("tb.simple/SimpleInterface", "funcInt64", params);
-    return 0;
+    return 0LL;
 }
 
 qreal SimulationSimpleInterface::funcFloat(qreal paramFloat)
@@ -267,7 +267,7 @@ qreal SimulationSimpleInterface::funcFloat(qreal paramFloat)
     Params params;
     params["paramFloat"] = paramFloat;
     ApiGear::SimulationClient::instance()->doCall("tb.simple/SimpleInterface", "funcFloat", params);
-    return 0.0;
+    return 0.0f;
 }
 
 float SimulationSimpleInterface::funcFloat32(float paramFloat32)
@@ -277,7 +277,7 @@ float SimulationSimpleInterface::funcFloat32(float paramFloat32)
     Params params;
     params["paramFloat32"] = paramFloat32;
     ApiGear::SimulationClient::instance()->doCall("tb.simple/SimpleInterface", "funcFloat32", params);
-    return 0.0;
+    return 0.0f;
 }
 
 double SimulationSimpleInterface::funcFloat64(double paramFloat)

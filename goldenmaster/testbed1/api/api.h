@@ -20,19 +20,17 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <QtCore>
 #include <QtCore/QtGlobal>
 
-#include <memory>
-
-#if defined(TESTBED1_LIBRARY)
-#  define TESTBED1_EXPORT Q_DECL_EXPORT
+#if defined(TESTBED1_API_LIBRARY)
+#  define TESTBED1_API_EXPORT Q_DECL_EXPORT
 #else
-#  define TESTBED1_EXPORT Q_DECL_IMPORT
+#  define TESTBED1_API_EXPORT Q_DECL_IMPORT
 #endif
 
 namespace testbed1 {
 // ********************************************************************
 // StructBool struct
 // ********************************************************************
-struct TESTBED1_EXPORT StructBool
+struct TESTBED1_API_EXPORT StructBool
 {
     Q_GADGET
     Q_PROPERTY(bool fieldBool MEMBER m_fieldBool )
@@ -53,7 +51,7 @@ QDataStream &operator>>(QDataStream &stream, StructBool &obj);
 // StructBool struct factory
 // Registered by plugin to allow creating this type of objects in qml. 
 // ********************************************************************
-class TESTBED1_EXPORT StructBoolFactory : public QObject {
+class TESTBED1_API_EXPORT StructBoolFactory : public QObject {
     Q_OBJECT
 public:
     Q_INVOKABLE StructBool create();
@@ -61,7 +59,7 @@ public:
 // ********************************************************************
 // StructInt struct
 // ********************************************************************
-struct TESTBED1_EXPORT StructInt
+struct TESTBED1_API_EXPORT StructInt
 {
     Q_GADGET
     Q_PROPERTY(int fieldInt MEMBER m_fieldInt )
@@ -82,7 +80,7 @@ QDataStream &operator>>(QDataStream &stream, StructInt &obj);
 // StructInt struct factory
 // Registered by plugin to allow creating this type of objects in qml. 
 // ********************************************************************
-class TESTBED1_EXPORT StructIntFactory : public QObject {
+class TESTBED1_API_EXPORT StructIntFactory : public QObject {
     Q_OBJECT
 public:
     Q_INVOKABLE StructInt create();
@@ -90,7 +88,7 @@ public:
 // ********************************************************************
 // StructFloat struct
 // ********************************************************************
-struct TESTBED1_EXPORT StructFloat
+struct TESTBED1_API_EXPORT StructFloat
 {
     Q_GADGET
     Q_PROPERTY(qreal fieldFloat MEMBER m_fieldFloat )
@@ -111,7 +109,7 @@ QDataStream &operator>>(QDataStream &stream, StructFloat &obj);
 // StructFloat struct factory
 // Registered by plugin to allow creating this type of objects in qml. 
 // ********************************************************************
-class TESTBED1_EXPORT StructFloatFactory : public QObject {
+class TESTBED1_API_EXPORT StructFloatFactory : public QObject {
     Q_OBJECT
 public:
     Q_INVOKABLE StructFloat create();
@@ -119,7 +117,7 @@ public:
 // ********************************************************************
 // StructString struct
 // ********************************************************************
-struct TESTBED1_EXPORT StructString
+struct TESTBED1_API_EXPORT StructString
 {
     Q_GADGET
     Q_PROPERTY(QString fieldString MEMBER m_fieldString )
@@ -140,7 +138,7 @@ QDataStream &operator>>(QDataStream &stream, StructString &obj);
 // StructString struct factory
 // Registered by plugin to allow creating this type of objects in qml. 
 // ********************************************************************
-class TESTBED1_EXPORT StructStringFactory : public QObject {
+class TESTBED1_API_EXPORT StructStringFactory : public QObject {
     Q_OBJECT
 public:
     Q_INVOKABLE StructString create();
@@ -159,7 +157,7 @@ public:
 // ********************************************************************
 
 
-class TESTBED1_EXPORT AbstractStructInterface : public QObject {
+class TESTBED1_API_EXPORT AbstractStructInterface : public QObject {
     Q_OBJECT
 public:
     AbstractStructInterface(QObject * parent=nullptr);
@@ -251,7 +249,7 @@ signals:
 // ********************************************************************
 
 
-class TESTBED1_EXPORT AbstractStructArrayInterface : public QObject {
+class TESTBED1_API_EXPORT AbstractStructArrayInterface : public QObject {
     Q_OBJECT
 public:
     AbstractStructArrayInterface(QObject * parent=nullptr);
@@ -330,31 +328,6 @@ signals:
     void propStringChanged(const QList<StructString>& propString);
 };
 
-
-// ********************************************************************
-// Interface Factory
-// ********************************************************************
-
-/**
-* An interface for a Factory of interfaces in testbed1
-* May be used to provide different implementations of your interfaces.
-* Check the usage of ApiFactoryInterface in Qml versions of interface implementation.
-* See also the ApiFactory, where you can set this factory as an ApiFactoryInterface implementation.
-*/
-class TESTBED1_EXPORT ApiFactoryInterface
-{
-public:
-    /** 
-    * Create an instance of StructInterface
-    * @return The implementation of a AbstractStructInterface.
-    */
-    virtual std::shared_ptr<AbstractStructInterface> createStructInterface(QObject *parent = nullptr) = 0;
-    /** 
-    * Create an instance of StructArrayInterface
-    * @return The implementation of a AbstractStructArrayInterface.
-    */
-    virtual std::shared_ptr<AbstractStructArrayInterface> createStructArrayInterface(QObject *parent = nullptr) = 0;
-};
 
 } //namespace testbed1
 

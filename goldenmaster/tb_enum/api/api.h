@@ -20,12 +20,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <QtCore>
 #include <QtCore/QtGlobal>
 
-#include <memory>
-
-#if defined(TB_ENUM_LIBRARY)
-#  define TB_ENUM_EXPORT Q_DECL_EXPORT
+#if defined(TB_ENUM_API_LIBRARY)
+#  define TB_ENUM_API_EXPORT Q_DECL_EXPORT
 #else
-#  define TB_ENUM_EXPORT Q_DECL_IMPORT
+#  define TB_ENUM_API_EXPORT Q_DECL_IMPORT
 #endif
 
 namespace tb_enum {
@@ -33,7 +31,7 @@ namespace tb_enum {
 // ********************************************************************
 // Enumeration Enum0
 // ********************************************************************
-class TB_ENUM_EXPORT Enum0 : public QObject {
+class TB_ENUM_API_EXPORT Enum0 : public QObject {
     Q_OBJECT
 public:
     Enum0(QObject *parent = nullptr)
@@ -77,7 +75,7 @@ inline QDataStream &operator>>(QDataStream &ds, Enum0::Enum0Enum &obj) {
 // ********************************************************************
 // Enumeration Enum1
 // ********************************************************************
-class TB_ENUM_EXPORT Enum1 : public QObject {
+class TB_ENUM_API_EXPORT Enum1 : public QObject {
     Q_OBJECT
 public:
     Enum1(QObject *parent = nullptr)
@@ -121,7 +119,7 @@ inline QDataStream &operator>>(QDataStream &ds, Enum1::Enum1Enum &obj) {
 // ********************************************************************
 // Enumeration Enum2
 // ********************************************************************
-class TB_ENUM_EXPORT Enum2 : public QObject {
+class TB_ENUM_API_EXPORT Enum2 : public QObject {
     Q_OBJECT
 public:
     Enum2(QObject *parent = nullptr)
@@ -165,7 +163,7 @@ inline QDataStream &operator>>(QDataStream &ds, Enum2::Enum2Enum &obj) {
 // ********************************************************************
 // Enumeration Enum3
 // ********************************************************************
-class TB_ENUM_EXPORT Enum3 : public QObject {
+class TB_ENUM_API_EXPORT Enum3 : public QObject {
     Q_OBJECT
 public:
     Enum3(QObject *parent = nullptr)
@@ -219,7 +217,7 @@ inline QDataStream &operator>>(QDataStream &ds, Enum3::Enum3Enum &obj) {
 // ********************************************************************
 
 
-class TB_ENUM_EXPORT AbstractEnumInterface : public QObject {
+class TB_ENUM_API_EXPORT AbstractEnumInterface : public QObject {
     Q_OBJECT
 public:
     AbstractEnumInterface(QObject * parent=nullptr);
@@ -298,26 +296,6 @@ signals:
     void prop3Changed(Enum3::Enum3Enum prop3);
 };
 
-
-// ********************************************************************
-// Interface Factory
-// ********************************************************************
-
-/**
-* An interface for a Factory of interfaces in tb.enum
-* May be used to provide different implementations of your interfaces.
-* Check the usage of ApiFactoryInterface in Qml versions of interface implementation.
-* See also the ApiFactory, where you can set this factory as an ApiFactoryInterface implementation.
-*/
-class TB_ENUM_EXPORT ApiFactoryInterface
-{
-public:
-    /** 
-    * Create an instance of EnumInterface
-    * @return The implementation of a AbstractEnumInterface.
-    */
-    virtual std::shared_ptr<AbstractEnumInterface> createEnumInterface(QObject *parent = nullptr) = 0;
-};
 
 } //namespace tb_enum
 

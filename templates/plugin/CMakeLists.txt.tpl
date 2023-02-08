@@ -4,6 +4,10 @@
 {{- $SOURCES := printf "PLUGIN_%s_SOURCES" $MODULE_ID -}}
 
 find_package(Qt5 REQUIRED COMPONENTS Core Qml WebSockets)
+{{ range .System.Modules }}
+{{- $module_id := snake .Name }}
+find_package({{$module_id}} QUIET COMPONENTS {{$module_id}}_api )
+{{- end }}
 
 set ({{$SOURCES}}
     plugin.cpp
@@ -18,6 +22,6 @@ set_target_properties(plugin_{{$module_id}} PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_PATH}
 )
 
-target_link_libraries(plugin_{{$module_id}} PRIVATE Qt5::Core Qt5::Qml {{$module_id}}::{{$module_id}}_lib {{$module_id}}::{{$module_id}}_api)
+target_link_libraries(plugin_{{$module_id}} PRIVATE Qt5::Core Qt5::Qml {{$module_id}}::{{$module_id}}_api)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qmldir ${OUTPUT_PATH}/qmldir COPYONLY)

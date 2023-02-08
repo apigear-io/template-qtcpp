@@ -3,12 +3,15 @@
 #include "apigear/olink/olinkclient.h"
 #include "olink/clientregistry.h"
 #include <memory>
-
+{{- $features := .Features }}
 {{- range .System.Modules }}
 {{- $module := . }}
 {{- range $module.Interfaces }}
 {{- $interface := . }}
 #include "{{snake $module.Name}}/olink/olink{{ lower ( camel $interface.Name) }}.h"
+{{- if $features.monitor }}
+#include "{{snake $module.Name}}/monitor/{{ lower ( camel $interface.Name) }}traced.h"
+{{- end }}
 {{- end }}
 {{- end }}
 
@@ -33,6 +36,9 @@ int main(int argc, char *argv[])
     {{- $clientClassName := printf "%s%s"  $modulePrefix $class }}
     auto {{$clientClassName}} = std::make_shared< {{- snake $module.Name }}::OLink{{$interface.Name -}} >();
     client.linkObjectSource({{ $clientClassName }});
+    {{- if $features.monitor }}
+    {{- snake $module.Name }}::{{$class}}Traced {{$clientClassName}}Traced({{$clientClassName}} );
+    {{- end }}
     {{- end }}
     {{- end }}
 
@@ -48,6 +54,8 @@ int main(int argc, char *argv[])
                      Qt::QueuedConnection);
     engine.load(url);
 
+    auto result = app.exec();
+
     {{- range.System.Modules }}
     {{- $module := . }}
     {{- range $module.Interfaces }}
@@ -59,5 +67,5 @@ int main(int argc, char *argv[])
     {{- end }}
     {{- end }}
 
-    return app.exec();
+    return result;
 }

@@ -1,7 +1,11 @@
+cmake_minimum_required(VERSION 3.20)
+project(tb_same2_api LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 find_package(Qt5 REQUIRED COMPONENTS Core Qml WebSockets)
-find_package(apigear QUIET COMPONENTS monitor_qt simulation_qt)
-find_package(monitor_qt)
-find_package(simulation_qt)
+find_package(apigear QUIET COMPONENTS simulation_qt)
 
 set(OUTPUT_PATH ${LIBRARY_PATH}/)
 
@@ -34,7 +38,10 @@ set (TB_SAME2_API_SOURCES
     api.cpp
     apifactory.cpp
     simu.cpp
-    agent.cpp
+    qmlsamestruct1interface.cpp
+    qmlsamestruct2interface.cpp
+    qmlsameenum1interface.cpp
+    qmlsameenum2interface.cpp
 )
 
 # dynamic library
@@ -51,5 +58,5 @@ target_include_directories(tb_same2_api
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(tb_same2_api PRIVATE  Qt5::Core Qt5::Qml Qt5::WebSockets jsonrpc_core nlohmann_json::nlohmann_json monitor_qt simulation_qt)
-target_compile_definitions(tb_same2_api PRIVATE TB_SAME2_LIBRARY)
+target_link_libraries(tb_same2_api PRIVATE  Qt5::Core Qt5::Qml Qt5::WebSockets jsonrpc_core nlohmann_json::nlohmann_json simulation_qt)
+target_compile_definitions(tb_same2_api PRIVATE TB_SAME2_API_LIBRARY)

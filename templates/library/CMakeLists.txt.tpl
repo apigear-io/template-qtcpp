@@ -1,8 +1,14 @@
 {{- $module_id := printf "%s" (snake .Module.Name) }}
-{{- $lib_id := printf "%s_lib" (snake .Module.Name) }}
-{{- $LIB_ID := printf "%s_LIB" (SNAKE .Module.Name) }}
+{{- $lib_id := printf "%s_impl" (snake .Module.Name) }}
+{{- $LIB_ID := printf "%s_IMPL" (SNAKE .Module.Name) }}
 {{- $module_path := (path .Module.Name) }}
 {{- $SOURCES := printf "%s_SOURCES" $LIB_ID -}}
+
+cmake_minimum_required(VERSION 3.20)
+project({{ $lib_id }} LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt5 REQUIRED COMPONENTS Core Qml WebSockets)
 set(OUTPUT_PATH ${LIBRARY_PATH}/)
@@ -11,7 +17,6 @@ set ({{$LIB_ID}}_SOURCES
     factory.cpp
 {{- range .Module.Interfaces }}
     {{.Name|lower}}.cpp
-    qml{{.Name|lower}}.cpp
 {{- end }}
 )
 

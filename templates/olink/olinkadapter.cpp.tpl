@@ -9,7 +9,6 @@
 #include "{{lower $class}}.h"
 
 #include <nlohmann/json.hpp>
-#include "{{snake .Module.Name}}/api/agent.h"
 #include "{{snake .Module.Name}}/api/json.adapter.h"
 
 #include "olink/remoteregistry.h"

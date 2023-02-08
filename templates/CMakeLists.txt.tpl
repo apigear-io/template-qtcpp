@@ -1,4 +1,6 @@
-cmake_minimum_required(VERSION 3.14)
+{{- $features := .Features -}}
+
+cmake_minimum_required(VERSION 3.20)
 
 project({{.System.Name}} LANGUAGES CXX)
 
@@ -21,32 +23,31 @@ set(LIBRARY_PATH "${CMAKE_BINARY_DIR}/libs" CACHE STRING "Path where the librari
 set(IMPORTS_PATH "${CMAKE_BINARY_DIR}/imports" CACHE STRING "Path where the plugins are deployed")
 
 include_directories(thirdparty)
+{{- if $features.apigear }}
 add_subdirectory(apigear)
+{{- end}}
 add_subdirectory(thirdparty/qtpromise)
 {{- range .System.Modules }}
 {{- $moduleId := snake .Name }}
-IF( IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/{{ $moduleId }}/api" )
-    add_subdirectory({{ $moduleId }}/api)
-ENDIF()
-IF( IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/{{ $moduleId }}/lib" )
-    add_subdirectory({{ $moduleId }}/lib)
-ENDIF()
-IF( IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/{{ $moduleId }}/plugin" )
-    add_subdirectory({{ $moduleId }}/plugin)
-ENDIF()
-IF( IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/{{ $moduleId }}/http" )
-    add_subdirectory({{ $moduleId }}/http)
-ENDIF()
-IF( IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/{{ $moduleId }}/olink" )
-    add_subdirectory({{ $moduleId }}/olink)
-ENDIF()
+add_subdirectory({{ $moduleId }}/api)
+{{- if $features.stubs }}
+add_subdirectory({{ $moduleId }}/implementation)
+{{- end}}
+{{- if $features.qmlplugin }}
+add_subdirectory({{ $moduleId }}/plugin)
+{{- end}}
+{{- if $features.http }}
+add_subdirectory({{ $moduleId }}/http)
+{{- end}}
+{{- if $features.olink }}
+add_subdirectory({{ $moduleId }}/olink)
+{{- end}}
+{{- if $features.monitor }}
+add_subdirectory({{ $moduleId }}/monitor)
+{{- end}}
 {{- end }}
-IF( IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/examples/olinkserver" )
+{{- if $features.examples }}
 add_subdirectory(examples/olinkserver)
-ENDIF()
-IF( IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/examples/olinkclient" )
 add_subdirectory(examples/olinkclient)
-ENDIF()
-IF( IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/examples/olinkclient" )
 add_subdirectory(examples/qml)
-ENDIF()
+{{- end }}

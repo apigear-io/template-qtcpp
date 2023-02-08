@@ -17,7 +17,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "olinksameenum1interface.h"
 
-#include "tb_same1/api/agent.h"
 #include "tb_same1/api/json.adapter.h"
 
 #include "olink/iclientnode.h"
@@ -61,7 +60,6 @@ void OLinkSameEnum1Interface::setProp1Local(Enum1::Enum1Enum prop1)
     if (m_prop1 != prop1) {
         m_prop1 = prop1;
         emit prop1Changed(prop1);
-        SameEnum1InterfaceAgent::trace_state(this);
     }
 }
 

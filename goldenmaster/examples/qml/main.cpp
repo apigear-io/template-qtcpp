@@ -1,89 +1,73 @@
 
-#include "testbed2/lib/manyparaminterface.h"
-#include "testbed2/lib/qmlmanyparaminterface.h"
+#include "testbed2/implementation/manyparaminterface.h"
+#include "testbed2/api/qmlmanyparaminterface.h"
 #include "testbed2/olink/olinkmanyparaminterfaceadapter.h"
-#include "testbed2/api/apifactory.h"
-#include "testbed2/olink/olinkfactory.h"
-#include "testbed2/lib/nestedstruct1interface.h"
-#include "testbed2/lib/qmlnestedstruct1interface.h"
+#include "testbed2/implementation/nestedstruct1interface.h"
+#include "testbed2/api/qmlnestedstruct1interface.h"
 #include "testbed2/olink/olinknestedstruct1interfaceadapter.h"
-#include "testbed2/api/apifactory.h"
-#include "testbed2/olink/olinkfactory.h"
-#include "testbed2/lib/nestedstruct2interface.h"
-#include "testbed2/lib/qmlnestedstruct2interface.h"
+#include "testbed2/implementation/nestedstruct2interface.h"
+#include "testbed2/api/qmlnestedstruct2interface.h"
 #include "testbed2/olink/olinknestedstruct2interfaceadapter.h"
-#include "testbed2/api/apifactory.h"
-#include "testbed2/olink/olinkfactory.h"
-#include "testbed2/lib/nestedstruct3interface.h"
-#include "testbed2/lib/qmlnestedstruct3interface.h"
+#include "testbed2/implementation/nestedstruct3interface.h"
+#include "testbed2/api/qmlnestedstruct3interface.h"
 #include "testbed2/olink/olinknestedstruct3interfaceadapter.h"
 #include "testbed2/api/apifactory.h"
 #include "testbed2/olink/olinkfactory.h"
-#include "tb_enum/lib/enuminterface.h"
-#include "tb_enum/lib/qmlenuminterface.h"
+#include "testbed2/monitor/tracedapifactory.h"
+#include "tb_enum/implementation/enuminterface.h"
+#include "tb_enum/api/qmlenuminterface.h"
 #include "tb_enum/olink/olinkenuminterfaceadapter.h"
 #include "tb_enum/api/apifactory.h"
 #include "tb_enum/olink/olinkfactory.h"
-#include "tb_same1/lib/samestruct1interface.h"
-#include "tb_same1/lib/qmlsamestruct1interface.h"
+#include "tb_enum/monitor/tracedapifactory.h"
+#include "tb_same1/implementation/samestruct1interface.h"
+#include "tb_same1/api/qmlsamestruct1interface.h"
 #include "tb_same1/olink/olinksamestruct1interfaceadapter.h"
-#include "tb_same1/api/apifactory.h"
-#include "tb_same1/olink/olinkfactory.h"
-#include "tb_same1/lib/samestruct2interface.h"
-#include "tb_same1/lib/qmlsamestruct2interface.h"
+#include "tb_same1/implementation/samestruct2interface.h"
+#include "tb_same1/api/qmlsamestruct2interface.h"
 #include "tb_same1/olink/olinksamestruct2interfaceadapter.h"
-#include "tb_same1/api/apifactory.h"
-#include "tb_same1/olink/olinkfactory.h"
-#include "tb_same1/lib/sameenum1interface.h"
-#include "tb_same1/lib/qmlsameenum1interface.h"
+#include "tb_same1/implementation/sameenum1interface.h"
+#include "tb_same1/api/qmlsameenum1interface.h"
 #include "tb_same1/olink/olinksameenum1interfaceadapter.h"
-#include "tb_same1/api/apifactory.h"
-#include "tb_same1/olink/olinkfactory.h"
-#include "tb_same1/lib/sameenum2interface.h"
-#include "tb_same1/lib/qmlsameenum2interface.h"
+#include "tb_same1/implementation/sameenum2interface.h"
+#include "tb_same1/api/qmlsameenum2interface.h"
 #include "tb_same1/olink/olinksameenum2interfaceadapter.h"
 #include "tb_same1/api/apifactory.h"
 #include "tb_same1/olink/olinkfactory.h"
-#include "tb_same2/lib/samestruct1interface.h"
-#include "tb_same2/lib/qmlsamestruct1interface.h"
+#include "tb_same1/monitor/tracedapifactory.h"
+#include "tb_same2/implementation/samestruct1interface.h"
+#include "tb_same2/api/qmlsamestruct1interface.h"
 #include "tb_same2/olink/olinksamestruct1interfaceadapter.h"
-#include "tb_same2/api/apifactory.h"
-#include "tb_same2/olink/olinkfactory.h"
-#include "tb_same2/lib/samestruct2interface.h"
-#include "tb_same2/lib/qmlsamestruct2interface.h"
+#include "tb_same2/implementation/samestruct2interface.h"
+#include "tb_same2/api/qmlsamestruct2interface.h"
 #include "tb_same2/olink/olinksamestruct2interfaceadapter.h"
-#include "tb_same2/api/apifactory.h"
-#include "tb_same2/olink/olinkfactory.h"
-#include "tb_same2/lib/sameenum1interface.h"
-#include "tb_same2/lib/qmlsameenum1interface.h"
+#include "tb_same2/implementation/sameenum1interface.h"
+#include "tb_same2/api/qmlsameenum1interface.h"
 #include "tb_same2/olink/olinksameenum1interfaceadapter.h"
-#include "tb_same2/api/apifactory.h"
-#include "tb_same2/olink/olinkfactory.h"
-#include "tb_same2/lib/sameenum2interface.h"
-#include "tb_same2/lib/qmlsameenum2interface.h"
+#include "tb_same2/implementation/sameenum2interface.h"
+#include "tb_same2/api/qmlsameenum2interface.h"
 #include "tb_same2/olink/olinksameenum2interfaceadapter.h"
 #include "tb_same2/api/apifactory.h"
 #include "tb_same2/olink/olinkfactory.h"
-#include "tb_simple/lib/simpleinterface.h"
-#include "tb_simple/lib/qmlsimpleinterface.h"
+#include "tb_same2/monitor/tracedapifactory.h"
+#include "tb_simple/implementation/simpleinterface.h"
+#include "tb_simple/api/qmlsimpleinterface.h"
 #include "tb_simple/olink/olinksimpleinterfaceadapter.h"
-#include "tb_simple/api/apifactory.h"
-#include "tb_simple/olink/olinkfactory.h"
-#include "tb_simple/lib/simplearrayinterface.h"
-#include "tb_simple/lib/qmlsimplearrayinterface.h"
+#include "tb_simple/implementation/simplearrayinterface.h"
+#include "tb_simple/api/qmlsimplearrayinterface.h"
 #include "tb_simple/olink/olinksimplearrayinterfaceadapter.h"
 #include "tb_simple/api/apifactory.h"
 #include "tb_simple/olink/olinkfactory.h"
-#include "testbed1/lib/structinterface.h"
-#include "testbed1/lib/qmlstructinterface.h"
+#include "tb_simple/monitor/tracedapifactory.h"
+#include "testbed1/implementation/structinterface.h"
+#include "testbed1/api/qmlstructinterface.h"
 #include "testbed1/olink/olinkstructinterfaceadapter.h"
-#include "testbed1/api/apifactory.h"
-#include "testbed1/olink/olinkfactory.h"
-#include "testbed1/lib/structarrayinterface.h"
-#include "testbed1/lib/qmlstructarrayinterface.h"
+#include "testbed1/implementation/structarrayinterface.h"
+#include "testbed1/api/qmlstructarrayinterface.h"
 #include "testbed1/olink/olinkstructarrayinterfaceadapter.h"
 #include "testbed1/api/apifactory.h"
 #include "testbed1/olink/olinkfactory.h"
+#include "testbed1/monitor/tracedapifactory.h"
 
 #include <QtCore>
 #include "apigear/olink/olinkhost.h"
@@ -116,17 +100,23 @@ int main(int argc, char *argv[]){
     ApiGear::ObjectLink::ClientRegistry client_registry;
     ApiGear::ObjectLink::OLinkClient client(client_registry);
     testbed2::OLinkFactory testbed2OlinkFactory(client);
-    testbed2::ApiFactory::set(&testbed2OlinkFactory);
+    testbed2::TracedApiFactory testbed2TracedOlinkFactory(testbed2OlinkFactory); 
+    testbed2::ApiFactory::set(&testbed2TracedOlinkFactory);
     tb_enum::OLinkFactory tb_enumOlinkFactory(client);
-    tb_enum::ApiFactory::set(&tb_enumOlinkFactory);
+    tb_enum::TracedApiFactory tb_enumTracedOlinkFactory(tb_enumOlinkFactory); 
+    tb_enum::ApiFactory::set(&tb_enumTracedOlinkFactory);
     tb_same1::OLinkFactory tb_same1OlinkFactory(client);
-    tb_same1::ApiFactory::set(&tb_same1OlinkFactory);
+    tb_same1::TracedApiFactory tb_same1TracedOlinkFactory(tb_same1OlinkFactory); 
+    tb_same1::ApiFactory::set(&tb_same1TracedOlinkFactory);
     tb_same2::OLinkFactory tb_same2OlinkFactory(client);
-    tb_same2::ApiFactory::set(&tb_same2OlinkFactory);
+    tb_same2::TracedApiFactory tb_same2TracedOlinkFactory(tb_same2OlinkFactory); 
+    tb_same2::ApiFactory::set(&tb_same2TracedOlinkFactory);
     tb_simple::OLinkFactory tb_simpleOlinkFactory(client);
-    tb_simple::ApiFactory::set(&tb_simpleOlinkFactory);
+    tb_simple::TracedApiFactory tb_simpleTracedOlinkFactory(tb_simpleOlinkFactory); 
+    tb_simple::ApiFactory::set(&tb_simpleTracedOlinkFactory);
     testbed1::OLinkFactory testbed1OlinkFactory(client);
-    testbed1::ApiFactory::set(&testbed1OlinkFactory);
+    testbed1::TracedApiFactory testbed1TracedOlinkFactory(testbed1OlinkFactory); 
+    testbed1::ApiFactory::set(&testbed1TracedOlinkFactory);
 
     // Create main app
     const QUrl url(QStringLiteral("qrc:/main.qml"));
@@ -238,19 +228,19 @@ void registerMetaTypes()
     qmlRegisterUncreatableType<testbed2::Enum1>(uritestbed2, 1, 0, "Testbed2Enum1", "An enum can not be created");
     qmlRegisterUncreatableType<testbed2::Enum2>(uritestbed2, 1, 0, "Testbed2Enum2", "An enum can not be created");
     qmlRegisterUncreatableType<testbed2::Enum3>(uritestbed2, 1, 0, "Testbed2Enum3", "An enum can not be created");
-    qRegisterMetaType<testbed2::Struct1>("Testbed2Struct1");
+    qRegisterMetaType<testbed2::Struct1>();
     qmlRegisterUncreatableType<testbed2::Struct1Factory>(uritestbed2, 1, 0, "Testbed2Struct1Factory", "A struct factory can not be created");
-    qRegisterMetaType<testbed2::Struct2>("Testbed2Struct2");
+    qRegisterMetaType<testbed2::Struct2>();
     qmlRegisterUncreatableType<testbed2::Struct2Factory>(uritestbed2, 1, 0, "Testbed2Struct2Factory", "A struct factory can not be created");
-    qRegisterMetaType<testbed2::Struct3>("Testbed2Struct3");
+    qRegisterMetaType<testbed2::Struct3>();
     qmlRegisterUncreatableType<testbed2::Struct3Factory>(uritestbed2, 1, 0, "Testbed2Struct3Factory", "A struct factory can not be created");
-    qRegisterMetaType<testbed2::Struct4>("Testbed2Struct4");
+    qRegisterMetaType<testbed2::Struct4>();
     qmlRegisterUncreatableType<testbed2::Struct4Factory>(uritestbed2, 1, 0, "Testbed2Struct4Factory", "A struct factory can not be created");
-    qRegisterMetaType<testbed2::NestedStruct1>("Testbed2NestedStruct1");
+    qRegisterMetaType<testbed2::NestedStruct1>();
     qmlRegisterUncreatableType<testbed2::NestedStruct1Factory>(uritestbed2, 1, 0, "Testbed2NestedStruct1Factory", "A struct factory can not be created");
-    qRegisterMetaType<testbed2::NestedStruct2>("Testbed2NestedStruct2");
+    qRegisterMetaType<testbed2::NestedStruct2>();
     qmlRegisterUncreatableType<testbed2::NestedStruct2Factory>(uritestbed2, 1, 0, "Testbed2NestedStruct2Factory", "A struct factory can not be created");
-    qRegisterMetaType<testbed2::NestedStruct3>("Testbed2NestedStruct3");
+    qRegisterMetaType<testbed2::NestedStruct3>();
     qmlRegisterUncreatableType<testbed2::NestedStruct3Factory>(uritestbed2, 1, 0, "Testbed2NestedStruct3Factory", "A struct factory can not be created");
     qmlRegisterType<testbed2::QmlManyParamInterface>(uritestbed2, 1, 0, "Testbed2ManyParamInterface");
     qmlRegisterType<testbed2::QmlNestedStruct1Interface>(uritestbed2, 1, 0, "Testbed2NestedStruct1Interface");
@@ -269,9 +259,9 @@ void registerMetaTypes()
     auto uritb_same1 = "tb_same1";
     qmlRegisterUncreatableType<tb_same1::Enum1>(uritb_same1, 1, 0, "TbSame1Enum1", "An enum can not be created");
     qmlRegisterUncreatableType<tb_same1::Enum2>(uritb_same1, 1, 0, "TbSame1Enum2", "An enum can not be created");
-    qRegisterMetaType<tb_same1::Struct1>("TbSame1Struct1");
+    qRegisterMetaType<tb_same1::Struct1>();
     qmlRegisterUncreatableType<tb_same1::Struct1Factory>(uritb_same1, 1, 0, "TbSame1Struct1Factory", "A struct factory can not be created");
-    qRegisterMetaType<tb_same1::Struct2>("TbSame1Struct2");
+    qRegisterMetaType<tb_same1::Struct2>();
     qmlRegisterUncreatableType<tb_same1::Struct2Factory>(uritb_same1, 1, 0, "TbSame1Struct2Factory", "A struct factory can not be created");
     qmlRegisterType<tb_same1::QmlSameStruct1Interface>(uritb_same1, 1, 0, "TbSame1SameStruct1Interface");
     qmlRegisterType<tb_same1::QmlSameStruct2Interface>(uritb_same1, 1, 0, "TbSame1SameStruct2Interface");
@@ -282,9 +272,9 @@ void registerMetaTypes()
     auto uritb_same2 = "tb_same2";
     qmlRegisterUncreatableType<tb_same2::Enum1>(uritb_same2, 1, 0, "TbSame2Enum1", "An enum can not be created");
     qmlRegisterUncreatableType<tb_same2::Enum2>(uritb_same2, 1, 0, "TbSame2Enum2", "An enum can not be created");
-    qRegisterMetaType<tb_same2::Struct1>("TbSame2Struct1");
+    qRegisterMetaType<tb_same2::Struct1>();
     qmlRegisterUncreatableType<tb_same2::Struct1Factory>(uritb_same2, 1, 0, "TbSame2Struct1Factory", "A struct factory can not be created");
-    qRegisterMetaType<tb_same2::Struct2>("TbSame2Struct2");
+    qRegisterMetaType<tb_same2::Struct2>();
     qmlRegisterUncreatableType<tb_same2::Struct2Factory>(uritb_same2, 1, 0, "TbSame2Struct2Factory", "A struct factory can not be created");
     qmlRegisterType<tb_same2::QmlSameStruct1Interface>(uritb_same2, 1, 0, "TbSame2SameStruct1Interface");
     qmlRegisterType<tb_same2::QmlSameStruct2Interface>(uritb_same2, 1, 0, "TbSame2SameStruct2Interface");
@@ -298,13 +288,13 @@ void registerMetaTypes()
 
     // register enums structs and interfaces for testbed1
     auto uritestbed1 = "testbed1";
-    qRegisterMetaType<testbed1::StructBool>("Testbed1StructBool");
+    qRegisterMetaType<testbed1::StructBool>();
     qmlRegisterUncreatableType<testbed1::StructBoolFactory>(uritestbed1, 1, 0, "Testbed1StructBoolFactory", "A struct factory can not be created");
-    qRegisterMetaType<testbed1::StructInt>("Testbed1StructInt");
+    qRegisterMetaType<testbed1::StructInt>();
     qmlRegisterUncreatableType<testbed1::StructIntFactory>(uritestbed1, 1, 0, "Testbed1StructIntFactory", "A struct factory can not be created");
-    qRegisterMetaType<testbed1::StructFloat>("Testbed1StructFloat");
+    qRegisterMetaType<testbed1::StructFloat>();
     qmlRegisterUncreatableType<testbed1::StructFloatFactory>(uritestbed1, 1, 0, "Testbed1StructFloatFactory", "A struct factory can not be created");
-    qRegisterMetaType<testbed1::StructString>("Testbed1StructString");
+    qRegisterMetaType<testbed1::StructString>();
     qmlRegisterUncreatableType<testbed1::StructStringFactory>(uritestbed1, 1, 0, "Testbed1StructStringFactory", "A struct factory can not be created");
     qmlRegisterType<testbed1::QmlStructInterface>(uritestbed1, 1, 0, "Testbed1StructInterface");
     qmlRegisterType<testbed1::QmlStructArrayInterface>(uritestbed1, 1, 0, "Testbed1StructArrayInterface");

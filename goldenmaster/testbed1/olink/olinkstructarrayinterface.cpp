@@ -17,7 +17,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "olinkstructarrayinterface.h"
 
-#include "testbed1/api/agent.h"
 #include "testbed1/api/json.adapter.h"
 
 #include "olink/iclientnode.h"
@@ -73,7 +72,6 @@ void OLinkStructArrayInterface::setPropBoolLocal(const QList<StructBool>& propBo
     if (m_propBool != propBool) {
         m_propBool = propBool;
         emit propBoolChanged(propBool);
-        StructArrayInterfaceAgent::trace_state(this);
     }
 }
 
@@ -97,7 +95,6 @@ void OLinkStructArrayInterface::setPropIntLocal(const QList<StructInt>& propInt)
     if (m_propInt != propInt) {
         m_propInt = propInt;
         emit propIntChanged(propInt);
-        StructArrayInterfaceAgent::trace_state(this);
     }
 }
 
@@ -121,7 +118,6 @@ void OLinkStructArrayInterface::setPropFloatLocal(const QList<StructFloat>& prop
     if (m_propFloat != propFloat) {
         m_propFloat = propFloat;
         emit propFloatChanged(propFloat);
-        StructArrayInterfaceAgent::trace_state(this);
     }
 }
 
@@ -145,7 +141,6 @@ void OLinkStructArrayInterface::setPropStringLocal(const QList<StructString>& pr
     if (m_propString != propString) {
         m_propString = propString;
         emit propStringChanged(propString);
-        StructArrayInterfaceAgent::trace_state(this);
     }
 }
 

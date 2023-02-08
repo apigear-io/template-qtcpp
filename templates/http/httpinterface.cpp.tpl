@@ -5,7 +5,6 @@
 {{- $iface := .Interface.Name }}
 #include "{{lower $class}}.h"
 
-#include "{{snake .Module.Name}}/api/agent.h"
 #include <QtQml>
 
 namespace {{snake  .Module.Name }} {
@@ -30,7 +29,6 @@ void {{$class}}::set{{Camel .Name}}({{qtParam "" .}})
     if (m_{{.Name}} != {{.Name}}) {
         m_{{.Name}} = {{.Name}};
         emit {{.Name}}Changed({{.Name}});
-        {{$iface}}Agent::trace_state(this);
     }
 }
 
@@ -52,7 +50,6 @@ void {{$class}}::set{{Camel .Name}}({{qtParam "" .}})
 {{- end }}
     QJsonObject reply = post("{{$module}}/{{$iface}}/{{.Name}}", payload);
     qDebug() << QJsonDocument(reply).toJson();
-    {{$iface}}Agent::trace_{{.Name}}(this, {{qtVars .Params }});
     return {{qtDefault "" .Return}};
 }
 {{- end }}

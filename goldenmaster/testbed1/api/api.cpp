@@ -111,7 +111,7 @@ StructInt StructIntFactory::create()
 // ********************************************************************
 
 StructFloat::StructFloat()
-    : m_fieldFloat(0.0)
+    : m_fieldFloat(0.0f)
 {
 }
 

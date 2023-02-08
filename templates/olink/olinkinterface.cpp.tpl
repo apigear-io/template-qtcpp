@@ -6,7 +6,6 @@
 {{- $iface := .Interface.Name }}
 #include "{{lower $class}}.h"
 
-#include "{{snake .Module.Name}}/api/agent.h"
 #include "{{snake .Module.Name}}/api/json.adapter.h"
 
 #include "olink/iclientnode.h"
@@ -56,7 +55,6 @@ void {{$class}}::set{{Camel .Name}}Local({{qtParam "" .}})
     if (m_{{.Name}} != {{.Name}}) {
         m_{{.Name}} = {{.Name}};
         emit {{.Name}}Changed({{.Name}});
-        {{$iface}}Agent::trace_state(this);
     }
 }
 

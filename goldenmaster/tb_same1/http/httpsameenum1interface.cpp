@@ -17,7 +17,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "httpsameenum1interface.h"
 
-#include "tb_same1/api/agent.h"
 #include <QtQml>
 
 namespace tb_same1 {
@@ -38,7 +37,6 @@ void HttpSameEnum1Interface::setProp1(Enum1::Enum1Enum prop1)
     if (m_prop1 != prop1) {
         m_prop1 = prop1;
         emit prop1Changed(prop1);
-        SameEnum1InterfaceAgent::trace_state(this);
     }
 }
 
@@ -55,7 +53,6 @@ Enum1::Enum1Enum HttpSameEnum1Interface::func1(Enum1::Enum1Enum param1)
     payload["param1"] = QJsonValue::fromVariant(QVariant::fromValue< Enum1::Enum1Enum >(param1));
     QJsonObject reply = post("tb.same1/SameEnum1Interface/func1", payload);
     qDebug() << QJsonDocument(reply).toJson();
-    SameEnum1InterfaceAgent::trace_func1(this, param1);
     return Enum1::value1;
 }
 

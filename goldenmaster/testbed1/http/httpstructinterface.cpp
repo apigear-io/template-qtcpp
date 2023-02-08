@@ -17,7 +17,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "httpstructinterface.h"
 
-#include "testbed1/api/agent.h"
 #include <QtQml>
 
 namespace testbed1 {
@@ -41,7 +40,6 @@ void HttpStructInterface::setPropBool(const StructBool& propBool)
     if (m_propBool != propBool) {
         m_propBool = propBool;
         emit propBoolChanged(propBool);
-        StructInterfaceAgent::trace_state(this);
     }
 }
 
@@ -55,7 +53,6 @@ void HttpStructInterface::setPropInt(const StructInt& propInt)
     if (m_propInt != propInt) {
         m_propInt = propInt;
         emit propIntChanged(propInt);
-        StructInterfaceAgent::trace_state(this);
     }
 }
 
@@ -69,7 +66,6 @@ void HttpStructInterface::setPropFloat(const StructFloat& propFloat)
     if (m_propFloat != propFloat) {
         m_propFloat = propFloat;
         emit propFloatChanged(propFloat);
-        StructInterfaceAgent::trace_state(this);
     }
 }
 
@@ -83,7 +79,6 @@ void HttpStructInterface::setPropString(const StructString& propString)
     if (m_propString != propString) {
         m_propString = propString;
         emit propStringChanged(propString);
-        StructInterfaceAgent::trace_state(this);
     }
 }
 
@@ -100,7 +95,6 @@ StructBool HttpStructInterface::funcBool(const StructBool& paramBool)
     payload["paramBool"] = QJsonValue::fromVariant(QVariant::fromValue< StructBool >(paramBool));
     QJsonObject reply = post("testbed1/StructInterface/funcBool", payload);
     qDebug() << QJsonDocument(reply).toJson();
-    StructInterfaceAgent::trace_funcBool(this, paramBool);
     return StructBool();
 }
 
@@ -112,7 +106,6 @@ StructBool HttpStructInterface::funcInt(const StructInt& paramInt)
     payload["paramInt"] = QJsonValue::fromVariant(QVariant::fromValue< StructInt >(paramInt));
     QJsonObject reply = post("testbed1/StructInterface/funcInt", payload);
     qDebug() << QJsonDocument(reply).toJson();
-    StructInterfaceAgent::trace_funcInt(this, paramInt);
     return StructBool();
 }
 
@@ -124,7 +117,6 @@ StructFloat HttpStructInterface::funcFloat(const StructFloat& paramFloat)
     payload["paramFloat"] = QJsonValue::fromVariant(QVariant::fromValue< StructFloat >(paramFloat));
     QJsonObject reply = post("testbed1/StructInterface/funcFloat", payload);
     qDebug() << QJsonDocument(reply).toJson();
-    StructInterfaceAgent::trace_funcFloat(this, paramFloat);
     return StructFloat();
 }
 
@@ -136,7 +128,6 @@ StructString HttpStructInterface::funcString(const StructString& paramString)
     payload["paramString"] = QJsonValue::fromVariant(QVariant::fromValue< StructString >(paramString));
     QJsonObject reply = post("testbed1/StructInterface/funcString", payload);
     qDebug() << QJsonDocument(reply).toJson();
-    StructInterfaceAgent::trace_funcString(this, paramString);
     return StructString();
 }
 

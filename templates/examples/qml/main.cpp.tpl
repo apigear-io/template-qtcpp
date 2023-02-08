@@ -1,12 +1,16 @@
+{{- $features := .Features }}
 {{- range .System.Modules }}
 {{- $module := . }}
 {{- range $module.Interfaces }}
 {{- $interface := . }}
-#include "{{snake $module.Name}}/lib/{{ lower ( camel $interface.Name) }}.h"
-#include "{{snake $module.Name}}/lib/qml{{lower ( camel $interface.Name)}}.h"
+#include "{{snake $module.Name}}/implementation/{{ lower ( camel $interface.Name) }}.h"
+#include "{{snake $module.Name}}/api/qml{{lower ( camel $interface.Name)}}.h"
 #include "{{snake $module.Name}}/olink/olink{{ lower ( camel $interface.Name) }}adapter.h"
+{{- end }}
 #include "{{snake $module.Name}}/api/apifactory.h"
 #include "{{snake $module.Name}}/olink/olinkfactory.h"
+{{- if $features.monitor }}
+#include "{{snake $module.Name}}/monitor/tracedapifactory.h"
 {{- end }}
 {{- end }}
 
@@ -44,7 +48,12 @@ int main(int argc, char *argv[]){
 {{- range .System.Modules }}
 {{- $module := . }}
     {{ snake $module.Name }}::OLinkFactory {{ snake $module.Name }}OlinkFactory(client);
+    {{- if $features.monitor }}
+    {{ snake $module.Name }}::TracedApiFactory {{ snake $module.Name }}TracedOlinkFactory({{ snake $module.Name }}OlinkFactory); 
+    {{ snake $module.Name }}::ApiFactory::set(&{{ snake $module.Name }}TracedOlinkFactory);
+    {{- else }}
     {{ snake $module.Name }}::ApiFactory::set(&{{ snake $module.Name }}OlinkFactory);
+    {{- end}}
 {{- end}}
 
     // Create main app
@@ -120,7 +129,7 @@ void registerMetaTypes()
 {{- end }}
 
 {{- range $module.Structs }}
-    qRegisterMetaType<{{$module_id}}::{{.Name}}>("{{$Modulename}}{{.Name}}");
+    qRegisterMetaType<{{$module_id}}::{{.Name}}>();
     qmlRegisterUncreatableType<{{$module_id}}::{{.Name}}Factory>(uri{{ snake $module.Name }}, {{$version.Major}}, {{$version.Minor}}, "{{$Modulename}}{{.Name}}Factory", "A struct factory can not be created");
 {{- end }}
 

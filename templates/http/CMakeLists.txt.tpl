@@ -3,6 +3,12 @@
 {{- $module_path := (path .Module.Name) }}
 {{- $SOURCES := printf "%s_HTTP_SOURCES" $MODULE_ID -}}
 
+cmake_minimum_required(VERSION 3.20)
+project({{ $module_id }}_http LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 find_package(Qt5 REQUIRED COMPONENTS Core Qml Network)
 set(OUTPUT_PATH ${LIBRARY_PATH}/)
 

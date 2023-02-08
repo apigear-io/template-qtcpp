@@ -1,5 +1,7 @@
+{{- $features := .Features -}}
+
 project(OLinkServer)
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.20)
 
 # append local binary directory for conan packages to be found
 set(CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR} ${CMAKE_MODULE_PATH})
@@ -32,14 +34,15 @@ endif()
 
 {{ range .System.Modules }}
 {{- $module_id := snake .Name }}
-find_package({{$module_id}} QUIET COMPONENTS {{$module_id}}_api {{$module_id}}_lib {{$module_id}}_olink)
+find_package({{$module_id}} QUIET COMPONENTS {{$module_id}}_api {{$module_id}}_impl {{$module_id}}_olink{{ if $features.monitor }} {{$module_id}}_monitor{{ end}})
 {{- end }}
 target_link_libraries(OLinkServer
 {{- range .System.Modules }}
 {{- $module_id := snake .Name }}
     {{$module_id}}_api
-    {{$module_id}}_lib
-    {{$module_id}}_olink
+    {{$module_id}}_impl
+    {{$module_id}}_olink{{ if $features.monitor }}
+    {{$module_id}}_monitor{{ end -}}
 {{- end }}
 Qt5::Core Qt5::Qml Qt5::WebSockets Qt5::Gui
 olink_qt

@@ -1,3 +1,9 @@
+cmake_minimum_required(VERSION 3.20)
+project(tb_enum_http LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 find_package(Qt5 REQUIRED COMPONENTS Core Qml Network)
 set(OUTPUT_PATH ${LIBRARY_PATH}/)
 

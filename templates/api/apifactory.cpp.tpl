@@ -1,8 +1,9 @@
 #include "apifactory.h"
 #include "simu.h"
+#include "api.h"
 
 
-{{ snake .Module.Name }}::ApiFactoryInterface* {{ snake .Module.Name }}::ApiFactory::s_instance(nullptr);
+{{ snake .Module.Name }}::IApiFactory* {{ snake .Module.Name }}::ApiFactory::s_instance(nullptr);
 
 namespace {{snake  .Module.Name }} {
 
@@ -11,7 +12,7 @@ ApiFactory::ApiFactory(QObject *parent)
 {
 }
 
-void ApiFactory::set(ApiFactoryInterface *instance)
+void ApiFactory::set(IApiFactory *instance)
 {
     if(s_instance) {
         qFatal("Can not set factory when factory already set");
@@ -19,7 +20,7 @@ void ApiFactory::set(ApiFactoryInterface *instance)
     s_instance = instance;
 }
 
-ApiFactoryInterface * ApiFactory::get()
+IApiFactory * ApiFactory::get()
 {
     if(s_instance) {
         return s_instance;

@@ -3,11 +3,11 @@
 #include <QtCore>
 #include <QtNetwork>
 
-#include "tb_same1/api/apifactory.h"
+#include "tb_same1/api/iapifactory.h"
 
 namespace tb_same1 {
 
-class HttpFactory : public QObject, public ApiFactoryInterface
+class HttpFactory : public QObject, public IApiFactory
 {
 public:
     HttpFactory(QObject *parent = nullptr);

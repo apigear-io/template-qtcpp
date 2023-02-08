@@ -1,8 +1,9 @@
 #include "apifactory.h"
 #include "simu.h"
+#include "api.h"
 
 
-tb_simple::ApiFactoryInterface* tb_simple::ApiFactory::s_instance(nullptr);
+tb_simple::IApiFactory* tb_simple::ApiFactory::s_instance(nullptr);
 
 namespace tb_simple {
 
@@ -11,7 +12,7 @@ ApiFactory::ApiFactory(QObject *parent)
 {
 }
 
-void ApiFactory::set(ApiFactoryInterface *instance)
+void ApiFactory::set(IApiFactory *instance)
 {
     if(s_instance) {
         qFatal("Can not set factory when factory already set");
@@ -19,7 +20,7 @@ void ApiFactory::set(ApiFactoryInterface *instance)
     s_instance = instance;
 }
 
-ApiFactoryInterface * ApiFactory::get()
+IApiFactory * ApiFactory::get()
 {
     if(s_instance) {
         return s_instance;

@@ -17,7 +17,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "olinknestedstruct1interface.h"
 
-#include "testbed2/api/agent.h"
 #include "testbed2/api/json.adapter.h"
 
 #include "olink/iclientnode.h"
@@ -61,7 +60,6 @@ void OLinkNestedStruct1Interface::setProp1Local(const NestedStruct1& prop1)
     if (m_prop1 != prop1) {
         m_prop1 = prop1;
         emit prop1Changed(prop1);
-        NestedStruct1InterfaceAgent::trace_state(this);
     }
 }
 

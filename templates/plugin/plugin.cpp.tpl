@@ -10,7 +10,7 @@
 #include "{{snake .Module.Name}}/api/api.h"
 
 {{- range .Module.Interfaces }}
-#include "{{$module_id}}/lib/qml{{lower .Name}}.h"
+#include "{{$module_id}}/api/qml{{lower .Name}}.h"
 {{- end }}
 
 void Plugin::registerTypes(const char *uri)

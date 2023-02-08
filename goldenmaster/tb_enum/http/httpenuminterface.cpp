@@ -17,7 +17,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "httpenuminterface.h"
 
-#include "tb_enum/api/agent.h"
 #include <QtQml>
 
 namespace tb_enum {
@@ -41,7 +40,6 @@ void HttpEnumInterface::setProp0(Enum0::Enum0Enum prop0)
     if (m_prop0 != prop0) {
         m_prop0 = prop0;
         emit prop0Changed(prop0);
-        EnumInterfaceAgent::trace_state(this);
     }
 }
 
@@ -55,7 +53,6 @@ void HttpEnumInterface::setProp1(Enum1::Enum1Enum prop1)
     if (m_prop1 != prop1) {
         m_prop1 = prop1;
         emit prop1Changed(prop1);
-        EnumInterfaceAgent::trace_state(this);
     }
 }
 
@@ -69,7 +66,6 @@ void HttpEnumInterface::setProp2(Enum2::Enum2Enum prop2)
     if (m_prop2 != prop2) {
         m_prop2 = prop2;
         emit prop2Changed(prop2);
-        EnumInterfaceAgent::trace_state(this);
     }
 }
 
@@ -83,7 +79,6 @@ void HttpEnumInterface::setProp3(Enum3::Enum3Enum prop3)
     if (m_prop3 != prop3) {
         m_prop3 = prop3;
         emit prop3Changed(prop3);
-        EnumInterfaceAgent::trace_state(this);
     }
 }
 
@@ -100,7 +95,6 @@ Enum0::Enum0Enum HttpEnumInterface::func0(Enum0::Enum0Enum param0)
     payload["param0"] = QJsonValue::fromVariant(QVariant::fromValue< Enum0::Enum0Enum >(param0));
     QJsonObject reply = post("tb.enum/EnumInterface/func0", payload);
     qDebug() << QJsonDocument(reply).toJson();
-    EnumInterfaceAgent::trace_func0(this, param0);
     return Enum0::value0;
 }
 
@@ -112,7 +106,6 @@ Enum1::Enum1Enum HttpEnumInterface::func1(Enum1::Enum1Enum param1)
     payload["param1"] = QJsonValue::fromVariant(QVariant::fromValue< Enum1::Enum1Enum >(param1));
     QJsonObject reply = post("tb.enum/EnumInterface/func1", payload);
     qDebug() << QJsonDocument(reply).toJson();
-    EnumInterfaceAgent::trace_func1(this, param1);
     return Enum1::value1;
 }
 
@@ -124,7 +117,6 @@ Enum2::Enum2Enum HttpEnumInterface::func2(Enum2::Enum2Enum param2)
     payload["param2"] = QJsonValue::fromVariant(QVariant::fromValue< Enum2::Enum2Enum >(param2));
     QJsonObject reply = post("tb.enum/EnumInterface/func2", payload);
     qDebug() << QJsonDocument(reply).toJson();
-    EnumInterfaceAgent::trace_func2(this, param2);
     return Enum2::value2;
 }
 
@@ -136,7 +128,6 @@ Enum3::Enum3Enum HttpEnumInterface::func3(Enum3::Enum3Enum param3)
     payload["param3"] = QJsonValue::fromVariant(QVariant::fromValue< Enum3::Enum3Enum >(param3));
     QJsonObject reply = post("tb.enum/EnumInterface/func3", payload);
     qDebug() << QJsonDocument(reply).toJson();
-    EnumInterfaceAgent::trace_func3(this, param3);
     return Enum3::value3;
 }
 

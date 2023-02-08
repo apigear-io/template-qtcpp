@@ -17,7 +17,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "olinkmanyparaminterface.h"
 
-#include "testbed2/api/agent.h"
 #include "testbed2/api/json.adapter.h"
 
 #include "olink/iclientnode.h"
@@ -73,7 +72,6 @@ void OLinkManyParamInterface::setProp1Local(int prop1)
     if (m_prop1 != prop1) {
         m_prop1 = prop1;
         emit prop1Changed(prop1);
-        ManyParamInterfaceAgent::trace_state(this);
     }
 }
 
@@ -97,7 +95,6 @@ void OLinkManyParamInterface::setProp2Local(int prop2)
     if (m_prop2 != prop2) {
         m_prop2 = prop2;
         emit prop2Changed(prop2);
-        ManyParamInterfaceAgent::trace_state(this);
     }
 }
 
@@ -121,7 +118,6 @@ void OLinkManyParamInterface::setProp3Local(int prop3)
     if (m_prop3 != prop3) {
         m_prop3 = prop3;
         emit prop3Changed(prop3);
-        ManyParamInterfaceAgent::trace_state(this);
     }
 }
 
@@ -145,7 +141,6 @@ void OLinkManyParamInterface::setProp4Local(int prop4)
     if (m_prop4 != prop4) {
         m_prop4 = prop4;
         emit prop4Changed(prop4);
-        ManyParamInterfaceAgent::trace_state(this);
     }
 }
 

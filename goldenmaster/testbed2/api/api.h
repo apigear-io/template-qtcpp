@@ -20,12 +20,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <QtCore>
 #include <QtCore/QtGlobal>
 
-#include <memory>
-
-#if defined(TESTBED2_LIBRARY)
-#  define TESTBED2_EXPORT Q_DECL_EXPORT
+#if defined(TESTBED2_API_LIBRARY)
+#  define TESTBED2_API_EXPORT Q_DECL_EXPORT
 #else
-#  define TESTBED2_EXPORT Q_DECL_IMPORT
+#  define TESTBED2_API_EXPORT Q_DECL_IMPORT
 #endif
 
 namespace testbed2 {
@@ -33,7 +31,7 @@ namespace testbed2 {
 // ********************************************************************
 // Enumeration Enum1
 // ********************************************************************
-class TESTBED2_EXPORT Enum1 : public QObject {
+class TESTBED2_API_EXPORT Enum1 : public QObject {
     Q_OBJECT
 public:
     Enum1(QObject *parent = nullptr)
@@ -78,7 +76,7 @@ inline QDataStream &operator>>(QDataStream &ds, Enum1::Enum1Enum &obj) {
 // ********************************************************************
 // Enumeration Enum2
 // ********************************************************************
-class TESTBED2_EXPORT Enum2 : public QObject {
+class TESTBED2_API_EXPORT Enum2 : public QObject {
     Q_OBJECT
 public:
     Enum2(QObject *parent = nullptr)
@@ -123,7 +121,7 @@ inline QDataStream &operator>>(QDataStream &ds, Enum2::Enum2Enum &obj) {
 // ********************************************************************
 // Enumeration Enum3
 // ********************************************************************
-class TESTBED2_EXPORT Enum3 : public QObject {
+class TESTBED2_API_EXPORT Enum3 : public QObject {
     Q_OBJECT
 public:
     Enum3(QObject *parent = nullptr)
@@ -167,7 +165,7 @@ inline QDataStream &operator>>(QDataStream &ds, Enum3::Enum3Enum &obj) {
 // ********************************************************************
 // Struct1 struct
 // ********************************************************************
-struct TESTBED2_EXPORT Struct1
+struct TESTBED2_API_EXPORT Struct1
 {
     Q_GADGET
     Q_PROPERTY(int field1 MEMBER m_field1 )
@@ -188,7 +186,7 @@ QDataStream &operator>>(QDataStream &stream, Struct1 &obj);
 // Struct1 struct factory
 // Registered by plugin to allow creating this type of objects in qml. 
 // ********************************************************************
-class TESTBED2_EXPORT Struct1Factory : public QObject {
+class TESTBED2_API_EXPORT Struct1Factory : public QObject {
     Q_OBJECT
 public:
     Q_INVOKABLE Struct1 create();
@@ -196,7 +194,7 @@ public:
 // ********************************************************************
 // Struct2 struct
 // ********************************************************************
-struct TESTBED2_EXPORT Struct2
+struct TESTBED2_API_EXPORT Struct2
 {
     Q_GADGET
     Q_PROPERTY(int field1 MEMBER m_field1 )
@@ -219,7 +217,7 @@ QDataStream &operator>>(QDataStream &stream, Struct2 &obj);
 // Struct2 struct factory
 // Registered by plugin to allow creating this type of objects in qml. 
 // ********************************************************************
-class TESTBED2_EXPORT Struct2Factory : public QObject {
+class TESTBED2_API_EXPORT Struct2Factory : public QObject {
     Q_OBJECT
 public:
     Q_INVOKABLE Struct2 create();
@@ -227,7 +225,7 @@ public:
 // ********************************************************************
 // Struct3 struct
 // ********************************************************************
-struct TESTBED2_EXPORT Struct3
+struct TESTBED2_API_EXPORT Struct3
 {
     Q_GADGET
     Q_PROPERTY(int field1 MEMBER m_field1 )
@@ -252,7 +250,7 @@ QDataStream &operator>>(QDataStream &stream, Struct3 &obj);
 // Struct3 struct factory
 // Registered by plugin to allow creating this type of objects in qml. 
 // ********************************************************************
-class TESTBED2_EXPORT Struct3Factory : public QObject {
+class TESTBED2_API_EXPORT Struct3Factory : public QObject {
     Q_OBJECT
 public:
     Q_INVOKABLE Struct3 create();
@@ -260,7 +258,7 @@ public:
 // ********************************************************************
 // Struct4 struct
 // ********************************************************************
-struct TESTBED2_EXPORT Struct4
+struct TESTBED2_API_EXPORT Struct4
 {
     Q_GADGET
     Q_PROPERTY(int field1 MEMBER m_field1 )
@@ -287,7 +285,7 @@ QDataStream &operator>>(QDataStream &stream, Struct4 &obj);
 // Struct4 struct factory
 // Registered by plugin to allow creating this type of objects in qml. 
 // ********************************************************************
-class TESTBED2_EXPORT Struct4Factory : public QObject {
+class TESTBED2_API_EXPORT Struct4Factory : public QObject {
     Q_OBJECT
 public:
     Q_INVOKABLE Struct4 create();
@@ -295,7 +293,7 @@ public:
 // ********************************************************************
 // NestedStruct1 struct
 // ********************************************************************
-struct TESTBED2_EXPORT NestedStruct1
+struct TESTBED2_API_EXPORT NestedStruct1
 {
     Q_GADGET
     Q_PROPERTY(Struct1 field1 MEMBER m_field1 )
@@ -316,7 +314,7 @@ QDataStream &operator>>(QDataStream &stream, NestedStruct1 &obj);
 // NestedStruct1 struct factory
 // Registered by plugin to allow creating this type of objects in qml. 
 // ********************************************************************
-class TESTBED2_EXPORT NestedStruct1Factory : public QObject {
+class TESTBED2_API_EXPORT NestedStruct1Factory : public QObject {
     Q_OBJECT
 public:
     Q_INVOKABLE NestedStruct1 create();
@@ -324,7 +322,7 @@ public:
 // ********************************************************************
 // NestedStruct2 struct
 // ********************************************************************
-struct TESTBED2_EXPORT NestedStruct2
+struct TESTBED2_API_EXPORT NestedStruct2
 {
     Q_GADGET
     Q_PROPERTY(Struct1 field1 MEMBER m_field1 )
@@ -347,7 +345,7 @@ QDataStream &operator>>(QDataStream &stream, NestedStruct2 &obj);
 // NestedStruct2 struct factory
 // Registered by plugin to allow creating this type of objects in qml. 
 // ********************************************************************
-class TESTBED2_EXPORT NestedStruct2Factory : public QObject {
+class TESTBED2_API_EXPORT NestedStruct2Factory : public QObject {
     Q_OBJECT
 public:
     Q_INVOKABLE NestedStruct2 create();
@@ -355,7 +353,7 @@ public:
 // ********************************************************************
 // NestedStruct3 struct
 // ********************************************************************
-struct TESTBED2_EXPORT NestedStruct3
+struct TESTBED2_API_EXPORT NestedStruct3
 {
     Q_GADGET
     Q_PROPERTY(Struct1 field1 MEMBER m_field1 )
@@ -380,7 +378,7 @@ QDataStream &operator>>(QDataStream &stream, NestedStruct3 &obj);
 // NestedStruct3 struct factory
 // Registered by plugin to allow creating this type of objects in qml. 
 // ********************************************************************
-class TESTBED2_EXPORT NestedStruct3Factory : public QObject {
+class TESTBED2_API_EXPORT NestedStruct3Factory : public QObject {
     Q_OBJECT
 public:
     Q_INVOKABLE NestedStruct3 create();
@@ -399,7 +397,7 @@ public:
 // ********************************************************************
 
 
-class TESTBED2_EXPORT AbstractManyParamInterface : public QObject {
+class TESTBED2_API_EXPORT AbstractManyParamInterface : public QObject {
     Q_OBJECT
 public:
     AbstractManyParamInterface(QObject * parent=nullptr);
@@ -497,7 +495,7 @@ signals:
 // ********************************************************************
 
 
-class TESTBED2_EXPORT AbstractNestedStruct1Interface : public QObject {
+class TESTBED2_API_EXPORT AbstractNestedStruct1Interface : public QObject {
     Q_OBJECT
 public:
     AbstractNestedStruct1Interface(QObject * parent=nullptr);
@@ -535,7 +533,7 @@ signals:
 // ********************************************************************
 
 
-class TESTBED2_EXPORT AbstractNestedStruct2Interface : public QObject {
+class TESTBED2_API_EXPORT AbstractNestedStruct2Interface : public QObject {
     Q_OBJECT
 public:
     AbstractNestedStruct2Interface(QObject * parent=nullptr);
@@ -592,7 +590,7 @@ signals:
 // ********************************************************************
 
 
-class TESTBED2_EXPORT AbstractNestedStruct3Interface : public QObject {
+class TESTBED2_API_EXPORT AbstractNestedStruct3Interface : public QObject {
     Q_OBJECT
 public:
     AbstractNestedStruct3Interface(QObject * parent=nullptr);
@@ -656,41 +654,6 @@ signals:
     void prop3Changed(const NestedStruct3& prop3);
 };
 
-
-// ********************************************************************
-// Interface Factory
-// ********************************************************************
-
-/**
-* An interface for a Factory of interfaces in testbed2
-* May be used to provide different implementations of your interfaces.
-* Check the usage of ApiFactoryInterface in Qml versions of interface implementation.
-* See also the ApiFactory, where you can set this factory as an ApiFactoryInterface implementation.
-*/
-class TESTBED2_EXPORT ApiFactoryInterface
-{
-public:
-    /** 
-    * Create an instance of ManyParamInterface
-    * @return The implementation of a AbstractManyParamInterface.
-    */
-    virtual std::shared_ptr<AbstractManyParamInterface> createManyParamInterface(QObject *parent = nullptr) = 0;
-    /** 
-    * Create an instance of NestedStruct1Interface
-    * @return The implementation of a AbstractNestedStruct1Interface.
-    */
-    virtual std::shared_ptr<AbstractNestedStruct1Interface> createNestedStruct1Interface(QObject *parent = nullptr) = 0;
-    /** 
-    * Create an instance of NestedStruct2Interface
-    * @return The implementation of a AbstractNestedStruct2Interface.
-    */
-    virtual std::shared_ptr<AbstractNestedStruct2Interface> createNestedStruct2Interface(QObject *parent = nullptr) = 0;
-    /** 
-    * Create an instance of NestedStruct3Interface
-    * @return The implementation of a AbstractNestedStruct3Interface.
-    */
-    virtual std::shared_ptr<AbstractNestedStruct3Interface> createNestedStruct3Interface(QObject *parent = nullptr) = 0;
-};
 
 } //namespace testbed2
 

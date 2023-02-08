@@ -20,12 +20,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <QtCore>
 #include <QtCore/QtGlobal>
 
-#include <memory>
-
-#if defined(TB_SIMPLE_LIBRARY)
-#  define TB_SIMPLE_EXPORT Q_DECL_EXPORT
+#if defined(TB_SIMPLE_API_LIBRARY)
+#  define TB_SIMPLE_API_EXPORT Q_DECL_EXPORT
 #else
-#  define TB_SIMPLE_EXPORT Q_DECL_IMPORT
+#  define TB_SIMPLE_API_EXPORT Q_DECL_IMPORT
 #endif
 
 namespace tb_simple {
@@ -43,7 +41,7 @@ namespace tb_simple {
 // ********************************************************************
 
 
-class TB_SIMPLE_EXPORT AbstractSimpleInterface : public QObject {
+class TB_SIMPLE_API_EXPORT AbstractSimpleInterface : public QObject {
     Q_OBJECT
 public:
     AbstractSimpleInterface(QObject * parent=nullptr);
@@ -207,7 +205,7 @@ signals:
 // ********************************************************************
 
 
-class TB_SIMPLE_EXPORT AbstractSimpleArrayInterface : public QObject {
+class TB_SIMPLE_API_EXPORT AbstractSimpleArrayInterface : public QObject {
     Q_OBJECT
 public:
     AbstractSimpleArrayInterface(QObject * parent=nullptr);
@@ -358,31 +356,6 @@ signals:
     void propStringChanged(const QList<QString>& propString);
 };
 
-
-// ********************************************************************
-// Interface Factory
-// ********************************************************************
-
-/**
-* An interface for a Factory of interfaces in tb.simple
-* May be used to provide different implementations of your interfaces.
-* Check the usage of ApiFactoryInterface in Qml versions of interface implementation.
-* See also the ApiFactory, where you can set this factory as an ApiFactoryInterface implementation.
-*/
-class TB_SIMPLE_EXPORT ApiFactoryInterface
-{
-public:
-    /** 
-    * Create an instance of SimpleInterface
-    * @return The implementation of a AbstractSimpleInterface.
-    */
-    virtual std::shared_ptr<AbstractSimpleInterface> createSimpleInterface(QObject *parent = nullptr) = 0;
-    /** 
-    * Create an instance of SimpleArrayInterface
-    * @return The implementation of a AbstractSimpleArrayInterface.
-    */
-    virtual std::shared_ptr<AbstractSimpleArrayInterface> createSimpleArrayInterface(QObject *parent = nullptr) = 0;
-};
 
 } //namespace tb_simple
 

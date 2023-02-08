@@ -21,7 +21,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "olinksimpleinterfaceadapter.h"
 
 #include <nlohmann/json.hpp>
-#include "tb_simple/api/agent.h"
 #include "tb_simple/api/json.adapter.h"
 
 #include "olink/remoteregistry.h"

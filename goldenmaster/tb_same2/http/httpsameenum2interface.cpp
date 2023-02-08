@@ -17,7 +17,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "httpsameenum2interface.h"
 
-#include "tb_same2/api/agent.h"
 #include <QtQml>
 
 namespace tb_same2 {
@@ -39,7 +38,6 @@ void HttpSameEnum2Interface::setProp1(Enum1::Enum1Enum prop1)
     if (m_prop1 != prop1) {
         m_prop1 = prop1;
         emit prop1Changed(prop1);
-        SameEnum2InterfaceAgent::trace_state(this);
     }
 }
 
@@ -53,7 +51,6 @@ void HttpSameEnum2Interface::setProp2(Enum2::Enum2Enum prop2)
     if (m_prop2 != prop2) {
         m_prop2 = prop2;
         emit prop2Changed(prop2);
-        SameEnum2InterfaceAgent::trace_state(this);
     }
 }
 
@@ -70,7 +67,6 @@ Enum1::Enum1Enum HttpSameEnum2Interface::func1(Enum1::Enum1Enum param1)
     payload["param1"] = QJsonValue::fromVariant(QVariant::fromValue< Enum1::Enum1Enum >(param1));
     QJsonObject reply = post("tb.same2/SameEnum2Interface/func1", payload);
     qDebug() << QJsonDocument(reply).toJson();
-    SameEnum2InterfaceAgent::trace_func1(this, param1);
     return Enum1::value1;
 }
 
@@ -83,7 +79,6 @@ Enum1::Enum1Enum HttpSameEnum2Interface::func2(Enum1::Enum1Enum param1, Enum2::E
     payload["param2"] = QJsonValue::fromVariant(QVariant::fromValue< Enum2::Enum2Enum >(param2));
     QJsonObject reply = post("tb.same2/SameEnum2Interface/func2", payload);
     qDebug() << QJsonDocument(reply).toJson();
-    SameEnum2InterfaceAgent::trace_func2(this, param1, param2);
     return Enum1::value1;
 }
 

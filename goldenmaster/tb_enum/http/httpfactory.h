@@ -3,11 +3,11 @@
 #include <QtCore>
 #include <QtNetwork>
 
-#include "tb_enum/api/apifactory.h"
+#include "tb_enum/api/iapifactory.h"
 
 namespace tb_enum {
 
-class HttpFactory : public QObject, public ApiFactoryInterface
+class HttpFactory : public QObject, public IApiFactory
 {
 public:
     HttpFactory(QObject *parent = nullptr);

@@ -1,5 +1,7 @@
+{{- $features := .Features -}}
+
 project(OLinkClient)
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.20)
 
 find_package(Qt5 REQUIRED COMPONENTS Core Qml Network WebSockets Gui)
 find_package(apigear QUIET COMPONENTS olink_qt)
@@ -32,14 +34,15 @@ add_executable(OLinkClient
 
 {{ range .System.Modules }}
 {{- $module_id := snake .Name }}
-find_package({{$module_id}} QUIET COMPONENTS {{$module_id}}_api {{$module_id}}_lib {{$module_id}}_olink)
+find_package({{$module_id}} QUIET COMPONENTS {{$module_id}}_api {{$module_id}}_impl {{$module_id}}_olink{{ if $features.monitor }} {{$module_id}}_monitor{{ end}})
 {{- end }}
 target_link_libraries(OLinkClient
 {{- range .System.Modules }}
 {{- $module_id := snake .Name }}
     {{$module_id}}_api
-    {{$module_id}}_lib
-    {{$module_id}}_olink
+    {{$module_id}}_impl
+    {{$module_id}}_olink{{ if $features.monitor }}
+    {{$module_id}}_monitor{{ end -}}
 {{- end }}
 Qt5::Core Qt5::Qml Qt5::WebSockets Qt5::Gui
 olink_qt

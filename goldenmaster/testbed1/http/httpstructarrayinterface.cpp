@@ -17,7 +17,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "httpstructarrayinterface.h"
 
-#include "testbed1/api/agent.h"
 #include <QtQml>
 
 namespace testbed1 {
@@ -41,7 +40,6 @@ void HttpStructArrayInterface::setPropBool(const QList<StructBool>& propBool)
     if (m_propBool != propBool) {
         m_propBool = propBool;
         emit propBoolChanged(propBool);
-        StructArrayInterfaceAgent::trace_state(this);
     }
 }
 
@@ -55,7 +53,6 @@ void HttpStructArrayInterface::setPropInt(const QList<StructInt>& propInt)
     if (m_propInt != propInt) {
         m_propInt = propInt;
         emit propIntChanged(propInt);
-        StructArrayInterfaceAgent::trace_state(this);
     }
 }
 
@@ -69,7 +66,6 @@ void HttpStructArrayInterface::setPropFloat(const QList<StructFloat>& propFloat)
     if (m_propFloat != propFloat) {
         m_propFloat = propFloat;
         emit propFloatChanged(propFloat);
-        StructArrayInterfaceAgent::trace_state(this);
     }
 }
 
@@ -83,7 +79,6 @@ void HttpStructArrayInterface::setPropString(const QList<StructString>& propStri
     if (m_propString != propString) {
         m_propString = propString;
         emit propStringChanged(propString);
-        StructArrayInterfaceAgent::trace_state(this);
     }
 }
 
@@ -100,7 +95,6 @@ StructBool HttpStructArrayInterface::funcBool(const QList<StructBool>& paramBool
     payload["paramBool"] = QJsonValue::fromVariant(QVariant::fromValue< QList<StructBool> >(paramBool));
     QJsonObject reply = post("testbed1/StructArrayInterface/funcBool", payload);
     qDebug() << QJsonDocument(reply).toJson();
-    StructArrayInterfaceAgent::trace_funcBool(this, paramBool);
     return StructBool();
 }
 
@@ -112,7 +106,6 @@ StructBool HttpStructArrayInterface::funcInt(const QList<StructInt>& paramInt)
     payload["paramInt"] = QJsonValue::fromVariant(QVariant::fromValue< QList<StructInt> >(paramInt));
     QJsonObject reply = post("testbed1/StructArrayInterface/funcInt", payload);
     qDebug() << QJsonDocument(reply).toJson();
-    StructArrayInterfaceAgent::trace_funcInt(this, paramInt);
     return StructBool();
 }
 
@@ -124,7 +117,6 @@ StructBool HttpStructArrayInterface::funcFloat(const QList<StructFloat>& paramFl
     payload["paramFloat"] = QJsonValue::fromVariant(QVariant::fromValue< QList<StructFloat> >(paramFloat));
     QJsonObject reply = post("testbed1/StructArrayInterface/funcFloat", payload);
     qDebug() << QJsonDocument(reply).toJson();
-    StructArrayInterfaceAgent::trace_funcFloat(this, paramFloat);
     return StructBool();
 }
 
@@ -136,7 +128,6 @@ StructBool HttpStructArrayInterface::funcString(const QList<StructString>& param
     payload["paramString"] = QJsonValue::fromVariant(QVariant::fromValue< QList<StructString> >(paramString));
     QJsonObject reply = post("testbed1/StructArrayInterface/funcString", payload);
     qDebug() << QJsonDocument(reply).toJson();
-    StructArrayInterfaceAgent::trace_funcString(this, paramString);
     return StructBool();
 }
 

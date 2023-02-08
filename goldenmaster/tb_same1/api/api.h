@@ -20,12 +20,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <QtCore>
 #include <QtCore/QtGlobal>
 
-#include <memory>
-
-#if defined(TB_SAME1_LIBRARY)
-#  define TB_SAME1_EXPORT Q_DECL_EXPORT
+#if defined(TB_SAME1_API_LIBRARY)
+#  define TB_SAME1_API_EXPORT Q_DECL_EXPORT
 #else
-#  define TB_SAME1_EXPORT Q_DECL_IMPORT
+#  define TB_SAME1_API_EXPORT Q_DECL_IMPORT
 #endif
 
 namespace tb_same1 {
@@ -33,7 +31,7 @@ namespace tb_same1 {
 // ********************************************************************
 // Enumeration Enum1
 // ********************************************************************
-class TB_SAME1_EXPORT Enum1 : public QObject {
+class TB_SAME1_API_EXPORT Enum1 : public QObject {
     Q_OBJECT
 public:
     Enum1(QObject *parent = nullptr)
@@ -76,7 +74,7 @@ inline QDataStream &operator>>(QDataStream &ds, Enum1::Enum1Enum &obj) {
 // ********************************************************************
 // Enumeration Enum2
 // ********************************************************************
-class TB_SAME1_EXPORT Enum2 : public QObject {
+class TB_SAME1_API_EXPORT Enum2 : public QObject {
     Q_OBJECT
 public:
     Enum2(QObject *parent = nullptr)
@@ -118,7 +116,7 @@ inline QDataStream &operator>>(QDataStream &ds, Enum2::Enum2Enum &obj) {
 // ********************************************************************
 // Struct1 struct
 // ********************************************************************
-struct TB_SAME1_EXPORT Struct1
+struct TB_SAME1_API_EXPORT Struct1
 {
     Q_GADGET
     Q_PROPERTY(int field1 MEMBER m_field1 )
@@ -143,7 +141,7 @@ QDataStream &operator>>(QDataStream &stream, Struct1 &obj);
 // Struct1 struct factory
 // Registered by plugin to allow creating this type of objects in qml. 
 // ********************************************************************
-class TB_SAME1_EXPORT Struct1Factory : public QObject {
+class TB_SAME1_API_EXPORT Struct1Factory : public QObject {
     Q_OBJECT
 public:
     Q_INVOKABLE Struct1 create();
@@ -151,7 +149,7 @@ public:
 // ********************************************************************
 // Struct2 struct
 // ********************************************************************
-struct TB_SAME1_EXPORT Struct2
+struct TB_SAME1_API_EXPORT Struct2
 {
     Q_GADGET
     Q_PROPERTY(int field1 MEMBER m_field1 )
@@ -176,7 +174,7 @@ QDataStream &operator>>(QDataStream &stream, Struct2 &obj);
 // Struct2 struct factory
 // Registered by plugin to allow creating this type of objects in qml. 
 // ********************************************************************
-class TB_SAME1_EXPORT Struct2Factory : public QObject {
+class TB_SAME1_API_EXPORT Struct2Factory : public QObject {
     Q_OBJECT
 public:
     Q_INVOKABLE Struct2 create();
@@ -195,7 +193,7 @@ public:
 // ********************************************************************
 
 
-class TB_SAME1_EXPORT AbstractSameStruct1Interface : public QObject {
+class TB_SAME1_API_EXPORT AbstractSameStruct1Interface : public QObject {
     Q_OBJECT
 public:
     AbstractSameStruct1Interface(QObject * parent=nullptr);
@@ -233,7 +231,7 @@ signals:
 // ********************************************************************
 
 
-class TB_SAME1_EXPORT AbstractSameStruct2Interface : public QObject {
+class TB_SAME1_API_EXPORT AbstractSameStruct2Interface : public QObject {
     Q_OBJECT
 public:
     AbstractSameStruct2Interface(QObject * parent=nullptr);
@@ -290,7 +288,7 @@ signals:
 // ********************************************************************
 
 
-class TB_SAME1_EXPORT AbstractSameEnum1Interface : public QObject {
+class TB_SAME1_API_EXPORT AbstractSameEnum1Interface : public QObject {
     Q_OBJECT
 public:
     AbstractSameEnum1Interface(QObject * parent=nullptr);
@@ -328,7 +326,7 @@ signals:
 // ********************************************************************
 
 
-class TB_SAME1_EXPORT AbstractSameEnum2Interface : public QObject {
+class TB_SAME1_API_EXPORT AbstractSameEnum2Interface : public QObject {
     Q_OBJECT
 public:
     AbstractSameEnum2Interface(QObject * parent=nullptr);
@@ -372,41 +370,6 @@ signals:
     void prop2Changed(Enum2::Enum2Enum prop2);
 };
 
-
-// ********************************************************************
-// Interface Factory
-// ********************************************************************
-
-/**
-* An interface for a Factory of interfaces in tb.same1
-* May be used to provide different implementations of your interfaces.
-* Check the usage of ApiFactoryInterface in Qml versions of interface implementation.
-* See also the ApiFactory, where you can set this factory as an ApiFactoryInterface implementation.
-*/
-class TB_SAME1_EXPORT ApiFactoryInterface
-{
-public:
-    /** 
-    * Create an instance of SameStruct1Interface
-    * @return The implementation of a AbstractSameStruct1Interface.
-    */
-    virtual std::shared_ptr<AbstractSameStruct1Interface> createSameStruct1Interface(QObject *parent = nullptr) = 0;
-    /** 
-    * Create an instance of SameStruct2Interface
-    * @return The implementation of a AbstractSameStruct2Interface.
-    */
-    virtual std::shared_ptr<AbstractSameStruct2Interface> createSameStruct2Interface(QObject *parent = nullptr) = 0;
-    /** 
-    * Create an instance of SameEnum1Interface
-    * @return The implementation of a AbstractSameEnum1Interface.
-    */
-    virtual std::shared_ptr<AbstractSameEnum1Interface> createSameEnum1Interface(QObject *parent = nullptr) = 0;
-    /** 
-    * Create an instance of SameEnum2Interface
-    * @return The implementation of a AbstractSameEnum2Interface.
-    */
-    virtual std::shared_ptr<AbstractSameEnum2Interface> createSameEnum2Interface(QObject *parent = nullptr) = 0;
-};
 
 } //namespace tb_same1
 

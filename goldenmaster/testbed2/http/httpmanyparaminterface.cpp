@@ -17,7 +17,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "httpmanyparaminterface.h"
 
-#include "testbed2/api/agent.h"
 #include <QtQml>
 
 namespace testbed2 {
@@ -41,7 +40,6 @@ void HttpManyParamInterface::setProp1(int prop1)
     if (m_prop1 != prop1) {
         m_prop1 = prop1;
         emit prop1Changed(prop1);
-        ManyParamInterfaceAgent::trace_state(this);
     }
 }
 
@@ -55,7 +53,6 @@ void HttpManyParamInterface::setProp2(int prop2)
     if (m_prop2 != prop2) {
         m_prop2 = prop2;
         emit prop2Changed(prop2);
-        ManyParamInterfaceAgent::trace_state(this);
     }
 }
 
@@ -69,7 +66,6 @@ void HttpManyParamInterface::setProp3(int prop3)
     if (m_prop3 != prop3) {
         m_prop3 = prop3;
         emit prop3Changed(prop3);
-        ManyParamInterfaceAgent::trace_state(this);
     }
 }
 
@@ -83,7 +79,6 @@ void HttpManyParamInterface::setProp4(int prop4)
     if (m_prop4 != prop4) {
         m_prop4 = prop4;
         emit prop4Changed(prop4);
-        ManyParamInterfaceAgent::trace_state(this);
     }
 }
 
@@ -100,7 +95,6 @@ int HttpManyParamInterface::func1(int param1)
     payload["param1"] = QJsonValue::fromVariant(QVariant::fromValue< int >(param1));
     QJsonObject reply = post("testbed2/ManyParamInterface/func1", payload);
     qDebug() << QJsonDocument(reply).toJson();
-    ManyParamInterfaceAgent::trace_func1(this, param1);
     return 0;
 }
 
@@ -113,7 +107,6 @@ int HttpManyParamInterface::func2(int param1, int param2)
     payload["param2"] = QJsonValue::fromVariant(QVariant::fromValue< int >(param2));
     QJsonObject reply = post("testbed2/ManyParamInterface/func2", payload);
     qDebug() << QJsonDocument(reply).toJson();
-    ManyParamInterfaceAgent::trace_func2(this, param1, param2);
     return 0;
 }
 
@@ -127,7 +120,6 @@ int HttpManyParamInterface::func3(int param1, int param2, int param3)
     payload["param3"] = QJsonValue::fromVariant(QVariant::fromValue< int >(param3));
     QJsonObject reply = post("testbed2/ManyParamInterface/func3", payload);
     qDebug() << QJsonDocument(reply).toJson();
-    ManyParamInterfaceAgent::trace_func3(this, param1, param2, param3);
     return 0;
 }
 
@@ -142,7 +134,6 @@ int HttpManyParamInterface::func4(int param1, int param2, int param3, int param4
     payload["param4"] = QJsonValue::fromVariant(QVariant::fromValue< int >(param4));
     QJsonObject reply = post("testbed2/ManyParamInterface/func4", payload);
     qDebug() << QJsonDocument(reply).toJson();
-    ManyParamInterfaceAgent::trace_func4(this, param1, param2, param3, param4);
     return 0;
 }
 

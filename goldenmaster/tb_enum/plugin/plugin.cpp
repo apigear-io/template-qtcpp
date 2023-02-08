@@ -21,7 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <QtQml>
 
 #include "tb_enum/api/api.h"
-#include "tb_enum/lib/qmlenuminterface.h"
+#include "tb_enum/api/qmlenuminterface.h"
 
 void Plugin::registerTypes(const char *uri)
 {

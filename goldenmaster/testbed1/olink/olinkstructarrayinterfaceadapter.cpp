@@ -21,7 +21,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "olinkstructarrayinterfaceadapter.h"
 
 #include <nlohmann/json.hpp>
-#include "testbed1/api/agent.h"
 #include "testbed1/api/json.adapter.h"
 
 #include "olink/remoteregistry.h"

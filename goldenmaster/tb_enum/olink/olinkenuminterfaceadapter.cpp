@@ -21,7 +21,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "olinkenuminterfaceadapter.h"
 
 #include <nlohmann/json.hpp>
-#include "tb_enum/api/agent.h"
 #include "tb_enum/api/json.adapter.h"
 
 #include "olink/remoteregistry.h"

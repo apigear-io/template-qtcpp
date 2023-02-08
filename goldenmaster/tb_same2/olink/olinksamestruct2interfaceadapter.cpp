@@ -21,7 +21,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "olinksamestruct2interfaceadapter.h"
 
 #include <nlohmann/json.hpp>
-#include "tb_same2/api/agent.h"
 #include "tb_same2/api/json.adapter.h"
 
 #include "olink/remoteregistry.h"

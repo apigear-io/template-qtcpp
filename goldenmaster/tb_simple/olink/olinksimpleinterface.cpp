@@ -17,7 +17,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "olinksimpleinterface.h"
 
-#include "tb_simple/api/agent.h"
 #include "tb_simple/api/json.adapter.h"
 
 #include "olink/iclientnode.h"
@@ -34,9 +33,9 @@ OLinkSimpleInterface::OLinkSimpleInterface(QObject *parent)
     , m_propBool(false)
     , m_propInt(0)
     , m_propInt32(0)
-    , m_propInt64(0)
-    , m_propFloat(0.0)
-    , m_propFloat32(0.0)
+    , m_propInt64(0LL)
+    , m_propFloat(0.0f)
+    , m_propFloat32(0.0f)
     , m_propFloat64(0.0)
     , m_propString(QString())
     , m_isReady(false)
@@ -89,7 +88,6 @@ void OLinkSimpleInterface::setPropBoolLocal(bool propBool)
     if (m_propBool != propBool) {
         m_propBool = propBool;
         emit propBoolChanged(propBool);
-        SimpleInterfaceAgent::trace_state(this);
     }
 }
 
@@ -113,7 +111,6 @@ void OLinkSimpleInterface::setPropIntLocal(int propInt)
     if (m_propInt != propInt) {
         m_propInt = propInt;
         emit propIntChanged(propInt);
-        SimpleInterfaceAgent::trace_state(this);
     }
 }
 
@@ -137,7 +134,6 @@ void OLinkSimpleInterface::setPropInt32Local(qint32 propInt32)
     if (m_propInt32 != propInt32) {
         m_propInt32 = propInt32;
         emit propInt32Changed(propInt32);
-        SimpleInterfaceAgent::trace_state(this);
     }
 }
 
@@ -161,7 +157,6 @@ void OLinkSimpleInterface::setPropInt64Local(qint64 propInt64)
     if (m_propInt64 != propInt64) {
         m_propInt64 = propInt64;
         emit propInt64Changed(propInt64);
-        SimpleInterfaceAgent::trace_state(this);
     }
 }
 
@@ -185,7 +180,6 @@ void OLinkSimpleInterface::setPropFloatLocal(qreal propFloat)
     if (m_propFloat != propFloat) {
         m_propFloat = propFloat;
         emit propFloatChanged(propFloat);
-        SimpleInterfaceAgent::trace_state(this);
     }
 }
 
@@ -209,7 +203,6 @@ void OLinkSimpleInterface::setPropFloat32Local(float propFloat32)
     if (m_propFloat32 != propFloat32) {
         m_propFloat32 = propFloat32;
         emit propFloat32Changed(propFloat32);
-        SimpleInterfaceAgent::trace_state(this);
     }
 }
 
@@ -233,7 +226,6 @@ void OLinkSimpleInterface::setPropFloat64Local(double propFloat64)
     if (m_propFloat64 != propFloat64) {
         m_propFloat64 = propFloat64;
         emit propFloat64Changed(propFloat64);
-        SimpleInterfaceAgent::trace_state(this);
     }
 }
 
@@ -257,7 +249,6 @@ void OLinkSimpleInterface::setPropStringLocal(const QString& propString)
     if (m_propString != propString) {
         m_propString = propString;
         emit propStringChanged(propString);
-        SimpleInterfaceAgent::trace_state(this);
     }
 }
 
@@ -366,9 +357,9 @@ qint64 OLinkSimpleInterface::funcInt64(qint64 paramInt64)
 {
     qDebug() << Q_FUNC_INFO;
     if(!m_node) {
-        return 0;
+        return 0LL;
     }
-    qint64 value{ 0 };
+    qint64 value{ 0LL };
     funcInt64Async(paramInt64)
         .then([&](qint64 result) {
             value = result;
@@ -398,9 +389,9 @@ qreal OLinkSimpleInterface::funcFloat(qreal paramFloat)
 {
     qDebug() << Q_FUNC_INFO;
     if(!m_node) {
-        return 0.0;
+        return 0.0f;
     }
-    qreal value{ 0.0 };
+    qreal value{ 0.0f };
     funcFloatAsync(paramFloat)
         .then([&](qreal result) {
             value = result;
@@ -430,9 +421,9 @@ float OLinkSimpleInterface::funcFloat32(float paramFloat32)
 {
     qDebug() << Q_FUNC_INFO;
     if(!m_node) {
-        return 0.0;
+        return 0.0f;
     }
-    float value{ 0.0 };
+    float value{ 0.0f };
     funcFloat32Async(paramFloat32)
         .then([&](float result) {
             value = result;

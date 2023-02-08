@@ -3,11 +3,11 @@
 #include <QtCore>
 #include <QtNetwork>
 
-#include "{{snake .Module.Name}}/api/apifactory.h"
+#include "{{snake .Module.Name}}/api/iapifactory.h"
 
 namespace {{snake  .Module.Name }} {
 
-class HttpFactory : public QObject, public ApiFactoryInterface
+class HttpFactory : public QObject, public IApiFactory
 {
 public:
     HttpFactory(QObject *parent = nullptr);

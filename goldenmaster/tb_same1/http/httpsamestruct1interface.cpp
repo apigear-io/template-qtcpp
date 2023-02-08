@@ -17,7 +17,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "httpsamestruct1interface.h"
 
-#include "tb_same1/api/agent.h"
 #include <QtQml>
 
 namespace tb_same1 {
@@ -38,7 +37,6 @@ void HttpSameStruct1Interface::setProp1(const Struct1& prop1)
     if (m_prop1 != prop1) {
         m_prop1 = prop1;
         emit prop1Changed(prop1);
-        SameStruct1InterfaceAgent::trace_state(this);
     }
 }
 
@@ -55,7 +53,6 @@ Struct1 HttpSameStruct1Interface::func1(const Struct1& param1)
     payload["param1"] = QJsonValue::fromVariant(QVariant::fromValue< Struct1 >(param1));
     QJsonObject reply = post("tb.same1/SameStruct1Interface/func1", payload);
     qDebug() << QJsonDocument(reply).toJson();
-    SameStruct1InterfaceAgent::trace_func1(this, param1);
     return Struct1();
 }
 

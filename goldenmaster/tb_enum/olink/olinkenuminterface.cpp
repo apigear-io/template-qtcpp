@@ -17,7 +17,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "olinkenuminterface.h"
 
-#include "tb_enum/api/agent.h"
 #include "tb_enum/api/json.adapter.h"
 
 #include "olink/iclientnode.h"
@@ -73,7 +72,6 @@ void OLinkEnumInterface::setProp0Local(Enum0::Enum0Enum prop0)
     if (m_prop0 != prop0) {
         m_prop0 = prop0;
         emit prop0Changed(prop0);
-        EnumInterfaceAgent::trace_state(this);
     }
 }
 
@@ -97,7 +95,6 @@ void OLinkEnumInterface::setProp1Local(Enum1::Enum1Enum prop1)
     if (m_prop1 != prop1) {
         m_prop1 = prop1;
         emit prop1Changed(prop1);
-        EnumInterfaceAgent::trace_state(this);
     }
 }
 
@@ -121,7 +118,6 @@ void OLinkEnumInterface::setProp2Local(Enum2::Enum2Enum prop2)
     if (m_prop2 != prop2) {
         m_prop2 = prop2;
         emit prop2Changed(prop2);
-        EnumInterfaceAgent::trace_state(this);
     }
 }
 
@@ -145,7 +141,6 @@ void OLinkEnumInterface::setProp3Local(Enum3::Enum3Enum prop3)
     if (m_prop3 != prop3) {
         m_prop3 = prop3;
         emit prop3Changed(prop3);
-        EnumInterfaceAgent::trace_state(this);
     }
 }
 

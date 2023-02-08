@@ -17,7 +17,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "httpnestedstruct1interface.h"
 
-#include "testbed2/api/agent.h"
 #include <QtQml>
 
 namespace testbed2 {
@@ -38,7 +37,6 @@ void HttpNestedStruct1Interface::setProp1(const NestedStruct1& prop1)
     if (m_prop1 != prop1) {
         m_prop1 = prop1;
         emit prop1Changed(prop1);
-        NestedStruct1InterfaceAgent::trace_state(this);
     }
 }
 
@@ -55,7 +53,6 @@ NestedStruct1 HttpNestedStruct1Interface::func1(const NestedStruct1& param1)
     payload["param1"] = QJsonValue::fromVariant(QVariant::fromValue< NestedStruct1 >(param1));
     QJsonObject reply = post("testbed2/NestedStruct1Interface/func1", payload);
     qDebug() << QJsonDocument(reply).toJson();
-    NestedStruct1InterfaceAgent::trace_func1(this, param1);
     return NestedStruct1();
 }
 

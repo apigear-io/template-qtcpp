@@ -21,10 +21,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <QtQml>
 
 #include "tb_same1/api/api.h"
-#include "tb_same1/lib/qmlsamestruct1interface.h"
-#include "tb_same1/lib/qmlsamestruct2interface.h"
-#include "tb_same1/lib/qmlsameenum1interface.h"
-#include "tb_same1/lib/qmlsameenum2interface.h"
+#include "tb_same1/api/qmlsamestruct1interface.h"
+#include "tb_same1/api/qmlsamestruct2interface.h"
+#include "tb_same1/api/qmlsameenum1interface.h"
+#include "tb_same1/api/qmlsameenum2interface.h"
 
 void Plugin::registerTypes(const char *uri)
 {

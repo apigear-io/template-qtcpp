@@ -18,7 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
 #include "qmlstructarrayinterface.h"
-#include "testbed1/api/apifactory.h"
+#include "apifactory.h"
 
 #include <QtQml>
 

@@ -1,5 +1,4 @@
 #include "apifactory.h"
-#include "simu.h"
 #include "api.h"
 
 
@@ -25,13 +24,18 @@ IApiFactory * ApiFactory::get()
     if(s_instance) {
         return s_instance;
     }
-    s_instance = new ApiFactory(QCoreApplication::instance());
-    return s_instance;
+    return nullptr;
 }
 
 std::shared_ptr<AbstractEnumInterface> ApiFactory::createEnumInterface(QObject *parent) 
 {
-    return std::make_shared<SimulationEnumInterface>(parent);
+    auto factory = ApiFactory::get();
+    if (factory)
+    {
+        return factory->createEnumInterface(parent);
+    }
+    qCritical() << Q_FUNC_INFO << " No instance of factory set EnumInterface cannot be created. ";
+    return nullptr;
 };
 
 } //namespace tb_enum

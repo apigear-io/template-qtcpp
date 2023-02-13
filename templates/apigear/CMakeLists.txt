@@ -14,7 +14,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_subdirectory(olink)
 add_subdirectory(monitor)
-add_subdirectory(simulation)
 
 if(BUILD_TESTING)
 enable_testing()

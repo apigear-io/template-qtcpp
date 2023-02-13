@@ -5,7 +5,6 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt5 REQUIRED COMPONENTS Core Qml WebSockets)
-find_package(apigear QUIET COMPONENTS simulation_qt)
 
 set(OUTPUT_PATH ${LIBRARY_PATH}/)
 
@@ -21,23 +20,9 @@ if(NOT nlohmann_json_FOUND)
   FetchContent_MakeAvailable(json)
 endif()
 
-find_package(jsonrpc_core QUIET)
-if(NOT jsonrpc_core)
-  message(STATUS "jsonrpc_core NOT FOUND, fetching the release package")
-  set(JSONRPC_Install ON)
-    FetchContent_Declare(jsonrpc_core
-      GIT_REPOSITORY https://github.com/apigear-io/jsonrpc-core-cpp.git
-      GIT_TAG v0.1.1
-      GIT_SHALLOW TRUE
-      EXCLUDE_FROM_ALL FALSE
-  )
-  FetchContent_MakeAvailable(jsonrpc_core)
-endif()
-
 set (TESTBED1_API_SOURCES
     api.cpp
     apifactory.cpp
-    simu.cpp
     qmlstructinterface.cpp
     qmlstructarrayinterface.cpp
 )
@@ -56,5 +41,5 @@ target_include_directories(testbed1_api
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(testbed1_api PRIVATE  Qt5::Core Qt5::Qml Qt5::WebSockets jsonrpc_core nlohmann_json::nlohmann_json simulation_qt)
+target_link_libraries(testbed1_api PRIVATE  Qt5::Core Qt5::Qml Qt5::WebSockets nlohmann_json::nlohmann_json)
 target_compile_definitions(testbed1_api PRIVATE TESTBED1_API_LIBRARY)

@@ -1,5 +1,4 @@
 #include "apifactory.h"
-#include "simu.h"
 #include "api.h"
 
 
@@ -25,28 +24,51 @@ IApiFactory * ApiFactory::get()
     if(s_instance) {
         return s_instance;
     }
-    s_instance = new ApiFactory(QCoreApplication::instance());
-    return s_instance;
+    return nullptr;
 }
 
 std::shared_ptr<AbstractSameStruct1Interface> ApiFactory::createSameStruct1Interface(QObject *parent) 
 {
-    return std::make_shared<SimulationSameStruct1Interface>(parent);
+    auto factory = ApiFactory::get();
+    if (factory)
+    {
+        return factory->createSameStruct1Interface(parent);
+    }
+    qCritical() << Q_FUNC_INFO << " No instance of factory set SameStruct1Interface cannot be created. ";
+    return nullptr;
 };
 
 std::shared_ptr<AbstractSameStruct2Interface> ApiFactory::createSameStruct2Interface(QObject *parent) 
 {
-    return std::make_shared<SimulationSameStruct2Interface>(parent);
+    auto factory = ApiFactory::get();
+    if (factory)
+    {
+        return factory->createSameStruct2Interface(parent);
+    }
+    qCritical() << Q_FUNC_INFO << " No instance of factory set SameStruct2Interface cannot be created. ";
+    return nullptr;
 };
 
 std::shared_ptr<AbstractSameEnum1Interface> ApiFactory::createSameEnum1Interface(QObject *parent) 
 {
-    return std::make_shared<SimulationSameEnum1Interface>(parent);
+    auto factory = ApiFactory::get();
+    if (factory)
+    {
+        return factory->createSameEnum1Interface(parent);
+    }
+    qCritical() << Q_FUNC_INFO << " No instance of factory set SameEnum1Interface cannot be created. ";
+    return nullptr;
 };
 
 std::shared_ptr<AbstractSameEnum2Interface> ApiFactory::createSameEnum2Interface(QObject *parent) 
 {
-    return std::make_shared<SimulationSameEnum2Interface>(parent);
+    auto factory = ApiFactory::get();
+    if (factory)
+    {
+        return factory->createSameEnum2Interface(parent);
+    }
+    qCritical() << Q_FUNC_INFO << " No instance of factory set SameEnum2Interface cannot be created. ";
+    return nullptr;
 };
 
 } //namespace tb_same1

@@ -1,5 +1,4 @@
 #include "apifactory.h"
-#include "simu.h"
 #include "api.h"
 
 
@@ -25,18 +24,29 @@ IApiFactory * ApiFactory::get()
     if(s_instance) {
         return s_instance;
     }
-    s_instance = new ApiFactory(QCoreApplication::instance());
-    return s_instance;
+    return nullptr;
 }
 
 std::shared_ptr<AbstractStructInterface> ApiFactory::createStructInterface(QObject *parent) 
 {
-    return std::make_shared<SimulationStructInterface>(parent);
+    auto factory = ApiFactory::get();
+    if (factory)
+    {
+        return factory->createStructInterface(parent);
+    }
+    qCritical() << Q_FUNC_INFO << " No instance of factory set StructInterface cannot be created. ";
+    return nullptr;
 };
 
 std::shared_ptr<AbstractStructArrayInterface> ApiFactory::createStructArrayInterface(QObject *parent) 
 {
-    return std::make_shared<SimulationStructArrayInterface>(parent);
+    auto factory = ApiFactory::get();
+    if (factory)
+    {
+        return factory->createStructArrayInterface(parent);
+    }
+    qCritical() << Q_FUNC_INFO << " No instance of factory set StructArrayInterface cannot be created. ";
+    return nullptr;
 };
 
 } //namespace testbed1

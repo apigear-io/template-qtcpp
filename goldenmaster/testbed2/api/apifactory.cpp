@@ -1,5 +1,4 @@
 #include "apifactory.h"
-#include "simu.h"
 #include "api.h"
 
 
@@ -25,28 +24,51 @@ IApiFactory * ApiFactory::get()
     if(s_instance) {
         return s_instance;
     }
-    s_instance = new ApiFactory(QCoreApplication::instance());
-    return s_instance;
+    return nullptr;
 }
 
 std::shared_ptr<AbstractManyParamInterface> ApiFactory::createManyParamInterface(QObject *parent) 
 {
-    return std::make_shared<SimulationManyParamInterface>(parent);
+    auto factory = ApiFactory::get();
+    if (factory)
+    {
+        return factory->createManyParamInterface(parent);
+    }
+    qCritical() << Q_FUNC_INFO << " No instance of factory set ManyParamInterface cannot be created. ";
+    return nullptr;
 };
 
 std::shared_ptr<AbstractNestedStruct1Interface> ApiFactory::createNestedStruct1Interface(QObject *parent) 
 {
-    return std::make_shared<SimulationNestedStruct1Interface>(parent);
+    auto factory = ApiFactory::get();
+    if (factory)
+    {
+        return factory->createNestedStruct1Interface(parent);
+    }
+    qCritical() << Q_FUNC_INFO << " No instance of factory set NestedStruct1Interface cannot be created. ";
+    return nullptr;
 };
 
 std::shared_ptr<AbstractNestedStruct2Interface> ApiFactory::createNestedStruct2Interface(QObject *parent) 
 {
-    return std::make_shared<SimulationNestedStruct2Interface>(parent);
+    auto factory = ApiFactory::get();
+    if (factory)
+    {
+        return factory->createNestedStruct2Interface(parent);
+    }
+    qCritical() << Q_FUNC_INFO << " No instance of factory set NestedStruct2Interface cannot be created. ";
+    return nullptr;
 };
 
 std::shared_ptr<AbstractNestedStruct3Interface> ApiFactory::createNestedStruct3Interface(QObject *parent) 
 {
-    return std::make_shared<SimulationNestedStruct3Interface>(parent);
+    auto factory = ApiFactory::get();
+    if (factory)
+    {
+        return factory->createNestedStruct3Interface(parent);
+    }
+    qCritical() << Q_FUNC_INFO << " No instance of factory set NestedStruct3Interface cannot be created. ";
+    return nullptr;
 };
 
 } //namespace testbed2

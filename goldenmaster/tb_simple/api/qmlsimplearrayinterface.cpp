@@ -18,7 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
 #include "qmlsimplearrayinterface.h"
-#include "tb_simple/api/apifactory.h"
+#include "apifactory.h"
 
 #include <QtQml>
 

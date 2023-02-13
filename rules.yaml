@@ -1,18 +1,11 @@
 features:
   - name: api
-  # temporary requires apigear. This should be removed, when simulation is removed.
-    requires:
-      - apigear
     scopes:
       - match: system
         documents:
           - source: "CMakeLists.txt.tpl"
             target: "CMakeLists.txt"
-          - source: "apigear/simulation/CMakeLists.txt"
-            raw: true
-          - source: "apigear/simulation/simulationclient.h"
-            raw: true
-          - source: "apigear/simulation/simulationclient.cpp"
+          - source: README.md
             raw: true
           - source: thirdparty/qtpromise/CMakeLists.txt
             raw: true
@@ -40,10 +33,6 @@ features:
           - source: "api/apifactory.cpp.tpl"
             target: "apifactory.cpp"
             force: true
-          - source: "api/simu.h.tpl"
-            target: "simu.h"
-          - source: "api/simu.cpp.tpl"
-            target: "simu.cpp"
       - match: interface
         prefix: "{{snake .Module.Name}}/api/"
         documents:

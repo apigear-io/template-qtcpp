@@ -4,7 +4,7 @@
 
 
 #include "qml{{lower $class}}.h"
-#include "{{snake .Module.Name}}/api/apifactory.h"
+#include "apifactory.h"
 
 #include <QtQml>
 

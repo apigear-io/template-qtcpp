@@ -1,5 +1,4 @@
 #include "apifactory.h"
-#include "simu.h"
 #include "api.h"
 
 
@@ -25,18 +24,29 @@ IApiFactory * ApiFactory::get()
     if(s_instance) {
         return s_instance;
     }
-    s_instance = new ApiFactory(QCoreApplication::instance());
-    return s_instance;
+    return nullptr;
 }
 
 std::shared_ptr<AbstractSimpleInterface> ApiFactory::createSimpleInterface(QObject *parent) 
 {
-    return std::make_shared<SimulationSimpleInterface>(parent);
+    auto factory = ApiFactory::get();
+    if (factory)
+    {
+        return factory->createSimpleInterface(parent);
+    }
+    qCritical() << Q_FUNC_INFO << " No instance of factory set SimpleInterface cannot be created. ";
+    return nullptr;
 };
 
 std::shared_ptr<AbstractSimpleArrayInterface> ApiFactory::createSimpleArrayInterface(QObject *parent) 
 {
-    return std::make_shared<SimulationSimpleArrayInterface>(parent);
+    auto factory = ApiFactory::get();
+    if (factory)
+    {
+        return factory->createSimpleArrayInterface(parent);
+    }
+    qCritical() << Q_FUNC_INFO << " No instance of factory set SimpleArrayInterface cannot be created. ";
+    return nullptr;
 };
 
 } //namespace tb_simple

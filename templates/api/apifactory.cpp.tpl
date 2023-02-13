@@ -1,5 +1,4 @@
 #include "apifactory.h"
-#include "simu.h"
 #include "api.h"
 
 
@@ -25,15 +24,20 @@ IApiFactory * ApiFactory::get()
     if(s_instance) {
         return s_instance;
     }
-    s_instance = new ApiFactory(QCoreApplication::instance());
-    return s_instance;
+    return nullptr;
 }
 
 {{- range .Module.Interfaces }}
 
 std::shared_ptr<Abstract{{Camel .Name}}> ApiFactory::create{{Camel .Name}}(QObject *parent) 
 {
-    return std::make_shared<Simulation{{Camel .Name}}>(parent);
+    auto factory = ApiFactory::get();
+    if (factory)
+    {
+        return factory->create{{Camel .Name}}(parent);
+    }
+    qCritical() << Q_FUNC_INFO << " No instance of factory set {{Camel .Name}} cannot be created. ";
+    return nullptr;
 };
 {{- end }}
 

@@ -31,44 +31,4 @@ target_include_directories(testbed2_impl
 target_link_libraries(testbed2_impl PRIVATE Qt5::Core Qt5::Qml Qt5::WebSockets testbed2::testbed2_api)
 target_compile_definitions(testbed2_impl PRIVATE TESTBED2_IMPL_LIBRARY)
 
-# add test targets
-
-## test for ManyParamInterface
-#add_executable(test_testbed2_impl_manyparaminterface
-#    tst_manyparaminterface.cpp
-#)
-#
-#target_link_libraries(test_testbed2_impl_manyparaminterface PRIVATE Qt5::Test testbed2::testbed2_impl)
-#target_compile_definitions(test_testbed2_impl_manyparaminterface PRIVATE TESTBED2_IMPL_LIBRARY)
-#add_test(test_testbed2_impl_manyparaminterface test_testbed2_impl_manyparaminterface)
-#
-
-## test for NestedStruct1Interface
-#add_executable(test_testbed2_impl_nestedstruct1interface
-#    tst_nestedstruct1interface.cpp
-#)
-#
-#target_link_libraries(test_testbed2_impl_nestedstruct1interface PRIVATE Qt5::Test testbed2::testbed2_impl)
-#target_compile_definitions(test_testbed2_impl_nestedstruct1interface PRIVATE TESTBED2_IMPL_LIBRARY)
-#add_test(test_testbed2_impl_nestedstruct1interface test_testbed2_impl_nestedstruct1interface)
-#
-
-## test for NestedStruct2Interface
-#add_executable(test_testbed2_impl_nestedstruct2interface
-#    tst_nestedstruct2interface.cpp
-#)
-#
-#target_link_libraries(test_testbed2_impl_nestedstruct2interface PRIVATE Qt5::Test testbed2::testbed2_impl)
-#target_compile_definitions(test_testbed2_impl_nestedstruct2interface PRIVATE TESTBED2_IMPL_LIBRARY)
-#add_test(test_testbed2_impl_nestedstruct2interface test_testbed2_impl_nestedstruct2interface)
-#
-
-## test for NestedStruct3Interface
-#add_executable(test_testbed2_impl_nestedstruct3interface
-#    tst_nestedstruct3interface.cpp
-#)
-#
-#target_link_libraries(test_testbed2_impl_nestedstruct3interface PRIVATE Qt5::Test testbed2::testbed2_impl)
-#target_compile_definitions(test_testbed2_impl_nestedstruct3interface PRIVATE TESTBED2_IMPL_LIBRARY)
-#add_test(test_testbed2_impl_nestedstruct3interface test_testbed2_impl_nestedstruct3interface)
-#
+add_subdirectory(tests)

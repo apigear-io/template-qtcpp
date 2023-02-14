@@ -15,100 +15,86 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#include "tst_enuminterface.h"
-#include "enuminterface.h"
+#include "test_nestedstruct3interface.h"
+#include "implementation/nestedstruct3interface.h"
 
 /**
  *  will be called before the first test function is executed.
 */
-void TestTbEnumEnumInterface::initTestCase(){
+void TestTestbed2NestedStruct3Interface::initTestCase(){
 
 }
 
 /**
  *  will be called to create a global test data table.
 */
-void TestTbEnumEnumInterface::initTestCase_data(){
+void TestTestbed2NestedStruct3Interface::initTestCase_data(){
 
 }
 
 /**
  *  will be called after the last test function was executed.
 */
-void TestTbEnumEnumInterface::cleanupTestCase(){
+void TestTestbed2NestedStruct3Interface::cleanupTestCase(){
 
 }
 
 /**
  *  will be called before each test function is executed.
 */
-void TestTbEnumEnumInterface::init(){
+void TestTestbed2NestedStruct3Interface::init(){
 
 }
 
 /**
  *  will be called after every test function.
 */
-void TestTbEnumEnumInterface::cleanup(){
+void TestTestbed2NestedStruct3Interface::cleanup(){
 
-}
-/**
- *  Test operation func0
-*/
-void TestTbEnumEnumInterface::func0(){
-    tb.enum::EnumInterface testTbenumenuminterface;
-    // Do implement test here
 }
 /**
  *  Test operation func1
 */
-void TestTbEnumEnumInterface::func1(){
-    tb.enum::EnumInterface testTbenumenuminterface;
+void TestTestbed2NestedStruct3Interface::func1(){
+    testbed2::NestedStruct3Interface testTestbed2nestedstruct3interface;
     // Do implement test here
 }
 /**
  *  Test operation func2
 */
-void TestTbEnumEnumInterface::func2(){
-    tb.enum::EnumInterface testTbenumenuminterface;
+void TestTestbed2NestedStruct3Interface::func2(){
+    testbed2::NestedStruct3Interface testTestbed2nestedstruct3interface;
     // Do implement test here
 }
 /**
  *  Test operation func3
 */
-void TestTbEnumEnumInterface::func3(){
-    tb.enum::EnumInterface testTbenumenuminterface;
-    // Do implement test here
-}
-/**
- *  Test proptery prop0
-*/
-void TestTbEnumEnumInterface::prop0(){
-    tb.enum::EnumInterface testTbenumenuminterface;
+void TestTestbed2NestedStruct3Interface::func3(){
+    testbed2::NestedStruct3Interface testTestbed2nestedstruct3interface;
     // Do implement test here
 }
 /**
  *  Test proptery prop1
 */
-void TestTbEnumEnumInterface::prop1(){
-    tb.enum::EnumInterface testTbenumenuminterface;
+void TestTestbed2NestedStruct3Interface::prop1(){
+    testbed2::NestedStruct3Interface testTestbed2nestedstruct3interface;
     // Do implement test here
 }
 /**
  *  Test proptery prop2
 */
-void TestTbEnumEnumInterface::prop2(){
-    tb.enum::EnumInterface testTbenumenuminterface;
+void TestTestbed2NestedStruct3Interface::prop2(){
+    testbed2::NestedStruct3Interface testTestbed2nestedstruct3interface;
     // Do implement test here
 }
 /**
  *  Test proptery prop3
 */
-void TestTbEnumEnumInterface::prop3(){
-    tb.enum::EnumInterface testTbenumenuminterface;
+void TestTestbed2NestedStruct3Interface::prop3(){
+    testbed2::NestedStruct3Interface testTestbed2nestedstruct3interface;
     // Do implement test here
 }
 
-QTEST_MAIN(TestTbEnumEnumInterface);
+QTEST_MAIN(TestTestbed2NestedStruct3Interface);
 
 

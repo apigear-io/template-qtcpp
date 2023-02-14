@@ -15,8 +15,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#include "tst_simpleinterface.h"
-#include "simpleinterface.h"
+#include "test_simpleinterface.h"
+#include "implementation/simpleinterface.h"
 
 /**
  *  will be called before the first test function is executed.
@@ -56,112 +56,112 @@ void TestTbSimpleSimpleInterface::cleanup(){
  *  Test operation funcBool
 */
 void TestTbSimpleSimpleInterface::funcBool(){
-    tb.simple::SimpleInterface testTbsimplesimpleinterface;
+    tb_simple::SimpleInterface testTbsimplesimpleinterface;
     // Do implement test here
 }
 /**
  *  Test operation funcInt
 */
 void TestTbSimpleSimpleInterface::funcInt(){
-    tb.simple::SimpleInterface testTbsimplesimpleinterface;
+    tb_simple::SimpleInterface testTbsimplesimpleinterface;
     // Do implement test here
 }
 /**
  *  Test operation funcInt32
 */
 void TestTbSimpleSimpleInterface::funcInt32(){
-    tb.simple::SimpleInterface testTbsimplesimpleinterface;
+    tb_simple::SimpleInterface testTbsimplesimpleinterface;
     // Do implement test here
 }
 /**
  *  Test operation funcInt64
 */
 void TestTbSimpleSimpleInterface::funcInt64(){
-    tb.simple::SimpleInterface testTbsimplesimpleinterface;
+    tb_simple::SimpleInterface testTbsimplesimpleinterface;
     // Do implement test here
 }
 /**
  *  Test operation funcFloat
 */
 void TestTbSimpleSimpleInterface::funcFloat(){
-    tb.simple::SimpleInterface testTbsimplesimpleinterface;
+    tb_simple::SimpleInterface testTbsimplesimpleinterface;
     // Do implement test here
 }
 /**
  *  Test operation funcFloat32
 */
 void TestTbSimpleSimpleInterface::funcFloat32(){
-    tb.simple::SimpleInterface testTbsimplesimpleinterface;
+    tb_simple::SimpleInterface testTbsimplesimpleinterface;
     // Do implement test here
 }
 /**
  *  Test operation funcFloat64
 */
 void TestTbSimpleSimpleInterface::funcFloat64(){
-    tb.simple::SimpleInterface testTbsimplesimpleinterface;
+    tb_simple::SimpleInterface testTbsimplesimpleinterface;
     // Do implement test here
 }
 /**
  *  Test operation funcString
 */
 void TestTbSimpleSimpleInterface::funcString(){
-    tb.simple::SimpleInterface testTbsimplesimpleinterface;
+    tb_simple::SimpleInterface testTbsimplesimpleinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propBool
 */
 void TestTbSimpleSimpleInterface::propBool(){
-    tb.simple::SimpleInterface testTbsimplesimpleinterface;
+    tb_simple::SimpleInterface testTbsimplesimpleinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propInt
 */
 void TestTbSimpleSimpleInterface::propInt(){
-    tb.simple::SimpleInterface testTbsimplesimpleinterface;
+    tb_simple::SimpleInterface testTbsimplesimpleinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propInt32
 */
 void TestTbSimpleSimpleInterface::propInt32(){
-    tb.simple::SimpleInterface testTbsimplesimpleinterface;
+    tb_simple::SimpleInterface testTbsimplesimpleinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propInt64
 */
 void TestTbSimpleSimpleInterface::propInt64(){
-    tb.simple::SimpleInterface testTbsimplesimpleinterface;
+    tb_simple::SimpleInterface testTbsimplesimpleinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propFloat
 */
 void TestTbSimpleSimpleInterface::propFloat(){
-    tb.simple::SimpleInterface testTbsimplesimpleinterface;
+    tb_simple::SimpleInterface testTbsimplesimpleinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propFloat32
 */
 void TestTbSimpleSimpleInterface::propFloat32(){
-    tb.simple::SimpleInterface testTbsimplesimpleinterface;
+    tb_simple::SimpleInterface testTbsimplesimpleinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propFloat64
 */
 void TestTbSimpleSimpleInterface::propFloat64(){
-    tb.simple::SimpleInterface testTbsimplesimpleinterface;
+    tb_simple::SimpleInterface testTbsimplesimpleinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propString
 */
 void TestTbSimpleSimpleInterface::propString(){
-    tb.simple::SimpleInterface testTbsimplesimpleinterface;
+    tb_simple::SimpleInterface testTbsimplesimpleinterface;
     // Do implement test here
 }
 

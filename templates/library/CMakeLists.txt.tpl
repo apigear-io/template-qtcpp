@@ -36,16 +36,4 @@ target_include_directories({{$lib_id}}
 target_link_libraries({{$lib_id}} PRIVATE Qt5::Core Qt5::Qml Qt5::WebSockets {{$module_id}}::{{snake .Module.Name}}_api)
 target_compile_definitions({{$lib_id}} PRIVATE {{ $LIB_ID }}_LIBRARY)
 
-# add test targets
-{{- range .Module.Interfaces }}
-{{- $test_name := (lower .Name) }}
-
-## test for {{.Name}}
-#add_executable(test_{{$lib_id}}_{{$test_name}}
-#    tst_{{$test_name}}.cpp
-#)
-#
-#target_link_libraries(test_{{$lib_id}}_{{$test_name}} PRIVATE Qt5::Test {{$module_id}}::{{$lib_id}})
-#target_compile_definitions(test_{{$lib_id}}_{{$test_name}} PRIVATE {{$LIB_ID}}_LIBRARY)
-#add_test(test_{{$lib_id}}_{{$test_name}} test_{{$lib_id}}_{{$test_name}})
-#{{- end }}
+add_subdirectory(tests)

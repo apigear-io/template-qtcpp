@@ -15,8 +15,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#include "tst_simplearrayinterface.h"
-#include "simplearrayinterface.h"
+#include "test_simplearrayinterface.h"
+#include "implementation/simplearrayinterface.h"
 
 /**
  *  will be called before the first test function is executed.
@@ -56,112 +56,112 @@ void TestTbSimpleSimpleArrayInterface::cleanup(){
  *  Test operation funcBool
 */
 void TestTbSimpleSimpleArrayInterface::funcBool(){
-    tb.simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
+    tb_simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
     // Do implement test here
 }
 /**
  *  Test operation funcInt
 */
 void TestTbSimpleSimpleArrayInterface::funcInt(){
-    tb.simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
+    tb_simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
     // Do implement test here
 }
 /**
  *  Test operation funcInt32
 */
 void TestTbSimpleSimpleArrayInterface::funcInt32(){
-    tb.simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
+    tb_simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
     // Do implement test here
 }
 /**
  *  Test operation funcInt64
 */
 void TestTbSimpleSimpleArrayInterface::funcInt64(){
-    tb.simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
+    tb_simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
     // Do implement test here
 }
 /**
  *  Test operation funcFloat
 */
 void TestTbSimpleSimpleArrayInterface::funcFloat(){
-    tb.simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
+    tb_simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
     // Do implement test here
 }
 /**
  *  Test operation funcFloat32
 */
 void TestTbSimpleSimpleArrayInterface::funcFloat32(){
-    tb.simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
+    tb_simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
     // Do implement test here
 }
 /**
  *  Test operation funcFloat64
 */
 void TestTbSimpleSimpleArrayInterface::funcFloat64(){
-    tb.simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
+    tb_simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
     // Do implement test here
 }
 /**
  *  Test operation funcString
 */
 void TestTbSimpleSimpleArrayInterface::funcString(){
-    tb.simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
+    tb_simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propBool
 */
 void TestTbSimpleSimpleArrayInterface::propBool(){
-    tb.simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
+    tb_simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propInt
 */
 void TestTbSimpleSimpleArrayInterface::propInt(){
-    tb.simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
+    tb_simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propInt32
 */
 void TestTbSimpleSimpleArrayInterface::propInt32(){
-    tb.simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
+    tb_simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propInt64
 */
 void TestTbSimpleSimpleArrayInterface::propInt64(){
-    tb.simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
+    tb_simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propFloat
 */
 void TestTbSimpleSimpleArrayInterface::propFloat(){
-    tb.simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
+    tb_simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propFloat32
 */
 void TestTbSimpleSimpleArrayInterface::propFloat32(){
-    tb.simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
+    tb_simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propFloat64
 */
 void TestTbSimpleSimpleArrayInterface::propFloat64(){
-    tb.simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
+    tb_simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propString
 */
 void TestTbSimpleSimpleArrayInterface::propString(){
-    tb.simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
+    tb_simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
     // Do implement test here
 }
 

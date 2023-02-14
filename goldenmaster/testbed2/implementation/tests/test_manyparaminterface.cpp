@@ -15,8 +15,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#include "tst_manyparaminterface.h"
-#include "manyparaminterface.h"
+#include "test_manyparaminterface.h"
+#include "implementation/manyparaminterface.h"
 
 /**
  *  will be called before the first test function is executed.

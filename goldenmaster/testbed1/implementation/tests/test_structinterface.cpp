@@ -15,100 +15,100 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#include "tst_structarrayinterface.h"
-#include "structarrayinterface.h"
+#include "test_structinterface.h"
+#include "implementation/structinterface.h"
 
 /**
  *  will be called before the first test function is executed.
 */
-void TestTestbed1StructArrayInterface::initTestCase(){
+void TestTestbed1StructInterface::initTestCase(){
 
 }
 
 /**
  *  will be called to create a global test data table.
 */
-void TestTestbed1StructArrayInterface::initTestCase_data(){
+void TestTestbed1StructInterface::initTestCase_data(){
 
 }
 
 /**
  *  will be called after the last test function was executed.
 */
-void TestTestbed1StructArrayInterface::cleanupTestCase(){
+void TestTestbed1StructInterface::cleanupTestCase(){
 
 }
 
 /**
  *  will be called before each test function is executed.
 */
-void TestTestbed1StructArrayInterface::init(){
+void TestTestbed1StructInterface::init(){
 
 }
 
 /**
  *  will be called after every test function.
 */
-void TestTestbed1StructArrayInterface::cleanup(){
+void TestTestbed1StructInterface::cleanup(){
 
 }
 /**
  *  Test operation funcBool
 */
-void TestTestbed1StructArrayInterface::funcBool(){
-    testbed1::StructArrayInterface testTestbed1structarrayinterface;
+void TestTestbed1StructInterface::funcBool(){
+    testbed1::StructInterface testTestbed1structinterface;
     // Do implement test here
 }
 /**
  *  Test operation funcInt
 */
-void TestTestbed1StructArrayInterface::funcInt(){
-    testbed1::StructArrayInterface testTestbed1structarrayinterface;
+void TestTestbed1StructInterface::funcInt(){
+    testbed1::StructInterface testTestbed1structinterface;
     // Do implement test here
 }
 /**
  *  Test operation funcFloat
 */
-void TestTestbed1StructArrayInterface::funcFloat(){
-    testbed1::StructArrayInterface testTestbed1structarrayinterface;
+void TestTestbed1StructInterface::funcFloat(){
+    testbed1::StructInterface testTestbed1structinterface;
     // Do implement test here
 }
 /**
  *  Test operation funcString
 */
-void TestTestbed1StructArrayInterface::funcString(){
-    testbed1::StructArrayInterface testTestbed1structarrayinterface;
+void TestTestbed1StructInterface::funcString(){
+    testbed1::StructInterface testTestbed1structinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propBool
 */
-void TestTestbed1StructArrayInterface::propBool(){
-    testbed1::StructArrayInterface testTestbed1structarrayinterface;
+void TestTestbed1StructInterface::propBool(){
+    testbed1::StructInterface testTestbed1structinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propInt
 */
-void TestTestbed1StructArrayInterface::propInt(){
-    testbed1::StructArrayInterface testTestbed1structarrayinterface;
+void TestTestbed1StructInterface::propInt(){
+    testbed1::StructInterface testTestbed1structinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propFloat
 */
-void TestTestbed1StructArrayInterface::propFloat(){
-    testbed1::StructArrayInterface testTestbed1structarrayinterface;
+void TestTestbed1StructInterface::propFloat(){
+    testbed1::StructInterface testTestbed1structinterface;
     // Do implement test here
 }
 /**
  *  Test proptery propString
 */
-void TestTestbed1StructArrayInterface::propString(){
-    testbed1::StructArrayInterface testTestbed1structarrayinterface;
+void TestTestbed1StructInterface::propString(){
+    testbed1::StructInterface testTestbed1structinterface;
     // Do implement test here
 }
 
-QTEST_MAIN(TestTestbed1StructArrayInterface);
+QTEST_MAIN(TestTestbed1StructInterface);
 
 

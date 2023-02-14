@@ -58,6 +58,9 @@ features:
         - source: "library/factory.cpp.tpl"
           target: "implementation/factory.cpp"
           force: true
+        - source: "library/tests/CMakeLists.txt.tpl"
+          target: "implementation/tests/CMakeLists.txt"
+          force: true
     - match: interface
       prefix: "{{snake .Module.Name}}/implementation/"
       documents:
@@ -67,11 +70,11 @@ features:
         - source: "library/interface.cpp.tpl"
           target: "{{lower .Interface.Name}}.cpp"
           force: true
-        - source: "library/tst_interface.h.tpl"
-          target: "tst_{{lower .Interface.Name}}.h"
+        - source: "library/tests/test_interface.h.tpl"
+          target: "tests/test_{{lower .Interface.Name}}.h"
           force: true
-        - source: "library/tst_interface.cpp.tpl"
-          target: "tst_{{lower .Interface.Name}}.cpp"
+        - source: "library/tests/test_interface.cpp.tpl"
+          target: "tests/test_{{lower .Interface.Name}}.cpp"
           force: true
   - name: qmlplugin
     requires:

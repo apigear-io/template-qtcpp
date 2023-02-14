@@ -15,58 +15,72 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#include "tst_sameenum1interface.h"
-#include "sameenum1interface.h"
+#include "test_samestruct2interface.h"
+#include "implementation/samestruct2interface.h"
 
 /**
  *  will be called before the first test function is executed.
 */
-void TestTbSame1SameEnum1Interface::initTestCase(){
+void TestTbSame2SameStruct2Interface::initTestCase(){
 
 }
 
 /**
  *  will be called to create a global test data table.
 */
-void TestTbSame1SameEnum1Interface::initTestCase_data(){
+void TestTbSame2SameStruct2Interface::initTestCase_data(){
 
 }
 
 /**
  *  will be called after the last test function was executed.
 */
-void TestTbSame1SameEnum1Interface::cleanupTestCase(){
+void TestTbSame2SameStruct2Interface::cleanupTestCase(){
 
 }
 
 /**
  *  will be called before each test function is executed.
 */
-void TestTbSame1SameEnum1Interface::init(){
+void TestTbSame2SameStruct2Interface::init(){
 
 }
 
 /**
  *  will be called after every test function.
 */
-void TestTbSame1SameEnum1Interface::cleanup(){
+void TestTbSame2SameStruct2Interface::cleanup(){
 
 }
 /**
  *  Test operation func1
 */
-void TestTbSame1SameEnum1Interface::func1(){
-    tb.same1::SameEnum1Interface testTbsame1sameenum1interface;
+void TestTbSame2SameStruct2Interface::func1(){
+    tb_same2::SameStruct2Interface testTbsame2samestruct2interface;
+    // Do implement test here
+}
+/**
+ *  Test operation func2
+*/
+void TestTbSame2SameStruct2Interface::func2(){
+    tb_same2::SameStruct2Interface testTbsame2samestruct2interface;
     // Do implement test here
 }
 /**
  *  Test proptery prop1
 */
-void TestTbSame1SameEnum1Interface::prop1(){
-    tb.same1::SameEnum1Interface testTbsame1sameenum1interface;
+void TestTbSame2SameStruct2Interface::prop1(){
+    tb_same2::SameStruct2Interface testTbsame2samestruct2interface;
+    // Do implement test here
+}
+/**
+ *  Test proptery prop2
+*/
+void TestTbSame2SameStruct2Interface::prop2(){
+    tb_same2::SameStruct2Interface testTbsame2samestruct2interface;
     // Do implement test here
 }
 
-QTEST_MAIN(TestTbSame1SameEnum1Interface);
+QTEST_MAIN(TestTbSame2SameStruct2Interface);
 
 

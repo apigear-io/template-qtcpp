@@ -31,44 +31,4 @@ target_include_directories(tb_same1_impl
 target_link_libraries(tb_same1_impl PRIVATE Qt5::Core Qt5::Qml Qt5::WebSockets tb_same1::tb_same1_api)
 target_compile_definitions(tb_same1_impl PRIVATE TB_SAME1_IMPL_LIBRARY)
 
-# add test targets
-
-## test for SameStruct1Interface
-#add_executable(test_tb_same1_impl_samestruct1interface
-#    tst_samestruct1interface.cpp
-#)
-#
-#target_link_libraries(test_tb_same1_impl_samestruct1interface PRIVATE Qt5::Test tb_same1::tb_same1_impl)
-#target_compile_definitions(test_tb_same1_impl_samestruct1interface PRIVATE TB_SAME1_IMPL_LIBRARY)
-#add_test(test_tb_same1_impl_samestruct1interface test_tb_same1_impl_samestruct1interface)
-#
-
-## test for SameStruct2Interface
-#add_executable(test_tb_same1_impl_samestruct2interface
-#    tst_samestruct2interface.cpp
-#)
-#
-#target_link_libraries(test_tb_same1_impl_samestruct2interface PRIVATE Qt5::Test tb_same1::tb_same1_impl)
-#target_compile_definitions(test_tb_same1_impl_samestruct2interface PRIVATE TB_SAME1_IMPL_LIBRARY)
-#add_test(test_tb_same1_impl_samestruct2interface test_tb_same1_impl_samestruct2interface)
-#
-
-## test for SameEnum1Interface
-#add_executable(test_tb_same1_impl_sameenum1interface
-#    tst_sameenum1interface.cpp
-#)
-#
-#target_link_libraries(test_tb_same1_impl_sameenum1interface PRIVATE Qt5::Test tb_same1::tb_same1_impl)
-#target_compile_definitions(test_tb_same1_impl_sameenum1interface PRIVATE TB_SAME1_IMPL_LIBRARY)
-#add_test(test_tb_same1_impl_sameenum1interface test_tb_same1_impl_sameenum1interface)
-#
-
-## test for SameEnum2Interface
-#add_executable(test_tb_same1_impl_sameenum2interface
-#    tst_sameenum2interface.cpp
-#)
-#
-#target_link_libraries(test_tb_same1_impl_sameenum2interface PRIVATE Qt5::Test tb_same1::tb_same1_impl)
-#target_compile_definitions(test_tb_same1_impl_sameenum2interface PRIVATE TB_SAME1_IMPL_LIBRARY)
-#add_test(test_tb_same1_impl_sameenum2interface test_tb_same1_impl_sameenum2interface)
-#
+add_subdirectory(tests)

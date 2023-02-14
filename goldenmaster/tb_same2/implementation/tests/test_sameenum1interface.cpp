@@ -15,58 +15,58 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#include "tst_samestruct1interface.h"
-#include "samestruct1interface.h"
+#include "test_sameenum1interface.h"
+#include "implementation/sameenum1interface.h"
 
 /**
  *  will be called before the first test function is executed.
 */
-void TestTbSame2SameStruct1Interface::initTestCase(){
+void TestTbSame2SameEnum1Interface::initTestCase(){
 
 }
 
 /**
  *  will be called to create a global test data table.
 */
-void TestTbSame2SameStruct1Interface::initTestCase_data(){
+void TestTbSame2SameEnum1Interface::initTestCase_data(){
 
 }
 
 /**
  *  will be called after the last test function was executed.
 */
-void TestTbSame2SameStruct1Interface::cleanupTestCase(){
+void TestTbSame2SameEnum1Interface::cleanupTestCase(){
 
 }
 
 /**
  *  will be called before each test function is executed.
 */
-void TestTbSame2SameStruct1Interface::init(){
+void TestTbSame2SameEnum1Interface::init(){
 
 }
 
 /**
  *  will be called after every test function.
 */
-void TestTbSame2SameStruct1Interface::cleanup(){
+void TestTbSame2SameEnum1Interface::cleanup(){
 
 }
 /**
  *  Test operation func1
 */
-void TestTbSame2SameStruct1Interface::func1(){
-    tb.same2::SameStruct1Interface testTbsame2samestruct1interface;
+void TestTbSame2SameEnum1Interface::func1(){
+    tb_same2::SameEnum1Interface testTbsame2sameenum1interface;
     // Do implement test here
 }
 /**
  *  Test proptery prop1
 */
-void TestTbSame2SameStruct1Interface::prop1(){
-    tb.same2::SameStruct1Interface testTbsame2samestruct1interface;
+void TestTbSame2SameEnum1Interface::prop1(){
+    tb_same2::SameEnum1Interface testTbsame2sameenum1interface;
     // Do implement test here
 }
 
-QTEST_MAIN(TestTbSame2SameStruct1Interface);
+QTEST_MAIN(TestTbSame2SameEnum1Interface);
 
 

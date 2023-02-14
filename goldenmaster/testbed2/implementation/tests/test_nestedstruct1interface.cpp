@@ -15,72 +15,58 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#include "tst_samestruct2interface.h"
-#include "samestruct2interface.h"
+#include "test_nestedstruct1interface.h"
+#include "implementation/nestedstruct1interface.h"
 
 /**
  *  will be called before the first test function is executed.
 */
-void TestTbSame1SameStruct2Interface::initTestCase(){
+void TestTestbed2NestedStruct1Interface::initTestCase(){
 
 }
 
 /**
  *  will be called to create a global test data table.
 */
-void TestTbSame1SameStruct2Interface::initTestCase_data(){
+void TestTestbed2NestedStruct1Interface::initTestCase_data(){
 
 }
 
 /**
  *  will be called after the last test function was executed.
 */
-void TestTbSame1SameStruct2Interface::cleanupTestCase(){
+void TestTestbed2NestedStruct1Interface::cleanupTestCase(){
 
 }
 
 /**
  *  will be called before each test function is executed.
 */
-void TestTbSame1SameStruct2Interface::init(){
+void TestTestbed2NestedStruct1Interface::init(){
 
 }
 
 /**
  *  will be called after every test function.
 */
-void TestTbSame1SameStruct2Interface::cleanup(){
+void TestTestbed2NestedStruct1Interface::cleanup(){
 
 }
 /**
  *  Test operation func1
 */
-void TestTbSame1SameStruct2Interface::func1(){
-    tb.same1::SameStruct2Interface testTbsame1samestruct2interface;
-    // Do implement test here
-}
-/**
- *  Test operation func2
-*/
-void TestTbSame1SameStruct2Interface::func2(){
-    tb.same1::SameStruct2Interface testTbsame1samestruct2interface;
+void TestTestbed2NestedStruct1Interface::func1(){
+    testbed2::NestedStruct1Interface testTestbed2nestedstruct1interface;
     // Do implement test here
 }
 /**
  *  Test proptery prop1
 */
-void TestTbSame1SameStruct2Interface::prop1(){
-    tb.same1::SameStruct2Interface testTbsame1samestruct2interface;
-    // Do implement test here
-}
-/**
- *  Test proptery prop2
-*/
-void TestTbSame1SameStruct2Interface::prop2(){
-    tb.same1::SameStruct2Interface testTbsame1samestruct2interface;
+void TestTestbed2NestedStruct1Interface::prop1(){
+    testbed2::NestedStruct1Interface testTestbed2nestedstruct1interface;
     // Do implement test here
 }
 
-QTEST_MAIN(TestTbSame1SameStruct2Interface);
+QTEST_MAIN(TestTestbed2NestedStruct1Interface);
 
 

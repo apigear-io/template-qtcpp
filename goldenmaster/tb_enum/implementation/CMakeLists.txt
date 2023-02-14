@@ -28,14 +28,4 @@ target_include_directories(tb_enum_impl
 target_link_libraries(tb_enum_impl PRIVATE Qt5::Core Qt5::Qml Qt5::WebSockets tb_enum::tb_enum_api)
 target_compile_definitions(tb_enum_impl PRIVATE TB_ENUM_IMPL_LIBRARY)
 
-# add test targets
-
-## test for EnumInterface
-#add_executable(test_tb_enum_impl_enuminterface
-#    tst_enuminterface.cpp
-#)
-#
-#target_link_libraries(test_tb_enum_impl_enuminterface PRIVATE Qt5::Test tb_enum::tb_enum_impl)
-#target_compile_definitions(test_tb_enum_impl_enuminterface PRIVATE TB_ENUM_IMPL_LIBRARY)
-#add_test(test_tb_enum_impl_enuminterface test_tb_enum_impl_enuminterface)
-#
+add_subdirectory(tests)

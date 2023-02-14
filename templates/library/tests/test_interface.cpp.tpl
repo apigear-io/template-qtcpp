@@ -1,11 +1,11 @@
 {{- /* Copyright (c) ApiGear UG 2020 */ -}}
 {{- cppGpl .Module }}
-#include "tst_{{.Interface.Name|lower}}.h"
-#include "{{.Interface.Name|lower}}.h"
+#include "test_{{.Interface.Name|lower}}.h"
+#include "implementation/{{.Interface.Name|lower}}.h"
 
 {{- $class :=  printf "%s%s" (Camel .Module.Name) .Interface.Name }}
 {{- $testedClass :=  .Interface.Name }}
-{{- $moduleName :=  .Module.Name }}
+{{- $moduleName :=  snake .Module.Name }}
 
 /**
  *  will be called before the first test function is executed.

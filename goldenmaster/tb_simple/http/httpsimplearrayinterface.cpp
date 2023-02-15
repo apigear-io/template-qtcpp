@@ -27,7 +27,11 @@ HttpSimpleArrayInterface::HttpSimpleArrayInterface(QNetworkAccessManager *networ
     , m_network(network)
     , m_propBool(QList<bool>())
     , m_propInt(QList<int>())
+    , m_propInt32(QList<qint32>())
+    , m_propInt64(QList<qint64>())
     , m_propFloat(QList<qreal>())
+    , m_propFloat32(QList<float>())
+    , m_propFloat64(QList<double>())
     , m_propString(QList<QString>())
 {
 }
@@ -64,6 +68,34 @@ QList<int> HttpSimpleArrayInterface::propInt() const
     return m_propInt;
 }
 
+void HttpSimpleArrayInterface::setPropInt32(const QList<qint32>& propInt32)
+{
+    if (m_propInt32 != propInt32) {
+        m_propInt32 = propInt32;
+        emit propInt32Changed(propInt32);
+        SimpleArrayInterfaceAgent::trace_state(this);
+    }
+}
+
+QList<qint32> HttpSimpleArrayInterface::propInt32() const
+{
+    return m_propInt32;
+}
+
+void HttpSimpleArrayInterface::setPropInt64(const QList<qint64>& propInt64)
+{
+    if (m_propInt64 != propInt64) {
+        m_propInt64 = propInt64;
+        emit propInt64Changed(propInt64);
+        SimpleArrayInterfaceAgent::trace_state(this);
+    }
+}
+
+QList<qint64> HttpSimpleArrayInterface::propInt64() const
+{
+    return m_propInt64;
+}
+
 void HttpSimpleArrayInterface::setPropFloat(const QList<qreal>& propFloat)
 {
     if (m_propFloat != propFloat) {
@@ -76,6 +108,34 @@ void HttpSimpleArrayInterface::setPropFloat(const QList<qreal>& propFloat)
 QList<qreal> HttpSimpleArrayInterface::propFloat() const
 {
     return m_propFloat;
+}
+
+void HttpSimpleArrayInterface::setPropFloat32(const QList<float>& propFloat32)
+{
+    if (m_propFloat32 != propFloat32) {
+        m_propFloat32 = propFloat32;
+        emit propFloat32Changed(propFloat32);
+        SimpleArrayInterfaceAgent::trace_state(this);
+    }
+}
+
+QList<float> HttpSimpleArrayInterface::propFloat32() const
+{
+    return m_propFloat32;
+}
+
+void HttpSimpleArrayInterface::setPropFloat64(const QList<double>& propFloat64)
+{
+    if (m_propFloat64 != propFloat64) {
+        m_propFloat64 = propFloat64;
+        emit propFloat64Changed(propFloat64);
+        SimpleArrayInterfaceAgent::trace_state(this);
+    }
+}
+
+QList<double> HttpSimpleArrayInterface::propFloat64() const
+{
+    return m_propFloat64;
 }
 
 void HttpSimpleArrayInterface::setPropString(const QList<QString>& propString)
@@ -116,6 +176,30 @@ QList<int> HttpSimpleArrayInterface::funcInt(const QList<int>& paramInt)
     return QList<int>();
 }
 
+QList<qint32> HttpSimpleArrayInterface::funcInt32(const QList<qint32>& paramInt32)
+{
+    qDebug() << Q_FUNC_INFO;
+
+    QJsonObject payload;
+    payload["paramInt32"] = QJsonValue::fromVariant(QVariant::fromValue< QList<qint32> >(paramInt32));
+    QJsonObject reply = post("tb.simple/SimpleArrayInterface/funcInt32", payload);
+    qDebug() << QJsonDocument(reply).toJson();
+    SimpleArrayInterfaceAgent::trace_funcInt32(this, paramInt32);
+    return QList<qint32>();
+}
+
+QList<qint64> HttpSimpleArrayInterface::funcInt64(const QList<qint64>& paramInt64)
+{
+    qDebug() << Q_FUNC_INFO;
+
+    QJsonObject payload;
+    payload["paramInt64"] = QJsonValue::fromVariant(QVariant::fromValue< QList<qint64> >(paramInt64));
+    QJsonObject reply = post("tb.simple/SimpleArrayInterface/funcInt64", payload);
+    qDebug() << QJsonDocument(reply).toJson();
+    SimpleArrayInterfaceAgent::trace_funcInt64(this, paramInt64);
+    return QList<qint64>();
+}
+
 QList<qreal> HttpSimpleArrayInterface::funcFloat(const QList<qreal>& paramFloat)
 {
     qDebug() << Q_FUNC_INFO;
@@ -126,6 +210,30 @@ QList<qreal> HttpSimpleArrayInterface::funcFloat(const QList<qreal>& paramFloat)
     qDebug() << QJsonDocument(reply).toJson();
     SimpleArrayInterfaceAgent::trace_funcFloat(this, paramFloat);
     return QList<qreal>();
+}
+
+QList<float> HttpSimpleArrayInterface::funcFloat32(const QList<float>& paramFloat32)
+{
+    qDebug() << Q_FUNC_INFO;
+
+    QJsonObject payload;
+    payload["paramFloat32"] = QJsonValue::fromVariant(QVariant::fromValue< QList<float> >(paramFloat32));
+    QJsonObject reply = post("tb.simple/SimpleArrayInterface/funcFloat32", payload);
+    qDebug() << QJsonDocument(reply).toJson();
+    SimpleArrayInterfaceAgent::trace_funcFloat32(this, paramFloat32);
+    return QList<float>();
+}
+
+QList<double> HttpSimpleArrayInterface::funcFloat64(const QList<double>& paramFloat)
+{
+    qDebug() << Q_FUNC_INFO;
+
+    QJsonObject payload;
+    payload["paramFloat"] = QJsonValue::fromVariant(QVariant::fromValue< QList<double> >(paramFloat));
+    QJsonObject reply = post("tb.simple/SimpleArrayInterface/funcFloat64", payload);
+    qDebug() << QJsonDocument(reply).toJson();
+    SimpleArrayInterfaceAgent::trace_funcFloat64(this, paramFloat);
+    return QList<double>();
 }
 
 QList<QString> HttpSimpleArrayInterface::funcString(const QList<QString>& paramString)
@@ -175,9 +283,25 @@ void HttpSimpleArrayInterface::applyState(const QJsonObject &state)
     const QJsonValue &jsValue = state.value("propInt");
     setPropInt(jsValue.toVariant().value<QList<int>>());
   }
+  if(state.contains("propInt32")) {
+    const QJsonValue &jsValue = state.value("propInt32");
+    setPropInt32(jsValue.toVariant().value<QList<qint32>>());
+  }
+  if(state.contains("propInt64")) {
+    const QJsonValue &jsValue = state.value("propInt64");
+    setPropInt64(jsValue.toVariant().value<QList<qint64>>());
+  }
   if(state.contains("propFloat")) {
     const QJsonValue &jsValue = state.value("propFloat");
     setPropFloat(jsValue.toVariant().value<QList<qreal>>());
+  }
+  if(state.contains("propFloat32")) {
+    const QJsonValue &jsValue = state.value("propFloat32");
+    setPropFloat32(jsValue.toVariant().value<QList<float>>());
+  }
+  if(state.contains("propFloat64")) {
+    const QJsonValue &jsValue = state.value("propFloat64");
+    setPropFloat64(jsValue.toVariant().value<QList<double>>());
   }
   if(state.contains("propString")) {
     const QJsonValue &jsValue = state.value("propString");

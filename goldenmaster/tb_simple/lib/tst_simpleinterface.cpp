@@ -67,9 +67,37 @@ void TestTbSimpleSimpleInterface::funcInt(){
     // Do implement test here
 }
 /**
+ *  Test operation funcInt32
+*/
+void TestTbSimpleSimpleInterface::funcInt32(){
+    tb.simple::SimpleInterface testTbsimplesimpleinterface;
+    // Do implement test here
+}
+/**
+ *  Test operation funcInt64
+*/
+void TestTbSimpleSimpleInterface::funcInt64(){
+    tb.simple::SimpleInterface testTbsimplesimpleinterface;
+    // Do implement test here
+}
+/**
  *  Test operation funcFloat
 */
 void TestTbSimpleSimpleInterface::funcFloat(){
+    tb.simple::SimpleInterface testTbsimplesimpleinterface;
+    // Do implement test here
+}
+/**
+ *  Test operation funcFloat32
+*/
+void TestTbSimpleSimpleInterface::funcFloat32(){
+    tb.simple::SimpleInterface testTbsimplesimpleinterface;
+    // Do implement test here
+}
+/**
+ *  Test operation funcFloat64
+*/
+void TestTbSimpleSimpleInterface::funcFloat64(){
     tb.simple::SimpleInterface testTbsimplesimpleinterface;
     // Do implement test here
 }
@@ -95,9 +123,37 @@ void TestTbSimpleSimpleInterface::propInt(){
     // Do implement test here
 }
 /**
+ *  Test proptery propInt32
+*/
+void TestTbSimpleSimpleInterface::propInt32(){
+    tb.simple::SimpleInterface testTbsimplesimpleinterface;
+    // Do implement test here
+}
+/**
+ *  Test proptery propInt64
+*/
+void TestTbSimpleSimpleInterface::propInt64(){
+    tb.simple::SimpleInterface testTbsimplesimpleinterface;
+    // Do implement test here
+}
+/**
  *  Test proptery propFloat
 */
 void TestTbSimpleSimpleInterface::propFloat(){
+    tb.simple::SimpleInterface testTbsimplesimpleinterface;
+    // Do implement test here
+}
+/**
+ *  Test proptery propFloat32
+*/
+void TestTbSimpleSimpleInterface::propFloat32(){
+    tb.simple::SimpleInterface testTbsimplesimpleinterface;
+    // Do implement test here
+}
+/**
+ *  Test proptery propFloat64
+*/
+void TestTbSimpleSimpleInterface::propFloat64(){
     tb.simple::SimpleInterface testTbsimplesimpleinterface;
     // Do implement test here
 }

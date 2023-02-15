@@ -67,9 +67,37 @@ void TestTbSimpleSimpleArrayInterface::funcInt(){
     // Do implement test here
 }
 /**
+ *  Test operation funcInt32
+*/
+void TestTbSimpleSimpleArrayInterface::funcInt32(){
+    tb.simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
+    // Do implement test here
+}
+/**
+ *  Test operation funcInt64
+*/
+void TestTbSimpleSimpleArrayInterface::funcInt64(){
+    tb.simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
+    // Do implement test here
+}
+/**
  *  Test operation funcFloat
 */
 void TestTbSimpleSimpleArrayInterface::funcFloat(){
+    tb.simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
+    // Do implement test here
+}
+/**
+ *  Test operation funcFloat32
+*/
+void TestTbSimpleSimpleArrayInterface::funcFloat32(){
+    tb.simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
+    // Do implement test here
+}
+/**
+ *  Test operation funcFloat64
+*/
+void TestTbSimpleSimpleArrayInterface::funcFloat64(){
     tb.simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
     // Do implement test here
 }
@@ -95,9 +123,37 @@ void TestTbSimpleSimpleArrayInterface::propInt(){
     // Do implement test here
 }
 /**
+ *  Test proptery propInt32
+*/
+void TestTbSimpleSimpleArrayInterface::propInt32(){
+    tb.simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
+    // Do implement test here
+}
+/**
+ *  Test proptery propInt64
+*/
+void TestTbSimpleSimpleArrayInterface::propInt64(){
+    tb.simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
+    // Do implement test here
+}
+/**
  *  Test proptery propFloat
 */
 void TestTbSimpleSimpleArrayInterface::propFloat(){
+    tb.simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
+    // Do implement test here
+}
+/**
+ *  Test proptery propFloat32
+*/
+void TestTbSimpleSimpleArrayInterface::propFloat32(){
+    tb.simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
+    // Do implement test here
+}
+/**
+ *  Test proptery propFloat64
+*/
+void TestTbSimpleSimpleArrayInterface::propFloat64(){
     tb.simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
     // Do implement test here
 }

@@ -34,13 +34,25 @@ public:
     void setPropBool(bool propBool) override;
     int propInt() const override;
     void setPropInt(int propInt) override;
+    qint32 propInt32() const override;
+    void setPropInt32(qint32 propInt32) override;
+    qint64 propInt64() const override;
+    void setPropInt64(qint64 propInt64) override;
     qreal propFloat() const override;
     void setPropFloat(qreal propFloat) override;
+    float propFloat32() const override;
+    void setPropFloat32(float propFloat32) override;
+    double propFloat64() const override;
+    void setPropFloat64(double propFloat64) override;
     QString propString() const override;
     void setPropString(const QString& propString) override;
     bool funcBool(bool paramBool) override;
     int funcInt(int paramInt) override;
+    qint32 funcInt32(qint32 paramInt32) override;
+    qint64 funcInt64(qint64 paramInt64) override;
     qreal funcFloat(qreal paramFloat) override;
+    float funcFloat32(float paramFloat32) override;
+    double funcFloat64(double paramFloat) override;
     QString funcString(const QString& paramString) override;
 private:
     QJsonObject post(const QString& path, const QJsonObject &payload);
@@ -49,7 +61,11 @@ private:
     QNetworkAccessManager *m_network;
     bool m_propBool;
     int m_propInt;
+    qint32 m_propInt32;
+    qint64 m_propInt64;
     qreal m_propFloat;
+    float m_propFloat32;
+    double m_propFloat64;
     QString m_propString;
 };
 

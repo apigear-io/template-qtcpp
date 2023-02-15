@@ -30,10 +30,18 @@ class TestTbSimpleSimpleInterface: public QObject
 private slots:
     void funcBool();
     void funcInt();
+    void funcInt32();
+    void funcInt64();
     void funcFloat();
+    void funcFloat32();
+    void funcFloat64();
     void funcString();
     void propBool();
     void propInt();
+    void propInt32();
+    void propInt64();
     void propFloat();
+    void propFloat32();
+    void propFloat64();
     void propString();
 };

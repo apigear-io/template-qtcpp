@@ -37,8 +37,16 @@ QmlSimpleInterface::QmlSimpleInterface(QObject *parent)
     connect(m_obj.get(), &AbstractSimpleInterface::propBoolChanged, this, &AbstractSimpleInterface::propBoolChanged);
     connect(m_obj.get(), &AbstractSimpleInterface::propIntChanged, this, &QmlSimpleInterface::propIntChanged);
     connect(m_obj.get(), &AbstractSimpleInterface::propIntChanged, this, &AbstractSimpleInterface::propIntChanged);
+    connect(m_obj.get(), &AbstractSimpleInterface::propInt32Changed, this, &QmlSimpleInterface::propInt32Changed);
+    connect(m_obj.get(), &AbstractSimpleInterface::propInt32Changed, this, &AbstractSimpleInterface::propInt32Changed);
+    connect(m_obj.get(), &AbstractSimpleInterface::propInt64Changed, this, &QmlSimpleInterface::propInt64Changed);
+    connect(m_obj.get(), &AbstractSimpleInterface::propInt64Changed, this, &AbstractSimpleInterface::propInt64Changed);
     connect(m_obj.get(), &AbstractSimpleInterface::propFloatChanged, this, &QmlSimpleInterface::propFloatChanged);
     connect(m_obj.get(), &AbstractSimpleInterface::propFloatChanged, this, &AbstractSimpleInterface::propFloatChanged);
+    connect(m_obj.get(), &AbstractSimpleInterface::propFloat32Changed, this, &QmlSimpleInterface::propFloat32Changed);
+    connect(m_obj.get(), &AbstractSimpleInterface::propFloat32Changed, this, &AbstractSimpleInterface::propFloat32Changed);
+    connect(m_obj.get(), &AbstractSimpleInterface::propFloat64Changed, this, &QmlSimpleInterface::propFloat64Changed);
+    connect(m_obj.get(), &AbstractSimpleInterface::propFloat64Changed, this, &AbstractSimpleInterface::propFloat64Changed);
     connect(m_obj.get(), &AbstractSimpleInterface::propStringChanged, this, &QmlSimpleInterface::propStringChanged);
     connect(m_obj.get(), &AbstractSimpleInterface::propStringChanged, this, &AbstractSimpleInterface::propStringChanged);
 
@@ -47,7 +55,11 @@ QmlSimpleInterface::QmlSimpleInterface(QObject *parent)
     //  This signal is designed to be emitted from backend only.
     connect(m_obj.get(), &AbstractSimpleInterface::sigBool, this, &AbstractSimpleInterface::sigBool);
     connect(m_obj.get(), &AbstractSimpleInterface::sigInt, this, &AbstractSimpleInterface::sigInt);
+    connect(m_obj.get(), &AbstractSimpleInterface::sigInt32, this, &AbstractSimpleInterface::sigInt32);
+    connect(m_obj.get(), &AbstractSimpleInterface::sigInt64, this, &AbstractSimpleInterface::sigInt64);
     connect(m_obj.get(), &AbstractSimpleInterface::sigFloat, this, &AbstractSimpleInterface::sigFloat);
+    connect(m_obj.get(), &AbstractSimpleInterface::sigFloat32, this, &AbstractSimpleInterface::sigFloat32);
+    connect(m_obj.get(), &AbstractSimpleInterface::sigFloat64, this, &AbstractSimpleInterface::sigFloat64);
     connect(m_obj.get(), &AbstractSimpleInterface::sigString, this, &AbstractSimpleInterface::sigString);
 }
 
@@ -77,6 +89,28 @@ void QmlSimpleInterface::setPropInt(int propInt)
     return m_obj->setPropInt(propInt);
 }
 
+qint32 QmlSimpleInterface::propInt32() const
+{
+    return m_obj->propInt32();
+}
+
+void QmlSimpleInterface::setPropInt32(qint32 propInt32)
+{
+    SimpleInterfaceAgent::capture_state(this);
+    return m_obj->setPropInt32(propInt32);
+}
+
+qint64 QmlSimpleInterface::propInt64() const
+{
+    return m_obj->propInt64();
+}
+
+void QmlSimpleInterface::setPropInt64(qint64 propInt64)
+{
+    SimpleInterfaceAgent::capture_state(this);
+    return m_obj->setPropInt64(propInt64);
+}
+
 qreal QmlSimpleInterface::propFloat() const
 {
     return m_obj->propFloat();
@@ -86,6 +120,28 @@ void QmlSimpleInterface::setPropFloat(qreal propFloat)
 {
     SimpleInterfaceAgent::capture_state(this);
     return m_obj->setPropFloat(propFloat);
+}
+
+float QmlSimpleInterface::propFloat32() const
+{
+    return m_obj->propFloat32();
+}
+
+void QmlSimpleInterface::setPropFloat32(float propFloat32)
+{
+    SimpleInterfaceAgent::capture_state(this);
+    return m_obj->setPropFloat32(propFloat32);
+}
+
+double QmlSimpleInterface::propFloat64() const
+{
+    return m_obj->propFloat64();
+}
+
+void QmlSimpleInterface::setPropFloat64(double propFloat64)
+{
+    SimpleInterfaceAgent::capture_state(this);
+    return m_obj->setPropFloat64(propFloat64);
 }
 
 QString QmlSimpleInterface::propString() const
@@ -113,11 +169,39 @@ int QmlSimpleInterface::funcInt(int paramInt)
     return m_obj->funcInt(paramInt);
 }
 
+qint32 QmlSimpleInterface::funcInt32(qint32 paramInt32)
+{
+    SimpleInterfaceAgent::trace_funcInt32(this, paramInt32);
+	
+    return m_obj->funcInt32(paramInt32);
+}
+
+qint64 QmlSimpleInterface::funcInt64(qint64 paramInt64)
+{
+    SimpleInterfaceAgent::trace_funcInt64(this, paramInt64);
+	
+    return m_obj->funcInt64(paramInt64);
+}
+
 qreal QmlSimpleInterface::funcFloat(qreal paramFloat)
 {
     SimpleInterfaceAgent::trace_funcFloat(this, paramFloat);
 	
     return m_obj->funcFloat(paramFloat);
+}
+
+float QmlSimpleInterface::funcFloat32(float paramFloat32)
+{
+    SimpleInterfaceAgent::trace_funcFloat32(this, paramFloat32);
+	
+    return m_obj->funcFloat32(paramFloat32);
+}
+
+double QmlSimpleInterface::funcFloat64(double paramFloat)
+{
+    SimpleInterfaceAgent::trace_funcFloat64(this, paramFloat);
+	
+    return m_obj->funcFloat64(paramFloat);
 }
 
 QString QmlSimpleInterface::funcString(const QString& paramString)

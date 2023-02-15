@@ -55,6 +55,20 @@ public:
     * @param value to set for the property propInt 
     */
     void setPropInt(const QList<int>& propInt) override;
+    /** @return value of the property propInt32 */
+    QList<qint32> propInt32() const override;
+    /** Use to change a property value.
+    * if the property is changed, a signal {.Name}}Changed is emitted.
+    * @param value to set for the property propInt32 
+    */
+    void setPropInt32(const QList<qint32>& propInt32) override;
+    /** @return value of the property propInt64 */
+    QList<qint64> propInt64() const override;
+    /** Use to change a property value.
+    * if the property is changed, a signal {.Name}}Changed is emitted.
+    * @param value to set for the property propInt64 
+    */
+    void setPropInt64(const QList<qint64>& propInt64) override;
     /** @return value of the property propFloat */
     QList<qreal> propFloat() const override;
     /** Use to change a property value.
@@ -62,6 +76,20 @@ public:
     * @param value to set for the property propFloat 
     */
     void setPropFloat(const QList<qreal>& propFloat) override;
+    /** @return value of the property propFloat32 */
+    QList<float> propFloat32() const override;
+    /** Use to change a property value.
+    * if the property is changed, a signal {.Name}}Changed is emitted.
+    * @param value to set for the property propFloat32 
+    */
+    void setPropFloat32(const QList<float>& propFloat32) override;
+    /** @return value of the property propFloat64 */
+    QList<double> propFloat64() const override;
+    /** Use to change a property value.
+    * if the property is changed, a signal {.Name}}Changed is emitted.
+    * @param value to set for the property propFloat64 
+    */
+    void setPropFloat64(const QList<double>& propFloat64) override;
     /** @return value of the property propString */
     QList<QString> propString() const override;
     /** Use to change a property value.
@@ -71,7 +99,11 @@ public:
     void setPropString(const QList<QString>& propString) override;
     QList<bool> funcBool(const QList<bool>& paramBool) override;
     QList<int> funcInt(const QList<int>& paramInt) override;
+    QList<qint32> funcInt32(const QList<qint32>& paramInt32) override;
+    QList<qint64> funcInt64(const QList<qint64>& paramInt64) override;
     QList<qreal> funcFloat(const QList<qreal>& paramFloat) override;
+    QList<float> funcFloat32(const QList<float>& paramFloat32) override;
+    QList<double> funcFloat64(const QList<double>& paramFloat) override;
     QList<QString> funcString(const QList<QString>& paramString) override;
 
 private:
@@ -79,8 +111,16 @@ private:
     QList<bool> m_propBool;
     /** propInt property */
     QList<int> m_propInt;
+    /** propInt32 property */
+    QList<qint32> m_propInt32;
+    /** propInt64 property */
+    QList<qint64> m_propInt64;
     /** propFloat property */
     QList<qreal> m_propFloat;
+    /** propFloat32 property */
+    QList<float> m_propFloat32;
+    /** propFloat64 property */
+    QList<double> m_propFloat64;
     /** propString property */
     QList<QString> m_propString;
 };

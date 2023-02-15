@@ -27,7 +27,11 @@ HttpSimpleInterface::HttpSimpleInterface(QNetworkAccessManager *network, QObject
     , m_network(network)
     , m_propBool(false)
     , m_propInt(0)
+    , m_propInt32(0)
+    , m_propInt64(0)
     , m_propFloat(0.0)
+    , m_propFloat32(0.0)
+    , m_propFloat64(0.0)
     , m_propString(QString())
 {
 }
@@ -64,6 +68,34 @@ int HttpSimpleInterface::propInt() const
     return m_propInt;
 }
 
+void HttpSimpleInterface::setPropInt32(qint32 propInt32)
+{
+    if (m_propInt32 != propInt32) {
+        m_propInt32 = propInt32;
+        emit propInt32Changed(propInt32);
+        SimpleInterfaceAgent::trace_state(this);
+    }
+}
+
+qint32 HttpSimpleInterface::propInt32() const
+{
+    return m_propInt32;
+}
+
+void HttpSimpleInterface::setPropInt64(qint64 propInt64)
+{
+    if (m_propInt64 != propInt64) {
+        m_propInt64 = propInt64;
+        emit propInt64Changed(propInt64);
+        SimpleInterfaceAgent::trace_state(this);
+    }
+}
+
+qint64 HttpSimpleInterface::propInt64() const
+{
+    return m_propInt64;
+}
+
 void HttpSimpleInterface::setPropFloat(qreal propFloat)
 {
     if (m_propFloat != propFloat) {
@@ -76,6 +108,34 @@ void HttpSimpleInterface::setPropFloat(qreal propFloat)
 qreal HttpSimpleInterface::propFloat() const
 {
     return m_propFloat;
+}
+
+void HttpSimpleInterface::setPropFloat32(float propFloat32)
+{
+    if (m_propFloat32 != propFloat32) {
+        m_propFloat32 = propFloat32;
+        emit propFloat32Changed(propFloat32);
+        SimpleInterfaceAgent::trace_state(this);
+    }
+}
+
+float HttpSimpleInterface::propFloat32() const
+{
+    return m_propFloat32;
+}
+
+void HttpSimpleInterface::setPropFloat64(double propFloat64)
+{
+    if (m_propFloat64 != propFloat64) {
+        m_propFloat64 = propFloat64;
+        emit propFloat64Changed(propFloat64);
+        SimpleInterfaceAgent::trace_state(this);
+    }
+}
+
+double HttpSimpleInterface::propFloat64() const
+{
+    return m_propFloat64;
 }
 
 void HttpSimpleInterface::setPropString(const QString& propString)
@@ -116,6 +176,30 @@ int HttpSimpleInterface::funcInt(int paramInt)
     return 0;
 }
 
+qint32 HttpSimpleInterface::funcInt32(qint32 paramInt32)
+{
+    qDebug() << Q_FUNC_INFO;
+
+    QJsonObject payload;
+    payload["paramInt32"] = QJsonValue::fromVariant(QVariant::fromValue< qint32 >(paramInt32));
+    QJsonObject reply = post("tb.simple/SimpleInterface/funcInt32", payload);
+    qDebug() << QJsonDocument(reply).toJson();
+    SimpleInterfaceAgent::trace_funcInt32(this, paramInt32);
+    return 0;
+}
+
+qint64 HttpSimpleInterface::funcInt64(qint64 paramInt64)
+{
+    qDebug() << Q_FUNC_INFO;
+
+    QJsonObject payload;
+    payload["paramInt64"] = QJsonValue::fromVariant(QVariant::fromValue< qint64 >(paramInt64));
+    QJsonObject reply = post("tb.simple/SimpleInterface/funcInt64", payload);
+    qDebug() << QJsonDocument(reply).toJson();
+    SimpleInterfaceAgent::trace_funcInt64(this, paramInt64);
+    return 0;
+}
+
 qreal HttpSimpleInterface::funcFloat(qreal paramFloat)
 {
     qDebug() << Q_FUNC_INFO;
@@ -125,6 +209,30 @@ qreal HttpSimpleInterface::funcFloat(qreal paramFloat)
     QJsonObject reply = post("tb.simple/SimpleInterface/funcFloat", payload);
     qDebug() << QJsonDocument(reply).toJson();
     SimpleInterfaceAgent::trace_funcFloat(this, paramFloat);
+    return 0.0;
+}
+
+float HttpSimpleInterface::funcFloat32(float paramFloat32)
+{
+    qDebug() << Q_FUNC_INFO;
+
+    QJsonObject payload;
+    payload["paramFloat32"] = QJsonValue::fromVariant(QVariant::fromValue< float >(paramFloat32));
+    QJsonObject reply = post("tb.simple/SimpleInterface/funcFloat32", payload);
+    qDebug() << QJsonDocument(reply).toJson();
+    SimpleInterfaceAgent::trace_funcFloat32(this, paramFloat32);
+    return 0.0;
+}
+
+double HttpSimpleInterface::funcFloat64(double paramFloat)
+{
+    qDebug() << Q_FUNC_INFO;
+
+    QJsonObject payload;
+    payload["paramFloat"] = QJsonValue::fromVariant(QVariant::fromValue< double >(paramFloat));
+    QJsonObject reply = post("tb.simple/SimpleInterface/funcFloat64", payload);
+    qDebug() << QJsonDocument(reply).toJson();
+    SimpleInterfaceAgent::trace_funcFloat64(this, paramFloat);
     return 0.0;
 }
 
@@ -175,9 +283,25 @@ void HttpSimpleInterface::applyState(const QJsonObject &state)
     const QJsonValue &jsValue = state.value("propInt");
     setPropInt(jsValue.toVariant().value<int>());
   }
+  if(state.contains("propInt32")) {
+    const QJsonValue &jsValue = state.value("propInt32");
+    setPropInt32(jsValue.toVariant().value<qint32>());
+  }
+  if(state.contains("propInt64")) {
+    const QJsonValue &jsValue = state.value("propInt64");
+    setPropInt64(jsValue.toVariant().value<qint64>());
+  }
   if(state.contains("propFloat")) {
     const QJsonValue &jsValue = state.value("propFloat");
     setPropFloat(jsValue.toVariant().value<qreal>());
+  }
+  if(state.contains("propFloat32")) {
+    const QJsonValue &jsValue = state.value("propFloat32");
+    setPropFloat32(jsValue.toVariant().value<float>());
+  }
+  if(state.contains("propFloat64")) {
+    const QJsonValue &jsValue = state.value("propFloat64");
+    setPropFloat64(jsValue.toVariant().value<double>());
   }
   if(state.contains("propString")) {
     const QJsonValue &jsValue = state.value("propString");

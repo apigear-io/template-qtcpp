@@ -33,7 +33,11 @@ OLinkSimpleInterface::OLinkSimpleInterface(QObject *parent)
     : AbstractSimpleInterface(parent)
     , m_propBool(false)
     , m_propInt(0)
+    , m_propInt32(0)
+    , m_propInt64(0)
     , m_propFloat(0.0)
+    , m_propFloat32(0.0)
+    , m_propFloat64(0.0)
     , m_propString(QString())
     , m_isReady(false)
     , m_node(nullptr)
@@ -50,8 +54,20 @@ void OLinkSimpleInterface::applyState(const nlohmann::json& fields)
     if(fields.contains("propInt")) {
         setPropIntLocal(fields["propInt"].get<int>());
     }
+    if(fields.contains("propInt32")) {
+        setPropInt32Local(fields["propInt32"].get<qint32>());
+    }
+    if(fields.contains("propInt64")) {
+        setPropInt64Local(fields["propInt64"].get<qint64>());
+    }
     if(fields.contains("propFloat")) {
         setPropFloatLocal(fields["propFloat"].get<qreal>());
+    }
+    if(fields.contains("propFloat32")) {
+        setPropFloat32Local(fields["propFloat32"].get<float>());
+    }
+    if(fields.contains("propFloat64")) {
+        setPropFloat64Local(fields["propFloat64"].get<double>());
     }
     if(fields.contains("propString")) {
         setPropStringLocal(fields["propString"].get<QString>());
@@ -106,6 +122,54 @@ int OLinkSimpleInterface::propInt() const
     return m_propInt;
 }
 
+void OLinkSimpleInterface::setPropInt32(qint32 propInt32)
+{
+    qDebug() << Q_FUNC_INFO;
+    if(!m_node) {
+        return;
+    }
+    m_node->setRemoteProperty("tb.simple.SimpleInterface/propInt32", propInt32);
+}
+
+void OLinkSimpleInterface::setPropInt32Local(qint32 propInt32)
+{
+    qDebug() << Q_FUNC_INFO;
+    if (m_propInt32 != propInt32) {
+        m_propInt32 = propInt32;
+        emit propInt32Changed(propInt32);
+        SimpleInterfaceAgent::trace_state(this);
+    }
+}
+
+qint32 OLinkSimpleInterface::propInt32() const
+{
+    return m_propInt32;
+}
+
+void OLinkSimpleInterface::setPropInt64(qint64 propInt64)
+{
+    qDebug() << Q_FUNC_INFO;
+    if(!m_node) {
+        return;
+    }
+    m_node->setRemoteProperty("tb.simple.SimpleInterface/propInt64", propInt64);
+}
+
+void OLinkSimpleInterface::setPropInt64Local(qint64 propInt64)
+{
+    qDebug() << Q_FUNC_INFO;
+    if (m_propInt64 != propInt64) {
+        m_propInt64 = propInt64;
+        emit propInt64Changed(propInt64);
+        SimpleInterfaceAgent::trace_state(this);
+    }
+}
+
+qint64 OLinkSimpleInterface::propInt64() const
+{
+    return m_propInt64;
+}
+
 void OLinkSimpleInterface::setPropFloat(qreal propFloat)
 {
     qDebug() << Q_FUNC_INFO;
@@ -128,6 +192,54 @@ void OLinkSimpleInterface::setPropFloatLocal(qreal propFloat)
 qreal OLinkSimpleInterface::propFloat() const
 {
     return m_propFloat;
+}
+
+void OLinkSimpleInterface::setPropFloat32(float propFloat32)
+{
+    qDebug() << Q_FUNC_INFO;
+    if(!m_node) {
+        return;
+    }
+    m_node->setRemoteProperty("tb.simple.SimpleInterface/propFloat32", propFloat32);
+}
+
+void OLinkSimpleInterface::setPropFloat32Local(float propFloat32)
+{
+    qDebug() << Q_FUNC_INFO;
+    if (m_propFloat32 != propFloat32) {
+        m_propFloat32 = propFloat32;
+        emit propFloat32Changed(propFloat32);
+        SimpleInterfaceAgent::trace_state(this);
+    }
+}
+
+float OLinkSimpleInterface::propFloat32() const
+{
+    return m_propFloat32;
+}
+
+void OLinkSimpleInterface::setPropFloat64(double propFloat64)
+{
+    qDebug() << Q_FUNC_INFO;
+    if(!m_node) {
+        return;
+    }
+    m_node->setRemoteProperty("tb.simple.SimpleInterface/propFloat64", propFloat64);
+}
+
+void OLinkSimpleInterface::setPropFloat64Local(double propFloat64)
+{
+    qDebug() << Q_FUNC_INFO;
+    if (m_propFloat64 != propFloat64) {
+        m_propFloat64 = propFloat64;
+        emit propFloat64Changed(propFloat64);
+        SimpleInterfaceAgent::trace_state(this);
+    }
+}
+
+double OLinkSimpleInterface::propFloat64() const
+{
+    return m_propFloat64;
 }
 
 void OLinkSimpleInterface::setPropString(const QString& propString)
@@ -218,6 +330,70 @@ QtPromise::QPromise<int> OLinkSimpleInterface::funcIntAsync(int paramInt)
     };
 }
 
+qint32 OLinkSimpleInterface::funcInt32(qint32 paramInt32)
+{
+    qDebug() << Q_FUNC_INFO;
+    if(!m_node) {
+        return 0;
+    }
+    qint32 value{ 0 };
+    funcInt32Async(paramInt32)
+        .then([&](qint32 result) {
+            value = result;
+        })
+        .wait();
+    return value;
+}
+
+QtPromise::QPromise<qint32> OLinkSimpleInterface::funcInt32Async(qint32 paramInt32)
+{
+    qDebug() << Q_FUNC_INFO;
+    if(!m_node) {
+        return QtPromise::QPromise<qint32>::reject("not initialized");
+    }
+    return QtPromise::QPromise<qint32>{[&](
+        const QtPromise::QPromiseResolve<qint32>& resolve) {
+            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcInt32");
+            m_node->invokeRemote(operationId, nlohmann::json::array({paramInt32}), [resolve](InvokeReplyArg arg) {                
+                const qint32& value = arg.value.get<qint32>();
+                resolve(value);
+            });
+        }
+    };
+}
+
+qint64 OLinkSimpleInterface::funcInt64(qint64 paramInt64)
+{
+    qDebug() << Q_FUNC_INFO;
+    if(!m_node) {
+        return 0;
+    }
+    qint64 value{ 0 };
+    funcInt64Async(paramInt64)
+        .then([&](qint64 result) {
+            value = result;
+        })
+        .wait();
+    return value;
+}
+
+QtPromise::QPromise<qint64> OLinkSimpleInterface::funcInt64Async(qint64 paramInt64)
+{
+    qDebug() << Q_FUNC_INFO;
+    if(!m_node) {
+        return QtPromise::QPromise<qint64>::reject("not initialized");
+    }
+    return QtPromise::QPromise<qint64>{[&](
+        const QtPromise::QPromiseResolve<qint64>& resolve) {
+            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcInt64");
+            m_node->invokeRemote(operationId, nlohmann::json::array({paramInt64}), [resolve](InvokeReplyArg arg) {                
+                const qint64& value = arg.value.get<qint64>();
+                resolve(value);
+            });
+        }
+    };
+}
+
 qreal OLinkSimpleInterface::funcFloat(qreal paramFloat)
 {
     qDebug() << Q_FUNC_INFO;
@@ -244,6 +420,70 @@ QtPromise::QPromise<qreal> OLinkSimpleInterface::funcFloatAsync(qreal paramFloat
             const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcFloat");
             m_node->invokeRemote(operationId, nlohmann::json::array({paramFloat}), [resolve](InvokeReplyArg arg) {                
                 const qreal& value = arg.value.get<qreal>();
+                resolve(value);
+            });
+        }
+    };
+}
+
+float OLinkSimpleInterface::funcFloat32(float paramFloat32)
+{
+    qDebug() << Q_FUNC_INFO;
+    if(!m_node) {
+        return 0.0;
+    }
+    float value{ 0.0 };
+    funcFloat32Async(paramFloat32)
+        .then([&](float result) {
+            value = result;
+        })
+        .wait();
+    return value;
+}
+
+QtPromise::QPromise<float> OLinkSimpleInterface::funcFloat32Async(float paramFloat32)
+{
+    qDebug() << Q_FUNC_INFO;
+    if(!m_node) {
+        return QtPromise::QPromise<float>::reject("not initialized");
+    }
+    return QtPromise::QPromise<float>{[&](
+        const QtPromise::QPromiseResolve<float>& resolve) {
+            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcFloat32");
+            m_node->invokeRemote(operationId, nlohmann::json::array({paramFloat32}), [resolve](InvokeReplyArg arg) {                
+                const float& value = arg.value.get<float>();
+                resolve(value);
+            });
+        }
+    };
+}
+
+double OLinkSimpleInterface::funcFloat64(double paramFloat)
+{
+    qDebug() << Q_FUNC_INFO;
+    if(!m_node) {
+        return 0.0;
+    }
+    double value{ 0.0 };
+    funcFloat64Async(paramFloat)
+        .then([&](double result) {
+            value = result;
+        })
+        .wait();
+    return value;
+}
+
+QtPromise::QPromise<double> OLinkSimpleInterface::funcFloat64Async(double paramFloat)
+{
+    qDebug() << Q_FUNC_INFO;
+    if(!m_node) {
+        return QtPromise::QPromise<double>::reject("not initialized");
+    }
+    return QtPromise::QPromise<double>{[&](
+        const QtPromise::QPromiseResolve<double>& resolve) {
+            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcFloat64");
+            m_node->invokeRemote(operationId, nlohmann::json::array({paramFloat}), [resolve](InvokeReplyArg arg) {                
+                const double& value = arg.value.get<double>();
                 resolve(value);
             });
         }
@@ -300,8 +540,24 @@ void OLinkSimpleInterface::olinkOnSignal(const std::string& signalId, const nloh
         emit sigInt(args[0].get<int>());   
         return;
     }
+    if(signalName == "sigInt32") {
+        emit sigInt32(args[0].get<qint32>());   
+        return;
+    }
+    if(signalName == "sigInt64") {
+        emit sigInt64(args[0].get<qint64>());   
+        return;
+    }
     if(signalName == "sigFloat") {
         emit sigFloat(args[0].get<qreal>());   
+        return;
+    }
+    if(signalName == "sigFloat32") {
+        emit sigFloat32(args[0].get<float>());   
+        return;
+    }
+    if(signalName == "sigFloat64") {
+        emit sigFloat64(args[0].get<double>());   
         return;
     }
     if(signalName == "sigString") {

@@ -55,6 +55,20 @@ public:
     * @param value to set for the property propInt 
     */
     void setPropInt(int propInt) override;
+    /** @return value of the property propInt32 */
+    qint32 propInt32() const override;
+    /** Use to change a property value.
+    * if the property is changed, a signal {.Name}}Changed is emitted.
+    * @param value to set for the property propInt32 
+    */
+    void setPropInt32(qint32 propInt32) override;
+    /** @return value of the property propInt64 */
+    qint64 propInt64() const override;
+    /** Use to change a property value.
+    * if the property is changed, a signal {.Name}}Changed is emitted.
+    * @param value to set for the property propInt64 
+    */
+    void setPropInt64(qint64 propInt64) override;
     /** @return value of the property propFloat */
     qreal propFloat() const override;
     /** Use to change a property value.
@@ -62,6 +76,20 @@ public:
     * @param value to set for the property propFloat 
     */
     void setPropFloat(qreal propFloat) override;
+    /** @return value of the property propFloat32 */
+    float propFloat32() const override;
+    /** Use to change a property value.
+    * if the property is changed, a signal {.Name}}Changed is emitted.
+    * @param value to set for the property propFloat32 
+    */
+    void setPropFloat32(float propFloat32) override;
+    /** @return value of the property propFloat64 */
+    double propFloat64() const override;
+    /** Use to change a property value.
+    * if the property is changed, a signal {.Name}}Changed is emitted.
+    * @param value to set for the property propFloat64 
+    */
+    void setPropFloat64(double propFloat64) override;
     /** @return value of the property propString */
     QString propString() const override;
     /** Use to change a property value.
@@ -71,7 +99,11 @@ public:
     void setPropString(const QString& propString) override;
     bool funcBool(bool paramBool) override;
     int funcInt(int paramInt) override;
+    qint32 funcInt32(qint32 paramInt32) override;
+    qint64 funcInt64(qint64 paramInt64) override;
     qreal funcFloat(qreal paramFloat) override;
+    float funcFloat32(float paramFloat32) override;
+    double funcFloat64(double paramFloat) override;
     QString funcString(const QString& paramString) override;
 
 private:
@@ -79,8 +111,16 @@ private:
     bool m_propBool;
     /** propInt property */
     int m_propInt;
+    /** propInt32 property */
+    qint32 m_propInt32;
+    /** propInt64 property */
+    qint64 m_propInt64;
     /** propFloat property */
     qreal m_propFloat;
+    /** propFloat32 property */
+    float m_propFloat32;
+    /** propFloat64 property */
+    double m_propFloat64;
     /** propString property */
     QString m_propString;
 };

@@ -77,6 +77,26 @@ public:
     void setPropInt(int propInt) override;
     /**
     * Property getter
+    * @return Locally stored recent value for PropInt32.
+    */
+    qint32 propInt32() const override;
+    /**
+    * Request setting a property on the SimpleInterface service.
+    * @param The value to which set request is send for the PropInt32.
+    */
+    void setPropInt32(qint32 propInt32) override;
+    /**
+    * Property getter
+    * @return Locally stored recent value for PropInt64.
+    */
+    qint64 propInt64() const override;
+    /**
+    * Request setting a property on the SimpleInterface service.
+    * @param The value to which set request is send for the PropInt64.
+    */
+    void setPropInt64(qint64 propInt64) override;
+    /**
+    * Property getter
     * @return Locally stored recent value for PropFloat.
     */
     qreal propFloat() const override;
@@ -85,6 +105,26 @@ public:
     * @param The value to which set request is send for the PropFloat.
     */
     void setPropFloat(qreal propFloat) override;
+    /**
+    * Property getter
+    * @return Locally stored recent value for PropFloat32.
+    */
+    float propFloat32() const override;
+    /**
+    * Request setting a property on the SimpleInterface service.
+    * @param The value to which set request is send for the PropFloat32.
+    */
+    void setPropFloat32(float propFloat32) override;
+    /**
+    * Property getter
+    * @return Locally stored recent value for PropFloat64.
+    */
+    double propFloat64() const override;
+    /**
+    * Request setting a property on the SimpleInterface service.
+    * @param The value to which set request is send for the PropFloat64.
+    */
+    void setPropFloat64(double propFloat64) override;
     /**
     * Property getter
     * @return Locally stored recent value for PropString.
@@ -114,6 +154,24 @@ public:
     */
     QtPromise::QPromise<int> funcIntAsync(int paramInt);
     /**
+    * Remote call of ISimpleInterface::funcInt32 on the SimpleInterface service.
+    * Uses funcInt32Async
+    */
+    qint32 funcInt32(qint32 paramInt32) override;
+    /**
+    * Remote call of ISimpleInterface::funcInt32 on the SimpleInterface service.
+    */
+    QtPromise::QPromise<qint32> funcInt32Async(qint32 paramInt32);
+    /**
+    * Remote call of ISimpleInterface::funcInt64 on the SimpleInterface service.
+    * Uses funcInt64Async
+    */
+    qint64 funcInt64(qint64 paramInt64) override;
+    /**
+    * Remote call of ISimpleInterface::funcInt64 on the SimpleInterface service.
+    */
+    QtPromise::QPromise<qint64> funcInt64Async(qint64 paramInt64);
+    /**
     * Remote call of ISimpleInterface::funcFloat on the SimpleInterface service.
     * Uses funcFloatAsync
     */
@@ -122,6 +180,24 @@ public:
     * Remote call of ISimpleInterface::funcFloat on the SimpleInterface service.
     */
     QtPromise::QPromise<qreal> funcFloatAsync(qreal paramFloat);
+    /**
+    * Remote call of ISimpleInterface::funcFloat32 on the SimpleInterface service.
+    * Uses funcFloat32Async
+    */
+    float funcFloat32(float paramFloat32) override;
+    /**
+    * Remote call of ISimpleInterface::funcFloat32 on the SimpleInterface service.
+    */
+    QtPromise::QPromise<float> funcFloat32Async(float paramFloat32);
+    /**
+    * Remote call of ISimpleInterface::funcFloat64 on the SimpleInterface service.
+    * Uses funcFloat64Async
+    */
+    double funcFloat64(double paramFloat) override;
+    /**
+    * Remote call of ISimpleInterface::funcFloat64 on the SimpleInterface service.
+    */
+    QtPromise::QPromise<double> funcFloat64Async(double paramFloat);
     /**
     * Remote call of ISimpleInterface::funcString on the SimpleInterface service.
     * Uses funcStringAsync
@@ -186,10 +262,26 @@ private:
     void setPropIntLocal(int propInt);
     /** A local value for propInt */
     int m_propInt;
+    /**  Updates local value for PropInt32 and informs subscriber about the change with emit property changed signal. */
+    void setPropInt32Local(qint32 propInt32);
+    /** A local value for propInt32 */
+    qint32 m_propInt32;
+    /**  Updates local value for PropInt64 and informs subscriber about the change with emit property changed signal. */
+    void setPropInt64Local(qint64 propInt64);
+    /** A local value for propInt64 */
+    qint64 m_propInt64;
     /**  Updates local value for PropFloat and informs subscriber about the change with emit property changed signal. */
     void setPropFloatLocal(qreal propFloat);
     /** A local value for propFloat */
     qreal m_propFloat;
+    /**  Updates local value for PropFloat32 and informs subscriber about the change with emit property changed signal. */
+    void setPropFloat32Local(float propFloat32);
+    /** A local value for propFloat32 */
+    float m_propFloat32;
+    /**  Updates local value for PropFloat64 and informs subscriber about the change with emit property changed signal. */
+    void setPropFloat64Local(double propFloat64);
+    /** A local value for propFloat64 */
+    double m_propFloat64;
     /**  Updates local value for PropString and informs subscriber about the change with emit property changed signal. */
     void setPropStringLocal(const QString& propString);
     /** A local value for propString */

@@ -33,7 +33,11 @@ OLinkSimpleArrayInterface::OLinkSimpleArrayInterface(QObject *parent)
     : AbstractSimpleArrayInterface(parent)
     , m_propBool(QList<bool>())
     , m_propInt(QList<int>())
+    , m_propInt32(QList<qint32>())
+    , m_propInt64(QList<qint64>())
     , m_propFloat(QList<qreal>())
+    , m_propFloat32(QList<float>())
+    , m_propFloat64(QList<double>())
     , m_propString(QList<QString>())
     , m_isReady(false)
     , m_node(nullptr)
@@ -50,8 +54,20 @@ void OLinkSimpleArrayInterface::applyState(const nlohmann::json& fields)
     if(fields.contains("propInt")) {
         setPropIntLocal(fields["propInt"].get<QList<int>>());
     }
+    if(fields.contains("propInt32")) {
+        setPropInt32Local(fields["propInt32"].get<QList<qint32>>());
+    }
+    if(fields.contains("propInt64")) {
+        setPropInt64Local(fields["propInt64"].get<QList<qint64>>());
+    }
     if(fields.contains("propFloat")) {
         setPropFloatLocal(fields["propFloat"].get<QList<qreal>>());
+    }
+    if(fields.contains("propFloat32")) {
+        setPropFloat32Local(fields["propFloat32"].get<QList<float>>());
+    }
+    if(fields.contains("propFloat64")) {
+        setPropFloat64Local(fields["propFloat64"].get<QList<double>>());
     }
     if(fields.contains("propString")) {
         setPropStringLocal(fields["propString"].get<QList<QString>>());
@@ -106,6 +122,54 @@ QList<int> OLinkSimpleArrayInterface::propInt() const
     return m_propInt;
 }
 
+void OLinkSimpleArrayInterface::setPropInt32(const QList<qint32>& propInt32)
+{
+    qDebug() << Q_FUNC_INFO;
+    if(!m_node) {
+        return;
+    }
+    m_node->setRemoteProperty("tb.simple.SimpleArrayInterface/propInt32", propInt32);
+}
+
+void OLinkSimpleArrayInterface::setPropInt32Local(const QList<qint32>& propInt32)
+{
+    qDebug() << Q_FUNC_INFO;
+    if (m_propInt32 != propInt32) {
+        m_propInt32 = propInt32;
+        emit propInt32Changed(propInt32);
+        SimpleArrayInterfaceAgent::trace_state(this);
+    }
+}
+
+QList<qint32> OLinkSimpleArrayInterface::propInt32() const
+{
+    return m_propInt32;
+}
+
+void OLinkSimpleArrayInterface::setPropInt64(const QList<qint64>& propInt64)
+{
+    qDebug() << Q_FUNC_INFO;
+    if(!m_node) {
+        return;
+    }
+    m_node->setRemoteProperty("tb.simple.SimpleArrayInterface/propInt64", propInt64);
+}
+
+void OLinkSimpleArrayInterface::setPropInt64Local(const QList<qint64>& propInt64)
+{
+    qDebug() << Q_FUNC_INFO;
+    if (m_propInt64 != propInt64) {
+        m_propInt64 = propInt64;
+        emit propInt64Changed(propInt64);
+        SimpleArrayInterfaceAgent::trace_state(this);
+    }
+}
+
+QList<qint64> OLinkSimpleArrayInterface::propInt64() const
+{
+    return m_propInt64;
+}
+
 void OLinkSimpleArrayInterface::setPropFloat(const QList<qreal>& propFloat)
 {
     qDebug() << Q_FUNC_INFO;
@@ -128,6 +192,54 @@ void OLinkSimpleArrayInterface::setPropFloatLocal(const QList<qreal>& propFloat)
 QList<qreal> OLinkSimpleArrayInterface::propFloat() const
 {
     return m_propFloat;
+}
+
+void OLinkSimpleArrayInterface::setPropFloat32(const QList<float>& propFloat32)
+{
+    qDebug() << Q_FUNC_INFO;
+    if(!m_node) {
+        return;
+    }
+    m_node->setRemoteProperty("tb.simple.SimpleArrayInterface/propFloat32", propFloat32);
+}
+
+void OLinkSimpleArrayInterface::setPropFloat32Local(const QList<float>& propFloat32)
+{
+    qDebug() << Q_FUNC_INFO;
+    if (m_propFloat32 != propFloat32) {
+        m_propFloat32 = propFloat32;
+        emit propFloat32Changed(propFloat32);
+        SimpleArrayInterfaceAgent::trace_state(this);
+    }
+}
+
+QList<float> OLinkSimpleArrayInterface::propFloat32() const
+{
+    return m_propFloat32;
+}
+
+void OLinkSimpleArrayInterface::setPropFloat64(const QList<double>& propFloat64)
+{
+    qDebug() << Q_FUNC_INFO;
+    if(!m_node) {
+        return;
+    }
+    m_node->setRemoteProperty("tb.simple.SimpleArrayInterface/propFloat64", propFloat64);
+}
+
+void OLinkSimpleArrayInterface::setPropFloat64Local(const QList<double>& propFloat64)
+{
+    qDebug() << Q_FUNC_INFO;
+    if (m_propFloat64 != propFloat64) {
+        m_propFloat64 = propFloat64;
+        emit propFloat64Changed(propFloat64);
+        SimpleArrayInterfaceAgent::trace_state(this);
+    }
+}
+
+QList<double> OLinkSimpleArrayInterface::propFloat64() const
+{
+    return m_propFloat64;
 }
 
 void OLinkSimpleArrayInterface::setPropString(const QList<QString>& propString)
@@ -218,6 +330,70 @@ QtPromise::QPromise<QList<int>> OLinkSimpleArrayInterface::funcIntAsync(const QL
     };
 }
 
+QList<qint32> OLinkSimpleArrayInterface::funcInt32(const QList<qint32>& paramInt32)
+{
+    qDebug() << Q_FUNC_INFO;
+    if(!m_node) {
+        return QList<qint32>();
+    }
+    QList<qint32> value{ QList<qint32>() };
+    funcInt32Async(paramInt32)
+        .then([&](QList<qint32> result) {
+            value = result;
+        })
+        .wait();
+    return value;
+}
+
+QtPromise::QPromise<QList<qint32>> OLinkSimpleArrayInterface::funcInt32Async(const QList<qint32>& paramInt32)
+{
+    qDebug() << Q_FUNC_INFO;
+    if(!m_node) {
+        return QtPromise::QPromise<QList<qint32>>::reject("not initialized");
+    }
+    return QtPromise::QPromise<QList<qint32>>{[&](
+        const QtPromise::QPromiseResolve<QList<qint32>>& resolve) {
+            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcInt32");
+            m_node->invokeRemote(operationId, nlohmann::json::array({paramInt32}), [resolve](InvokeReplyArg arg) {                
+                const QList<qint32>& value = arg.value.get<QList<qint32>>();
+                resolve(value);
+            });
+        }
+    };
+}
+
+QList<qint64> OLinkSimpleArrayInterface::funcInt64(const QList<qint64>& paramInt64)
+{
+    qDebug() << Q_FUNC_INFO;
+    if(!m_node) {
+        return QList<qint64>();
+    }
+    QList<qint64> value{ QList<qint64>() };
+    funcInt64Async(paramInt64)
+        .then([&](QList<qint64> result) {
+            value = result;
+        })
+        .wait();
+    return value;
+}
+
+QtPromise::QPromise<QList<qint64>> OLinkSimpleArrayInterface::funcInt64Async(const QList<qint64>& paramInt64)
+{
+    qDebug() << Q_FUNC_INFO;
+    if(!m_node) {
+        return QtPromise::QPromise<QList<qint64>>::reject("not initialized");
+    }
+    return QtPromise::QPromise<QList<qint64>>{[&](
+        const QtPromise::QPromiseResolve<QList<qint64>>& resolve) {
+            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcInt64");
+            m_node->invokeRemote(operationId, nlohmann::json::array({paramInt64}), [resolve](InvokeReplyArg arg) {                
+                const QList<qint64>& value = arg.value.get<QList<qint64>>();
+                resolve(value);
+            });
+        }
+    };
+}
+
 QList<qreal> OLinkSimpleArrayInterface::funcFloat(const QList<qreal>& paramFloat)
 {
     qDebug() << Q_FUNC_INFO;
@@ -244,6 +420,70 @@ QtPromise::QPromise<QList<qreal>> OLinkSimpleArrayInterface::funcFloatAsync(cons
             const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcFloat");
             m_node->invokeRemote(operationId, nlohmann::json::array({paramFloat}), [resolve](InvokeReplyArg arg) {                
                 const QList<qreal>& value = arg.value.get<QList<qreal>>();
+                resolve(value);
+            });
+        }
+    };
+}
+
+QList<float> OLinkSimpleArrayInterface::funcFloat32(const QList<float>& paramFloat32)
+{
+    qDebug() << Q_FUNC_INFO;
+    if(!m_node) {
+        return QList<float>();
+    }
+    QList<float> value{ QList<float>() };
+    funcFloat32Async(paramFloat32)
+        .then([&](QList<float> result) {
+            value = result;
+        })
+        .wait();
+    return value;
+}
+
+QtPromise::QPromise<QList<float>> OLinkSimpleArrayInterface::funcFloat32Async(const QList<float>& paramFloat32)
+{
+    qDebug() << Q_FUNC_INFO;
+    if(!m_node) {
+        return QtPromise::QPromise<QList<float>>::reject("not initialized");
+    }
+    return QtPromise::QPromise<QList<float>>{[&](
+        const QtPromise::QPromiseResolve<QList<float>>& resolve) {
+            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcFloat32");
+            m_node->invokeRemote(operationId, nlohmann::json::array({paramFloat32}), [resolve](InvokeReplyArg arg) {                
+                const QList<float>& value = arg.value.get<QList<float>>();
+                resolve(value);
+            });
+        }
+    };
+}
+
+QList<double> OLinkSimpleArrayInterface::funcFloat64(const QList<double>& paramFloat)
+{
+    qDebug() << Q_FUNC_INFO;
+    if(!m_node) {
+        return QList<double>();
+    }
+    QList<double> value{ QList<double>() };
+    funcFloat64Async(paramFloat)
+        .then([&](QList<double> result) {
+            value = result;
+        })
+        .wait();
+    return value;
+}
+
+QtPromise::QPromise<QList<double>> OLinkSimpleArrayInterface::funcFloat64Async(const QList<double>& paramFloat)
+{
+    qDebug() << Q_FUNC_INFO;
+    if(!m_node) {
+        return QtPromise::QPromise<QList<double>>::reject("not initialized");
+    }
+    return QtPromise::QPromise<QList<double>>{[&](
+        const QtPromise::QPromiseResolve<QList<double>>& resolve) {
+            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcFloat64");
+            m_node->invokeRemote(operationId, nlohmann::json::array({paramFloat}), [resolve](InvokeReplyArg arg) {                
+                const QList<double>& value = arg.value.get<QList<double>>();
                 resolve(value);
             });
         }
@@ -300,8 +540,24 @@ void OLinkSimpleArrayInterface::olinkOnSignal(const std::string& signalId, const
         emit sigInt(args[0].get<QList<int>>());   
         return;
     }
+    if(signalName == "sigInt32") {
+        emit sigInt32(args[0].get<QList<qint32>>());   
+        return;
+    }
+    if(signalName == "sigInt64") {
+        emit sigInt64(args[0].get<QList<qint64>>());   
+        return;
+    }
     if(signalName == "sigFloat") {
         emit sigFloat(args[0].get<QList<qreal>>());   
+        return;
+    }
+    if(signalName == "sigFloat32") {
+        emit sigFloat32(args[0].get<QList<float>>());   
+        return;
+    }
+    if(signalName == "sigFloat64") {
+        emit sigFloat64(args[0].get<QList<double>>());   
         return;
     }
     if(signalName == "sigString") {

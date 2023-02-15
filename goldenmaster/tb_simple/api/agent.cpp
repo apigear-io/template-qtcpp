@@ -12,7 +12,11 @@ QVariantMap SimpleInterfaceAgent::capture_state(AbstractSimpleInterface* obj)
     return QVariantMap{
         { "propBool", QVariant::fromValue(obj->propBool()) },
         { "propInt", QVariant::fromValue(obj->propInt()) },
+        { "propInt32", QVariant::fromValue(obj->propInt32()) },
+        { "propInt64", QVariant::fromValue(obj->propInt64()) },
         { "propFloat", QVariant::fromValue(obj->propFloat()) },
+        { "propFloat32", QVariant::fromValue(obj->propFloat32()) },
+        { "propFloat64", QVariant::fromValue(obj->propFloat64()) },
         { "propString", QVariant::fromValue(obj->propString()) },
     };
 }
@@ -36,12 +40,40 @@ void SimpleInterfaceAgent::trace_funcInt(AbstractSimpleInterface* obj, int param
     };
     ApiGear::Monitor::AgentClient::instance()->traceCall("tb.simple.SimpleInterface#funcInt", params_);
 }
+void SimpleInterfaceAgent::trace_funcInt32(AbstractSimpleInterface* obj, qint32 paramInt32)
+{
+    const QVariantMap &params_ {
+        { "paramInt32", QVariant::fromValue(paramInt32) },
+    };
+    ApiGear::Monitor::AgentClient::instance()->traceCall("tb.simple.SimpleInterface#funcInt32", params_);
+}
+void SimpleInterfaceAgent::trace_funcInt64(AbstractSimpleInterface* obj, qint64 paramInt64)
+{
+    const QVariantMap &params_ {
+        { "paramInt64", QVariant::fromValue(paramInt64) },
+    };
+    ApiGear::Monitor::AgentClient::instance()->traceCall("tb.simple.SimpleInterface#funcInt64", params_);
+}
 void SimpleInterfaceAgent::trace_funcFloat(AbstractSimpleInterface* obj, qreal paramFloat)
 {
     const QVariantMap &params_ {
         { "paramFloat", QVariant::fromValue(paramFloat) },
     };
     ApiGear::Monitor::AgentClient::instance()->traceCall("tb.simple.SimpleInterface#funcFloat", params_);
+}
+void SimpleInterfaceAgent::trace_funcFloat32(AbstractSimpleInterface* obj, float paramFloat32)
+{
+    const QVariantMap &params_ {
+        { "paramFloat32", QVariant::fromValue(paramFloat32) },
+    };
+    ApiGear::Monitor::AgentClient::instance()->traceCall("tb.simple.SimpleInterface#funcFloat32", params_);
+}
+void SimpleInterfaceAgent::trace_funcFloat64(AbstractSimpleInterface* obj, double paramFloat)
+{
+    const QVariantMap &params_ {
+        { "paramFloat", QVariant::fromValue(paramFloat) },
+    };
+    ApiGear::Monitor::AgentClient::instance()->traceCall("tb.simple.SimpleInterface#funcFloat64", params_);
 }
 void SimpleInterfaceAgent::trace_funcString(AbstractSimpleInterface* obj, const QString& paramString)
 {
@@ -60,7 +92,11 @@ QVariantMap SimpleArrayInterfaceAgent::capture_state(AbstractSimpleArrayInterfac
     return QVariantMap{
         { "propBool", QVariant::fromValue(obj->propBool()) },
         { "propInt", QVariant::fromValue(obj->propInt()) },
+        { "propInt32", QVariant::fromValue(obj->propInt32()) },
+        { "propInt64", QVariant::fromValue(obj->propInt64()) },
         { "propFloat", QVariant::fromValue(obj->propFloat()) },
+        { "propFloat32", QVariant::fromValue(obj->propFloat32()) },
+        { "propFloat64", QVariant::fromValue(obj->propFloat64()) },
         { "propString", QVariant::fromValue(obj->propString()) },
     };
 }
@@ -84,12 +120,40 @@ void SimpleArrayInterfaceAgent::trace_funcInt(AbstractSimpleArrayInterface* obj,
     };
     ApiGear::Monitor::AgentClient::instance()->traceCall("tb.simple.SimpleArrayInterface#funcInt", params_);
 }
+void SimpleArrayInterfaceAgent::trace_funcInt32(AbstractSimpleArrayInterface* obj, const QList<qint32>& paramInt32)
+{
+    const QVariantMap &params_ {
+        { "paramInt32", QVariant::fromValue(paramInt32) },
+    };
+    ApiGear::Monitor::AgentClient::instance()->traceCall("tb.simple.SimpleArrayInterface#funcInt32", params_);
+}
+void SimpleArrayInterfaceAgent::trace_funcInt64(AbstractSimpleArrayInterface* obj, const QList<qint64>& paramInt64)
+{
+    const QVariantMap &params_ {
+        { "paramInt64", QVariant::fromValue(paramInt64) },
+    };
+    ApiGear::Monitor::AgentClient::instance()->traceCall("tb.simple.SimpleArrayInterface#funcInt64", params_);
+}
 void SimpleArrayInterfaceAgent::trace_funcFloat(AbstractSimpleArrayInterface* obj, const QList<qreal>& paramFloat)
 {
     const QVariantMap &params_ {
         { "paramFloat", QVariant::fromValue(paramFloat) },
     };
     ApiGear::Monitor::AgentClient::instance()->traceCall("tb.simple.SimpleArrayInterface#funcFloat", params_);
+}
+void SimpleArrayInterfaceAgent::trace_funcFloat32(AbstractSimpleArrayInterface* obj, const QList<float>& paramFloat32)
+{
+    const QVariantMap &params_ {
+        { "paramFloat32", QVariant::fromValue(paramFloat32) },
+    };
+    ApiGear::Monitor::AgentClient::instance()->traceCall("tb.simple.SimpleArrayInterface#funcFloat32", params_);
+}
+void SimpleArrayInterfaceAgent::trace_funcFloat64(AbstractSimpleArrayInterface* obj, const QList<double>& paramFloat)
+{
+    const QVariantMap &params_ {
+        { "paramFloat", QVariant::fromValue(paramFloat) },
+    };
+    ApiGear::Monitor::AgentClient::instance()->traceCall("tb.simple.SimpleArrayInterface#funcFloat64", params_);
 }
 void SimpleArrayInterfaceAgent::trace_funcString(AbstractSimpleArrayInterface* obj, const QList<QString>& paramString)
 {

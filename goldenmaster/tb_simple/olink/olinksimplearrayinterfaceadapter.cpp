@@ -60,6 +60,26 @@ OLinkSimpleArrayInterfaceAdapter::OLinkSimpleArrayInterfaceAdapter(RemoteRegistr
             }
         }
     });
+    connect(m_impl, &AbstractSimpleArrayInterface::propInt32Changed, this,
+        [=](const QList<qint32>& propInt32) {
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "propInt32");
+        for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
+            auto lockedNode = node.lock();
+            if(lockedNode) {
+                lockedNode->notifyPropertyChange(propertyId, propInt32);
+            }
+        }
+    });
+    connect(m_impl, &AbstractSimpleArrayInterface::propInt64Changed, this,
+        [=](const QList<qint64>& propInt64) {
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "propInt64");
+        for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
+            auto lockedNode = node.lock();
+            if(lockedNode) {
+                lockedNode->notifyPropertyChange(propertyId, propInt64);
+            }
+        }
+    });
     connect(m_impl, &AbstractSimpleArrayInterface::propFloatChanged, this,
         [=](const QList<qreal>& propFloat) {
         const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "propFloat");
@@ -67,6 +87,26 @@ OLinkSimpleArrayInterfaceAdapter::OLinkSimpleArrayInterfaceAdapter(RemoteRegistr
             auto lockedNode = node.lock();
             if(lockedNode) {
                 lockedNode->notifyPropertyChange(propertyId, propFloat);
+            }
+        }
+    });
+    connect(m_impl, &AbstractSimpleArrayInterface::propFloat32Changed, this,
+        [=](const QList<float>& propFloat32) {
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "propFloat32");
+        for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
+            auto lockedNode = node.lock();
+            if(lockedNode) {
+                lockedNode->notifyPropertyChange(propertyId, propFloat32);
+            }
+        }
+    });
+    connect(m_impl, &AbstractSimpleArrayInterface::propFloat64Changed, this,
+        [=](const QList<double>& propFloat64) {
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "propFloat64");
+        for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
+            auto lockedNode = node.lock();
+            if(lockedNode) {
+                lockedNode->notifyPropertyChange(propertyId, propFloat64);
             }
         }
     });
@@ -102,10 +142,54 @@ OLinkSimpleArrayInterfaceAdapter::OLinkSimpleArrayInterfaceAdapter(RemoteRegistr
                     }
                 }
     });
+        connect(m_impl, &AbstractSimpleArrayInterface::sigInt32, this,
+            [=](const QList<qint32>& paramInt32) {
+                const nlohmann::json& args = { paramInt32 };
+                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sigInt32");
+                for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
+                    auto lockedNode = node.lock();
+                    if(lockedNode) {
+                        lockedNode->notifySignal(signalId, args);
+                    }
+                }
+    });
+        connect(m_impl, &AbstractSimpleArrayInterface::sigInt64, this,
+            [=](const QList<qint64>& paramInt64) {
+                const nlohmann::json& args = { paramInt64 };
+                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sigInt64");
+                for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
+                    auto lockedNode = node.lock();
+                    if(lockedNode) {
+                        lockedNode->notifySignal(signalId, args);
+                    }
+                }
+    });
         connect(m_impl, &AbstractSimpleArrayInterface::sigFloat, this,
             [=](const QList<qreal>& paramFloat) {
                 const nlohmann::json& args = { paramFloat };
                 const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sigFloat");
+                for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
+                    auto lockedNode = node.lock();
+                    if(lockedNode) {
+                        lockedNode->notifySignal(signalId, args);
+                    }
+                }
+    });
+        connect(m_impl, &AbstractSimpleArrayInterface::sigFloat32, this,
+            [=](const QList<float>& paramFloa32) {
+                const nlohmann::json& args = { paramFloa32 };
+                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sigFloat32");
+                for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
+                    auto lockedNode = node.lock();
+                    if(lockedNode) {
+                        lockedNode->notifySignal(signalId, args);
+                    }
+                }
+    });
+        connect(m_impl, &AbstractSimpleArrayInterface::sigFloat64, this,
+            [=](const QList<double>& paramFloat64) {
+                const nlohmann::json& args = { paramFloat64 };
+                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sigFloat64");
                 for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
                     auto lockedNode = node.lock();
                     if(lockedNode) {
@@ -131,7 +215,11 @@ json OLinkSimpleArrayInterfaceAdapter::captureState()
     return json::object({
         { "propBool", m_impl->propBool() },
         { "propInt", m_impl->propInt() },
+        { "propInt32", m_impl->propInt32() },
+        { "propInt64", m_impl->propInt64() },
         { "propFloat", m_impl->propFloat() },
+        { "propFloat32", m_impl->propFloat32() },
+        { "propFloat64", m_impl->propFloat64() },
         { "propString", m_impl->propString() }
     });
 }
@@ -144,8 +232,20 @@ void OLinkSimpleArrayInterfaceAdapter::applyState(const json& state)
     if(state.contains("propInt")) {
         m_impl->setPropInt(state["propInt"]);
     }
+    if(state.contains("propInt32")) {
+        m_impl->setPropInt32(state["propInt32"]);
+    }
+    if(state.contains("propInt64")) {
+        m_impl->setPropInt64(state["propInt64"]);
+    }
     if(state.contains("propFloat")) {
         m_impl->setPropFloat(state["propFloat"]);
+    }
+    if(state.contains("propFloat32")) {
+        m_impl->setPropFloat32(state["propFloat32"]);
+    }
+    if(state.contains("propFloat64")) {
+        m_impl->setPropFloat64(state["propFloat64"]);
     }
     if(state.contains("propString")) {
         m_impl->setPropString(state["propString"]);
@@ -170,9 +270,29 @@ json OLinkSimpleArrayInterfaceAdapter::olinkInvoke(const std::string& methodId, 
         QList<int> result = m_impl->funcInt(paramInt);
         return result;
     }
+    if(path == "funcInt32") {
+        const QList<qint32>& paramInt32 = args.at(0);
+        QList<qint32> result = m_impl->funcInt32(paramInt32);
+        return result;
+    }
+    if(path == "funcInt64") {
+        const QList<qint64>& paramInt64 = args.at(0);
+        QList<qint64> result = m_impl->funcInt64(paramInt64);
+        return result;
+    }
     if(path == "funcFloat") {
         const QList<qreal>& paramFloat = args.at(0);
         QList<qreal> result = m_impl->funcFloat(paramFloat);
+        return result;
+    }
+    if(path == "funcFloat32") {
+        const QList<float>& paramFloat32 = args.at(0);
+        QList<float> result = m_impl->funcFloat32(paramFloat32);
+        return result;
+    }
+    if(path == "funcFloat64") {
+        const QList<double>& paramFloat = args.at(0);
+        QList<double> result = m_impl->funcFloat64(paramFloat);
         return result;
     }
     if(path == "funcString") {
@@ -194,9 +314,25 @@ void OLinkSimpleArrayInterfaceAdapter::olinkSetProperty(const std::string& prope
         QList<int> propInt = value.get<QList<int>>();
         m_impl->setPropInt(propInt);
     }
+    if(path == "propInt32") {
+        QList<qint32> propInt32 = value.get<QList<qint32>>();
+        m_impl->setPropInt32(propInt32);
+    }
+    if(path == "propInt64") {
+        QList<qint64> propInt64 = value.get<QList<qint64>>();
+        m_impl->setPropInt64(propInt64);
+    }
     if(path == "propFloat") {
         QList<qreal> propFloat = value.get<QList<qreal>>();
         m_impl->setPropFloat(propFloat);
+    }
+    if(path == "propFloat32") {
+        QList<float> propFloat32 = value.get<QList<float>>();
+        m_impl->setPropFloat32(propFloat32);
+    }
+    if(path == "propFloat64") {
+        QList<double> propFloat64 = value.get<QList<double>>();
+        m_impl->setPropFloat64(propFloat64);
     }
     if(path == "propString") {
         QList<QString> propString = value.get<QList<QString>>();

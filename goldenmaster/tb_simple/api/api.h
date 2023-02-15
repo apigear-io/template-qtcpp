@@ -64,6 +64,22 @@ public:
     */
     virtual int propInt() const = 0;
     /**
+    * Sets the value of the propInt32 property.
+    */
+    virtual void setPropInt32(qint32 propInt32) = 0;
+    /**
+    * Gets the value of the propInt32 property.
+    */
+    virtual qint32 propInt32() const = 0;
+    /**
+    * Sets the value of the propInt64 property.
+    */
+    virtual void setPropInt64(qint64 propInt64) = 0;
+    /**
+    * Gets the value of the propInt64 property.
+    */
+    virtual qint64 propInt64() const = 0;
+    /**
     * Sets the value of the propFloat property.
     */
     virtual void setPropFloat(qreal propFloat) = 0;
@@ -71,6 +87,22 @@ public:
     * Gets the value of the propFloat property.
     */
     virtual qreal propFloat() const = 0;
+    /**
+    * Sets the value of the propFloat32 property.
+    */
+    virtual void setPropFloat32(float propFloat32) = 0;
+    /**
+    * Gets the value of the propFloat32 property.
+    */
+    virtual float propFloat32() const = 0;
+    /**
+    * Sets the value of the propFloat64 property.
+    */
+    virtual void setPropFloat64(double propFloat64) = 0;
+    /**
+    * Gets the value of the propFloat64 property.
+    */
+    virtual double propFloat64() const = 0;
     /**
     * Sets the value of the propString property.
     */
@@ -84,7 +116,15 @@ public:
 
     virtual int funcInt(int paramInt) = 0;
 
+    virtual qint32 funcInt32(qint32 paramInt32) = 0;
+
+    virtual qint64 funcInt64(qint64 paramInt64) = 0;
+
     virtual qreal funcFloat(qreal paramFloat) = 0;
+
+    virtual float funcFloat32(float paramFloat32) = 0;
+
+    virtual double funcFloat64(double paramFloat) = 0;
 
     virtual QString funcString(const QString& paramString) = 0;
 signals:
@@ -97,9 +137,25 @@ signals:
     */
     void sigInt(int paramInt);
     /**
+    * @param paramInt32 
+    */
+    void sigInt32(qint32 paramInt32);
+    /**
+    * @param paramInt64 
+    */
+    void sigInt64(qint64 paramInt64);
+    /**
     * @param paramFloat 
     */
     void sigFloat(qreal paramFloat);
+    /**
+    * @param paramFloa32 
+    */
+    void sigFloat32(float paramFloa32);
+    /**
+    * @param paramFloat64 
+    */
+    void sigFloat64(double paramFloat64);
     /**
     * @param paramString 
     */
@@ -113,9 +169,25 @@ signals:
     */
     void propIntChanged(int propInt);
     /**
+    * Emitted when propInt32 value has changed.
+    */
+    void propInt32Changed(qint32 propInt32);
+    /**
+    * Emitted when propInt64 value has changed.
+    */
+    void propInt64Changed(qint64 propInt64);
+    /**
     * Emitted when propFloat value has changed.
     */
     void propFloatChanged(qreal propFloat);
+    /**
+    * Emitted when propFloat32 value has changed.
+    */
+    void propFloat32Changed(float propFloat32);
+    /**
+    * Emitted when propFloat64 value has changed.
+    */
+    void propFloat64Changed(double propFloat64);
     /**
     * Emitted when propString value has changed.
     */
@@ -156,6 +228,22 @@ public:
     */
     virtual QList<int> propInt() const = 0;
     /**
+    * Sets the value of the propInt32 property.
+    */
+    virtual void setPropInt32(const QList<qint32>& propInt32) = 0;
+    /**
+    * Gets the value of the propInt32 property.
+    */
+    virtual QList<qint32> propInt32() const = 0;
+    /**
+    * Sets the value of the propInt64 property.
+    */
+    virtual void setPropInt64(const QList<qint64>& propInt64) = 0;
+    /**
+    * Gets the value of the propInt64 property.
+    */
+    virtual QList<qint64> propInt64() const = 0;
+    /**
     * Sets the value of the propFloat property.
     */
     virtual void setPropFloat(const QList<qreal>& propFloat) = 0;
@@ -163,6 +251,22 @@ public:
     * Gets the value of the propFloat property.
     */
     virtual QList<qreal> propFloat() const = 0;
+    /**
+    * Sets the value of the propFloat32 property.
+    */
+    virtual void setPropFloat32(const QList<float>& propFloat32) = 0;
+    /**
+    * Gets the value of the propFloat32 property.
+    */
+    virtual QList<float> propFloat32() const = 0;
+    /**
+    * Sets the value of the propFloat64 property.
+    */
+    virtual void setPropFloat64(const QList<double>& propFloat64) = 0;
+    /**
+    * Gets the value of the propFloat64 property.
+    */
+    virtual QList<double> propFloat64() const = 0;
     /**
     * Sets the value of the propString property.
     */
@@ -176,7 +280,15 @@ public:
 
     virtual QList<int> funcInt(const QList<int>& paramInt) = 0;
 
+    virtual QList<qint32> funcInt32(const QList<qint32>& paramInt32) = 0;
+
+    virtual QList<qint64> funcInt64(const QList<qint64>& paramInt64) = 0;
+
     virtual QList<qreal> funcFloat(const QList<qreal>& paramFloat) = 0;
+
+    virtual QList<float> funcFloat32(const QList<float>& paramFloat32) = 0;
+
+    virtual QList<double> funcFloat64(const QList<double>& paramFloat) = 0;
 
     virtual QList<QString> funcString(const QList<QString>& paramString) = 0;
 signals:
@@ -189,9 +301,25 @@ signals:
     */
     void sigInt(const QList<int>& paramInt);
     /**
+    * @param paramInt32 
+    */
+    void sigInt32(const QList<qint32>& paramInt32);
+    /**
+    * @param paramInt64 
+    */
+    void sigInt64(const QList<qint64>& paramInt64);
+    /**
     * @param paramFloat 
     */
     void sigFloat(const QList<qreal>& paramFloat);
+    /**
+    * @param paramFloa32 
+    */
+    void sigFloat32(const QList<float>& paramFloa32);
+    /**
+    * @param paramFloat64 
+    */
+    void sigFloat64(const QList<double>& paramFloat64);
     /**
     * @param paramString 
     */
@@ -205,9 +333,25 @@ signals:
     */
     void propIntChanged(const QList<int>& propInt);
     /**
+    * Emitted when propInt32 value has changed.
+    */
+    void propInt32Changed(const QList<qint32>& propInt32);
+    /**
+    * Emitted when propInt64 value has changed.
+    */
+    void propInt64Changed(const QList<qint64>& propInt64);
+    /**
     * Emitted when propFloat value has changed.
     */
     void propFloatChanged(const QList<qreal>& propFloat);
+    /**
+    * Emitted when propFloat32 value has changed.
+    */
+    void propFloat32Changed(const QList<float>& propFloat32);
+    /**
+    * Emitted when propFloat64 value has changed.
+    */
+    void propFloat64Changed(const QList<double>& propFloat64);
     /**
     * Emitted when propString value has changed.
     */

@@ -77,6 +77,26 @@ public:
     void setPropInt(const QList<int>& propInt) override;
     /**
     * Property getter
+    * @return Locally stored recent value for PropInt32.
+    */
+    QList<qint32> propInt32() const override;
+    /**
+    * Request setting a property on the SimpleArrayInterface service.
+    * @param The value to which set request is send for the PropInt32.
+    */
+    void setPropInt32(const QList<qint32>& propInt32) override;
+    /**
+    * Property getter
+    * @return Locally stored recent value for PropInt64.
+    */
+    QList<qint64> propInt64() const override;
+    /**
+    * Request setting a property on the SimpleArrayInterface service.
+    * @param The value to which set request is send for the PropInt64.
+    */
+    void setPropInt64(const QList<qint64>& propInt64) override;
+    /**
+    * Property getter
     * @return Locally stored recent value for PropFloat.
     */
     QList<qreal> propFloat() const override;
@@ -85,6 +105,26 @@ public:
     * @param The value to which set request is send for the PropFloat.
     */
     void setPropFloat(const QList<qreal>& propFloat) override;
+    /**
+    * Property getter
+    * @return Locally stored recent value for PropFloat32.
+    */
+    QList<float> propFloat32() const override;
+    /**
+    * Request setting a property on the SimpleArrayInterface service.
+    * @param The value to which set request is send for the PropFloat32.
+    */
+    void setPropFloat32(const QList<float>& propFloat32) override;
+    /**
+    * Property getter
+    * @return Locally stored recent value for PropFloat64.
+    */
+    QList<double> propFloat64() const override;
+    /**
+    * Request setting a property on the SimpleArrayInterface service.
+    * @param The value to which set request is send for the PropFloat64.
+    */
+    void setPropFloat64(const QList<double>& propFloat64) override;
     /**
     * Property getter
     * @return Locally stored recent value for PropString.
@@ -114,6 +154,24 @@ public:
     */
     QtPromise::QPromise<QList<int>> funcIntAsync(const QList<int>& paramInt);
     /**
+    * Remote call of ISimpleArrayInterface::funcInt32 on the SimpleArrayInterface service.
+    * Uses funcInt32Async
+    */
+    QList<qint32> funcInt32(const QList<qint32>& paramInt32) override;
+    /**
+    * Remote call of ISimpleArrayInterface::funcInt32 on the SimpleArrayInterface service.
+    */
+    QtPromise::QPromise<QList<qint32>> funcInt32Async(const QList<qint32>& paramInt32);
+    /**
+    * Remote call of ISimpleArrayInterface::funcInt64 on the SimpleArrayInterface service.
+    * Uses funcInt64Async
+    */
+    QList<qint64> funcInt64(const QList<qint64>& paramInt64) override;
+    /**
+    * Remote call of ISimpleArrayInterface::funcInt64 on the SimpleArrayInterface service.
+    */
+    QtPromise::QPromise<QList<qint64>> funcInt64Async(const QList<qint64>& paramInt64);
+    /**
     * Remote call of ISimpleArrayInterface::funcFloat on the SimpleArrayInterface service.
     * Uses funcFloatAsync
     */
@@ -122,6 +180,24 @@ public:
     * Remote call of ISimpleArrayInterface::funcFloat on the SimpleArrayInterface service.
     */
     QtPromise::QPromise<QList<qreal>> funcFloatAsync(const QList<qreal>& paramFloat);
+    /**
+    * Remote call of ISimpleArrayInterface::funcFloat32 on the SimpleArrayInterface service.
+    * Uses funcFloat32Async
+    */
+    QList<float> funcFloat32(const QList<float>& paramFloat32) override;
+    /**
+    * Remote call of ISimpleArrayInterface::funcFloat32 on the SimpleArrayInterface service.
+    */
+    QtPromise::QPromise<QList<float>> funcFloat32Async(const QList<float>& paramFloat32);
+    /**
+    * Remote call of ISimpleArrayInterface::funcFloat64 on the SimpleArrayInterface service.
+    * Uses funcFloat64Async
+    */
+    QList<double> funcFloat64(const QList<double>& paramFloat) override;
+    /**
+    * Remote call of ISimpleArrayInterface::funcFloat64 on the SimpleArrayInterface service.
+    */
+    QtPromise::QPromise<QList<double>> funcFloat64Async(const QList<double>& paramFloat);
     /**
     * Remote call of ISimpleArrayInterface::funcString on the SimpleArrayInterface service.
     * Uses funcStringAsync
@@ -186,10 +262,26 @@ private:
     void setPropIntLocal(const QList<int>& propInt);
     /** A local value for propInt */
     QList<int> m_propInt;
+    /**  Updates local value for PropInt32 and informs subscriber about the change with emit property changed signal. */
+    void setPropInt32Local(const QList<qint32>& propInt32);
+    /** A local value for propInt32 */
+    QList<qint32> m_propInt32;
+    /**  Updates local value for PropInt64 and informs subscriber about the change with emit property changed signal. */
+    void setPropInt64Local(const QList<qint64>& propInt64);
+    /** A local value for propInt64 */
+    QList<qint64> m_propInt64;
     /**  Updates local value for PropFloat and informs subscriber about the change with emit property changed signal. */
     void setPropFloatLocal(const QList<qreal>& propFloat);
     /** A local value for propFloat */
     QList<qreal> m_propFloat;
+    /**  Updates local value for PropFloat32 and informs subscriber about the change with emit property changed signal. */
+    void setPropFloat32Local(const QList<float>& propFloat32);
+    /** A local value for propFloat32 */
+    QList<float> m_propFloat32;
+    /**  Updates local value for PropFloat64 and informs subscriber about the change with emit property changed signal. */
+    void setPropFloat64Local(const QList<double>& propFloat64);
+    /** A local value for propFloat64 */
+    QList<double> m_propFloat64;
     /**  Updates local value for PropString and informs subscriber about the change with emit property changed signal. */
     void setPropStringLocal(const QList<QString>& propString);
     /** A local value for propString */

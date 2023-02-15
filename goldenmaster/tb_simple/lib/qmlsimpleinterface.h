@@ -48,9 +48,29 @@ class TB_SIMPLE_LIB_EXPORT QmlSimpleInterface : public AbstractSimpleInterface
     Q_PROPERTY(int propInt READ propInt WRITE setPropInt NOTIFY propIntChanged)
 
     /**
+    * Exposes propInt32 property for qml.
+    */
+    Q_PROPERTY(qint32 propInt32 READ propInt32 WRITE setPropInt32 NOTIFY propInt32Changed)
+
+    /**
+    * Exposes propInt64 property for qml.
+    */
+    Q_PROPERTY(qint64 propInt64 READ propInt64 WRITE setPropInt64 NOTIFY propInt64Changed)
+
+    /**
     * Exposes propFloat property for qml.
     */
     Q_PROPERTY(qreal propFloat READ propFloat WRITE setPropFloat NOTIFY propFloatChanged)
+
+    /**
+    * Exposes propFloat32 property for qml.
+    */
+    Q_PROPERTY(float propFloat32 READ propFloat32 WRITE setPropFloat32 NOTIFY propFloat32Changed)
+
+    /**
+    * Exposes propFloat64 property for qml.
+    */
+    Q_PROPERTY(double propFloat64 READ propFloat64 WRITE setPropFloat64 NOTIFY propFloat64Changed)
 
     /**
     * Exposes propString property for qml.
@@ -80,6 +100,26 @@ public:
     */
     void setPropInt(int propInt) override;
     /**
+    * Getter for a propInt32 property
+    * @return A value for propInt32 property provided by backend.
+    */
+    qint32 propInt32() const override;
+    /*
+    * Setter for a propInt32 property, requests the backend to set the propInt32 property
+    * @param qint32 propInt32  Value to set for  propInt32 property.
+    */
+    void setPropInt32(qint32 propInt32) override;
+    /**
+    * Getter for a propInt64 property
+    * @return A value for propInt64 property provided by backend.
+    */
+    qint64 propInt64() const override;
+    /*
+    * Setter for a propInt64 property, requests the backend to set the propInt64 property
+    * @param qint64 propInt64  Value to set for  propInt64 property.
+    */
+    void setPropInt64(qint64 propInt64) override;
+    /**
     * Getter for a propFloat property
     * @return A value for propFloat property provided by backend.
     */
@@ -89,6 +129,26 @@ public:
     * @param qreal propFloat  Value to set for  propFloat property.
     */
     void setPropFloat(qreal propFloat) override;
+    /**
+    * Getter for a propFloat32 property
+    * @return A value for propFloat32 property provided by backend.
+    */
+    float propFloat32() const override;
+    /*
+    * Setter for a propFloat32 property, requests the backend to set the propFloat32 property
+    * @param float propFloat32  Value to set for  propFloat32 property.
+    */
+    void setPropFloat32(float propFloat32) override;
+    /**
+    * Getter for a propFloat64 property
+    * @return A value for propFloat64 property provided by backend.
+    */
+    double propFloat64() const override;
+    /*
+    * Setter for a propFloat64 property, requests the backend to set the propFloat64 property
+    * @param double propFloat64  Value to set for  propFloat64 property.
+    */
+    void setPropFloat64(double propFloat64) override;
     /**
     * Getter for a propString property
     * @return A value for propString property provided by backend.
@@ -113,10 +173,34 @@ public:
     Q_INVOKABLE int funcInt(int paramInt) override;
 
     /**
+    * Exposes funcInt32 of backend implementation to a qml.
+    *   
+    */
+    Q_INVOKABLE qint32 funcInt32(qint32 paramInt32) override;
+
+    /**
+    * Exposes funcInt64 of backend implementation to a qml.
+    *   
+    */
+    Q_INVOKABLE qint64 funcInt64(qint64 paramInt64) override;
+
+    /**
     * Exposes funcFloat of backend implementation to a qml.
     *   
     */
     Q_INVOKABLE qreal funcFloat(qreal paramFloat) override;
+
+    /**
+    * Exposes funcFloat32 of backend implementation to a qml.
+    *   
+    */
+    Q_INVOKABLE float funcFloat32(float paramFloat32) override;
+
+    /**
+    * Exposes funcFloat64 of backend implementation to a qml.
+    *   
+    */
+    Q_INVOKABLE double funcFloat64(double paramFloat) override;
 
     /**
     * Exposes funcString of backend implementation to a qml.
@@ -128,7 +212,11 @@ Q_SIGNALS:
     /** Re-define singals for property changed notification, to make them are available for qml property */
     void propBoolChanged(bool propBool);
     void propIntChanged(int propInt);
+    void propInt32Changed(qint32 propInt32);
+    void propInt64Changed(qint64 propInt64);
     void propFloatChanged(qreal propFloat);
+    void propFloat32Changed(float propFloat32);
+    void propFloat64Changed(double propFloat64);
     void propStringChanged(const QString& propString);
 private:
     /**

@@ -1,0 +1,31 @@
+schema: apigear.scenario/1.0
+name: "first scenario"
+version: "1.0"
+#initial properties and setting gunction response
+interfaces:
+  - name: io.world.Hello #( module io.world and interface Hello combination)
+    properties:
+      last: {content: "Initial"}
+    operations:
+      - name: say
+        actions:
+         - $return: { value: 88  }
+# sequence of changing properties and emitting signals
+sequences:
+  - name: play with hello
+    interval: 2000 # 2 seconds
+    interface: io.world.Hello
+    loops: 3 
+    steps: # step is called every 2 secs according to interval
+      - name: change property
+        actions: 
+          - $set: { last: {content: "First Change of Property"} }
+      - name: emit signal
+        actions: 
+          - $signal: { justSaid: [ {content: "First Message"} ] }
+      - name: change property AND emit signal
+        actions:
+          - $set: { last: {content: "Second Change of Property"} }
+          - $signal: { justSaid: [ {content: "Other Signal"} ] }
+
+

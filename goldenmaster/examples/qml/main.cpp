@@ -83,8 +83,7 @@
 #include <memory>
 #include <iostream>
 
-void registerMetaTypes();
-
+#include <QtPlugin>
 
 // Example uses Olink Client as a backend for Qml Interface Wrappers
 // It sets up the server with InterfaceImplemenation and wrappes it with Olink Service Adapters
@@ -93,8 +92,6 @@ void registerMetaTypes();
 // And your UI containing the factory and a client.
 
 int main(int argc, char *argv[]){
-
-    registerMetaTypes();
 
     // Prepare Factory before app is created.
     ApiGear::ObjectLink::ClientRegistry client_registry;
@@ -219,84 +216,4 @@ int main(int argc, char *argv[]){
     registry.removeSource(testbed1OlinkStructArrayInterfaceService->olinkObjectName());
 
     return result;
-}
-
-void registerMetaTypes()
-{
-    // register enums structs and interfaces for testbed2
-    auto uritestbed2 = "testbed2";
-    qmlRegisterUncreatableType<testbed2::Enum1>(uritestbed2, 1, 0, "Testbed2Enum1", "An enum can not be created");
-    qmlRegisterUncreatableType<testbed2::Enum2>(uritestbed2, 1, 0, "Testbed2Enum2", "An enum can not be created");
-    qmlRegisterUncreatableType<testbed2::Enum3>(uritestbed2, 1, 0, "Testbed2Enum3", "An enum can not be created");
-    qRegisterMetaType<testbed2::Struct1>();
-    qmlRegisterUncreatableType<testbed2::Struct1Factory>(uritestbed2, 1, 0, "Testbed2Struct1Factory", "A struct factory can not be created");
-    qRegisterMetaType<testbed2::Struct2>();
-    qmlRegisterUncreatableType<testbed2::Struct2Factory>(uritestbed2, 1, 0, "Testbed2Struct2Factory", "A struct factory can not be created");
-    qRegisterMetaType<testbed2::Struct3>();
-    qmlRegisterUncreatableType<testbed2::Struct3Factory>(uritestbed2, 1, 0, "Testbed2Struct3Factory", "A struct factory can not be created");
-    qRegisterMetaType<testbed2::Struct4>();
-    qmlRegisterUncreatableType<testbed2::Struct4Factory>(uritestbed2, 1, 0, "Testbed2Struct4Factory", "A struct factory can not be created");
-    qRegisterMetaType<testbed2::NestedStruct1>();
-    qmlRegisterUncreatableType<testbed2::NestedStruct1Factory>(uritestbed2, 1, 0, "Testbed2NestedStruct1Factory", "A struct factory can not be created");
-    qRegisterMetaType<testbed2::NestedStruct2>();
-    qmlRegisterUncreatableType<testbed2::NestedStruct2Factory>(uritestbed2, 1, 0, "Testbed2NestedStruct2Factory", "A struct factory can not be created");
-    qRegisterMetaType<testbed2::NestedStruct3>();
-    qmlRegisterUncreatableType<testbed2::NestedStruct3Factory>(uritestbed2, 1, 0, "Testbed2NestedStruct3Factory", "A struct factory can not be created");
-    qmlRegisterType<testbed2::QmlManyParamInterface>(uritestbed2, 1, 0, "Testbed2ManyParamInterface");
-    qmlRegisterType<testbed2::QmlNestedStruct1Interface>(uritestbed2, 1, 0, "Testbed2NestedStruct1Interface");
-    qmlRegisterType<testbed2::QmlNestedStruct2Interface>(uritestbed2, 1, 0, "Testbed2NestedStruct2Interface");
-    qmlRegisterType<testbed2::QmlNestedStruct3Interface>(uritestbed2, 1, 0, "Testbed2NestedStruct3Interface");
-
-    // register enums structs and interfaces for tb_enum
-    auto uritb_enum = "tb_enum";
-    qmlRegisterUncreatableType<tb_enum::Enum0>(uritb_enum, 1, 0, "TbEnumEnum0", "An enum can not be created");
-    qmlRegisterUncreatableType<tb_enum::Enum1>(uritb_enum, 1, 0, "TbEnumEnum1", "An enum can not be created");
-    qmlRegisterUncreatableType<tb_enum::Enum2>(uritb_enum, 1, 0, "TbEnumEnum2", "An enum can not be created");
-    qmlRegisterUncreatableType<tb_enum::Enum3>(uritb_enum, 1, 0, "TbEnumEnum3", "An enum can not be created");
-    qmlRegisterType<tb_enum::QmlEnumInterface>(uritb_enum, 1, 0, "TbEnumEnumInterface");
-
-    // register enums structs and interfaces for tb_same1
-    auto uritb_same1 = "tb_same1";
-    qmlRegisterUncreatableType<tb_same1::Enum1>(uritb_same1, 1, 0, "TbSame1Enum1", "An enum can not be created");
-    qmlRegisterUncreatableType<tb_same1::Enum2>(uritb_same1, 1, 0, "TbSame1Enum2", "An enum can not be created");
-    qRegisterMetaType<tb_same1::Struct1>();
-    qmlRegisterUncreatableType<tb_same1::Struct1Factory>(uritb_same1, 1, 0, "TbSame1Struct1Factory", "A struct factory can not be created");
-    qRegisterMetaType<tb_same1::Struct2>();
-    qmlRegisterUncreatableType<tb_same1::Struct2Factory>(uritb_same1, 1, 0, "TbSame1Struct2Factory", "A struct factory can not be created");
-    qmlRegisterType<tb_same1::QmlSameStruct1Interface>(uritb_same1, 1, 0, "TbSame1SameStruct1Interface");
-    qmlRegisterType<tb_same1::QmlSameStruct2Interface>(uritb_same1, 1, 0, "TbSame1SameStruct2Interface");
-    qmlRegisterType<tb_same1::QmlSameEnum1Interface>(uritb_same1, 1, 0, "TbSame1SameEnum1Interface");
-    qmlRegisterType<tb_same1::QmlSameEnum2Interface>(uritb_same1, 1, 0, "TbSame1SameEnum2Interface");
-
-    // register enums structs and interfaces for tb_same2
-    auto uritb_same2 = "tb_same2";
-    qmlRegisterUncreatableType<tb_same2::Enum1>(uritb_same2, 1, 0, "TbSame2Enum1", "An enum can not be created");
-    qmlRegisterUncreatableType<tb_same2::Enum2>(uritb_same2, 1, 0, "TbSame2Enum2", "An enum can not be created");
-    qRegisterMetaType<tb_same2::Struct1>();
-    qmlRegisterUncreatableType<tb_same2::Struct1Factory>(uritb_same2, 1, 0, "TbSame2Struct1Factory", "A struct factory can not be created");
-    qRegisterMetaType<tb_same2::Struct2>();
-    qmlRegisterUncreatableType<tb_same2::Struct2Factory>(uritb_same2, 1, 0, "TbSame2Struct2Factory", "A struct factory can not be created");
-    qmlRegisterType<tb_same2::QmlSameStruct1Interface>(uritb_same2, 1, 0, "TbSame2SameStruct1Interface");
-    qmlRegisterType<tb_same2::QmlSameStruct2Interface>(uritb_same2, 1, 0, "TbSame2SameStruct2Interface");
-    qmlRegisterType<tb_same2::QmlSameEnum1Interface>(uritb_same2, 1, 0, "TbSame2SameEnum1Interface");
-    qmlRegisterType<tb_same2::QmlSameEnum2Interface>(uritb_same2, 1, 0, "TbSame2SameEnum2Interface");
-
-    // register enums structs and interfaces for tb_simple
-    auto uritb_simple = "tb_simple";
-    qmlRegisterType<tb_simple::QmlSimpleInterface>(uritb_simple, 1, 0, "TbSimpleSimpleInterface");
-    qmlRegisterType<tb_simple::QmlSimpleArrayInterface>(uritb_simple, 1, 0, "TbSimpleSimpleArrayInterface");
-
-    // register enums structs and interfaces for testbed1
-    auto uritestbed1 = "testbed1";
-    qRegisterMetaType<testbed1::StructBool>();
-    qmlRegisterUncreatableType<testbed1::StructBoolFactory>(uritestbed1, 1, 0, "Testbed1StructBoolFactory", "A struct factory can not be created");
-    qRegisterMetaType<testbed1::StructInt>();
-    qmlRegisterUncreatableType<testbed1::StructIntFactory>(uritestbed1, 1, 0, "Testbed1StructIntFactory", "A struct factory can not be created");
-    qRegisterMetaType<testbed1::StructFloat>();
-    qmlRegisterUncreatableType<testbed1::StructFloatFactory>(uritestbed1, 1, 0, "Testbed1StructFloatFactory", "A struct factory can not be created");
-    qRegisterMetaType<testbed1::StructString>();
-    qmlRegisterUncreatableType<testbed1::StructStringFactory>(uritestbed1, 1, 0, "Testbed1StructStringFactory", "A struct factory can not be created");
-    qmlRegisterType<testbed1::QmlStructInterface>(uritestbed1, 1, 0, "Testbed1StructInterface");
-    qmlRegisterType<testbed1::QmlStructArrayInterface>(uritestbed1, 1, 0, "Testbed1StructArrayInterface");
-
 }

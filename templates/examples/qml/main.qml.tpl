@@ -4,7 +4,10 @@ import QtQuick.Controls 2.15
 {{- range .System.Modules }}
 {{- $module := . }}
 {{- $version := .Version }}
-import {{snake $module.Name }} {{$version.Major}}.{{$version.Minor}}
+import {{$module.Name }} {{$version.Major}}.{{$version.Minor}}
+{{- range $module.Structs }}
+import {{$module.Name }}.{{.Name}}FactorySingleton {{$version.Major}}.{{$version.Minor}}
+{{- end }}
 {{- end }}
 
 ApplicationWindow {

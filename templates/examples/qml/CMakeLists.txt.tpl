@@ -13,6 +13,10 @@ set (SOURCES
     main.qml
     resources.qrc
 )
+
+set(QML_IMPORT_PATH  "${CMAKE_BINARY_DIR}/imports" CACHE STRING "" FORCE)
+set(QML2_IMPORT_PATH "${CMAKE_BINARY_DIR}/imports" CACHE STRING "" FORCE)
+
 add_executable(QmlExamlple
     ${SOURCES}
 )

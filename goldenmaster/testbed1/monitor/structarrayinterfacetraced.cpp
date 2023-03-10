@@ -15,10 +15,10 @@ StructArrayInterfaceTraced::StructArrayInterfaceTraced(std::shared_ptr<AbstractS
     }
 
     // Connect signals emitted by implementation with tracing function.
-     connect(m_impl.get(), &AbstractStructArrayInterface::sigBool, this, &StructArrayInterfaceTraced::traceSigBool);
-     connect(m_impl.get(), &AbstractStructArrayInterface::sigInt, this, &StructArrayInterfaceTraced::traceSigInt);
-     connect(m_impl.get(), &AbstractStructArrayInterface::sigFloat, this, &StructArrayInterfaceTraced::traceSigFloat);
-     connect(m_impl.get(), &AbstractStructArrayInterface::sigString, this, &StructArrayInterfaceTraced::traceSigString);
+     connect(m_impl.get(), &AbstractStructArrayInterface::sigBool, this, &StructArrayInterfaceTraced::sigBool);
+     connect(m_impl.get(), &AbstractStructArrayInterface::sigInt, this, &StructArrayInterfaceTraced::sigInt);
+     connect(m_impl.get(), &AbstractStructArrayInterface::sigFloat, this, &StructArrayInterfaceTraced::sigFloat);
+     connect(m_impl.get(), &AbstractStructArrayInterface::sigString, this, &StructArrayInterfaceTraced::sigString);
 
     // Connect signals emitted by implementation with this object.
      connect(m_impl.get(), &AbstractStructArrayInterface::sigBool, this, &StructArrayInterfaceTraced::traceSigBool);

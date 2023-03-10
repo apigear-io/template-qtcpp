@@ -15,8 +15,8 @@ NestedStruct2InterfaceTraced::NestedStruct2InterfaceTraced(std::shared_ptr<Abstr
     }
 
     // Connect signals emitted by implementation with tracing function.
-     connect(m_impl.get(), &AbstractNestedStruct2Interface::sig1, this, &NestedStruct2InterfaceTraced::traceSig1);
-     connect(m_impl.get(), &AbstractNestedStruct2Interface::sig2, this, &NestedStruct2InterfaceTraced::traceSig2);
+     connect(m_impl.get(), &AbstractNestedStruct2Interface::sig1, this, &NestedStruct2InterfaceTraced::sig1);
+     connect(m_impl.get(), &AbstractNestedStruct2Interface::sig2, this, &NestedStruct2InterfaceTraced::sig2);
 
     // Connect signals emitted by implementation with this object.
      connect(m_impl.get(), &AbstractNestedStruct2Interface::sig1, this, &NestedStruct2InterfaceTraced::traceSig1);

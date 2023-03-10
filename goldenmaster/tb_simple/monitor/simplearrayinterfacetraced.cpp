@@ -15,14 +15,14 @@ SimpleArrayInterfaceTraced::SimpleArrayInterfaceTraced(std::shared_ptr<AbstractS
     }
 
     // Connect signals emitted by implementation with tracing function.
-     connect(m_impl.get(), &AbstractSimpleArrayInterface::sigBool, this, &SimpleArrayInterfaceTraced::traceSigBool);
-     connect(m_impl.get(), &AbstractSimpleArrayInterface::sigInt, this, &SimpleArrayInterfaceTraced::traceSigInt);
-     connect(m_impl.get(), &AbstractSimpleArrayInterface::sigInt32, this, &SimpleArrayInterfaceTraced::traceSigInt32);
-     connect(m_impl.get(), &AbstractSimpleArrayInterface::sigInt64, this, &SimpleArrayInterfaceTraced::traceSigInt64);
-     connect(m_impl.get(), &AbstractSimpleArrayInterface::sigFloat, this, &SimpleArrayInterfaceTraced::traceSigFloat);
-     connect(m_impl.get(), &AbstractSimpleArrayInterface::sigFloat32, this, &SimpleArrayInterfaceTraced::traceSigFloat32);
-     connect(m_impl.get(), &AbstractSimpleArrayInterface::sigFloat64, this, &SimpleArrayInterfaceTraced::traceSigFloat64);
-     connect(m_impl.get(), &AbstractSimpleArrayInterface::sigString, this, &SimpleArrayInterfaceTraced::traceSigString);
+     connect(m_impl.get(), &AbstractSimpleArrayInterface::sigBool, this, &SimpleArrayInterfaceTraced::sigBool);
+     connect(m_impl.get(), &AbstractSimpleArrayInterface::sigInt, this, &SimpleArrayInterfaceTraced::sigInt);
+     connect(m_impl.get(), &AbstractSimpleArrayInterface::sigInt32, this, &SimpleArrayInterfaceTraced::sigInt32);
+     connect(m_impl.get(), &AbstractSimpleArrayInterface::sigInt64, this, &SimpleArrayInterfaceTraced::sigInt64);
+     connect(m_impl.get(), &AbstractSimpleArrayInterface::sigFloat, this, &SimpleArrayInterfaceTraced::sigFloat);
+     connect(m_impl.get(), &AbstractSimpleArrayInterface::sigFloat32, this, &SimpleArrayInterfaceTraced::sigFloat32);
+     connect(m_impl.get(), &AbstractSimpleArrayInterface::sigFloat64, this, &SimpleArrayInterfaceTraced::sigFloat64);
+     connect(m_impl.get(), &AbstractSimpleArrayInterface::sigString, this, &SimpleArrayInterfaceTraced::sigString);
 
     // Connect signals emitted by implementation with this object.
      connect(m_impl.get(), &AbstractSimpleArrayInterface::sigBool, this, &SimpleArrayInterfaceTraced::traceSigBool);

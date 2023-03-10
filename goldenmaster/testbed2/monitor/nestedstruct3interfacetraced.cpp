@@ -15,9 +15,9 @@ NestedStruct3InterfaceTraced::NestedStruct3InterfaceTraced(std::shared_ptr<Abstr
     }
 
     // Connect signals emitted by implementation with tracing function.
-     connect(m_impl.get(), &AbstractNestedStruct3Interface::sig1, this, &NestedStruct3InterfaceTraced::traceSig1);
-     connect(m_impl.get(), &AbstractNestedStruct3Interface::sig2, this, &NestedStruct3InterfaceTraced::traceSig2);
-     connect(m_impl.get(), &AbstractNestedStruct3Interface::sig3, this, &NestedStruct3InterfaceTraced::traceSig3);
+     connect(m_impl.get(), &AbstractNestedStruct3Interface::sig1, this, &NestedStruct3InterfaceTraced::sig1);
+     connect(m_impl.get(), &AbstractNestedStruct3Interface::sig2, this, &NestedStruct3InterfaceTraced::sig2);
+     connect(m_impl.get(), &AbstractNestedStruct3Interface::sig3, this, &NestedStruct3InterfaceTraced::sig3);
 
     // Connect signals emitted by implementation with this object.
      connect(m_impl.get(), &AbstractNestedStruct3Interface::sig1, this, &NestedStruct3InterfaceTraced::traceSig1);

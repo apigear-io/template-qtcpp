@@ -15,8 +15,8 @@ SameStruct2InterfaceTraced::SameStruct2InterfaceTraced(std::shared_ptr<AbstractS
     }
 
     // Connect signals emitted by implementation with tracing function.
-     connect(m_impl.get(), &AbstractSameStruct2Interface::sig1, this, &SameStruct2InterfaceTraced::traceSig1);
-     connect(m_impl.get(), &AbstractSameStruct2Interface::sig2, this, &SameStruct2InterfaceTraced::traceSig2);
+     connect(m_impl.get(), &AbstractSameStruct2Interface::sig1, this, &SameStruct2InterfaceTraced::sig1);
+     connect(m_impl.get(), &AbstractSameStruct2Interface::sig2, this, &SameStruct2InterfaceTraced::sig2);
 
     // Connect signals emitted by implementation with this object.
      connect(m_impl.get(), &AbstractSameStruct2Interface::sig1, this, &SameStruct2InterfaceTraced::traceSig1);

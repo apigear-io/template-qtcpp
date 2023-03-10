@@ -28,8 +28,7 @@
 #include <memory>
 #include <iostream>
 
-void registerMetaTypes();
-
+#include <QtPlugin>
 
 // Example uses Olink Client as a backend for Qml Interface Wrappers
 // It sets up the server with InterfaceImplemenation and wrappes it with Olink Service Adapters
@@ -38,8 +37,6 @@ void registerMetaTypes();
 // And your UI containing the factory and a client.
 
 int main(int argc, char *argv[]){
-
-    registerMetaTypes();
 
     // Prepare Factory before app is created.
     ApiGear::ObjectLink::ClientRegistry client_registry;
@@ -113,28 +110,4 @@ int main(int argc, char *argv[]){
     {{- end }}
 
     return result;
-}
-
-void registerMetaTypes()
-{
-{{- range .System.Modules }}
-{{- $module := . }}
-{{- $module_id := snake $module.Name }}
-{{- $version := $module.Version }}
-    // register enums structs and interfaces for {{$module_id}}
-    {{- $Modulename := Camel $module.Name }}
-    auto uri{{ snake $module.Name }} = "{{snake $module.Name }}";
-{{- range $module.Enums }}
-    qmlRegisterUncreatableType<{{$module_id}}::{{.Name}}>(uri{{ snake $module.Name }}, {{$version.Major}}, {{$version.Minor}}, "{{$Modulename}}{{.Name}}", "An enum can not be created");
-{{- end }}
-
-{{- range $module.Structs }}
-    qRegisterMetaType<{{$module_id}}::{{.Name}}>();
-    qmlRegisterUncreatableType<{{$module_id}}::{{.Name}}Factory>(uri{{ snake $module.Name }}, {{$version.Major}}, {{$version.Minor}}, "{{$Modulename}}{{.Name}}Factory", "A struct factory can not be created");
-{{- end }}
-
-{{- range $module.Interfaces }}
-    qmlRegisterType<{{$module_id}}::Qml{{.Name}}>(uri{{ snake $module.Name }}, {{$version.Major}}, {{$version.Minor}}, "{{$Modulename}}{{.Name}}");
-{{- end }}
-{{ end }}
 }

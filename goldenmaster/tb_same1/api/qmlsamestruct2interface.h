@@ -40,12 +40,12 @@ class TB_SAME1_API_EXPORT QmlSameStruct2Interface : public AbstractSameStruct2In
     /**
     * Exposes prop1 property for qml.
     */
-    Q_PROPERTY(Struct2 prop1 READ prop1 WRITE setProp1 NOTIFY prop1Changed)
+    Q_PROPERTY(tb_same1::Struct2 prop1 READ prop1 WRITE setProp1 NOTIFY prop1Changed)
 
     /**
     * Exposes prop2 property for qml.
     */
-    Q_PROPERTY(Struct2 prop2 READ prop2 WRITE setProp2 NOTIFY prop2Changed)
+    Q_PROPERTY(tb_same1::Struct2 prop2 READ prop2 WRITE setProp2 NOTIFY prop2Changed)
 public:
     explicit QmlSameStruct2Interface(QObject *parent = nullptr);
     ~QmlSameStruct2Interface() override;
@@ -53,39 +53,39 @@ public:
     * Getter for a prop1 property
     * @return A value for prop1 property provided by backend.
     */
-    Struct2 prop1() const override;
+    tb_same1::Struct2 prop1() const override;
     /*
     * Setter for a prop1 property, requests the backend to set the prop1 property
     * @param const Struct2& prop1  Value to set for  prop1 property.
     */
-    void setProp1(const Struct2& prop1) override;
+    void setProp1(const tb_same1::Struct2& prop1) override;
     /**
     * Getter for a prop2 property
     * @return A value for prop2 property provided by backend.
     */
-    Struct2 prop2() const override;
+    tb_same1::Struct2 prop2() const override;
     /*
     * Setter for a prop2 property, requests the backend to set the prop2 property
     * @param const Struct2& prop2  Value to set for  prop2 property.
     */
-    void setProp2(const Struct2& prop2) override;
+    void setProp2(const tb_same1::Struct2& prop2) override;
 
     /**
     * Exposes func1 of backend implementation to a qml.
     *   
     */
-    Q_INVOKABLE Struct1 func1(const Struct1& param1) override;
+    Q_INVOKABLE tb_same1::Struct1 func1(const tb_same1::Struct1& param1) override;
 
     /**
     * Exposes func2 of backend implementation to a qml.
     *   
     */
-    Q_INVOKABLE Struct1 func2(const Struct1& param1, const Struct2& param2) override;
+    Q_INVOKABLE tb_same1::Struct1 func2(const tb_same1::Struct1& param1, const tb_same1::Struct2& param2) override;
 
 Q_SIGNALS:
     /** Re-define singals for property changed notification, to make them are available for qml property */
-    void prop1Changed(const Struct2& prop1);
-    void prop2Changed(const Struct2& prop2);
+    void prop1Changed(const tb_same1::Struct2& prop1);
+    void prop2Changed(const tb_same1::Struct2& prop2);
 private:
     /**
     * Backend of AbstractSameStruct2Interface type that provides properties on which methods will be invoked.

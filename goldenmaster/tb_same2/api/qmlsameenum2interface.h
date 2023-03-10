@@ -40,12 +40,12 @@ class TB_SAME2_API_EXPORT QmlSameEnum2Interface : public AbstractSameEnum2Interf
     /**
     * Exposes prop1 property for qml.
     */
-    Q_PROPERTY(Enum1::Enum1Enum prop1 READ prop1 WRITE setProp1 NOTIFY prop1Changed)
+    Q_PROPERTY(tb_same2::Enum1::Enum1Enum prop1 READ prop1 WRITE setProp1 NOTIFY prop1Changed)
 
     /**
     * Exposes prop2 property for qml.
     */
-    Q_PROPERTY(Enum2::Enum2Enum prop2 READ prop2 WRITE setProp2 NOTIFY prop2Changed)
+    Q_PROPERTY(tb_same2::Enum2::Enum2Enum prop2 READ prop2 WRITE setProp2 NOTIFY prop2Changed)
 public:
     explicit QmlSameEnum2Interface(QObject *parent = nullptr);
     ~QmlSameEnum2Interface() override;
@@ -53,39 +53,39 @@ public:
     * Getter for a prop1 property
     * @return A value for prop1 property provided by backend.
     */
-    Enum1::Enum1Enum prop1() const override;
+    tb_same2::Enum1::Enum1Enum prop1() const override;
     /*
     * Setter for a prop1 property, requests the backend to set the prop1 property
     * @param Enum1::Enum1Enum prop1  Value to set for  prop1 property.
     */
-    void setProp1(Enum1::Enum1Enum prop1) override;
+    void setProp1(tb_same2::Enum1::Enum1Enum prop1) override;
     /**
     * Getter for a prop2 property
     * @return A value for prop2 property provided by backend.
     */
-    Enum2::Enum2Enum prop2() const override;
+    tb_same2::Enum2::Enum2Enum prop2() const override;
     /*
     * Setter for a prop2 property, requests the backend to set the prop2 property
     * @param Enum2::Enum2Enum prop2  Value to set for  prop2 property.
     */
-    void setProp2(Enum2::Enum2Enum prop2) override;
+    void setProp2(tb_same2::Enum2::Enum2Enum prop2) override;
 
     /**
     * Exposes func1 of backend implementation to a qml.
     *   
     */
-    Q_INVOKABLE Enum1::Enum1Enum func1(Enum1::Enum1Enum param1) override;
+    Q_INVOKABLE tb_same2::Enum1::Enum1Enum func1(tb_same2::Enum1::Enum1Enum param1) override;
 
     /**
     * Exposes func2 of backend implementation to a qml.
     *   
     */
-    Q_INVOKABLE Enum1::Enum1Enum func2(Enum1::Enum1Enum param1, Enum2::Enum2Enum param2) override;
+    Q_INVOKABLE tb_same2::Enum1::Enum1Enum func2(tb_same2::Enum1::Enum1Enum param1, tb_same2::Enum2::Enum2Enum param2) override;
 
 Q_SIGNALS:
     /** Re-define singals for property changed notification, to make them are available for qml property */
-    void prop1Changed(Enum1::Enum1Enum prop1);
-    void prop2Changed(Enum2::Enum2Enum prop2);
+    void prop1Changed(tb_same2::Enum1::Enum1Enum prop1);
+    void prop2Changed(tb_same2::Enum2::Enum2Enum prop2);
 private:
     /**
     * Backend of AbstractSameEnum2Interface type that provides properties on which methods will be invoked.

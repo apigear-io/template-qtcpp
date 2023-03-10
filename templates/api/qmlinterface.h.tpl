@@ -1,6 +1,7 @@
 {{- /* Copyright (c) ApiGear UG 2020 */ -}}
 {{ cppGpl .Module }}
 {{- $class := Camel .Interface.Name }}
+{{- $namespacePrefix := printf "%s::" (snake .Module.Name) }}
 {{- $MODULE_ID := printf "%s_API" (SNAKE .Module.Name) }}
 
 #pragma once
@@ -10,7 +11,7 @@
 #include "api.h"
 #include <memory>
 
-namespace {{snake  .Module.Name }} {
+namespace {{snake .Module.Name }} {
 
 /**
 * A QML wrapper of the {{$class}} implementation.
@@ -31,7 +32,7 @@ class {{$MODULE_ID}}_EXPORT Qml{{$class}} : public Abstract{{$class}}
     * @param {{$property.Name}} {{$property.Description}}
     {{- end }}
     */
-    Q_PROPERTY({{qtReturn "" .}} {{.Name}} READ {{.Name}} WRITE set{{Camel .Name}} NOTIFY {{.Name}}Changed)
+    Q_PROPERTY({{qtReturn $namespacePrefix .}} {{.Name}} READ {{.Name}} WRITE set{{Camel .Name}} NOTIFY {{.Name}}Changed)
 {{- end }}
 public:
     explicit Qml{{$class}}(QObject *parent = nullptr);
@@ -42,12 +43,12 @@ public:
     * Getter for a {{.Name}} property
     * @return A value for {{.Name}} property provided by backend.
     */
-    {{qtReturn "" .}} {{.Name}}() const override;
+    {{qtReturn $namespacePrefix .}} {{.Name}}() const override;
     /*
     * Setter for a {{.Name}} property, requests the backend to set the {{.Name}} property
     * @param {{qtParam "" .}}  Value to set for  {{.Name}} property.
     */
-    void set{{Camel .Name}}({{qtParam "" .}}) override;
+    void set{{Camel .Name}}({{qtParam $namespacePrefix .}}) override;
 {{- end }}
 
 {{- range .Interface.Operations }}
@@ -62,13 +63,13 @@ public:
 {{- end }}   {{- /* end if param description */}}
 {{- end }}   {{- /* end range operation param*/}}  
     */
-    Q_INVOKABLE {{qtReturn "" .Return}} {{camel .Name}}({{qtParams "" .Params}}) override;
+    Q_INVOKABLE {{qtReturn $namespacePrefix .Return}} {{camel .Name}}({{qtParams $namespacePrefix .Params}}) override;
 {{- end }}
 
 Q_SIGNALS:
     /** Re-define singals for property changed notification, to make them are available for qml property */
 {{- range .Interface.Properties }}
-    void {{.Name}}Changed({{qtParam "" .}});
+    void {{.Name}}Changed({{qtParam $namespacePrefix .}});
 {{- end }}
 private:
     /**

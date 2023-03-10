@@ -40,22 +40,22 @@ class TESTBED1_API_EXPORT QmlStructInterface : public AbstractStructInterface
     /**
     * Exposes propBool property for qml.
     */
-    Q_PROPERTY(StructBool propBool READ propBool WRITE setPropBool NOTIFY propBoolChanged)
+    Q_PROPERTY(testbed1::StructBool propBool READ propBool WRITE setPropBool NOTIFY propBoolChanged)
 
     /**
     * Exposes propInt property for qml.
     */
-    Q_PROPERTY(StructInt propInt READ propInt WRITE setPropInt NOTIFY propIntChanged)
+    Q_PROPERTY(testbed1::StructInt propInt READ propInt WRITE setPropInt NOTIFY propIntChanged)
 
     /**
     * Exposes propFloat property for qml.
     */
-    Q_PROPERTY(StructFloat propFloat READ propFloat WRITE setPropFloat NOTIFY propFloatChanged)
+    Q_PROPERTY(testbed1::StructFloat propFloat READ propFloat WRITE setPropFloat NOTIFY propFloatChanged)
 
     /**
     * Exposes propString property for qml.
     */
-    Q_PROPERTY(StructString propString READ propString WRITE setPropString NOTIFY propStringChanged)
+    Q_PROPERTY(testbed1::StructString propString READ propString WRITE setPropString NOTIFY propStringChanged)
 public:
     explicit QmlStructInterface(QObject *parent = nullptr);
     ~QmlStructInterface() override;
@@ -63,73 +63,73 @@ public:
     * Getter for a propBool property
     * @return A value for propBool property provided by backend.
     */
-    StructBool propBool() const override;
+    testbed1::StructBool propBool() const override;
     /*
     * Setter for a propBool property, requests the backend to set the propBool property
     * @param const StructBool& propBool  Value to set for  propBool property.
     */
-    void setPropBool(const StructBool& propBool) override;
+    void setPropBool(const testbed1::StructBool& propBool) override;
     /**
     * Getter for a propInt property
     * @return A value for propInt property provided by backend.
     */
-    StructInt propInt() const override;
+    testbed1::StructInt propInt() const override;
     /*
     * Setter for a propInt property, requests the backend to set the propInt property
     * @param const StructInt& propInt  Value to set for  propInt property.
     */
-    void setPropInt(const StructInt& propInt) override;
+    void setPropInt(const testbed1::StructInt& propInt) override;
     /**
     * Getter for a propFloat property
     * @return A value for propFloat property provided by backend.
     */
-    StructFloat propFloat() const override;
+    testbed1::StructFloat propFloat() const override;
     /*
     * Setter for a propFloat property, requests the backend to set the propFloat property
     * @param const StructFloat& propFloat  Value to set for  propFloat property.
     */
-    void setPropFloat(const StructFloat& propFloat) override;
+    void setPropFloat(const testbed1::StructFloat& propFloat) override;
     /**
     * Getter for a propString property
     * @return A value for propString property provided by backend.
     */
-    StructString propString() const override;
+    testbed1::StructString propString() const override;
     /*
     * Setter for a propString property, requests the backend to set the propString property
     * @param const StructString& propString  Value to set for  propString property.
     */
-    void setPropString(const StructString& propString) override;
+    void setPropString(const testbed1::StructString& propString) override;
 
     /**
     * Exposes funcBool of backend implementation to a qml.
     *   
     */
-    Q_INVOKABLE StructBool funcBool(const StructBool& paramBool) override;
+    Q_INVOKABLE testbed1::StructBool funcBool(const testbed1::StructBool& paramBool) override;
 
     /**
     * Exposes funcInt of backend implementation to a qml.
     *   
     */
-    Q_INVOKABLE StructBool funcInt(const StructInt& paramInt) override;
+    Q_INVOKABLE testbed1::StructBool funcInt(const testbed1::StructInt& paramInt) override;
 
     /**
     * Exposes funcFloat of backend implementation to a qml.
     *   
     */
-    Q_INVOKABLE StructFloat funcFloat(const StructFloat& paramFloat) override;
+    Q_INVOKABLE testbed1::StructFloat funcFloat(const testbed1::StructFloat& paramFloat) override;
 
     /**
     * Exposes funcString of backend implementation to a qml.
     *   
     */
-    Q_INVOKABLE StructString funcString(const StructString& paramString) override;
+    Q_INVOKABLE testbed1::StructString funcString(const testbed1::StructString& paramString) override;
 
 Q_SIGNALS:
     /** Re-define singals for property changed notification, to make them are available for qml property */
-    void propBoolChanged(const StructBool& propBool);
-    void propIntChanged(const StructInt& propInt);
-    void propFloatChanged(const StructFloat& propFloat);
-    void propStringChanged(const StructString& propString);
+    void propBoolChanged(const testbed1::StructBool& propBool);
+    void propIntChanged(const testbed1::StructInt& propInt);
+    void propFloatChanged(const testbed1::StructFloat& propFloat);
+    void propStringChanged(const testbed1::StructString& propString);
 private:
     /**
     * Backend of AbstractStructInterface type that provides properties on which methods will be invoked.

@@ -15,10 +15,10 @@ EnumInterfaceTraced::EnumInterfaceTraced(std::shared_ptr<AbstractEnumInterface> 
     }
 
     // Connect signals emitted by implementation with tracing function.
-     connect(m_impl.get(), &AbstractEnumInterface::sig0, this, &EnumInterfaceTraced::traceSig0);
-     connect(m_impl.get(), &AbstractEnumInterface::sig1, this, &EnumInterfaceTraced::traceSig1);
-     connect(m_impl.get(), &AbstractEnumInterface::sig2, this, &EnumInterfaceTraced::traceSig2);
-     connect(m_impl.get(), &AbstractEnumInterface::sig3, this, &EnumInterfaceTraced::traceSig3);
+     connect(m_impl.get(), &AbstractEnumInterface::sig0, this, &EnumInterfaceTraced::sig0);
+     connect(m_impl.get(), &AbstractEnumInterface::sig1, this, &EnumInterfaceTraced::sig1);
+     connect(m_impl.get(), &AbstractEnumInterface::sig2, this, &EnumInterfaceTraced::sig2);
+     connect(m_impl.get(), &AbstractEnumInterface::sig3, this, &EnumInterfaceTraced::sig3);
 
     // Connect signals emitted by implementation with this object.
      connect(m_impl.get(), &AbstractEnumInterface::sig0, this, &EnumInterfaceTraced::traceSig0);

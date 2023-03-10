@@ -15,7 +15,7 @@ NestedStruct1InterfaceTraced::NestedStruct1InterfaceTraced(std::shared_ptr<Abstr
     }
 
     // Connect signals emitted by implementation with tracing function.
-     connect(m_impl.get(), &AbstractNestedStruct1Interface::sig1, this, &NestedStruct1InterfaceTraced::traceSig1);
+     connect(m_impl.get(), &AbstractNestedStruct1Interface::sig1, this, &NestedStruct1InterfaceTraced::sig1);
 
     // Connect signals emitted by implementation with this object.
      connect(m_impl.get(), &AbstractNestedStruct1Interface::sig1, this, &NestedStruct1InterfaceTraced::traceSig1);

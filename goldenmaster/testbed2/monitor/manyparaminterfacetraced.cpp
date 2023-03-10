@@ -15,10 +15,10 @@ ManyParamInterfaceTraced::ManyParamInterfaceTraced(std::shared_ptr<AbstractManyP
     }
 
     // Connect signals emitted by implementation with tracing function.
-     connect(m_impl.get(), &AbstractManyParamInterface::sig1, this, &ManyParamInterfaceTraced::traceSig1);
-     connect(m_impl.get(), &AbstractManyParamInterface::sig2, this, &ManyParamInterfaceTraced::traceSig2);
-     connect(m_impl.get(), &AbstractManyParamInterface::sig3, this, &ManyParamInterfaceTraced::traceSig3);
-     connect(m_impl.get(), &AbstractManyParamInterface::sig4, this, &ManyParamInterfaceTraced::traceSig4);
+     connect(m_impl.get(), &AbstractManyParamInterface::sig1, this, &ManyParamInterfaceTraced::sig1);
+     connect(m_impl.get(), &AbstractManyParamInterface::sig2, this, &ManyParamInterfaceTraced::sig2);
+     connect(m_impl.get(), &AbstractManyParamInterface::sig3, this, &ManyParamInterfaceTraced::sig3);
+     connect(m_impl.get(), &AbstractManyParamInterface::sig4, this, &ManyParamInterfaceTraced::sig4);
 
     // Connect signals emitted by implementation with this object.
      connect(m_impl.get(), &AbstractManyParamInterface::sig1, this, &ManyParamInterfaceTraced::traceSig1);

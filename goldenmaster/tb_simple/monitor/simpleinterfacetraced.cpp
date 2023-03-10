@@ -15,14 +15,14 @@ SimpleInterfaceTraced::SimpleInterfaceTraced(std::shared_ptr<AbstractSimpleInter
     }
 
     // Connect signals emitted by implementation with tracing function.
-     connect(m_impl.get(), &AbstractSimpleInterface::sigBool, this, &SimpleInterfaceTraced::traceSigBool);
-     connect(m_impl.get(), &AbstractSimpleInterface::sigInt, this, &SimpleInterfaceTraced::traceSigInt);
-     connect(m_impl.get(), &AbstractSimpleInterface::sigInt32, this, &SimpleInterfaceTraced::traceSigInt32);
-     connect(m_impl.get(), &AbstractSimpleInterface::sigInt64, this, &SimpleInterfaceTraced::traceSigInt64);
-     connect(m_impl.get(), &AbstractSimpleInterface::sigFloat, this, &SimpleInterfaceTraced::traceSigFloat);
-     connect(m_impl.get(), &AbstractSimpleInterface::sigFloat32, this, &SimpleInterfaceTraced::traceSigFloat32);
-     connect(m_impl.get(), &AbstractSimpleInterface::sigFloat64, this, &SimpleInterfaceTraced::traceSigFloat64);
-     connect(m_impl.get(), &AbstractSimpleInterface::sigString, this, &SimpleInterfaceTraced::traceSigString);
+     connect(m_impl.get(), &AbstractSimpleInterface::sigBool, this, &SimpleInterfaceTraced::sigBool);
+     connect(m_impl.get(), &AbstractSimpleInterface::sigInt, this, &SimpleInterfaceTraced::sigInt);
+     connect(m_impl.get(), &AbstractSimpleInterface::sigInt32, this, &SimpleInterfaceTraced::sigInt32);
+     connect(m_impl.get(), &AbstractSimpleInterface::sigInt64, this, &SimpleInterfaceTraced::sigInt64);
+     connect(m_impl.get(), &AbstractSimpleInterface::sigFloat, this, &SimpleInterfaceTraced::sigFloat);
+     connect(m_impl.get(), &AbstractSimpleInterface::sigFloat32, this, &SimpleInterfaceTraced::sigFloat32);
+     connect(m_impl.get(), &AbstractSimpleInterface::sigFloat64, this, &SimpleInterfaceTraced::sigFloat64);
+     connect(m_impl.get(), &AbstractSimpleInterface::sigString, this, &SimpleInterfaceTraced::sigString);
 
     // Connect signals emitted by implementation with this object.
      connect(m_impl.get(), &AbstractSimpleInterface::sigBool, this, &SimpleInterfaceTraced::traceSigBool);

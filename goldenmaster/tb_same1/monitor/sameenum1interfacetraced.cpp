@@ -15,7 +15,7 @@ SameEnum1InterfaceTraced::SameEnum1InterfaceTraced(std::shared_ptr<AbstractSameE
     }
 
     // Connect signals emitted by implementation with tracing function.
-     connect(m_impl.get(), &AbstractSameEnum1Interface::sig1, this, &SameEnum1InterfaceTraced::traceSig1);
+     connect(m_impl.get(), &AbstractSameEnum1Interface::sig1, this, &SameEnum1InterfaceTraced::sig1);
 
     // Connect signals emitted by implementation with this object.
      connect(m_impl.get(), &AbstractSameEnum1Interface::sig1, this, &SameEnum1InterfaceTraced::traceSig1);

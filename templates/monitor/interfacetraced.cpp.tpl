@@ -20,7 +20,7 @@ namespace {{ snake .Module.Name }} {
     // Connect signals emitted by implementation with tracing function.
 {{- range .Interface.Signals}}
 {{- $signal := . }}
-     connect(m_impl.get(), &{{$interfaceClass}}::{{camel $signal.Name}}, this, &{{$class}}::trace{{Camel $signal.Name}});    
+     connect(m_impl.get(), &{{$interfaceClass}}::{{camel $signal.Name}}, this, &{{$class}}::{{camel $signal.Name}});    
 {{- end }}
 
     // Connect signals emitted by implementation with this object.

@@ -1,6 +1,7 @@
 {{- /* Copyright (c) ApiGear UG 2020 */}}
 {{- $MODULE_ID := printf "%s_API" (SNAKE .Module.Name) }}
 {{- $module_id := snake .Module.Name }}
+{{- $namespacePrefix := printf "%s::" (snake .Module.Name) }}
 {{- cppGpl .Module }}
 #pragma once
 
@@ -112,7 +113,7 @@ QDataStream &operator>>(QDataStream &stream, {{$class}} &obj);
 class {{ $MODULE_ID }}_EXPORT {{$class}}Factory : public QObject {
     Q_OBJECT
 public:
-    Q_INVOKABLE {{$class}} create();
+    Q_INVOKABLE {{$module_id}}::{{$class}} create();
 };
 
 
@@ -185,7 +186,7 @@ signals:
     * @param {{$param.Name}} {{$param.Description}}
     {{- end -}} {{/* range singal.Params */}}
     */
-    void {{$signalName}}({{qtParams "" .Params}});
+    void {{$signalName}}({{qtParams $namespacePrefix .Params}});
 {{- end }}
 {{- range .Properties }}
 {{- $property:= . }}

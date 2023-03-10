@@ -40,17 +40,17 @@ class TESTBED2_API_EXPORT QmlNestedStruct3Interface : public AbstractNestedStruc
     /**
     * Exposes prop1 property for qml.
     */
-    Q_PROPERTY(NestedStruct1 prop1 READ prop1 WRITE setProp1 NOTIFY prop1Changed)
+    Q_PROPERTY(testbed2::NestedStruct1 prop1 READ prop1 WRITE setProp1 NOTIFY prop1Changed)
 
     /**
     * Exposes prop2 property for qml.
     */
-    Q_PROPERTY(NestedStruct2 prop2 READ prop2 WRITE setProp2 NOTIFY prop2Changed)
+    Q_PROPERTY(testbed2::NestedStruct2 prop2 READ prop2 WRITE setProp2 NOTIFY prop2Changed)
 
     /**
     * Exposes prop3 property for qml.
     */
-    Q_PROPERTY(NestedStruct3 prop3 READ prop3 WRITE setProp3 NOTIFY prop3Changed)
+    Q_PROPERTY(testbed2::NestedStruct3 prop3 READ prop3 WRITE setProp3 NOTIFY prop3Changed)
 public:
     explicit QmlNestedStruct3Interface(QObject *parent = nullptr);
     ~QmlNestedStruct3Interface() override;
@@ -58,56 +58,56 @@ public:
     * Getter for a prop1 property
     * @return A value for prop1 property provided by backend.
     */
-    NestedStruct1 prop1() const override;
+    testbed2::NestedStruct1 prop1() const override;
     /*
     * Setter for a prop1 property, requests the backend to set the prop1 property
     * @param const NestedStruct1& prop1  Value to set for  prop1 property.
     */
-    void setProp1(const NestedStruct1& prop1) override;
+    void setProp1(const testbed2::NestedStruct1& prop1) override;
     /**
     * Getter for a prop2 property
     * @return A value for prop2 property provided by backend.
     */
-    NestedStruct2 prop2() const override;
+    testbed2::NestedStruct2 prop2() const override;
     /*
     * Setter for a prop2 property, requests the backend to set the prop2 property
     * @param const NestedStruct2& prop2  Value to set for  prop2 property.
     */
-    void setProp2(const NestedStruct2& prop2) override;
+    void setProp2(const testbed2::NestedStruct2& prop2) override;
     /**
     * Getter for a prop3 property
     * @return A value for prop3 property provided by backend.
     */
-    NestedStruct3 prop3() const override;
+    testbed2::NestedStruct3 prop3() const override;
     /*
     * Setter for a prop3 property, requests the backend to set the prop3 property
     * @param const NestedStruct3& prop3  Value to set for  prop3 property.
     */
-    void setProp3(const NestedStruct3& prop3) override;
+    void setProp3(const testbed2::NestedStruct3& prop3) override;
 
     /**
     * Exposes func1 of backend implementation to a qml.
     *   
     */
-    Q_INVOKABLE NestedStruct1 func1(const NestedStruct1& param1) override;
+    Q_INVOKABLE testbed2::NestedStruct1 func1(const testbed2::NestedStruct1& param1) override;
 
     /**
     * Exposes func2 of backend implementation to a qml.
     *   
     */
-    Q_INVOKABLE NestedStruct1 func2(const NestedStruct1& param1, const NestedStruct2& param2) override;
+    Q_INVOKABLE testbed2::NestedStruct1 func2(const testbed2::NestedStruct1& param1, const testbed2::NestedStruct2& param2) override;
 
     /**
     * Exposes func3 of backend implementation to a qml.
     *   
     */
-    Q_INVOKABLE NestedStruct1 func3(const NestedStruct1& param1, const NestedStruct2& param2, const NestedStruct3& param3) override;
+    Q_INVOKABLE testbed2::NestedStruct1 func3(const testbed2::NestedStruct1& param1, const testbed2::NestedStruct2& param2, const testbed2::NestedStruct3& param3) override;
 
 Q_SIGNALS:
     /** Re-define singals for property changed notification, to make them are available for qml property */
-    void prop1Changed(const NestedStruct1& prop1);
-    void prop2Changed(const NestedStruct2& prop2);
-    void prop3Changed(const NestedStruct3& prop3);
+    void prop1Changed(const testbed2::NestedStruct1& prop1);
+    void prop2Changed(const testbed2::NestedStruct2& prop2);
+    void prop3Changed(const testbed2::NestedStruct3& prop3);
 private:
     /**
     * Backend of AbstractNestedStruct3Interface type that provides properties on which methods will be invoked.

@@ -144,7 +144,7 @@ QDataStream &operator>>(QDataStream &stream, Struct1 &obj);
 class TB_SAME2_API_EXPORT Struct1Factory : public QObject {
     Q_OBJECT
 public:
-    Q_INVOKABLE Struct1 create();
+    Q_INVOKABLE tb_same2::Struct1 create();
 };
 // ********************************************************************
 // Struct2 struct
@@ -177,7 +177,7 @@ QDataStream &operator>>(QDataStream &stream, Struct2 &obj);
 class TB_SAME2_API_EXPORT Struct2Factory : public QObject {
     Q_OBJECT
 public:
-    Q_INVOKABLE Struct2 create();
+    Q_INVOKABLE tb_same2::Struct2 create();
 };
 
 // ********************************************************************
@@ -211,7 +211,7 @@ signals:
     /**
     * @param param1 
     */
-    void sig1(const Struct1& param1);
+    void sig1(const tb_same2::Struct1& param1);
     /**
     * Emitted when prop1 value has changed.
     */
@@ -259,12 +259,12 @@ signals:
     /**
     * @param param1 
     */
-    void sig1(const Struct1& param1);
+    void sig1(const tb_same2::Struct1& param1);
     /**
     * @param param1 
     * @param param2 
     */
-    void sig2(const Struct1& param1, const Struct2& param2);
+    void sig2(const tb_same2::Struct1& param1, const tb_same2::Struct2& param2);
     /**
     * Emitted when prop1 value has changed.
     */
@@ -306,7 +306,7 @@ signals:
     /**
     * @param param1 
     */
-    void sig1(Enum1::Enum1Enum param1);
+    void sig1(tb_same2::Enum1::Enum1Enum param1);
     /**
     * Emitted when prop1 value has changed.
     */
@@ -354,12 +354,12 @@ signals:
     /**
     * @param param1 
     */
-    void sig1(Enum1::Enum1Enum param1);
+    void sig1(tb_same2::Enum1::Enum1Enum param1);
     /**
     * @param param1 
     * @param param2 
     */
-    void sig2(Enum1::Enum1Enum param1, Enum2::Enum2Enum param2);
+    void sig2(tb_same2::Enum1::Enum1Enum param1, tb_same2::Enum2::Enum2Enum param2);
     /**
     * Emitted when prop1 value has changed.
     */

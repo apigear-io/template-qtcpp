@@ -40,22 +40,22 @@ class TB_ENUM_API_EXPORT QmlEnumInterface : public AbstractEnumInterface
     /**
     * Exposes prop0 property for qml.
     */
-    Q_PROPERTY(Enum0::Enum0Enum prop0 READ prop0 WRITE setProp0 NOTIFY prop0Changed)
+    Q_PROPERTY(tb_enum::Enum0::Enum0Enum prop0 READ prop0 WRITE setProp0 NOTIFY prop0Changed)
 
     /**
     * Exposes prop1 property for qml.
     */
-    Q_PROPERTY(Enum1::Enum1Enum prop1 READ prop1 WRITE setProp1 NOTIFY prop1Changed)
+    Q_PROPERTY(tb_enum::Enum1::Enum1Enum prop1 READ prop1 WRITE setProp1 NOTIFY prop1Changed)
 
     /**
     * Exposes prop2 property for qml.
     */
-    Q_PROPERTY(Enum2::Enum2Enum prop2 READ prop2 WRITE setProp2 NOTIFY prop2Changed)
+    Q_PROPERTY(tb_enum::Enum2::Enum2Enum prop2 READ prop2 WRITE setProp2 NOTIFY prop2Changed)
 
     /**
     * Exposes prop3 property for qml.
     */
-    Q_PROPERTY(Enum3::Enum3Enum prop3 READ prop3 WRITE setProp3 NOTIFY prop3Changed)
+    Q_PROPERTY(tb_enum::Enum3::Enum3Enum prop3 READ prop3 WRITE setProp3 NOTIFY prop3Changed)
 public:
     explicit QmlEnumInterface(QObject *parent = nullptr);
     ~QmlEnumInterface() override;
@@ -63,73 +63,73 @@ public:
     * Getter for a prop0 property
     * @return A value for prop0 property provided by backend.
     */
-    Enum0::Enum0Enum prop0() const override;
+    tb_enum::Enum0::Enum0Enum prop0() const override;
     /*
     * Setter for a prop0 property, requests the backend to set the prop0 property
     * @param Enum0::Enum0Enum prop0  Value to set for  prop0 property.
     */
-    void setProp0(Enum0::Enum0Enum prop0) override;
+    void setProp0(tb_enum::Enum0::Enum0Enum prop0) override;
     /**
     * Getter for a prop1 property
     * @return A value for prop1 property provided by backend.
     */
-    Enum1::Enum1Enum prop1() const override;
+    tb_enum::Enum1::Enum1Enum prop1() const override;
     /*
     * Setter for a prop1 property, requests the backend to set the prop1 property
     * @param Enum1::Enum1Enum prop1  Value to set for  prop1 property.
     */
-    void setProp1(Enum1::Enum1Enum prop1) override;
+    void setProp1(tb_enum::Enum1::Enum1Enum prop1) override;
     /**
     * Getter for a prop2 property
     * @return A value for prop2 property provided by backend.
     */
-    Enum2::Enum2Enum prop2() const override;
+    tb_enum::Enum2::Enum2Enum prop2() const override;
     /*
     * Setter for a prop2 property, requests the backend to set the prop2 property
     * @param Enum2::Enum2Enum prop2  Value to set for  prop2 property.
     */
-    void setProp2(Enum2::Enum2Enum prop2) override;
+    void setProp2(tb_enum::Enum2::Enum2Enum prop2) override;
     /**
     * Getter for a prop3 property
     * @return A value for prop3 property provided by backend.
     */
-    Enum3::Enum3Enum prop3() const override;
+    tb_enum::Enum3::Enum3Enum prop3() const override;
     /*
     * Setter for a prop3 property, requests the backend to set the prop3 property
     * @param Enum3::Enum3Enum prop3  Value to set for  prop3 property.
     */
-    void setProp3(Enum3::Enum3Enum prop3) override;
+    void setProp3(tb_enum::Enum3::Enum3Enum prop3) override;
 
     /**
     * Exposes func0 of backend implementation to a qml.
     *   
     */
-    Q_INVOKABLE Enum0::Enum0Enum func0(Enum0::Enum0Enum param0) override;
+    Q_INVOKABLE tb_enum::Enum0::Enum0Enum func0(tb_enum::Enum0::Enum0Enum param0) override;
 
     /**
     * Exposes func1 of backend implementation to a qml.
     *   
     */
-    Q_INVOKABLE Enum1::Enum1Enum func1(Enum1::Enum1Enum param1) override;
+    Q_INVOKABLE tb_enum::Enum1::Enum1Enum func1(tb_enum::Enum1::Enum1Enum param1) override;
 
     /**
     * Exposes func2 of backend implementation to a qml.
     *   
     */
-    Q_INVOKABLE Enum2::Enum2Enum func2(Enum2::Enum2Enum param2) override;
+    Q_INVOKABLE tb_enum::Enum2::Enum2Enum func2(tb_enum::Enum2::Enum2Enum param2) override;
 
     /**
     * Exposes func3 of backend implementation to a qml.
     *   
     */
-    Q_INVOKABLE Enum3::Enum3Enum func3(Enum3::Enum3Enum param3) override;
+    Q_INVOKABLE tb_enum::Enum3::Enum3Enum func3(tb_enum::Enum3::Enum3Enum param3) override;
 
 Q_SIGNALS:
     /** Re-define singals for property changed notification, to make them are available for qml property */
-    void prop0Changed(Enum0::Enum0Enum prop0);
-    void prop1Changed(Enum1::Enum1Enum prop1);
-    void prop2Changed(Enum2::Enum2Enum prop2);
-    void prop3Changed(Enum3::Enum3Enum prop3);
+    void prop0Changed(tb_enum::Enum0::Enum0Enum prop0);
+    void prop1Changed(tb_enum::Enum1::Enum1Enum prop1);
+    void prop2Changed(tb_enum::Enum2::Enum2Enum prop2);
+    void prop3Changed(tb_enum::Enum3::Enum3Enum prop3);
 private:
     /**
     * Backend of AbstractEnumInterface type that provides properties on which methods will be invoked.

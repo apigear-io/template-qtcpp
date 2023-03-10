@@ -265,19 +265,19 @@ signals:
     /**
     * @param param0 
     */
-    void sig0(Enum0::Enum0Enum param0);
+    void sig0(tb_enum::Enum0::Enum0Enum param0);
     /**
     * @param param1 
     */
-    void sig1(Enum1::Enum1Enum param1);
+    void sig1(tb_enum::Enum1::Enum1Enum param1);
     /**
     * @param param2 
     */
-    void sig2(Enum2::Enum2Enum param2);
+    void sig2(tb_enum::Enum2::Enum2Enum param2);
     /**
     * @param param3 
     */
-    void sig3(Enum3::Enum3Enum param3);
+    void sig3(tb_enum::Enum3::Enum3Enum param3);
     /**
     * Emitted when prop0 value has changed.
     */

@@ -40,7 +40,7 @@ class TB_SAME1_API_EXPORT QmlSameStruct1Interface : public AbstractSameStruct1In
     /**
     * Exposes prop1 property for qml.
     */
-    Q_PROPERTY(Struct1 prop1 READ prop1 WRITE setProp1 NOTIFY prop1Changed)
+    Q_PROPERTY(tb_same1::Struct1 prop1 READ prop1 WRITE setProp1 NOTIFY prop1Changed)
 public:
     explicit QmlSameStruct1Interface(QObject *parent = nullptr);
     ~QmlSameStruct1Interface() override;
@@ -48,22 +48,22 @@ public:
     * Getter for a prop1 property
     * @return A value for prop1 property provided by backend.
     */
-    Struct1 prop1() const override;
+    tb_same1::Struct1 prop1() const override;
     /*
     * Setter for a prop1 property, requests the backend to set the prop1 property
     * @param const Struct1& prop1  Value to set for  prop1 property.
     */
-    void setProp1(const Struct1& prop1) override;
+    void setProp1(const tb_same1::Struct1& prop1) override;
 
     /**
     * Exposes func1 of backend implementation to a qml.
     *   
     */
-    Q_INVOKABLE Struct1 func1(const Struct1& param1) override;
+    Q_INVOKABLE tb_same1::Struct1 func1(const tb_same1::Struct1& param1) override;
 
 Q_SIGNALS:
     /** Re-define singals for property changed notification, to make them are available for qml property */
-    void prop1Changed(const Struct1& prop1);
+    void prop1Changed(const tb_same1::Struct1& prop1);
 private:
     /**
     * Backend of AbstractSameStruct1Interface type that provides properties on which methods will be invoked.

@@ -54,7 +54,7 @@ QDataStream &operator>>(QDataStream &stream, StructBool &obj);
 class TESTBED1_API_EXPORT StructBoolFactory : public QObject {
     Q_OBJECT
 public:
-    Q_INVOKABLE StructBool create();
+    Q_INVOKABLE testbed1::StructBool create();
 };
 // ********************************************************************
 // StructInt struct
@@ -83,7 +83,7 @@ QDataStream &operator>>(QDataStream &stream, StructInt &obj);
 class TESTBED1_API_EXPORT StructIntFactory : public QObject {
     Q_OBJECT
 public:
-    Q_INVOKABLE StructInt create();
+    Q_INVOKABLE testbed1::StructInt create();
 };
 // ********************************************************************
 // StructFloat struct
@@ -112,7 +112,7 @@ QDataStream &operator>>(QDataStream &stream, StructFloat &obj);
 class TESTBED1_API_EXPORT StructFloatFactory : public QObject {
     Q_OBJECT
 public:
-    Q_INVOKABLE StructFloat create();
+    Q_INVOKABLE testbed1::StructFloat create();
 };
 // ********************************************************************
 // StructString struct
@@ -141,7 +141,7 @@ QDataStream &operator>>(QDataStream &stream, StructString &obj);
 class TESTBED1_API_EXPORT StructStringFactory : public QObject {
     Q_OBJECT
 public:
-    Q_INVOKABLE StructString create();
+    Q_INVOKABLE testbed1::StructString create();
 };
 
 // ********************************************************************
@@ -205,19 +205,19 @@ signals:
     /**
     * @param paramBool 
     */
-    void sigBool(const StructBool& paramBool);
+    void sigBool(const testbed1::StructBool& paramBool);
     /**
     * @param paramInt 
     */
-    void sigInt(const StructInt& paramInt);
+    void sigInt(const testbed1::StructInt& paramInt);
     /**
     * @param paramFloat 
     */
-    void sigFloat(const StructFloat& paramFloat);
+    void sigFloat(const testbed1::StructFloat& paramFloat);
     /**
     * @param paramString 
     */
-    void sigString(const StructString& paramString);
+    void sigString(const testbed1::StructString& paramString);
     /**
     * Emitted when propBool value has changed.
     */
@@ -297,19 +297,19 @@ signals:
     /**
     * @param paramBool 
     */
-    void sigBool(const QList<StructBool>& paramBool);
+    void sigBool(const QList<testbed1::StructBool>& paramBool);
     /**
     * @param paramInt 
     */
-    void sigInt(const QList<StructInt>& paramInt);
+    void sigInt(const QList<testbed1::StructInt>& paramInt);
     /**
     * @param paramFloat 
     */
-    void sigFloat(const QList<StructFloat>& paramFloat);
+    void sigFloat(const QList<testbed1::StructFloat>& paramFloat);
     /**
     * @param paramString 
     */
-    void sigString(const QList<StructString>& paramString);
+    void sigString(const QList<testbed1::StructString>& paramString);
     /**
     * Emitted when propBool value has changed.
     */

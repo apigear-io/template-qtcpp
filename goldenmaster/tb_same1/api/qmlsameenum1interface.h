@@ -40,7 +40,7 @@ class TB_SAME1_API_EXPORT QmlSameEnum1Interface : public AbstractSameEnum1Interf
     /**
     * Exposes prop1 property for qml.
     */
-    Q_PROPERTY(Enum1::Enum1Enum prop1 READ prop1 WRITE setProp1 NOTIFY prop1Changed)
+    Q_PROPERTY(tb_same1::Enum1::Enum1Enum prop1 READ prop1 WRITE setProp1 NOTIFY prop1Changed)
 public:
     explicit QmlSameEnum1Interface(QObject *parent = nullptr);
     ~QmlSameEnum1Interface() override;
@@ -48,22 +48,22 @@ public:
     * Getter for a prop1 property
     * @return A value for prop1 property provided by backend.
     */
-    Enum1::Enum1Enum prop1() const override;
+    tb_same1::Enum1::Enum1Enum prop1() const override;
     /*
     * Setter for a prop1 property, requests the backend to set the prop1 property
     * @param Enum1::Enum1Enum prop1  Value to set for  prop1 property.
     */
-    void setProp1(Enum1::Enum1Enum prop1) override;
+    void setProp1(tb_same1::Enum1::Enum1Enum prop1) override;
 
     /**
     * Exposes func1 of backend implementation to a qml.
     *   
     */
-    Q_INVOKABLE Enum1::Enum1Enum func1(Enum1::Enum1Enum param1) override;
+    Q_INVOKABLE tb_same1::Enum1::Enum1Enum func1(tb_same1::Enum1::Enum1Enum param1) override;
 
 Q_SIGNALS:
     /** Re-define singals for property changed notification, to make them are available for qml property */
-    void prop1Changed(Enum1::Enum1Enum prop1);
+    void prop1Changed(tb_same1::Enum1::Enum1Enum prop1);
 private:
     /**
     * Backend of AbstractSameEnum1Interface type that provides properties on which methods will be invoked.

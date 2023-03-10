@@ -189,7 +189,7 @@ QDataStream &operator>>(QDataStream &stream, Struct1 &obj);
 class TESTBED2_API_EXPORT Struct1Factory : public QObject {
     Q_OBJECT
 public:
-    Q_INVOKABLE Struct1 create();
+    Q_INVOKABLE testbed2::Struct1 create();
 };
 // ********************************************************************
 // Struct2 struct
@@ -220,7 +220,7 @@ QDataStream &operator>>(QDataStream &stream, Struct2 &obj);
 class TESTBED2_API_EXPORT Struct2Factory : public QObject {
     Q_OBJECT
 public:
-    Q_INVOKABLE Struct2 create();
+    Q_INVOKABLE testbed2::Struct2 create();
 };
 // ********************************************************************
 // Struct3 struct
@@ -253,7 +253,7 @@ QDataStream &operator>>(QDataStream &stream, Struct3 &obj);
 class TESTBED2_API_EXPORT Struct3Factory : public QObject {
     Q_OBJECT
 public:
-    Q_INVOKABLE Struct3 create();
+    Q_INVOKABLE testbed2::Struct3 create();
 };
 // ********************************************************************
 // Struct4 struct
@@ -288,7 +288,7 @@ QDataStream &operator>>(QDataStream &stream, Struct4 &obj);
 class TESTBED2_API_EXPORT Struct4Factory : public QObject {
     Q_OBJECT
 public:
-    Q_INVOKABLE Struct4 create();
+    Q_INVOKABLE testbed2::Struct4 create();
 };
 // ********************************************************************
 // NestedStruct1 struct
@@ -317,7 +317,7 @@ QDataStream &operator>>(QDataStream &stream, NestedStruct1 &obj);
 class TESTBED2_API_EXPORT NestedStruct1Factory : public QObject {
     Q_OBJECT
 public:
-    Q_INVOKABLE NestedStruct1 create();
+    Q_INVOKABLE testbed2::NestedStruct1 create();
 };
 // ********************************************************************
 // NestedStruct2 struct
@@ -348,7 +348,7 @@ QDataStream &operator>>(QDataStream &stream, NestedStruct2 &obj);
 class TESTBED2_API_EXPORT NestedStruct2Factory : public QObject {
     Q_OBJECT
 public:
-    Q_INVOKABLE NestedStruct2 create();
+    Q_INVOKABLE testbed2::NestedStruct2 create();
 };
 // ********************************************************************
 // NestedStruct3 struct
@@ -381,7 +381,7 @@ QDataStream &operator>>(QDataStream &stream, NestedStruct3 &obj);
 class TESTBED2_API_EXPORT NestedStruct3Factory : public QObject {
     Q_OBJECT
 public:
-    Q_INVOKABLE NestedStruct3 create();
+    Q_INVOKABLE testbed2::NestedStruct3 create();
 };
 
 // ********************************************************************
@@ -513,7 +513,7 @@ signals:
     /**
     * @param param1 
     */
-    void sig1(const NestedStruct1& param1);
+    void sig1(const testbed2::NestedStruct1& param1);
     /**
     * Emitted when prop1 value has changed.
     */
@@ -561,12 +561,12 @@ signals:
     /**
     * @param param1 
     */
-    void sig1(const NestedStruct1& param1);
+    void sig1(const testbed2::NestedStruct1& param1);
     /**
     * @param param1 
     * @param param2 
     */
-    void sig2(const NestedStruct1& param1, const NestedStruct2& param2);
+    void sig2(const testbed2::NestedStruct1& param1, const testbed2::NestedStruct2& param2);
     /**
     * Emitted when prop1 value has changed.
     */
@@ -628,18 +628,18 @@ signals:
     /**
     * @param param1 
     */
-    void sig1(const NestedStruct1& param1);
+    void sig1(const testbed2::NestedStruct1& param1);
     /**
     * @param param1 
     * @param param2 
     */
-    void sig2(const NestedStruct1& param1, const NestedStruct2& param2);
+    void sig2(const testbed2::NestedStruct1& param1, const testbed2::NestedStruct2& param2);
     /**
     * @param param1 
     * @param param2 
     * @param param3 
     */
-    void sig3(const NestedStruct1& param1, const NestedStruct2& param2, const NestedStruct3& param3);
+    void sig3(const testbed2::NestedStruct1& param1, const testbed2::NestedStruct2& param2, const testbed2::NestedStruct3& param3);
     /**
     * Emitted when prop1 value has changed.
     */

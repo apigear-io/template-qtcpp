@@ -15,11 +15,20 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+
 #pragma once
 
 #include <QtQml>
+
+#if defined(TESTBED1_PLUGIN_LIBRARY)
+#  define TESTBED1_PLUGIN_EXPORT Q_DECL_EXPORT
+#else
+#  define TESTBED1_PLUGIN_EXPORT Q_DECL_IMPORT
+#endif
+
+
 /** A QML extension plugin for testbed1 */
-class Plugin : public QQmlExtensionPlugin
+class TESTBED1_PLUGIN_EXPORT Plugin : public QQmlExtensionPlugin
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QQmlExtensionInterface")

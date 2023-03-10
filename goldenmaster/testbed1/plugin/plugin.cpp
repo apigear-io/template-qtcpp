@@ -26,23 +26,40 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 void Plugin::registerTypes(const char *uri)
 {
-    // @uri testbed1
-    // register enum
-
-    // register structs
+    // register enums structs and interfaces for testbed1
     qRegisterMetaType<testbed1::StructBool>();
-    qmlRegisterUncreatableType<testbed1::StructBoolFactory>(uri, 1, 0, "StructBoolFactory", "A struct factory can not be created");
+    auto createTestbed1StructBoolFactorySingleton = [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QObject* {
+         Q_UNUSED(engine)
+         Q_UNUSED(scriptEngine)
+         return new testbed1::StructBoolFactory();
+    };
+    const std::string uriTestbed1StructBoolFactory = uri + std::string(".StructBoolFactorySingleton");
+    qmlRegisterSingletonType<testbed1::StructBoolFactory>(uriTestbed1StructBoolFactory.c_str(), 1, 0, "Testbed1StructBoolFactory", createTestbed1StructBoolFactorySingleton);
     qRegisterMetaType<testbed1::StructInt>();
-    qmlRegisterUncreatableType<testbed1::StructIntFactory>(uri, 1, 0, "StructIntFactory", "A struct factory can not be created");
+    auto createTestbed1StructIntFactorySingleton = [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QObject* {
+         Q_UNUSED(engine)
+         Q_UNUSED(scriptEngine)
+         return new testbed1::StructIntFactory();
+    };
+    const std::string uriTestbed1StructIntFactory = uri + std::string(".StructIntFactorySingleton");
+    qmlRegisterSingletonType<testbed1::StructIntFactory>(uriTestbed1StructIntFactory.c_str(), 1, 0, "Testbed1StructIntFactory", createTestbed1StructIntFactorySingleton);
     qRegisterMetaType<testbed1::StructFloat>();
-    qmlRegisterUncreatableType<testbed1::StructFloatFactory>(uri, 1, 0, "StructFloatFactory", "A struct factory can not be created");
+    auto createTestbed1StructFloatFactorySingleton = [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QObject* {
+         Q_UNUSED(engine)
+         Q_UNUSED(scriptEngine)
+         return new testbed1::StructFloatFactory();
+    };
+    const std::string uriTestbed1StructFloatFactory = uri + std::string(".StructFloatFactorySingleton");
+    qmlRegisterSingletonType<testbed1::StructFloatFactory>(uriTestbed1StructFloatFactory.c_str(), 1, 0, "Testbed1StructFloatFactory", createTestbed1StructFloatFactorySingleton);
     qRegisterMetaType<testbed1::StructString>();
-    qmlRegisterUncreatableType<testbed1::StructStringFactory>(uri, 1, 0, "StructStringFactory", "A struct factory can not be created");
-
-    // register interfaces
-    qmlRegisterType<testbed1::QmlStructInterface>(uri, 1, 0, "StructInterface");
-    qmlRegisterType<testbed1::QmlStructArrayInterface>(uri, 1, 0, "StructArrayInterface");
-
-
+    auto createTestbed1StructStringFactorySingleton = [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QObject* {
+         Q_UNUSED(engine)
+         Q_UNUSED(scriptEngine)
+         return new testbed1::StructStringFactory();
+    };
+    const std::string uriTestbed1StructStringFactory = uri + std::string(".StructStringFactorySingleton");
+    qmlRegisterSingletonType<testbed1::StructStringFactory>(uriTestbed1StructStringFactory.c_str(), 1, 0, "Testbed1StructStringFactory", createTestbed1StructStringFactorySingleton);
+    qmlRegisterType<testbed1::QmlStructInterface>(uri, 1, 0, "Testbed1StructInterface");
+    qmlRegisterType<testbed1::QmlStructArrayInterface>(uri, 1, 0, "Testbed1StructArrayInterface");
 
 }

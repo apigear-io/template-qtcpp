@@ -28,23 +28,28 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 void Plugin::registerTypes(const char *uri)
 {
-    // @uri tb.same2
-    // register enum
-    qmlRegisterUncreatableType<tb_same2::Enum1>(uri, 1, 0, "Enum1", "An enum can not be created");
-    qmlRegisterUncreatableType<tb_same2::Enum2>(uri, 1, 0, "Enum2", "An enum can not be created");
-
-    // register structs
+    // register enums structs and interfaces for tb_same2
+    qmlRegisterUncreatableType<tb_same2::Enum1>(uri, 1, 0, "TbSame2Enum1", "An enum can not be created");
+    qmlRegisterUncreatableType<tb_same2::Enum2>(uri, 1, 0, "TbSame2Enum2", "An enum can not be created");
     qRegisterMetaType<tb_same2::Struct1>();
-    qmlRegisterUncreatableType<tb_same2::Struct1Factory>(uri, 1, 0, "Struct1Factory", "A struct factory can not be created");
+    auto createTbSame2Struct1FactorySingleton = [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QObject* {
+         Q_UNUSED(engine)
+         Q_UNUSED(scriptEngine)
+         return new tb_same2::Struct1Factory();
+    };
+    const std::string uriTbSame2Struct1Factory = uri + std::string(".Struct1FactorySingleton");
+    qmlRegisterSingletonType<tb_same2::Struct1Factory>(uriTbSame2Struct1Factory.c_str(), 1, 0, "TbSame2Struct1Factory", createTbSame2Struct1FactorySingleton);
     qRegisterMetaType<tb_same2::Struct2>();
-    qmlRegisterUncreatableType<tb_same2::Struct2Factory>(uri, 1, 0, "Struct2Factory", "A struct factory can not be created");
-
-    // register interfaces
-    qmlRegisterType<tb_same2::QmlSameStruct1Interface>(uri, 1, 0, "SameStruct1Interface");
-    qmlRegisterType<tb_same2::QmlSameStruct2Interface>(uri, 1, 0, "SameStruct2Interface");
-    qmlRegisterType<tb_same2::QmlSameEnum1Interface>(uri, 1, 0, "SameEnum1Interface");
-    qmlRegisterType<tb_same2::QmlSameEnum2Interface>(uri, 1, 0, "SameEnum2Interface");
-
-
+    auto createTbSame2Struct2FactorySingleton = [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QObject* {
+         Q_UNUSED(engine)
+         Q_UNUSED(scriptEngine)
+         return new tb_same2::Struct2Factory();
+    };
+    const std::string uriTbSame2Struct2Factory = uri + std::string(".Struct2FactorySingleton");
+    qmlRegisterSingletonType<tb_same2::Struct2Factory>(uriTbSame2Struct2Factory.c_str(), 1, 0, "TbSame2Struct2Factory", createTbSame2Struct2FactorySingleton);
+    qmlRegisterType<tb_same2::QmlSameStruct1Interface>(uri, 1, 0, "TbSame2SameStruct1Interface");
+    qmlRegisterType<tb_same2::QmlSameStruct2Interface>(uri, 1, 0, "TbSame2SameStruct2Interface");
+    qmlRegisterType<tb_same2::QmlSameEnum1Interface>(uri, 1, 0, "TbSame2SameEnum1Interface");
+    qmlRegisterType<tb_same2::QmlSameEnum2Interface>(uri, 1, 0, "TbSame2SameEnum2Interface");
 
 }

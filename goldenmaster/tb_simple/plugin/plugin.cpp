@@ -26,15 +26,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 void Plugin::registerTypes(const char *uri)
 {
-    // @uri tb.simple
-    // register enum
-
-    // register structs
-
-    // register interfaces
-    qmlRegisterType<tb_simple::QmlSimpleInterface>(uri, 1, 0, "SimpleInterface");
-    qmlRegisterType<tb_simple::QmlSimpleArrayInterface>(uri, 1, 0, "SimpleArrayInterface");
-
-
+    // register enums structs and interfaces for tb_simple
+    qmlRegisterType<tb_simple::QmlSimpleInterface>(uri, 1, 0, "TbSimpleSimpleInterface");
+    qmlRegisterType<tb_simple::QmlSimpleArrayInterface>(uri, 1, 0, "TbSimpleSimpleArrayInterface");
 
 }

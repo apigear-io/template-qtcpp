@@ -28,34 +28,69 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 void Plugin::registerTypes(const char *uri)
 {
-    // @uri testbed2
-    // register enum
-    qmlRegisterUncreatableType<testbed2::Enum1>(uri, 1, 0, "Enum1", "An enum can not be created");
-    qmlRegisterUncreatableType<testbed2::Enum2>(uri, 1, 0, "Enum2", "An enum can not be created");
-    qmlRegisterUncreatableType<testbed2::Enum3>(uri, 1, 0, "Enum3", "An enum can not be created");
-
-    // register structs
+    // register enums structs and interfaces for testbed2
+    qmlRegisterUncreatableType<testbed2::Enum1>(uri, 1, 0, "Testbed2Enum1", "An enum can not be created");
+    qmlRegisterUncreatableType<testbed2::Enum2>(uri, 1, 0, "Testbed2Enum2", "An enum can not be created");
+    qmlRegisterUncreatableType<testbed2::Enum3>(uri, 1, 0, "Testbed2Enum3", "An enum can not be created");
     qRegisterMetaType<testbed2::Struct1>();
-    qmlRegisterUncreatableType<testbed2::Struct1Factory>(uri, 1, 0, "Struct1Factory", "A struct factory can not be created");
+    auto createTestbed2Struct1FactorySingleton = [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QObject* {
+         Q_UNUSED(engine)
+         Q_UNUSED(scriptEngine)
+         return new testbed2::Struct1Factory();
+    };
+    const std::string uriTestbed2Struct1Factory = uri + std::string(".Struct1FactorySingleton");
+    qmlRegisterSingletonType<testbed2::Struct1Factory>(uriTestbed2Struct1Factory.c_str(), 1, 0, "Testbed2Struct1Factory", createTestbed2Struct1FactorySingleton);
     qRegisterMetaType<testbed2::Struct2>();
-    qmlRegisterUncreatableType<testbed2::Struct2Factory>(uri, 1, 0, "Struct2Factory", "A struct factory can not be created");
+    auto createTestbed2Struct2FactorySingleton = [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QObject* {
+         Q_UNUSED(engine)
+         Q_UNUSED(scriptEngine)
+         return new testbed2::Struct2Factory();
+    };
+    const std::string uriTestbed2Struct2Factory = uri + std::string(".Struct2FactorySingleton");
+    qmlRegisterSingletonType<testbed2::Struct2Factory>(uriTestbed2Struct2Factory.c_str(), 1, 0, "Testbed2Struct2Factory", createTestbed2Struct2FactorySingleton);
     qRegisterMetaType<testbed2::Struct3>();
-    qmlRegisterUncreatableType<testbed2::Struct3Factory>(uri, 1, 0, "Struct3Factory", "A struct factory can not be created");
+    auto createTestbed2Struct3FactorySingleton = [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QObject* {
+         Q_UNUSED(engine)
+         Q_UNUSED(scriptEngine)
+         return new testbed2::Struct3Factory();
+    };
+    const std::string uriTestbed2Struct3Factory = uri + std::string(".Struct3FactorySingleton");
+    qmlRegisterSingletonType<testbed2::Struct3Factory>(uriTestbed2Struct3Factory.c_str(), 1, 0, "Testbed2Struct3Factory", createTestbed2Struct3FactorySingleton);
     qRegisterMetaType<testbed2::Struct4>();
-    qmlRegisterUncreatableType<testbed2::Struct4Factory>(uri, 1, 0, "Struct4Factory", "A struct factory can not be created");
+    auto createTestbed2Struct4FactorySingleton = [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QObject* {
+         Q_UNUSED(engine)
+         Q_UNUSED(scriptEngine)
+         return new testbed2::Struct4Factory();
+    };
+    const std::string uriTestbed2Struct4Factory = uri + std::string(".Struct4FactorySingleton");
+    qmlRegisterSingletonType<testbed2::Struct4Factory>(uriTestbed2Struct4Factory.c_str(), 1, 0, "Testbed2Struct4Factory", createTestbed2Struct4FactorySingleton);
     qRegisterMetaType<testbed2::NestedStruct1>();
-    qmlRegisterUncreatableType<testbed2::NestedStruct1Factory>(uri, 1, 0, "NestedStruct1Factory", "A struct factory can not be created");
+    auto createTestbed2NestedStruct1FactorySingleton = [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QObject* {
+         Q_UNUSED(engine)
+         Q_UNUSED(scriptEngine)
+         return new testbed2::NestedStruct1Factory();
+    };
+    const std::string uriTestbed2NestedStruct1Factory = uri + std::string(".NestedStruct1FactorySingleton");
+    qmlRegisterSingletonType<testbed2::NestedStruct1Factory>(uriTestbed2NestedStruct1Factory.c_str(), 1, 0, "Testbed2NestedStruct1Factory", createTestbed2NestedStruct1FactorySingleton);
     qRegisterMetaType<testbed2::NestedStruct2>();
-    qmlRegisterUncreatableType<testbed2::NestedStruct2Factory>(uri, 1, 0, "NestedStruct2Factory", "A struct factory can not be created");
+    auto createTestbed2NestedStruct2FactorySingleton = [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QObject* {
+         Q_UNUSED(engine)
+         Q_UNUSED(scriptEngine)
+         return new testbed2::NestedStruct2Factory();
+    };
+    const std::string uriTestbed2NestedStruct2Factory = uri + std::string(".NestedStruct2FactorySingleton");
+    qmlRegisterSingletonType<testbed2::NestedStruct2Factory>(uriTestbed2NestedStruct2Factory.c_str(), 1, 0, "Testbed2NestedStruct2Factory", createTestbed2NestedStruct2FactorySingleton);
     qRegisterMetaType<testbed2::NestedStruct3>();
-    qmlRegisterUncreatableType<testbed2::NestedStruct3Factory>(uri, 1, 0, "NestedStruct3Factory", "A struct factory can not be created");
-
-    // register interfaces
-    qmlRegisterType<testbed2::QmlManyParamInterface>(uri, 1, 0, "ManyParamInterface");
-    qmlRegisterType<testbed2::QmlNestedStruct1Interface>(uri, 1, 0, "NestedStruct1Interface");
-    qmlRegisterType<testbed2::QmlNestedStruct2Interface>(uri, 1, 0, "NestedStruct2Interface");
-    qmlRegisterType<testbed2::QmlNestedStruct3Interface>(uri, 1, 0, "NestedStruct3Interface");
-
-
+    auto createTestbed2NestedStruct3FactorySingleton = [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QObject* {
+         Q_UNUSED(engine)
+         Q_UNUSED(scriptEngine)
+         return new testbed2::NestedStruct3Factory();
+    };
+    const std::string uriTestbed2NestedStruct3Factory = uri + std::string(".NestedStruct3FactorySingleton");
+    qmlRegisterSingletonType<testbed2::NestedStruct3Factory>(uriTestbed2NestedStruct3Factory.c_str(), 1, 0, "Testbed2NestedStruct3Factory", createTestbed2NestedStruct3FactorySingleton);
+    qmlRegisterType<testbed2::QmlManyParamInterface>(uri, 1, 0, "Testbed2ManyParamInterface");
+    qmlRegisterType<testbed2::QmlNestedStruct1Interface>(uri, 1, 0, "Testbed2NestedStruct1Interface");
+    qmlRegisterType<testbed2::QmlNestedStruct2Interface>(uri, 1, 0, "Testbed2NestedStruct2Interface");
+    qmlRegisterType<testbed2::QmlNestedStruct3Interface>(uri, 1, 0, "Testbed2NestedStruct3Interface");
 
 }

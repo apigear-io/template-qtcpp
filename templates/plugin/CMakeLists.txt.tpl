@@ -25,3 +25,5 @@ set_target_properties(plugin_{{$module_id}} PROPERTIES
 target_link_libraries(plugin_{{$module_id}} PRIVATE Qt5::Core Qt5::Qml {{$module_id}}::{{$module_id}}_api)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qmldir ${OUTPUT_PATH}/qmldir COPYONLY)
+
+target_compile_definitions(plugin_{{$module_id}} PRIVATE {{$MODULE_ID}}_PLUGIN_LIBRARY)

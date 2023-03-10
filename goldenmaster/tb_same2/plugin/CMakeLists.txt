@@ -23,3 +23,5 @@ set_target_properties(plugin_tb_same2 PROPERTIES
 target_link_libraries(plugin_tb_same2 PRIVATE Qt5::Core Qt5::Qml tb_same2::tb_same2_api)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qmldir ${OUTPUT_PATH}/qmldir COPYONLY)
+
+target_compile_definitions(plugin_tb_same2 PRIVATE TB_SAME2_PLUGIN_LIBRARY)

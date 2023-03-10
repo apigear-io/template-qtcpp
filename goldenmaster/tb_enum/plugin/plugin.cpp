@@ -25,18 +25,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 void Plugin::registerTypes(const char *uri)
 {
-    // @uri tb.enum
-    // register enum
-    qmlRegisterUncreatableType<tb_enum::Enum0>(uri, 1, 0, "Enum0", "An enum can not be created");
-    qmlRegisterUncreatableType<tb_enum::Enum1>(uri, 1, 0, "Enum1", "An enum can not be created");
-    qmlRegisterUncreatableType<tb_enum::Enum2>(uri, 1, 0, "Enum2", "An enum can not be created");
-    qmlRegisterUncreatableType<tb_enum::Enum3>(uri, 1, 0, "Enum3", "An enum can not be created");
-
-    // register structs
-
-    // register interfaces
-    qmlRegisterType<tb_enum::QmlEnumInterface>(uri, 1, 0, "EnumInterface");
-
-
+    // register enums structs and interfaces for tb_enum
+    qmlRegisterUncreatableType<tb_enum::Enum0>(uri, 1, 0, "TbEnumEnum0", "An enum can not be created");
+    qmlRegisterUncreatableType<tb_enum::Enum1>(uri, 1, 0, "TbEnumEnum1", "An enum can not be created");
+    qmlRegisterUncreatableType<tb_enum::Enum2>(uri, 1, 0, "TbEnumEnum2", "An enum can not be created");
+    qmlRegisterUncreatableType<tb_enum::Enum3>(uri, 1, 0, "TbEnumEnum3", "An enum can not be created");
+    qmlRegisterType<tb_enum::QmlEnumInterface>(uri, 1, 0, "TbEnumEnumInterface");
 
 }

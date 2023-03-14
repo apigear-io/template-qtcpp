@@ -56,6 +56,10 @@ int main(int argc, char *argv[]){
     // Create main app
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QGuiApplication app(argc, argv);
+
+    // Hardcoded path to plugins for runtime app, works only in this folder structure
+    // You may want to try out setting QML_IMPORT_PATH and QML2_IMPORT_PATH variables instead of following line.
+    app.addLibraryPath(app.applicationDirPath() + "../../imports");
     QQmlApplicationEngine engine;
 
     engine.load(url);

@@ -1,0 +1,22 @@
+# This workflow will ensure that all changes to the goldenmaster are tested
+
+name: Technology Template Build Test
+
+on:
+  pull_request:
+    paths:
+      - '*/**'
+      - '!goldenmaster/**'
+    branches: [main]
+
+jobs:
+  cmake_build:
+    name: ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - { name: "CMake Ubuntu Latest GCC", os: ubuntu-latest }
+    steps:
+      - run: 'echo "No build required"'

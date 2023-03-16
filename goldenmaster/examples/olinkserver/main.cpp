@@ -58,9 +58,16 @@
 
 #include <iostream>
 
-int main(){
+// You can run this server app together with the client side app - either also example,
+// or implemented olink client (may be using other technology) to play around with it.
+// Have in mind, that this example only instantiates the interfaces and the services.
+// To see results make sure the clients are sending request to server or add some actions by yourself.
+// Note that the server should be started before the client apps.
+// If you are running this example from qt creator make sure that the run project settings have "run in terminal" option selected.
 
-    ApiGear::ObjectLink::RemoteRegistry registry;
+int main(int argc, char *argv[]){
+
+    QCoreApplication app(argc, argv);  ApiGear::ObjectLink::RemoteRegistry registry;
     ApiGear::ObjectLink::OLinkHost server(registry);
     server.listen("localhost", 8182);
     auto testbed2ManyParamInterface = std::make_shared<testbed2::ManyParamInterface>();
@@ -132,6 +139,7 @@ int main(){
     auto testbed1OlinkStructArrayInterfaceService = std::make_shared<testbed1::OLinkStructArrayInterfaceAdapter>(registry, &testbed1StructArrayInterfaceTraced);
     registry.addSource(testbed1OlinkStructArrayInterfaceService);
 
+    auto result = app.exec();
     // Use the server.
     registry.removeSource(testbed2OlinkManyParamInterfaceService->olinkObjectName());
     registry.removeSource(testbed2OlinkNestedStruct1InterfaceService->olinkObjectName());
@@ -150,5 +158,5 @@ int main(){
     registry.removeSource(tbSimpleOlinkSimpleArrayInterfaceService->olinkObjectName());
     registry.removeSource(testbed1OlinkStructInterfaceService->olinkObjectName());
     registry.removeSource(testbed1OlinkStructArrayInterfaceService->olinkObjectName());
-    return 0;
+    return result;
 }

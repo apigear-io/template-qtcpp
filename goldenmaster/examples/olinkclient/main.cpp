@@ -39,62 +39,84 @@
 #include "testbed1/monitor/structarrayinterfacetraced.h"
 
 
+// You can run this client app together with the server side app - either also example, simulation,
+// or implemented olink server (may be in other technology) to play around with it.
+// Have in mind, that this example only instantiates the interfaces, you need to add some action to it by yourself, like:
+// changing properties or executing methods, also make sure you are subscribed for the changes and signals.
+// If you use a server example try out implementing some changes like: setting some properties or emitting signals to see any effects here.
+// Note that the server should be started first.
+// If you are running this example from qt creator make sure that the run project settings have "run in terminal" option selected.
 int main(int argc, char *argv[])
 {
-
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-#endif
     QGuiApplication app(argc, argv);
     ApiGear::ObjectLink::ClientRegistry registry;
     ApiGear::ObjectLink::OLinkClient client(registry);
-    client.connectToHost(QUrl("ws://127.0.0.1:8182"));
+    client.connectToHost(QUrl("ws://127.0.0.1:8182/ws"));
     auto testbed2ManyParamInterface = std::make_shared<testbed2::OLinkManyParamInterface>();
-    client.linkObjectSource(testbed2ManyParamInterface);testbed2::ManyParamInterfaceTraced testbed2ManyParamInterfaceTraced(testbed2ManyParamInterface );
+    client.linkObjectSource(testbed2ManyParamInterface);
+    testbed2::ManyParamInterfaceTraced testbed2ManyParamInterfaceTraced(testbed2ManyParamInterface );
     auto testbed2NestedStruct1Interface = std::make_shared<testbed2::OLinkNestedStruct1Interface>();
-    client.linkObjectSource(testbed2NestedStruct1Interface);testbed2::NestedStruct1InterfaceTraced testbed2NestedStruct1InterfaceTraced(testbed2NestedStruct1Interface );
+    client.linkObjectSource(testbed2NestedStruct1Interface);
+    testbed2::NestedStruct1InterfaceTraced testbed2NestedStruct1InterfaceTraced(testbed2NestedStruct1Interface );
     auto testbed2NestedStruct2Interface = std::make_shared<testbed2::OLinkNestedStruct2Interface>();
-    client.linkObjectSource(testbed2NestedStruct2Interface);testbed2::NestedStruct2InterfaceTraced testbed2NestedStruct2InterfaceTraced(testbed2NestedStruct2Interface );
+    client.linkObjectSource(testbed2NestedStruct2Interface);
+    testbed2::NestedStruct2InterfaceTraced testbed2NestedStruct2InterfaceTraced(testbed2NestedStruct2Interface );
     auto testbed2NestedStruct3Interface = std::make_shared<testbed2::OLinkNestedStruct3Interface>();
-    client.linkObjectSource(testbed2NestedStruct3Interface);testbed2::NestedStruct3InterfaceTraced testbed2NestedStruct3InterfaceTraced(testbed2NestedStruct3Interface );
+    client.linkObjectSource(testbed2NestedStruct3Interface);
+    testbed2::NestedStruct3InterfaceTraced testbed2NestedStruct3InterfaceTraced(testbed2NestedStruct3Interface );
     auto tbEnumEnumInterface = std::make_shared<tb_enum::OLinkEnumInterface>();
-    client.linkObjectSource(tbEnumEnumInterface);tb_enum::EnumInterfaceTraced tbEnumEnumInterfaceTraced(tbEnumEnumInterface );
+    client.linkObjectSource(tbEnumEnumInterface);
+    tb_enum::EnumInterfaceTraced tbEnumEnumInterfaceTraced(tbEnumEnumInterface );
     auto tbSame1SameStruct1Interface = std::make_shared<tb_same1::OLinkSameStruct1Interface>();
-    client.linkObjectSource(tbSame1SameStruct1Interface);tb_same1::SameStruct1InterfaceTraced tbSame1SameStruct1InterfaceTraced(tbSame1SameStruct1Interface );
+    client.linkObjectSource(tbSame1SameStruct1Interface);
+    tb_same1::SameStruct1InterfaceTraced tbSame1SameStruct1InterfaceTraced(tbSame1SameStruct1Interface );
     auto tbSame1SameStruct2Interface = std::make_shared<tb_same1::OLinkSameStruct2Interface>();
-    client.linkObjectSource(tbSame1SameStruct2Interface);tb_same1::SameStruct2InterfaceTraced tbSame1SameStruct2InterfaceTraced(tbSame1SameStruct2Interface );
+    client.linkObjectSource(tbSame1SameStruct2Interface);
+    tb_same1::SameStruct2InterfaceTraced tbSame1SameStruct2InterfaceTraced(tbSame1SameStruct2Interface );
     auto tbSame1SameEnum1Interface = std::make_shared<tb_same1::OLinkSameEnum1Interface>();
-    client.linkObjectSource(tbSame1SameEnum1Interface);tb_same1::SameEnum1InterfaceTraced tbSame1SameEnum1InterfaceTraced(tbSame1SameEnum1Interface );
+    client.linkObjectSource(tbSame1SameEnum1Interface);
+    tb_same1::SameEnum1InterfaceTraced tbSame1SameEnum1InterfaceTraced(tbSame1SameEnum1Interface );
     auto tbSame1SameEnum2Interface = std::make_shared<tb_same1::OLinkSameEnum2Interface>();
-    client.linkObjectSource(tbSame1SameEnum2Interface);tb_same1::SameEnum2InterfaceTraced tbSame1SameEnum2InterfaceTraced(tbSame1SameEnum2Interface );
+    client.linkObjectSource(tbSame1SameEnum2Interface);
+    tb_same1::SameEnum2InterfaceTraced tbSame1SameEnum2InterfaceTraced(tbSame1SameEnum2Interface );
     auto tbSame2SameStruct1Interface = std::make_shared<tb_same2::OLinkSameStruct1Interface>();
-    client.linkObjectSource(tbSame2SameStruct1Interface);tb_same2::SameStruct1InterfaceTraced tbSame2SameStruct1InterfaceTraced(tbSame2SameStruct1Interface );
+    client.linkObjectSource(tbSame2SameStruct1Interface);
+    tb_same2::SameStruct1InterfaceTraced tbSame2SameStruct1InterfaceTraced(tbSame2SameStruct1Interface );
     auto tbSame2SameStruct2Interface = std::make_shared<tb_same2::OLinkSameStruct2Interface>();
-    client.linkObjectSource(tbSame2SameStruct2Interface);tb_same2::SameStruct2InterfaceTraced tbSame2SameStruct2InterfaceTraced(tbSame2SameStruct2Interface );
+    client.linkObjectSource(tbSame2SameStruct2Interface);
+    tb_same2::SameStruct2InterfaceTraced tbSame2SameStruct2InterfaceTraced(tbSame2SameStruct2Interface );
     auto tbSame2SameEnum1Interface = std::make_shared<tb_same2::OLinkSameEnum1Interface>();
-    client.linkObjectSource(tbSame2SameEnum1Interface);tb_same2::SameEnum1InterfaceTraced tbSame2SameEnum1InterfaceTraced(tbSame2SameEnum1Interface );
+    client.linkObjectSource(tbSame2SameEnum1Interface);
+    tb_same2::SameEnum1InterfaceTraced tbSame2SameEnum1InterfaceTraced(tbSame2SameEnum1Interface );
     auto tbSame2SameEnum2Interface = std::make_shared<tb_same2::OLinkSameEnum2Interface>();
-    client.linkObjectSource(tbSame2SameEnum2Interface);tb_same2::SameEnum2InterfaceTraced tbSame2SameEnum2InterfaceTraced(tbSame2SameEnum2Interface );
+    client.linkObjectSource(tbSame2SameEnum2Interface);
+    tb_same2::SameEnum2InterfaceTraced tbSame2SameEnum2InterfaceTraced(tbSame2SameEnum2Interface );
     auto tbSimpleSimpleInterface = std::make_shared<tb_simple::OLinkSimpleInterface>();
-    client.linkObjectSource(tbSimpleSimpleInterface);tb_simple::SimpleInterfaceTraced tbSimpleSimpleInterfaceTraced(tbSimpleSimpleInterface );
+    client.linkObjectSource(tbSimpleSimpleInterface);
+    tb_simple::SimpleInterfaceTraced tbSimpleSimpleInterfaceTraced(tbSimpleSimpleInterface );
     auto tbSimpleSimpleArrayInterface = std::make_shared<tb_simple::OLinkSimpleArrayInterface>();
-    client.linkObjectSource(tbSimpleSimpleArrayInterface);tb_simple::SimpleArrayInterfaceTraced tbSimpleSimpleArrayInterfaceTraced(tbSimpleSimpleArrayInterface );
+    client.linkObjectSource(tbSimpleSimpleArrayInterface);
+    tb_simple::SimpleArrayInterfaceTraced tbSimpleSimpleArrayInterfaceTraced(tbSimpleSimpleArrayInterface );
     auto testbed1StructInterface = std::make_shared<testbed1::OLinkStructInterface>();
-    client.linkObjectSource(testbed1StructInterface);testbed1::StructInterfaceTraced testbed1StructInterfaceTraced(testbed1StructInterface );
+    client.linkObjectSource(testbed1StructInterface);
+    testbed1::StructInterfaceTraced testbed1StructInterfaceTraced(testbed1StructInterface );
     auto testbed1StructArrayInterface = std::make_shared<testbed1::OLinkStructArrayInterface>();
-    client.linkObjectSource(testbed1StructArrayInterface);testbed1::StructArrayInterfaceTraced testbed1StructArrayInterfaceTraced(testbed1StructArrayInterface );
+    client.linkObjectSource(testbed1StructArrayInterface);
+    testbed1::StructArrayInterfaceTraced testbed1StructArrayInterfaceTraced(testbed1StructArrayInterface );
 
-    QQmlApplicationEngine engine;
-    const QUrl url(QStringLiteral("qrc:/main.qml"));
-    QObject::connect(&engine,
-                     &QQmlApplicationEngine::objectCreated,
-                     &app,
-                     [url](QObject *obj, const QUrl &objUrl) {
-                       if (!obj && url == objUrl)
-                        QCoreApplication::exit(-1);
-                     },
-                     Qt::QueuedConnection);
-    engine.load(url);
+    
+    // Try out properties: subscribe for changes
+    testbed2ManyParamInterfaceTraced.connect(&testbed2ManyParamInterfaceTraced, &testbed2::AbstractManyParamInterface::prop1Changed, []( int prop1){ qDebug() << "prop1 property changed ";});
+    // or ask for change.
+    auto local_prop1 = 0;
+    testbed2ManyParamInterfaceTraced.setProp1(local_prop1);
+    
+    // Check the signals with subscribing for its change
+    testbed2ManyParamInterfaceTraced.connect(&testbed2ManyParamInterfaceTraced, &testbed2::AbstractManyParamInterface::sig1, [](int param1){ qDebug() << "sig1 signal emitted ";});
+    
+    // Play around executing your operations
+    auto method_result = testbed2ManyParamInterfaceTraced.func1(0);
+    
 
     auto result = app.exec();
     client.unlinkObjectSource(testbed2ManyParamInterface->olinkObjectName());

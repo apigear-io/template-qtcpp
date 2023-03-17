@@ -41,7 +41,7 @@ bool checkMessageInContainer(const std::vector<QString>& container, const QStrin
 
 auto portNumber = 8000;
 QString localHostAddress =  "ws://127.0.0.1";
-QString localHostAddressWithPort = "ws://127.0.0.1:" + QString::fromStdString(std::to_string(portNumber));
+QString localHostAddressWithPort = "ws://127.0.0.1:" + QString::fromStdString(std::to_string(portNumber)) + QString("/ws");
 const std::string sink1Id = "tests.sink1";
 const std::string sink2Id = "tests.sink2";
 nlohmann::json initProperties = { {"property1", "some_string" }, { "property2",  9 }, { "property3", false } };

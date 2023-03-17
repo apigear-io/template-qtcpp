@@ -43,7 +43,7 @@ void sendTenPropertyMessages (const std::string& propertyId, int startingPropert
 const std::string objectId = "tests.sink1";
 uint16_t portNumber = 7681;
 QString localHostAddress = "127.0.0.1";
-QUrl url("ws://127.0.0.1:7681");
+QUrl url("ws://127.0.0.1:7681/ws");
 
 nlohmann::json initProperties1 = { {"property1", "some_string1" }, { "property2",  92 }, { "property3", true } };
 nlohmann::json initProperties2 = { {"property1", "some_string2" }, { "property2",  29 }, { "property3", false } };

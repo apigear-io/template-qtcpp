@@ -77,6 +77,7 @@ target_link_libraries(QmlExamlple
 Qt5::Core Qt5::Qml Qt5::WebSockets Qt5::Gui Qt5::Quick Qt5::QuickControls2 Qt5::QuickWidgets
 olink_qt
 olink_core
+monitor_qt
 )
 
 

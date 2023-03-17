@@ -65,6 +65,7 @@ target_link_libraries(OLinkServer
 Qt5::Core Qt5::Qml Qt5::WebSockets Qt5::Gui
 olink_qt
 olink_core
+monitor_qt
 )
 
 

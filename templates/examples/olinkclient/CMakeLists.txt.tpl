@@ -47,6 +47,9 @@ target_link_libraries(OLinkClient
 Qt5::Core Qt5::Qml Qt5::WebSockets Qt5::Gui
 olink_qt
 olink_core
+{{- if $features.monitor }}
+monitor_qt
+{{- end}}
 )
 install(TARGETS OLinkClient
         RUNTIME DESTINATION bin COMPONENT Runtime)

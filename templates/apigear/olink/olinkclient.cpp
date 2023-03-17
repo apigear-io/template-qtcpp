@@ -42,7 +42,7 @@ void OLinkClient::connectToHost(QUrl url)
 {
     qDebug() << Q_FUNC_INFO << url;
     if (url.isEmpty()) {
-        QString serverUrl = qEnvironmentVariable("OLINK_SERVER", "ws://127.0.0.1:8182");
+        QString serverUrl = qEnvironmentVariable("OLINK_SERVER", "ws://127.0.0.1:8182/ws");
         m_serverUrl = QUrl(serverUrl);
     }
     else {

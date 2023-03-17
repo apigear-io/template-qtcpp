@@ -85,7 +85,7 @@ int main(int argc, char *argv[]){
     {{- end }}
 
     // With services ready connect the client - all qml olink clients will be linked
-    client.connectToHost(QUrl("ws://127.0.0.1:8182"));
+    client.connectToHost(QUrl("ws://127.0.0.1:8182/ws"));
 
     /**
     * You may want to try out the bindings in qml for your interface

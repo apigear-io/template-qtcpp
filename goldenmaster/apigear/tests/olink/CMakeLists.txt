@@ -39,19 +39,6 @@ FetchContent_MakeAvailable(Catch2 trompeloeil)
 
 find_package(Catch2 REQUIRED)
 
-find_package(olink_core)
-if(NOT olink_core_FOUND)
-  # pull objectlink-core-cpp as dependency
-  message(STATUS "objectlink-core-cpp NOT FOUND, fetching the git repository")
-  FetchContent_Declare(olink_core
-      GIT_REPOSITORY https://github.com/apigear-io/objectlink-core-cpp.git
-      GIT_TAG v0.2.4
-      GIT_SHALLOW TRUE
-      EXCLUDE_FROM_ALL FALSE
-  )
-  FetchContent_MakeAvailable(olink_core)
-endif()
-
 set(CMAKE_CTEST_COMMAND ctest -V)
 if(NOT TARGET check)
 add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND})
@@ -78,7 +65,6 @@ add_test(test_olink test_olink)
 add_dependencies(check test_olink)
 
 target_link_libraries(test_olink PRIVATE
-    olink_core
     olink_qt
     Catch2::Catch2
     trompeloeil::trompeloeil

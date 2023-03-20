@@ -42,7 +42,6 @@ target_link_libraries(OLinkServer
     testbed1_impl
     testbed1_olink
     testbed1_monitor
-monitor_qt
 )
 
 install(TARGETS OLinkServer

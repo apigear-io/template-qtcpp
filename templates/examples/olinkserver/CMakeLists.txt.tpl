@@ -29,9 +29,6 @@ target_link_libraries(OLinkServer
     {{$module_id}}_olink{{ if $features.monitor }}
     {{$module_id}}_monitor{{ end -}}
 {{- end }}
-{{- if $features.monitor }}
-monitor_qt
-{{- end}}
 )
 
 install(TARGETS OLinkServer

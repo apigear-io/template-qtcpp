@@ -49,7 +49,6 @@ target_link_libraries(OLinkClient
     testbed1_olink
     testbed1_monitor
 Qt5::Gui
-monitor_qt
 )
 install(TARGETS OLinkClient
         RUNTIME DESTINATION bin COMPONENT Runtime)

@@ -55,7 +55,6 @@ target_link_libraries(QmlExamlple
     plugin_testbed1
     testbed1_monitor
 Qt5::Gui Qt5::Quick Qt5::QuickControls2 Qt5::QuickWidgets
-monitor_qt
 )
 
 

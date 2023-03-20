@@ -17,20 +17,6 @@ add_executable(OLinkServer
 )
 
 find_package(Qt5 REQUIRED COMPONENTS Core Qml Network WebSockets Gui)
-find_package(apigear QUIET COMPONENTS olink_qt)
-
-find_package(apigear QUIET COMPONENTS olink_core)
-if(NOT olink_core_FOUND)
-  # pull objectlink-core-cpp as dependency
-  message(STATUS "objectlink-core-cpp NOT FOUND, fetching the git repository")
-  FetchContent_Declare(olink_core
-      GIT_REPOSITORY https://github.com/apigear-io/objectlink-core-cpp.git
-      GIT_TAG v0.2.4
-      GIT_SHALLOW TRUE
-      EXCLUDE_FROM_ALL FALSE
-  )
-  FetchContent_MakeAvailable(olink_core)
-endif()
 
 {{ range .System.Modules }}
 {{- $module_id := snake .Name }}
@@ -45,13 +31,10 @@ target_link_libraries(OLinkServer
     {{$module_id}}_monitor{{ end -}}
 {{- end }}
 Qt5::Core Qt5::Qml Qt5::WebSockets Qt5::Gui
-olink_qt
-olink_core
 {{- if $features.monitor }}
 monitor_qt
 {{- end}}
 )
-
 
 install(TARGETS OLinkServer
         RUNTIME DESTINATION bin COMPONENT Runtime)

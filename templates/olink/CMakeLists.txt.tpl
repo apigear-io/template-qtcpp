@@ -23,6 +23,4 @@ target_include_directories({{$lib_id}}
     $<INSTALL_INTERFACE:include/{{$module_id}}>
 )
 
-target_link_libraries({{$lib_id}} 
-PRIVATE {{$module_id}}::{{$module_id}}_api 
-PUBLIC olink_qt qtpromise)
+target_link_libraries({{$lib_id}} PUBLIC {{$module_id}}::{{$module_id}}_api olink_qt qtpromise)

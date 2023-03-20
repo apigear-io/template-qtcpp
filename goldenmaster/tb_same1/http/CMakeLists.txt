@@ -19,4 +19,4 @@ set (TB_SAME1_HTTP_SOURCES
 
 add_library(tb_same1_http STATIC ${TB_SAME1_HTTP_SOURCES})
 target_include_directories(tb_same1_http PRIVATE ../tb_same1)
-target_link_libraries(tb_same1_http PRIVATE Qt5::Network tb_same1_api)
+target_link_libraries(tb_same1_http PUBLIC Qt5::Network tb_same1_api)

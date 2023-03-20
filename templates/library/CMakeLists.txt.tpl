@@ -32,7 +32,7 @@ target_include_directories({{$lib_id}}
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries({{$lib_id}} PRIVATE {{$module_id}}::{{snake .Module.Name}}_api)
+target_link_libraries({{$lib_id}} PUBLIC {{$module_id}}::{{snake .Module.Name}}_api)
 target_compile_definitions({{$lib_id}} PRIVATE {{ $LIB_ID }}_LIBRARY)
 
 add_subdirectory(tests)

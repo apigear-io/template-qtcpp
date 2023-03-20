@@ -20,7 +20,7 @@ set_target_properties(plugin_tb_same2 PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_PATH}
 )
 
-target_link_libraries(plugin_tb_same2 PRIVATE tb_same2::tb_same2_api)
+target_link_libraries(plugin_tb_same2 PUBLIC tb_same2::tb_same2_api)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qmldir ${OUTPUT_PATH}/qmldir COPYONLY)
 

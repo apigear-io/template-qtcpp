@@ -20,7 +20,7 @@ set_target_properties(plugin_testbed1 PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_PATH}
 )
 
-target_link_libraries(plugin_testbed1 PRIVATE testbed1::testbed1_api)
+target_link_libraries(plugin_testbed1 PUBLIC testbed1::testbed1_api)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qmldir ${OUTPUT_PATH}/qmldir COPYONLY)
 

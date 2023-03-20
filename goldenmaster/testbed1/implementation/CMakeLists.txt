@@ -25,7 +25,7 @@ target_include_directories(testbed1_impl
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(testbed1_impl PRIVATE testbed1::testbed1_api)
+target_link_libraries(testbed1_impl PUBLIC testbed1::testbed1_api)
 target_compile_definitions(testbed1_impl PRIVATE TESTBED1_IMPL_LIBRARY)
 
 add_subdirectory(tests)

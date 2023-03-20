@@ -23,39 +23,33 @@ add_executable(QmlExamlple
 find_package(Qt5 REQUIRED COMPONENTS Gui Quick QuickControls2 QuickWidgets)
 
 
-find_package(testbed2 QUIET COMPONENTS testbed2_api testbed2_impl testbed2_olink plugin_testbed2 testbed2_monitor)
-find_package(tb_enum QUIET COMPONENTS tb_enum_api tb_enum_impl tb_enum_olink plugin_tb_enum tb_enum_monitor)
-find_package(tb_same1 QUIET COMPONENTS tb_same1_api tb_same1_impl tb_same1_olink plugin_tb_same1 tb_same1_monitor)
-find_package(tb_same2 QUIET COMPONENTS tb_same2_api tb_same2_impl tb_same2_olink plugin_tb_same2 tb_same2_monitor)
-find_package(tb_simple QUIET COMPONENTS tb_simple_api tb_simple_impl tb_simple_olink plugin_tb_simple tb_simple_monitor)
-find_package(testbed1 QUIET COMPONENTS testbed1_api testbed1_impl testbed1_olink plugin_testbed1 testbed1_monitor)
+find_package(testbed2 QUIET COMPONENTS testbed2_impl testbed2_olink plugin_testbed2 testbed2_monitor)
+find_package(tb_enum QUIET COMPONENTS tb_enum_impl tb_enum_olink plugin_tb_enum tb_enum_monitor)
+find_package(tb_same1 QUIET COMPONENTS tb_same1_impl tb_same1_olink plugin_tb_same1 tb_same1_monitor)
+find_package(tb_same2 QUIET COMPONENTS tb_same2_impl tb_same2_olink plugin_tb_same2 tb_same2_monitor)
+find_package(tb_simple QUIET COMPONENTS tb_simple_impl tb_simple_olink plugin_tb_simple tb_simple_monitor)
+find_package(testbed1 QUIET COMPONENTS testbed1_impl testbed1_olink plugin_testbed1 testbed1_monitor)
 target_link_libraries(QmlExamlple
-    testbed2_api
     testbed2_impl
     testbed2_olink
     plugin_testbed2
     testbed2_monitor
-    tb_enum_api
     tb_enum_impl
     tb_enum_olink
     plugin_tb_enum
     tb_enum_monitor
-    tb_same1_api
     tb_same1_impl
     tb_same1_olink
     plugin_tb_same1
     tb_same1_monitor
-    tb_same2_api
     tb_same2_impl
     tb_same2_olink
     plugin_tb_same2
     tb_same2_monitor
-    tb_simple_api
     tb_simple_impl
     tb_simple_olink
     plugin_tb_simple
     tb_simple_monitor
-    testbed1_api
     testbed1_impl
     testbed1_olink
     plugin_testbed1

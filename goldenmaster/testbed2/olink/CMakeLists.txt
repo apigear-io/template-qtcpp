@@ -22,6 +22,4 @@ target_include_directories(testbed2_olink
     $<INSTALL_INTERFACE:include/testbed2>
 )
 
-target_link_libraries(testbed2_olink 
-PRIVATE testbed2::testbed2_api 
-PUBLIC olink_qt qtpromise)
+target_link_libraries(testbed2_olink PUBLIC testbed2::testbed2_api olink_qt qtpromise)

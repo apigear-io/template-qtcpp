@@ -18,6 +18,4 @@ target_include_directories(tb_simple_olink
     $<INSTALL_INTERFACE:include/tb_simple>
 )
 
-target_link_libraries(tb_simple_olink 
-PRIVATE tb_simple::tb_simple_api 
-PUBLIC olink_qt qtpromise)
+target_link_libraries(tb_simple_olink PUBLIC tb_simple::tb_simple_api olink_qt qtpromise)

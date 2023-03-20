@@ -25,5 +25,5 @@ target_include_directories(tb_same2_monitor
     $<INSTALL_INTERFACE:include/tb_same2>
 )
 
-target_link_libraries(tb_same2_monitor PRIVATE tb_same2::tb_same2_api apigear::monitor_qt)
+target_link_libraries(tb_same2_monitor PUBLIC tb_same2::tb_same2_api apigear::monitor_qt)
 target_compile_definitions(tb_same2_monitor PRIVATE TB_SAME2_MONITOR_LIBRARY)

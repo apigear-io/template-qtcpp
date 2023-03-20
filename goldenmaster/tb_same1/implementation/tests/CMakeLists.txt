@@ -20,8 +20,8 @@ add_executable(test_tb_same1_sameenum1interface test_sameenum1interface.cpp)
 add_executable(test_tb_same1_sameenum2interface test_sameenum2interface.cpp)
 
 
-find_package(tb_same1 QUIET COMPONENTS tb_same1_api tb_same1_impl )
-target_link_libraries(test_tb_same1_samestruct1interface  tb_same1_api tb_same1_impl Qt5::Core Qt5::Test)
-target_link_libraries(test_tb_same1_samestruct2interface  tb_same1_api tb_same1_impl Qt5::Core Qt5::Test)
-target_link_libraries(test_tb_same1_sameenum1interface  tb_same1_api tb_same1_impl Qt5::Core Qt5::Test)
-target_link_libraries(test_tb_same1_sameenum2interface  tb_same1_api tb_same1_impl Qt5::Core Qt5::Test)
+find_package(tb_same1 QUIET COMPONENTS tb_same1_impl )
+target_link_libraries(test_tb_same1_samestruct1interface tb_same1_impl Qt5::Test)
+target_link_libraries(test_tb_same1_samestruct2interface tb_same1_impl Qt5::Test)
+target_link_libraries(test_tb_same1_sameenum1interface tb_same1_impl Qt5::Test)
+target_link_libraries(test_tb_same1_sameenum2interface tb_same1_impl Qt5::Test)

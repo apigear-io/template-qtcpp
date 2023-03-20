@@ -23,5 +23,5 @@ target_include_directories(testbed1_monitor
     $<INSTALL_INTERFACE:include/testbed1>
 )
 
-target_link_libraries(testbed1_monitor PRIVATE testbed1::testbed1_api apigear::monitor_qt)
+target_link_libraries(testbed1_monitor PUBLIC testbed1::testbed1_api apigear::monitor_qt)
 target_compile_definitions(testbed1_monitor PRIVATE TESTBED1_MONITOR_LIBRARY)

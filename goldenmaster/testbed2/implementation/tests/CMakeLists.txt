@@ -20,8 +20,8 @@ add_executable(test_testbed2_nestedstruct2interface test_nestedstruct2interface.
 add_executable(test_testbed2_nestedstruct3interface test_nestedstruct3interface.cpp)
 
 
-find_package(testbed2 QUIET COMPONENTS testbed2_api testbed2_impl )
-target_link_libraries(test_testbed2_manyparaminterface  testbed2_api testbed2_impl Qt5::Core Qt5::Test)
-target_link_libraries(test_testbed2_nestedstruct1interface  testbed2_api testbed2_impl Qt5::Core Qt5::Test)
-target_link_libraries(test_testbed2_nestedstruct2interface  testbed2_api testbed2_impl Qt5::Core Qt5::Test)
-target_link_libraries(test_testbed2_nestedstruct3interface  testbed2_api testbed2_impl Qt5::Core Qt5::Test)
+find_package(testbed2 QUIET COMPONENTS testbed2_impl )
+target_link_libraries(test_testbed2_manyparaminterface testbed2_impl Qt5::Test)
+target_link_libraries(test_testbed2_nestedstruct1interface testbed2_impl Qt5::Test)
+target_link_libraries(test_testbed2_nestedstruct2interface testbed2_impl Qt5::Test)
+target_link_libraries(test_testbed2_nestedstruct3interface testbed2_impl Qt5::Test)

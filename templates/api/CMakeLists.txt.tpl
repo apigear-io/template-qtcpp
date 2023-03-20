@@ -48,5 +48,6 @@ target_include_directories({{$lib_id}}
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries({{$lib_id}} PRIVATE  Qt5::Core Qt5::Qml Qt5::WebSockets nlohmann_json::nlohmann_json)
+target_link_libraries({{$lib_id}} PRIVATE  Qt5::Core Qt5::Qml Qt5::WebSockets
+PUBLIC nlohmann_json::nlohmann_json)
 target_compile_definitions({{$lib_id}} PRIVATE {{ $MODULE_ID }}_LIBRARY)

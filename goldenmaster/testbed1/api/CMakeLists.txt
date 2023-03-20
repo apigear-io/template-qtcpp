@@ -41,5 +41,6 @@ target_include_directories(testbed1_api
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(testbed1_api PRIVATE  Qt5::Core Qt5::Qml Qt5::WebSockets nlohmann_json::nlohmann_json)
+target_link_libraries(testbed1_api PRIVATE  Qt5::Core Qt5::Qml Qt5::WebSockets
+PUBLIC nlohmann_json::nlohmann_json)
 target_compile_definitions(testbed1_api PRIVATE TESTBED1_API_LIBRARY)

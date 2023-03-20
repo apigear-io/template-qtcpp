@@ -19,19 +19,6 @@ if(NOT nlohmann_json_FOUND)
   FetchContent_MakeAvailable(json)
 endif()
 
-find_package(olink_core)
-if(NOT olink_core_FOUND)
-  # pull objectlink-core-cpp as dependency
-  message(STATUS "objectlink-core-cpp NOT FOUND, fetching the git repository")
-  FetchContent_Declare(olink_core
-      GIT_REPOSITORY https://github.com/apigear-io/objectlink-core-cpp.git
-      GIT_TAG v0.2.4
-      GIT_SHALLOW TRUE
-      EXCLUDE_FROM_ALL FALSE
-  )
-  FetchContent_MakeAvailable(olink_core)
-endif()
-
 set ({{$MODULE_ID}}_OLINK_SOURCES
     olinkfactory.cpp
 {{- range .Module.Interfaces }}
@@ -50,4 +37,6 @@ target_include_directories({{$lib_id}}
     $<INSTALL_INTERFACE:include/{{$module_id}}>
 )
 
-target_link_libraries({{$lib_id}} PRIVATE olink_core Qt5::Core Qt5::Qml Qt5::WebSockets {{$module_id}}::{{$module_id}}_api PUBLIC nlohmann_json::nlohmann_json qtpromise)
+target_link_libraries({{$lib_id}} 
+PRIVATE Qt5::Core Qt5::Qml Qt5::WebSockets {{$module_id}}::{{$module_id}}_api 
+PUBLIC olink_qt nlohmann_json::nlohmann_json qtpromise)

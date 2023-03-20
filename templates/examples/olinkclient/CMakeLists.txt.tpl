@@ -31,9 +31,6 @@ target_link_libraries(OLinkClient
     {{$module_id}}_monitor{{ end -}}
 {{- end }}
 Qt5::Gui
-{{- if $features.monitor }}
-monitor_qt
-{{- end}}
 )
 install(TARGETS OLinkClient
         RUNTIME DESTINATION bin COMPONENT Runtime)

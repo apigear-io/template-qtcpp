@@ -40,5 +40,6 @@ target_include_directories(tb_enum_api
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(tb_enum_api PRIVATE  Qt5::Core Qt5::Qml Qt5::WebSockets nlohmann_json::nlohmann_json)
+target_link_libraries(tb_enum_api PRIVATE  Qt5::Core Qt5::Qml Qt5::WebSockets
+PUBLIC nlohmann_json::nlohmann_json)
 target_compile_definitions(tb_enum_api PRIVATE TB_ENUM_API_LIBRARY)

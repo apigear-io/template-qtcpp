@@ -4,7 +4,6 @@ project(tb_simple_monitor)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt5 REQUIRED COMPONENTS Core WebSockets)
 find_package(apigear QUIET COMPONENTS monitor_qt )
 
 set (TB_SIMPLE_MONITOR_SOURCES
@@ -24,5 +23,5 @@ target_include_directories(tb_simple_monitor
     $<INSTALL_INTERFACE:include/tb_simple>
 )
 
-target_link_libraries(tb_simple_monitor PRIVATE tb_simple::tb_simple_api Qt5::Core Qt5::WebSockets apigear::monitor_qt)
+target_link_libraries(tb_simple_monitor PRIVATE tb_simple::tb_simple_api apigear::monitor_qt)
 target_compile_definitions(tb_simple_monitor PRIVATE TB_SIMPLE_MONITOR_LIBRARY)

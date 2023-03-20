@@ -4,7 +4,6 @@ project(testbed1_impl LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt5 REQUIRED COMPONENTS Core Qml WebSockets)
 set(OUTPUT_PATH ${LIBRARY_PATH}/)
 
 set (TESTBED1_IMPL_SOURCES
@@ -26,7 +25,7 @@ target_include_directories(testbed1_impl
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(testbed1_impl PRIVATE Qt5::Core Qt5::Qml Qt5::WebSockets testbed1::testbed1_api)
+target_link_libraries(testbed1_impl PRIVATE testbed1::testbed1_api)
 target_compile_definitions(testbed1_impl PRIVATE TESTBED1_IMPL_LIBRARY)
 
 add_subdirectory(tests)

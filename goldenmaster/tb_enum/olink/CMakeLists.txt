@@ -1,7 +1,5 @@
 project(tb_enum_olink)
 
-find_package(Qt5 REQUIRED COMPONENTS Core Qml Network WebSockets)
-
 set (TB_ENUM_OLINK_SOURCES
     olinkfactory.cpp
     olinkenuminterface.cpp
@@ -19,5 +17,5 @@ target_include_directories(tb_enum_olink
 )
 
 target_link_libraries(tb_enum_olink 
-PRIVATE Qt5::Core Qt5::Qml Qt5::WebSockets tb_enum::tb_enum_api 
+PRIVATE tb_enum::tb_enum_api 
 PUBLIC olink_qt qtpromise)

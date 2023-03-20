@@ -5,8 +5,6 @@
 {{- $SOURCES := printf "%s_OLINK_SOURCES" $MODULE_ID -}}
 project({{$lib_id}})
 
-find_package(Qt5 REQUIRED COMPONENTS Core Qml Network WebSockets)
-
 set ({{$MODULE_ID}}_OLINK_SOURCES
     olinkfactory.cpp
 {{- range .Module.Interfaces }}
@@ -26,5 +24,5 @@ target_include_directories({{$lib_id}}
 )
 
 target_link_libraries({{$lib_id}} 
-PRIVATE Qt5::Core Qt5::Qml Qt5::WebSockets {{$module_id}}::{{$module_id}}_api 
+PRIVATE {{$module_id}}::{{$module_id}}_api 
 PUBLIC olink_qt qtpromise)

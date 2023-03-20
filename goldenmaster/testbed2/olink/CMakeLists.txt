@@ -1,7 +1,5 @@
 project(testbed2_olink)
 
-find_package(Qt5 REQUIRED COMPONENTS Core Qml Network WebSockets)
-
 set (TESTBED2_OLINK_SOURCES
     olinkfactory.cpp
     olinkmanyparaminterface.cpp
@@ -25,5 +23,5 @@ target_include_directories(testbed2_olink
 )
 
 target_link_libraries(testbed2_olink 
-PRIVATE Qt5::Core Qt5::Qml Qt5::WebSockets testbed2::testbed2_api 
+PRIVATE testbed2::testbed2_api 
 PUBLIC olink_qt qtpromise)

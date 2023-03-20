@@ -68,7 +68,7 @@ target_link_libraries(test_olink PRIVATE
     olink_qt
     Catch2::Catch2
     trompeloeil::trompeloeil
-    Qt::Test Qt5::Core Qt5::Qml Qt5::WebSockets)
+    Qt::Test)
 
 list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/contrib)
 include(Catch)

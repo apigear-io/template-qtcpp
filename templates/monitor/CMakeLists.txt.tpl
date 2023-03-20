@@ -9,7 +9,6 @@ project({{$lib_id}})
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt5 REQUIRED COMPONENTS Core WebSockets)
 find_package(apigear QUIET COMPONENTS monitor_qt )
 
 set ({{$SOURCES}}
@@ -30,5 +29,5 @@ target_include_directories({{$lib_id}}
     $<INSTALL_INTERFACE:include/{{$module_id}}>
 )
 
-target_link_libraries({{$lib_id}} PRIVATE {{$module_id}}::{{$module_id}}_api Qt5::Core Qt5::WebSockets apigear::monitor_qt)
+target_link_libraries({{$lib_id}} PRIVATE {{$module_id}}::{{$module_id}}_api apigear::monitor_qt)
 target_compile_definitions({{$lib_id}} PRIVATE {{ $MODULE_ID }}_LIBRARY)

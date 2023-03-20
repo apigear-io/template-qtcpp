@@ -30,7 +30,6 @@ target_link_libraries(OLinkServer
     {{$module_id}}_olink{{ if $features.monitor }}
     {{$module_id}}_monitor{{ end -}}
 {{- end }}
-Qt5::Core Qt5::Qml Qt5::WebSockets Qt5::Gui
 {{- if $features.monitor }}
 monitor_qt
 {{- end}}

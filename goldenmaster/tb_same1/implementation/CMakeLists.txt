@@ -27,7 +27,7 @@ target_include_directories(tb_same1_impl
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(tb_same1_impl PRIVATE tb_same1::tb_same1_api)
+target_link_libraries(tb_same1_impl PUBLIC tb_same1::tb_same1_api)
 target_compile_definitions(tb_same1_impl PRIVATE TB_SAME1_IMPL_LIBRARY)
 
 add_subdirectory(tests)

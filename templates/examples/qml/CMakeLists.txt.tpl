@@ -25,12 +25,11 @@ find_package(Qt5 REQUIRED COMPONENTS Gui Quick QuickControls2 QuickWidgets)
 
 {{ range .System.Modules }}
 {{- $module_id := snake .Name }}
-find_package({{$module_id}} QUIET COMPONENTS {{$module_id}}_api {{$module_id}}_impl {{$module_id}}_olink plugin_{{$module_id}}{{ if $features.monitor }} {{$module_id}}_monitor{{ end}})
+find_package({{$module_id}} QUIET COMPONENTS {{$module_id}}_impl {{$module_id}}_olink plugin_{{$module_id}}{{ if $features.monitor }} {{$module_id}}_monitor{{ end}})
 {{- end }}
 target_link_libraries(QmlExamlple
 {{- range .System.Modules }}
 {{- $module_id := snake .Name }}
-    {{$module_id}}_api
     {{$module_id}}_impl
     {{$module_id}}_olink
     plugin_{{$module_id}}{{ if $features.monitor }}

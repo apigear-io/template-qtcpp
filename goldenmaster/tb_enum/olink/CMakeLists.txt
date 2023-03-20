@@ -16,6 +16,4 @@ target_include_directories(tb_enum_olink
     $<INSTALL_INTERFACE:include/tb_enum>
 )
 
-target_link_libraries(tb_enum_olink 
-PRIVATE tb_enum::tb_enum_api 
-PUBLIC olink_qt qtpromise)
+target_link_libraries(tb_enum_olink PUBLIC tb_enum::tb_enum_api olink_qt qtpromise)

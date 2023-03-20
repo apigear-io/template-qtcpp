@@ -25,7 +25,7 @@ target_include_directories(tb_simple_impl
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(tb_simple_impl PRIVATE tb_simple::tb_simple_api)
+target_link_libraries(tb_simple_impl PUBLIC tb_simple::tb_simple_api)
 target_compile_definitions(tb_simple_impl PRIVATE TB_SIMPLE_IMPL_LIBRARY)
 
 add_subdirectory(tests)

@@ -24,7 +24,7 @@ target_include_directories(tb_enum_impl
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(tb_enum_impl PRIVATE tb_enum::tb_enum_api)
+target_link_libraries(tb_enum_impl PUBLIC tb_enum::tb_enum_api)
 target_compile_definitions(tb_enum_impl PRIVATE TB_ENUM_IMPL_LIBRARY)
 
 add_subdirectory(tests)

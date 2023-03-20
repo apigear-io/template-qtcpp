@@ -22,8 +22,8 @@ add_executable(test_{{$module_id}}_{{.Name|lower}} test_{{.Name|lower}}.cpp)
 {{- end }}
 
 
-find_package({{$module_id}} QUIET COMPONENTS {{$module_id}}_api {{$module_id}}_impl )
+find_package({{$module_id}} QUIET COMPONENTS {{$module_id}}_impl )
 
 {{- range .Module.Interfaces }}
-target_link_libraries(test_{{$module_id}}_{{.Name|lower}}  {{$module_id}}_api {{$module_id}}_impl Qt5::Core Qt5::Test)
+target_link_libraries(test_{{$module_id}}_{{.Name|lower}} {{$module_id}}_impl Qt5::Test)
 {{- end }}

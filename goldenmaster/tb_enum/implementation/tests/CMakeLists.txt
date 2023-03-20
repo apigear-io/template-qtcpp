@@ -17,5 +17,5 @@ set(CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR} ${CMAKE_MODULE_PATH})
 add_executable(test_tb_enum_enuminterface test_enuminterface.cpp)
 
 
-find_package(tb_enum QUIET COMPONENTS tb_enum_api tb_enum_impl )
-target_link_libraries(test_tb_enum_enuminterface  tb_enum_api tb_enum_impl Qt5::Core Qt5::Test)
+find_package(tb_enum QUIET COMPONENTS tb_enum_impl )
+target_link_libraries(test_tb_enum_enuminterface tb_enum_impl Qt5::Test)

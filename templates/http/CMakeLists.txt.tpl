@@ -23,4 +23,4 @@ set ({{$SOURCES}}
 
 add_library({{$module_id}}_http STATIC ${ {{- $SOURCES -}} })
 target_include_directories({{$module_id}}_http PRIVATE ../{{$module_id}})
-target_link_libraries({{$module_id}}_http PRIVATE Qt5::Network {{$module_id}}_api)
+target_link_libraries({{$module_id}}_http PUBLIC Qt5::Network {{$module_id}}_api)

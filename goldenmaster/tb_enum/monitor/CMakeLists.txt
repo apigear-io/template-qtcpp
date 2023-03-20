@@ -22,5 +22,5 @@ target_include_directories(tb_enum_monitor
     $<INSTALL_INTERFACE:include/tb_enum>
 )
 
-target_link_libraries(tb_enum_monitor PRIVATE tb_enum::tb_enum_api apigear::monitor_qt)
+target_link_libraries(tb_enum_monitor PUBLIC tb_enum::tb_enum_api apigear::monitor_qt)
 target_compile_definitions(tb_enum_monitor PRIVATE TB_ENUM_MONITOR_LIBRARY)

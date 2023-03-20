@@ -22,7 +22,7 @@ set_target_properties(plugin_{{$module_id}} PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_PATH}
 )
 
-target_link_libraries(plugin_{{$module_id}} PRIVATE {{$module_id}}::{{$module_id}}_api)
+target_link_libraries(plugin_{{$module_id}} PUBLIC {{$module_id}}::{{$module_id}}_api)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qmldir ${OUTPUT_PATH}/qmldir COPYONLY)
 

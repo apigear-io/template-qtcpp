@@ -17,4 +17,4 @@ set (TB_SIMPLE_HTTP_SOURCES
 
 add_library(tb_simple_http STATIC ${TB_SIMPLE_HTTP_SOURCES})
 target_include_directories(tb_simple_http PRIVATE ../tb_simple)
-target_link_libraries(tb_simple_http PRIVATE Qt5::Network tb_simple_api)
+target_link_libraries(tb_simple_http PUBLIC Qt5::Network tb_simple_api)

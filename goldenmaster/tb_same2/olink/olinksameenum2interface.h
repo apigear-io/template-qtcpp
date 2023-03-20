@@ -98,7 +98,6 @@ signals:
 
     /**
     * Informs if the OLinkSameEnum2Interface is ready to send and receive messages.
-    * @return true if SameEnum2Interface is operable, false otherwise.
     */
     void isReady();
 public:

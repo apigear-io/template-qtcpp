@@ -136,7 +136,6 @@ signals:
 
     /**
     * Informs if the OLinkStructArrayInterface is ready to send and receive messages.
-    * @return true if StructArrayInterface is operable, false otherwise.
     */
     void isReady();
 public:

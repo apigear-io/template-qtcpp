@@ -212,7 +212,6 @@ signals:
 
     /**
     * Informs if the OLinkSimpleArrayInterface is ready to send and receive messages.
-    * @return true if SimpleArrayInterface is operable, false otherwise.
     */
     void isReady();
 public:

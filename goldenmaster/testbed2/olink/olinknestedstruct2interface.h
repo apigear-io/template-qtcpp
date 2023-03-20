@@ -98,7 +98,6 @@ signals:
 
     /**
     * Informs if the OLinkNestedStruct2Interface is ready to send and receive messages.
-    * @return true if NestedStruct2Interface is operable, false otherwise.
     */
     void isReady();
 public:

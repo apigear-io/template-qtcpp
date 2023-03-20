@@ -78,7 +78,6 @@ signals:
 
     /**
     * Informs if the {{$class}} is ready to send and receive messages.
-    * @return true if {{$interfaceNameOriginal}} is operable, false otherwise.
     */
     void isReady();
 public:

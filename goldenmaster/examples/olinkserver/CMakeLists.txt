@@ -48,7 +48,6 @@ target_link_libraries(OLinkServer
     testbed1_impl
     testbed1_olink
     testbed1_monitor
-Qt5::Core Qt5::Qml Qt5::WebSockets Qt5::Gui
 monitor_qt
 )
 

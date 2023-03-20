@@ -21,7 +21,7 @@ add_executable(QmlExamlple
     ${SOURCES}
 )
 
-find_package(Qt5 REQUIRED COMPONENTS Core Qml Network WebSockets Gui Quick QuickControls2 QuickWidgets)
+find_package(Qt5 REQUIRED COMPONENTS Gui Quick QuickControls2 QuickWidgets)
 
 {{ range .System.Modules }}
 {{- $module_id := snake .Name }}
@@ -36,7 +36,7 @@ target_link_libraries(QmlExamlple
     plugin_{{$module_id}}{{ if $features.monitor }}
     {{$module_id}}_monitor{{ end -}}
 {{- end }}
-Qt5::Core Qt5::Qml Qt5::WebSockets Qt5::Gui Qt5::Quick Qt5::QuickControls2 Qt5::QuickWidgets
+Qt5::Gui Qt5::Quick Qt5::QuickControls2 Qt5::QuickWidgets
 {{- if $features.monitor }}
 monitor_qt
 {{- end}}

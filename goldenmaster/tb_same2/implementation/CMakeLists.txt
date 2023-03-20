@@ -4,7 +4,6 @@ project(tb_same2_impl LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt5 REQUIRED COMPONENTS Core Qml WebSockets)
 set(OUTPUT_PATH ${LIBRARY_PATH}/)
 
 set (TB_SAME2_IMPL_SOURCES
@@ -28,7 +27,7 @@ target_include_directories(tb_same2_impl
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(tb_same2_impl PRIVATE Qt5::Core Qt5::Qml Qt5::WebSockets tb_same2::tb_same2_api)
+target_link_libraries(tb_same2_impl PRIVATE tb_same2::tb_same2_api)
 target_compile_definitions(tb_same2_impl PRIVATE TB_SAME2_IMPL_LIBRARY)
 
 add_subdirectory(tests)

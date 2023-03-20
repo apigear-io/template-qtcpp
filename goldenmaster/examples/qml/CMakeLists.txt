@@ -20,7 +20,7 @@ add_executable(QmlExamlple
     ${SOURCES}
 )
 
-find_package(Qt5 REQUIRED COMPONENTS Core Qml Network WebSockets Gui Quick QuickControls2 QuickWidgets)
+find_package(Qt5 REQUIRED COMPONENTS Gui Quick QuickControls2 QuickWidgets)
 
 
 find_package(testbed2 QUIET COMPONENTS testbed2_api testbed2_impl testbed2_olink plugin_testbed2 testbed2_monitor)
@@ -60,7 +60,7 @@ target_link_libraries(QmlExamlple
     testbed1_olink
     plugin_testbed1
     testbed1_monitor
-Qt5::Core Qt5::Qml Qt5::WebSockets Qt5::Gui Qt5::Quick Qt5::QuickControls2 Qt5::QuickWidgets
+Qt5::Gui Qt5::Quick Qt5::QuickControls2 Qt5::QuickWidgets
 monitor_qt
 )
 

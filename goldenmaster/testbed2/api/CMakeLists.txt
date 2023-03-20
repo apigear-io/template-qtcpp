@@ -4,7 +4,7 @@ project(testbed2_api LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt5 REQUIRED COMPONENTS Core Qml WebSockets)
+find_package(Qt5 REQUIRED COMPONENTS Core Qml)
 
 set(OUTPUT_PATH ${LIBRARY_PATH}/)
 
@@ -43,6 +43,9 @@ target_include_directories(testbed2_api
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(testbed2_api PRIVATE  Qt5::Core Qt5::Qml Qt5::WebSockets
-PUBLIC nlohmann_json::nlohmann_json)
+target_link_libraries(testbed2_api PUBLIC
+Qt5::Core
+Qt5::Qml
+nlohmann_json::nlohmann_json)
+
 target_compile_definitions(testbed2_api PRIVATE TESTBED2_API_LIBRARY)

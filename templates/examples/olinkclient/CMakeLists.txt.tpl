@@ -3,7 +3,7 @@
 project(OLinkClient)
 cmake_minimum_required(VERSION 3.20)
 
-find_package(Qt5 REQUIRED COMPONENTS Core Qml Network WebSockets Gui)
+find_package(Qt5 REQUIRED COMPONENTS Gui)
 
 # append local binary directory for conan packages to be found
 set(CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR} ${CMAKE_MODULE_PATH})
@@ -30,7 +30,7 @@ target_link_libraries(OLinkClient
     {{$module_id}}_olink{{ if $features.monitor }}
     {{$module_id}}_monitor{{ end -}}
 {{- end }}
-Qt5::Core Qt5::Qml Qt5::WebSockets Qt5::Gui
+Qt5::Gui
 {{- if $features.monitor }}
 monitor_qt
 {{- end}}

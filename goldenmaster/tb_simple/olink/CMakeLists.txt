@@ -1,7 +1,5 @@
 project(tb_simple_olink)
 
-find_package(Qt5 REQUIRED COMPONENTS Core Qml Network WebSockets)
-
 set (TB_SIMPLE_OLINK_SOURCES
     olinkfactory.cpp
     olinksimpleinterface.cpp
@@ -21,5 +19,5 @@ target_include_directories(tb_simple_olink
 )
 
 target_link_libraries(tb_simple_olink 
-PRIVATE Qt5::Core Qt5::Qml Qt5::WebSockets tb_simple::tb_simple_api 
+PRIVATE tb_simple::tb_simple_api 
 PUBLIC olink_qt qtpromise)

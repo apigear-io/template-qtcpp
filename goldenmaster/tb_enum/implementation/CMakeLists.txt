@@ -4,7 +4,6 @@ project(tb_enum_impl LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt5 REQUIRED COMPONENTS Core Qml WebSockets)
 set(OUTPUT_PATH ${LIBRARY_PATH}/)
 
 set (TB_ENUM_IMPL_SOURCES
@@ -25,7 +24,7 @@ target_include_directories(tb_enum_impl
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(tb_enum_impl PRIVATE Qt5::Core Qt5::Qml Qt5::WebSockets tb_enum::tb_enum_api)
+target_link_libraries(tb_enum_impl PRIVATE tb_enum::tb_enum_api)
 target_compile_definitions(tb_enum_impl PRIVATE TB_ENUM_IMPL_LIBRARY)
 
 add_subdirectory(tests)

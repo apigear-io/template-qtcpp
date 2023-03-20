@@ -10,7 +10,6 @@ project({{ $lib_id }} LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt5 REQUIRED COMPONENTS Core Qml WebSockets)
 set(OUTPUT_PATH ${LIBRARY_PATH}/)
 
 set ({{$LIB_ID}}_SOURCES
@@ -33,7 +32,7 @@ target_include_directories({{$lib_id}}
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries({{$lib_id}} PRIVATE Qt5::Core Qt5::Qml Qt5::WebSockets {{$module_id}}::{{snake .Module.Name}}_api)
+target_link_libraries({{$lib_id}} PRIVATE {{$module_id}}::{{snake .Module.Name}}_api)
 target_compile_definitions({{$lib_id}} PRIVATE {{ $LIB_ID }}_LIBRARY)
 
 add_subdirectory(tests)

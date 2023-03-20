@@ -117,7 +117,6 @@ signals:
 
     /**
     * Informs if the OLinkNestedStruct3Interface is ready to send and receive messages.
-    * @return true if NestedStruct3Interface is operable, false otherwise.
     */
     void isReady();
 public:

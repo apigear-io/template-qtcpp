@@ -136,7 +136,6 @@ signals:
 
     /**
     * Informs if the OLinkEnumInterface is ready to send and receive messages.
-    * @return true if EnumInterface is operable, false otherwise.
     */
     void isReady();
 public:

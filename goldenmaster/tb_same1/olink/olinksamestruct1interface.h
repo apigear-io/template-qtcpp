@@ -79,7 +79,6 @@ signals:
 
     /**
     * Informs if the OLinkSameStruct1Interface is ready to send and receive messages.
-    * @return true if SameStruct1Interface is operable, false otherwise.
     */
     void isReady();
 public:

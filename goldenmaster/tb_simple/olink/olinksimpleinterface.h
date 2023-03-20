@@ -212,7 +212,6 @@ signals:
 
     /**
     * Informs if the OLinkSimpleInterface is ready to send and receive messages.
-    * @return true if SimpleInterface is operable, false otherwise.
     */
     void isReady();
 public:

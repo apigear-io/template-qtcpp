@@ -136,7 +136,6 @@ signals:
 
     /**
     * Informs if the OLinkManyParamInterface is ready to send and receive messages.
-    * @return true if ManyParamInterface is operable, false otherwise.
     */
     void isReady();
 public:

@@ -296,7 +296,7 @@ public:
 struct TESTBED2_API_EXPORT NestedStruct1
 {
     Q_GADGET
-    Q_PROPERTY(Struct1 field1 MEMBER m_field1 )
+    Q_PROPERTY(testbed2::Struct1 field1 MEMBER m_field1 )
 
 public:
     NestedStruct1();
@@ -325,8 +325,8 @@ public:
 struct TESTBED2_API_EXPORT NestedStruct2
 {
     Q_GADGET
-    Q_PROPERTY(Struct1 field1 MEMBER m_field1 )
-    Q_PROPERTY(Struct2 field2 MEMBER m_field2 )
+    Q_PROPERTY(testbed2::Struct1 field1 MEMBER m_field1 )
+    Q_PROPERTY(testbed2::Struct2 field2 MEMBER m_field2 )
 
 public:
     NestedStruct2();
@@ -356,9 +356,9 @@ public:
 struct TESTBED2_API_EXPORT NestedStruct3
 {
     Q_GADGET
-    Q_PROPERTY(Struct1 field1 MEMBER m_field1 )
-    Q_PROPERTY(Struct2 field2 MEMBER m_field2 )
-    Q_PROPERTY(Struct3 field3 MEMBER m_field3 )
+    Q_PROPERTY(testbed2::Struct1 field1 MEMBER m_field1 )
+    Q_PROPERTY(testbed2::Struct2 field2 MEMBER m_field2 )
+    Q_PROPERTY(testbed2::Struct3 field3 MEMBER m_field3 )
 
 public:
     NestedStruct3();

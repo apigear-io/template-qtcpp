@@ -83,7 +83,7 @@ struct {{ $MODULE_ID }}_EXPORT {{$class}}
 {
     Q_GADGET
 {{- range .Fields }}
-    Q_PROPERTY({{qtReturn "" .}} {{.Name}} MEMBER m_{{.Name}} )
+    Q_PROPERTY({{qtReturn $namespacePrefix .}} {{.Name}} MEMBER m_{{.Name}} )
 {{- end }}
 
 public:

@@ -73,14 +73,15 @@ void {{$class}}::set{{Camel .Name}}Local({{qtParam "" .}})
 {
     qDebug() << Q_FUNC_INFO;
     if(!m_node) {
-        return {{qtDefault "" .Return}};
+        return{{ if (not .Return.IsVoid) }} {{qtDefault "" .Return}} {{- end}};
     }
     {{- if .Return.IsVoid }}
     InvokeReplyFunc func = [this](InvokeReplyArg arg) {};
     const nlohmann::json &args = nlohmann::json::array({
-        {{ .Params }}
+        {{ qtVars .Params }}
     });
-    m_node->invokeRemote("{{$module_id}}.{{$iface}}/{{.Name}}", args, func);
+    const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "{{.Name}}");
+    m_node->invokeRemote(operationId, args, func);
     {{- else }}
     {{$return}} value{ {{qtDefault "" .Return}} };
     {{camel .Name}}Async({{ qtVars .Params }})

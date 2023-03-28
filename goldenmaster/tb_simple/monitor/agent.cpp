@@ -26,6 +26,12 @@ void SimpleInterfaceAgent::trace_state(AbstractSimpleInterface* obj)
     const QVariantMap &fields_ = capture_state(obj);
     ApiGear::Monitor::AgentClient::instance()->traceState("tb.simple.SimpleInterface", fields_);
 }
+void SimpleInterfaceAgent::trace_funcVoid(AbstractSimpleInterface* obj )
+{
+    const QVariantMap &params_ {
+    };
+    ApiGear::Monitor::AgentClient::instance()->traceCall("tb.simple.SimpleInterface#funcVoid", params_);
+}
 void SimpleInterfaceAgent::trace_funcBool(AbstractSimpleInterface* obj, bool paramBool)
 {
     const QVariantMap &params_ {
@@ -81,6 +87,12 @@ void SimpleInterfaceAgent::trace_funcString(AbstractSimpleInterface* obj, const 
         { "paramString", QVariant::fromValue(paramString) },
     };
     ApiGear::Monitor::AgentClient::instance()->traceCall("tb.simple.SimpleInterface#funcString", params_);
+}
+void SimpleInterfaceAgent::trace_sigVoid(AbstractSimpleInterface* obj )
+{
+    const QVariantMap &params_ {
+    };
+    ApiGear::Monitor::AgentClient::instance()->traceSignal("tb.simple.SimpleInterface#sigVoid", params_);
 }
 void SimpleInterfaceAgent::trace_sigBool(AbstractSimpleInterface* obj, bool paramBool)
 {

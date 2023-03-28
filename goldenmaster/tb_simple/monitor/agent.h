@@ -20,6 +20,7 @@ public:
   SimpleInterfaceAgent();
   static QVariantMap capture_state(AbstractSimpleInterface* obj);
   static void trace_state(AbstractSimpleInterface* obj);
+  static void trace_funcVoid(AbstractSimpleInterface* obj );
   static void trace_funcBool(AbstractSimpleInterface* obj, bool paramBool);
   static void trace_funcInt(AbstractSimpleInterface* obj, int paramInt);
   static void trace_funcInt32(AbstractSimpleInterface* obj, qint32 paramInt32);
@@ -28,6 +29,7 @@ public:
   static void trace_funcFloat32(AbstractSimpleInterface* obj, float paramFloat32);
   static void trace_funcFloat64(AbstractSimpleInterface* obj, double paramFloat);
   static void trace_funcString(AbstractSimpleInterface* obj, const QString& paramString);
+  static void trace_sigVoid(AbstractSimpleInterface* obj );
   static void trace_sigBool(AbstractSimpleInterface* obj, bool paramBool);
   static void trace_sigInt(AbstractSimpleInterface* obj, int paramInt);
   static void trace_sigInt32(AbstractSimpleInterface* obj, qint32 paramInt32);

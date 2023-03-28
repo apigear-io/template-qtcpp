@@ -88,7 +88,7 @@ json {{$class}}::olinkInvoke(const std::string& methodId, const nlohmann::json& 
         const {{qtType "" .}}& {{.Name}} = args.at({{ $i }});      
 {{- end }}
 {{- if .Return.IsVoid }}
-        m_impl->{{camel .Name}}({{ .Params }});
+        m_impl->{{camel .Name}}( {{ qtVars .Params }});
         return json{};
 {{- else }}
         {{qtReturn "" .Return}} result = m_impl->{{camel .Name}}({{ qtVars .Params }});

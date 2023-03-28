@@ -257,6 +257,31 @@ QString OLinkSimpleInterface::propString() const
     return m_propString;
 }
 
+void OLinkSimpleInterface::funcVoid()
+{
+    qDebug() << Q_FUNC_INFO;
+    if(!m_node) {
+        return;
+    }
+    InvokeReplyFunc func = [this](InvokeReplyArg arg) {};
+    const nlohmann::json &args = nlohmann::json::array({
+        
+    });
+    const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcVoid");
+    m_node->invokeRemote(operationId, args, func);
+}
+
+QtPromise::QPromise<void> OLinkSimpleInterface::funcVoidAsync()
+{
+    qDebug() << Q_FUNC_INFO;
+    if(!m_node) {
+        return QtPromise::QPromise<void>::reject("not initialized");
+    }
+    m_node->invokeRemote("tb.simple.SimpleInterface/funcVoid", nlohmann::json::array({
+            }));
+    return QtPromise::QPromise<void>::resolve();
+}
+
 bool OLinkSimpleInterface::funcBool(bool paramBool)
 {
     qDebug() << Q_FUNC_INFO;
@@ -523,6 +548,10 @@ void OLinkSimpleInterface::olinkOnSignal(const std::string& signalId, const nloh
 {
     qDebug() << Q_FUNC_INFO << QString::fromStdString(signalId);
     auto signalName = Name::getMemberName(signalId);
+    if(signalName == "sigVoid") {
+        emit sigVoid();   
+        return;
+    }
     if(signalName == "sigBool") {
         emit sigBool(args[0].get<bool>());   
         return;

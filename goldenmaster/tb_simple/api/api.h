@@ -110,6 +110,8 @@ public:
     */
     virtual QString propString() const = 0;
 
+    virtual void funcVoid() = 0;
+
     virtual bool funcBool(bool paramBool) = 0;
 
     virtual int funcInt(int paramInt) = 0;
@@ -126,6 +128,9 @@ public:
 
     virtual QString funcString(const QString& paramString) = 0;
 signals:
+    /**
+    */
+    void sigVoid();
     /**
     * @param paramBool 
     */

@@ -44,7 +44,7 @@ namespace {{ snake .Module.Name }} {
         qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
         return {{ if(not ($operation.Return.IsVoid)) }} {} {{ end }};
     }
-    {{$interfaceName}}Agent::trace_{{$operation.Name}}(this, {{qtVars $operation.Params}});
+    {{$interfaceName}}Agent::trace_{{$operation.Name}}(this{{- if (len $operation.Params) }},{{ end}} {{qtVars $operation.Params}});
     {{ if (not ($operation.Return.IsVoid)) }}return {{ end }}m_impl->{{lower1 $operation.Name}}({{ qtVars $operation.Params}});
 }
 {{ end -}}
@@ -75,7 +75,7 @@ void {{$class}}::set{{Camel $property.Name}}({{qtParam "" $property}})
 {{- $signal := . }}
 void {{$class}}::trace{{Camel $signal.Name}}({{qtParams "" $signal.Params}})
 {
-    {{$interfaceName}}Agent::trace_{{$signal.Name}}(this, {{qtVars $signal.Params}});
+    {{$interfaceName}}Agent::trace_{{$signal.Name}}(this{{- if (len $signal.Params) }},{{ end}} {{qtVars $signal.Params}});
 }
 {{- end }}
 

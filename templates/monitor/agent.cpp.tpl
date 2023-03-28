@@ -29,7 +29,7 @@ void {{$class}}::trace_state(Abstract{{Camel .Name}}* obj)
 }
 {{- $iface := Camel .Name }}
 {{- range .Operations }}
-void {{$class}}::trace_{{.Name}}(Abstract{{$iface}}* obj, {{qtParams "" .Params}})
+void {{$class}}::trace_{{.Name}}(Abstract{{$iface}}* obj{{- if (len .Params) }},{{ end}} {{qtParams "" .Params}})
 {
     const QVariantMap &params_ {
         {{- range  .Params }}
@@ -41,7 +41,7 @@ void {{$class}}::trace_{{.Name}}(Abstract{{$iface}}* obj, {{qtParams "" .Params}
 {{- end }}
 
 {{- range .Signals }}
-void {{$class}}::trace_{{.Name}}(Abstract{{$iface}}* obj, {{qtParams "" .Params}})
+void {{$class}}::trace_{{.Name}}(Abstract{{$iface}}* obj{{- if (len .Params) }},{{ end}} {{qtParams "" .Params}})
 {
     const QVariantMap &params_ {
         {{- range  .Params }}

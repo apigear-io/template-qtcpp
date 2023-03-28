@@ -26,10 +26,10 @@ public:
   static QVariantMap capture_state(Abstract{{$iface}}* obj);
   static void trace_state(Abstract{{$iface}}* obj);
   {{- range .Operations }}
-  static void trace_{{.Name}}(Abstract{{$iface}}* obj, {{qtParams "" .Params}});
+  static void trace_{{.Name}}(Abstract{{$iface}}* obj {{- if (len .Params) }},{{ end}} {{qtParams "" .Params}});
   {{- end }}
   {{- range .Signals }}
-  static void trace_{{.Name}}(Abstract{{$iface}}* obj, {{qtParams "" .Params}});
+  static void trace_{{.Name}}(Abstract{{$iface}}* obj{{- if (len .Params) }},{{ end}} {{qtParams "" .Params}});
   {{- end }}
 };
 {{- end }}

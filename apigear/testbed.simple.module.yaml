@@ -23,6 +23,7 @@ interfaces:
       - { name: propFloat64, type: float64 }
       - { name: propString, type: string }
     operations:
+      - name: funcVoid
       - name: funcBool
         params:
           - { name: paramBool, type: bool }
@@ -56,6 +57,7 @@ interfaces:
           - { name: paramString, type: string }
         return: { type: string }
     signals:
+      - name: sigVoid
       - name: sigBool
         params:
           - { name: paramBool, type: bool }

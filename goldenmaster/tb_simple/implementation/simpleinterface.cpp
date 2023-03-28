@@ -144,6 +144,12 @@ QString SimpleInterface::propString() const
     return m_propString;
 }
 
+void SimpleInterface::funcVoid()
+{
+    qDebug() << Q_FUNC_INFO;
+    return;
+}
+
 bool SimpleInterface::funcBool(bool paramBool)
 {
     qDebug() << Q_FUNC_INFO;

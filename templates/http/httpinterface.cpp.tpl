@@ -50,7 +50,7 @@ void {{$class}}::set{{Camel .Name}}({{qtParam "" .}})
 {{- end }}
     QJsonObject reply = post("{{$module}}/{{$iface}}/{{.Name}}", payload);
     qDebug() << QJsonDocument(reply).toJson();
-    return {{qtDefault "" .Return}};
+    return{{ if (not .Return.IsVoid) }} {{qtDefault "" .Return}} {{- end}};
 }
 {{- end }}
 

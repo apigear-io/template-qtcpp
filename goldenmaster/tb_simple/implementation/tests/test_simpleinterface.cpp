@@ -53,6 +53,13 @@ void TestTbSimpleSimpleInterface::cleanup(){
 
 }
 /**
+ *  Test operation funcVoid
+*/
+void TestTbSimpleSimpleInterface::funcVoid(){
+    tb_simple::SimpleInterface testTbsimplesimpleinterface;
+    // Do implement test here
+}
+/**
  *  Test operation funcBool
 */
 void TestTbSimpleSimpleInterface::funcBool(){

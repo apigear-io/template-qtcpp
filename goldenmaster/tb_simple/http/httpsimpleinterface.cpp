@@ -143,6 +143,16 @@ QString HttpSimpleInterface::propString() const
     return m_propString;
 }
 
+void HttpSimpleInterface::funcVoid()
+{
+    qDebug() << Q_FUNC_INFO;
+
+    QJsonObject payload;
+    QJsonObject reply = post("tb.simple/SimpleInterface/funcVoid", payload);
+    qDebug() << QJsonDocument(reply).toJson();
+    return;
+}
+
 bool HttpSimpleInterface::funcBool(bool paramBool)
 {
     qDebug() << Q_FUNC_INFO;

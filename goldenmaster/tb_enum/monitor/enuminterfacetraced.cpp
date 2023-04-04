@@ -1,5 +1,4 @@
 
-#pragma once
 #include "enuminterfacetraced.h"
 #include "tb_enum/monitor/agent.h"
 

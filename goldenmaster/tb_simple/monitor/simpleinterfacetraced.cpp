@@ -1,5 +1,4 @@
 
-#pragma once
 #include "simpleinterfacetraced.h"
 #include "tb_simple/monitor/agent.h"
 

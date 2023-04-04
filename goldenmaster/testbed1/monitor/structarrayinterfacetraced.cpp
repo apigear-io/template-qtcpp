@@ -1,5 +1,4 @@
 
-#pragma once
 #include "structarrayinterfacetraced.h"
 #include "testbed1/monitor/agent.h"
 

@@ -2,7 +2,6 @@
 {{- $interfaceName := Camel .Interface.Name  }}
 {{- $interfaceClass := printf "Abstract%s" (Camel .Interface.Name) }}
 {{- $class := printf "%sTraced" $interfaceName }}
-#pragma once
 #include "{{lower .Interface.Name}}traced.h"
 #include "{{snake .Module.Name}}/monitor/agent.h"
 

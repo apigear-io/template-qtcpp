@@ -1,5 +1,4 @@
 
-#pragma once
 #include "samestruct1interfacetraced.h"
 #include "tb_same1/monitor/agent.h"
 

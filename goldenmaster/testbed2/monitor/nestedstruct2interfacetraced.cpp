@@ -1,5 +1,4 @@
 
-#pragma once
 #include "nestedstruct2interfacetraced.h"
 #include "testbed2/monitor/agent.h"
 

@@ -1,5 +1,4 @@
 
-#pragma once
 #include "manyparaminterfacetraced.h"
 #include "testbed2/monitor/agent.h"
 

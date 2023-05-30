@@ -24,13 +24,9 @@ jobs:
         with:
           submodules: recursive
       - name: Setup cmake
-        if: ${{ matrix.config.os == 'windows-latest'}}
         uses: jwlawson/actions-setup-cmake@v1.13
         with:
           cmake-version: '3.24.x'
-      - name: Install dependencies
-        if: ${{ matrix.config.os == 'ubuntu-latest'}}
-        run: sudo apt-get install -y cmake nlohmann-json3-dev
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:

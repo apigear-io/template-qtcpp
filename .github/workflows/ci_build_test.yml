@@ -6,6 +6,7 @@ on:
   pull_request:
     paths:
       - 'goldenmaster/**'
+      - '.github/workflows/**'
     branches: [main]
 
 jobs:
@@ -16,19 +17,33 @@ jobs:
       fail-fast: false
       matrix:
         config:
+          - { name: "CMake Windows Latest MSVC", os: windows-latest }
           - { name: "CMake Ubuntu Latest GCC", os: ubuntu-latest }
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: recursive
+      - name: Setup cmake
+        if: ${{ matrix.config.os == 'windows-latest'}}
+        uses: jwlawson/actions-setup-cmake@v1.13
+        with:
+          cmake-version: '3.24.x'
       - name: Install dependencies
+        if: ${{ matrix.config.os == 'ubuntu-latest'}}
         run: sudo apt-get install -y cmake nlohmann-json3-dev
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
           version: '5.15.2'
           cache: 'true'
-      - name: Run cmake
+      - name: Run cmake build & test on Windows
+        if: ${{ matrix.config.os == 'windows-latest'}}
+        working-directory: goldenmaster
+        env:
+            CTEST_OUTPUT_ON_FAILURE: 1
+        run: cmake -Bbuild -DCMAKE_INSTALL_PREFIX=tmp && cmake --build build/ && cmake --build build/ --target RUN_TESTS
+      - name: Run cmake build & test on Linux
+        if: ${{ matrix.config.os != 'windows-latest'}}
         working-directory: goldenmaster
         env:
             CTEST_OUTPUT_ON_FAILURE: 1

@@ -33,6 +33,9 @@ jobs:
         with:
           version: '5.15.2'
           cache: 'true'
+      - name: Update path env on Windows for testing
+        if: ${{ matrix.config.os == 'windows-latest'}}
+        run: echo "$GITHUB_WORKSPACE/goldenmaster/build/bin/Debug/" >> $GITHUB_PATH
       - name: Run cmake build & test on Windows
         if: ${{ matrix.config.os == 'windows-latest'}}
         working-directory: goldenmaster

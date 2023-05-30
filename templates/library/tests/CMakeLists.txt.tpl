@@ -35,7 +35,7 @@ target_link_libraries(test_{{$module_id}}_{{.Name|lower}} {{$module_id}}_impl Qt
 {{- end }}
 
 {{- range .Module.Interfaces }}
-add_test(test_{{$module_id}}_{{.Name|lower}} test_{{$module_id}}_{{.Name|lower}})
+add_test(NAME test_{{$module_id}}_{{.Name|lower}} COMMAND $<TARGET_FILE:test_{{$module_id}}_{{.Name|lower}}>)
 add_dependencies(check test_{{$module_id}}_{{.Name|lower}})
 {{- end }}
 

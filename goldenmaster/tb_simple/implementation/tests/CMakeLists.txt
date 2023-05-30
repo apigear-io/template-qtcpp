@@ -25,9 +25,9 @@ add_executable(test_tb_simple_simpleinterface test_simpleinterface.cpp)
 add_executable(test_tb_simple_simplearrayinterface test_simplearrayinterface.cpp)
 target_link_libraries(test_tb_simple_simpleinterface tb_simple_impl Qt5::Test)
 target_link_libraries(test_tb_simple_simplearrayinterface tb_simple_impl Qt5::Test)
-add_test(test_tb_simple_simpleinterface test_tb_simple_simpleinterface)
+add_test(NAME test_tb_simple_simpleinterface COMMAND $<TARGET_FILE:test_tb_simple_simpleinterface>)
 add_dependencies(check test_tb_simple_simpleinterface)
-add_test(test_tb_simple_simplearrayinterface test_tb_simple_simplearrayinterface)
+add_test(NAME test_tb_simple_simplearrayinterface COMMAND $<TARGET_FILE:test_tb_simple_simplearrayinterface>)
 add_dependencies(check test_tb_simple_simplearrayinterface)
 
 endif() # BUILD_TESTING

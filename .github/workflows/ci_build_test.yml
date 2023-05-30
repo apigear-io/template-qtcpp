@@ -32,4 +32,4 @@ jobs:
         working-directory: goldenmaster
         env:
             CTEST_OUTPUT_ON_FAILURE: 1
-        run: cmake -Bbuild -H. -DCMAKE_INSTALL_PREFIX=tmp && cmake --build build/ && cmake --build build/ --target test
+        run: cmake -Bbuild -DCMAKE_INSTALL_PREFIX=tmp && cmake --build build/ && cmake --build build/ --target test

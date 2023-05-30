@@ -4,6 +4,7 @@ project(tb_same2_monitor)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+find_package(Qt5 REQUIRED COMPONENTS Core)
 find_package(apigear QUIET COMPONENTS monitor_qt )
 
 set (TB_SAME2_MONITOR_SOURCES

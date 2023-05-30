@@ -5,6 +5,8 @@
 {{- $SOURCES := printf "%s_OLINK_SOURCES" $MODULE_ID -}}
 project({{$lib_id}})
 
+find_package(Qt5 REQUIRED COMPONENTS Core)
+
 set ({{$MODULE_ID}}_OLINK_SOURCES
     olinkfactory.cpp
 {{- range .Module.Interfaces }}

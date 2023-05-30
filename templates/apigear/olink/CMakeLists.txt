@@ -11,6 +11,8 @@ find_package(Qt5 REQUIRED COMPONENTS Core WebSockets)
 
 find_package(apigear QUIET COMPONENTS olink_core)
 if(NOT olink_core_FOUND)
+  # disable olink core tests
+  set(BUILD_TESTING OFF)
   # pull objectlink-core-cpp as dependency
   message(STATUS "objectlink-core-cpp NOT FOUND, fetching the git repository")
   FetchContent_Declare(olink_core

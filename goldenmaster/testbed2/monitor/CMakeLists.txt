@@ -4,6 +4,7 @@ project(testbed2_monitor)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+find_package(Qt5 REQUIRED COMPONENTS Core)
 find_package(apigear QUIET COMPONENTS monitor_qt )
 
 set (TESTBED2_MONITOR_SOURCES

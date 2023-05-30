@@ -1,5 +1,7 @@
 project(tb_enum_olink)
 
+find_package(Qt5 REQUIRED COMPONENTS Core)
+
 set (TB_ENUM_OLINK_SOURCES
     olinkfactory.cpp
     olinkenuminterface.cpp

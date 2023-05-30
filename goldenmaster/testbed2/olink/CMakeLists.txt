@@ -1,5 +1,7 @@
 project(testbed2_olink)
 
+find_package(Qt5 REQUIRED COMPONENTS Core)
+
 set (TESTBED2_OLINK_SOURCES
     olinkfactory.cpp
     olinkmanyparaminterface.cpp

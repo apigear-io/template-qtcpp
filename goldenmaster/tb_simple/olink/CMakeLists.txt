@@ -1,5 +1,7 @@
 project(tb_simple_olink)
 
+find_package(Qt5 REQUIRED COMPONENTS Core)
+
 set (TB_SIMPLE_OLINK_SOURCES
     olinkfactory.cpp
     olinksimpleinterface.cpp

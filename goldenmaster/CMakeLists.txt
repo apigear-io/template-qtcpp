@@ -13,9 +13,12 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-find_package(Qt5 COMPONENTS Test REQUIRED)
+option(BUILD_TESTING "Enable this option to build the test targets" OFF)
 
+if(BUILD_TESTING)
+find_package(Qt5 COMPONENTS Test REQUIRED)
 enable_testing()
+endif() # BUILD_TESTING
 
 set(LIBRARY_PATH "${CMAKE_BINARY_DIR}/libs" CACHE STRING "Path where the libraries are deployed")
 set(IMPORTS_PATH "${CMAKE_BINARY_DIR}/imports" CACHE STRING "Path where the plugins are deployed")

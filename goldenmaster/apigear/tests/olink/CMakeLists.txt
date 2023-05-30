@@ -61,7 +61,7 @@ include_directories(test_olink
 add_executable(test_olink ${TEST_OLINK_SOURCES})
 
 
-add_test(test_olink test_olink)
+add_test(NAME test_olink COMMAND $<TARGET_FILE:test_olink>)
 add_dependencies(check test_olink)
 
 target_link_libraries(test_olink PRIVATE

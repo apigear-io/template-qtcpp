@@ -38,10 +38,10 @@ jobs:
         working-directory: goldenmaster
         env:
             CTEST_OUTPUT_ON_FAILURE: 1
-        run: cmake -Bbuild -DCMAKE_INSTALL_PREFIX=tmp && cmake --build build/ && cmake --build build/ --target RUN_TESTS
+        run: cmake -Bbuild -DBUILD_TESTING=ON -DCMAKE_INSTALL_PREFIX=tmp && cmake --build build/ && cmake --build build/ --target RUN_TESTS
       - name: Run cmake build & test on Linux/macOS
         if: ${{ matrix.config.os != 'windows-latest'}}
         working-directory: goldenmaster
         env:
             CTEST_OUTPUT_ON_FAILURE: 1
-        run: cmake -Bbuild -DCMAKE_INSTALL_PREFIX=tmp && cmake --build build/ && cmake --build build/ --target test
+        run: cmake -Bbuild -DBUILD_TESTING=ON -DCMAKE_INSTALL_PREFIX=tmp && cmake --build build/ && cmake --build build/ --target test

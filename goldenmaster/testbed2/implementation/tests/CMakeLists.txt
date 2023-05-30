@@ -1,16 +1,23 @@
 
-project(testbed2_tests)
 cmake_minimum_required(VERSION 3.20)
+project(testbed2_tests)
+
+include(CTest)
+
+if(BUILD_TESTING)
+enable_testing()
+
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
-find_package(Qt5 REQUIRED COMPONENTS Core Test)
 
-set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+find_package(Qt5 REQUIRED COMPONENTS Core Test)
+find_package(testbed2 QUIET COMPONENTS testbed2_impl)
 
 # append local binary directory for conan packages to be found
 set(CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR} ${CMAKE_MODULE_PATH})
@@ -18,10 +25,17 @@ add_executable(test_testbed2_manyparaminterface test_manyparaminterface.cpp)
 add_executable(test_testbed2_nestedstruct1interface test_nestedstruct1interface.cpp)
 add_executable(test_testbed2_nestedstruct2interface test_nestedstruct2interface.cpp)
 add_executable(test_testbed2_nestedstruct3interface test_nestedstruct3interface.cpp)
-
-
-find_package(testbed2 QUIET COMPONENTS testbed2_impl )
 target_link_libraries(test_testbed2_manyparaminterface testbed2_impl Qt5::Test)
 target_link_libraries(test_testbed2_nestedstruct1interface testbed2_impl Qt5::Test)
 target_link_libraries(test_testbed2_nestedstruct2interface testbed2_impl Qt5::Test)
 target_link_libraries(test_testbed2_nestedstruct3interface testbed2_impl Qt5::Test)
+add_test(test_testbed2_manyparaminterface test_testbed2_manyparaminterface)
+add_dependencies(check test_testbed2_manyparaminterface)
+add_test(test_testbed2_nestedstruct1interface test_testbed2_nestedstruct1interface)
+add_dependencies(check test_testbed2_nestedstruct1interface)
+add_test(test_testbed2_nestedstruct2interface test_testbed2_nestedstruct2interface)
+add_dependencies(check test_testbed2_nestedstruct2interface)
+add_test(test_testbed2_nestedstruct3interface test_testbed2_nestedstruct3interface)
+add_dependencies(check test_testbed2_nestedstruct3interface)
+
+endif() # BUILD_TESTING

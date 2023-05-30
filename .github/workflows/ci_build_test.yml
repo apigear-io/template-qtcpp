@@ -19,6 +19,7 @@ jobs:
         config:
           - { name: "CMake Windows Latest MSVC", os: windows-latest }
           - { name: "CMake Ubuntu Latest GCC", os: ubuntu-latest }
+          - { name: "CMake macOS Latest Clang", os: macos-latest }
     steps:
       - uses: actions/checkout@v3
         with:
@@ -38,7 +39,7 @@ jobs:
         env:
             CTEST_OUTPUT_ON_FAILURE: 1
         run: cmake -Bbuild -DCMAKE_INSTALL_PREFIX=tmp && cmake --build build/ && cmake --build build/ --target RUN_TESTS
-      - name: Run cmake build & test on Linux
+      - name: Run cmake build & test on Linux/macOS
         if: ${{ matrix.config.os != 'windows-latest'}}
         working-directory: goldenmaster
         env:

@@ -49,3 +49,9 @@ Qt5::Qml
 nlohmann_json::nlohmann_json)
 
 target_compile_definitions(tb_same1_api PRIVATE TB_SAME1_API_LIBRARY)
+
+# some module files can potentially lead to too big object files
+# therefore we enable the necessary compiler flags to support them
+if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+  target_compile_options(tb_same1_api PRIVATE /bigobj)
+endif ()

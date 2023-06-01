@@ -25,3 +25,9 @@ target_link_libraries(plugin_testbed2 PUBLIC testbed2::testbed2_api)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qmldir ${OUTPUT_PATH}/qmldir COPYONLY)
 
 target_compile_definitions(plugin_testbed2 PRIVATE TESTBED2_PLUGIN_LIBRARY)
+
+# some module files can potentially lead to too big object files
+# therefore we enable the necessary compiler flags to support them
+if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+  target_compile_options(plugin_testbed2 PRIVATE /bigobj)
+endif ()

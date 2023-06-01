@@ -27,3 +27,9 @@ target_link_libraries(plugin_{{$module_id}} PUBLIC {{$module_id}}::{{$module_id}
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qmldir ${OUTPUT_PATH}/qmldir COPYONLY)
 
 target_compile_definitions(plugin_{{$module_id}} PRIVATE {{$MODULE_ID}}_PLUGIN_LIBRARY)
+
+# some module files can potentially lead to too big object files
+# therefore we enable the necessary compiler flags to support them
+if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+  target_compile_options(plugin_{{$module_id}} PRIVATE /bigobj)
+endif ()

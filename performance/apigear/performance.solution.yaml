@@ -1,0 +1,12 @@
+schema: "apigear.solution/1.0"
+name: performance
+version: "0.1"
+
+layers:
+  - name: test
+    inputs:
+      - performance_interface100.module.yaml
+    output: ../testApi
+    template: ../..
+    force: true
+    features: ["olink", "stubs"]

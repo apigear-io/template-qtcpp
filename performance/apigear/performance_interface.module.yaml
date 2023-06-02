@@ -1,0 +1,36 @@
+schema: apigear.module/1.0
+name: api
+version: "1.0"
+
+interfaces:
+  - name: TestApi
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }

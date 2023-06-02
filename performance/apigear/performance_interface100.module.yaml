@@ -1,0 +1,3205 @@
+schema: apigear.module/1.0
+name: api
+version: "1.0"
+
+interfaces:
+  - name: TestApi0
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi1
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi2
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi3
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi4
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi5
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi6
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi7
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi8
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi9
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi10
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi11
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi12
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi13
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi14
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi15
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi16
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi17
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi18
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi19
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi20
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi21
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi22
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi23
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi24
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi25
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi26
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi27
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi28
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi29
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi30
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi31
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi32
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi33
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi34
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi35
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi36
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi37
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi38
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi39
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi40
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi41
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi42
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi43
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi44
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi45
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi46
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi47
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi48
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi49
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi50
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi51
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi52
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi53
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi54
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi55
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi56
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi57
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi58
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi59
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi60
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi61
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi62
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi63
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi64
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi65
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi66
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi67
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi68
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi69
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi70
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi71
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi72
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi73
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi74
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi75
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi76
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi77
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi78
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi79
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi80
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi81
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi82
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi83
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi84
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi85
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi86
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi87
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi88
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi89
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi90
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi91
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi92
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi93
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi94
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi95
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi96
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi97
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi98
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+
+  - name: TestApi99
+    properties:
+      - { name: propInt, type: int }
+      - { name: propFloat, type: float }
+      - { name: propString, type: string }
+    operations:
+      - name: funcInt
+        params:
+          - { name: paramInt, type: int }
+        return:
+          type: int
+      - name: funcFloat
+        params:
+          - { name: paramFloat, type: float }
+        return:
+          type: float
+      - name: funcString
+        params:
+          - { name: paramString, type: string }
+        return:
+          type: string
+    signals:
+      - name: sigInt
+        params:
+          - { name: paramInt, type: int }
+      - name: sigFloat
+        params:
+          - { name: paramFloat, type: float }
+      - name: sigString
+        params:
+          - { name: paramString, type: string }
+

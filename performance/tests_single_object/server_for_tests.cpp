@@ -58,10 +58,8 @@ int main(int argc, char* argv[])
     ApiGear::ObjectLink::OLinkHost server(registry);
     QString address = "127.0.0.1";
 
-
     server.listen(address, portNumber);
         
-
     auto serviceWorker = std::async(std::launch::async,
                                     [sourceService](){
         bool testStarted = false;

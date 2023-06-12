@@ -40,7 +40,7 @@ bool checkMessageInContainer(const std::vector<QString>& container, const QStrin
 }
 
 auto portNumber = 8000;
-QString localHostAddress =  "ws://127.0.0.1";
+QString localHostAddress =  "127.0.0.1";
 QString localHostAddressWithPort = "ws://127.0.0.1:" + QString::fromStdString(std::to_string(portNumber)) + QString("/ws");
 const std::string sink1Id = "tests.sink1";
 const std::string sink2Id = "tests.sink2";

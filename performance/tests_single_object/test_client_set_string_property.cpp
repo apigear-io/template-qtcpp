@@ -31,8 +31,6 @@ int main(int argc, char* argv[])
         char* p;
         sendThreadNumber = strtol(argv[2], &p, 10);
     }
-    auto portNumber = 8000;
-    auto localHostAddress = "ws://127.0.0.1:" + std::to_string(portNumber);
 
     ApiGear::ObjectLink::ClientRegistry client_registry;
     ApiGear::ObjectLink::OLinkClient client(client_registry);
@@ -84,7 +82,7 @@ int main(int argc, char* argv[])
             {
                 task.wait();
             }
-            while (sink->propertyChangedTimes < messages_number * sendThreadNumber - 1)
+            while (sink->propertyChangedTimes < messages_number * sendThreadNumber)
             {
                 // Wait until all responses received.
             }

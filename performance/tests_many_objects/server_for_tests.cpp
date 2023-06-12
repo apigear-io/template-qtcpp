@@ -12,37 +12,44 @@
 
 int main(int argc, char* argv[])
 {
+    QCoreApplication app(argc, argv);
     ApiGear::ObjectLink::RemoteRegistry registry;
-
-    auto portNumber = 8000;
-    ApiGear::ObjectLink::OLinkHost server(registry);
-    server.listen("localhost", portNumber);
-    auto begin = std::chrono::high_resolution_clock::now();
-
     auto services = prepareServices(registry);
-    auto testStarted = false;
 
-    auto servicesfinished = 0;
-    do {
+    quint16 portNumber = 8000;
+    ApiGear::ObjectLink::OLinkHost server(registry);
+    QString address = "127.0.0.1";
 
-        servicesfinished = 0;
-        for (auto& service : services)
-        {
-            if (!testStarted && service->m_status == ServiceStatus::LinkedRceived)
+    server.listen(address, portNumber);
+
+    auto serviceWorker = std::async(std::launch::async,
+                                    [&services](){
+        bool testStarted = false;
+        // Will be overwritten with receiving link message
+        auto begin = std::chrono::high_resolution_clock::now();
+        auto servicesfinished = 0;
+        do {
+
+            servicesfinished = 0;
+            for (auto& service : services)
             {
-                testStarted = true;
-                begin = std::chrono::high_resolution_clock::now();
+                if (!testStarted && service->m_status == ServiceStatus::LinkedRceived)
+                {
+                    testStarted = true;
+                    begin = std::chrono::high_resolution_clock::now();
+                }
+                if (service->m_status == ServiceStatus::UnlinkedReceived)
+                {
+                    servicesfinished++;
+                }
             }
-            if (service->m_status == ServiceStatus::UnlinkedReceived)
-            {
-                servicesfinished++;
-            }
-        }
 
-    } while (servicesfinished != services.size());
+        } while (servicesfinished != services.size());
+        auto end = std::chrono::high_resolution_clock::now();
 
-    auto end = std::chrono::high_resolution_clock::now();
+        auto test_duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin);
+        std::cout << "server finished work, time measured " << test_duration.count() << std::endl;
+    });
 
-    auto test_duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin);
-    std::cout << "server finished work, time measured " << test_duration.count() << std::endl;
+    return app.exec();
 }

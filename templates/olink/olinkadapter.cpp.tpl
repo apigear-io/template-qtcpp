@@ -13,6 +13,7 @@
 
 #include "olink/remoteregistry.h"
 #include "olink/iremotenode.h"
+#include "utilities/logger.h"
 
 #include <QtCore>
 
@@ -80,7 +81,8 @@ std::string {{$class}}::olinkObjectName() {
 }
 
 json {{$class}}::olinkInvoke(const std::string& methodId, const nlohmann::json& args){
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(methodId);
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+    AG_LOG_DEBUG(methodId);
     std::string path = Name::getMemberName(methodId);
 {{- range .Interface.Operations }}
     if(path == "{{.Name}}") {
@@ -100,7 +102,8 @@ json {{$class}}::olinkInvoke(const std::string& methodId, const nlohmann::json& 
 }
 
 void {{$class}}::olinkSetProperty(const std::string& propertyId, const nlohmann::json& value){
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(propertyId);
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+    AG_LOG_DEBUG(propertyId);
     std::string path = Name::getMemberName(propertyId);
 {{- range .Interface.Properties }}
     if(path == "{{.Name}}") {
@@ -111,12 +114,14 @@ void {{$class}}::olinkSetProperty(const std::string& propertyId, const nlohmann:
 }
 
 void {{$class}}::olinkLinked(const std::string& objectId, IRemoteNode *node) {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
+    AG_LOG_INFO(Q_FUNC_INFO);
+    AG_LOG_INFO(objectId);
 }
 
 void {{$class}}::olinkUnlinked(const std::string& objectId)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
+    AG_LOG_INFO(Q_FUNC_INFO);
+    AG_LOG_INFO(objectId);
 }
 
 json {{$class}}::olinkCollectProperties()

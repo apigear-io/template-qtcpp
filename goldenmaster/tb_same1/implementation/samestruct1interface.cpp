@@ -48,7 +48,6 @@ Struct1 SameStruct1Interface::prop1() const
 
 Struct1 SameStruct1Interface::func1(const Struct1& param1)
 {
-    qDebug() << Q_FUNC_INFO;
     return Struct1();
 }
 } //namespace tb_same1

@@ -16,6 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "httpnestedstruct3interface.h"
+#include "apigear/utilities/logger.h"
 
 #include <QtQml>
 
@@ -75,37 +76,34 @@ NestedStruct3 HttpNestedStruct3Interface::prop3() const
 
 NestedStruct1 HttpNestedStruct3Interface::func1(const NestedStruct1& param1)
 {
-    qDebug() << Q_FUNC_INFO;
-
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     QJsonObject payload;
     payload["param1"] = QJsonValue::fromVariant(QVariant::fromValue< NestedStruct1 >(param1));
     QJsonObject reply = post("testbed2/NestedStruct3Interface/func1", payload);
-    qDebug() << QJsonDocument(reply).toJson();
+    AG_LOG_DEBUG(qPrintable(QJsonDocument(reply).toJson()));
     return NestedStruct1();
 }
 
 NestedStruct1 HttpNestedStruct3Interface::func2(const NestedStruct1& param1, const NestedStruct2& param2)
 {
-    qDebug() << Q_FUNC_INFO;
-
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     QJsonObject payload;
     payload["param1"] = QJsonValue::fromVariant(QVariant::fromValue< NestedStruct1 >(param1));
     payload["param2"] = QJsonValue::fromVariant(QVariant::fromValue< NestedStruct2 >(param2));
     QJsonObject reply = post("testbed2/NestedStruct3Interface/func2", payload);
-    qDebug() << QJsonDocument(reply).toJson();
+    AG_LOG_DEBUG(qPrintable(QJsonDocument(reply).toJson()));
     return NestedStruct1();
 }
 
 NestedStruct1 HttpNestedStruct3Interface::func3(const NestedStruct1& param1, const NestedStruct2& param2, const NestedStruct3& param3)
 {
-    qDebug() << Q_FUNC_INFO;
-
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     QJsonObject payload;
     payload["param1"] = QJsonValue::fromVariant(QVariant::fromValue< NestedStruct1 >(param1));
     payload["param2"] = QJsonValue::fromVariant(QVariant::fromValue< NestedStruct2 >(param2));
     payload["param3"] = QJsonValue::fromVariant(QVariant::fromValue< NestedStruct3 >(param3));
     QJsonObject reply = post("testbed2/NestedStruct3Interface/func3", payload);
-    qDebug() << QJsonDocument(reply).toJson();
+    AG_LOG_DEBUG(qPrintable(QJsonDocument(reply).toJson()));
     return NestedStruct1();
 }
 
@@ -116,14 +114,14 @@ QJsonObject HttpNestedStruct3Interface::post(const QString& path, const QJsonObj
     request.setUrl(QUrl(QString("%1/%2").arg(address).arg(path)));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     const QByteArray& data = QJsonDocument(payload).toJson(QJsonDocument::Compact);
-    qDebug() << qPrintable(data);
+    AG_LOG_DEBUG( qPrintable(data));
     QNetworkReply* reply = m_network->post(request, data);
     // wait for finished signal
     QEventLoop loop;
     connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
     loop.exec();
     if(reply->error()) {
-        qDebug() << reply->errorString();
+        AG_LOG_ERROR(reply->errorString());
         return QJsonObject();
     }
     const QJsonObject &response = QJsonDocument::fromJson(reply->readAll()).object();

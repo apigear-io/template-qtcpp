@@ -1,15 +1,17 @@
 
 #include "nestedstruct2interfacetraced.h"
 #include "testbed2/monitor/agent.h"
+#include "utilities/logger.h"
 
 namespace testbed2 {
 
+const std::string noObjectToTraceLogInfo = " object to trace is invalid.";
 
 NestedStruct2InterfaceTraced::NestedStruct2InterfaceTraced(std::shared_ptr<AbstractNestedStruct2Interface> impl)
     :m_impl(impl)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
 
@@ -29,7 +31,7 @@ NestedStruct2InterfaceTraced::NestedStruct2InterfaceTraced(std::shared_ptr<Abstr
 NestedStruct1 NestedStruct2InterfaceTraced::func1(const NestedStruct1& param1) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     NestedStruct2InterfaceAgent::trace_func1(this, param1);
@@ -40,7 +42,7 @@ NestedStruct1 NestedStruct2InterfaceTraced::func1(const NestedStruct1& param1)
 NestedStruct1 NestedStruct2InterfaceTraced::func2(const NestedStruct1& param1, const NestedStruct2& param2) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     NestedStruct2InterfaceAgent::trace_func2(this, param1, param2);
@@ -50,7 +52,7 @@ NestedStruct1 NestedStruct2InterfaceTraced::func2(const NestedStruct1& param1, c
 void NestedStruct2InterfaceTraced::setProp1(const NestedStruct1& prop1)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     NestedStruct2InterfaceAgent::trace_state(this);
@@ -59,7 +61,7 @@ void NestedStruct2InterfaceTraced::setProp1(const NestedStruct1& prop1)
 NestedStruct1 NestedStruct2InterfaceTraced::prop1() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->prop1();
@@ -68,7 +70,7 @@ NestedStruct1 NestedStruct2InterfaceTraced::prop1() const
 void NestedStruct2InterfaceTraced::setProp2(const NestedStruct2& prop2)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     NestedStruct2InterfaceAgent::trace_state(this);
@@ -77,7 +79,7 @@ void NestedStruct2InterfaceTraced::setProp2(const NestedStruct2& prop2)
 NestedStruct2 NestedStruct2InterfaceTraced::prop2() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->prop2();

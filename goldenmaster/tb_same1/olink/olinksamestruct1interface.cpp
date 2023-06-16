@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "tb_same1/api/json.adapter.h"
 
 #include "olink/iclientnode.h"
+#include "utilities/logger.h"
 
 #include <QtCore>
 
@@ -34,12 +35,12 @@ OLinkSameStruct1Interface::OLinkSameStruct1Interface(QObject *parent)
     , m_isReady(false)
     , m_node(nullptr)
 {        
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
 }
 
 void OLinkSameStruct1Interface::applyState(const nlohmann::json& fields) 
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(fields.contains("prop1")) {
         setProp1Local(fields["prop1"].get<Struct1>());
     }
@@ -47,7 +48,7 @@ void OLinkSameStruct1Interface::applyState(const nlohmann::json& fields)
 
 void OLinkSameStruct1Interface::setProp1(const Struct1& prop1)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return;
     }
@@ -56,7 +57,7 @@ void OLinkSameStruct1Interface::setProp1(const Struct1& prop1)
 
 void OLinkSameStruct1Interface::setProp1Local(const Struct1& prop1)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if (m_prop1 != prop1) {
         m_prop1 = prop1;
         emit prop1Changed(prop1);
@@ -70,7 +71,7 @@ Struct1 OLinkSameStruct1Interface::prop1() const
 
 Struct1 OLinkSameStruct1Interface::func1(const Struct1& param1)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return Struct1();
     }
@@ -85,7 +86,7 @@ Struct1 OLinkSameStruct1Interface::func1(const Struct1& param1)
 
 QtPromise::QPromise<Struct1> OLinkSameStruct1Interface::func1Async(const Struct1& param1)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QtPromise::QPromise<Struct1>::reject("not initialized");
     }
@@ -108,7 +109,8 @@ std::string OLinkSameStruct1Interface::olinkObjectName()
 
 void OLinkSameStruct1Interface::olinkOnSignal(const std::string& signalId, const nlohmann::json& args)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(signalId);
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+    AG_LOG_DEBUG(signalId);
     auto signalName = Name::getMemberName(signalId);
     if(signalName == "sig1") {
         emit sig1(args[0].get<Struct1>());   
@@ -118,13 +120,15 @@ void OLinkSameStruct1Interface::olinkOnSignal(const std::string& signalId, const
 
 void OLinkSameStruct1Interface::olinkOnPropertyChanged(const std::string& propertyId, const nlohmann::json& value)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(propertyId);
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+    AG_LOG_DEBUG(propertyId);
     std::string propertyName = Name::getMemberName(propertyId);
     applyState({ {propertyName, value} });
 }
 void OLinkSameStruct1Interface::olinkOnInit(const std::string& objectId, const nlohmann::json& props, IClientNode *node)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
+    AG_LOG_INFO(Q_FUNC_INFO);
+    AG_LOG_INFO(objectId);
     m_isReady = true;
     m_node = node;
     applyState(props);
@@ -133,7 +137,7 @@ void OLinkSameStruct1Interface::olinkOnInit(const std::string& objectId, const n
 
 void OLinkSameStruct1Interface::olinkOnRelease()
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_INFO(Q_FUNC_INFO);
     m_isReady = false;
     m_node = nullptr;
 }

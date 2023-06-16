@@ -2,6 +2,7 @@
 #include <QGuiApplication>
 #include "apigear/olink/olinkclient.h"
 #include "olink/clientregistry.h"
+#include "utilities/logger.h"
 #include <memory>
 #include "testbed2/olink/olinkmanyparaminterface.h"
 #include "testbed2/monitor/manyparaminterfacetraced.h"
@@ -106,13 +107,21 @@ int main(int argc, char *argv[])
 
     
     // Try out properties: subscribe for changes
-    testbed2ManyParamInterfaceTraced.connect(&testbed2ManyParamInterfaceTraced, &testbed2::AbstractManyParamInterface::prop1Changed, []( int prop1){ qDebug() << "prop1 property changed ";});
+    testbed2ManyParamInterfaceTraced.connect(&testbed2ManyParamInterfaceTraced, &testbed2::AbstractManyParamInterface::prop1Changed, 
+            []( int prop1){ 
+                static const std::string message = "prop1 property changed ";
+                AG_LOG_DEBUG(message);
+            });
     // or ask for change.
     auto local_prop1 = 0;
     testbed2ManyParamInterfaceTraced.setProp1(local_prop1);
     
     // Check the signals with subscribing for its change
-    testbed2ManyParamInterfaceTraced.connect(&testbed2ManyParamInterfaceTraced, &testbed2::AbstractManyParamInterface::sig1, [](int param1){ qDebug() << "sig1 signal emitted ";});
+    testbed2ManyParamInterfaceTraced.connect(&testbed2ManyParamInterfaceTraced, &testbed2::AbstractManyParamInterface::sig1, 
+        [](int param1){
+                static const std::string message = "sig1 signal emitted ";
+                AG_LOG_DEBUG(message);
+        });
     
     // Play around executing your operations
     auto method_result = testbed2ManyParamInterfaceTraced.func1(0);

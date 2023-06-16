@@ -16,6 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "httpmanyparaminterface.h"
+#include "apigear/utilities/logger.h"
 
 #include <QtQml>
 
@@ -89,51 +90,47 @@ int HttpManyParamInterface::prop4() const
 
 int HttpManyParamInterface::func1(int param1)
 {
-    qDebug() << Q_FUNC_INFO;
-
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     QJsonObject payload;
     payload["param1"] = QJsonValue::fromVariant(QVariant::fromValue< int >(param1));
     QJsonObject reply = post("testbed2/ManyParamInterface/func1", payload);
-    qDebug() << QJsonDocument(reply).toJson();
+    AG_LOG_DEBUG(qPrintable(QJsonDocument(reply).toJson()));
     return 0;
 }
 
 int HttpManyParamInterface::func2(int param1, int param2)
 {
-    qDebug() << Q_FUNC_INFO;
-
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     QJsonObject payload;
     payload["param1"] = QJsonValue::fromVariant(QVariant::fromValue< int >(param1));
     payload["param2"] = QJsonValue::fromVariant(QVariant::fromValue< int >(param2));
     QJsonObject reply = post("testbed2/ManyParamInterface/func2", payload);
-    qDebug() << QJsonDocument(reply).toJson();
+    AG_LOG_DEBUG(qPrintable(QJsonDocument(reply).toJson()));
     return 0;
 }
 
 int HttpManyParamInterface::func3(int param1, int param2, int param3)
 {
-    qDebug() << Q_FUNC_INFO;
-
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     QJsonObject payload;
     payload["param1"] = QJsonValue::fromVariant(QVariant::fromValue< int >(param1));
     payload["param2"] = QJsonValue::fromVariant(QVariant::fromValue< int >(param2));
     payload["param3"] = QJsonValue::fromVariant(QVariant::fromValue< int >(param3));
     QJsonObject reply = post("testbed2/ManyParamInterface/func3", payload);
-    qDebug() << QJsonDocument(reply).toJson();
+    AG_LOG_DEBUG(qPrintable(QJsonDocument(reply).toJson()));
     return 0;
 }
 
 int HttpManyParamInterface::func4(int param1, int param2, int param3, int param4)
 {
-    qDebug() << Q_FUNC_INFO;
-
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     QJsonObject payload;
     payload["param1"] = QJsonValue::fromVariant(QVariant::fromValue< int >(param1));
     payload["param2"] = QJsonValue::fromVariant(QVariant::fromValue< int >(param2));
     payload["param3"] = QJsonValue::fromVariant(QVariant::fromValue< int >(param3));
     payload["param4"] = QJsonValue::fromVariant(QVariant::fromValue< int >(param4));
     QJsonObject reply = post("testbed2/ManyParamInterface/func4", payload);
-    qDebug() << QJsonDocument(reply).toJson();
+    AG_LOG_DEBUG(qPrintable(QJsonDocument(reply).toJson()));
     return 0;
 }
 
@@ -144,14 +141,14 @@ QJsonObject HttpManyParamInterface::post(const QString& path, const QJsonObject 
     request.setUrl(QUrl(QString("%1/%2").arg(address).arg(path)));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     const QByteArray& data = QJsonDocument(payload).toJson(QJsonDocument::Compact);
-    qDebug() << qPrintable(data);
+    AG_LOG_DEBUG( qPrintable(data));
     QNetworkReply* reply = m_network->post(request, data);
     // wait for finished signal
     QEventLoop loop;
     connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
     loop.exec();
     if(reply->error()) {
-        qDebug() << reply->errorString();
+        AG_LOG_ERROR(reply->errorString());
         return QJsonObject();
     }
     const QJsonObject &response = QJsonDocument::fromJson(reply->readAll()).object();

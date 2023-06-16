@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "tb_enum/api/json.adapter.h"
 
 #include "olink/iclientnode.h"
+#include "utilities/logger.h"
 
 #include <QtCore>
 
@@ -37,12 +38,12 @@ OLinkEnumInterface::OLinkEnumInterface(QObject *parent)
     , m_isReady(false)
     , m_node(nullptr)
 {        
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
 }
 
 void OLinkEnumInterface::applyState(const nlohmann::json& fields) 
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(fields.contains("prop0")) {
         setProp0Local(fields["prop0"].get<Enum0::Enum0Enum>());
     }
@@ -59,7 +60,7 @@ void OLinkEnumInterface::applyState(const nlohmann::json& fields)
 
 void OLinkEnumInterface::setProp0(Enum0::Enum0Enum prop0)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return;
     }
@@ -68,7 +69,7 @@ void OLinkEnumInterface::setProp0(Enum0::Enum0Enum prop0)
 
 void OLinkEnumInterface::setProp0Local(Enum0::Enum0Enum prop0)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if (m_prop0 != prop0) {
         m_prop0 = prop0;
         emit prop0Changed(prop0);
@@ -82,7 +83,7 @@ Enum0::Enum0Enum OLinkEnumInterface::prop0() const
 
 void OLinkEnumInterface::setProp1(Enum1::Enum1Enum prop1)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return;
     }
@@ -91,7 +92,7 @@ void OLinkEnumInterface::setProp1(Enum1::Enum1Enum prop1)
 
 void OLinkEnumInterface::setProp1Local(Enum1::Enum1Enum prop1)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if (m_prop1 != prop1) {
         m_prop1 = prop1;
         emit prop1Changed(prop1);
@@ -105,7 +106,7 @@ Enum1::Enum1Enum OLinkEnumInterface::prop1() const
 
 void OLinkEnumInterface::setProp2(Enum2::Enum2Enum prop2)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return;
     }
@@ -114,7 +115,7 @@ void OLinkEnumInterface::setProp2(Enum2::Enum2Enum prop2)
 
 void OLinkEnumInterface::setProp2Local(Enum2::Enum2Enum prop2)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if (m_prop2 != prop2) {
         m_prop2 = prop2;
         emit prop2Changed(prop2);
@@ -128,7 +129,7 @@ Enum2::Enum2Enum OLinkEnumInterface::prop2() const
 
 void OLinkEnumInterface::setProp3(Enum3::Enum3Enum prop3)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return;
     }
@@ -137,7 +138,7 @@ void OLinkEnumInterface::setProp3(Enum3::Enum3Enum prop3)
 
 void OLinkEnumInterface::setProp3Local(Enum3::Enum3Enum prop3)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if (m_prop3 != prop3) {
         m_prop3 = prop3;
         emit prop3Changed(prop3);
@@ -151,7 +152,7 @@ Enum3::Enum3Enum OLinkEnumInterface::prop3() const
 
 Enum0::Enum0Enum OLinkEnumInterface::func0(Enum0::Enum0Enum param0)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return Enum0::value0;
     }
@@ -166,7 +167,7 @@ Enum0::Enum0Enum OLinkEnumInterface::func0(Enum0::Enum0Enum param0)
 
 QtPromise::QPromise<Enum0::Enum0Enum> OLinkEnumInterface::func0Async(Enum0::Enum0Enum param0)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QtPromise::QPromise<Enum0::Enum0Enum>::reject("not initialized");
     }
@@ -183,7 +184,7 @@ QtPromise::QPromise<Enum0::Enum0Enum> OLinkEnumInterface::func0Async(Enum0::Enum
 
 Enum1::Enum1Enum OLinkEnumInterface::func1(Enum1::Enum1Enum param1)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return Enum1::value1;
     }
@@ -198,7 +199,7 @@ Enum1::Enum1Enum OLinkEnumInterface::func1(Enum1::Enum1Enum param1)
 
 QtPromise::QPromise<Enum1::Enum1Enum> OLinkEnumInterface::func1Async(Enum1::Enum1Enum param1)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QtPromise::QPromise<Enum1::Enum1Enum>::reject("not initialized");
     }
@@ -215,7 +216,7 @@ QtPromise::QPromise<Enum1::Enum1Enum> OLinkEnumInterface::func1Async(Enum1::Enum
 
 Enum2::Enum2Enum OLinkEnumInterface::func2(Enum2::Enum2Enum param2)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return Enum2::value2;
     }
@@ -230,7 +231,7 @@ Enum2::Enum2Enum OLinkEnumInterface::func2(Enum2::Enum2Enum param2)
 
 QtPromise::QPromise<Enum2::Enum2Enum> OLinkEnumInterface::func2Async(Enum2::Enum2Enum param2)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QtPromise::QPromise<Enum2::Enum2Enum>::reject("not initialized");
     }
@@ -247,7 +248,7 @@ QtPromise::QPromise<Enum2::Enum2Enum> OLinkEnumInterface::func2Async(Enum2::Enum
 
 Enum3::Enum3Enum OLinkEnumInterface::func3(Enum3::Enum3Enum param3)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return Enum3::value3;
     }
@@ -262,7 +263,7 @@ Enum3::Enum3Enum OLinkEnumInterface::func3(Enum3::Enum3Enum param3)
 
 QtPromise::QPromise<Enum3::Enum3Enum> OLinkEnumInterface::func3Async(Enum3::Enum3Enum param3)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QtPromise::QPromise<Enum3::Enum3Enum>::reject("not initialized");
     }
@@ -285,7 +286,8 @@ std::string OLinkEnumInterface::olinkObjectName()
 
 void OLinkEnumInterface::olinkOnSignal(const std::string& signalId, const nlohmann::json& args)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(signalId);
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+    AG_LOG_DEBUG(signalId);
     auto signalName = Name::getMemberName(signalId);
     if(signalName == "sig0") {
         emit sig0(args[0].get<Enum0::Enum0Enum>());   
@@ -307,13 +309,15 @@ void OLinkEnumInterface::olinkOnSignal(const std::string& signalId, const nlohma
 
 void OLinkEnumInterface::olinkOnPropertyChanged(const std::string& propertyId, const nlohmann::json& value)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(propertyId);
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+    AG_LOG_DEBUG(propertyId);
     std::string propertyName = Name::getMemberName(propertyId);
     applyState({ {propertyName, value} });
 }
 void OLinkEnumInterface::olinkOnInit(const std::string& objectId, const nlohmann::json& props, IClientNode *node)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
+    AG_LOG_INFO(Q_FUNC_INFO);
+    AG_LOG_INFO(objectId);
     m_isReady = true;
     m_node = node;
     applyState(props);
@@ -322,7 +326,7 @@ void OLinkEnumInterface::olinkOnInit(const std::string& objectId, const nlohmann
 
 void OLinkEnumInterface::olinkOnRelease()
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_INFO(Q_FUNC_INFO);
     m_isReady = false;
     m_node = nullptr;
 }

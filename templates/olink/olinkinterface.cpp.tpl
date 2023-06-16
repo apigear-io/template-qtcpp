@@ -9,6 +9,7 @@
 #include "{{snake .Module.Name}}/api/json.adapter.h"
 
 #include "olink/iclientnode.h"
+#include "utilities/logger.h"
 
 #include <QtCore>
 
@@ -25,12 +26,12 @@ namespace {{snake  .Module.Name }} {
     , m_isReady(false)
     , m_node(nullptr)
 {        
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
 }
 
 void {{$class}}::applyState(const nlohmann::json& fields) 
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
 {{- range .Interface.Properties }}
     if(fields.contains("{{.Name}}")) {
         set{{Camel .Name}}Local(fields["{{.Name}}"].get<{{qtReturn "" .}}>());
@@ -42,7 +43,7 @@ void {{$class}}::applyState(const nlohmann::json& fields)
 
 void {{$class}}::set{{Camel .Name}}({{qtParam "" .}})
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return;
     }
@@ -51,7 +52,7 @@ void {{$class}}::set{{Camel .Name}}({{qtParam "" .}})
 
 void {{$class}}::set{{Camel .Name}}Local({{qtParam "" .}})
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if (m_{{.Name}} != {{.Name}}) {
         m_{{.Name}} = {{.Name}};
         emit {{.Name}}Changed({{.Name}});
@@ -71,7 +72,7 @@ void {{$class}}::set{{Camel .Name}}Local({{qtParam "" .}})
 
 {{$return}} {{$class}}::{{camel .Name}}({{qtParams "" .Params}})
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return{{ if (not .Return.IsVoid) }} {{qtDefault "" .Return}} {{- end}};
     }
@@ -95,7 +96,7 @@ void {{$class}}::set{{Camel .Name}}Local({{qtParam "" .}})
 
 QtPromise::QPromise<{{$return}}> {{$class}}::{{camel .Name}}Async({{qtParams "" .Params}})
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QtPromise::QPromise<{{$return}}>::reject("not initialized");
     }
@@ -130,7 +131,8 @@ std::string {{$class}}::olinkObjectName()
 
 void {{$class}}::olinkOnSignal(const std::string& signalId, const nlohmann::json& args)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(signalId);
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+    AG_LOG_DEBUG(signalId);
     auto signalName = Name::getMemberName(signalId);
 {{- range .Interface.Signals }}
 {{- $signalName := camel .Name }}
@@ -147,13 +149,15 @@ void {{$class}}::olinkOnSignal(const std::string& signalId, const nlohmann::json
 
 void {{$class}}::olinkOnPropertyChanged(const std::string& propertyId, const nlohmann::json& value)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(propertyId);
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+    AG_LOG_DEBUG(propertyId);
     std::string propertyName = Name::getMemberName(propertyId);
     applyState({ {propertyName, value} });
 }
 void {{$class}}::olinkOnInit(const std::string& objectId, const nlohmann::json& props, IClientNode *node)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
+    AG_LOG_INFO(Q_FUNC_INFO);
+    AG_LOG_INFO(objectId);
     m_isReady = true;
     m_node = node;
     applyState(props);
@@ -162,7 +166,7 @@ void {{$class}}::olinkOnInit(const std::string& objectId, const nlohmann::json& 
 
 void {{$class}}::olinkOnRelease()
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_INFO(Q_FUNC_INFO);
     m_isReady = false;
     m_node = nullptr;
 }

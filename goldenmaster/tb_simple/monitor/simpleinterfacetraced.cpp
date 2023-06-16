@@ -1,15 +1,17 @@
 
 #include "simpleinterfacetraced.h"
 #include "tb_simple/monitor/agent.h"
+#include "utilities/logger.h"
 
 namespace tb_simple {
 
+const std::string noObjectToTraceLogInfo = " object to trace is invalid.";
 
 SimpleInterfaceTraced::SimpleInterfaceTraced(std::shared_ptr<AbstractSimpleInterface> impl)
     :m_impl(impl)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
 
@@ -49,7 +51,7 @@ SimpleInterfaceTraced::SimpleInterfaceTraced(std::shared_ptr<AbstractSimpleInter
 void SimpleInterfaceTraced::funcVoid() 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return ;
     }
     SimpleInterfaceAgent::trace_funcVoid(this );
@@ -60,7 +62,7 @@ void SimpleInterfaceTraced::funcVoid()
 bool SimpleInterfaceTraced::funcBool(bool paramBool) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     SimpleInterfaceAgent::trace_funcBool(this, paramBool);
@@ -71,7 +73,7 @@ bool SimpleInterfaceTraced::funcBool(bool paramBool)
 int SimpleInterfaceTraced::funcInt(int paramInt) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     SimpleInterfaceAgent::trace_funcInt(this, paramInt);
@@ -82,7 +84,7 @@ int SimpleInterfaceTraced::funcInt(int paramInt)
 qint32 SimpleInterfaceTraced::funcInt32(qint32 paramInt32) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     SimpleInterfaceAgent::trace_funcInt32(this, paramInt32);
@@ -93,7 +95,7 @@ qint32 SimpleInterfaceTraced::funcInt32(qint32 paramInt32)
 qint64 SimpleInterfaceTraced::funcInt64(qint64 paramInt64) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     SimpleInterfaceAgent::trace_funcInt64(this, paramInt64);
@@ -104,7 +106,7 @@ qint64 SimpleInterfaceTraced::funcInt64(qint64 paramInt64)
 qreal SimpleInterfaceTraced::funcFloat(qreal paramFloat) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     SimpleInterfaceAgent::trace_funcFloat(this, paramFloat);
@@ -115,7 +117,7 @@ qreal SimpleInterfaceTraced::funcFloat(qreal paramFloat)
 float SimpleInterfaceTraced::funcFloat32(float paramFloat32) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     SimpleInterfaceAgent::trace_funcFloat32(this, paramFloat32);
@@ -126,7 +128,7 @@ float SimpleInterfaceTraced::funcFloat32(float paramFloat32)
 double SimpleInterfaceTraced::funcFloat64(double paramFloat) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     SimpleInterfaceAgent::trace_funcFloat64(this, paramFloat);
@@ -137,7 +139,7 @@ double SimpleInterfaceTraced::funcFloat64(double paramFloat)
 QString SimpleInterfaceTraced::funcString(const QString& paramString) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     SimpleInterfaceAgent::trace_funcString(this, paramString);
@@ -147,7 +149,7 @@ QString SimpleInterfaceTraced::funcString(const QString& paramString)
 void SimpleInterfaceTraced::setPropBool(bool propBool)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     SimpleInterfaceAgent::trace_state(this);
@@ -156,7 +158,7 @@ void SimpleInterfaceTraced::setPropBool(bool propBool)
 bool SimpleInterfaceTraced::propBool() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->propBool();
@@ -165,7 +167,7 @@ bool SimpleInterfaceTraced::propBool() const
 void SimpleInterfaceTraced::setPropInt(int propInt)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     SimpleInterfaceAgent::trace_state(this);
@@ -174,7 +176,7 @@ void SimpleInterfaceTraced::setPropInt(int propInt)
 int SimpleInterfaceTraced::propInt() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->propInt();
@@ -183,7 +185,7 @@ int SimpleInterfaceTraced::propInt() const
 void SimpleInterfaceTraced::setPropInt32(qint32 propInt32)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     SimpleInterfaceAgent::trace_state(this);
@@ -192,7 +194,7 @@ void SimpleInterfaceTraced::setPropInt32(qint32 propInt32)
 qint32 SimpleInterfaceTraced::propInt32() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->propInt32();
@@ -201,7 +203,7 @@ qint32 SimpleInterfaceTraced::propInt32() const
 void SimpleInterfaceTraced::setPropInt64(qint64 propInt64)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     SimpleInterfaceAgent::trace_state(this);
@@ -210,7 +212,7 @@ void SimpleInterfaceTraced::setPropInt64(qint64 propInt64)
 qint64 SimpleInterfaceTraced::propInt64() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->propInt64();
@@ -219,7 +221,7 @@ qint64 SimpleInterfaceTraced::propInt64() const
 void SimpleInterfaceTraced::setPropFloat(qreal propFloat)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     SimpleInterfaceAgent::trace_state(this);
@@ -228,7 +230,7 @@ void SimpleInterfaceTraced::setPropFloat(qreal propFloat)
 qreal SimpleInterfaceTraced::propFloat() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->propFloat();
@@ -237,7 +239,7 @@ qreal SimpleInterfaceTraced::propFloat() const
 void SimpleInterfaceTraced::setPropFloat32(float propFloat32)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     SimpleInterfaceAgent::trace_state(this);
@@ -246,7 +248,7 @@ void SimpleInterfaceTraced::setPropFloat32(float propFloat32)
 float SimpleInterfaceTraced::propFloat32() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->propFloat32();
@@ -255,7 +257,7 @@ float SimpleInterfaceTraced::propFloat32() const
 void SimpleInterfaceTraced::setPropFloat64(double propFloat64)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     SimpleInterfaceAgent::trace_state(this);
@@ -264,7 +266,7 @@ void SimpleInterfaceTraced::setPropFloat64(double propFloat64)
 double SimpleInterfaceTraced::propFloat64() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->propFloat64();
@@ -273,7 +275,7 @@ double SimpleInterfaceTraced::propFloat64() const
 void SimpleInterfaceTraced::setPropString(const QString& propString)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     SimpleInterfaceAgent::trace_state(this);
@@ -282,7 +284,7 @@ void SimpleInterfaceTraced::setPropString(const QString& propString)
 QString SimpleInterfaceTraced::propString() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->propString();

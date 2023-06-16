@@ -16,6 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "httpnestedstruct1interface.h"
+#include "apigear/utilities/logger.h"
 
 #include <QtQml>
 
@@ -47,12 +48,11 @@ NestedStruct1 HttpNestedStruct1Interface::prop1() const
 
 NestedStruct1 HttpNestedStruct1Interface::func1(const NestedStruct1& param1)
 {
-    qDebug() << Q_FUNC_INFO;
-
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     QJsonObject payload;
     payload["param1"] = QJsonValue::fromVariant(QVariant::fromValue< NestedStruct1 >(param1));
     QJsonObject reply = post("testbed2/NestedStruct1Interface/func1", payload);
-    qDebug() << QJsonDocument(reply).toJson();
+    AG_LOG_DEBUG(qPrintable(QJsonDocument(reply).toJson()));
     return NestedStruct1();
 }
 
@@ -63,14 +63,14 @@ QJsonObject HttpNestedStruct1Interface::post(const QString& path, const QJsonObj
     request.setUrl(QUrl(QString("%1/%2").arg(address).arg(path)));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     const QByteArray& data = QJsonDocument(payload).toJson(QJsonDocument::Compact);
-    qDebug() << qPrintable(data);
+    AG_LOG_DEBUG( qPrintable(data));
     QNetworkReply* reply = m_network->post(request, data);
     // wait for finished signal
     QEventLoop loop;
     connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
     loop.exec();
     if(reply->error()) {
-        qDebug() << reply->errorString();
+        AG_LOG_ERROR(reply->errorString());
         return QJsonObject();
     }
     const QJsonObject &response = QJsonDocument::fromJson(reply->readAll()).object();

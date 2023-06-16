@@ -90,25 +90,21 @@ QList<StructString> StructArrayInterface::propString() const
 
 StructBool StructArrayInterface::funcBool(const QList<StructBool>& paramBool)
 {
-    qDebug() << Q_FUNC_INFO;
     return StructBool();
 }
 
 StructBool StructArrayInterface::funcInt(const QList<StructInt>& paramInt)
 {
-    qDebug() << Q_FUNC_INFO;
     return StructBool();
 }
 
 StructBool StructArrayInterface::funcFloat(const QList<StructFloat>& paramFloat)
 {
-    qDebug() << Q_FUNC_INFO;
     return StructBool();
 }
 
 StructBool StructArrayInterface::funcString(const QList<StructString>& paramString)
 {
-    qDebug() << Q_FUNC_INFO;
     return StructBool();
 }
 } //namespace testbed1

@@ -146,49 +146,41 @@ QList<QString> SimpleArrayInterface::propString() const
 
 QList<bool> SimpleArrayInterface::funcBool(const QList<bool>& paramBool)
 {
-    qDebug() << Q_FUNC_INFO;
     return QList<bool>();
 }
 
 QList<int> SimpleArrayInterface::funcInt(const QList<int>& paramInt)
 {
-    qDebug() << Q_FUNC_INFO;
     return QList<int>();
 }
 
 QList<qint32> SimpleArrayInterface::funcInt32(const QList<qint32>& paramInt32)
 {
-    qDebug() << Q_FUNC_INFO;
     return QList<qint32>();
 }
 
 QList<qint64> SimpleArrayInterface::funcInt64(const QList<qint64>& paramInt64)
 {
-    qDebug() << Q_FUNC_INFO;
     return QList<qint64>();
 }
 
 QList<qreal> SimpleArrayInterface::funcFloat(const QList<qreal>& paramFloat)
 {
-    qDebug() << Q_FUNC_INFO;
     return QList<qreal>();
 }
 
 QList<float> SimpleArrayInterface::funcFloat32(const QList<float>& paramFloat32)
 {
-    qDebug() << Q_FUNC_INFO;
     return QList<float>();
 }
 
 QList<double> SimpleArrayInterface::funcFloat64(const QList<double>& paramFloat)
 {
-    qDebug() << Q_FUNC_INFO;
     return QList<double>();
 }
 
 QList<QString> SimpleArrayInterface::funcString(const QList<QString>& paramString)
 {
-    qDebug() << Q_FUNC_INFO;
     return QList<QString>();
 }
 } //namespace tb_simple

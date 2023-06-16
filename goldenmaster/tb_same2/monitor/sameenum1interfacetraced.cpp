@@ -1,15 +1,17 @@
 
 #include "sameenum1interfacetraced.h"
 #include "tb_same2/monitor/agent.h"
+#include "utilities/logger.h"
 
 namespace tb_same2 {
 
+const std::string noObjectToTraceLogInfo = " object to trace is invalid.";
 
 SameEnum1InterfaceTraced::SameEnum1InterfaceTraced(std::shared_ptr<AbstractSameEnum1Interface> impl)
     :m_impl(impl)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
 
@@ -26,7 +28,7 @@ SameEnum1InterfaceTraced::SameEnum1InterfaceTraced(std::shared_ptr<AbstractSameE
 Enum1::Enum1Enum SameEnum1InterfaceTraced::func1(Enum1::Enum1Enum param1) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     SameEnum1InterfaceAgent::trace_func1(this, param1);
@@ -36,7 +38,7 @@ Enum1::Enum1Enum SameEnum1InterfaceTraced::func1(Enum1::Enum1Enum param1)
 void SameEnum1InterfaceTraced::setProp1(Enum1::Enum1Enum prop1)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     SameEnum1InterfaceAgent::trace_state(this);
@@ -45,7 +47,7 @@ void SameEnum1InterfaceTraced::setProp1(Enum1::Enum1Enum prop1)
 Enum1::Enum1Enum SameEnum1InterfaceTraced::prop1() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->prop1();

@@ -62,13 +62,11 @@ NestedStruct2 NestedStruct2Interface::prop2() const
 
 NestedStruct1 NestedStruct2Interface::func1(const NestedStruct1& param1)
 {
-    qDebug() << Q_FUNC_INFO;
     return NestedStruct1();
 }
 
 NestedStruct1 NestedStruct2Interface::func2(const NestedStruct1& param1, const NestedStruct2& param2)
 {
-    qDebug() << Q_FUNC_INFO;
     return NestedStruct1();
 }
 } //namespace testbed2

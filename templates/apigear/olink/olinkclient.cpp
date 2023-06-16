@@ -2,6 +2,7 @@
 #include "olink/clientregistry.h"
 #include "olink/clientnode.h"
 #include "olink/iobjectsink.h"
+#include "../utilities/logger.h"
 #include <memory>
 
 using namespace ApiGear::ObjectLink;
@@ -13,7 +14,7 @@ OLinkClient::OLinkClient(ClientRegistry& registry, QObject* parent)
     , m_node(ClientNode::create(registry))
     , m_retryTimer(new QTimer(this))
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     m_node->onLog(m_logger.logFunc());
     m_registry.onLog(m_logger.logFunc());
     connect(m_socket, &QWebSocket::connected, this, &OLinkClient::onConnected);
@@ -40,7 +41,7 @@ OLinkClient::~OLinkClient()
 
 void OLinkClient::connectToHost(QUrl url)
 {
-    qDebug() << Q_FUNC_INFO << url;
+    AG_LOG_INFO(Q_FUNC_INFO + url.host().toStdString() + ":" + std::to_string(url.port()));
     if (url.isEmpty()) {
         QString serverUrl = qEnvironmentVariable("OLINK_SERVER", "ws://127.0.0.1:8182/ws");
         m_serverUrl = QUrl(serverUrl);
@@ -81,13 +82,14 @@ void OLinkClient::linkObjectSource(std::weak_ptr<IObjectSink> objectSink)
     auto objectSinkLocked = objectSink.lock();
     if (!objectSinkLocked)
     {
-        qDebug() << Q_FUNC_INFO << "Invalid object sink. Sink not linked.";
+        AG_LOG_WARNING(Q_FUNC_INFO +  std::string(" Invalid object sink. Sink not linked."));
         return;
     }
     auto name = objectSinkLocked->olinkObjectName();
     m_node->registry().addSink(objectSink);
 
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(name);
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+    AG_LOG_DEBUG(name);
     if (m_socket && m_socket->state() == QAbstractSocket::ConnectedState){
         m_node->linkRemote(name);
         m_objectLinkStatus[name] = LinkStatus::Linked;
@@ -112,7 +114,7 @@ void OLinkClient::unlinkObjectSource(std::string objectId)
 
 void OLinkClient::onConnected()
 {
-    qDebug() << Q_FUNC_INFO << " socket connected";
+    AG_LOG_INFO(Q_FUNC_INFO + std::string("socket connected ") + m_serverUrl.host().toStdString() + ":" + std::to_string(m_serverUrl.port()));
     m_retryTimer->stop();
     for (auto& object : m_objectLinkStatus)
     {
@@ -128,7 +130,7 @@ void OLinkClient::onDisconnected()
     {
         object.second = LinkStatus::NotLinked;
     }
-    qDebug() << Q_FUNC_INFO << " socket disconnected";
+    AG_LOG_INFO(Q_FUNC_INFO + std::string(" socket disconnected"));
 }
 
 void OLinkClient::handleTextMessage(const QString& message)
@@ -138,7 +140,7 @@ void OLinkClient::handleTextMessage(const QString& message)
 
 void OLinkClient::processMessages()
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if (m_socket->state() == QAbstractSocket::ConnectedState) {
         m_retryTimer->stop();
     }
@@ -156,7 +158,9 @@ void OLinkClient::processMessages()
             auto message = m_queue.front();
             auto sentBytes = m_socket->sendTextMessage(message);
             if (sentBytes != 0){
-                qDebug() << "write message to socket " << message;
+                static const std::string log_message = "write message to socket ";
+                AG_LOG_DEBUG(log_message);
+                AG_LOG_DEBUG(message);
                 m_queue.pop_front();
             }
             else {

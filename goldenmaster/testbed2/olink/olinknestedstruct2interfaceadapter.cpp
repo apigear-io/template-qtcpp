@@ -25,6 +25,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "olink/remoteregistry.h"
 #include "olink/iremotenode.h"
+#include "utilities/logger.h"
 
 #include <QtCore>
 
@@ -107,7 +108,8 @@ std::string OLinkNestedStruct2InterfaceAdapter::olinkObjectName() {
 }
 
 json OLinkNestedStruct2InterfaceAdapter::olinkInvoke(const std::string& methodId, const nlohmann::json& args){
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(methodId);
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+    AG_LOG_DEBUG(methodId);
     std::string path = Name::getMemberName(methodId);
     if(path == "func1") {
         const NestedStruct1& param1 = args.at(0);
@@ -124,7 +126,8 @@ json OLinkNestedStruct2InterfaceAdapter::olinkInvoke(const std::string& methodId
 }
 
 void OLinkNestedStruct2InterfaceAdapter::olinkSetProperty(const std::string& propertyId, const nlohmann::json& value){
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(propertyId);
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+    AG_LOG_DEBUG(propertyId);
     std::string path = Name::getMemberName(propertyId);
     if(path == "prop1") {
         NestedStruct1 prop1 = value.get<NestedStruct1>();
@@ -137,12 +140,14 @@ void OLinkNestedStruct2InterfaceAdapter::olinkSetProperty(const std::string& pro
 }
 
 void OLinkNestedStruct2InterfaceAdapter::olinkLinked(const std::string& objectId, IRemoteNode *node) {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
+    AG_LOG_INFO(Q_FUNC_INFO);
+    AG_LOG_INFO(objectId);
 }
 
 void OLinkNestedStruct2InterfaceAdapter::olinkUnlinked(const std::string& objectId)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
+    AG_LOG_INFO(Q_FUNC_INFO);
+    AG_LOG_INFO(objectId);
 }
 
 json OLinkNestedStruct2InterfaceAdapter::olinkCollectProperties()

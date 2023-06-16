@@ -2,6 +2,7 @@
 #include <QGuiApplication>
 #include "apigear/olink/olinkclient.h"
 #include "olink/clientregistry.h"
+#include "utilities/logger.h"
 #include <memory>
 {{- $features := .Features }}
 {{- range .System.Modules }}
@@ -66,7 +67,11 @@ int main(int argc, char *argv[])
 {{- if (and (eq $propertyExampleReady  0)  (len $interface.Properties) )}}
     {{- $property := (index $interface.Properties 0) }}
     // Try out properties: subscribe for changes
-    {{$clientClassNameCall}}connect({{$clientClassNameGetPtr}}, &{{ snake $module.Name }}::{{$class}}::{{$property.Name}}Changed, []( {{qtParam $namespacePrefix $property}}){ qDebug() << "{{$property.Name}} property changed ";});
+    {{$clientClassNameCall}}connect({{$clientClassNameGetPtr}}, &{{ snake $module.Name }}::{{$class}}::{{$property.Name}}Changed, 
+            []( {{qtParam $namespacePrefix $property}}){ 
+                static const std::string message = "{{$property.Name}} property changed ";
+                AG_LOG_DEBUG(message);
+            });
     // or ask for change.
     auto local_{{$property.Name}} = {{qtDefault $namespacePrefix $property}};
     {{$clientClassNameCall}}set{{Camel $property.Name}}(local_{{$property.Name}});
@@ -75,7 +80,11 @@ int main(int argc, char *argv[])
 {{- if (and (eq $signalExampleReady  0)  (len $interface.Signals))}}
     // Check the signals with subscribing for its change
     {{- $signal := (index $interface.Signals 0 ) }}
-    {{$clientClassNameCall}}connect({{$clientClassNameGetPtr}}, &{{ snake $module.Name }}::{{$class}}::{{camel $signal.Name}}, []({{qtParams $namespacePrefix $signal.Params}}){ qDebug() << "{{camel $signal.Name}} signal emitted ";});
+    {{$clientClassNameCall}}connect({{$clientClassNameGetPtr}}, &{{ snake $module.Name }}::{{$class}}::{{camel $signal.Name}}, 
+        []({{qtParams $namespacePrefix $signal.Params}}){
+                static const std::string message = "{{camel $signal.Name}} signal emitted ";
+                AG_LOG_DEBUG(message);
+        });
     {{ $signalExampleReady = 1}}
 {{- end }}
 

@@ -1,15 +1,17 @@
 
 #include "manyparaminterfacetraced.h"
 #include "testbed2/monitor/agent.h"
+#include "utilities/logger.h"
 
 namespace testbed2 {
 
+const std::string noObjectToTraceLogInfo = " object to trace is invalid.";
 
 ManyParamInterfaceTraced::ManyParamInterfaceTraced(std::shared_ptr<AbstractManyParamInterface> impl)
     :m_impl(impl)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
 
@@ -35,7 +37,7 @@ ManyParamInterfaceTraced::ManyParamInterfaceTraced(std::shared_ptr<AbstractManyP
 int ManyParamInterfaceTraced::func1(int param1) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     ManyParamInterfaceAgent::trace_func1(this, param1);
@@ -46,7 +48,7 @@ int ManyParamInterfaceTraced::func1(int param1)
 int ManyParamInterfaceTraced::func2(int param1, int param2) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     ManyParamInterfaceAgent::trace_func2(this, param1, param2);
@@ -57,7 +59,7 @@ int ManyParamInterfaceTraced::func2(int param1, int param2)
 int ManyParamInterfaceTraced::func3(int param1, int param2, int param3) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     ManyParamInterfaceAgent::trace_func3(this, param1, param2, param3);
@@ -68,7 +70,7 @@ int ManyParamInterfaceTraced::func3(int param1, int param2, int param3)
 int ManyParamInterfaceTraced::func4(int param1, int param2, int param3, int param4) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     ManyParamInterfaceAgent::trace_func4(this, param1, param2, param3, param4);
@@ -78,7 +80,7 @@ int ManyParamInterfaceTraced::func4(int param1, int param2, int param3, int para
 void ManyParamInterfaceTraced::setProp1(int prop1)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     ManyParamInterfaceAgent::trace_state(this);
@@ -87,7 +89,7 @@ void ManyParamInterfaceTraced::setProp1(int prop1)
 int ManyParamInterfaceTraced::prop1() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->prop1();
@@ -96,7 +98,7 @@ int ManyParamInterfaceTraced::prop1() const
 void ManyParamInterfaceTraced::setProp2(int prop2)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     ManyParamInterfaceAgent::trace_state(this);
@@ -105,7 +107,7 @@ void ManyParamInterfaceTraced::setProp2(int prop2)
 int ManyParamInterfaceTraced::prop2() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->prop2();
@@ -114,7 +116,7 @@ int ManyParamInterfaceTraced::prop2() const
 void ManyParamInterfaceTraced::setProp3(int prop3)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     ManyParamInterfaceAgent::trace_state(this);
@@ -123,7 +125,7 @@ void ManyParamInterfaceTraced::setProp3(int prop3)
 int ManyParamInterfaceTraced::prop3() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->prop3();
@@ -132,7 +134,7 @@ int ManyParamInterfaceTraced::prop3() const
 void ManyParamInterfaceTraced::setProp4(int prop4)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     ManyParamInterfaceAgent::trace_state(this);
@@ -141,7 +143,7 @@ void ManyParamInterfaceTraced::setProp4(int prop4)
 int ManyParamInterfaceTraced::prop4() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->prop4();

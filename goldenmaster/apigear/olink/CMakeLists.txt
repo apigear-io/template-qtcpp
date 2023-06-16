@@ -44,7 +44,7 @@ target_include_directories(olink_qt
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(olink_qt PUBLIC olink_core Qt5::Core Qt5::WebSockets)
+target_link_libraries(olink_qt PUBLIC apigear::utilities_qt olink_core Qt5::Core Qt5::WebSockets)
 target_compile_definitions(olink_qt PRIVATE OLINK_QT)
 
 # install binary files

@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "testbed1/api/json.adapter.h"
 
 #include "olink/iclientnode.h"
+#include "utilities/logger.h"
 
 #include <QtCore>
 
@@ -37,12 +38,12 @@ OLinkStructInterface::OLinkStructInterface(QObject *parent)
     , m_isReady(false)
     , m_node(nullptr)
 {        
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
 }
 
 void OLinkStructInterface::applyState(const nlohmann::json& fields) 
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(fields.contains("propBool")) {
         setPropBoolLocal(fields["propBool"].get<StructBool>());
     }
@@ -59,7 +60,7 @@ void OLinkStructInterface::applyState(const nlohmann::json& fields)
 
 void OLinkStructInterface::setPropBool(const StructBool& propBool)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return;
     }
@@ -68,7 +69,7 @@ void OLinkStructInterface::setPropBool(const StructBool& propBool)
 
 void OLinkStructInterface::setPropBoolLocal(const StructBool& propBool)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if (m_propBool != propBool) {
         m_propBool = propBool;
         emit propBoolChanged(propBool);
@@ -82,7 +83,7 @@ StructBool OLinkStructInterface::propBool() const
 
 void OLinkStructInterface::setPropInt(const StructInt& propInt)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return;
     }
@@ -91,7 +92,7 @@ void OLinkStructInterface::setPropInt(const StructInt& propInt)
 
 void OLinkStructInterface::setPropIntLocal(const StructInt& propInt)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if (m_propInt != propInt) {
         m_propInt = propInt;
         emit propIntChanged(propInt);
@@ -105,7 +106,7 @@ StructInt OLinkStructInterface::propInt() const
 
 void OLinkStructInterface::setPropFloat(const StructFloat& propFloat)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return;
     }
@@ -114,7 +115,7 @@ void OLinkStructInterface::setPropFloat(const StructFloat& propFloat)
 
 void OLinkStructInterface::setPropFloatLocal(const StructFloat& propFloat)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if (m_propFloat != propFloat) {
         m_propFloat = propFloat;
         emit propFloatChanged(propFloat);
@@ -128,7 +129,7 @@ StructFloat OLinkStructInterface::propFloat() const
 
 void OLinkStructInterface::setPropString(const StructString& propString)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return;
     }
@@ -137,7 +138,7 @@ void OLinkStructInterface::setPropString(const StructString& propString)
 
 void OLinkStructInterface::setPropStringLocal(const StructString& propString)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if (m_propString != propString) {
         m_propString = propString;
         emit propStringChanged(propString);
@@ -151,7 +152,7 @@ StructString OLinkStructInterface::propString() const
 
 StructBool OLinkStructInterface::funcBool(const StructBool& paramBool)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return StructBool();
     }
@@ -166,7 +167,7 @@ StructBool OLinkStructInterface::funcBool(const StructBool& paramBool)
 
 QtPromise::QPromise<StructBool> OLinkStructInterface::funcBoolAsync(const StructBool& paramBool)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QtPromise::QPromise<StructBool>::reject("not initialized");
     }
@@ -183,7 +184,7 @@ QtPromise::QPromise<StructBool> OLinkStructInterface::funcBoolAsync(const Struct
 
 StructBool OLinkStructInterface::funcInt(const StructInt& paramInt)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return StructBool();
     }
@@ -198,7 +199,7 @@ StructBool OLinkStructInterface::funcInt(const StructInt& paramInt)
 
 QtPromise::QPromise<StructBool> OLinkStructInterface::funcIntAsync(const StructInt& paramInt)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QtPromise::QPromise<StructBool>::reject("not initialized");
     }
@@ -215,7 +216,7 @@ QtPromise::QPromise<StructBool> OLinkStructInterface::funcIntAsync(const StructI
 
 StructFloat OLinkStructInterface::funcFloat(const StructFloat& paramFloat)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return StructFloat();
     }
@@ -230,7 +231,7 @@ StructFloat OLinkStructInterface::funcFloat(const StructFloat& paramFloat)
 
 QtPromise::QPromise<StructFloat> OLinkStructInterface::funcFloatAsync(const StructFloat& paramFloat)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QtPromise::QPromise<StructFloat>::reject("not initialized");
     }
@@ -247,7 +248,7 @@ QtPromise::QPromise<StructFloat> OLinkStructInterface::funcFloatAsync(const Stru
 
 StructString OLinkStructInterface::funcString(const StructString& paramString)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return StructString();
     }
@@ -262,7 +263,7 @@ StructString OLinkStructInterface::funcString(const StructString& paramString)
 
 QtPromise::QPromise<StructString> OLinkStructInterface::funcStringAsync(const StructString& paramString)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QtPromise::QPromise<StructString>::reject("not initialized");
     }
@@ -285,7 +286,8 @@ std::string OLinkStructInterface::olinkObjectName()
 
 void OLinkStructInterface::olinkOnSignal(const std::string& signalId, const nlohmann::json& args)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(signalId);
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+    AG_LOG_DEBUG(signalId);
     auto signalName = Name::getMemberName(signalId);
     if(signalName == "sigBool") {
         emit sigBool(args[0].get<StructBool>());   
@@ -307,13 +309,15 @@ void OLinkStructInterface::olinkOnSignal(const std::string& signalId, const nloh
 
 void OLinkStructInterface::olinkOnPropertyChanged(const std::string& propertyId, const nlohmann::json& value)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(propertyId);
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+    AG_LOG_DEBUG(propertyId);
     std::string propertyName = Name::getMemberName(propertyId);
     applyState({ {propertyName, value} });
 }
 void OLinkStructInterface::olinkOnInit(const std::string& objectId, const nlohmann::json& props, IClientNode *node)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
+    AG_LOG_INFO(Q_FUNC_INFO);
+    AG_LOG_INFO(objectId);
     m_isReady = true;
     m_node = node;
     applyState(props);
@@ -322,7 +326,7 @@ void OLinkStructInterface::olinkOnInit(const std::string& objectId, const nlohma
 
 void OLinkStructInterface::olinkOnRelease()
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_INFO(Q_FUNC_INFO);
     m_isReady = false;
     m_node = nullptr;
 }

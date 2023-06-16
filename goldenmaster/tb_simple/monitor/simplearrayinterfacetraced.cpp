@@ -1,15 +1,17 @@
 
 #include "simplearrayinterfacetraced.h"
 #include "tb_simple/monitor/agent.h"
+#include "utilities/logger.h"
 
 namespace tb_simple {
 
+const std::string noObjectToTraceLogInfo = " object to trace is invalid.";
 
 SimpleArrayInterfaceTraced::SimpleArrayInterfaceTraced(std::shared_ptr<AbstractSimpleArrayInterface> impl)
     :m_impl(impl)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
 
@@ -47,7 +49,7 @@ SimpleArrayInterfaceTraced::SimpleArrayInterfaceTraced(std::shared_ptr<AbstractS
 QList<bool> SimpleArrayInterfaceTraced::funcBool(const QList<bool>& paramBool) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     SimpleArrayInterfaceAgent::trace_funcBool(this, paramBool);
@@ -58,7 +60,7 @@ QList<bool> SimpleArrayInterfaceTraced::funcBool(const QList<bool>& paramBool)
 QList<int> SimpleArrayInterfaceTraced::funcInt(const QList<int>& paramInt) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     SimpleArrayInterfaceAgent::trace_funcInt(this, paramInt);
@@ -69,7 +71,7 @@ QList<int> SimpleArrayInterfaceTraced::funcInt(const QList<int>& paramInt)
 QList<qint32> SimpleArrayInterfaceTraced::funcInt32(const QList<qint32>& paramInt32) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     SimpleArrayInterfaceAgent::trace_funcInt32(this, paramInt32);
@@ -80,7 +82,7 @@ QList<qint32> SimpleArrayInterfaceTraced::funcInt32(const QList<qint32>& paramIn
 QList<qint64> SimpleArrayInterfaceTraced::funcInt64(const QList<qint64>& paramInt64) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     SimpleArrayInterfaceAgent::trace_funcInt64(this, paramInt64);
@@ -91,7 +93,7 @@ QList<qint64> SimpleArrayInterfaceTraced::funcInt64(const QList<qint64>& paramIn
 QList<qreal> SimpleArrayInterfaceTraced::funcFloat(const QList<qreal>& paramFloat) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     SimpleArrayInterfaceAgent::trace_funcFloat(this, paramFloat);
@@ -102,7 +104,7 @@ QList<qreal> SimpleArrayInterfaceTraced::funcFloat(const QList<qreal>& paramFloa
 QList<float> SimpleArrayInterfaceTraced::funcFloat32(const QList<float>& paramFloat32) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     SimpleArrayInterfaceAgent::trace_funcFloat32(this, paramFloat32);
@@ -113,7 +115,7 @@ QList<float> SimpleArrayInterfaceTraced::funcFloat32(const QList<float>& paramFl
 QList<double> SimpleArrayInterfaceTraced::funcFloat64(const QList<double>& paramFloat) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     SimpleArrayInterfaceAgent::trace_funcFloat64(this, paramFloat);
@@ -124,7 +126,7 @@ QList<double> SimpleArrayInterfaceTraced::funcFloat64(const QList<double>& param
 QList<QString> SimpleArrayInterfaceTraced::funcString(const QList<QString>& paramString) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     SimpleArrayInterfaceAgent::trace_funcString(this, paramString);
@@ -134,7 +136,7 @@ QList<QString> SimpleArrayInterfaceTraced::funcString(const QList<QString>& para
 void SimpleArrayInterfaceTraced::setPropBool(const QList<bool>& propBool)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     SimpleArrayInterfaceAgent::trace_state(this);
@@ -143,7 +145,7 @@ void SimpleArrayInterfaceTraced::setPropBool(const QList<bool>& propBool)
 QList<bool> SimpleArrayInterfaceTraced::propBool() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->propBool();
@@ -152,7 +154,7 @@ QList<bool> SimpleArrayInterfaceTraced::propBool() const
 void SimpleArrayInterfaceTraced::setPropInt(const QList<int>& propInt)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     SimpleArrayInterfaceAgent::trace_state(this);
@@ -161,7 +163,7 @@ void SimpleArrayInterfaceTraced::setPropInt(const QList<int>& propInt)
 QList<int> SimpleArrayInterfaceTraced::propInt() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->propInt();
@@ -170,7 +172,7 @@ QList<int> SimpleArrayInterfaceTraced::propInt() const
 void SimpleArrayInterfaceTraced::setPropInt32(const QList<qint32>& propInt32)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     SimpleArrayInterfaceAgent::trace_state(this);
@@ -179,7 +181,7 @@ void SimpleArrayInterfaceTraced::setPropInt32(const QList<qint32>& propInt32)
 QList<qint32> SimpleArrayInterfaceTraced::propInt32() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->propInt32();
@@ -188,7 +190,7 @@ QList<qint32> SimpleArrayInterfaceTraced::propInt32() const
 void SimpleArrayInterfaceTraced::setPropInt64(const QList<qint64>& propInt64)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     SimpleArrayInterfaceAgent::trace_state(this);
@@ -197,7 +199,7 @@ void SimpleArrayInterfaceTraced::setPropInt64(const QList<qint64>& propInt64)
 QList<qint64> SimpleArrayInterfaceTraced::propInt64() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->propInt64();
@@ -206,7 +208,7 @@ QList<qint64> SimpleArrayInterfaceTraced::propInt64() const
 void SimpleArrayInterfaceTraced::setPropFloat(const QList<qreal>& propFloat)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     SimpleArrayInterfaceAgent::trace_state(this);
@@ -215,7 +217,7 @@ void SimpleArrayInterfaceTraced::setPropFloat(const QList<qreal>& propFloat)
 QList<qreal> SimpleArrayInterfaceTraced::propFloat() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->propFloat();
@@ -224,7 +226,7 @@ QList<qreal> SimpleArrayInterfaceTraced::propFloat() const
 void SimpleArrayInterfaceTraced::setPropFloat32(const QList<float>& propFloat32)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     SimpleArrayInterfaceAgent::trace_state(this);
@@ -233,7 +235,7 @@ void SimpleArrayInterfaceTraced::setPropFloat32(const QList<float>& propFloat32)
 QList<float> SimpleArrayInterfaceTraced::propFloat32() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->propFloat32();
@@ -242,7 +244,7 @@ QList<float> SimpleArrayInterfaceTraced::propFloat32() const
 void SimpleArrayInterfaceTraced::setPropFloat64(const QList<double>& propFloat64)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     SimpleArrayInterfaceAgent::trace_state(this);
@@ -251,7 +253,7 @@ void SimpleArrayInterfaceTraced::setPropFloat64(const QList<double>& propFloat64
 QList<double> SimpleArrayInterfaceTraced::propFloat64() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->propFloat64();
@@ -260,7 +262,7 @@ QList<double> SimpleArrayInterfaceTraced::propFloat64() const
 void SimpleArrayInterfaceTraced::setPropString(const QList<QString>& propString)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     SimpleArrayInterfaceAgent::trace_state(this);
@@ -269,7 +271,7 @@ void SimpleArrayInterfaceTraced::setPropString(const QList<QString>& propString)
 QList<QString> SimpleArrayInterfaceTraced::propString() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->propString();

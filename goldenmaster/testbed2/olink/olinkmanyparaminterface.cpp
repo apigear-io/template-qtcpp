@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "testbed2/api/json.adapter.h"
 
 #include "olink/iclientnode.h"
+#include "utilities/logger.h"
 
 #include <QtCore>
 
@@ -37,12 +38,12 @@ OLinkManyParamInterface::OLinkManyParamInterface(QObject *parent)
     , m_isReady(false)
     , m_node(nullptr)
 {        
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
 }
 
 void OLinkManyParamInterface::applyState(const nlohmann::json& fields) 
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(fields.contains("prop1")) {
         setProp1Local(fields["prop1"].get<int>());
     }
@@ -59,7 +60,7 @@ void OLinkManyParamInterface::applyState(const nlohmann::json& fields)
 
 void OLinkManyParamInterface::setProp1(int prop1)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return;
     }
@@ -68,7 +69,7 @@ void OLinkManyParamInterface::setProp1(int prop1)
 
 void OLinkManyParamInterface::setProp1Local(int prop1)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if (m_prop1 != prop1) {
         m_prop1 = prop1;
         emit prop1Changed(prop1);
@@ -82,7 +83,7 @@ int OLinkManyParamInterface::prop1() const
 
 void OLinkManyParamInterface::setProp2(int prop2)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return;
     }
@@ -91,7 +92,7 @@ void OLinkManyParamInterface::setProp2(int prop2)
 
 void OLinkManyParamInterface::setProp2Local(int prop2)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if (m_prop2 != prop2) {
         m_prop2 = prop2;
         emit prop2Changed(prop2);
@@ -105,7 +106,7 @@ int OLinkManyParamInterface::prop2() const
 
 void OLinkManyParamInterface::setProp3(int prop3)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return;
     }
@@ -114,7 +115,7 @@ void OLinkManyParamInterface::setProp3(int prop3)
 
 void OLinkManyParamInterface::setProp3Local(int prop3)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if (m_prop3 != prop3) {
         m_prop3 = prop3;
         emit prop3Changed(prop3);
@@ -128,7 +129,7 @@ int OLinkManyParamInterface::prop3() const
 
 void OLinkManyParamInterface::setProp4(int prop4)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return;
     }
@@ -137,7 +138,7 @@ void OLinkManyParamInterface::setProp4(int prop4)
 
 void OLinkManyParamInterface::setProp4Local(int prop4)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if (m_prop4 != prop4) {
         m_prop4 = prop4;
         emit prop4Changed(prop4);
@@ -151,7 +152,7 @@ int OLinkManyParamInterface::prop4() const
 
 int OLinkManyParamInterface::func1(int param1)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return 0;
     }
@@ -166,7 +167,7 @@ int OLinkManyParamInterface::func1(int param1)
 
 QtPromise::QPromise<int> OLinkManyParamInterface::func1Async(int param1)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QtPromise::QPromise<int>::reject("not initialized");
     }
@@ -183,7 +184,7 @@ QtPromise::QPromise<int> OLinkManyParamInterface::func1Async(int param1)
 
 int OLinkManyParamInterface::func2(int param1, int param2)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return 0;
     }
@@ -198,7 +199,7 @@ int OLinkManyParamInterface::func2(int param1, int param2)
 
 QtPromise::QPromise<int> OLinkManyParamInterface::func2Async(int param1, int param2)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QtPromise::QPromise<int>::reject("not initialized");
     }
@@ -215,7 +216,7 @@ QtPromise::QPromise<int> OLinkManyParamInterface::func2Async(int param1, int par
 
 int OLinkManyParamInterface::func3(int param1, int param2, int param3)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return 0;
     }
@@ -230,7 +231,7 @@ int OLinkManyParamInterface::func3(int param1, int param2, int param3)
 
 QtPromise::QPromise<int> OLinkManyParamInterface::func3Async(int param1, int param2, int param3)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QtPromise::QPromise<int>::reject("not initialized");
     }
@@ -247,7 +248,7 @@ QtPromise::QPromise<int> OLinkManyParamInterface::func3Async(int param1, int par
 
 int OLinkManyParamInterface::func4(int param1, int param2, int param3, int param4)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return 0;
     }
@@ -262,7 +263,7 @@ int OLinkManyParamInterface::func4(int param1, int param2, int param3, int param
 
 QtPromise::QPromise<int> OLinkManyParamInterface::func4Async(int param1, int param2, int param3, int param4)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QtPromise::QPromise<int>::reject("not initialized");
     }
@@ -285,7 +286,8 @@ std::string OLinkManyParamInterface::olinkObjectName()
 
 void OLinkManyParamInterface::olinkOnSignal(const std::string& signalId, const nlohmann::json& args)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(signalId);
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+    AG_LOG_DEBUG(signalId);
     auto signalName = Name::getMemberName(signalId);
     if(signalName == "sig1") {
         emit sig1(args[0].get<int>());   
@@ -307,13 +309,15 @@ void OLinkManyParamInterface::olinkOnSignal(const std::string& signalId, const n
 
 void OLinkManyParamInterface::olinkOnPropertyChanged(const std::string& propertyId, const nlohmann::json& value)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(propertyId);
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+    AG_LOG_DEBUG(propertyId);
     std::string propertyName = Name::getMemberName(propertyId);
     applyState({ {propertyName, value} });
 }
 void OLinkManyParamInterface::olinkOnInit(const std::string& objectId, const nlohmann::json& props, IClientNode *node)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
+    AG_LOG_INFO(Q_FUNC_INFO);
+    AG_LOG_INFO(objectId);
     m_isReady = true;
     m_node = node;
     applyState(props);
@@ -322,7 +326,7 @@ void OLinkManyParamInterface::olinkOnInit(const std::string& objectId, const nlo
 
 void OLinkManyParamInterface::olinkOnRelease()
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_INFO(Q_FUNC_INFO);
     m_isReady = false;
     m_node = nullptr;
 }

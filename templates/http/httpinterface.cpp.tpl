@@ -4,6 +4,7 @@
 {{- $module := .Module.Name }}
 {{- $iface := .Interface.Name }}
 #include "{{lower $class}}.h"
+#include "apigear/utilities/logger.h"
 
 #include <QtQml>
 
@@ -42,14 +43,13 @@ void {{$class}}::set{{Camel .Name}}({{qtParam "" .}})
 
 {{qtReturn "" .Return}} {{$class}}::{{camel .Name}}({{qtParams "" .Params}})
 {
-    qDebug() << Q_FUNC_INFO;
-
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     QJsonObject payload;
 {{- range  .Params }}
     payload["{{.Name}}"] = QJsonValue::fromVariant(QVariant::fromValue< {{qtReturn "" .}} >({{.Name}}));
 {{- end }}
     QJsonObject reply = post("{{$module}}/{{$iface}}/{{.Name}}", payload);
-    qDebug() << QJsonDocument(reply).toJson();
+    AG_LOG_DEBUG(qPrintable(QJsonDocument(reply).toJson()));
     return{{ if (not .Return.IsVoid) }} {{qtDefault "" .Return}} {{- end}};
 }
 {{- end }}
@@ -61,14 +61,14 @@ QJsonObject {{$class}}::post(const QString& path, const QJsonObject &payload)
     request.setUrl(QUrl(QString("%1/%2").arg(address).arg(path)));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     const QByteArray& data = QJsonDocument(payload).toJson(QJsonDocument::Compact);
-    qDebug() << qPrintable(data);
+    AG_LOG_DEBUG( qPrintable(data));
     QNetworkReply* reply = m_network->post(request, data);
     // wait for finished signal
     QEventLoop loop;
     connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
     loop.exec();
     if(reply->error()) {
-        qDebug() << reply->errorString();
+        AG_LOG_ERROR(reply->errorString());
         return QJsonObject();
     }
     const QJsonObject &response = QJsonDocument::fromJson(reply->readAll()).object();

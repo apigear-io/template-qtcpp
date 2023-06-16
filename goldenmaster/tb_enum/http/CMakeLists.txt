@@ -16,4 +16,4 @@ set (TB_ENUM_HTTP_SOURCES
 
 add_library(tb_enum_http STATIC ${TB_ENUM_HTTP_SOURCES})
 target_include_directories(tb_enum_http PRIVATE ../tb_enum)
-target_link_libraries(tb_enum_http PUBLIC Qt5::Network tb_enum_api)
+target_link_libraries(tb_enum_http PUBLIC apigear::utilities_qt Qt5::Network tb_enum_api)

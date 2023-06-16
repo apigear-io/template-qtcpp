@@ -41,7 +41,6 @@ void {{$class}}::set{{Camel .Name}}({{qtParam "" .}})
 
 {{qtReturn "" .Return}} {{$class}}::{{camel .Name}}({{qtParams "" .Params}})
 {
-    qDebug() << Q_FUNC_INFO;
     return{{ if (not .Return.IsVoid) }} {{qtDefault "" .Return}} {{- end}};
 }
 {{- end }}

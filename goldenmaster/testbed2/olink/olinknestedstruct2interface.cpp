@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "testbed2/api/json.adapter.h"
 
 #include "olink/iclientnode.h"
+#include "utilities/logger.h"
 
 #include <QtCore>
 
@@ -35,12 +36,12 @@ OLinkNestedStruct2Interface::OLinkNestedStruct2Interface(QObject *parent)
     , m_isReady(false)
     , m_node(nullptr)
 {        
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
 }
 
 void OLinkNestedStruct2Interface::applyState(const nlohmann::json& fields) 
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(fields.contains("prop1")) {
         setProp1Local(fields["prop1"].get<NestedStruct1>());
     }
@@ -51,7 +52,7 @@ void OLinkNestedStruct2Interface::applyState(const nlohmann::json& fields)
 
 void OLinkNestedStruct2Interface::setProp1(const NestedStruct1& prop1)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return;
     }
@@ -60,7 +61,7 @@ void OLinkNestedStruct2Interface::setProp1(const NestedStruct1& prop1)
 
 void OLinkNestedStruct2Interface::setProp1Local(const NestedStruct1& prop1)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if (m_prop1 != prop1) {
         m_prop1 = prop1;
         emit prop1Changed(prop1);
@@ -74,7 +75,7 @@ NestedStruct1 OLinkNestedStruct2Interface::prop1() const
 
 void OLinkNestedStruct2Interface::setProp2(const NestedStruct2& prop2)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return;
     }
@@ -83,7 +84,7 @@ void OLinkNestedStruct2Interface::setProp2(const NestedStruct2& prop2)
 
 void OLinkNestedStruct2Interface::setProp2Local(const NestedStruct2& prop2)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if (m_prop2 != prop2) {
         m_prop2 = prop2;
         emit prop2Changed(prop2);
@@ -97,7 +98,7 @@ NestedStruct2 OLinkNestedStruct2Interface::prop2() const
 
 NestedStruct1 OLinkNestedStruct2Interface::func1(const NestedStruct1& param1)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return NestedStruct1();
     }
@@ -112,7 +113,7 @@ NestedStruct1 OLinkNestedStruct2Interface::func1(const NestedStruct1& param1)
 
 QtPromise::QPromise<NestedStruct1> OLinkNestedStruct2Interface::func1Async(const NestedStruct1& param1)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QtPromise::QPromise<NestedStruct1>::reject("not initialized");
     }
@@ -129,7 +130,7 @@ QtPromise::QPromise<NestedStruct1> OLinkNestedStruct2Interface::func1Async(const
 
 NestedStruct1 OLinkNestedStruct2Interface::func2(const NestedStruct1& param1, const NestedStruct2& param2)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return NestedStruct1();
     }
@@ -144,7 +145,7 @@ NestedStruct1 OLinkNestedStruct2Interface::func2(const NestedStruct1& param1, co
 
 QtPromise::QPromise<NestedStruct1> OLinkNestedStruct2Interface::func2Async(const NestedStruct1& param1, const NestedStruct2& param2)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QtPromise::QPromise<NestedStruct1>::reject("not initialized");
     }
@@ -167,7 +168,8 @@ std::string OLinkNestedStruct2Interface::olinkObjectName()
 
 void OLinkNestedStruct2Interface::olinkOnSignal(const std::string& signalId, const nlohmann::json& args)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(signalId);
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+    AG_LOG_DEBUG(signalId);
     auto signalName = Name::getMemberName(signalId);
     if(signalName == "sig1") {
         emit sig1(args[0].get<NestedStruct1>());   
@@ -181,13 +183,15 @@ void OLinkNestedStruct2Interface::olinkOnSignal(const std::string& signalId, con
 
 void OLinkNestedStruct2Interface::olinkOnPropertyChanged(const std::string& propertyId, const nlohmann::json& value)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(propertyId);
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+    AG_LOG_DEBUG(propertyId);
     std::string propertyName = Name::getMemberName(propertyId);
     applyState({ {propertyName, value} });
 }
 void OLinkNestedStruct2Interface::olinkOnInit(const std::string& objectId, const nlohmann::json& props, IClientNode *node)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
+    AG_LOG_INFO(Q_FUNC_INFO);
+    AG_LOG_INFO(objectId);
     m_isReady = true;
     m_node = node;
     applyState(props);
@@ -196,7 +200,7 @@ void OLinkNestedStruct2Interface::olinkOnInit(const std::string& objectId, const
 
 void OLinkNestedStruct2Interface::olinkOnRelease()
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_INFO(Q_FUNC_INFO);
     m_isReady = false;
     m_node = nullptr;
 }

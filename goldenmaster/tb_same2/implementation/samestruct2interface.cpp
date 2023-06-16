@@ -62,13 +62,11 @@ Struct2 SameStruct2Interface::prop2() const
 
 Struct1 SameStruct2Interface::func1(const Struct1& param1)
 {
-    qDebug() << Q_FUNC_INFO;
     return Struct1();
 }
 
 Struct1 SameStruct2Interface::func2(const Struct1& param1, const Struct2& param2)
 {
-    qDebug() << Q_FUNC_INFO;
     return Struct1();
 }
 } //namespace tb_same2

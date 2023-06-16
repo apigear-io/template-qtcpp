@@ -48,7 +48,6 @@ Enum1::Enum1Enum SameEnum1Interface::prop1() const
 
 Enum1::Enum1Enum SameEnum1Interface::func1(Enum1::Enum1Enum param1)
 {
-    qDebug() << Q_FUNC_INFO;
     return Enum1::value1;
 }
 } //namespace tb_same1

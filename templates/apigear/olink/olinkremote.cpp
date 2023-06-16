@@ -4,6 +4,8 @@
 #include "olink/remotenode.h"
 #include <memory>
 
+#include"../utilities/logger.h"
+
 using namespace ApiGear::ObjectLink;
 
 OLinkRemote::OLinkRemote(RemoteRegistry& registry, QWebSocket* socket)
@@ -21,7 +23,8 @@ OLinkRemote::OLinkRemote(RemoteRegistry& registry, QWebSocket* socket)
 
 void OLinkRemote::writeMessage(const QString &msg)
 {
-    qDebug() << Q_FUNC_INFO << msg;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+    AG_LOG_DEBUG(msg);
     if(m_socket) {
         m_socket->sendTextMessage(msg);
     }
@@ -29,13 +32,13 @@ void OLinkRemote::writeMessage(const QString &msg)
 
 void OLinkRemote::handleMessage(const QString &msg)
 {
-    qDebug() << Q_FUNC_INFO << msg;
-
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+    AG_LOG_DEBUG(msg);
     m_node->handleMessage(msg.toStdString());
 }
 
 void OLinkRemote::socketDisconnected()
 {
-    qDebug() << "Client disconnected, connection closed";
+    AG_LOG_INFO("Client disconnected, connection closed");
     this->deleteLater();
 }

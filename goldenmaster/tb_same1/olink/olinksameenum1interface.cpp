@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "tb_same1/api/json.adapter.h"
 
 #include "olink/iclientnode.h"
+#include "utilities/logger.h"
 
 #include <QtCore>
 
@@ -34,12 +35,12 @@ OLinkSameEnum1Interface::OLinkSameEnum1Interface(QObject *parent)
     , m_isReady(false)
     , m_node(nullptr)
 {        
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
 }
 
 void OLinkSameEnum1Interface::applyState(const nlohmann::json& fields) 
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(fields.contains("prop1")) {
         setProp1Local(fields["prop1"].get<Enum1::Enum1Enum>());
     }
@@ -47,7 +48,7 @@ void OLinkSameEnum1Interface::applyState(const nlohmann::json& fields)
 
 void OLinkSameEnum1Interface::setProp1(Enum1::Enum1Enum prop1)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return;
     }
@@ -56,7 +57,7 @@ void OLinkSameEnum1Interface::setProp1(Enum1::Enum1Enum prop1)
 
 void OLinkSameEnum1Interface::setProp1Local(Enum1::Enum1Enum prop1)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if (m_prop1 != prop1) {
         m_prop1 = prop1;
         emit prop1Changed(prop1);
@@ -70,7 +71,7 @@ Enum1::Enum1Enum OLinkSameEnum1Interface::prop1() const
 
 Enum1::Enum1Enum OLinkSameEnum1Interface::func1(Enum1::Enum1Enum param1)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return Enum1::value1;
     }
@@ -85,7 +86,7 @@ Enum1::Enum1Enum OLinkSameEnum1Interface::func1(Enum1::Enum1Enum param1)
 
 QtPromise::QPromise<Enum1::Enum1Enum> OLinkSameEnum1Interface::func1Async(Enum1::Enum1Enum param1)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QtPromise::QPromise<Enum1::Enum1Enum>::reject("not initialized");
     }
@@ -108,7 +109,8 @@ std::string OLinkSameEnum1Interface::olinkObjectName()
 
 void OLinkSameEnum1Interface::olinkOnSignal(const std::string& signalId, const nlohmann::json& args)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(signalId);
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+    AG_LOG_DEBUG(signalId);
     auto signalName = Name::getMemberName(signalId);
     if(signalName == "sig1") {
         emit sig1(args[0].get<Enum1::Enum1Enum>());   
@@ -118,13 +120,15 @@ void OLinkSameEnum1Interface::olinkOnSignal(const std::string& signalId, const n
 
 void OLinkSameEnum1Interface::olinkOnPropertyChanged(const std::string& propertyId, const nlohmann::json& value)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(propertyId);
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+    AG_LOG_DEBUG(propertyId);
     std::string propertyName = Name::getMemberName(propertyId);
     applyState({ {propertyName, value} });
 }
 void OLinkSameEnum1Interface::olinkOnInit(const std::string& objectId, const nlohmann::json& props, IClientNode *node)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
+    AG_LOG_INFO(Q_FUNC_INFO);
+    AG_LOG_INFO(objectId);
     m_isReady = true;
     m_node = node;
     applyState(props);
@@ -133,7 +137,7 @@ void OLinkSameEnum1Interface::olinkOnInit(const std::string& objectId, const nlo
 
 void OLinkSameEnum1Interface::olinkOnRelease()
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_INFO(Q_FUNC_INFO);
     m_isReady = false;
     m_node = nullptr;
 }

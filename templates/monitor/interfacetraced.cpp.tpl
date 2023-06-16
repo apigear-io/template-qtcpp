@@ -4,15 +4,17 @@
 {{- $class := printf "%sTraced" $interfaceName }}
 #include "{{lower .Interface.Name}}traced.h"
 #include "{{snake .Module.Name}}/monitor/agent.h"
+#include "utilities/logger.h"
 
 namespace {{ snake .Module.Name }} {
 
+const std::string noObjectToTraceLogInfo = " object to trace is invalid.";
 
 {{$class}}::{{$class}}(std::shared_ptr<{{$interfaceClass}}> impl)
     :m_impl(impl)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
 
@@ -40,7 +42,7 @@ namespace {{ snake .Module.Name }} {
 {{qtReturn "" $operation.Return }} {{$class}}::{{lower1 $operation.Name}}({{qtParams "" $operation.Params}}) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {{ if(not ($operation.Return.IsVoid)) }} {} {{ end }};
     }
     {{$interfaceName}}Agent::trace_{{$operation.Name}}(this{{- if (len $operation.Params) }},{{ end}} {{qtVars $operation.Params}});
@@ -53,7 +55,7 @@ namespace {{ snake .Module.Name }} {
 void {{$class}}::set{{Camel $property.Name}}({{qtParam "" $property}})
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     {{$interfaceName}}Agent::trace_state(this);
@@ -62,7 +64,7 @@ void {{$class}}::set{{Camel $property.Name}}({{qtParam "" $property}})
 {{qtReturn "" $property}} {{$class}}::{{$property.Name}}() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->{{$property.Name}}();

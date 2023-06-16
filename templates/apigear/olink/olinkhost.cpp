@@ -25,6 +25,7 @@
 
 #include "olinkremote.h"
 #include "olink/remoteregistry.h"
+#include "../utilities/logger.h"
 
 using namespace ApiGear::ObjectLink;
 
@@ -44,16 +45,16 @@ OLinkHost::~OLinkHost()
 
 void OLinkHost::listen(const QString& host, int port)
 {
-    qDebug() << "wss.listen()";
+    AG_LOG_INFO("wss.listen ");
     m_wss->listen(QHostAddress(host), quint16(port));
-    qDebug() << m_wss->serverAddress() << m_wss->serverPort();
+    AG_LOG_INFO(m_wss->serverAddress().toString().toStdString() + ":" + std::to_string(m_wss->serverPort()));
     connect(m_wss, &QWebSocketServer::newConnection, this, &OLinkHost::onNewConnection);
     connect(m_wss, &QWebSocketServer::closed, this, &OLinkHost::onClosed);
 }
 
 void OLinkHost::onNewConnection()
 {
-    qDebug() << "wss.newConnection()";
+    AG_LOG_INFO("wss.newConnection");
     auto ws = m_wss->nextPendingConnection();
     OLinkRemote* connectionUser = new OLinkRemote(m_registry, ws);
     ws->setParent(connectionUser);
@@ -63,7 +64,7 @@ void OLinkHost::onNewConnection()
 
 void OLinkHost::onClosed()
 {
-    qDebug() << "wss.closed()";
+    AG_LOG_INFO("wss.closed");
 }
 
 RemoteRegistry &OLinkHost::registry()

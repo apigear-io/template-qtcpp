@@ -1,15 +1,17 @@
 
 #include "nestedstruct3interfacetraced.h"
 #include "testbed2/monitor/agent.h"
+#include "utilities/logger.h"
 
 namespace testbed2 {
 
+const std::string noObjectToTraceLogInfo = " object to trace is invalid.";
 
 NestedStruct3InterfaceTraced::NestedStruct3InterfaceTraced(std::shared_ptr<AbstractNestedStruct3Interface> impl)
     :m_impl(impl)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
 
@@ -32,7 +34,7 @@ NestedStruct3InterfaceTraced::NestedStruct3InterfaceTraced(std::shared_ptr<Abstr
 NestedStruct1 NestedStruct3InterfaceTraced::func1(const NestedStruct1& param1) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     NestedStruct3InterfaceAgent::trace_func1(this, param1);
@@ -43,7 +45,7 @@ NestedStruct1 NestedStruct3InterfaceTraced::func1(const NestedStruct1& param1)
 NestedStruct1 NestedStruct3InterfaceTraced::func2(const NestedStruct1& param1, const NestedStruct2& param2) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     NestedStruct3InterfaceAgent::trace_func2(this, param1, param2);
@@ -54,7 +56,7 @@ NestedStruct1 NestedStruct3InterfaceTraced::func2(const NestedStruct1& param1, c
 NestedStruct1 NestedStruct3InterfaceTraced::func3(const NestedStruct1& param1, const NestedStruct2& param2, const NestedStruct3& param3) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     NestedStruct3InterfaceAgent::trace_func3(this, param1, param2, param3);
@@ -64,7 +66,7 @@ NestedStruct1 NestedStruct3InterfaceTraced::func3(const NestedStruct1& param1, c
 void NestedStruct3InterfaceTraced::setProp1(const NestedStruct1& prop1)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     NestedStruct3InterfaceAgent::trace_state(this);
@@ -73,7 +75,7 @@ void NestedStruct3InterfaceTraced::setProp1(const NestedStruct1& prop1)
 NestedStruct1 NestedStruct3InterfaceTraced::prop1() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->prop1();
@@ -82,7 +84,7 @@ NestedStruct1 NestedStruct3InterfaceTraced::prop1() const
 void NestedStruct3InterfaceTraced::setProp2(const NestedStruct2& prop2)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     NestedStruct3InterfaceAgent::trace_state(this);
@@ -91,7 +93,7 @@ void NestedStruct3InterfaceTraced::setProp2(const NestedStruct2& prop2)
 NestedStruct2 NestedStruct3InterfaceTraced::prop2() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->prop2();
@@ -100,7 +102,7 @@ NestedStruct2 NestedStruct3InterfaceTraced::prop2() const
 void NestedStruct3InterfaceTraced::setProp3(const NestedStruct3& prop3)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     NestedStruct3InterfaceAgent::trace_state(this);
@@ -109,7 +111,7 @@ void NestedStruct3InterfaceTraced::setProp3(const NestedStruct3& prop3)
 NestedStruct3 NestedStruct3InterfaceTraced::prop3() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->prop3();

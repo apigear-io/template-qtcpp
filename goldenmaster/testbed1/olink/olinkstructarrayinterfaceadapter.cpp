@@ -25,6 +25,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "olink/remoteregistry.h"
 #include "olink/iremotenode.h"
+#include "utilities/logger.h"
 
 #include <QtCore>
 
@@ -157,7 +158,8 @@ std::string OLinkStructArrayInterfaceAdapter::olinkObjectName() {
 }
 
 json OLinkStructArrayInterfaceAdapter::olinkInvoke(const std::string& methodId, const nlohmann::json& args){
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(methodId);
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+    AG_LOG_DEBUG(methodId);
     std::string path = Name::getMemberName(methodId);
     if(path == "funcBool") {
         const QList<StructBool>& paramBool = args.at(0);
@@ -183,7 +185,8 @@ json OLinkStructArrayInterfaceAdapter::olinkInvoke(const std::string& methodId, 
 }
 
 void OLinkStructArrayInterfaceAdapter::olinkSetProperty(const std::string& propertyId, const nlohmann::json& value){
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(propertyId);
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+    AG_LOG_DEBUG(propertyId);
     std::string path = Name::getMemberName(propertyId);
     if(path == "propBool") {
         QList<StructBool> propBool = value.get<QList<StructBool>>();
@@ -204,12 +207,14 @@ void OLinkStructArrayInterfaceAdapter::olinkSetProperty(const std::string& prope
 }
 
 void OLinkStructArrayInterfaceAdapter::olinkLinked(const std::string& objectId, IRemoteNode *node) {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
+    AG_LOG_INFO(Q_FUNC_INFO);
+    AG_LOG_INFO(objectId);
 }
 
 void OLinkStructArrayInterfaceAdapter::olinkUnlinked(const std::string& objectId)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
+    AG_LOG_INFO(Q_FUNC_INFO);
+    AG_LOG_INFO(objectId);
 }
 
 json OLinkStructArrayInterfaceAdapter::olinkCollectProperties()

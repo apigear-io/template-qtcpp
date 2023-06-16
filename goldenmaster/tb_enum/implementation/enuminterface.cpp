@@ -90,25 +90,21 @@ Enum3::Enum3Enum EnumInterface::prop3() const
 
 Enum0::Enum0Enum EnumInterface::func0(Enum0::Enum0Enum param0)
 {
-    qDebug() << Q_FUNC_INFO;
     return Enum0::value0;
 }
 
 Enum1::Enum1Enum EnumInterface::func1(Enum1::Enum1Enum param1)
 {
-    qDebug() << Q_FUNC_INFO;
     return Enum1::value1;
 }
 
 Enum2::Enum2Enum EnumInterface::func2(Enum2::Enum2Enum param2)
 {
-    qDebug() << Q_FUNC_INFO;
     return Enum2::value2;
 }
 
 Enum3::Enum3Enum EnumInterface::func3(Enum3::Enum3Enum param3)
 {
-    qDebug() << Q_FUNC_INFO;
     return Enum3::value3;
 }
 } //namespace tb_enum

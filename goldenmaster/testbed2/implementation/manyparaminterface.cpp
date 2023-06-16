@@ -90,25 +90,21 @@ int ManyParamInterface::prop4() const
 
 int ManyParamInterface::func1(int param1)
 {
-    qDebug() << Q_FUNC_INFO;
     return 0;
 }
 
 int ManyParamInterface::func2(int param1, int param2)
 {
-    qDebug() << Q_FUNC_INFO;
     return 0;
 }
 
 int ManyParamInterface::func3(int param1, int param2, int param3)
 {
-    qDebug() << Q_FUNC_INFO;
     return 0;
 }
 
 int ManyParamInterface::func4(int param1, int param2, int param3, int param4)
 {
-    qDebug() << Q_FUNC_INFO;
     return 0;
 }
 } //namespace testbed2

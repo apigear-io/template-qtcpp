@@ -12,6 +12,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+add_subdirectory(utilities)
 add_subdirectory(olink)
 add_subdirectory(monitor)
 

@@ -25,6 +25,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "olink/remoteregistry.h"
 #include "olink/iremotenode.h"
+#include "utilities/logger.h"
 
 #include <QtCore>
 
@@ -157,7 +158,8 @@ std::string OLinkEnumInterfaceAdapter::olinkObjectName() {
 }
 
 json OLinkEnumInterfaceAdapter::olinkInvoke(const std::string& methodId, const nlohmann::json& args){
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(methodId);
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+    AG_LOG_DEBUG(methodId);
     std::string path = Name::getMemberName(methodId);
     if(path == "func0") {
         const Enum0::Enum0Enum& param0 = args.at(0);
@@ -183,7 +185,8 @@ json OLinkEnumInterfaceAdapter::olinkInvoke(const std::string& methodId, const n
 }
 
 void OLinkEnumInterfaceAdapter::olinkSetProperty(const std::string& propertyId, const nlohmann::json& value){
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(propertyId);
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+    AG_LOG_DEBUG(propertyId);
     std::string path = Name::getMemberName(propertyId);
     if(path == "prop0") {
         Enum0::Enum0Enum prop0 = value.get<Enum0::Enum0Enum>();
@@ -204,12 +207,14 @@ void OLinkEnumInterfaceAdapter::olinkSetProperty(const std::string& propertyId, 
 }
 
 void OLinkEnumInterfaceAdapter::olinkLinked(const std::string& objectId, IRemoteNode *node) {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
+    AG_LOG_INFO(Q_FUNC_INFO);
+    AG_LOG_INFO(objectId);
 }
 
 void OLinkEnumInterfaceAdapter::olinkUnlinked(const std::string& objectId)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
+    AG_LOG_INFO(Q_FUNC_INFO);
+    AG_LOG_INFO(objectId);
 }
 
 json OLinkEnumInterfaceAdapter::olinkCollectProperties()

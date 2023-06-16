@@ -1,15 +1,17 @@
 
 #include "samestruct2interfacetraced.h"
 #include "tb_same2/monitor/agent.h"
+#include "utilities/logger.h"
 
 namespace tb_same2 {
 
+const std::string noObjectToTraceLogInfo = " object to trace is invalid.";
 
 SameStruct2InterfaceTraced::SameStruct2InterfaceTraced(std::shared_ptr<AbstractSameStruct2Interface> impl)
     :m_impl(impl)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
 
@@ -29,7 +31,7 @@ SameStruct2InterfaceTraced::SameStruct2InterfaceTraced(std::shared_ptr<AbstractS
 Struct1 SameStruct2InterfaceTraced::func1(const Struct1& param1) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     SameStruct2InterfaceAgent::trace_func1(this, param1);
@@ -40,7 +42,7 @@ Struct1 SameStruct2InterfaceTraced::func1(const Struct1& param1)
 Struct1 SameStruct2InterfaceTraced::func2(const Struct1& param1, const Struct2& param2) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     SameStruct2InterfaceAgent::trace_func2(this, param1, param2);
@@ -50,7 +52,7 @@ Struct1 SameStruct2InterfaceTraced::func2(const Struct1& param1, const Struct2& 
 void SameStruct2InterfaceTraced::setProp1(const Struct2& prop1)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     SameStruct2InterfaceAgent::trace_state(this);
@@ -59,7 +61,7 @@ void SameStruct2InterfaceTraced::setProp1(const Struct2& prop1)
 Struct2 SameStruct2InterfaceTraced::prop1() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->prop1();
@@ -68,7 +70,7 @@ Struct2 SameStruct2InterfaceTraced::prop1() const
 void SameStruct2InterfaceTraced::setProp2(const Struct2& prop2)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     SameStruct2InterfaceAgent::trace_state(this);
@@ -77,7 +79,7 @@ void SameStruct2InterfaceTraced::setProp2(const Struct2& prop2)
 Struct2 SameStruct2InterfaceTraced::prop2() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->prop2();

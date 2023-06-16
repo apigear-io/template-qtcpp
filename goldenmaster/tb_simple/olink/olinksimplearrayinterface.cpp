@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "tb_simple/api/json.adapter.h"
 
 #include "olink/iclientnode.h"
+#include "utilities/logger.h"
 
 #include <QtCore>
 
@@ -41,12 +42,12 @@ OLinkSimpleArrayInterface::OLinkSimpleArrayInterface(QObject *parent)
     , m_isReady(false)
     , m_node(nullptr)
 {        
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
 }
 
 void OLinkSimpleArrayInterface::applyState(const nlohmann::json& fields) 
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(fields.contains("propBool")) {
         setPropBoolLocal(fields["propBool"].get<QList<bool>>());
     }
@@ -75,7 +76,7 @@ void OLinkSimpleArrayInterface::applyState(const nlohmann::json& fields)
 
 void OLinkSimpleArrayInterface::setPropBool(const QList<bool>& propBool)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return;
     }
@@ -84,7 +85,7 @@ void OLinkSimpleArrayInterface::setPropBool(const QList<bool>& propBool)
 
 void OLinkSimpleArrayInterface::setPropBoolLocal(const QList<bool>& propBool)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if (m_propBool != propBool) {
         m_propBool = propBool;
         emit propBoolChanged(propBool);
@@ -98,7 +99,7 @@ QList<bool> OLinkSimpleArrayInterface::propBool() const
 
 void OLinkSimpleArrayInterface::setPropInt(const QList<int>& propInt)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return;
     }
@@ -107,7 +108,7 @@ void OLinkSimpleArrayInterface::setPropInt(const QList<int>& propInt)
 
 void OLinkSimpleArrayInterface::setPropIntLocal(const QList<int>& propInt)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if (m_propInt != propInt) {
         m_propInt = propInt;
         emit propIntChanged(propInt);
@@ -121,7 +122,7 @@ QList<int> OLinkSimpleArrayInterface::propInt() const
 
 void OLinkSimpleArrayInterface::setPropInt32(const QList<qint32>& propInt32)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return;
     }
@@ -130,7 +131,7 @@ void OLinkSimpleArrayInterface::setPropInt32(const QList<qint32>& propInt32)
 
 void OLinkSimpleArrayInterface::setPropInt32Local(const QList<qint32>& propInt32)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if (m_propInt32 != propInt32) {
         m_propInt32 = propInt32;
         emit propInt32Changed(propInt32);
@@ -144,7 +145,7 @@ QList<qint32> OLinkSimpleArrayInterface::propInt32() const
 
 void OLinkSimpleArrayInterface::setPropInt64(const QList<qint64>& propInt64)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return;
     }
@@ -153,7 +154,7 @@ void OLinkSimpleArrayInterface::setPropInt64(const QList<qint64>& propInt64)
 
 void OLinkSimpleArrayInterface::setPropInt64Local(const QList<qint64>& propInt64)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if (m_propInt64 != propInt64) {
         m_propInt64 = propInt64;
         emit propInt64Changed(propInt64);
@@ -167,7 +168,7 @@ QList<qint64> OLinkSimpleArrayInterface::propInt64() const
 
 void OLinkSimpleArrayInterface::setPropFloat(const QList<qreal>& propFloat)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return;
     }
@@ -176,7 +177,7 @@ void OLinkSimpleArrayInterface::setPropFloat(const QList<qreal>& propFloat)
 
 void OLinkSimpleArrayInterface::setPropFloatLocal(const QList<qreal>& propFloat)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if (m_propFloat != propFloat) {
         m_propFloat = propFloat;
         emit propFloatChanged(propFloat);
@@ -190,7 +191,7 @@ QList<qreal> OLinkSimpleArrayInterface::propFloat() const
 
 void OLinkSimpleArrayInterface::setPropFloat32(const QList<float>& propFloat32)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return;
     }
@@ -199,7 +200,7 @@ void OLinkSimpleArrayInterface::setPropFloat32(const QList<float>& propFloat32)
 
 void OLinkSimpleArrayInterface::setPropFloat32Local(const QList<float>& propFloat32)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if (m_propFloat32 != propFloat32) {
         m_propFloat32 = propFloat32;
         emit propFloat32Changed(propFloat32);
@@ -213,7 +214,7 @@ QList<float> OLinkSimpleArrayInterface::propFloat32() const
 
 void OLinkSimpleArrayInterface::setPropFloat64(const QList<double>& propFloat64)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return;
     }
@@ -222,7 +223,7 @@ void OLinkSimpleArrayInterface::setPropFloat64(const QList<double>& propFloat64)
 
 void OLinkSimpleArrayInterface::setPropFloat64Local(const QList<double>& propFloat64)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if (m_propFloat64 != propFloat64) {
         m_propFloat64 = propFloat64;
         emit propFloat64Changed(propFloat64);
@@ -236,7 +237,7 @@ QList<double> OLinkSimpleArrayInterface::propFloat64() const
 
 void OLinkSimpleArrayInterface::setPropString(const QList<QString>& propString)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return;
     }
@@ -245,7 +246,7 @@ void OLinkSimpleArrayInterface::setPropString(const QList<QString>& propString)
 
 void OLinkSimpleArrayInterface::setPropStringLocal(const QList<QString>& propString)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if (m_propString != propString) {
         m_propString = propString;
         emit propStringChanged(propString);
@@ -259,7 +260,7 @@ QList<QString> OLinkSimpleArrayInterface::propString() const
 
 QList<bool> OLinkSimpleArrayInterface::funcBool(const QList<bool>& paramBool)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QList<bool>();
     }
@@ -274,7 +275,7 @@ QList<bool> OLinkSimpleArrayInterface::funcBool(const QList<bool>& paramBool)
 
 QtPromise::QPromise<QList<bool>> OLinkSimpleArrayInterface::funcBoolAsync(const QList<bool>& paramBool)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QtPromise::QPromise<QList<bool>>::reject("not initialized");
     }
@@ -291,7 +292,7 @@ QtPromise::QPromise<QList<bool>> OLinkSimpleArrayInterface::funcBoolAsync(const 
 
 QList<int> OLinkSimpleArrayInterface::funcInt(const QList<int>& paramInt)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QList<int>();
     }
@@ -306,7 +307,7 @@ QList<int> OLinkSimpleArrayInterface::funcInt(const QList<int>& paramInt)
 
 QtPromise::QPromise<QList<int>> OLinkSimpleArrayInterface::funcIntAsync(const QList<int>& paramInt)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QtPromise::QPromise<QList<int>>::reject("not initialized");
     }
@@ -323,7 +324,7 @@ QtPromise::QPromise<QList<int>> OLinkSimpleArrayInterface::funcIntAsync(const QL
 
 QList<qint32> OLinkSimpleArrayInterface::funcInt32(const QList<qint32>& paramInt32)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QList<qint32>();
     }
@@ -338,7 +339,7 @@ QList<qint32> OLinkSimpleArrayInterface::funcInt32(const QList<qint32>& paramInt
 
 QtPromise::QPromise<QList<qint32>> OLinkSimpleArrayInterface::funcInt32Async(const QList<qint32>& paramInt32)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QtPromise::QPromise<QList<qint32>>::reject("not initialized");
     }
@@ -355,7 +356,7 @@ QtPromise::QPromise<QList<qint32>> OLinkSimpleArrayInterface::funcInt32Async(con
 
 QList<qint64> OLinkSimpleArrayInterface::funcInt64(const QList<qint64>& paramInt64)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QList<qint64>();
     }
@@ -370,7 +371,7 @@ QList<qint64> OLinkSimpleArrayInterface::funcInt64(const QList<qint64>& paramInt
 
 QtPromise::QPromise<QList<qint64>> OLinkSimpleArrayInterface::funcInt64Async(const QList<qint64>& paramInt64)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QtPromise::QPromise<QList<qint64>>::reject("not initialized");
     }
@@ -387,7 +388,7 @@ QtPromise::QPromise<QList<qint64>> OLinkSimpleArrayInterface::funcInt64Async(con
 
 QList<qreal> OLinkSimpleArrayInterface::funcFloat(const QList<qreal>& paramFloat)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QList<qreal>();
     }
@@ -402,7 +403,7 @@ QList<qreal> OLinkSimpleArrayInterface::funcFloat(const QList<qreal>& paramFloat
 
 QtPromise::QPromise<QList<qreal>> OLinkSimpleArrayInterface::funcFloatAsync(const QList<qreal>& paramFloat)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QtPromise::QPromise<QList<qreal>>::reject("not initialized");
     }
@@ -419,7 +420,7 @@ QtPromise::QPromise<QList<qreal>> OLinkSimpleArrayInterface::funcFloatAsync(cons
 
 QList<float> OLinkSimpleArrayInterface::funcFloat32(const QList<float>& paramFloat32)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QList<float>();
     }
@@ -434,7 +435,7 @@ QList<float> OLinkSimpleArrayInterface::funcFloat32(const QList<float>& paramFlo
 
 QtPromise::QPromise<QList<float>> OLinkSimpleArrayInterface::funcFloat32Async(const QList<float>& paramFloat32)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QtPromise::QPromise<QList<float>>::reject("not initialized");
     }
@@ -451,7 +452,7 @@ QtPromise::QPromise<QList<float>> OLinkSimpleArrayInterface::funcFloat32Async(co
 
 QList<double> OLinkSimpleArrayInterface::funcFloat64(const QList<double>& paramFloat)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QList<double>();
     }
@@ -466,7 +467,7 @@ QList<double> OLinkSimpleArrayInterface::funcFloat64(const QList<double>& paramF
 
 QtPromise::QPromise<QList<double>> OLinkSimpleArrayInterface::funcFloat64Async(const QList<double>& paramFloat)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QtPromise::QPromise<QList<double>>::reject("not initialized");
     }
@@ -483,7 +484,7 @@ QtPromise::QPromise<QList<double>> OLinkSimpleArrayInterface::funcFloat64Async(c
 
 QList<QString> OLinkSimpleArrayInterface::funcString(const QList<QString>& paramString)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QList<QString>();
     }
@@ -498,7 +499,7 @@ QList<QString> OLinkSimpleArrayInterface::funcString(const QList<QString>& param
 
 QtPromise::QPromise<QList<QString>> OLinkSimpleArrayInterface::funcStringAsync(const QList<QString>& paramString)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QtPromise::QPromise<QList<QString>>::reject("not initialized");
     }
@@ -521,7 +522,8 @@ std::string OLinkSimpleArrayInterface::olinkObjectName()
 
 void OLinkSimpleArrayInterface::olinkOnSignal(const std::string& signalId, const nlohmann::json& args)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(signalId);
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+    AG_LOG_DEBUG(signalId);
     auto signalName = Name::getMemberName(signalId);
     if(signalName == "sigBool") {
         emit sigBool(args[0].get<QList<bool>>());   
@@ -559,13 +561,15 @@ void OLinkSimpleArrayInterface::olinkOnSignal(const std::string& signalId, const
 
 void OLinkSimpleArrayInterface::olinkOnPropertyChanged(const std::string& propertyId, const nlohmann::json& value)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(propertyId);
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+    AG_LOG_DEBUG(propertyId);
     std::string propertyName = Name::getMemberName(propertyId);
     applyState({ {propertyName, value} });
 }
 void OLinkSimpleArrayInterface::olinkOnInit(const std::string& objectId, const nlohmann::json& props, IClientNode *node)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
+    AG_LOG_INFO(Q_FUNC_INFO);
+    AG_LOG_INFO(objectId);
     m_isReady = true;
     m_node = node;
     applyState(props);
@@ -574,7 +578,7 @@ void OLinkSimpleArrayInterface::olinkOnInit(const std::string& objectId, const n
 
 void OLinkSimpleArrayInterface::olinkOnRelease()
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_INFO(Q_FUNC_INFO);
     m_isReady = false;
     m_node = nullptr;
 }

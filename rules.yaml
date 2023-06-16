@@ -123,6 +123,18 @@ features:
              raw: true
            - source: "apigear/monitor/agentclient.cpp"
              raw: true
+           - source: "apigear/utilities/CMakeLists.txt"
+             raw: true
+           - source: "apigear/utilities/logger.h"
+             raw: true
+           - source: "apigear/utilities/logger.cpp"
+             raw: true
+           - source: "apigear/utilities/tests/CMakeLists.txt"
+             raw: true
+           - source: "apigear/utilities/tests/logger.test.cpp"
+             raw: true
+           - source: "apigear/utilities/tests/test_main.cpp"
+             raw: true
            - source: apigear/olink/CMakeLists.txt
              raw: true
            - source: apigear/olink/olink_common.h

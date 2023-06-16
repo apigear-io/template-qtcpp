@@ -90,25 +90,21 @@ StructString StructInterface::propString() const
 
 StructBool StructInterface::funcBool(const StructBool& paramBool)
 {
-    qDebug() << Q_FUNC_INFO;
     return StructBool();
 }
 
 StructBool StructInterface::funcInt(const StructInt& paramInt)
 {
-    qDebug() << Q_FUNC_INFO;
     return StructBool();
 }
 
 StructFloat StructInterface::funcFloat(const StructFloat& paramFloat)
 {
-    qDebug() << Q_FUNC_INFO;
     return StructFloat();
 }
 
 StructString StructInterface::funcString(const StructString& paramString)
 {
-    qDebug() << Q_FUNC_INFO;
     return StructString();
 }
 } //namespace testbed1

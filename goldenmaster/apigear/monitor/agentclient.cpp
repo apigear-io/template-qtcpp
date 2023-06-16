@@ -1,5 +1,5 @@
 #include "agentclient.h"
-
+#include "../utilities/logger.h"
 #include <QtNetwork>
 
 using namespace ApiGear::Monitor;
@@ -155,7 +155,7 @@ void AgentClient::doProcess()
     while (!m_queue.isEmpty()) {
         const QJsonObject &obj = m_queue.dequeue();
         const QByteArray &data = QJsonDocument(obj).toJson();
-        qDebug() << qPrintable(data);
+        AG_LOG_DEBUG(qPrintable(data));
         m_socket->sendBinaryMessage(data);
     }
 }
@@ -185,6 +185,6 @@ void AgentClient::doSendTrace()
         return;
     }
     const QByteArray& data = QJsonDocument(batch).toJson(QJsonDocument::Compact);
-    qDebug() << qPrintable(data);
+    AG_LOG_DEBUG(qPrintable(data));
     m_http->post(request, data);
 }

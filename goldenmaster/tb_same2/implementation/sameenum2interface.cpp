@@ -62,13 +62,11 @@ Enum2::Enum2Enum SameEnum2Interface::prop2() const
 
 Enum1::Enum1Enum SameEnum2Interface::func1(Enum1::Enum1Enum param1)
 {
-    qDebug() << Q_FUNC_INFO;
     return Enum1::value1;
 }
 
 Enum1::Enum1Enum SameEnum2Interface::func2(Enum1::Enum1Enum param1, Enum2::Enum2Enum param2)
 {
-    qDebug() << Q_FUNC_INFO;
     return Enum1::value1;
 }
 } //namespace tb_same2

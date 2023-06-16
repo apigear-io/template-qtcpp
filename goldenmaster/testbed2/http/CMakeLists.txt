@@ -19,4 +19,4 @@ set (TESTBED2_HTTP_SOURCES
 
 add_library(testbed2_http STATIC ${TESTBED2_HTTP_SOURCES})
 target_include_directories(testbed2_http PRIVATE ../testbed2)
-target_link_libraries(testbed2_http PUBLIC Qt5::Network testbed2_api)
+target_link_libraries(testbed2_http PUBLIC apigear::utilities_qt Qt5::Network testbed2_api)

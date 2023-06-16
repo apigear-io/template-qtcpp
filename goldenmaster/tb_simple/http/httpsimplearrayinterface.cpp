@@ -16,6 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "httpsimplearrayinterface.h"
+#include "apigear/utilities/logger.h"
 
 #include <QtQml>
 
@@ -145,89 +146,81 @@ QList<QString> HttpSimpleArrayInterface::propString() const
 
 QList<bool> HttpSimpleArrayInterface::funcBool(const QList<bool>& paramBool)
 {
-    qDebug() << Q_FUNC_INFO;
-
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     QJsonObject payload;
     payload["paramBool"] = QJsonValue::fromVariant(QVariant::fromValue< QList<bool> >(paramBool));
     QJsonObject reply = post("tb.simple/SimpleArrayInterface/funcBool", payload);
-    qDebug() << QJsonDocument(reply).toJson();
+    AG_LOG_DEBUG(qPrintable(QJsonDocument(reply).toJson()));
     return QList<bool>();
 }
 
 QList<int> HttpSimpleArrayInterface::funcInt(const QList<int>& paramInt)
 {
-    qDebug() << Q_FUNC_INFO;
-
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     QJsonObject payload;
     payload["paramInt"] = QJsonValue::fromVariant(QVariant::fromValue< QList<int> >(paramInt));
     QJsonObject reply = post("tb.simple/SimpleArrayInterface/funcInt", payload);
-    qDebug() << QJsonDocument(reply).toJson();
+    AG_LOG_DEBUG(qPrintable(QJsonDocument(reply).toJson()));
     return QList<int>();
 }
 
 QList<qint32> HttpSimpleArrayInterface::funcInt32(const QList<qint32>& paramInt32)
 {
-    qDebug() << Q_FUNC_INFO;
-
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     QJsonObject payload;
     payload["paramInt32"] = QJsonValue::fromVariant(QVariant::fromValue< QList<qint32> >(paramInt32));
     QJsonObject reply = post("tb.simple/SimpleArrayInterface/funcInt32", payload);
-    qDebug() << QJsonDocument(reply).toJson();
+    AG_LOG_DEBUG(qPrintable(QJsonDocument(reply).toJson()));
     return QList<qint32>();
 }
 
 QList<qint64> HttpSimpleArrayInterface::funcInt64(const QList<qint64>& paramInt64)
 {
-    qDebug() << Q_FUNC_INFO;
-
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     QJsonObject payload;
     payload["paramInt64"] = QJsonValue::fromVariant(QVariant::fromValue< QList<qint64> >(paramInt64));
     QJsonObject reply = post("tb.simple/SimpleArrayInterface/funcInt64", payload);
-    qDebug() << QJsonDocument(reply).toJson();
+    AG_LOG_DEBUG(qPrintable(QJsonDocument(reply).toJson()));
     return QList<qint64>();
 }
 
 QList<qreal> HttpSimpleArrayInterface::funcFloat(const QList<qreal>& paramFloat)
 {
-    qDebug() << Q_FUNC_INFO;
-
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     QJsonObject payload;
     payload["paramFloat"] = QJsonValue::fromVariant(QVariant::fromValue< QList<qreal> >(paramFloat));
     QJsonObject reply = post("tb.simple/SimpleArrayInterface/funcFloat", payload);
-    qDebug() << QJsonDocument(reply).toJson();
+    AG_LOG_DEBUG(qPrintable(QJsonDocument(reply).toJson()));
     return QList<qreal>();
 }
 
 QList<float> HttpSimpleArrayInterface::funcFloat32(const QList<float>& paramFloat32)
 {
-    qDebug() << Q_FUNC_INFO;
-
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     QJsonObject payload;
     payload["paramFloat32"] = QJsonValue::fromVariant(QVariant::fromValue< QList<float> >(paramFloat32));
     QJsonObject reply = post("tb.simple/SimpleArrayInterface/funcFloat32", payload);
-    qDebug() << QJsonDocument(reply).toJson();
+    AG_LOG_DEBUG(qPrintable(QJsonDocument(reply).toJson()));
     return QList<float>();
 }
 
 QList<double> HttpSimpleArrayInterface::funcFloat64(const QList<double>& paramFloat)
 {
-    qDebug() << Q_FUNC_INFO;
-
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     QJsonObject payload;
     payload["paramFloat"] = QJsonValue::fromVariant(QVariant::fromValue< QList<double> >(paramFloat));
     QJsonObject reply = post("tb.simple/SimpleArrayInterface/funcFloat64", payload);
-    qDebug() << QJsonDocument(reply).toJson();
+    AG_LOG_DEBUG(qPrintable(QJsonDocument(reply).toJson()));
     return QList<double>();
 }
 
 QList<QString> HttpSimpleArrayInterface::funcString(const QList<QString>& paramString)
 {
-    qDebug() << Q_FUNC_INFO;
-
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     QJsonObject payload;
     payload["paramString"] = QJsonValue::fromVariant(QVariant::fromValue< QList<QString> >(paramString));
     QJsonObject reply = post("tb.simple/SimpleArrayInterface/funcString", payload);
-    qDebug() << QJsonDocument(reply).toJson();
+    AG_LOG_DEBUG(qPrintable(QJsonDocument(reply).toJson()));
     return QList<QString>();
 }
 
@@ -238,14 +231,14 @@ QJsonObject HttpSimpleArrayInterface::post(const QString& path, const QJsonObjec
     request.setUrl(QUrl(QString("%1/%2").arg(address).arg(path)));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     const QByteArray& data = QJsonDocument(payload).toJson(QJsonDocument::Compact);
-    qDebug() << qPrintable(data);
+    AG_LOG_DEBUG( qPrintable(data));
     QNetworkReply* reply = m_network->post(request, data);
     // wait for finished signal
     QEventLoop loop;
     connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
     loop.exec();
     if(reply->error()) {
-        qDebug() << reply->errorString();
+        AG_LOG_ERROR(reply->errorString());
         return QJsonObject();
     }
     const QJsonObject &response = QJsonDocument::fromJson(reply->readAll()).object();

@@ -1,15 +1,17 @@
 
 #include "structinterfacetraced.h"
 #include "testbed1/monitor/agent.h"
+#include "utilities/logger.h"
 
 namespace testbed1 {
 
+const std::string noObjectToTraceLogInfo = " object to trace is invalid.";
 
 StructInterfaceTraced::StructInterfaceTraced(std::shared_ptr<AbstractStructInterface> impl)
     :m_impl(impl)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
 
@@ -35,7 +37,7 @@ StructInterfaceTraced::StructInterfaceTraced(std::shared_ptr<AbstractStructInter
 StructBool StructInterfaceTraced::funcBool(const StructBool& paramBool) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     StructInterfaceAgent::trace_funcBool(this, paramBool);
@@ -46,7 +48,7 @@ StructBool StructInterfaceTraced::funcBool(const StructBool& paramBool)
 StructBool StructInterfaceTraced::funcInt(const StructInt& paramInt) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     StructInterfaceAgent::trace_funcInt(this, paramInt);
@@ -57,7 +59,7 @@ StructBool StructInterfaceTraced::funcInt(const StructInt& paramInt)
 StructFloat StructInterfaceTraced::funcFloat(const StructFloat& paramFloat) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     StructInterfaceAgent::trace_funcFloat(this, paramFloat);
@@ -68,7 +70,7 @@ StructFloat StructInterfaceTraced::funcFloat(const StructFloat& paramFloat)
 StructString StructInterfaceTraced::funcString(const StructString& paramString) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     StructInterfaceAgent::trace_funcString(this, paramString);
@@ -78,7 +80,7 @@ StructString StructInterfaceTraced::funcString(const StructString& paramString)
 void StructInterfaceTraced::setPropBool(const StructBool& propBool)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     StructInterfaceAgent::trace_state(this);
@@ -87,7 +89,7 @@ void StructInterfaceTraced::setPropBool(const StructBool& propBool)
 StructBool StructInterfaceTraced::propBool() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->propBool();
@@ -96,7 +98,7 @@ StructBool StructInterfaceTraced::propBool() const
 void StructInterfaceTraced::setPropInt(const StructInt& propInt)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     StructInterfaceAgent::trace_state(this);
@@ -105,7 +107,7 @@ void StructInterfaceTraced::setPropInt(const StructInt& propInt)
 StructInt StructInterfaceTraced::propInt() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->propInt();
@@ -114,7 +116,7 @@ StructInt StructInterfaceTraced::propInt() const
 void StructInterfaceTraced::setPropFloat(const StructFloat& propFloat)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     StructInterfaceAgent::trace_state(this);
@@ -123,7 +125,7 @@ void StructInterfaceTraced::setPropFloat(const StructFloat& propFloat)
 StructFloat StructInterfaceTraced::propFloat() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->propFloat();
@@ -132,7 +134,7 @@ StructFloat StructInterfaceTraced::propFloat() const
 void StructInterfaceTraced::setPropString(const StructString& propString)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     StructInterfaceAgent::trace_state(this);
@@ -141,7 +143,7 @@ void StructInterfaceTraced::setPropString(const StructString& propString)
 StructString StructInterfaceTraced::propString() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->propString();

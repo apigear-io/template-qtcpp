@@ -146,55 +146,46 @@ QString SimpleInterface::propString() const
 
 void SimpleInterface::funcVoid()
 {
-    qDebug() << Q_FUNC_INFO;
     return;
 }
 
 bool SimpleInterface::funcBool(bool paramBool)
 {
-    qDebug() << Q_FUNC_INFO;
     return false;
 }
 
 int SimpleInterface::funcInt(int paramInt)
 {
-    qDebug() << Q_FUNC_INFO;
     return 0;
 }
 
 qint32 SimpleInterface::funcInt32(qint32 paramInt32)
 {
-    qDebug() << Q_FUNC_INFO;
     return 0;
 }
 
 qint64 SimpleInterface::funcInt64(qint64 paramInt64)
 {
-    qDebug() << Q_FUNC_INFO;
     return 0LL;
 }
 
 qreal SimpleInterface::funcFloat(qreal paramFloat)
 {
-    qDebug() << Q_FUNC_INFO;
     return 0.0f;
 }
 
 float SimpleInterface::funcFloat32(float paramFloat32)
 {
-    qDebug() << Q_FUNC_INFO;
     return 0.0f;
 }
 
 double SimpleInterface::funcFloat64(double paramFloat)
 {
-    qDebug() << Q_FUNC_INFO;
     return 0.0;
 }
 
 QString SimpleInterface::funcString(const QString& paramString)
 {
-    qDebug() << Q_FUNC_INFO;
     return QString();
 }
 } //namespace tb_simple

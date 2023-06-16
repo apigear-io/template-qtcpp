@@ -16,6 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "httpstructinterface.h"
+#include "apigear/utilities/logger.h"
 
 #include <QtQml>
 
@@ -89,45 +90,41 @@ StructString HttpStructInterface::propString() const
 
 StructBool HttpStructInterface::funcBool(const StructBool& paramBool)
 {
-    qDebug() << Q_FUNC_INFO;
-
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     QJsonObject payload;
     payload["paramBool"] = QJsonValue::fromVariant(QVariant::fromValue< StructBool >(paramBool));
     QJsonObject reply = post("testbed1/StructInterface/funcBool", payload);
-    qDebug() << QJsonDocument(reply).toJson();
+    AG_LOG_DEBUG(qPrintable(QJsonDocument(reply).toJson()));
     return StructBool();
 }
 
 StructBool HttpStructInterface::funcInt(const StructInt& paramInt)
 {
-    qDebug() << Q_FUNC_INFO;
-
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     QJsonObject payload;
     payload["paramInt"] = QJsonValue::fromVariant(QVariant::fromValue< StructInt >(paramInt));
     QJsonObject reply = post("testbed1/StructInterface/funcInt", payload);
-    qDebug() << QJsonDocument(reply).toJson();
+    AG_LOG_DEBUG(qPrintable(QJsonDocument(reply).toJson()));
     return StructBool();
 }
 
 StructFloat HttpStructInterface::funcFloat(const StructFloat& paramFloat)
 {
-    qDebug() << Q_FUNC_INFO;
-
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     QJsonObject payload;
     payload["paramFloat"] = QJsonValue::fromVariant(QVariant::fromValue< StructFloat >(paramFloat));
     QJsonObject reply = post("testbed1/StructInterface/funcFloat", payload);
-    qDebug() << QJsonDocument(reply).toJson();
+    AG_LOG_DEBUG(qPrintable(QJsonDocument(reply).toJson()));
     return StructFloat();
 }
 
 StructString HttpStructInterface::funcString(const StructString& paramString)
 {
-    qDebug() << Q_FUNC_INFO;
-
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     QJsonObject payload;
     payload["paramString"] = QJsonValue::fromVariant(QVariant::fromValue< StructString >(paramString));
     QJsonObject reply = post("testbed1/StructInterface/funcString", payload);
-    qDebug() << QJsonDocument(reply).toJson();
+    AG_LOG_DEBUG(qPrintable(QJsonDocument(reply).toJson()));
     return StructString();
 }
 
@@ -138,14 +135,14 @@ QJsonObject HttpStructInterface::post(const QString& path, const QJsonObject &pa
     request.setUrl(QUrl(QString("%1/%2").arg(address).arg(path)));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     const QByteArray& data = QJsonDocument(payload).toJson(QJsonDocument::Compact);
-    qDebug() << qPrintable(data);
+    AG_LOG_DEBUG( qPrintable(data));
     QNetworkReply* reply = m_network->post(request, data);
     // wait for finished signal
     QEventLoop loop;
     connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
     loop.exec();
     if(reply->error()) {
-        qDebug() << reply->errorString();
+        AG_LOG_ERROR(reply->errorString());
         return QJsonObject();
     }
     const QJsonObject &response = QJsonDocument::fromJson(reply->readAll()).object();

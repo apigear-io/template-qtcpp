@@ -1,15 +1,17 @@
 
 #include "enuminterfacetraced.h"
 #include "tb_enum/monitor/agent.h"
+#include "utilities/logger.h"
 
 namespace tb_enum {
 
+const std::string noObjectToTraceLogInfo = " object to trace is invalid.";
 
 EnumInterfaceTraced::EnumInterfaceTraced(std::shared_ptr<AbstractEnumInterface> impl)
     :m_impl(impl)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
 
@@ -35,7 +37,7 @@ EnumInterfaceTraced::EnumInterfaceTraced(std::shared_ptr<AbstractEnumInterface> 
 Enum0::Enum0Enum EnumInterfaceTraced::func0(Enum0::Enum0Enum param0) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     EnumInterfaceAgent::trace_func0(this, param0);
@@ -46,7 +48,7 @@ Enum0::Enum0Enum EnumInterfaceTraced::func0(Enum0::Enum0Enum param0)
 Enum1::Enum1Enum EnumInterfaceTraced::func1(Enum1::Enum1Enum param1) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     EnumInterfaceAgent::trace_func1(this, param1);
@@ -57,7 +59,7 @@ Enum1::Enum1Enum EnumInterfaceTraced::func1(Enum1::Enum1Enum param1)
 Enum2::Enum2Enum EnumInterfaceTraced::func2(Enum2::Enum2Enum param2) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     EnumInterfaceAgent::trace_func2(this, param2);
@@ -68,7 +70,7 @@ Enum2::Enum2Enum EnumInterfaceTraced::func2(Enum2::Enum2Enum param2)
 Enum3::Enum3Enum EnumInterfaceTraced::func3(Enum3::Enum3Enum param3) 
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return  {} ;
     }
     EnumInterfaceAgent::trace_func3(this, param3);
@@ -78,7 +80,7 @@ Enum3::Enum3Enum EnumInterfaceTraced::func3(Enum3::Enum3Enum param3)
 void EnumInterfaceTraced::setProp0(Enum0::Enum0Enum prop0)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     EnumInterfaceAgent::trace_state(this);
@@ -87,7 +89,7 @@ void EnumInterfaceTraced::setProp0(Enum0::Enum0Enum prop0)
 Enum0::Enum0Enum EnumInterfaceTraced::prop0() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->prop0();
@@ -96,7 +98,7 @@ Enum0::Enum0Enum EnumInterfaceTraced::prop0() const
 void EnumInterfaceTraced::setProp1(Enum1::Enum1Enum prop1)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     EnumInterfaceAgent::trace_state(this);
@@ -105,7 +107,7 @@ void EnumInterfaceTraced::setProp1(Enum1::Enum1Enum prop1)
 Enum1::Enum1Enum EnumInterfaceTraced::prop1() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->prop1();
@@ -114,7 +116,7 @@ Enum1::Enum1Enum EnumInterfaceTraced::prop1() const
 void EnumInterfaceTraced::setProp2(Enum2::Enum2Enum prop2)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     EnumInterfaceAgent::trace_state(this);
@@ -123,7 +125,7 @@ void EnumInterfaceTraced::setProp2(Enum2::Enum2Enum prop2)
 Enum2::Enum2Enum EnumInterfaceTraced::prop2() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->prop2();
@@ -132,7 +134,7 @@ Enum2::Enum2Enum EnumInterfaceTraced::prop2() const
 void EnumInterfaceTraced::setProp3(Enum3::Enum3Enum prop3)
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return;
     }
     EnumInterfaceAgent::trace_state(this);
@@ -141,7 +143,7 @@ void EnumInterfaceTraced::setProp3(Enum3::Enum3Enum prop3)
 Enum3::Enum3Enum EnumInterfaceTraced::prop3() const
 {
     if (!m_impl) {
-        qDebug() << Q_FUNC_INFO << " object to trace is invalid. ";
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {};
     }
     return m_impl->prop3();

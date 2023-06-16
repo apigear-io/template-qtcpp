@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "tb_simple/api/json.adapter.h"
 
 #include "olink/iclientnode.h"
+#include "utilities/logger.h"
 
 #include <QtCore>
 
@@ -41,12 +42,12 @@ OLinkSimpleInterface::OLinkSimpleInterface(QObject *parent)
     , m_isReady(false)
     , m_node(nullptr)
 {        
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
 }
 
 void OLinkSimpleInterface::applyState(const nlohmann::json& fields) 
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(fields.contains("propBool")) {
         setPropBoolLocal(fields["propBool"].get<bool>());
     }
@@ -75,7 +76,7 @@ void OLinkSimpleInterface::applyState(const nlohmann::json& fields)
 
 void OLinkSimpleInterface::setPropBool(bool propBool)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return;
     }
@@ -84,7 +85,7 @@ void OLinkSimpleInterface::setPropBool(bool propBool)
 
 void OLinkSimpleInterface::setPropBoolLocal(bool propBool)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if (m_propBool != propBool) {
         m_propBool = propBool;
         emit propBoolChanged(propBool);
@@ -98,7 +99,7 @@ bool OLinkSimpleInterface::propBool() const
 
 void OLinkSimpleInterface::setPropInt(int propInt)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return;
     }
@@ -107,7 +108,7 @@ void OLinkSimpleInterface::setPropInt(int propInt)
 
 void OLinkSimpleInterface::setPropIntLocal(int propInt)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if (m_propInt != propInt) {
         m_propInt = propInt;
         emit propIntChanged(propInt);
@@ -121,7 +122,7 @@ int OLinkSimpleInterface::propInt() const
 
 void OLinkSimpleInterface::setPropInt32(qint32 propInt32)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return;
     }
@@ -130,7 +131,7 @@ void OLinkSimpleInterface::setPropInt32(qint32 propInt32)
 
 void OLinkSimpleInterface::setPropInt32Local(qint32 propInt32)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if (m_propInt32 != propInt32) {
         m_propInt32 = propInt32;
         emit propInt32Changed(propInt32);
@@ -144,7 +145,7 @@ qint32 OLinkSimpleInterface::propInt32() const
 
 void OLinkSimpleInterface::setPropInt64(qint64 propInt64)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return;
     }
@@ -153,7 +154,7 @@ void OLinkSimpleInterface::setPropInt64(qint64 propInt64)
 
 void OLinkSimpleInterface::setPropInt64Local(qint64 propInt64)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if (m_propInt64 != propInt64) {
         m_propInt64 = propInt64;
         emit propInt64Changed(propInt64);
@@ -167,7 +168,7 @@ qint64 OLinkSimpleInterface::propInt64() const
 
 void OLinkSimpleInterface::setPropFloat(qreal propFloat)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return;
     }
@@ -176,7 +177,7 @@ void OLinkSimpleInterface::setPropFloat(qreal propFloat)
 
 void OLinkSimpleInterface::setPropFloatLocal(qreal propFloat)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if (m_propFloat != propFloat) {
         m_propFloat = propFloat;
         emit propFloatChanged(propFloat);
@@ -190,7 +191,7 @@ qreal OLinkSimpleInterface::propFloat() const
 
 void OLinkSimpleInterface::setPropFloat32(float propFloat32)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return;
     }
@@ -199,7 +200,7 @@ void OLinkSimpleInterface::setPropFloat32(float propFloat32)
 
 void OLinkSimpleInterface::setPropFloat32Local(float propFloat32)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if (m_propFloat32 != propFloat32) {
         m_propFloat32 = propFloat32;
         emit propFloat32Changed(propFloat32);
@@ -213,7 +214,7 @@ float OLinkSimpleInterface::propFloat32() const
 
 void OLinkSimpleInterface::setPropFloat64(double propFloat64)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return;
     }
@@ -222,7 +223,7 @@ void OLinkSimpleInterface::setPropFloat64(double propFloat64)
 
 void OLinkSimpleInterface::setPropFloat64Local(double propFloat64)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if (m_propFloat64 != propFloat64) {
         m_propFloat64 = propFloat64;
         emit propFloat64Changed(propFloat64);
@@ -236,7 +237,7 @@ double OLinkSimpleInterface::propFloat64() const
 
 void OLinkSimpleInterface::setPropString(const QString& propString)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return;
     }
@@ -245,7 +246,7 @@ void OLinkSimpleInterface::setPropString(const QString& propString)
 
 void OLinkSimpleInterface::setPropStringLocal(const QString& propString)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if (m_propString != propString) {
         m_propString = propString;
         emit propStringChanged(propString);
@@ -259,7 +260,7 @@ QString OLinkSimpleInterface::propString() const
 
 void OLinkSimpleInterface::funcVoid()
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return;
     }
@@ -273,7 +274,7 @@ void OLinkSimpleInterface::funcVoid()
 
 QtPromise::QPromise<void> OLinkSimpleInterface::funcVoidAsync()
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QtPromise::QPromise<void>::reject("not initialized");
     }
@@ -284,7 +285,7 @@ QtPromise::QPromise<void> OLinkSimpleInterface::funcVoidAsync()
 
 bool OLinkSimpleInterface::funcBool(bool paramBool)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return false;
     }
@@ -299,7 +300,7 @@ bool OLinkSimpleInterface::funcBool(bool paramBool)
 
 QtPromise::QPromise<bool> OLinkSimpleInterface::funcBoolAsync(bool paramBool)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QtPromise::QPromise<bool>::reject("not initialized");
     }
@@ -316,7 +317,7 @@ QtPromise::QPromise<bool> OLinkSimpleInterface::funcBoolAsync(bool paramBool)
 
 int OLinkSimpleInterface::funcInt(int paramInt)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return 0;
     }
@@ -331,7 +332,7 @@ int OLinkSimpleInterface::funcInt(int paramInt)
 
 QtPromise::QPromise<int> OLinkSimpleInterface::funcIntAsync(int paramInt)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QtPromise::QPromise<int>::reject("not initialized");
     }
@@ -348,7 +349,7 @@ QtPromise::QPromise<int> OLinkSimpleInterface::funcIntAsync(int paramInt)
 
 qint32 OLinkSimpleInterface::funcInt32(qint32 paramInt32)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return 0;
     }
@@ -363,7 +364,7 @@ qint32 OLinkSimpleInterface::funcInt32(qint32 paramInt32)
 
 QtPromise::QPromise<qint32> OLinkSimpleInterface::funcInt32Async(qint32 paramInt32)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QtPromise::QPromise<qint32>::reject("not initialized");
     }
@@ -380,7 +381,7 @@ QtPromise::QPromise<qint32> OLinkSimpleInterface::funcInt32Async(qint32 paramInt
 
 qint64 OLinkSimpleInterface::funcInt64(qint64 paramInt64)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return 0LL;
     }
@@ -395,7 +396,7 @@ qint64 OLinkSimpleInterface::funcInt64(qint64 paramInt64)
 
 QtPromise::QPromise<qint64> OLinkSimpleInterface::funcInt64Async(qint64 paramInt64)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QtPromise::QPromise<qint64>::reject("not initialized");
     }
@@ -412,7 +413,7 @@ QtPromise::QPromise<qint64> OLinkSimpleInterface::funcInt64Async(qint64 paramInt
 
 qreal OLinkSimpleInterface::funcFloat(qreal paramFloat)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return 0.0f;
     }
@@ -427,7 +428,7 @@ qreal OLinkSimpleInterface::funcFloat(qreal paramFloat)
 
 QtPromise::QPromise<qreal> OLinkSimpleInterface::funcFloatAsync(qreal paramFloat)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QtPromise::QPromise<qreal>::reject("not initialized");
     }
@@ -444,7 +445,7 @@ QtPromise::QPromise<qreal> OLinkSimpleInterface::funcFloatAsync(qreal paramFloat
 
 float OLinkSimpleInterface::funcFloat32(float paramFloat32)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return 0.0f;
     }
@@ -459,7 +460,7 @@ float OLinkSimpleInterface::funcFloat32(float paramFloat32)
 
 QtPromise::QPromise<float> OLinkSimpleInterface::funcFloat32Async(float paramFloat32)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QtPromise::QPromise<float>::reject("not initialized");
     }
@@ -476,7 +477,7 @@ QtPromise::QPromise<float> OLinkSimpleInterface::funcFloat32Async(float paramFlo
 
 double OLinkSimpleInterface::funcFloat64(double paramFloat)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return 0.0;
     }
@@ -491,7 +492,7 @@ double OLinkSimpleInterface::funcFloat64(double paramFloat)
 
 QtPromise::QPromise<double> OLinkSimpleInterface::funcFloat64Async(double paramFloat)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QtPromise::QPromise<double>::reject("not initialized");
     }
@@ -508,7 +509,7 @@ QtPromise::QPromise<double> OLinkSimpleInterface::funcFloat64Async(double paramF
 
 QString OLinkSimpleInterface::funcString(const QString& paramString)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QString();
     }
@@ -523,7 +524,7 @@ QString OLinkSimpleInterface::funcString(const QString& paramString)
 
 QtPromise::QPromise<QString> OLinkSimpleInterface::funcStringAsync(const QString& paramString)
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
         return QtPromise::QPromise<QString>::reject("not initialized");
     }
@@ -546,7 +547,8 @@ std::string OLinkSimpleInterface::olinkObjectName()
 
 void OLinkSimpleInterface::olinkOnSignal(const std::string& signalId, const nlohmann::json& args)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(signalId);
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+    AG_LOG_DEBUG(signalId);
     auto signalName = Name::getMemberName(signalId);
     if(signalName == "sigVoid") {
         emit sigVoid();   
@@ -588,13 +590,15 @@ void OLinkSimpleInterface::olinkOnSignal(const std::string& signalId, const nloh
 
 void OLinkSimpleInterface::olinkOnPropertyChanged(const std::string& propertyId, const nlohmann::json& value)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(propertyId);
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+    AG_LOG_DEBUG(propertyId);
     std::string propertyName = Name::getMemberName(propertyId);
     applyState({ {propertyName, value} });
 }
 void OLinkSimpleInterface::olinkOnInit(const std::string& objectId, const nlohmann::json& props, IClientNode *node)
 {
-    qDebug() << Q_FUNC_INFO << QString::fromStdString(objectId);
+    AG_LOG_INFO(Q_FUNC_INFO);
+    AG_LOG_INFO(objectId);
     m_isReady = true;
     m_node = node;
     applyState(props);
@@ -603,7 +607,7 @@ void OLinkSimpleInterface::olinkOnInit(const std::string& objectId, const nlohma
 
 void OLinkSimpleInterface::olinkOnRelease()
 {
-    qDebug() << Q_FUNC_INFO;
+    AG_LOG_INFO(Q_FUNC_INFO);
     m_isReady = false;
     m_node = nullptr;
 }

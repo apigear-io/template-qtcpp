@@ -29,7 +29,7 @@ target_include_directories(monitor_qt
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(monitor_qt PUBLIC Qt5::Core Qt5::WebSockets)
+target_link_libraries(monitor_qt PUBLIC apigear::utilities_qt Qt5::Core Qt5::WebSockets)
 target_compile_definitions(monitor_qt PRIVATE COMPILING_MONITOR_QT)
 
 # install binary files

@@ -6,8 +6,8 @@
 namespace {{snake  .Module.Name }} {
 
 {{- range .Module.Interfaces }}
-{{- $class := printf "%sAgent" .Name }}
-{{- $iface := .Name }}
+{{- $iface := Camel .Name }}
+{{- $class := printf "%sAgent" $iface}}
 
 {{$class}}::{{$class}}()
 {
@@ -27,7 +27,6 @@ void {{$class}}::trace_state(Abstract{{Camel .Name}}* obj)
     const QVariantMap &fields_ = capture_state(obj);
     ApiGear::Monitor::AgentClient::instance()->traceState("{{$module}}.{{.Name}}", fields_);
 }
-{{- $iface := Camel .Name }}
 {{- range .Operations }}
 void {{$class}}::trace_{{.Name}}(Abstract{{$iface}}* obj{{- if (len .Params) }},{{ end}} {{qtParams "" .Params}})
 {

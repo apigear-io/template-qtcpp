@@ -37,7 +37,7 @@ void Plugin::registerTypes(const char *uri)
 {{- end }}
 
 {{- range $module.Interfaces }}
-    qmlRegisterType<{{$module_id}}::Qml{{.Name}}>(uri, {{$version.Major}}, {{$version.Minor}}, "{{$Modulename}}{{.Name}}");
+    qmlRegisterType<{{$module_id}}::Qml{{Camel .Name}}>(uri, {{$version.Major}}, {{$version.Minor}}, "{{$Modulename}}{{.Name}}");
 {{- end }}
 
 }

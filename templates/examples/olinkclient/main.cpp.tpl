@@ -9,9 +9,9 @@
 {{- $module := . }}
 {{- range $module.Interfaces }}
 {{- $interface := . }}
-#include "{{snake $module.Name}}/olink/olink{{ lower ( camel $interface.Name) }}.h"
+#include "{{snake $module.Name}}/olink/olink{{ lower $interface.Name }}.h"
 {{- if $features.monitor }}
-#include "{{snake $module.Name}}/monitor/{{ lower ( camel $interface.Name) }}traced.h"
+#include "{{snake $module.Name}}/monitor/{{ lower $interface.Name }}traced.h"
 {{- end }}
 {{- end }}
 {{- end }}

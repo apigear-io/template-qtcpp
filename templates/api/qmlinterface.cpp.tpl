@@ -3,7 +3,7 @@
 {{- $class := Camel .Interface.Name }}
 
 
-#include "qml{{lower $class}}.h"
+#include "qml{{lower .Interface.Name}}.h"
 #include "apifactory.h"
 
 #include <QtQml>

@@ -15,8 +15,8 @@
 namespace {{snake  .Module.Name }} {
 
 {{- range .Module.Interfaces }}
-{{- $class := printf "%sAgent" .Name }}
 {{- $iface := Camel .Name }}
+{{- $class := printf "%sAgent" $iface }}
 
 
 class {{ $MODULE_ID }}_EXPORT {{$class}}

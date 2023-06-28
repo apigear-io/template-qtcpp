@@ -3,9 +3,9 @@
 {{- $module := . }}
 {{- range $module.Interfaces }}
 {{- $interface := . }}
-#include "{{snake $module.Name}}/implementation/{{ lower ( camel $interface.Name) }}.h"
-#include "{{snake $module.Name}}/api/qml{{lower ( camel $interface.Name)}}.h"
-#include "{{snake $module.Name}}/olink/olink{{ lower ( camel $interface.Name) }}adapter.h"
+#include "{{snake $module.Name}}/implementation/{{ lower $interface.Name }}.h"
+#include "{{snake $module.Name}}/api/qml{{lower $interface.Name}}.h"
+#include "{{snake $module.Name}}/olink/olink{{ lower $interface.Name }}adapter.h"
 {{- end }}
 #include "{{snake $module.Name}}/api/apifactory.h"
 #include "{{snake $module.Name}}/olink/olinkfactory.h"

@@ -15,6 +15,8 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
+add_compile_definitions(QT_DISABLE_DEPRECATED_UP_TO=0x050F00)
+
 # on Windows it is helpful to have all binary files next to each other
 # it is intentionally not set as part of BUILD_TESTING to have a consistent behavior
 # this can be removed once there is a better option than modifying the PATH env for unit testing
@@ -25,26 +27,25 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 option(BUILD_TESTING "Enable this option to build the test targets" OFF)
 
 if(BUILD_TESTING)
-find_package(Qt5 COMPONENTS Test REQUIRED)
+find_package(Qt6 COMPONENTS Test REQUIRED)
 enable_testing()
 endif() # BUILD_TESTING
 
 set(LIBRARY_PATH "${CMAKE_BINARY_DIR}/libs" CACHE STRING "Path where the libraries are deployed")
 set(IMPORTS_PATH "${CMAKE_BINARY_DIR}/imports" CACHE STRING "Path where the plugins are deployed")
 
-include_directories(thirdparty)
 {{- if $features.apigear }}
 add_subdirectory(apigear)
 {{- end}}
+{{- if $features.olink }}
+include_directories(thirdparty)
 add_subdirectory(thirdparty/qtpromise)
+{{- end}}
 {{- range .System.Modules }}
 {{- $moduleId := snake .Name }}
 add_subdirectory({{ $moduleId }}/api)
 {{- if $features.stubs }}
 add_subdirectory({{ $moduleId }}/implementation)
-{{- end}}
-{{- if $features.qmlplugin }}
-add_subdirectory({{ $moduleId }}/plugin)
 {{- end}}
 {{- if $features.http }}
 add_subdirectory({{ $moduleId }}/http)
@@ -54,6 +55,9 @@ add_subdirectory({{ $moduleId }}/olink)
 {{- end}}
 {{- if $features.monitor }}
 add_subdirectory({{ $moduleId }}/monitor)
+{{- end}}
+{{- if $features.qmlplugin }}
+add_subdirectory({{ $moduleId }}/qmlplugin)
 {{- end}}
 {{- end }}
 {{- if $features.examples }}

@@ -19,8 +19,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "samestruct2interface.h"
 
-#include <QtQml>
-
 namespace tb_same2 {
 
 SameStruct2Interface::SameStruct2Interface(QObject *parent)

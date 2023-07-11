@@ -27,21 +27,6 @@ features:
           - source: "api/json.adapter.h.tpl"
             target: "json.adapter.h"
             force: true
-          - source: "api/apifactory.h.tpl"
-            target: "apifactory.h"
-            force: true
-          - source: "api/apifactory.cpp.tpl"
-            target: "apifactory.cpp"
-            force: true
-      - match: interface
-        prefix: "{{snake .Module.Name}}/api/"
-        documents:
-          - source: "api/qmlinterface.h.tpl"
-            target: "qml{{lower .Interface.Name}}.h"
-            force: true
-          - source: "api/qmlinterface.cpp.tpl"
-            target: "qml{{lower .Interface.Name}}.cpp"
-            force: true
   - name: stubs
     requires:
       - api
@@ -76,21 +61,6 @@ features:
         - source: "library/tests/test_interface.cpp.tpl"
           target: "tests/test_{{lower .Interface.Name}}.cpp"
           force: true
-  - name: qmlplugin
-    requires:
-      - api
-    scopes:
-    - match: module
-      prefix: "{{snake .Module.Name}}/"
-      documents:
-        - source: "plugin/CMakeLists.txt.tpl"
-          target: "plugin/CMakeLists.txt"
-        - source: "plugin/plugin.h.tpl"
-          target: "plugin/plugin.h"
-        - source: "plugin/plugin.cpp.tpl"
-          target: "plugin/plugin.cpp"
-        - source: "plugin/qmldir.tpl"
-          target: "plugin/qmldir"
   - name: http
     requires:
       - api
@@ -219,7 +189,36 @@ features:
           - source: "olink/olinkadapter.h.tpl"
             target: "olink/olink{{lower .Interface.Name}}adapter.h"
           - source: "olink/olinkadapter.cpp.tpl"
-            target: "olink/olink{{lower .Interface.Name}}adapter.cpp"            
+            target: "olink/olink{{lower .Interface.Name}}adapter.cpp"       
+  - name: qmlplugin
+    scopes:
+      - match: module
+        prefix: "{{snake .Module.Name}}/qmlplugin/"
+        documents:
+          - source: "qmlplugin/CMakeLists.txt.tpl"
+            target: "CMakeLists.txt"
+            force: true
+          - source: "qmlplugin/qml_api.h.tpl"
+            target: "qml_api.h"
+            force: true
+          - source: "qmlplugin/qml_api.cpp.tpl"
+            target: "qml_api.cpp"
+            force: true
+          - source: "qmlplugin/apifactory.h.tpl"
+            target: "apifactory.h"
+            force: true
+          - source: "qmlplugin/apifactory.cpp.tpl"
+            target: "apifactory.cpp"
+            force: true
+      - match: interface
+        prefix: "{{snake .Module.Name}}/qmlplugin/"
+        documents:
+          - source: "qmlplugin/qmlinterface.h.tpl"
+            target: "qml{{lower .Interface.Name}}.h"
+            force: true
+          - source: "qmlplugin/qmlinterface.cpp.tpl"
+            target: "qml{{lower .Interface.Name}}.cpp"
+            force: true
   - name: examples
     requires:
       - olink

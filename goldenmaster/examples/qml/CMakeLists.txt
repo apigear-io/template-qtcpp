@@ -20,41 +20,41 @@ add_executable(QmlExamlple
     ${SOURCES}
 )
 
-find_package(Qt5 REQUIRED COMPONENTS Gui Quick QuickControls2 QuickWidgets)
+find_package(Qt6 REQUIRED COMPONENTS Core Qml Gui Quick QuickControls2 QuickWidgets)
 
 
-find_package(testbed2 QUIET COMPONENTS testbed2_impl testbed2_olink plugin_testbed2 testbed2_monitor)
-find_package(tb_enum QUIET COMPONENTS tb_enum_impl tb_enum_olink plugin_tb_enum tb_enum_monitor)
-find_package(tb_same1 QUIET COMPONENTS tb_same1_impl tb_same1_olink plugin_tb_same1 tb_same1_monitor)
-find_package(tb_same2 QUIET COMPONENTS tb_same2_impl tb_same2_olink plugin_tb_same2 tb_same2_monitor)
-find_package(tb_simple QUIET COMPONENTS tb_simple_impl tb_simple_olink plugin_tb_simple tb_simple_monitor)
-find_package(testbed1 QUIET COMPONENTS testbed1_impl testbed1_olink plugin_testbed1 testbed1_monitor)
-target_link_libraries(QmlExamlple
+find_package(testbed2 QUIET COMPONENTS testbed2_impl testbed2_olink  testbed2_monitor)
+find_package(tb_enum QUIET COMPONENTS tb_enum_impl tb_enum_olink  tb_enum_monitor)
+find_package(tb_same1 QUIET COMPONENTS tb_same1_impl tb_same1_olink  tb_same1_monitor)
+find_package(tb_same2 QUIET COMPONENTS tb_same2_impl tb_same2_olink  tb_same2_monitor)
+find_package(tb_simple QUIET COMPONENTS tb_simple_impl tb_simple_olink  tb_simple_monitor)
+find_package(testbed1 QUIET COMPONENTS testbed1_impl testbed1_olink  testbed1_monitor)
+target_link_libraries(QmlExamlple PUBLIC
     testbed2_impl
-    testbed2_olink
-    plugin_testbed2
+    testbed2_qml
+    testbed2_olink 
     testbed2_monitor
     tb_enum_impl
-    tb_enum_olink
-    plugin_tb_enum
+    tb_enum_qml
+    tb_enum_olink 
     tb_enum_monitor
     tb_same1_impl
-    tb_same1_olink
-    plugin_tb_same1
+    tb_same1_qml
+    tb_same1_olink 
     tb_same1_monitor
     tb_same2_impl
-    tb_same2_olink
-    plugin_tb_same2
+    tb_same2_qml
+    tb_same2_olink 
     tb_same2_monitor
     tb_simple_impl
-    tb_simple_olink
-    plugin_tb_simple
+    tb_simple_qml
+    tb_simple_olink 
     tb_simple_monitor
     testbed1_impl
-    testbed1_olink
-    plugin_testbed1
+    testbed1_qml
+    testbed1_olink 
     testbed1_monitor
-Qt5::Gui Qt5::Quick Qt5::QuickControls2 Qt5::QuickWidgets
+PRIVATE Qt6::Qml Qt6::Gui Qt6::Quick Qt6::QuickControls2 Qt6::QuickWidgets
 )
 
 

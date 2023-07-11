@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(OUTPUT_PATH ${LIBRARY_PATH}/)
 
-find_package(Qt5 REQUIRED COMPONENTS Core)
+find_package(tb_enum QUIET COMPONENTS tb_enum_api)
 
 set (TB_ENUM_IMPL_SOURCES
     factory.cpp

@@ -1,6 +1,6 @@
 project(tb_same2_olink)
 
-find_package(Qt5 REQUIRED COMPONENTS Core)
+find_package(Qt6 REQUIRED COMPONENTS Concurrent)
 
 set (TB_SAME2_OLINK_SOURCES
     olinkfactory.cpp
@@ -24,4 +24,4 @@ target_include_directories(tb_same2_olink
     $<INSTALL_INTERFACE:include/tb_same2>
 )
 
-target_link_libraries(tb_same2_olink PUBLIC tb_same2::tb_same2_api olink_qt qtpromise)
+target_link_libraries(tb_same2_olink PUBLIC tb_same2::tb_same2_api olink_qt Qt6::Concurrent qtpromise)

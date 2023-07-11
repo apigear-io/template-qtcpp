@@ -3,6 +3,7 @@
 {{- $MODULE_ID := printf "%s_API" (SNAKE .Module.Name) }}
 {{- $module_path := (path .Module.Name) }}
 {{- $SOURCES := printf "%s_SOURCES" $MODULE_ID -}}
+{{- $features := .Features -}}
 
 cmake_minimum_required(VERSION 3.20)
 project({{ $lib_id }} LANGUAGES CXX)
@@ -10,7 +11,7 @@ project({{ $lib_id }} LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt5 REQUIRED COMPONENTS Core Qml)
+find_package(Qt6 REQUIRED COMPONENTS Core)
 
 set(OUTPUT_PATH ${LIBRARY_PATH}/)
 
@@ -28,10 +29,6 @@ endif()
 
 set ({{$SOURCES}}
     api.cpp
-    apifactory.cpp
-{{- range .Module.Interfaces }}
-    qml{{.Name|lower}}.cpp
-{{- end }}
 )
 
 # dynamic library
@@ -48,10 +45,7 @@ target_include_directories({{$lib_id}}
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries({{$lib_id}} PUBLIC
-Qt5::Core
-Qt5::Qml
-nlohmann_json::nlohmann_json)
+target_link_libraries({{$lib_id}} PUBLIC nlohmann_json::nlohmann_json Qt6::Core)
 
 target_compile_definitions({{$lib_id}} PRIVATE {{ $MODULE_ID }}_LIBRARY)
 

@@ -19,8 +19,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "structinterface.h"
 
-#include <QtQml>
-
 namespace testbed1 {
 
 StructInterface::StructInterface(QObject *parent)

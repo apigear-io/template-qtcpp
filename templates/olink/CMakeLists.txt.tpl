@@ -5,7 +5,7 @@
 {{- $SOURCES := printf "%s_OLINK_SOURCES" $MODULE_ID -}}
 project({{$lib_id}})
 
-find_package(Qt5 REQUIRED COMPONENTS Core)
+find_package(Qt6 REQUIRED COMPONENTS Concurrent)
 
 set ({{$MODULE_ID}}_OLINK_SOURCES
     olinkfactory.cpp
@@ -25,4 +25,4 @@ target_include_directories({{$lib_id}}
     $<INSTALL_INTERFACE:include/{{$module_id}}>
 )
 
-target_link_libraries({{$lib_id}} PUBLIC {{$module_id}}::{{$module_id}}_api olink_qt qtpromise)
+target_link_libraries({{$lib_id}} PUBLIC {{$module_id}}::{{$module_id}}_api olink_qt Qt6::Concurrent qtpromise)

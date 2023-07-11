@@ -22,11 +22,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <memory>
 
-#if defined(TB_ENUM_API_LIBRARY)
-#  define TB_ENUM_API_EXPORT Q_DECL_EXPORT
-#else
-#  define TB_ENUM_API_EXPORT Q_DECL_IMPORT
-#endif
 
 namespace tb_enum {
     class AbstractEnumInterface;
@@ -37,9 +32,10 @@ namespace tb_enum {
 * Check the usage of IApiFactory in Qml versions of interface implementation.
 * See also the ApiFactory, where you can set this factory as an IApiFactory implementation.
 */
-class TB_ENUM_API_EXPORT IApiFactory
+class IApiFactory
 {
 public:
+    virtual ~IApiFactory() = default;
     /** 
     * Create an instance of EnumInterface
     * @return The implementation of a AbstractEnumInterface.

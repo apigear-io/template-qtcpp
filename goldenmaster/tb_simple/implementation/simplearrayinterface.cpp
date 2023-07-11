@@ -19,8 +19,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "simplearrayinterface.h"
 
-#include <QtQml>
-
 namespace tb_simple {
 
 SimpleArrayInterface::SimpleArrayInterface(QObject *parent)

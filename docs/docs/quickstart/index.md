@@ -166,15 +166,15 @@ $ apigear generate solution apigear/helloworld.solution.yaml
 
 ## 5. Use the generated Qt project.
 
-The generated code supports *Qml* and *C++* implementations. The following paragraphs show how you can use it.
+The generated code provides Qt *C++* implementations. The following paragraphs show how you can use it.
 You can start your project loading the top level CMakeLists.txt in `qt_hello_world` folder.
 
 The 'api.h' contains all definitions of the enums and structs for your module, as well as the QObject abstract base classes for your Interfaces.
 From now on you can simply include the header files for the api interface or the stub implementation and use it.
-For more details on generated features please check [api](features/api.md) and [stubs](features/stubs.md) 
+For more details on generated features please check [api](features/api.md), [stubs](features/stubs.md). 
 
 :::tip
-Check the "example" feature to see how to use your API directly in qml with the generated wrappers.
+Check the "example" and [qmlplugin](features/qmlplugin.md) features to see how to use your API directly in qml with the generated wrappers.
 :::
 
 :::note
@@ -226,7 +226,7 @@ add a CMakeLists.txt
 project(MyExample)
 cmake_minimum_required(VERSION 3.20)
 
-find_package(Qt5 REQUIRED COMPONENTS Gui)
+find_package(Qt6 REQUIRED COMPONENTS Gui)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -234,6 +234,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_executable(MyExample main.cpp)
 
 find_package(io_world QUIET COMPONENTS io_world_impl)
-target_link_libraries(MyExample io_world_impl Qt5::Gui)
+target_link_libraries(MyExample io_world_impl Qt6::Gui)
 ```
 Add the `example` subdirectory to the hello-world/qt_hello_world/CMakeLists.txt. Now you can build the application and the libraries with it and run your example.

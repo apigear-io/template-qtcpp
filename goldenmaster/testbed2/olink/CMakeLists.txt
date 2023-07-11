@@ -1,6 +1,6 @@
 project(testbed2_olink)
 
-find_package(Qt5 REQUIRED COMPONENTS Core)
+find_package(Qt6 REQUIRED COMPONENTS Concurrent)
 
 set (TESTBED2_OLINK_SOURCES
     olinkfactory.cpp
@@ -24,4 +24,4 @@ target_include_directories(testbed2_olink
     $<INSTALL_INTERFACE:include/testbed2>
 )
 
-target_link_libraries(testbed2_olink PUBLIC testbed2::testbed2_api olink_qt qtpromise)
+target_link_libraries(testbed2_olink PUBLIC testbed2::testbed2_api olink_qt Qt6::Concurrent qtpromise)

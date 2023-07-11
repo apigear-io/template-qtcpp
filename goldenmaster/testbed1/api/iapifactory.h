@@ -22,11 +22,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <memory>
 
-#if defined(TESTBED1_API_LIBRARY)
-#  define TESTBED1_API_EXPORT Q_DECL_EXPORT
-#else
-#  define TESTBED1_API_EXPORT Q_DECL_IMPORT
-#endif
 
 namespace testbed1 {
     class AbstractStructInterface;
@@ -38,9 +33,10 @@ namespace testbed1 {
 * Check the usage of IApiFactory in Qml versions of interface implementation.
 * See also the ApiFactory, where you can set this factory as an IApiFactory implementation.
 */
-class TESTBED1_API_EXPORT IApiFactory
+class IApiFactory
 {
 public:
+    virtual ~IApiFactory() = default;
     /** 
     * Create an instance of StructInterface
     * @return The implementation of a AbstractStructInterface.

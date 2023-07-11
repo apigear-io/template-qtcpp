@@ -8,7 +8,7 @@ import helloWorldModuleComponent from '!!raw-loader!./data/helloworld.module.yam
 
 The feature `stubs` adds:
 - a semi-featured starting point for your implementation a instantiable classes for your Interfaces.
-- the factory, that produces this implementation stubs (for QmlWrapper)
+- the factory, that produces this implementation stubs (for QMLWrapper)
 - a setup for tests.
 
 ### File overview for module
@@ -57,7 +57,7 @@ We generate the import/export statements - here IO_WORLD_IMPL_EXPORT - for all t
 ### Factory
 
 Factory of stub is defined in `📜factory.h` and `📜factory.cpp`
-This factory is necessary, when you want to provide this stub implementation to the Qml Wrapper.
+This factory is necessary, when you want to provide this stub implementation to the QML Wrapper.
 See [this](api.md#providing-backend-to-qml-wrapper) api section for full information.
 
 Also have in mind, that using this version of provided pair "factory - stub", you will not have any handle to interact with a created stub from code. Only changes and interaction will be possible from QML. You could create your version of a factory which also registers the objects to some kind of global registry, which you're able to reach from code.

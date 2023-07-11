@@ -187,9 +187,9 @@ QtPromise::QPromise<int> OLinkManyParamInterface::func1Async(int param1)
     if(!m_node) {
         return QtPromise::QPromise<int>::reject("not initialized");
     }
+    static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func1");
     return QtPromise::QPromise<int>{[&](
         const QtPromise::QPromiseResolve<int>& resolve) {
-            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func1");
             m_node->invokeRemote(operationId, nlohmann::json::array({param1}), [resolve](InvokeReplyArg arg) {                
                 const int& value = arg.value.get<int>();
                 resolve(value);
@@ -219,9 +219,9 @@ QtPromise::QPromise<int> OLinkManyParamInterface::func2Async(int param1, int par
     if(!m_node) {
         return QtPromise::QPromise<int>::reject("not initialized");
     }
+    static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func2");
     return QtPromise::QPromise<int>{[&](
         const QtPromise::QPromiseResolve<int>& resolve) {
-            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func2");
             m_node->invokeRemote(operationId, nlohmann::json::array({param1,param2}), [resolve](InvokeReplyArg arg) {                
                 const int& value = arg.value.get<int>();
                 resolve(value);
@@ -251,9 +251,9 @@ QtPromise::QPromise<int> OLinkManyParamInterface::func3Async(int param1, int par
     if(!m_node) {
         return QtPromise::QPromise<int>::reject("not initialized");
     }
+    static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func3");
     return QtPromise::QPromise<int>{[&](
         const QtPromise::QPromiseResolve<int>& resolve) {
-            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func3");
             m_node->invokeRemote(operationId, nlohmann::json::array({param1,param2,param3}), [resolve](InvokeReplyArg arg) {                
                 const int& value = arg.value.get<int>();
                 resolve(value);
@@ -283,9 +283,9 @@ QtPromise::QPromise<int> OLinkManyParamInterface::func4Async(int param1, int par
     if(!m_node) {
         return QtPromise::QPromise<int>::reject("not initialized");
     }
+    static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func4");
     return QtPromise::QPromise<int>{[&](
         const QtPromise::QPromiseResolve<int>& resolve) {
-            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func4");
             m_node->invokeRemote(operationId, nlohmann::json::array({param1,param2,param3,param4}), [resolve](InvokeReplyArg arg) {                
                 const int& value = arg.value.get<int>();
                 resolve(value);

@@ -18,7 +18,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "httpmanyparaminterface.h"
 #include "apigear/utilities/logger.h"
 
-#include <QtQml>
 
 namespace testbed2 {
 

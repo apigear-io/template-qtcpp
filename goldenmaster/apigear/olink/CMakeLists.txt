@@ -7,7 +7,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 include(FetchContent)
 
-find_package(Qt5 REQUIRED COMPONENTS Core WebSockets)
+find_package(Qt6 REQUIRED COMPONENTS Core WebSockets)
 
 find_package(apigear QUIET COMPONENTS olink_core)
 if(NOT olink_core_FOUND)
@@ -44,7 +44,7 @@ target_include_directories(olink_qt
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(olink_qt PUBLIC apigear::utilities_qt olink_core Qt5::Core Qt5::WebSockets)
+target_link_libraries(olink_qt PUBLIC apigear::utilities_qt olink_core Qt6::Core Qt6::WebSockets)
 target_compile_definitions(olink_qt PRIVATE OLINK_QT)
 
 # install binary files

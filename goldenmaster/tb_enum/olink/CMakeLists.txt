@@ -1,6 +1,6 @@
 project(tb_enum_olink)
 
-find_package(Qt5 REQUIRED COMPONENTS Core)
+find_package(Qt6 REQUIRED COMPONENTS Concurrent)
 
 set (TB_ENUM_OLINK_SOURCES
     olinkfactory.cpp
@@ -18,4 +18,4 @@ target_include_directories(tb_enum_olink
     $<INSTALL_INTERFACE:include/tb_enum>
 )
 
-target_link_libraries(tb_enum_olink PUBLIC tb_enum::tb_enum_api olink_qt qtpromise)
+target_link_libraries(tb_enum_olink PUBLIC tb_enum::tb_enum_api olink_qt Qt6::Concurrent qtpromise)

@@ -4,7 +4,7 @@ project(testbed2_api LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt5 REQUIRED COMPONENTS Core Qml)
+find_package(Qt6 REQUIRED COMPONENTS Core)
 
 set(OUTPUT_PATH ${LIBRARY_PATH}/)
 
@@ -22,11 +22,6 @@ endif()
 
 set (TESTBED2_API_SOURCES
     api.cpp
-    apifactory.cpp
-    qmlmanyparaminterface.cpp
-    qmlnestedstruct1interface.cpp
-    qmlnestedstruct2interface.cpp
-    qmlnestedstruct3interface.cpp
 )
 
 # dynamic library
@@ -43,10 +38,7 @@ target_include_directories(testbed2_api
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(testbed2_api PUBLIC
-Qt5::Core
-Qt5::Qml
-nlohmann_json::nlohmann_json)
+target_link_libraries(testbed2_api PUBLIC nlohmann_json::nlohmann_json Qt6::Core)
 
 target_compile_definitions(testbed2_api PRIVATE TESTBED2_API_LIBRARY)
 

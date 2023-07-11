@@ -3,6 +3,8 @@
 {{- $LIB_ID := printf "%s_IMPL" (SNAKE .Module.Name) }}
 {{- $module_path := (path .Module.Name) }}
 {{- $SOURCES := printf "%s_SOURCES" $LIB_ID -}}
+{{- $MODULE_ID := (SNAKE .Module.Name) }}
+{{- $features := .Features -}}
 
 cmake_minimum_required(VERSION 3.20)
 project({{ $lib_id }} LANGUAGES CXX)
@@ -12,7 +14,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(OUTPUT_PATH ${LIBRARY_PATH}/)
 
-find_package(Qt5 REQUIRED COMPONENTS Core)
+find_package({{$module_id}} QUIET COMPONENTS {{$module_id}}_api)
 
 set ({{$LIB_ID}}_SOURCES
     factory.cpp

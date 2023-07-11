@@ -307,9 +307,9 @@ QtPromise::QPromise<QList<bool>> OLinkSimpleArrayInterface::funcBoolAsync(const 
     if(!m_node) {
         return QtPromise::QPromise<QList<bool>>::reject("not initialized");
     }
+    static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcBool");
     return QtPromise::QPromise<QList<bool>>{[&](
         const QtPromise::QPromiseResolve<QList<bool>>& resolve) {
-            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcBool");
             m_node->invokeRemote(operationId, nlohmann::json::array({paramBool}), [resolve](InvokeReplyArg arg) {                
                 const QList<bool>& value = arg.value.get<QList<bool>>();
                 resolve(value);
@@ -339,9 +339,9 @@ QtPromise::QPromise<QList<int>> OLinkSimpleArrayInterface::funcIntAsync(const QL
     if(!m_node) {
         return QtPromise::QPromise<QList<int>>::reject("not initialized");
     }
+    static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcInt");
     return QtPromise::QPromise<QList<int>>{[&](
         const QtPromise::QPromiseResolve<QList<int>>& resolve) {
-            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcInt");
             m_node->invokeRemote(operationId, nlohmann::json::array({paramInt}), [resolve](InvokeReplyArg arg) {                
                 const QList<int>& value = arg.value.get<QList<int>>();
                 resolve(value);
@@ -371,9 +371,9 @@ QtPromise::QPromise<QList<qint32>> OLinkSimpleArrayInterface::funcInt32Async(con
     if(!m_node) {
         return QtPromise::QPromise<QList<qint32>>::reject("not initialized");
     }
+    static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcInt32");
     return QtPromise::QPromise<QList<qint32>>{[&](
         const QtPromise::QPromiseResolve<QList<qint32>>& resolve) {
-            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcInt32");
             m_node->invokeRemote(operationId, nlohmann::json::array({paramInt32}), [resolve](InvokeReplyArg arg) {                
                 const QList<qint32>& value = arg.value.get<QList<qint32>>();
                 resolve(value);
@@ -403,9 +403,9 @@ QtPromise::QPromise<QList<qint64>> OLinkSimpleArrayInterface::funcInt64Async(con
     if(!m_node) {
         return QtPromise::QPromise<QList<qint64>>::reject("not initialized");
     }
+    static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcInt64");
     return QtPromise::QPromise<QList<qint64>>{[&](
         const QtPromise::QPromiseResolve<QList<qint64>>& resolve) {
-            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcInt64");
             m_node->invokeRemote(operationId, nlohmann::json::array({paramInt64}), [resolve](InvokeReplyArg arg) {                
                 const QList<qint64>& value = arg.value.get<QList<qint64>>();
                 resolve(value);
@@ -435,9 +435,9 @@ QtPromise::QPromise<QList<qreal>> OLinkSimpleArrayInterface::funcFloatAsync(cons
     if(!m_node) {
         return QtPromise::QPromise<QList<qreal>>::reject("not initialized");
     }
+    static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcFloat");
     return QtPromise::QPromise<QList<qreal>>{[&](
         const QtPromise::QPromiseResolve<QList<qreal>>& resolve) {
-            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcFloat");
             m_node->invokeRemote(operationId, nlohmann::json::array({paramFloat}), [resolve](InvokeReplyArg arg) {                
                 const QList<qreal>& value = arg.value.get<QList<qreal>>();
                 resolve(value);
@@ -467,9 +467,9 @@ QtPromise::QPromise<QList<float>> OLinkSimpleArrayInterface::funcFloat32Async(co
     if(!m_node) {
         return QtPromise::QPromise<QList<float>>::reject("not initialized");
     }
+    static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcFloat32");
     return QtPromise::QPromise<QList<float>>{[&](
         const QtPromise::QPromiseResolve<QList<float>>& resolve) {
-            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcFloat32");
             m_node->invokeRemote(operationId, nlohmann::json::array({paramFloat32}), [resolve](InvokeReplyArg arg) {                
                 const QList<float>& value = arg.value.get<QList<float>>();
                 resolve(value);
@@ -499,9 +499,9 @@ QtPromise::QPromise<QList<double>> OLinkSimpleArrayInterface::funcFloat64Async(c
     if(!m_node) {
         return QtPromise::QPromise<QList<double>>::reject("not initialized");
     }
+    static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcFloat64");
     return QtPromise::QPromise<QList<double>>{[&](
         const QtPromise::QPromiseResolve<QList<double>>& resolve) {
-            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcFloat64");
             m_node->invokeRemote(operationId, nlohmann::json::array({paramFloat}), [resolve](InvokeReplyArg arg) {                
                 const QList<double>& value = arg.value.get<QList<double>>();
                 resolve(value);
@@ -531,9 +531,9 @@ QtPromise::QPromise<QList<QString>> OLinkSimpleArrayInterface::funcStringAsync(c
     if(!m_node) {
         return QtPromise::QPromise<QList<QString>>::reject("not initialized");
     }
+    static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcString");
     return QtPromise::QPromise<QList<QString>>{[&](
         const QtPromise::QPromiseResolve<QList<QString>>& resolve) {
-            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcString");
             m_node->invokeRemote(operationId, nlohmann::json::array({paramString}), [resolve](InvokeReplyArg arg) {                
                 const QList<QString>& value = arg.value.get<QList<QString>>();
                 resolve(value);

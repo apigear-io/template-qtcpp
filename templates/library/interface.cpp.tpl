@@ -5,8 +5,6 @@
 
 #include "{{lower .Interface.Name}}.h"
 
-#include <QtQml>
-
 namespace {{snake  .Module.Name }} {
 
 {{$class}}::{{$class}}(QObject *parent)

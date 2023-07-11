@@ -187,9 +187,9 @@ QtPromise::QPromise<StructBool> OLinkStructInterface::funcBoolAsync(const Struct
     if(!m_node) {
         return QtPromise::QPromise<StructBool>::reject("not initialized");
     }
+    static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcBool");
     return QtPromise::QPromise<StructBool>{[&](
         const QtPromise::QPromiseResolve<StructBool>& resolve) {
-            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcBool");
             m_node->invokeRemote(operationId, nlohmann::json::array({paramBool}), [resolve](InvokeReplyArg arg) {                
                 const StructBool& value = arg.value.get<StructBool>();
                 resolve(value);
@@ -219,9 +219,9 @@ QtPromise::QPromise<StructBool> OLinkStructInterface::funcIntAsync(const StructI
     if(!m_node) {
         return QtPromise::QPromise<StructBool>::reject("not initialized");
     }
+    static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcInt");
     return QtPromise::QPromise<StructBool>{[&](
         const QtPromise::QPromiseResolve<StructBool>& resolve) {
-            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcInt");
             m_node->invokeRemote(operationId, nlohmann::json::array({paramInt}), [resolve](InvokeReplyArg arg) {                
                 const StructBool& value = arg.value.get<StructBool>();
                 resolve(value);
@@ -251,9 +251,9 @@ QtPromise::QPromise<StructFloat> OLinkStructInterface::funcFloatAsync(const Stru
     if(!m_node) {
         return QtPromise::QPromise<StructFloat>::reject("not initialized");
     }
+    static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcFloat");
     return QtPromise::QPromise<StructFloat>{[&](
         const QtPromise::QPromiseResolve<StructFloat>& resolve) {
-            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcFloat");
             m_node->invokeRemote(operationId, nlohmann::json::array({paramFloat}), [resolve](InvokeReplyArg arg) {                
                 const StructFloat& value = arg.value.get<StructFloat>();
                 resolve(value);
@@ -283,9 +283,9 @@ QtPromise::QPromise<StructString> OLinkStructInterface::funcStringAsync(const St
     if(!m_node) {
         return QtPromise::QPromise<StructString>::reject("not initialized");
     }
+    static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcString");
     return QtPromise::QPromise<StructString>{[&](
         const QtPromise::QPromiseResolve<StructString>& resolve) {
-            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcString");
             m_node->invokeRemote(operationId, nlohmann::json::array({paramString}), [resolve](InvokeReplyArg arg) {                
                 const StructString& value = arg.value.get<StructString>();
                 resolve(value);

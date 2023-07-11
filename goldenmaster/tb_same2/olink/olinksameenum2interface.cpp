@@ -127,9 +127,9 @@ QtPromise::QPromise<Enum1::Enum1Enum> OLinkSameEnum2Interface::func1Async(Enum1:
     if(!m_node) {
         return QtPromise::QPromise<Enum1::Enum1Enum>::reject("not initialized");
     }
+    static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func1");
     return QtPromise::QPromise<Enum1::Enum1Enum>{[&](
         const QtPromise::QPromiseResolve<Enum1::Enum1Enum>& resolve) {
-            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func1");
             m_node->invokeRemote(operationId, nlohmann::json::array({param1}), [resolve](InvokeReplyArg arg) {                
                 const Enum1::Enum1Enum& value = arg.value.get<Enum1::Enum1Enum>();
                 resolve(value);
@@ -159,9 +159,9 @@ QtPromise::QPromise<Enum1::Enum1Enum> OLinkSameEnum2Interface::func2Async(Enum1:
     if(!m_node) {
         return QtPromise::QPromise<Enum1::Enum1Enum>::reject("not initialized");
     }
+    static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func2");
     return QtPromise::QPromise<Enum1::Enum1Enum>{[&](
         const QtPromise::QPromiseResolve<Enum1::Enum1Enum>& resolve) {
-            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func2");
             m_node->invokeRemote(operationId, nlohmann::json::array({param1,param2}), [resolve](InvokeReplyArg arg) {                
                 const Enum1::Enum1Enum& value = arg.value.get<Enum1::Enum1Enum>();
                 resolve(value);

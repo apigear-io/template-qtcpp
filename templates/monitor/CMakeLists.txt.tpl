@@ -8,9 +8,8 @@ project({{$lib_id}})
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-find_package(Qt5 REQUIRED COMPONENTS Core)
-find_package(apigear QUIET COMPONENTS monitor_qt )
+find_package(apigear QUIET COMPONENTS monitor_qt)
+find_package({{$module_id}} QUIET COMPONENTS {{$module_id}}_api)
 
 set ({{$SOURCES}}
     tracedapifactory.cpp

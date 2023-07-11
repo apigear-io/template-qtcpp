@@ -99,15 +99,6 @@ QDataStream &operator>>(QDataStream &stream, Struct1 &obj)
     obj.m_field3 = field3Value;
     return stream;
 }
-
-// ********************************************************************
-// Struct Factory Struct1
-// ********************************************************************
-
-Struct1 Struct1Factory::create()
-{
-    return Struct1();
-}
 // ********************************************************************
 // Struct Struct2
 // ********************************************************************
@@ -152,15 +143,6 @@ QDataStream &operator>>(QDataStream &stream, Struct2 &obj)
     stream >> field3Value;
     obj.m_field3 = field3Value;
     return stream;
-}
-
-// ********************************************************************
-// Struct Factory Struct2
-// ********************************************************************
-
-Struct2 Struct2Factory::create()
-{
-    return Struct2();
 }
 
 // ********************************************************************

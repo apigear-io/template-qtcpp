@@ -4,10 +4,10 @@
 {{- range $module.Interfaces }}
 {{- $interface := . }}
 #include "{{snake $module.Name}}/implementation/{{ lower $interface.Name }}.h"
-#include "{{snake $module.Name}}/api/qml{{lower $interface.Name}}.h"
+#include "{{snake $module.Name}}/qmlplugin/qml{{lower $interface.Name}}.h"
 #include "{{snake $module.Name}}/olink/olink{{ lower $interface.Name }}adapter.h"
 {{- end }}
-#include "{{snake $module.Name}}/api/apifactory.h"
+#include "{{snake $module.Name}}/qmlplugin/apifactory.h"
 #include "{{snake $module.Name}}/olink/olinkfactory.h"
 {{- if $features.monitor }}
 #include "{{snake $module.Name}}/monitor/tracedapifactory.h"

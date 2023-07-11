@@ -4,10 +4,7 @@ import QtQuick.Controls 2.15
 {{- range .System.Modules }}
 {{- $module := . }}
 {{- $version := .Version }}
-import {{$module.Name }} {{$version.Major}}.{{$version.Minor}}
-{{- range $module.Structs }}
-import {{$module.Name }}.{{.Name}}FactorySingleton {{$version.Major}}.{{$version.Minor}}
-{{- end }}
+import {{ snake $module.Name }} {{$version.Major}}.{{$version.Minor}}
 {{- end }}
 
 ApplicationWindow {
@@ -35,7 +32,7 @@ ApplicationWindow {
 {{- $Modulename := Camel $module.Name }}
 {{- range $module.Interfaces }}
 {{- $interface := . }}
-    {{$Modulename}}{{$interface.Name}} { id: qml{{$Modulename}}{{$interface.Name}} }
+    {{$Modulename}}{{Camel $interface.Name}} { id: qml{{$Modulename}}{{$interface.Name}} }
 {{- end }}
 {{- end }}
 

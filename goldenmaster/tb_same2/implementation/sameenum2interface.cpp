@@ -19,8 +19,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "sameenum2interface.h"
 
-#include <QtQml>
-
 namespace tb_same2 {
 
 SameEnum2Interface::SameEnum2Interface(QObject *parent)

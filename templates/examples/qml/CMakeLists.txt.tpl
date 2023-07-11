@@ -21,21 +21,21 @@ add_executable(QmlExamlple
     ${SOURCES}
 )
 
-find_package(Qt5 REQUIRED COMPONENTS Gui Quick QuickControls2 QuickWidgets)
+find_package(Qt6 REQUIRED COMPONENTS Core Qml Gui Quick QuickControls2 QuickWidgets)
 
 {{ range .System.Modules }}
 {{- $module_id := snake .Name }}
-find_package({{$module_id}} QUIET COMPONENTS {{$module_id}}_impl {{$module_id}}_olink plugin_{{$module_id}}{{ if $features.monitor }} {{$module_id}}_monitor{{ end}})
+find_package({{$module_id}} QUIET COMPONENTS {{$module_id}}_impl {{$module_id}}_olink {{ if $features.monitor }} {{$module_id}}_monitor{{ end}})
 {{- end }}
-target_link_libraries(QmlExamlple
+target_link_libraries(QmlExamlple PUBLIC
 {{- range .System.Modules }}
 {{- $module_id := snake .Name }}
     {{$module_id}}_impl
-    {{$module_id}}_olink
-    plugin_{{$module_id}}{{ if $features.monitor }}
+    {{$module_id}}_qml
+    {{$module_id}}_olink {{ if $features.monitor }}
     {{$module_id}}_monitor{{ end -}}
 {{- end }}
-Qt5::Gui Qt5::Quick Qt5::QuickControls2 Qt5::QuickWidgets
+PRIVATE Qt6::Qml Qt6::Gui Qt6::Quick Qt6::QuickControls2 Qt6::QuickWidgets
 )
 
 

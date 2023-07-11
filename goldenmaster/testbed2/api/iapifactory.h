@@ -22,11 +22,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <memory>
 
-#if defined(TESTBED2_API_LIBRARY)
-#  define TESTBED2_API_EXPORT Q_DECL_EXPORT
-#else
-#  define TESTBED2_API_EXPORT Q_DECL_IMPORT
-#endif
 
 namespace testbed2 {
     class AbstractManyParamInterface;
@@ -40,9 +35,10 @@ namespace testbed2 {
 * Check the usage of IApiFactory in Qml versions of interface implementation.
 * See also the ApiFactory, where you can set this factory as an IApiFactory implementation.
 */
-class TESTBED2_API_EXPORT IApiFactory
+class IApiFactory
 {
 public:
+    virtual ~IApiFactory() = default;
     /** 
     * Create an instance of ManyParamInterface
     * @return The implementation of a AbstractManyParamInterface.

@@ -9,11 +9,6 @@
 
 #include <memory>
 
-#if defined({{ $MODULE_ID }}_LIBRARY)
-#  define {{ $MODULE_ID }}_EXPORT Q_DECL_EXPORT
-#else
-#  define {{ $MODULE_ID }}_EXPORT Q_DECL_IMPORT
-#endif
 
 namespace {{snake  .Module.Name }} {
 
@@ -27,9 +22,10 @@ namespace {{snake  .Module.Name }} {
 * Check the usage of IApiFactory in Qml versions of interface implementation.
 * See also the ApiFactory, where you can set this factory as an IApiFactory implementation.
 */
-class {{ $MODULE_ID }}_EXPORT IApiFactory
+class IApiFactory
 {
 public:
+    virtual ~IApiFactory() = default;
 {{- range .Module.Interfaces }}
     /** 
     * Create an instance of {{Camel .Name}}

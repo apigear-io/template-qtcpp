@@ -17,7 +17,7 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt5 REQUIRED COMPONENTS Core Test)
+find_package(Qt6 REQUIRED COMPONENTS Core Test)
 find_package({{$module_id}} QUIET COMPONENTS {{$module_id}}_impl)
 
 # append local binary directory for conan packages to be found
@@ -31,7 +31,7 @@ add_executable(test_{{$module_id}}_{{.Name|lower}} test_{{.Name|lower}}.cpp)
 
 
 {{- range .Module.Interfaces }}
-target_link_libraries(test_{{$module_id}}_{{.Name|lower}} {{$module_id}}_impl Qt5::Test)
+target_link_libraries(test_{{$module_id}}_{{.Name|lower}} {{$module_id}}_impl Qt6::Test)
 {{- end }}
 
 {{- range .Module.Interfaces }}

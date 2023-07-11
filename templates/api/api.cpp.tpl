@@ -78,14 +78,6 @@ QDataStream &operator>>(QDataStream &stream, {{$class}} &obj)
     return stream;
 }
 
-// ********************************************************************
-// Struct Factory {{$class}}
-// ********************************************************************
-
-{{$class}} {{$class}}Factory::create()
-{
-    return {{$class}}();
-}
 {{- end }}
 
 {{- range .Module.Interfaces }}

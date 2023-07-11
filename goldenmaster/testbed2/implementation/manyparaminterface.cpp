@@ -19,8 +19,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "manyparaminterface.h"
 
-#include <QtQml>
-
 namespace testbed2 {
 
 ManyParamInterface::ManyParamInterface(QObject *parent)

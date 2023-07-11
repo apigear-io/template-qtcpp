@@ -9,7 +9,7 @@ project({{ $module_id }}_http LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt5 REQUIRED COMPONENTS Network)
+find_package(Qt6 REQUIRED COMPONENTS Network)
 set(OUTPUT_PATH ${LIBRARY_PATH}/)
 
 set ({{$SOURCES}}
@@ -23,4 +23,4 @@ set ({{$SOURCES}}
 
 add_library({{$module_id}}_http STATIC ${ {{- $SOURCES -}} })
 target_include_directories({{$module_id}}_http PRIVATE ../{{$module_id}})
-target_link_libraries({{$module_id}}_http PUBLIC apigear::utilities_qt Qt5::Network {{$module_id}}_api)
+target_link_libraries({{$module_id}}_http PUBLIC apigear::utilities_qt Qt6::Network {{$module_id}}_api)

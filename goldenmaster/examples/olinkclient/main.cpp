@@ -1,4 +1,3 @@
-#include <QtQml>
 #include <QGuiApplication>
 #include "apigear/olink/olinkclient.h"
 #include "olink/clientregistry.h"

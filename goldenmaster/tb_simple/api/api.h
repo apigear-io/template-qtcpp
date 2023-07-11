@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <QtCore>
 #include <QtCore/QtGlobal>
+#include <QDataStream>
 
 #if defined(TB_SIMPLE_API_LIBRARY)
 #  define TB_SIMPLE_API_EXPORT Q_DECL_EXPORT
@@ -363,4 +364,5 @@ signals:
 
 
 } //namespace tb_simple
+
 

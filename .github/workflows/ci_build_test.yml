@@ -31,8 +31,9 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
-          version: '5.15.2'
+          version: '6.5.*'
           cache: 'true'
+          modules: qtwebsockets
       - name: Update path env on Windows for testing
         if: ${{ matrix.config.os == 'windows-latest'}}
         run: echo "$GITHUB_WORKSPACE/goldenmaster/build/bin/Debug/" >> $GITHUB_PATH

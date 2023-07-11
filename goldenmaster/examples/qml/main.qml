@@ -2,26 +2,11 @@ import QtQuick 2.15
 import QtQuick.Layouts 1.2
 import QtQuick.Controls 2.15
 import testbed2 1.0
-import testbed2.Struct1FactorySingleton 1.0
-import testbed2.Struct2FactorySingleton 1.0
-import testbed2.Struct3FactorySingleton 1.0
-import testbed2.Struct4FactorySingleton 1.0
-import testbed2.NestedStruct1FactorySingleton 1.0
-import testbed2.NestedStruct2FactorySingleton 1.0
-import testbed2.NestedStruct3FactorySingleton 1.0
-import tb.enum 1.0
-import tb.same1 1.0
-import tb.same1.Struct1FactorySingleton 1.0
-import tb.same1.Struct2FactorySingleton 1.0
-import tb.same2 1.0
-import tb.same2.Struct1FactorySingleton 1.0
-import tb.same2.Struct2FactorySingleton 1.0
-import tb.simple 1.0
+import tb_enum 1.0
+import tb_same1 1.0
+import tb_same2 1.0
+import tb_simple 1.0
 import testbed1 1.0
-import testbed1.StructBoolFactorySingleton 1.0
-import testbed1.StructIntFactorySingleton 1.0
-import testbed1.StructFloatFactorySingleton 1.0
-import testbed1.StructStringFactorySingleton 1.0
 
 ApplicationWindow {
     id: appWindow

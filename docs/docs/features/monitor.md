@@ -68,7 +68,7 @@ It shares the ownership of the wrapped object. It forwards all calls to the impl
 
 The `📜agent.h` and `📜agent.cpp` files contain helpers to prepare interface specific trace data for the general tracing [TraceClient](monitor#qt-trace-client)
 
-### Tracing with Qml objects
+### Tracing with QML objects
 
 Files `📜tracedapifactory.h`  and `📜tracedapifactory.cpp` contain the TracedApiFactory which creates the interfaces wrapped with the trace decorator.
 In our example it will produce only `Hello` interfaces:

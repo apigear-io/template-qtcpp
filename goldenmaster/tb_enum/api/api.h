@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <QtCore>
 #include <QtCore/QtGlobal>
+#include <QDataStream>
 
 #if defined(TB_ENUM_API_LIBRARY)
 #  define TB_ENUM_API_EXPORT Q_DECL_EXPORT
@@ -33,6 +34,7 @@ namespace tb_enum {
 // ********************************************************************
 class TB_ENUM_API_EXPORT Enum0 : public QObject {
     Q_OBJECT
+
 public:
     Enum0(QObject *parent = nullptr)
         : QObject(parent)
@@ -54,14 +56,14 @@ public:
 };
 
 /** ostream operator. Allows writing the Enum0Enum value to an text output*/
-inline QDataStream &operator<<(QDataStream &ds, const Enum0::Enum0Enum &obj)
+inline TB_ENUM_API_EXPORT QDataStream& operator<<(QDataStream &ds, const Enum0::Enum0Enum &obj)
 {
     quint8 val = obj;
     ds << val;
     return ds;
 }
 /** istream operator. Allows reading to Enum0Enum value from input text*/
-inline QDataStream &operator>>(QDataStream &ds, Enum0::Enum0Enum &obj) {
+inline TB_ENUM_API_EXPORT QDataStream& operator>>(QDataStream &ds, Enum0::Enum0Enum &obj) {
     bool ok;
     quint8 val;
     ds >> val;
@@ -77,6 +79,7 @@ inline QDataStream &operator>>(QDataStream &ds, Enum0::Enum0Enum &obj) {
 // ********************************************************************
 class TB_ENUM_API_EXPORT Enum1 : public QObject {
     Q_OBJECT
+
 public:
     Enum1(QObject *parent = nullptr)
         : QObject(parent)
@@ -98,14 +101,14 @@ public:
 };
 
 /** ostream operator. Allows writing the Enum1Enum value to an text output*/
-inline QDataStream &operator<<(QDataStream &ds, const Enum1::Enum1Enum &obj)
+inline TB_ENUM_API_EXPORT QDataStream& operator<<(QDataStream &ds, const Enum1::Enum1Enum &obj)
 {
     quint8 val = obj;
     ds << val;
     return ds;
 }
 /** istream operator. Allows reading to Enum1Enum value from input text*/
-inline QDataStream &operator>>(QDataStream &ds, Enum1::Enum1Enum &obj) {
+inline TB_ENUM_API_EXPORT QDataStream& operator>>(QDataStream &ds, Enum1::Enum1Enum &obj) {
     bool ok;
     quint8 val;
     ds >> val;
@@ -121,6 +124,7 @@ inline QDataStream &operator>>(QDataStream &ds, Enum1::Enum1Enum &obj) {
 // ********************************************************************
 class TB_ENUM_API_EXPORT Enum2 : public QObject {
     Q_OBJECT
+
 public:
     Enum2(QObject *parent = nullptr)
         : QObject(parent)
@@ -142,14 +146,14 @@ public:
 };
 
 /** ostream operator. Allows writing the Enum2Enum value to an text output*/
-inline QDataStream &operator<<(QDataStream &ds, const Enum2::Enum2Enum &obj)
+inline TB_ENUM_API_EXPORT QDataStream& operator<<(QDataStream &ds, const Enum2::Enum2Enum &obj)
 {
     quint8 val = obj;
     ds << val;
     return ds;
 }
 /** istream operator. Allows reading to Enum2Enum value from input text*/
-inline QDataStream &operator>>(QDataStream &ds, Enum2::Enum2Enum &obj) {
+inline TB_ENUM_API_EXPORT QDataStream& operator>>(QDataStream &ds, Enum2::Enum2Enum &obj) {
     bool ok;
     quint8 val;
     ds >> val;
@@ -165,6 +169,7 @@ inline QDataStream &operator>>(QDataStream &ds, Enum2::Enum2Enum &obj) {
 // ********************************************************************
 class TB_ENUM_API_EXPORT Enum3 : public QObject {
     Q_OBJECT
+
 public:
     Enum3(QObject *parent = nullptr)
         : QObject(parent)
@@ -186,14 +191,14 @@ public:
 };
 
 /** ostream operator. Allows writing the Enum3Enum value to an text output*/
-inline QDataStream &operator<<(QDataStream &ds, const Enum3::Enum3Enum &obj)
+inline TB_ENUM_API_EXPORT QDataStream& operator<<(QDataStream &ds, const Enum3::Enum3Enum &obj)
 {
     quint8 val = obj;
     ds << val;
     return ds;
 }
 /** istream operator. Allows reading to Enum3Enum value from input text*/
-inline QDataStream &operator>>(QDataStream &ds, Enum3::Enum3Enum &obj) {
+inline TB_ENUM_API_EXPORT QDataStream& operator>>(QDataStream &ds, Enum3::Enum3Enum &obj) {
     bool ok;
     quint8 val;
     ds >> val;

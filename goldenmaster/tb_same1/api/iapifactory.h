@@ -22,11 +22,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <memory>
 
-#if defined(TB_SAME1_API_LIBRARY)
-#  define TB_SAME1_API_EXPORT Q_DECL_EXPORT
-#else
-#  define TB_SAME1_API_EXPORT Q_DECL_IMPORT
-#endif
 
 namespace tb_same1 {
     class AbstractSameStruct1Interface;
@@ -40,9 +35,10 @@ namespace tb_same1 {
 * Check the usage of IApiFactory in Qml versions of interface implementation.
 * See also the ApiFactory, where you can set this factory as an IApiFactory implementation.
 */
-class TB_SAME1_API_EXPORT IApiFactory
+class IApiFactory
 {
 public:
+    virtual ~IApiFactory() = default;
     /** 
     * Create an instance of SameStruct1Interface
     * @return The implementation of a AbstractSameStruct1Interface.

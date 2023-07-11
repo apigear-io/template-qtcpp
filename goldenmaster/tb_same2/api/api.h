@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <QtCore>
 #include <QtCore/QtGlobal>
+#include <QDataStream>
 
 #if defined(TB_SAME2_API_LIBRARY)
 #  define TB_SAME2_API_EXPORT Q_DECL_EXPORT
@@ -33,6 +34,7 @@ namespace tb_same2 {
 // ********************************************************************
 class TB_SAME2_API_EXPORT Enum1 : public QObject {
     Q_OBJECT
+
 public:
     Enum1(QObject *parent = nullptr)
         : QObject(parent)
@@ -53,14 +55,14 @@ public:
 };
 
 /** ostream operator. Allows writing the Enum1Enum value to an text output*/
-inline QDataStream &operator<<(QDataStream &ds, const Enum1::Enum1Enum &obj)
+inline TB_SAME2_API_EXPORT QDataStream& operator<<(QDataStream &ds, const Enum1::Enum1Enum &obj)
 {
     quint8 val = obj;
     ds << val;
     return ds;
 }
 /** istream operator. Allows reading to Enum1Enum value from input text*/
-inline QDataStream &operator>>(QDataStream &ds, Enum1::Enum1Enum &obj) {
+inline TB_SAME2_API_EXPORT QDataStream& operator>>(QDataStream &ds, Enum1::Enum1Enum &obj) {
     bool ok;
     quint8 val;
     ds >> val;
@@ -76,6 +78,7 @@ inline QDataStream &operator>>(QDataStream &ds, Enum1::Enum1Enum &obj) {
 // ********************************************************************
 class TB_SAME2_API_EXPORT Enum2 : public QObject {
     Q_OBJECT
+
 public:
     Enum2(QObject *parent = nullptr)
         : QObject(parent)
@@ -96,14 +99,14 @@ public:
 };
 
 /** ostream operator. Allows writing the Enum2Enum value to an text output*/
-inline QDataStream &operator<<(QDataStream &ds, const Enum2::Enum2Enum &obj)
+inline TB_SAME2_API_EXPORT QDataStream& operator<<(QDataStream &ds, const Enum2::Enum2Enum &obj)
 {
     quint8 val = obj;
     ds << val;
     return ds;
 }
 /** istream operator. Allows reading to Enum2Enum value from input text*/
-inline QDataStream &operator>>(QDataStream &ds, Enum2::Enum2Enum &obj) {
+inline TB_SAME2_API_EXPORT QDataStream& operator>>(QDataStream &ds, Enum2::Enum2Enum &obj) {
     bool ok;
     quint8 val;
     ds >> val;
@@ -113,6 +116,7 @@ inline QDataStream &operator>>(QDataStream &ds, Enum2::Enum2Enum &obj) {
     }
     return ds;
 }
+
 // ********************************************************************
 // Struct1 struct
 // ********************************************************************
@@ -133,19 +137,11 @@ public:
 };
 
 /** ostream operator. Allows writing the Struct1 value to an text output*/
-QDataStream &operator<<(QDataStream &stream, const Struct1 &obj);
+TB_SAME2_API_EXPORT QDataStream& operator<<(QDataStream &stream, const Struct1 &obj);
 /** istream operator. Allows reading to Struct1 value from input text*/
-QDataStream &operator>>(QDataStream &stream, Struct1 &obj);
+TB_SAME2_API_EXPORT QDataStream& operator>>(QDataStream &stream, Struct1 &obj);
 
-// ********************************************************************
-// Struct1 struct factory
-// Registered by plugin to allow creating this type of objects in qml. 
-// ********************************************************************
-class TB_SAME2_API_EXPORT Struct1Factory : public QObject {
-    Q_OBJECT
-public:
-    Q_INVOKABLE tb_same2::Struct1 create();
-};
+
 // ********************************************************************
 // Struct2 struct
 // ********************************************************************
@@ -166,19 +162,10 @@ public:
 };
 
 /** ostream operator. Allows writing the Struct2 value to an text output*/
-QDataStream &operator<<(QDataStream &stream, const Struct2 &obj);
+TB_SAME2_API_EXPORT QDataStream& operator<<(QDataStream &stream, const Struct2 &obj);
 /** istream operator. Allows reading to Struct2 value from input text*/
-QDataStream &operator>>(QDataStream &stream, Struct2 &obj);
+TB_SAME2_API_EXPORT QDataStream& operator>>(QDataStream &stream, Struct2 &obj);
 
-// ********************************************************************
-// Struct2 struct factory
-// Registered by plugin to allow creating this type of objects in qml. 
-// ********************************************************************
-class TB_SAME2_API_EXPORT Struct2Factory : public QObject {
-    Q_OBJECT
-public:
-    Q_INVOKABLE tb_same2::Struct2 create();
-};
 
 // ********************************************************************
 /**

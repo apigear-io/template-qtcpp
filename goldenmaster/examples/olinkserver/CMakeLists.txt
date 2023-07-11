@@ -14,7 +14,7 @@ add_executable(OLinkServer
     ${SOURCES}
 )
 
-find_package(Qt5 REQUIRED COMPONENTS Core Qml Network WebSockets Gui)
+find_package(Qt6 REQUIRED COMPONENTS Gui)
 
 
 find_package(testbed2 QUIET COMPONENTS testbed2_impl testbed2_olink testbed2_monitor)
@@ -23,7 +23,7 @@ find_package(tb_same1 QUIET COMPONENTS tb_same1_impl tb_same1_olink tb_same1_mon
 find_package(tb_same2 QUIET COMPONENTS tb_same2_impl tb_same2_olink tb_same2_monitor)
 find_package(tb_simple QUIET COMPONENTS tb_simple_impl tb_simple_olink tb_simple_monitor)
 find_package(testbed1 QUIET COMPONENTS testbed1_impl testbed1_olink testbed1_monitor)
-target_link_libraries(OLinkServer
+target_link_libraries(OLinkServer PUBLIC
     testbed2_impl
     testbed2_olink
     testbed2_monitor
@@ -42,7 +42,7 @@ target_link_libraries(OLinkServer
     testbed1_impl
     testbed1_olink
     testbed1_monitor
-)
+Qt6::Gui)
 
 install(TARGETS OLinkServer
         RUNTIME DESTINATION bin COMPONENT Runtime)

@@ -113,15 +113,6 @@ QDataStream &operator>>(QDataStream &stream, Struct1 &obj)
     obj.m_field1 = field1Value;
     return stream;
 }
-
-// ********************************************************************
-// Struct Factory Struct1
-// ********************************************************************
-
-Struct1 Struct1Factory::create()
-{
-    return Struct1();
-}
 // ********************************************************************
 // Struct Struct2
 // ********************************************************************
@@ -161,15 +152,6 @@ QDataStream &operator>>(QDataStream &stream, Struct2 &obj)
     stream >> field2Value;
     obj.m_field2 = field2Value;
     return stream;
-}
-
-// ********************************************************************
-// Struct Factory Struct2
-// ********************************************************************
-
-Struct2 Struct2Factory::create()
-{
-    return Struct2();
 }
 // ********************************************************************
 // Struct Struct3
@@ -215,15 +197,6 @@ QDataStream &operator>>(QDataStream &stream, Struct3 &obj)
     stream >> field3Value;
     obj.m_field3 = field3Value;
     return stream;
-}
-
-// ********************************************************************
-// Struct Factory Struct3
-// ********************************************************************
-
-Struct3 Struct3Factory::create()
-{
-    return Struct3();
 }
 // ********************************************************************
 // Struct Struct4
@@ -275,15 +248,6 @@ QDataStream &operator>>(QDataStream &stream, Struct4 &obj)
     obj.m_field4 = field4Value;
     return stream;
 }
-
-// ********************************************************************
-// Struct Factory Struct4
-// ********************************************************************
-
-Struct4 Struct4Factory::create()
-{
-    return Struct4();
-}
 // ********************************************************************
 // Struct NestedStruct1
 // ********************************************************************
@@ -318,15 +282,6 @@ QDataStream &operator>>(QDataStream &stream, NestedStruct1 &obj)
     stream >> field1Value;
     obj.m_field1 = field1Value;
     return stream;
-}
-
-// ********************************************************************
-// Struct Factory NestedStruct1
-// ********************************************************************
-
-NestedStruct1 NestedStruct1Factory::create()
-{
-    return NestedStruct1();
 }
 // ********************************************************************
 // Struct NestedStruct2
@@ -367,15 +322,6 @@ QDataStream &operator>>(QDataStream &stream, NestedStruct2 &obj)
     stream >> field2Value;
     obj.m_field2 = field2Value;
     return stream;
-}
-
-// ********************************************************************
-// Struct Factory NestedStruct2
-// ********************************************************************
-
-NestedStruct2 NestedStruct2Factory::create()
-{
-    return NestedStruct2();
 }
 // ********************************************************************
 // Struct NestedStruct3
@@ -421,15 +367,6 @@ QDataStream &operator>>(QDataStream &stream, NestedStruct3 &obj)
     stream >> field3Value;
     obj.m_field3 = field3Value;
     return stream;
-}
-
-// ********************************************************************
-// Struct Factory NestedStruct3
-// ********************************************************************
-
-NestedStruct3 NestedStruct3Factory::create()
-{
-    return NestedStruct3();
 }
 
 // ********************************************************************

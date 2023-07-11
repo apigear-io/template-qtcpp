@@ -20,7 +20,7 @@ enable_testing()
 
 Include(FetchContent)
 
-find_package(Qt5 REQUIRED COMPONENTS Test Core Qml Network WebSockets)
+find_package(Qt6 REQUIRED COMPONENTS Test Core Qml Network WebSockets)
 find_package(apigear QUIET COMPONENTS olink_qt)
 
 FetchContent_Declare(

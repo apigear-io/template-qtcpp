@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <QtCore>
 #include <QtCore/QtGlobal>
+#include <QDataStream>
 
 #if defined(TESTBED1_API_LIBRARY)
 #  define TESTBED1_API_EXPORT Q_DECL_EXPORT
@@ -27,6 +28,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #endif
 
 namespace testbed1 {
+
 // ********************************************************************
 // StructBool struct
 // ********************************************************************
@@ -43,19 +45,11 @@ public:
 };
 
 /** ostream operator. Allows writing the StructBool value to an text output*/
-QDataStream &operator<<(QDataStream &stream, const StructBool &obj);
+TESTBED1_API_EXPORT QDataStream& operator<<(QDataStream &stream, const StructBool &obj);
 /** istream operator. Allows reading to StructBool value from input text*/
-QDataStream &operator>>(QDataStream &stream, StructBool &obj);
+TESTBED1_API_EXPORT QDataStream& operator>>(QDataStream &stream, StructBool &obj);
 
-// ********************************************************************
-// StructBool struct factory
-// Registered by plugin to allow creating this type of objects in qml. 
-// ********************************************************************
-class TESTBED1_API_EXPORT StructBoolFactory : public QObject {
-    Q_OBJECT
-public:
-    Q_INVOKABLE testbed1::StructBool create();
-};
+
 // ********************************************************************
 // StructInt struct
 // ********************************************************************
@@ -72,19 +66,11 @@ public:
 };
 
 /** ostream operator. Allows writing the StructInt value to an text output*/
-QDataStream &operator<<(QDataStream &stream, const StructInt &obj);
+TESTBED1_API_EXPORT QDataStream& operator<<(QDataStream &stream, const StructInt &obj);
 /** istream operator. Allows reading to StructInt value from input text*/
-QDataStream &operator>>(QDataStream &stream, StructInt &obj);
+TESTBED1_API_EXPORT QDataStream& operator>>(QDataStream &stream, StructInt &obj);
 
-// ********************************************************************
-// StructInt struct factory
-// Registered by plugin to allow creating this type of objects in qml. 
-// ********************************************************************
-class TESTBED1_API_EXPORT StructIntFactory : public QObject {
-    Q_OBJECT
-public:
-    Q_INVOKABLE testbed1::StructInt create();
-};
+
 // ********************************************************************
 // StructFloat struct
 // ********************************************************************
@@ -101,19 +87,11 @@ public:
 };
 
 /** ostream operator. Allows writing the StructFloat value to an text output*/
-QDataStream &operator<<(QDataStream &stream, const StructFloat &obj);
+TESTBED1_API_EXPORT QDataStream& operator<<(QDataStream &stream, const StructFloat &obj);
 /** istream operator. Allows reading to StructFloat value from input text*/
-QDataStream &operator>>(QDataStream &stream, StructFloat &obj);
+TESTBED1_API_EXPORT QDataStream& operator>>(QDataStream &stream, StructFloat &obj);
 
-// ********************************************************************
-// StructFloat struct factory
-// Registered by plugin to allow creating this type of objects in qml. 
-// ********************************************************************
-class TESTBED1_API_EXPORT StructFloatFactory : public QObject {
-    Q_OBJECT
-public:
-    Q_INVOKABLE testbed1::StructFloat create();
-};
+
 // ********************************************************************
 // StructString struct
 // ********************************************************************
@@ -130,19 +108,10 @@ public:
 };
 
 /** ostream operator. Allows writing the StructString value to an text output*/
-QDataStream &operator<<(QDataStream &stream, const StructString &obj);
+TESTBED1_API_EXPORT QDataStream& operator<<(QDataStream &stream, const StructString &obj);
 /** istream operator. Allows reading to StructString value from input text*/
-QDataStream &operator>>(QDataStream &stream, StructString &obj);
+TESTBED1_API_EXPORT QDataStream& operator>>(QDataStream &stream, StructString &obj);
 
-// ********************************************************************
-// StructString struct factory
-// Registered by plugin to allow creating this type of objects in qml. 
-// ********************************************************************
-class TESTBED1_API_EXPORT StructStringFactory : public QObject {
-    Q_OBJECT
-public:
-    Q_INVOKABLE testbed1::StructString create();
-};
 
 // ********************************************************************
 /**

@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-find_package(Qt5 REQUIRED COMPONENTS Core)
+find_package(Qt6 REQUIRED COMPONENTS Core)
 
 set (SOURCES
     logger.cpp
@@ -19,7 +19,7 @@ target_include_directories(utilities_qt
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(utilities_qt PUBLIC Qt5::Core)
+target_link_libraries(utilities_qt PUBLIC Qt6::Core)
 
 # install binary files
 install(TARGETS utilities_qt

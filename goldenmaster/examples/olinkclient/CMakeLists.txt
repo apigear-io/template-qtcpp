@@ -1,7 +1,7 @@
 project(OLinkClient)
 cmake_minimum_required(VERSION 3.20)
 
-find_package(Qt5 REQUIRED COMPONENTS Gui)
+find_package(Qt6 REQUIRED COMPONENTS Gui)
 
 # append local binary directory for conan packages to be found
 set(CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR} ${CMAKE_MODULE_PATH})
@@ -23,7 +23,7 @@ find_package(tb_same1 QUIET COMPONENTS tb_same1_api tb_same1_impl tb_same1_olink
 find_package(tb_same2 QUIET COMPONENTS tb_same2_api tb_same2_impl tb_same2_olink tb_same2_monitor)
 find_package(tb_simple QUIET COMPONENTS tb_simple_api tb_simple_impl tb_simple_olink tb_simple_monitor)
 find_package(testbed1 QUIET COMPONENTS testbed1_api testbed1_impl testbed1_olink testbed1_monitor)
-target_link_libraries(OLinkClient
+target_link_libraries(OLinkClient PUBLIC
     testbed2_api
     testbed2_impl
     testbed2_olink
@@ -48,7 +48,7 @@ target_link_libraries(OLinkClient
     testbed1_impl
     testbed1_olink
     testbed1_monitor
-Qt5::Gui
+Qt6::Gui
 )
 install(TARGETS OLinkClient
         RUNTIME DESTINATION bin COMPONENT Runtime)

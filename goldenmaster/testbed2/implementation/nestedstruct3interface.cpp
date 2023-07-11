@@ -19,8 +19,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "nestedstruct3interface.h"
 
-#include <QtQml>
-
 namespace testbed2 {
 
 NestedStruct3Interface::NestedStruct3Interface(QObject *parent)

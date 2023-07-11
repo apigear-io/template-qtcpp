@@ -1,12 +1,15 @@
 {{- /* Copyright (c) ApiGear UG 2020 */}}
 {{- $MODULE_ID := printf "%s_API" (SNAKE .Module.Name) }}
 {{- $module_id := snake .Module.Name }}
+{{- $Modulename := Camel .Module.Name }}
 {{- $namespacePrefix := printf "%s::" (snake .Module.Name) }}
 {{- cppGpl .Module }}
+{{- $version := .Module.Version }}
 #pragma once
 
 #include <QtCore>
 #include <QtCore/QtGlobal>
+#include <QDataStream>
 
 #if defined({{ $MODULE_ID }}_LIBRARY)
 #  define {{ $MODULE_ID }}_EXPORT Q_DECL_EXPORT
@@ -28,6 +31,7 @@ namespace {{snake  .Module.Name }} {
 // ********************************************************************
 class {{ $MODULE_ID }}_EXPORT {{ $class }} : public QObject {
     Q_OBJECT
+
 public:
     {{ $class }}(QObject *parent = nullptr)
         : QObject(parent)
@@ -53,14 +57,14 @@ public:
 };
 
 /** ostream operator. Allows writing the {{$class}}Enum value to an text output*/
-inline QDataStream &operator<<(QDataStream &ds, const {{$class}}::{{$class}}Enum &obj)
+inline {{ $MODULE_ID }}_EXPORT QDataStream& operator<<(QDataStream &ds, const {{$class}}::{{$class}}Enum &obj)
 {
     quint8 val = obj;
     ds << val;
     return ds;
 }
 /** istream operator. Allows reading to {{$class}}Enum value from input text*/
-inline QDataStream &operator>>(QDataStream &ds, {{$class}}::{{$class}}Enum &obj) {
+inline {{ $MODULE_ID }}_EXPORT QDataStream& operator>>(QDataStream &ds, {{$class}}::{{$class}}Enum &obj) {
     bool ok;
     quint8 val;
     ds >> val;
@@ -73,6 +77,7 @@ inline QDataStream &operator>>(QDataStream &ds, {{$class}}::{{$class}}Enum &obj)
 {{- end }}
 {{- range .Module.Structs }}
 {{- $class := .Name }}
+
 // ********************************************************************
 // {{$class}} struct
  {{- if .Description }}
@@ -102,22 +107,10 @@ public:
 };
 
 /** ostream operator. Allows writing the {{$class}} value to an text output*/
-QDataStream &operator<<(QDataStream &stream, const {{$class}} &obj);
+{{ $MODULE_ID }}_EXPORT QDataStream& operator<<(QDataStream &stream, const {{$class}} &obj);
 /** istream operator. Allows reading to {{$class}} value from input text*/
-QDataStream &operator>>(QDataStream &stream, {{$class}} &obj);
-
-// ********************************************************************
-// {{$class}} struct factory
-// Registered by plugin to allow creating this type of objects in qml. 
-// ********************************************************************
-class {{ $MODULE_ID }}_EXPORT {{$class}}Factory : public QObject {
-    Q_OBJECT
-public:
-    Q_INVOKABLE {{$module_id}}::{{$class}} create();
-};
-
-
-{{- end }}
+{{ $MODULE_ID }}_EXPORT QDataStream& operator>>(QDataStream &stream, {{$class}} &obj);
+{{ end }}
 {{ range .Module.Interfaces }}
 {{- $class := printf "Abstract%s" (Camel .Name) }}
 // ********************************************************************

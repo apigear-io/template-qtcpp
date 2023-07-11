@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(OUTPUT_PATH ${LIBRARY_PATH}/)
 
-find_package(Qt5 REQUIRED COMPONENTS Core)
+find_package(testbed1 QUIET COMPONENTS testbed1_api)
 
 set (TESTBED1_IMPL_SOURCES
     factory.cpp

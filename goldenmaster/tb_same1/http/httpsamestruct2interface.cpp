@@ -18,7 +18,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "httpsamestruct2interface.h"
 #include "apigear/utilities/logger.h"
 
-#include <QtQml>
 
 namespace tb_same1 {
 

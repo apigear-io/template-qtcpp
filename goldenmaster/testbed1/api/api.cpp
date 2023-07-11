@@ -53,15 +53,6 @@ QDataStream &operator>>(QDataStream &stream, StructBool &obj)
     obj.m_fieldBool = fieldBoolValue;
     return stream;
 }
-
-// ********************************************************************
-// Struct Factory StructBool
-// ********************************************************************
-
-StructBool StructBoolFactory::create()
-{
-    return StructBool();
-}
 // ********************************************************************
 // Struct StructInt
 // ********************************************************************
@@ -96,15 +87,6 @@ QDataStream &operator>>(QDataStream &stream, StructInt &obj)
     stream >> fieldIntValue;
     obj.m_fieldInt = fieldIntValue;
     return stream;
-}
-
-// ********************************************************************
-// Struct Factory StructInt
-// ********************************************************************
-
-StructInt StructIntFactory::create()
-{
-    return StructInt();
 }
 // ********************************************************************
 // Struct StructFloat
@@ -141,15 +123,6 @@ QDataStream &operator>>(QDataStream &stream, StructFloat &obj)
     obj.m_fieldFloat = fieldFloatValue;
     return stream;
 }
-
-// ********************************************************************
-// Struct Factory StructFloat
-// ********************************************************************
-
-StructFloat StructFloatFactory::create()
-{
-    return StructFloat();
-}
 // ********************************************************************
 // Struct StructString
 // ********************************************************************
@@ -184,15 +157,6 @@ QDataStream &operator>>(QDataStream &stream, StructString &obj)
     stream >> fieldStringValue;
     obj.m_fieldString = fieldStringValue;
     return stream;
-}
-
-// ********************************************************************
-// Struct Factory StructString
-// ********************************************************************
-
-StructString StructStringFactory::create()
-{
-    return StructString();
 }
 
 // ********************************************************************

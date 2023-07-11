@@ -94,7 +94,7 @@ void {{$class}}::set{{Camel .Name}}Local({{qtParam "" .}})
     const nlohmann::json &args = nlohmann::json::array({
         {{ qtVars .Params }}
     });
-    const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "{{.Name}}");
+    static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "{{.Name}}");
     m_node->invokeRemote(operationId, args, func);
     {{- else }}
     {{$return}} value{ {{qtDefault "" .Return}} };
@@ -113,8 +113,9 @@ QtPromise::QPromise<{{$return}}> {{$class}}::{{camel .Name}}Async({{qtParams "" 
     if(!m_node) {
         return QtPromise::QPromise<{{$return}}>::reject("not initialized");
     }
+    static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "{{.Name}}");
     {{- if .Return.IsVoid }}
-    m_node->invokeRemote("{{$module}}.{{$iface}}/{{.Name}}", nlohmann::json::array({
+    m_node->invokeRemote(operationId, nlohmann::json::array({
             {{ range $i, $e := .Params }}{{if $i}}, {{end}}
                 {{.Name}}
             {{- end }}}));
@@ -122,7 +123,6 @@ QtPromise::QPromise<{{$return}}> {{$class}}::{{camel .Name}}Async({{qtParams "" 
     {{- else }}
     return QtPromise::QPromise<{{$return}}>{[&](
         const QtPromise::QPromiseResolve<{{$return}}>& resolve) {
-            const auto& operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "{{.Name}}");
             m_node->invokeRemote(operationId, nlohmann::json::array({
             {{- range $i, $e := .Params }}{{if $i}},{{end}}{{.Name}}
             {{- end }}}), [resolve](InvokeReplyArg arg) {                

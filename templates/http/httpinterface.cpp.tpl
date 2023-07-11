@@ -6,7 +6,6 @@
 #include "{{lower $class}}.h"
 #include "apigear/utilities/logger.h"
 
-#include <QtQml>
 
 namespace {{snake  .Module.Name }} {
 

@@ -2,7 +2,7 @@ include(FetchContent)
 
 FetchContent_Declare(qtpromise
   GIT_REPOSITORY https://github.com/simonbrunel/qtpromise.git
-  GIT_TAG v0.6.0
+  GIT_TAG v0.7.0
   GIT_SHALLOW true
 )
 

@@ -19,8 +19,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "enuminterface.h"
 
-#include <QtQml>
-
 namespace tb_enum {
 
 EnumInterface::EnumInterface(QObject *parent)

@@ -22,11 +22,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <memory>
 
-#if defined(TB_SIMPLE_API_LIBRARY)
-#  define TB_SIMPLE_API_EXPORT Q_DECL_EXPORT
-#else
-#  define TB_SIMPLE_API_EXPORT Q_DECL_IMPORT
-#endif
 
 namespace tb_simple {
     class AbstractSimpleInterface;
@@ -38,9 +33,10 @@ namespace tb_simple {
 * Check the usage of IApiFactory in Qml versions of interface implementation.
 * See also the ApiFactory, where you can set this factory as an IApiFactory implementation.
 */
-class TB_SIMPLE_API_EXPORT IApiFactory
+class IApiFactory
 {
 public:
+    virtual ~IApiFactory() = default;
     /** 
     * Create an instance of SimpleInterface
     * @return The implementation of a AbstractSimpleInterface.

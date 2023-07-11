@@ -19,8 +19,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "nestedstruct2interface.h"
 
-#include <QtQml>
-
 namespace testbed2 {
 
 NestedStruct2Interface::NestedStruct2Interface(QObject *parent)

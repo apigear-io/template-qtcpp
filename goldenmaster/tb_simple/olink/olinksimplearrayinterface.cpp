@@ -74,6 +74,34 @@ void OLinkSimpleArrayInterface::applyState(const nlohmann::json& fields)
     }
 }
 
+void OLinkSimpleArrayInterface::applyProperty(const std::string& propertyName, const nlohmann::json& value)
+{
+    if ( propertyName == "propBool") {
+        setPropBoolLocal(value.get<QList<bool>>());
+    }
+    else if ( propertyName == "propInt") {
+        setPropIntLocal(value.get<QList<int>>());
+    }
+    else if ( propertyName == "propInt32") {
+        setPropInt32Local(value.get<QList<qint32>>());
+    }
+    else if ( propertyName == "propInt64") {
+        setPropInt64Local(value.get<QList<qint64>>());
+    }
+    else if ( propertyName == "propFloat") {
+        setPropFloatLocal(value.get<QList<qreal>>());
+    }
+    else if ( propertyName == "propFloat32") {
+        setPropFloat32Local(value.get<QList<float>>());
+    }
+    else if ( propertyName == "propFloat64") {
+        setPropFloat64Local(value.get<QList<double>>());
+    }
+    else if ( propertyName == "propString") {
+        setPropStringLocal(value.get<QList<QString>>());
+    }
+}
+
 void OLinkSimpleArrayInterface::setPropBool(const QList<bool>& propBool)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
@@ -564,7 +592,7 @@ void OLinkSimpleArrayInterface::olinkOnPropertyChanged(const std::string& proper
     AG_LOG_DEBUG(Q_FUNC_INFO);
     AG_LOG_DEBUG(propertyId);
     std::string propertyName = Name::getMemberName(propertyId);
-    applyState({ {propertyName, value} });
+    applyProperty(propertyName, value);
 }
 void OLinkSimpleArrayInterface::olinkOnInit(const std::string& objectId, const nlohmann::json& props, IClientNode *node)
 {

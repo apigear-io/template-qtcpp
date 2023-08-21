@@ -58,6 +58,22 @@ void OLinkManyParamInterface::applyState(const nlohmann::json& fields)
     }
 }
 
+void OLinkManyParamInterface::applyProperty(const std::string& propertyName, const nlohmann::json& value)
+{
+    if ( propertyName == "prop1") {
+        setProp1Local(value.get<int>());
+    }
+    else if ( propertyName == "prop2") {
+        setProp2Local(value.get<int>());
+    }
+    else if ( propertyName == "prop3") {
+        setProp3Local(value.get<int>());
+    }
+    else if ( propertyName == "prop4") {
+        setProp4Local(value.get<int>());
+    }
+}
+
 void OLinkManyParamInterface::setProp1(int prop1)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
@@ -312,7 +328,7 @@ void OLinkManyParamInterface::olinkOnPropertyChanged(const std::string& property
     AG_LOG_DEBUG(Q_FUNC_INFO);
     AG_LOG_DEBUG(propertyId);
     std::string propertyName = Name::getMemberName(propertyId);
-    applyState({ {propertyName, value} });
+    applyProperty(propertyName, value);
 }
 void OLinkManyParamInterface::olinkOnInit(const std::string& objectId, const nlohmann::json& props, IClientNode *node)
 {

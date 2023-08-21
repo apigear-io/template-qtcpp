@@ -50,6 +50,16 @@ void OLinkSameEnum2Interface::applyState(const nlohmann::json& fields)
     }
 }
 
+void OLinkSameEnum2Interface::applyProperty(const std::string& propertyName, const nlohmann::json& value)
+{
+    if ( propertyName == "prop1") {
+        setProp1Local(value.get<Enum1::Enum1Enum>());
+    }
+    else if ( propertyName == "prop2") {
+        setProp2Local(value.get<Enum2::Enum2Enum>());
+    }
+}
+
 void OLinkSameEnum2Interface::setProp1(Enum1::Enum1Enum prop1)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
@@ -186,7 +196,7 @@ void OLinkSameEnum2Interface::olinkOnPropertyChanged(const std::string& property
     AG_LOG_DEBUG(Q_FUNC_INFO);
     AG_LOG_DEBUG(propertyId);
     std::string propertyName = Name::getMemberName(propertyId);
-    applyState({ {propertyName, value} });
+    applyProperty(propertyName, value);
 }
 void OLinkSameEnum2Interface::olinkOnInit(const std::string& objectId, const nlohmann::json& props, IClientNode *node)
 {

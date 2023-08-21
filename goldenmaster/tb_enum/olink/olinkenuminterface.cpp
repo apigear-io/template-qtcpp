@@ -58,6 +58,22 @@ void OLinkEnumInterface::applyState(const nlohmann::json& fields)
     }
 }
 
+void OLinkEnumInterface::applyProperty(const std::string& propertyName, const nlohmann::json& value)
+{
+    if ( propertyName == "prop0") {
+        setProp0Local(value.get<Enum0::Enum0Enum>());
+    }
+    else if ( propertyName == "prop1") {
+        setProp1Local(value.get<Enum1::Enum1Enum>());
+    }
+    else if ( propertyName == "prop2") {
+        setProp2Local(value.get<Enum2::Enum2Enum>());
+    }
+    else if ( propertyName == "prop3") {
+        setProp3Local(value.get<Enum3::Enum3Enum>());
+    }
+}
+
 void OLinkEnumInterface::setProp0(Enum0::Enum0Enum prop0)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
@@ -312,7 +328,7 @@ void OLinkEnumInterface::olinkOnPropertyChanged(const std::string& propertyId, c
     AG_LOG_DEBUG(Q_FUNC_INFO);
     AG_LOG_DEBUG(propertyId);
     std::string propertyName = Name::getMemberName(propertyId);
-    applyState({ {propertyName, value} });
+    applyProperty(propertyName, value);
 }
 void OLinkEnumInterface::olinkOnInit(const std::string& objectId, const nlohmann::json& props, IClientNode *node)
 {

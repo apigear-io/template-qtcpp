@@ -120,6 +120,13 @@ private:
     */
     void applyState(const nlohmann::json& fields);
 
+    /**
+    * Applies received property value to local state and publishes changes to subscribers.
+    * @param propertyName the name of property to be changed.
+    * @param value The value for property.
+    */
+    void applyProperty(const std::string& propertyName, const nlohmann::json& value);
+
 {{- range .Interface.Properties }}
 {{- $property := . }}
     /**  Updates local value for {{Camel $property.Name}} and informs subscriber about the change with emit property changed signal. */

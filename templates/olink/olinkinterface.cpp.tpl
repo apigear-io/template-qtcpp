@@ -39,6 +39,19 @@ void {{$class}}::applyState(const nlohmann::json& fields)
 {{- end }}
 }
 
+void {{$class}}::applyProperty(const std::string& propertyName, const nlohmann::json& value)
+{
+{{- range $idx, $property := .Interface.Properties }}
+    {{ if $idx }}else {{ end -}}if ( propertyName == "{{$property.Name}}") {
+        set{{Camel $property.Name}}Local(value.get<{{qtReturn "" .}}>());
+    }
+{{- else -}}
+    // no properties to apply state {{- /* we generate anyway for consistency */}}
+    (void) propertyName;
+    (void) value;
+{{- end }}
+}
+
 {{- range .Interface.Properties }}
 
 void {{$class}}::set{{Camel .Name}}({{qtParam "" .}})
@@ -152,7 +165,7 @@ void {{$class}}::olinkOnPropertyChanged(const std::string& propertyId, const nlo
     AG_LOG_DEBUG(Q_FUNC_INFO);
     AG_LOG_DEBUG(propertyId);
     std::string propertyName = Name::getMemberName(propertyId);
-    applyState({ {propertyName, value} });
+    applyProperty(propertyName, value);
 }
 void {{$class}}::olinkOnInit(const std::string& objectId, const nlohmann::json& props, IClientNode *node)
 {

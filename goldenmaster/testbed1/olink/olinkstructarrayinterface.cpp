@@ -58,6 +58,22 @@ void OLinkStructArrayInterface::applyState(const nlohmann::json& fields)
     }
 }
 
+void OLinkStructArrayInterface::applyProperty(const std::string& propertyName, const nlohmann::json& value)
+{
+    if ( propertyName == "propBool") {
+        setPropBoolLocal(value.get<QList<StructBool>>());
+    }
+    else if ( propertyName == "propInt") {
+        setPropIntLocal(value.get<QList<StructInt>>());
+    }
+    else if ( propertyName == "propFloat") {
+        setPropFloatLocal(value.get<QList<StructFloat>>());
+    }
+    else if ( propertyName == "propString") {
+        setPropStringLocal(value.get<QList<StructString>>());
+    }
+}
+
 void OLinkStructArrayInterface::setPropBool(const QList<StructBool>& propBool)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
@@ -312,7 +328,7 @@ void OLinkStructArrayInterface::olinkOnPropertyChanged(const std::string& proper
     AG_LOG_DEBUG(Q_FUNC_INFO);
     AG_LOG_DEBUG(propertyId);
     std::string propertyName = Name::getMemberName(propertyId);
-    applyState({ {propertyName, value} });
+    applyProperty(propertyName, value);
 }
 void OLinkStructArrayInterface::olinkOnInit(const std::string& objectId, const nlohmann::json& props, IClientNode *node)
 {

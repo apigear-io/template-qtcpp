@@ -46,6 +46,13 @@ void OLinkNestedStruct1Interface::applyState(const nlohmann::json& fields)
     }
 }
 
+void OLinkNestedStruct1Interface::applyProperty(const std::string& propertyName, const nlohmann::json& value)
+{
+    if ( propertyName == "prop1") {
+        setProp1Local(value.get<NestedStruct1>());
+    }
+}
+
 void OLinkNestedStruct1Interface::setProp1(const NestedStruct1& prop1)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
@@ -123,7 +130,7 @@ void OLinkNestedStruct1Interface::olinkOnPropertyChanged(const std::string& prop
     AG_LOG_DEBUG(Q_FUNC_INFO);
     AG_LOG_DEBUG(propertyId);
     std::string propertyName = Name::getMemberName(propertyId);
-    applyState({ {propertyName, value} });
+    applyProperty(propertyName, value);
 }
 void OLinkNestedStruct1Interface::olinkOnInit(const std::string& objectId, const nlohmann::json& props, IClientNode *node)
 {

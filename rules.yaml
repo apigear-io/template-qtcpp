@@ -85,8 +85,8 @@ features:
     scopes:
       - match: system
         documents:
-           - source: "apigear/CMakeLists.txt"
-             raw: true
+           - source: "apigear/CMakeLists.txt.tpl"
+             target: "apigear/CMakeLists.txt"
            - source: "apigear/monitor/CMakeLists.txt"
              raw: true
            - source: "apigear/monitor/agentclient.h"
@@ -141,6 +141,22 @@ features:
              raw: true
            - source: apigear/tests/olink/private/test_server/testserver.cpp
              raw: true
+           - source: apigear/mqtt/CMakeLists.txt
+             raw: true
+           - source: apigear/mqtt/mqtt_common.h
+             raw: true
+           - source: apigear/mqtt/mqttclient.h
+             raw: true
+           - source: apigear/mqtt/mqttclient.cpp
+             raw: true
+           - source: apigear/mqtt/mqttservice.h
+             raw: true
+           - source: apigear/mqtt/mqttservice.cpp
+             raw: true
+           - source: apigear/mqtt/payloadconverter.h
+             raw: true
+           - source: apigear/mqtt/payloadconverter.cpp
+             raw: true
   - name: monitor
     requires:
       - api
@@ -189,7 +205,34 @@ features:
           - source: "olink/olinkadapter.h.tpl"
             target: "olink/olink{{lower .Interface.Name}}adapter.h"
           - source: "olink/olinkadapter.cpp.tpl"
-            target: "olink/olink{{lower .Interface.Name}}adapter.cpp"       
+            target: "olink/olink{{lower .Interface.Name}}adapter.cpp"
+  - name: mqtt
+    requires:
+      - api
+      - apigear
+    scopes:
+      - match: module
+        prefix: "{{snake .Module.Name}}/mqtt/"
+        documents:
+          - source: "mqtt/CMakeLists.txt.tpl"
+            target: "CMakeLists.txt"
+          - source: "mqtt/mqttfactory.h.tpl"
+            target: "mqttfactory.h"
+          - source: "mqtt/mqttfactory.cpp.tpl"
+            target: "mqttfactory.cpp"
+          - source: "mqtt/mqtt_common.h.tpl"
+            target: "mqtt_common.h"
+      - match: interface
+        prefix: "{{snake .Module.Name}}/mqtt/"
+        documents:
+          - source: "mqtt/mqttinterface.h.tpl"
+            target: "mqtt{{lower .Interface.Name}}.h"
+          - source: "mqtt/mqttinterface.cpp.tpl"
+            target: "mqtt{{lower .Interface.Name}}.cpp"            
+          - source: "mqtt/mqttadapter.h.tpl"
+            target: "mqtt{{lower .Interface.Name}}adapter.h"
+          - source: "mqtt/mqttadapter.cpp.tpl"
+            target: "mqtt{{lower .Interface.Name}}adapter.cpp"     
   - name: qmlplugin
     scopes:
       - match: module

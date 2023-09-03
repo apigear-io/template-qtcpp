@@ -31,9 +31,19 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
-          version: '6.5.*'
+          version: '6.5.2'
           cache: 'true'
           modules: qtwebsockets
+      - name: Checkout QMqtt
+        uses: actions/checkout@v3
+        with:
+          repository: qt/qtmqtt
+          ref: '6.5.2'
+      - name: Build qmktt
+        working-directory: ${{ GITHUB_WORKSPACE}}/mqtt
+        run: qmake -r 
+             make 
+             make install
       - name: Update path env on Windows for testing
         if: ${{ matrix.config.os == 'windows-latest'}}
         run: echo "$GITHUB_WORKSPACE/goldenmaster/build/bin/Debug/" >> $GITHUB_PATH

@@ -53,6 +53,9 @@ add_subdirectory({{ $moduleId }}/http)
 {{- if $features.olink }}
 add_subdirectory({{ $moduleId }}/olink)
 {{- end}}
+{{- if $features.mqtt }}
+add_subdirectory({{ $moduleId }}/mqtt)
+{{- end}}
 {{- if $features.monitor }}
 add_subdirectory({{ $moduleId }}/monitor)
 {{- end}}

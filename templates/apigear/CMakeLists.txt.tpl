@@ -15,6 +15,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_subdirectory(utilities)
 add_subdirectory(olink)
 add_subdirectory(monitor)
+{{- if  .Features.mqtt }}
+add_subdirectory(mqtt)
+{{- end}}
 
 if(BUILD_TESTING)
 enable_testing()

@@ -1,0 +1,8 @@
+
+#pragma once
+
+#if defined(TESTBED1_MQTT_LIBRARY)
+#  define TESTBED1_MQTT_LIBRARY_EXPORT Q_DECL_EXPORT
+#else
+#  define TESTBED1_MQTT_LIBRARY_EXPORT Q_DECL_IMPORT
+#endif

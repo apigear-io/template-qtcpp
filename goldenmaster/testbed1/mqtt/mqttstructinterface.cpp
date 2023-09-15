@@ -209,7 +209,7 @@ QtPromise::QPromise<StructBool> MqttStructInterface::funcBoolAsync(const StructB
         const QtPromise::QPromiseResolve<StructBool>& resolve)
         {
                 m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const auto& arg)
+                [resolve](const nlohmann::json& arg)
                 {
                     StructBool value = arg.get<StructBool>();
                     resolve(value);
@@ -254,7 +254,7 @@ QtPromise::QPromise<StructBool> MqttStructInterface::funcIntAsync(const StructIn
         const QtPromise::QPromiseResolve<StructBool>& resolve)
         {
                 m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const auto& arg)
+                [resolve](const nlohmann::json& arg)
                 {
                     StructBool value = arg.get<StructBool>();
                     resolve(value);
@@ -299,7 +299,7 @@ QtPromise::QPromise<StructFloat> MqttStructInterface::funcFloatAsync(const Struc
         const QtPromise::QPromiseResolve<StructFloat>& resolve)
         {
                 m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const auto& arg)
+                [resolve](const nlohmann::json& arg)
                 {
                     StructFloat value = arg.get<StructFloat>();
                     resolve(value);
@@ -344,7 +344,7 @@ QtPromise::QPromise<StructString> MqttStructInterface::funcStringAsync(const Str
         const QtPromise::QPromiseResolve<StructString>& resolve)
         {
                 m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const auto& arg)
+                [resolve](const nlohmann::json& arg)
                 {
                     StructString value = arg.get<StructString>();
                     resolve(value);
@@ -372,16 +372,16 @@ void MqttStructInterface::subscribeForPropertiesChanges()
 void MqttStructInterface::subscribeForSignals()
 {
         static const QString topicsigBool = objectName() + "/sig/sigBool";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigBool, [this](const auto& input){
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigBool, [this](const nlohmann::json& input){
             emit sigBool(input[0].get<StructBool>());}));
         static const QString topicsigInt = objectName() + "/sig/sigInt";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigInt, [this](const auto& input){
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigInt, [this](const nlohmann::json& input){
             emit sigInt(input[0].get<StructInt>());}));
         static const QString topicsigFloat = objectName() + "/sig/sigFloat";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigFloat, [this](const auto& input){
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigFloat, [this](const nlohmann::json& input){
             emit sigFloat(input[0].get<StructFloat>());}));
         static const QString topicsigString = objectName() + "/sig/sigString";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigString, [this](const auto& input){
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigString, [this](const nlohmann::json& input){
             emit sigString(input[0].get<StructString>());}));
 }
 void MqttStructInterface::subscribeForInvokeResponses()

@@ -209,7 +209,7 @@ QtPromise::QPromise<int> MqttManyParamInterface::func1Async(int param1)
         const QtPromise::QPromiseResolve<int>& resolve)
         {
                 m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const auto& arg)
+                [resolve](const nlohmann::json& arg)
                 {
                     int value = arg.get<int>();
                     resolve(value);
@@ -254,7 +254,7 @@ QtPromise::QPromise<int> MqttManyParamInterface::func2Async(int param1, int para
         const QtPromise::QPromiseResolve<int>& resolve)
         {
                 m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const auto& arg)
+                [resolve](const nlohmann::json& arg)
                 {
                     int value = arg.get<int>();
                     resolve(value);
@@ -299,7 +299,7 @@ QtPromise::QPromise<int> MqttManyParamInterface::func3Async(int param1, int para
         const QtPromise::QPromiseResolve<int>& resolve)
         {
                 m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const auto& arg)
+                [resolve](const nlohmann::json& arg)
                 {
                     int value = arg.get<int>();
                     resolve(value);
@@ -344,7 +344,7 @@ QtPromise::QPromise<int> MqttManyParamInterface::func4Async(int param1, int para
         const QtPromise::QPromiseResolve<int>& resolve)
         {
                 m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const auto& arg)
+                [resolve](const nlohmann::json& arg)
                 {
                     int value = arg.get<int>();
                     resolve(value);
@@ -372,16 +372,16 @@ void MqttManyParamInterface::subscribeForPropertiesChanges()
 void MqttManyParamInterface::subscribeForSignals()
 {
         static const QString topicsig1 = objectName() + "/sig/sig1";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig1, [this](const auto& input){
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig1, [this](const nlohmann::json& input){
             emit sig1(input[0].get<int>());}));
         static const QString topicsig2 = objectName() + "/sig/sig2";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig2, [this](const auto& input){
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig2, [this](const nlohmann::json& input){
             emit sig2(input[0].get<int>(),input[1].get<int>());}));
         static const QString topicsig3 = objectName() + "/sig/sig3";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig3, [this](const auto& input){
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig3, [this](const nlohmann::json& input){
             emit sig3(input[0].get<int>(),input[1].get<int>(),input[2].get<int>());}));
         static const QString topicsig4 = objectName() + "/sig/sig4";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig4, [this](const auto& input){
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig4, [this](const nlohmann::json& input){
             emit sig4(input[0].get<int>(),input[1].get<int>(),input[2].get<int>(),input[3].get<int>());}));
 }
 void MqttManyParamInterface::subscribeForInvokeResponses()

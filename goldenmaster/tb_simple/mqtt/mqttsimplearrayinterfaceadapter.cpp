@@ -133,7 +133,7 @@ void MqttSimpleArrayInterfaceAdapter::subscribeForInvokeRequests()
 {
     const auto invokeTopic_funcBool = objectName() + "/rpc/funcBool";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_funcBool,
-        [this](const auto& arguments)
+        [this](const nlohmann::json& arguments)
         {
             QList<bool> paramBool = arguments.at(0).get<QList<bool>>();
             auto result = m_impl->funcBool(paramBool);
@@ -141,7 +141,7 @@ void MqttSimpleArrayInterfaceAdapter::subscribeForInvokeRequests()
         }));
     const auto invokeTopic_funcInt = objectName() + "/rpc/funcInt";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_funcInt,
-        [this](const auto& arguments)
+        [this](const nlohmann::json& arguments)
         {
             QList<int> paramInt = arguments.at(0).get<QList<int>>();
             auto result = m_impl->funcInt(paramInt);
@@ -149,7 +149,7 @@ void MqttSimpleArrayInterfaceAdapter::subscribeForInvokeRequests()
         }));
     const auto invokeTopic_funcInt32 = objectName() + "/rpc/funcInt32";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_funcInt32,
-        [this](const auto& arguments)
+        [this](const nlohmann::json& arguments)
         {
             QList<qint32> paramInt32 = arguments.at(0).get<QList<qint32>>();
             auto result = m_impl->funcInt32(paramInt32);
@@ -157,7 +157,7 @@ void MqttSimpleArrayInterfaceAdapter::subscribeForInvokeRequests()
         }));
     const auto invokeTopic_funcInt64 = objectName() + "/rpc/funcInt64";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_funcInt64,
-        [this](const auto& arguments)
+        [this](const nlohmann::json& arguments)
         {
             QList<qint64> paramInt64 = arguments.at(0).get<QList<qint64>>();
             auto result = m_impl->funcInt64(paramInt64);
@@ -165,7 +165,7 @@ void MqttSimpleArrayInterfaceAdapter::subscribeForInvokeRequests()
         }));
     const auto invokeTopic_funcFloat = objectName() + "/rpc/funcFloat";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_funcFloat,
-        [this](const auto& arguments)
+        [this](const nlohmann::json& arguments)
         {
             QList<qreal> paramFloat = arguments.at(0).get<QList<qreal>>();
             auto result = m_impl->funcFloat(paramFloat);
@@ -173,7 +173,7 @@ void MqttSimpleArrayInterfaceAdapter::subscribeForInvokeRequests()
         }));
     const auto invokeTopic_funcFloat32 = objectName() + "/rpc/funcFloat32";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_funcFloat32,
-        [this](const auto& arguments)
+        [this](const nlohmann::json& arguments)
         {
             QList<float> paramFloat32 = arguments.at(0).get<QList<float>>();
             auto result = m_impl->funcFloat32(paramFloat32);
@@ -181,7 +181,7 @@ void MqttSimpleArrayInterfaceAdapter::subscribeForInvokeRequests()
         }));
     const auto invokeTopic_funcFloat64 = objectName() + "/rpc/funcFloat64";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_funcFloat64,
-        [this](const auto& arguments)
+        [this](const nlohmann::json& arguments)
         {
             QList<double> paramFloat = arguments.at(0).get<QList<double>>();
             auto result = m_impl->funcFloat64(paramFloat);
@@ -189,7 +189,7 @@ void MqttSimpleArrayInterfaceAdapter::subscribeForInvokeRequests()
         }));
     const auto invokeTopic_funcString = objectName() + "/rpc/funcString";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_funcString,
-        [this](const auto& arguments)
+        [this](const nlohmann::json& arguments)
         {
             QList<QString> paramString = arguments.at(0).get<QList<QString>>();
             auto result = m_impl->funcString(paramString);

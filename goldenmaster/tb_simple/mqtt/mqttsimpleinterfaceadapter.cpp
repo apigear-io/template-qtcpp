@@ -133,14 +133,14 @@ void MqttSimpleInterfaceAdapter::subscribeForInvokeRequests()
 {
     const auto invokeTopic_funcVoid = objectName() + "/rpc/funcVoid";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_funcVoid,
-        [this](const auto& arguments)
+        [this](const nlohmann::json& arguments)
         {
             m_impl->funcVoid( );
             return nlohmann::json {};
         }));
     const auto invokeTopic_funcBool = objectName() + "/rpc/funcBool";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_funcBool,
-        [this](const auto& arguments)
+        [this](const nlohmann::json& arguments)
         {
             bool paramBool = arguments.at(0).get<bool>();
             auto result = m_impl->funcBool(paramBool);
@@ -148,7 +148,7 @@ void MqttSimpleInterfaceAdapter::subscribeForInvokeRequests()
         }));
     const auto invokeTopic_funcInt = objectName() + "/rpc/funcInt";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_funcInt,
-        [this](const auto& arguments)
+        [this](const nlohmann::json& arguments)
         {
             int paramInt = arguments.at(0).get<int>();
             auto result = m_impl->funcInt(paramInt);
@@ -156,7 +156,7 @@ void MqttSimpleInterfaceAdapter::subscribeForInvokeRequests()
         }));
     const auto invokeTopic_funcInt32 = objectName() + "/rpc/funcInt32";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_funcInt32,
-        [this](const auto& arguments)
+        [this](const nlohmann::json& arguments)
         {
             qint32 paramInt32 = arguments.at(0).get<qint32>();
             auto result = m_impl->funcInt32(paramInt32);
@@ -164,7 +164,7 @@ void MqttSimpleInterfaceAdapter::subscribeForInvokeRequests()
         }));
     const auto invokeTopic_funcInt64 = objectName() + "/rpc/funcInt64";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_funcInt64,
-        [this](const auto& arguments)
+        [this](const nlohmann::json& arguments)
         {
             qint64 paramInt64 = arguments.at(0).get<qint64>();
             auto result = m_impl->funcInt64(paramInt64);
@@ -172,7 +172,7 @@ void MqttSimpleInterfaceAdapter::subscribeForInvokeRequests()
         }));
     const auto invokeTopic_funcFloat = objectName() + "/rpc/funcFloat";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_funcFloat,
-        [this](const auto& arguments)
+        [this](const nlohmann::json& arguments)
         {
             qreal paramFloat = arguments.at(0).get<qreal>();
             auto result = m_impl->funcFloat(paramFloat);
@@ -180,7 +180,7 @@ void MqttSimpleInterfaceAdapter::subscribeForInvokeRequests()
         }));
     const auto invokeTopic_funcFloat32 = objectName() + "/rpc/funcFloat32";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_funcFloat32,
-        [this](const auto& arguments)
+        [this](const nlohmann::json& arguments)
         {
             float paramFloat32 = arguments.at(0).get<float>();
             auto result = m_impl->funcFloat32(paramFloat32);
@@ -188,7 +188,7 @@ void MqttSimpleInterfaceAdapter::subscribeForInvokeRequests()
         }));
     const auto invokeTopic_funcFloat64 = objectName() + "/rpc/funcFloat64";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_funcFloat64,
-        [this](const auto& arguments)
+        [this](const nlohmann::json& arguments)
         {
             double paramFloat = arguments.at(0).get<double>();
             auto result = m_impl->funcFloat64(paramFloat);
@@ -196,7 +196,7 @@ void MqttSimpleInterfaceAdapter::subscribeForInvokeRequests()
         }));
     const auto invokeTopic_funcString = objectName() + "/rpc/funcString";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_funcString,
-        [this](const auto& arguments)
+        [this](const nlohmann::json& arguments)
         {
             QString paramString = arguments.at(0).get<QString>();
             auto result = m_impl->funcString(paramString);

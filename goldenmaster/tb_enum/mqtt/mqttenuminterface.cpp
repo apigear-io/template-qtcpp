@@ -209,7 +209,7 @@ QtPromise::QPromise<Enum0::Enum0Enum> MqttEnumInterface::func0Async(Enum0::Enum0
         const QtPromise::QPromiseResolve<Enum0::Enum0Enum>& resolve)
         {
                 m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const auto& arg)
+                [resolve](const nlohmann::json& arg)
                 {
                     Enum0::Enum0Enum value = arg.get<Enum0::Enum0Enum>();
                     resolve(value);
@@ -254,7 +254,7 @@ QtPromise::QPromise<Enum1::Enum1Enum> MqttEnumInterface::func1Async(Enum1::Enum1
         const QtPromise::QPromiseResolve<Enum1::Enum1Enum>& resolve)
         {
                 m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const auto& arg)
+                [resolve](const nlohmann::json& arg)
                 {
                     Enum1::Enum1Enum value = arg.get<Enum1::Enum1Enum>();
                     resolve(value);
@@ -299,7 +299,7 @@ QtPromise::QPromise<Enum2::Enum2Enum> MqttEnumInterface::func2Async(Enum2::Enum2
         const QtPromise::QPromiseResolve<Enum2::Enum2Enum>& resolve)
         {
                 m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const auto& arg)
+                [resolve](const nlohmann::json& arg)
                 {
                     Enum2::Enum2Enum value = arg.get<Enum2::Enum2Enum>();
                     resolve(value);
@@ -344,7 +344,7 @@ QtPromise::QPromise<Enum3::Enum3Enum> MqttEnumInterface::func3Async(Enum3::Enum3
         const QtPromise::QPromiseResolve<Enum3::Enum3Enum>& resolve)
         {
                 m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const auto& arg)
+                [resolve](const nlohmann::json& arg)
                 {
                     Enum3::Enum3Enum value = arg.get<Enum3::Enum3Enum>();
                     resolve(value);
@@ -372,16 +372,16 @@ void MqttEnumInterface::subscribeForPropertiesChanges()
 void MqttEnumInterface::subscribeForSignals()
 {
         static const QString topicsig0 = objectName() + "/sig/sig0";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig0, [this](const auto& input){
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig0, [this](const nlohmann::json& input){
             emit sig0(input[0].get<Enum0::Enum0Enum>());}));
         static const QString topicsig1 = objectName() + "/sig/sig1";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig1, [this](const auto& input){
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig1, [this](const nlohmann::json& input){
             emit sig1(input[0].get<Enum1::Enum1Enum>());}));
         static const QString topicsig2 = objectName() + "/sig/sig2";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig2, [this](const auto& input){
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig2, [this](const nlohmann::json& input){
             emit sig2(input[0].get<Enum2::Enum2Enum>());}));
         static const QString topicsig3 = objectName() + "/sig/sig3";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig3, [this](const auto& input){
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig3, [this](const nlohmann::json& input){
             emit sig3(input[0].get<Enum3::Enum3Enum>());}));
 }
 void MqttEnumInterface::subscribeForInvokeResponses()

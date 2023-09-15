@@ -93,7 +93,7 @@ void {{$class}}::subscribeForInvokeRequests()
     {{- range .Interface.Operations }}
     const auto invokeTopic_{{.Name}} = objectName() + "/rpc/{{.Name}}";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_{{.Name}},
-        [this](const auto& arguments)
+        [this](const nlohmann::json& arguments)
         {
             {{- range  $i, $e := .Params }}
             {{qtType "" .}} {{.Name}} = arguments.at({{ $i }}).get<{{qtReturn "" .}}>();      

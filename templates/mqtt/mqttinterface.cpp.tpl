@@ -115,7 +115,6 @@ void {{$class}}::set{{Camel .Name}}Local(const nlohmann::json& input)
         return{{ if (not .Return.IsVoid) }} {{qtDefault "" .Return}} {{- end}};
     }
     {{- if .Return.IsVoid }}
-    InvokeReplyFunc func = [this](InvokeReplyArg arg) {};
     auto arguments = nlohmann::json::array({
         {{- qtVars .Params -}}
     });
@@ -159,7 +158,7 @@ QtPromise::QPromise<{{$return}}> {{$class}}::{{camel .Name}}Async({{qtParams "" 
         const QtPromise::QPromiseResolve<{{$return}}>& resolve)
         {
                 m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const auto& arg)
+                [resolve](const nlohmann::json& arg)
                 {
                     {{$return}} value = arg.get<{{$return}}>();
                     resolve(value);
@@ -194,7 +193,7 @@ void {{$class}}::subscribeForSignals()
 {
     {{- range .Interface.Signals }}
         static const QString topic{{.Name}} = objectName() + "/sig/{{.Name}}";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topic{{.Name}}, [this](const auto& input){
+        m_subscribedIds.push_back(m_client.subscribeTopic(topic{{.Name}}, [this](const nlohmann::json& input){
             emit {{camel .Name}}( {{- range $i, $e := .Params }}{{if $i}},{{end -}}
             input[{{$i}}].get<{{qtReturn "" .}}>(){{- end -}});}));
 

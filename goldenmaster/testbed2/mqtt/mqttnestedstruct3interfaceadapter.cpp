@@ -98,7 +98,7 @@ void MqttNestedStruct3InterfaceAdapter::subscribeForInvokeRequests()
 {
     const auto invokeTopic_func1 = objectName() + "/rpc/func1";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_func1,
-        [this](const auto& arguments)
+        [this](const nlohmann::json& arguments)
         {
             NestedStruct1 param1 = arguments.at(0).get<NestedStruct1>();
             auto result = m_impl->func1(param1);
@@ -106,7 +106,7 @@ void MqttNestedStruct3InterfaceAdapter::subscribeForInvokeRequests()
         }));
     const auto invokeTopic_func2 = objectName() + "/rpc/func2";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_func2,
-        [this](const auto& arguments)
+        [this](const nlohmann::json& arguments)
         {
             NestedStruct1 param1 = arguments.at(0).get<NestedStruct1>();
             NestedStruct2 param2 = arguments.at(1).get<NestedStruct2>();
@@ -115,7 +115,7 @@ void MqttNestedStruct3InterfaceAdapter::subscribeForInvokeRequests()
         }));
     const auto invokeTopic_func3 = objectName() + "/rpc/func3";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_func3,
-        [this](const auto& arguments)
+        [this](const nlohmann::json& arguments)
         {
             NestedStruct1 param1 = arguments.at(0).get<NestedStruct1>();
             NestedStruct2 param2 = arguments.at(1).get<NestedStruct2>();

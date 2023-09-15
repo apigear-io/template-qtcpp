@@ -291,7 +291,6 @@ void MqttSimpleInterface::funcVoid()
     if(!m_client.isReady()) {
         return;
     }
-    InvokeReplyFunc func = [this](InvokeReplyArg arg) {};
     auto arguments = nlohmann::json::array({});
     static const QString topic = objectName() + QString("/rpc/funcVoid");
     m_client.invokeRemoteNoResponse(topic, arguments);
@@ -347,7 +346,7 @@ QtPromise::QPromise<bool> MqttSimpleInterface::funcBoolAsync(bool paramBool)
         const QtPromise::QPromiseResolve<bool>& resolve)
         {
                 m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const auto& arg)
+                [resolve](const nlohmann::json& arg)
                 {
                     bool value = arg.get<bool>();
                     resolve(value);
@@ -392,7 +391,7 @@ QtPromise::QPromise<int> MqttSimpleInterface::funcIntAsync(int paramInt)
         const QtPromise::QPromiseResolve<int>& resolve)
         {
                 m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const auto& arg)
+                [resolve](const nlohmann::json& arg)
                 {
                     int value = arg.get<int>();
                     resolve(value);
@@ -437,7 +436,7 @@ QtPromise::QPromise<qint32> MqttSimpleInterface::funcInt32Async(qint32 paramInt3
         const QtPromise::QPromiseResolve<qint32>& resolve)
         {
                 m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const auto& arg)
+                [resolve](const nlohmann::json& arg)
                 {
                     qint32 value = arg.get<qint32>();
                     resolve(value);
@@ -482,7 +481,7 @@ QtPromise::QPromise<qint64> MqttSimpleInterface::funcInt64Async(qint64 paramInt6
         const QtPromise::QPromiseResolve<qint64>& resolve)
         {
                 m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const auto& arg)
+                [resolve](const nlohmann::json& arg)
                 {
                     qint64 value = arg.get<qint64>();
                     resolve(value);
@@ -527,7 +526,7 @@ QtPromise::QPromise<qreal> MqttSimpleInterface::funcFloatAsync(qreal paramFloat)
         const QtPromise::QPromiseResolve<qreal>& resolve)
         {
                 m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const auto& arg)
+                [resolve](const nlohmann::json& arg)
                 {
                     qreal value = arg.get<qreal>();
                     resolve(value);
@@ -572,7 +571,7 @@ QtPromise::QPromise<float> MqttSimpleInterface::funcFloat32Async(float paramFloa
         const QtPromise::QPromiseResolve<float>& resolve)
         {
                 m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const auto& arg)
+                [resolve](const nlohmann::json& arg)
                 {
                     float value = arg.get<float>();
                     resolve(value);
@@ -617,7 +616,7 @@ QtPromise::QPromise<double> MqttSimpleInterface::funcFloat64Async(double paramFl
         const QtPromise::QPromiseResolve<double>& resolve)
         {
                 m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const auto& arg)
+                [resolve](const nlohmann::json& arg)
                 {
                     double value = arg.get<double>();
                     resolve(value);
@@ -662,7 +661,7 @@ QtPromise::QPromise<QString> MqttSimpleInterface::funcStringAsync(const QString&
         const QtPromise::QPromiseResolve<QString>& resolve)
         {
                 m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const auto& arg)
+                [resolve](const nlohmann::json& arg)
                 {
                     QString value = arg.get<QString>();
                     resolve(value);
@@ -698,31 +697,31 @@ void MqttSimpleInterface::subscribeForPropertiesChanges()
 void MqttSimpleInterface::subscribeForSignals()
 {
         static const QString topicsigVoid = objectName() + "/sig/sigVoid";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigVoid, [this](const auto& input){
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigVoid, [this](const nlohmann::json& input){
             emit sigVoid();}));
         static const QString topicsigBool = objectName() + "/sig/sigBool";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigBool, [this](const auto& input){
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigBool, [this](const nlohmann::json& input){
             emit sigBool(input[0].get<bool>());}));
         static const QString topicsigInt = objectName() + "/sig/sigInt";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigInt, [this](const auto& input){
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigInt, [this](const nlohmann::json& input){
             emit sigInt(input[0].get<int>());}));
         static const QString topicsigInt32 = objectName() + "/sig/sigInt32";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigInt32, [this](const auto& input){
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigInt32, [this](const nlohmann::json& input){
             emit sigInt32(input[0].get<qint32>());}));
         static const QString topicsigInt64 = objectName() + "/sig/sigInt64";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigInt64, [this](const auto& input){
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigInt64, [this](const nlohmann::json& input){
             emit sigInt64(input[0].get<qint64>());}));
         static const QString topicsigFloat = objectName() + "/sig/sigFloat";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigFloat, [this](const auto& input){
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigFloat, [this](const nlohmann::json& input){
             emit sigFloat(input[0].get<qreal>());}));
         static const QString topicsigFloat32 = objectName() + "/sig/sigFloat32";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigFloat32, [this](const auto& input){
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigFloat32, [this](const nlohmann::json& input){
             emit sigFloat32(input[0].get<float>());}));
         static const QString topicsigFloat64 = objectName() + "/sig/sigFloat64";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigFloat64, [this](const auto& input){
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigFloat64, [this](const nlohmann::json& input){
             emit sigFloat64(input[0].get<double>());}));
         static const QString topicsigString = objectName() + "/sig/sigString";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigString, [this](const auto& input){
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigString, [this](const nlohmann::json& input){
             emit sigString(input[0].get<QString>());}));
 }
 void MqttSimpleInterface::subscribeForInvokeResponses()

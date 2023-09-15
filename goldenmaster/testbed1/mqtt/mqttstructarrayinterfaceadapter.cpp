@@ -105,7 +105,7 @@ void MqttStructArrayInterfaceAdapter::subscribeForInvokeRequests()
 {
     const auto invokeTopic_funcBool = objectName() + "/rpc/funcBool";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_funcBool,
-        [this](const auto& arguments)
+        [this](const nlohmann::json& arguments)
         {
             QList<StructBool> paramBool = arguments.at(0).get<QList<StructBool>>();
             auto result = m_impl->funcBool(paramBool);
@@ -113,7 +113,7 @@ void MqttStructArrayInterfaceAdapter::subscribeForInvokeRequests()
         }));
     const auto invokeTopic_funcInt = objectName() + "/rpc/funcInt";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_funcInt,
-        [this](const auto& arguments)
+        [this](const nlohmann::json& arguments)
         {
             QList<StructInt> paramInt = arguments.at(0).get<QList<StructInt>>();
             auto result = m_impl->funcInt(paramInt);
@@ -121,7 +121,7 @@ void MqttStructArrayInterfaceAdapter::subscribeForInvokeRequests()
         }));
     const auto invokeTopic_funcFloat = objectName() + "/rpc/funcFloat";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_funcFloat,
-        [this](const auto& arguments)
+        [this](const nlohmann::json& arguments)
         {
             QList<StructFloat> paramFloat = arguments.at(0).get<QList<StructFloat>>();
             auto result = m_impl->funcFloat(paramFloat);
@@ -129,7 +129,7 @@ void MqttStructArrayInterfaceAdapter::subscribeForInvokeRequests()
         }));
     const auto invokeTopic_funcString = objectName() + "/rpc/funcString";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_funcString,
-        [this](const auto& arguments)
+        [this](const nlohmann::json& arguments)
         {
             QList<StructString> paramString = arguments.at(0).get<QList<StructString>>();
             auto result = m_impl->funcString(paramString);

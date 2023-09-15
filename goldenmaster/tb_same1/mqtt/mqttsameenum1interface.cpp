@@ -125,7 +125,7 @@ QtPromise::QPromise<Enum1::Enum1Enum> MqttSameEnum1Interface::func1Async(Enum1::
         const QtPromise::QPromiseResolve<Enum1::Enum1Enum>& resolve)
         {
                 m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const auto& arg)
+                [resolve](const nlohmann::json& arg)
                 {
                     Enum1::Enum1Enum value = arg.get<Enum1::Enum1Enum>();
                     resolve(value);
@@ -147,7 +147,7 @@ void MqttSameEnum1Interface::subscribeForPropertiesChanges()
 void MqttSameEnum1Interface::subscribeForSignals()
 {
         static const QString topicsig1 = objectName() + "/sig/sig1";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig1, [this](const auto& input){
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig1, [this](const nlohmann::json& input){
             emit sig1(input[0].get<Enum1::Enum1Enum>());}));
 }
 void MqttSameEnum1Interface::subscribeForInvokeResponses()

@@ -321,7 +321,7 @@ QtPromise::QPromise<QList<bool>> MqttSimpleArrayInterface::funcBoolAsync(const Q
         const QtPromise::QPromiseResolve<QList<bool>>& resolve)
         {
                 m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const auto& arg)
+                [resolve](const nlohmann::json& arg)
                 {
                     QList<bool> value = arg.get<QList<bool>>();
                     resolve(value);
@@ -366,7 +366,7 @@ QtPromise::QPromise<QList<int>> MqttSimpleArrayInterface::funcIntAsync(const QLi
         const QtPromise::QPromiseResolve<QList<int>>& resolve)
         {
                 m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const auto& arg)
+                [resolve](const nlohmann::json& arg)
                 {
                     QList<int> value = arg.get<QList<int>>();
                     resolve(value);
@@ -411,7 +411,7 @@ QtPromise::QPromise<QList<qint32>> MqttSimpleArrayInterface::funcInt32Async(cons
         const QtPromise::QPromiseResolve<QList<qint32>>& resolve)
         {
                 m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const auto& arg)
+                [resolve](const nlohmann::json& arg)
                 {
                     QList<qint32> value = arg.get<QList<qint32>>();
                     resolve(value);
@@ -456,7 +456,7 @@ QtPromise::QPromise<QList<qint64>> MqttSimpleArrayInterface::funcInt64Async(cons
         const QtPromise::QPromiseResolve<QList<qint64>>& resolve)
         {
                 m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const auto& arg)
+                [resolve](const nlohmann::json& arg)
                 {
                     QList<qint64> value = arg.get<QList<qint64>>();
                     resolve(value);
@@ -501,7 +501,7 @@ QtPromise::QPromise<QList<qreal>> MqttSimpleArrayInterface::funcFloatAsync(const
         const QtPromise::QPromiseResolve<QList<qreal>>& resolve)
         {
                 m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const auto& arg)
+                [resolve](const nlohmann::json& arg)
                 {
                     QList<qreal> value = arg.get<QList<qreal>>();
                     resolve(value);
@@ -546,7 +546,7 @@ QtPromise::QPromise<QList<float>> MqttSimpleArrayInterface::funcFloat32Async(con
         const QtPromise::QPromiseResolve<QList<float>>& resolve)
         {
                 m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const auto& arg)
+                [resolve](const nlohmann::json& arg)
                 {
                     QList<float> value = arg.get<QList<float>>();
                     resolve(value);
@@ -591,7 +591,7 @@ QtPromise::QPromise<QList<double>> MqttSimpleArrayInterface::funcFloat64Async(co
         const QtPromise::QPromiseResolve<QList<double>>& resolve)
         {
                 m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const auto& arg)
+                [resolve](const nlohmann::json& arg)
                 {
                     QList<double> value = arg.get<QList<double>>();
                     resolve(value);
@@ -636,7 +636,7 @@ QtPromise::QPromise<QList<QString>> MqttSimpleArrayInterface::funcStringAsync(co
         const QtPromise::QPromiseResolve<QList<QString>>& resolve)
         {
                 m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const auto& arg)
+                [resolve](const nlohmann::json& arg)
                 {
                     QList<QString> value = arg.get<QList<QString>>();
                     resolve(value);
@@ -672,28 +672,28 @@ void MqttSimpleArrayInterface::subscribeForPropertiesChanges()
 void MqttSimpleArrayInterface::subscribeForSignals()
 {
         static const QString topicsigBool = objectName() + "/sig/sigBool";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigBool, [this](const auto& input){
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigBool, [this](const nlohmann::json& input){
             emit sigBool(input[0].get<QList<bool>>());}));
         static const QString topicsigInt = objectName() + "/sig/sigInt";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigInt, [this](const auto& input){
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigInt, [this](const nlohmann::json& input){
             emit sigInt(input[0].get<QList<int>>());}));
         static const QString topicsigInt32 = objectName() + "/sig/sigInt32";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigInt32, [this](const auto& input){
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigInt32, [this](const nlohmann::json& input){
             emit sigInt32(input[0].get<QList<qint32>>());}));
         static const QString topicsigInt64 = objectName() + "/sig/sigInt64";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigInt64, [this](const auto& input){
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigInt64, [this](const nlohmann::json& input){
             emit sigInt64(input[0].get<QList<qint64>>());}));
         static const QString topicsigFloat = objectName() + "/sig/sigFloat";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigFloat, [this](const auto& input){
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigFloat, [this](const nlohmann::json& input){
             emit sigFloat(input[0].get<QList<qreal>>());}));
         static const QString topicsigFloat32 = objectName() + "/sig/sigFloat32";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigFloat32, [this](const auto& input){
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigFloat32, [this](const nlohmann::json& input){
             emit sigFloat32(input[0].get<QList<float>>());}));
         static const QString topicsigFloat64 = objectName() + "/sig/sigFloat64";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigFloat64, [this](const auto& input){
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigFloat64, [this](const nlohmann::json& input){
             emit sigFloat64(input[0].get<QList<double>>());}));
         static const QString topicsigString = objectName() + "/sig/sigString";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigString, [this](const auto& input){
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigString, [this](const nlohmann::json& input){
             emit sigString(input[0].get<QList<QString>>());}));
 }
 void MqttSimpleArrayInterface::subscribeForInvokeResponses()

@@ -105,7 +105,7 @@ void MqttEnumInterfaceAdapter::subscribeForInvokeRequests()
 {
     const auto invokeTopic_func0 = objectName() + "/rpc/func0";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_func0,
-        [this](const auto& arguments)
+        [this](const nlohmann::json& arguments)
         {
             Enum0::Enum0Enum param0 = arguments.at(0).get<Enum0::Enum0Enum>();
             auto result = m_impl->func0(param0);
@@ -113,7 +113,7 @@ void MqttEnumInterfaceAdapter::subscribeForInvokeRequests()
         }));
     const auto invokeTopic_func1 = objectName() + "/rpc/func1";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_func1,
-        [this](const auto& arguments)
+        [this](const nlohmann::json& arguments)
         {
             Enum1::Enum1Enum param1 = arguments.at(0).get<Enum1::Enum1Enum>();
             auto result = m_impl->func1(param1);
@@ -121,7 +121,7 @@ void MqttEnumInterfaceAdapter::subscribeForInvokeRequests()
         }));
     const auto invokeTopic_func2 = objectName() + "/rpc/func2";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_func2,
-        [this](const auto& arguments)
+        [this](const nlohmann::json& arguments)
         {
             Enum2::Enum2Enum param2 = arguments.at(0).get<Enum2::Enum2Enum>();
             auto result = m_impl->func2(param2);
@@ -129,7 +129,7 @@ void MqttEnumInterfaceAdapter::subscribeForInvokeRequests()
         }));
     const auto invokeTopic_func3 = objectName() + "/rpc/func3";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_func3,
-        [this](const auto& arguments)
+        [this](const nlohmann::json& arguments)
         {
             Enum3::Enum3Enum param3 = arguments.at(0).get<Enum3::Enum3Enum>();
             auto result = m_impl->func3(param3);

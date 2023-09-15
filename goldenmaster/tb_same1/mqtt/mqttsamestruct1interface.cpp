@@ -125,7 +125,7 @@ QtPromise::QPromise<Struct1> MqttSameStruct1Interface::func1Async(const Struct1&
         const QtPromise::QPromiseResolve<Struct1>& resolve)
         {
                 m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const auto& arg)
+                [resolve](const nlohmann::json& arg)
                 {
                     Struct1 value = arg.get<Struct1>();
                     resolve(value);
@@ -147,7 +147,7 @@ void MqttSameStruct1Interface::subscribeForPropertiesChanges()
 void MqttSameStruct1Interface::subscribeForSignals()
 {
         static const QString topicsig1 = objectName() + "/sig/sig1";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig1, [this](const auto& input){
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig1, [this](const nlohmann::json& input){
             emit sig1(input[0].get<Struct1>());}));
 }
 void MqttSameStruct1Interface::subscribeForInvokeResponses()

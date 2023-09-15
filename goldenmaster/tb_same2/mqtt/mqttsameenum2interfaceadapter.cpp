@@ -91,7 +91,7 @@ void MqttSameEnum2InterfaceAdapter::subscribeForInvokeRequests()
 {
     const auto invokeTopic_func1 = objectName() + "/rpc/func1";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_func1,
-        [this](const auto& arguments)
+        [this](const nlohmann::json& arguments)
         {
             Enum1::Enum1Enum param1 = arguments.at(0).get<Enum1::Enum1Enum>();
             auto result = m_impl->func1(param1);
@@ -99,7 +99,7 @@ void MqttSameEnum2InterfaceAdapter::subscribeForInvokeRequests()
         }));
     const auto invokeTopic_func2 = objectName() + "/rpc/func2";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_func2,
-        [this](const auto& arguments)
+        [this](const nlohmann::json& arguments)
         {
             Enum1::Enum1Enum param1 = arguments.at(0).get<Enum1::Enum1Enum>();
             Enum2::Enum2Enum param2 = arguments.at(1).get<Enum2::Enum2Enum>();

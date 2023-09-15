@@ -34,16 +34,29 @@ jobs:
           version: '6.5.2'
           cache: 'true'
           modules: qtwebsockets
+      - name: create mqtt dir
+        run: |
+            mkdir qtmqtt
       - name: Checkout QMqtt
         uses: actions/checkout@v3
         with:
           repository: qt/qtmqtt
           ref: '6.5.2'
-      - name: Build qmktt
-        working-directory: ${{ GITHUB_WORKSPACE}}/mqtt
-        run: qmake -r 
-             make 
-             make install
+          path: qtmqtt
+      - name: Build qmqtt windows
+        if: ${{ matrix.config.os == 'windows-latest'}}
+        working-directory: qtmqtt
+        run: |
+             cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo  -DCMAKE_CXX_FLAGS_DEBUG="-O2" .
+             cmake --build . --config RelWithDebInfo
+             cmake --install . --verbose 
+      - name: Build qmqtt mac and linux
+        if: ${{ matrix.config.os != 'windows-latest'}}
+        working-directory: qtmqtt
+        run: |
+             cmake .
+             cmake --build .
+             cmake --install . --verbose 
       - name: Update path env on Windows for testing
         if: ${{ matrix.config.os == 'windows-latest'}}
         run: echo "$GITHUB_WORKSPACE/goldenmaster/build/bin/Debug/" >> $GITHUB_PATH

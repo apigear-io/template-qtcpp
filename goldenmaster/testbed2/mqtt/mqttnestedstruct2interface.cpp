@@ -153,7 +153,7 @@ QtPromise::QPromise<NestedStruct1> MqttNestedStruct2Interface::func1Async(const 
         const QtPromise::QPromiseResolve<NestedStruct1>& resolve)
         {
                 m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const auto& arg)
+                [resolve](const nlohmann::json& arg)
                 {
                     NestedStruct1 value = arg.get<NestedStruct1>();
                     resolve(value);
@@ -198,7 +198,7 @@ QtPromise::QPromise<NestedStruct1> MqttNestedStruct2Interface::func2Async(const 
         const QtPromise::QPromiseResolve<NestedStruct1>& resolve)
         {
                 m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const auto& arg)
+                [resolve](const nlohmann::json& arg)
                 {
                     NestedStruct1 value = arg.get<NestedStruct1>();
                     resolve(value);
@@ -222,10 +222,10 @@ void MqttNestedStruct2Interface::subscribeForPropertiesChanges()
 void MqttNestedStruct2Interface::subscribeForSignals()
 {
         static const QString topicsig1 = objectName() + "/sig/sig1";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig1, [this](const auto& input){
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig1, [this](const nlohmann::json& input){
             emit sig1(input[0].get<NestedStruct1>());}));
         static const QString topicsig2 = objectName() + "/sig/sig2";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig2, [this](const auto& input){
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig2, [this](const nlohmann::json& input){
             emit sig2(input[0].get<NestedStruct1>(),input[1].get<NestedStruct2>());}));
 }
 void MqttNestedStruct2Interface::subscribeForInvokeResponses()

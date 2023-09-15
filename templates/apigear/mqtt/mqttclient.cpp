@@ -1,7 +1,4 @@
 #include "mqttclient.h"
-//#include "../utilities/logger.h"
-
-#pragma once
 
 #include <QtCore>
 #include <QMultiMap>

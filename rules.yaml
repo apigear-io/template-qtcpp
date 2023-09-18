@@ -210,6 +210,7 @@ features:
     requires:
       - api
       - apigear
+      - examples
     scopes:
       - match: module
         prefix: "{{snake .Module.Name}}/mqtt/"
@@ -286,3 +287,19 @@ features:
           raw: true
         - source: "examples/qml/main.qml.tpl"
           target: "examples/qml/main.qml"
+        - source: "examples/mqttservice/CMakeLists.txt.tpl"
+          target: "examples/mqttservice/CMakeLists.txt"
+        - source: "examples/mqttservice/main.cpp.tpl"
+          target: "examples/mqttservice/main.cpp"
+        - source: "examples/mqttclient/CMakeLists.txt.tpl"
+          target: "examples/mqttclient/CMakeLists.txt"
+        - source: "examples/mqttclient/main.cpp.tpl"
+          target: "examples/mqttclient/main.cpp"
+        - source: "examples/mqttqml/CMakeLists.txt.tpl"
+          target: "examples/mqttqml/CMakeLists.txt"
+        - source: "examples/mqttqml/main.cpp.tpl"
+          target: "examples/mqttqml/main.cpp"
+        - source: "examples/mqttqml/resources.qrc"
+          raw: true
+        - source: "examples/mqttqml/main.qml.tpl"
+          target: "examples/mqttqml/main.qml"

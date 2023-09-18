@@ -68,3 +68,8 @@ add_subdirectory(examples/olinkserver)
 add_subdirectory(examples/olinkclient)
 add_subdirectory(examples/qml)
 {{- end }}
+{{- if $features.mqtt }}
+add_subdirectory(examples/mqttservice)
+add_subdirectory(examples/mqttclient)
+add_subdirectory(examples/mqttqml)
+{{- end }}

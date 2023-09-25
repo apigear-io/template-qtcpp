@@ -43,7 +43,7 @@ int main(int argc, char *argv[]){
     auto {{$instanceName}}Traced = std::make_shared<{{ snake $module.Name }}::{{$class}}Traced>({{$instanceName}} );
     auto {{$serviceInstanceName}} = std::make_shared< {{- snake $module.Name }}::Mqtt{{$interface.Name}}Adapter>(service, {{ $instanceName }}Traced);
     {{- else}}
-    auto {{$serviceInstanceName}} = std::make_shared< {{- snake $module.Name }}::Mqtt{{$interface.Name}}Adapter>(service, {{ $instanceName }}.get());
+    auto {{$serviceInstanceName}} = std::make_shared< {{- snake $module.Name }}::Mqtt{{$interface.Name}}Adapter>(service, {{ $instanceName }});
     {{- end }}
     {{- end }}
     {{- end }}

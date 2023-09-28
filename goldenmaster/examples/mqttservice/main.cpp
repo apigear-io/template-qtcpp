@@ -60,6 +60,8 @@
 // You can run this service app together with the client side app - either also example,
 // or implemented mqtt client (may be using other technology) to play around with it.
 // Remember to use also a mqtt broker of your choice.
+// Be aware that some brokers limit maximum number of messages queued per client, if you send a lot of messages consider using more clients
+// e.g. one per interface.
 // Have in mind, that this example only instantiates the interfaces and the services.
 // To see results make sure the clients are sending request to server or add some actions by yourself.
 // If you are running this example from qt creator make sure that the run project settings have "run in terminal" option selected.

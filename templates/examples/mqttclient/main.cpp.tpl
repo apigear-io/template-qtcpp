@@ -19,6 +19,8 @@
 // You can run this client app together with the service side app - either also example, simulation,
 // or implemented mqtt service (may be in other technology) to play around with it.
 // Remember to use also a mqtt broker of your choice.
+// Be aware that some brokers limit maximum number of messages queued per client, if you send a lot of messages consider using more clients
+// e.g. one per interface.
 // Have in mind, that this example only instantiates the interfaces, you need to add some action to it by yourself, like:
 // changing properties or executing methods, also make sure you are subscribed for the changes and signals.
 // If you use a service example try out implementing some changes like: setting some properties or emitting signals to see any effects here.

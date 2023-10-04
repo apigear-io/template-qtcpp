@@ -27,7 +27,7 @@ namespace testbed2 {
 
 namespace
 {
-const QString ID = "testbed2/ManyParamInterface";
+const QString InterfaceName = "testbed2/ManyParamInterface";
 }
 
 MqttManyParamInterface::MqttManyParamInterface(ApiGear::Mqtt::Client& client, QObject *parent)
@@ -51,35 +51,34 @@ MqttManyParamInterface::MqttManyParamInterface(ApiGear::Mqtt::Client& client, QO
             subscribeForSignals();
             subscribeForInvokeResponses();
     });
+    connect(&m_client, &ApiGear::Mqtt::Client::disconnected, [this](){
+        m_subscribedIds.clear();
+        m_InvokeCallsInfo.clear();
+    });
 }
 
 MqttManyParamInterface::~MqttManyParamInterface()
 {
-    for(auto id :m_subscribedIds)
-    {
-        m_client.unsubscribeTopic(id);
-    }
-    for(auto info :m_InvokeCallsInfo)
-    {
-        m_client.unsubscribeTopic(info.second.second);
-    }
+    disconnect(&m_client, &ApiGear::Mqtt::Client::disconnected, 0, 0);
+    disconnect(&m_client, &ApiGear::Mqtt::Client::ready, 0, 0);
+    unsubscribeAll();
 }
 
 void MqttManyParamInterface::setProp1(int prop1)
 {
-    static const QString topic = objectName() + QString("/set/prop1");
+    static const QString topic = interfaceName() + QString("/set/prop1");
     AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_client.isReady())
     {
         return;
     }
-    m_client.setRemoteProperty(topic, { prop1 });
+    m_client.setRemoteProperty(topic, nlohmann::json( prop1 ));
 }
 
-void MqttManyParamInterface::setProp1Local(const nlohmann::json& input)
+void MqttManyParamInterface::setProp1Local(const nlohmann::json& value)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    auto in_prop1(input.get<int>());
+    auto in_prop1(value.get<int>());
     if (m_prop1 != in_prop1)
     {
         m_prop1 = in_prop1;
@@ -94,19 +93,19 @@ int MqttManyParamInterface::prop1() const
 
 void MqttManyParamInterface::setProp2(int prop2)
 {
-    static const QString topic = objectName() + QString("/set/prop2");
+    static const QString topic = interfaceName() + QString("/set/prop2");
     AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_client.isReady())
     {
         return;
     }
-    m_client.setRemoteProperty(topic, { prop2 });
+    m_client.setRemoteProperty(topic, nlohmann::json( prop2 ));
 }
 
-void MqttManyParamInterface::setProp2Local(const nlohmann::json& input)
+void MqttManyParamInterface::setProp2Local(const nlohmann::json& value)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    auto in_prop2(input.get<int>());
+    auto in_prop2(value.get<int>());
     if (m_prop2 != in_prop2)
     {
         m_prop2 = in_prop2;
@@ -121,19 +120,19 @@ int MqttManyParamInterface::prop2() const
 
 void MqttManyParamInterface::setProp3(int prop3)
 {
-    static const QString topic = objectName() + QString("/set/prop3");
+    static const QString topic = interfaceName() + QString("/set/prop3");
     AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_client.isReady())
     {
         return;
     }
-    m_client.setRemoteProperty(topic, { prop3 });
+    m_client.setRemoteProperty(topic, nlohmann::json( prop3 ));
 }
 
-void MqttManyParamInterface::setProp3Local(const nlohmann::json& input)
+void MqttManyParamInterface::setProp3Local(const nlohmann::json& value)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    auto in_prop3(input.get<int>());
+    auto in_prop3(value.get<int>());
     if (m_prop3 != in_prop3)
     {
         m_prop3 = in_prop3;
@@ -148,19 +147,19 @@ int MqttManyParamInterface::prop3() const
 
 void MqttManyParamInterface::setProp4(int prop4)
 {
-    static const QString topic = objectName() + QString("/set/prop4");
+    static const QString topic = interfaceName() + QString("/set/prop4");
     AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_client.isReady())
     {
         return;
     }
-    m_client.setRemoteProperty(topic, { prop4 });
+    m_client.setRemoteProperty(topic, nlohmann::json( prop4 ));
 }
 
-void MqttManyParamInterface::setProp4Local(const nlohmann::json& input)
+void MqttManyParamInterface::setProp4Local(const nlohmann::json& value)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    auto in_prop4(input.get<int>());
+    auto in_prop4(value.get<int>());
     if (m_prop4 != in_prop4)
     {
         m_prop4 = in_prop4;
@@ -189,7 +188,7 @@ int MqttManyParamInterface::func1(int param1)
 QtPromise::QPromise<int> MqttManyParamInterface::func1Async(int param1)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    static const QString topic = objectName() + QString("/rpc/func1");
+    static const QString topic = interfaceName() + QString("/rpc/func1");
 
     if(!m_client.isReady())
     {
@@ -234,7 +233,7 @@ int MqttManyParamInterface::func2(int param1, int param2)
 QtPromise::QPromise<int> MqttManyParamInterface::func2Async(int param1, int param2)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    static const QString topic = objectName() + QString("/rpc/func2");
+    static const QString topic = interfaceName() + QString("/rpc/func2");
 
     if(!m_client.isReady())
     {
@@ -279,7 +278,7 @@ int MqttManyParamInterface::func3(int param1, int param2, int param3)
 QtPromise::QPromise<int> MqttManyParamInterface::func3Async(int param1, int param2, int param3)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    static const QString topic = objectName() + QString("/rpc/func3");
+    static const QString topic = interfaceName() + QString("/rpc/func3");
 
     if(!m_client.isReady())
     {
@@ -324,7 +323,7 @@ int MqttManyParamInterface::func4(int param1, int param2, int param3, int param4
 QtPromise::QPromise<int> MqttManyParamInterface::func4Async(int param1, int param2, int param3, int param4)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    static const QString topic = objectName() + QString("/rpc/func4");
+    static const QString topic = interfaceName() + QString("/rpc/func4");
 
     if(!m_client.isReady())
     {
@@ -354,56 +353,67 @@ QtPromise::QPromise<int> MqttManyParamInterface::func4Async(int param1, int para
 }
 
 
-const QString& MqttManyParamInterface::objectName()
+const QString& MqttManyParamInterface::interfaceName()
 {
-    return ID;
+    return InterfaceName;
 }
 void MqttManyParamInterface::subscribeForPropertiesChanges()
 {
-        static const QString topicprop1 = objectName() + "/prop/prop1";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicprop1, [this](auto& input) { setProp1Local(input);}));
-        static const QString topicprop2 = objectName() + "/prop/prop2";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicprop2, [this](auto& input) { setProp2Local(input);}));
-        static const QString topicprop3 = objectName() + "/prop/prop3";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicprop3, [this](auto& input) { setProp3Local(input);}));
-        static const QString topicprop4 = objectName() + "/prop/prop4";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicprop4, [this](auto& input) { setProp4Local(input);}));
+        static const QString topicprop1 = interfaceName() + "/prop/prop1";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicprop1, [this](auto& value) { setProp1Local(value);}));
+        static const QString topicprop2 = interfaceName() + "/prop/prop2";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicprop2, [this](auto& value) { setProp2Local(value);}));
+        static const QString topicprop3 = interfaceName() + "/prop/prop3";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicprop3, [this](auto& value) { setProp3Local(value);}));
+        static const QString topicprop4 = interfaceName() + "/prop/prop4";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicprop4, [this](auto& value) { setProp4Local(value);}));
 }
 void MqttManyParamInterface::subscribeForSignals()
 {
-        static const QString topicsig1 = objectName() + "/sig/sig1";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig1, [this](const nlohmann::json& input){
-            emit sig1(input[0].get<int>());}));
-        static const QString topicsig2 = objectName() + "/sig/sig2";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig2, [this](const nlohmann::json& input){
-            emit sig2(input[0].get<int>(),input[1].get<int>());}));
-        static const QString topicsig3 = objectName() + "/sig/sig3";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig3, [this](const nlohmann::json& input){
-            emit sig3(input[0].get<int>(),input[1].get<int>(),input[2].get<int>());}));
-        static const QString topicsig4 = objectName() + "/sig/sig4";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig4, [this](const nlohmann::json& input){
-            emit sig4(input[0].get<int>(),input[1].get<int>(),input[2].get<int>(),input[3].get<int>());}));
+        static const QString topicsig1 = interfaceName() + "/sig/sig1";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig1, [this](const nlohmann::json& argumentsArray){
+            emit sig1(argumentsArray[0].get<int>());}));
+        static const QString topicsig2 = interfaceName() + "/sig/sig2";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig2, [this](const nlohmann::json& argumentsArray){
+            emit sig2(argumentsArray[0].get<int>(),argumentsArray[1].get<int>());}));
+        static const QString topicsig3 = interfaceName() + "/sig/sig3";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig3, [this](const nlohmann::json& argumentsArray){
+            emit sig3(argumentsArray[0].get<int>(),argumentsArray[1].get<int>(),argumentsArray[2].get<int>());}));
+        static const QString topicsig4 = interfaceName() + "/sig/sig4";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig4, [this](const nlohmann::json& argumentsArray){
+            emit sig4(argumentsArray[0].get<int>(),argumentsArray[1].get<int>(),argumentsArray[2].get<int>(),argumentsArray[3].get<int>());}));
 }
 void MqttManyParamInterface::subscribeForInvokeResponses()
 {
     // Subscribe for invokeReply and prepare invoke call info for non void functions.
-    const QString topicfunc1 = objectName() + "/rpc/func1";
-    const QString topicfunc1InvokeResp = objectName() + "/rpc/func1"+ m_client.clientId() + "/result";
+    const QString topicfunc1 = interfaceName() + "/rpc/func1";
+    const QString topicfunc1InvokeResp = interfaceName() + "/rpc/func1"+ m_client.clientId() + "/result";
     auto id_func1 = m_client.subscribeForInvokeResponse(topicfunc1InvokeResp);
     m_InvokeCallsInfo[topicfunc1] = std::make_pair(topicfunc1InvokeResp, id_func1);
-    const QString topicfunc2 = objectName() + "/rpc/func2";
-    const QString topicfunc2InvokeResp = objectName() + "/rpc/func2"+ m_client.clientId() + "/result";
+    const QString topicfunc2 = interfaceName() + "/rpc/func2";
+    const QString topicfunc2InvokeResp = interfaceName() + "/rpc/func2"+ m_client.clientId() + "/result";
     auto id_func2 = m_client.subscribeForInvokeResponse(topicfunc2InvokeResp);
     m_InvokeCallsInfo[topicfunc2] = std::make_pair(topicfunc2InvokeResp, id_func2);
-    const QString topicfunc3 = objectName() + "/rpc/func3";
-    const QString topicfunc3InvokeResp = objectName() + "/rpc/func3"+ m_client.clientId() + "/result";
+    const QString topicfunc3 = interfaceName() + "/rpc/func3";
+    const QString topicfunc3InvokeResp = interfaceName() + "/rpc/func3"+ m_client.clientId() + "/result";
     auto id_func3 = m_client.subscribeForInvokeResponse(topicfunc3InvokeResp);
     m_InvokeCallsInfo[topicfunc3] = std::make_pair(topicfunc3InvokeResp, id_func3);
-    const QString topicfunc4 = objectName() + "/rpc/func4";
-    const QString topicfunc4InvokeResp = objectName() + "/rpc/func4"+ m_client.clientId() + "/result";
+    const QString topicfunc4 = interfaceName() + "/rpc/func4";
+    const QString topicfunc4InvokeResp = interfaceName() + "/rpc/func4"+ m_client.clientId() + "/result";
     auto id_func4 = m_client.subscribeForInvokeResponse(topicfunc4InvokeResp);
     m_InvokeCallsInfo[topicfunc4] = std::make_pair(topicfunc4InvokeResp, id_func4);
 }
 
+void MqttManyParamInterface::unsubscribeAll()
+{
+    for(auto id :m_subscribedIds)
+    {
+        m_client.unsubscribeTopic(id);
+    }
+    for(auto info :m_InvokeCallsInfo)
+    {
+        m_client.unsubscribeTopic(info.second.second);
+    }
+}
 
 } // namespace testbed2

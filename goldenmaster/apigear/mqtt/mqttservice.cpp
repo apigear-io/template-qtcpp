@@ -23,7 +23,7 @@
 */
 #include "mqttservice.h"
 
-
+#include "private/multimap_helper.h"
 #include "payloadconverter.h"
 
 namespace ApiGear {
@@ -44,8 +44,7 @@ ServiceAdapter::ServiceAdapter(QString id, QObject* parent)
     m_client.setProtocolVersion(QMqttClient::MQTT_5_0);
     connect(this, &ServiceAdapter::messageToWriteWithProperties, this, &ServiceAdapter::writeMessageWithProperties, Qt::QueuedConnection);
     connect(this, &ServiceAdapter::messageToWrite,this, &ServiceAdapter::writeMessage, Qt::QueuedConnection);
-    connect(&m_client, &QMqttClient::stateChanged, [this](auto state){qDebug()<<"stateChanged "<<state; if(state == QMqttClient::Connected){ready();}});
-
+    connect(&m_client, &QMqttClient::stateChanged, this, &ServiceAdapter::handleClientStateChanged);
     connect(this, &ServiceAdapter::subscribeTopicSignal, this, &ServiceAdapter::onSubscribeTopic, Qt::QueuedConnection);
     connect(this, &ServiceAdapter::subscribeForInvokeTopicSignal, this, &ServiceAdapter::onSubscribeForInvokeTopic, Qt::QueuedConnection);
     connect(this, &ServiceAdapter::unsubscribeTopic, this, &ServiceAdapter::onUnsubscribeTopic, Qt::QueuedConnection);
@@ -83,20 +82,13 @@ void ServiceAdapter::onSubscribeTopic(quint64 id, const QString &topic, SimpleSu
     {
         connect(subscription, &QMqttSubscription::messageReceived, [this](const QMqttMessage& message)
             {
-                //qDebug()<< "service got message " << message.topic();
-                auto subscription = m_subscriptions.begin();
-                for (subscription = m_subscriptions.begin(); subscription!= m_subscriptions.end(); subscription++)
-                {
-                    if (subscription.key().match(message.topic()))
-                        break;
-                }
-
+                auto subscription = multimap_helper::find_first_with_matching_topic(m_subscriptions.begin(), m_subscriptions.end(), message.topic());
                 while (subscription != m_subscriptions.end() && subscription.key().match(message.topic()))
                 {
                     if (subscription.value().second)
                     {
-                        auto arguments = PayloadConverter::fromPayload(message.payload());
-                        auto element  = arguments.at(0);
+                        // Assumes payload is single value.
+                        auto element = PayloadConverter::fromPayload(message.payload());
                         subscription.value().second(element);
                     }
                     subscription++;
@@ -122,10 +114,9 @@ bool ServiceAdapter::isReady() const
     return m_client.state() == QMqttClient::ClientState::Connected;
 }
 
-const QString& ServiceAdapter::clientId() const
+QString ServiceAdapter::clientId() const
 {
-    static auto clientID =  m_client.clientId();
-    return clientID;
+    return m_client.clientId();
 }
 
 void ServiceAdapter::connectToHost(QString hostAddress,int port)
@@ -152,31 +143,22 @@ quint64 ServiceAdapter::subscribeForInvokeTopic(const QString &topic, std::funct
 
 void ServiceAdapter::onUnsubscribeTopic(quint64 subscriptionId)
 {
-    auto found = std::find_if(m_subscriptions.begin(), m_subscriptions.end(), [subscriptionId](auto& element){ return element.first == subscriptionId;});
-    if (found != m_subscriptions.end())
+    auto removeSubscription = [this, subscriptionId](auto& container)
     {
-        auto topic = found.key();
-        m_subscriptions.erase(found);
-        auto values = m_subscriptions.values(topic);
-        if (values.empty())
+        auto found = std::find_if(container.begin(), container.end(), [subscriptionId](auto& element) { return element.first == subscriptionId; });
+        if (found != container.end())
         {
-            m_client.unsubscribe(topic);
-        }
-    }
-    else
-    {
-        auto foundInvokeSubscription = std::find_if(m_invokeSubscriptions.begin(), m_invokeSubscriptions.end(), [subscriptionId](auto& element){ return element.first == subscriptionId;});
-        if (foundInvokeSubscription != m_invokeSubscriptions.end())
-        {
-            auto topic = foundInvokeSubscription.key();
-            m_invokeSubscriptions.erase(foundInvokeSubscription);
-            auto values = m_invokeSubscriptions.values(topic);
+            auto topic = found.key();
+            container.erase(found);
+            auto values = container.values(topic);
             if (values.empty())
             {
                 m_client.unsubscribe(topic);
             }
         }
-    }
+    };
+    removeSubscription(m_subscriptions);
+    removeSubscription(m_invokeSubscriptions);
 };
 
 void ServiceAdapter::emitPropertyChange(const QMqttTopicName& topic, const nlohmann::json& value)
@@ -191,7 +173,7 @@ void ServiceAdapter::emitSignalChange(const QMqttTopicName& topic, const nlohman
 
 void ServiceAdapter::disconnect()
 {
-    m_client.disconnect();
+    m_client.disconnectFromHost();
 }
 
 void ServiceAdapter::handleInvoke(const QMqttMessage& message)
@@ -210,6 +192,7 @@ void ServiceAdapter::handleInvoke(const QMqttMessage& message)
         if (subscriptionIter->second)
         {
             auto arguments = PayloadConverter::fromPayload(message.payload());
+            // Assumes payload is an array of arguments.
             auto response = subscriptionIter->second(arguments);
             if (!responseTopic.isEmpty())
             {
@@ -221,6 +204,36 @@ void ServiceAdapter::handleInvoke(const QMqttMessage& message)
         }
         subscriptionIter++;
     }
+}
+
+void ServiceAdapter::handleClientStateChanged(QMqttClient::ClientState state)
+{
+    if (state == QMqttClient::Connected)
+    {
+        if (!m_subscriptions.empty() || !m_invokeSubscriptions.empty())
+        {
+            unsubscribeAll();
+        }
+        emit ready();
+    }
+    else if (state == QMqttClient::Disconnected)
+    {
+        emit disconnected();
+    }
+}
+
+void ServiceAdapter::unsubscribeAll()
+{
+    for (auto item = m_subscriptions.keyBegin(); item != m_subscriptions.keyEnd(); item++)
+    {
+        m_client.unsubscribe(*item);
+    }
+    for (auto item = m_invokeSubscriptions.keyBegin(); item != m_invokeSubscriptions.keyEnd(); item++)
+    {
+        m_client.unsubscribe(*item);
+    }
+    m_subscriptions.clear();
+    m_invokeSubscriptions.clear();
 }
 
 }} // namespace ApiGear::Mqtt

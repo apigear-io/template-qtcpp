@@ -28,8 +28,6 @@ set (SOURCES
     mqttservice.cpp
 )
 
-FILE(GLOB_RECURSE INCLUDES *.h)
-
 add_library(apigear_mqtt SHARED ${SOURCES}
 )
 add_library(apigear::apigear_mqtt ALIAS apigear_mqtt)

@@ -19,7 +19,7 @@ namespace {{snake  .Module.Name }} {
 
 namespace
 {
-const QString ID = "{{$module}}/{{$iface}}";
+const QString InterfaceName = "{{$module}}/{{$iface}}";
 }
 
 
@@ -58,25 +58,29 @@ const QString ID = "{{$module}}/{{$iface}}";
         connectServiceSignals();
         {{- end }}
     });
+    
+    connect(&m_mqttServiceAdapter, &ApiGear::Mqtt::ServiceAdapter::disconnected, [this](){
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+        m_subscribedIds.clear();
+    });
 }
 
 {{$class}}::~{{$class}}()
 {
-    for(auto id :m_subscribedIds)
-    {
-        m_mqttServiceAdapter.unsubscribeTopic(id);
-    }
+    disconnect(&m_mqttServiceAdapter, &ApiGear::Mqtt::ServiceAdapter::disconnected, 0, 0);
+    disconnect(&m_mqttServiceAdapter, &ApiGear::Mqtt::ServiceAdapter::ready, 0, 0);
+    unsubscribeAll();
 }
 
-const QString& {{$class}}::objectName()
+const QString& {{$class}}::interfaceName()
 {
-    return ID;
+    return InterfaceName;
 }
 {{ if (len .Interface.Properties) }}
 void {{$class}}::subscribeForPropertiesChanges()
 {
     {{- range .Interface.Properties }}
-    const auto setTopic_{{.Name}} = objectName() + "/set/{{.Name}}";
+    const auto setTopic_{{.Name}} = interfaceName() + "/set/{{.Name}}";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_{{.Name}},
         [this](const nlohmann::json& value)
         {
@@ -91,7 +95,7 @@ void {{$class}}::subscribeForPropertiesChanges()
 void {{$class}}::subscribeForInvokeRequests()
 {
     {{- range .Interface.Operations }}
-    const auto invokeTopic_{{.Name}} = objectName() + "/rpc/{{.Name}}";
+    const auto invokeTopic_{{.Name}} = interfaceName() + "/rpc/{{.Name}}";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_{{.Name}},
         [this](const nlohmann::json& arguments)
         {
@@ -115,7 +119,7 @@ void {{$class}}::subscribeForInvokeRequests()
 void {{$class}}::connectServicePropertiesChanges()
 {
     {{- range .Interface.Properties }}
-    const auto publishTopic_{{.Name}} = objectName() + "/prop/{{.Name}}";
+    const auto publishTopic_{{.Name}} = interfaceName() + "/prop/{{.Name}}";
     connect(m_impl.get(),&Abstract{{$iface}}::{{.Name}}Changed,
         this, [this, publishTopic_{{.Name}}]({{ qtParam "" . }})
         {
@@ -129,7 +133,7 @@ void {{$class}}::connectServiceSignals()
 {
 {{- range .Interface.Signals }}
 {{- $signalName := camel .Name }}
-    const auto topic_{{$signalName}} = objectName() + "/sig/{{$signalName}}";
+    const auto topic_{{$signalName}} = interfaceName() + "/sig/{{$signalName}}";
     connect(m_impl.get(), &Abstract{{$iface}}::{{$signalName}}, this,
         [this, topic_{{$signalName}}]({{qtParams "" .Params}})
         {
@@ -139,5 +143,13 @@ void {{$class}}::connectServiceSignals()
 {{- end }}
 }
 {{- end }}
+
+void {{$class}}::unsubscribeAll()
+{
+    for(auto id :m_subscribedIds)
+    {
+        m_mqttServiceAdapter.unsubscribeTopic(id);
+    }
+}
 
 } // namespace {{snake  .Module.Name }}

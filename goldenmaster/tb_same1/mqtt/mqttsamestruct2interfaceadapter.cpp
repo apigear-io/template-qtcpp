@@ -31,7 +31,7 @@ namespace tb_same1 {
 
 namespace
 {
-const QString ID = "tb.same1/SameStruct2Interface";
+const QString InterfaceName = "tb.same1/SameStruct2Interface";
 }
 
 
@@ -54,31 +54,35 @@ MqttSameStruct2InterfaceAdapter::MqttSameStruct2InterfaceAdapter(ApiGear::Mqtt::
         connectServicePropertiesChanges();
         connectServiceSignals();
     });
+    
+    connect(&m_mqttServiceAdapter, &ApiGear::Mqtt::ServiceAdapter::disconnected, [this](){
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+        m_subscribedIds.clear();
+    });
 }
 
 MqttSameStruct2InterfaceAdapter::~MqttSameStruct2InterfaceAdapter()
 {
-    for(auto id :m_subscribedIds)
-    {
-        m_mqttServiceAdapter.unsubscribeTopic(id);
-    }
+    disconnect(&m_mqttServiceAdapter, &ApiGear::Mqtt::ServiceAdapter::disconnected, 0, 0);
+    disconnect(&m_mqttServiceAdapter, &ApiGear::Mqtt::ServiceAdapter::ready, 0, 0);
+    unsubscribeAll();
 }
 
-const QString& MqttSameStruct2InterfaceAdapter::objectName()
+const QString& MqttSameStruct2InterfaceAdapter::interfaceName()
 {
-    return ID;
+    return InterfaceName;
 }
 
 void MqttSameStruct2InterfaceAdapter::subscribeForPropertiesChanges()
 {
-    const auto setTopic_prop1 = objectName() + "/set/prop1";
+    const auto setTopic_prop1 = interfaceName() + "/set/prop1";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_prop1,
         [this](const nlohmann::json& value)
         {
             Struct2 prop1 = value.get<Struct2>();
             m_impl->setProp1(prop1);
         }));
-    const auto setTopic_prop2 = objectName() + "/set/prop2";
+    const auto setTopic_prop2 = interfaceName() + "/set/prop2";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_prop2,
         [this](const nlohmann::json& value)
         {
@@ -89,7 +93,7 @@ void MqttSameStruct2InterfaceAdapter::subscribeForPropertiesChanges()
 
 void MqttSameStruct2InterfaceAdapter::subscribeForInvokeRequests()
 {
-    const auto invokeTopic_func1 = objectName() + "/rpc/func1";
+    const auto invokeTopic_func1 = interfaceName() + "/rpc/func1";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_func1,
         [this](const nlohmann::json& arguments)
         {
@@ -97,7 +101,7 @@ void MqttSameStruct2InterfaceAdapter::subscribeForInvokeRequests()
             auto result = m_impl->func1(param1);
             return result;
         }));
-    const auto invokeTopic_func2 = objectName() + "/rpc/func2";
+    const auto invokeTopic_func2 = interfaceName() + "/rpc/func2";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_func2,
         [this](const nlohmann::json& arguments)
         {
@@ -110,13 +114,13 @@ void MqttSameStruct2InterfaceAdapter::subscribeForInvokeRequests()
 
 void MqttSameStruct2InterfaceAdapter::connectServicePropertiesChanges()
 {
-    const auto publishTopic_prop1 = objectName() + "/prop/prop1";
+    const auto publishTopic_prop1 = interfaceName() + "/prop/prop1";
     connect(m_impl.get(),&AbstractSameStruct2Interface::prop1Changed,
         this, [this, publishTopic_prop1](const Struct2& prop1)
         {
             m_mqttServiceAdapter.emitPropertyChange(publishTopic_prop1, prop1);
         });
-    const auto publishTopic_prop2 = objectName() + "/prop/prop2";
+    const auto publishTopic_prop2 = interfaceName() + "/prop/prop2";
     connect(m_impl.get(),&AbstractSameStruct2Interface::prop2Changed,
         this, [this, publishTopic_prop2](const Struct2& prop2)
         {
@@ -126,20 +130,28 @@ void MqttSameStruct2InterfaceAdapter::connectServicePropertiesChanges()
 
 void MqttSameStruct2InterfaceAdapter::connectServiceSignals()
 {
-    const auto topic_sig1 = objectName() + "/sig/sig1";
+    const auto topic_sig1 = interfaceName() + "/sig/sig1";
     connect(m_impl.get(), &AbstractSameStruct2Interface::sig1, this,
         [this, topic_sig1](const Struct1& param1)
         {
             nlohmann::json args = { param1 };
             m_mqttServiceAdapter.emitPropertyChange(topic_sig1, args);
         });
-    const auto topic_sig2 = objectName() + "/sig/sig2";
+    const auto topic_sig2 = interfaceName() + "/sig/sig2";
     connect(m_impl.get(), &AbstractSameStruct2Interface::sig2, this,
         [this, topic_sig2](const Struct1& param1, const Struct2& param2)
         {
             nlohmann::json args = { param1, param2 };
             m_mqttServiceAdapter.emitPropertyChange(topic_sig2, args);
         });
+}
+
+void MqttSameStruct2InterfaceAdapter::unsubscribeAll()
+{
+    for(auto id :m_subscribedIds)
+    {
+        m_mqttServiceAdapter.unsubscribeTopic(id);
+    }
 }
 
 } // namespace tb_same1

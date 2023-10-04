@@ -50,11 +50,11 @@ public:
     virtual ~MqttNestedStruct1InterfaceAdapter();
 public:
     /**
-    * The name of the object for which this service is created, object on client side has to have the same name.
-    * It serves as an identifier for the source registry, it has to be unique for the pair source object - remote node.
-    * Passed in the messages topics as an object identifier.
+    * The name of the interface for which this mqtt service adapter is created.
+    * It is used in subscriptions messages as an object identifier, to create topics for this interface, 
+    * so adapter for an interface on client side has to have the same name.
     */
-    const QString& objectName();
+    const QString& interfaceName();
 
 private:
     // Helper function, subscribes this adpater for property change requests from remote clients.
@@ -65,6 +65,10 @@ private:
     void connectServicePropertiesChanges();
     // Helper function, subscribes this adpater for signals emitted by the NestedStruct1Interface implementation.
     void connectServiceSignals();
+
+    // Helper function for removing all subscriptions. 
+    void unsubscribeAll();
+
     /**
     * The actual implementation of a NestedStruct1Interface that gets adapted to be a service in mqtt network.
     */

@@ -31,7 +31,7 @@ namespace testbed2 {
 
 namespace
 {
-const QString ID = "testbed2/NestedStruct3Interface";
+const QString InterfaceName = "testbed2/NestedStruct3Interface";
 }
 
 
@@ -54,38 +54,42 @@ MqttNestedStruct3InterfaceAdapter::MqttNestedStruct3InterfaceAdapter(ApiGear::Mq
         connectServicePropertiesChanges();
         connectServiceSignals();
     });
+    
+    connect(&m_mqttServiceAdapter, &ApiGear::Mqtt::ServiceAdapter::disconnected, [this](){
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+        m_subscribedIds.clear();
+    });
 }
 
 MqttNestedStruct3InterfaceAdapter::~MqttNestedStruct3InterfaceAdapter()
 {
-    for(auto id :m_subscribedIds)
-    {
-        m_mqttServiceAdapter.unsubscribeTopic(id);
-    }
+    disconnect(&m_mqttServiceAdapter, &ApiGear::Mqtt::ServiceAdapter::disconnected, 0, 0);
+    disconnect(&m_mqttServiceAdapter, &ApiGear::Mqtt::ServiceAdapter::ready, 0, 0);
+    unsubscribeAll();
 }
 
-const QString& MqttNestedStruct3InterfaceAdapter::objectName()
+const QString& MqttNestedStruct3InterfaceAdapter::interfaceName()
 {
-    return ID;
+    return InterfaceName;
 }
 
 void MqttNestedStruct3InterfaceAdapter::subscribeForPropertiesChanges()
 {
-    const auto setTopic_prop1 = objectName() + "/set/prop1";
+    const auto setTopic_prop1 = interfaceName() + "/set/prop1";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_prop1,
         [this](const nlohmann::json& value)
         {
             NestedStruct1 prop1 = value.get<NestedStruct1>();
             m_impl->setProp1(prop1);
         }));
-    const auto setTopic_prop2 = objectName() + "/set/prop2";
+    const auto setTopic_prop2 = interfaceName() + "/set/prop2";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_prop2,
         [this](const nlohmann::json& value)
         {
             NestedStruct2 prop2 = value.get<NestedStruct2>();
             m_impl->setProp2(prop2);
         }));
-    const auto setTopic_prop3 = objectName() + "/set/prop3";
+    const auto setTopic_prop3 = interfaceName() + "/set/prop3";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_prop3,
         [this](const nlohmann::json& value)
         {
@@ -96,7 +100,7 @@ void MqttNestedStruct3InterfaceAdapter::subscribeForPropertiesChanges()
 
 void MqttNestedStruct3InterfaceAdapter::subscribeForInvokeRequests()
 {
-    const auto invokeTopic_func1 = objectName() + "/rpc/func1";
+    const auto invokeTopic_func1 = interfaceName() + "/rpc/func1";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_func1,
         [this](const nlohmann::json& arguments)
         {
@@ -104,7 +108,7 @@ void MqttNestedStruct3InterfaceAdapter::subscribeForInvokeRequests()
             auto result = m_impl->func1(param1);
             return result;
         }));
-    const auto invokeTopic_func2 = objectName() + "/rpc/func2";
+    const auto invokeTopic_func2 = interfaceName() + "/rpc/func2";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_func2,
         [this](const nlohmann::json& arguments)
         {
@@ -113,7 +117,7 @@ void MqttNestedStruct3InterfaceAdapter::subscribeForInvokeRequests()
             auto result = m_impl->func2(param1, param2);
             return result;
         }));
-    const auto invokeTopic_func3 = objectName() + "/rpc/func3";
+    const auto invokeTopic_func3 = interfaceName() + "/rpc/func3";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_func3,
         [this](const nlohmann::json& arguments)
         {
@@ -127,19 +131,19 @@ void MqttNestedStruct3InterfaceAdapter::subscribeForInvokeRequests()
 
 void MqttNestedStruct3InterfaceAdapter::connectServicePropertiesChanges()
 {
-    const auto publishTopic_prop1 = objectName() + "/prop/prop1";
+    const auto publishTopic_prop1 = interfaceName() + "/prop/prop1";
     connect(m_impl.get(),&AbstractNestedStruct3Interface::prop1Changed,
         this, [this, publishTopic_prop1](const NestedStruct1& prop1)
         {
             m_mqttServiceAdapter.emitPropertyChange(publishTopic_prop1, prop1);
         });
-    const auto publishTopic_prop2 = objectName() + "/prop/prop2";
+    const auto publishTopic_prop2 = interfaceName() + "/prop/prop2";
     connect(m_impl.get(),&AbstractNestedStruct3Interface::prop2Changed,
         this, [this, publishTopic_prop2](const NestedStruct2& prop2)
         {
             m_mqttServiceAdapter.emitPropertyChange(publishTopic_prop2, prop2);
         });
-    const auto publishTopic_prop3 = objectName() + "/prop/prop3";
+    const auto publishTopic_prop3 = interfaceName() + "/prop/prop3";
     connect(m_impl.get(),&AbstractNestedStruct3Interface::prop3Changed,
         this, [this, publishTopic_prop3](const NestedStruct3& prop3)
         {
@@ -149,27 +153,35 @@ void MqttNestedStruct3InterfaceAdapter::connectServicePropertiesChanges()
 
 void MqttNestedStruct3InterfaceAdapter::connectServiceSignals()
 {
-    const auto topic_sig1 = objectName() + "/sig/sig1";
+    const auto topic_sig1 = interfaceName() + "/sig/sig1";
     connect(m_impl.get(), &AbstractNestedStruct3Interface::sig1, this,
         [this, topic_sig1](const NestedStruct1& param1)
         {
             nlohmann::json args = { param1 };
             m_mqttServiceAdapter.emitPropertyChange(topic_sig1, args);
         });
-    const auto topic_sig2 = objectName() + "/sig/sig2";
+    const auto topic_sig2 = interfaceName() + "/sig/sig2";
     connect(m_impl.get(), &AbstractNestedStruct3Interface::sig2, this,
         [this, topic_sig2](const NestedStruct1& param1, const NestedStruct2& param2)
         {
             nlohmann::json args = { param1, param2 };
             m_mqttServiceAdapter.emitPropertyChange(topic_sig2, args);
         });
-    const auto topic_sig3 = objectName() + "/sig/sig3";
+    const auto topic_sig3 = interfaceName() + "/sig/sig3";
     connect(m_impl.get(), &AbstractNestedStruct3Interface::sig3, this,
         [this, topic_sig3](const NestedStruct1& param1, const NestedStruct2& param2, const NestedStruct3& param3)
         {
             nlohmann::json args = { param1, param2, param3 };
             m_mqttServiceAdapter.emitPropertyChange(topic_sig3, args);
         });
+}
+
+void MqttNestedStruct3InterfaceAdapter::unsubscribeAll()
+{
+    for(auto id :m_subscribedIds)
+    {
+        m_mqttServiceAdapter.unsubscribeTopic(id);
+    }
 }
 
 } // namespace testbed2

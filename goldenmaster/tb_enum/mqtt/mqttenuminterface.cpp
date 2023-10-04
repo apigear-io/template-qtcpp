@@ -27,7 +27,7 @@ namespace tb_enum {
 
 namespace
 {
-const QString ID = "tb.enum/EnumInterface";
+const QString InterfaceName = "tb.enum/EnumInterface";
 }
 
 MqttEnumInterface::MqttEnumInterface(ApiGear::Mqtt::Client& client, QObject *parent)
@@ -51,35 +51,34 @@ MqttEnumInterface::MqttEnumInterface(ApiGear::Mqtt::Client& client, QObject *par
             subscribeForSignals();
             subscribeForInvokeResponses();
     });
+    connect(&m_client, &ApiGear::Mqtt::Client::disconnected, [this](){
+        m_subscribedIds.clear();
+        m_InvokeCallsInfo.clear();
+    });
 }
 
 MqttEnumInterface::~MqttEnumInterface()
 {
-    for(auto id :m_subscribedIds)
-    {
-        m_client.unsubscribeTopic(id);
-    }
-    for(auto info :m_InvokeCallsInfo)
-    {
-        m_client.unsubscribeTopic(info.second.second);
-    }
+    disconnect(&m_client, &ApiGear::Mqtt::Client::disconnected, 0, 0);
+    disconnect(&m_client, &ApiGear::Mqtt::Client::ready, 0, 0);
+    unsubscribeAll();
 }
 
 void MqttEnumInterface::setProp0(Enum0::Enum0Enum prop0)
 {
-    static const QString topic = objectName() + QString("/set/prop0");
+    static const QString topic = interfaceName() + QString("/set/prop0");
     AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_client.isReady())
     {
         return;
     }
-    m_client.setRemoteProperty(topic, { prop0 });
+    m_client.setRemoteProperty(topic, nlohmann::json( prop0 ));
 }
 
-void MqttEnumInterface::setProp0Local(const nlohmann::json& input)
+void MqttEnumInterface::setProp0Local(const nlohmann::json& value)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    auto in_prop0(input.get<Enum0::Enum0Enum>());
+    auto in_prop0(value.get<Enum0::Enum0Enum>());
     if (m_prop0 != in_prop0)
     {
         m_prop0 = in_prop0;
@@ -94,19 +93,19 @@ Enum0::Enum0Enum MqttEnumInterface::prop0() const
 
 void MqttEnumInterface::setProp1(Enum1::Enum1Enum prop1)
 {
-    static const QString topic = objectName() + QString("/set/prop1");
+    static const QString topic = interfaceName() + QString("/set/prop1");
     AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_client.isReady())
     {
         return;
     }
-    m_client.setRemoteProperty(topic, { prop1 });
+    m_client.setRemoteProperty(topic, nlohmann::json( prop1 ));
 }
 
-void MqttEnumInterface::setProp1Local(const nlohmann::json& input)
+void MqttEnumInterface::setProp1Local(const nlohmann::json& value)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    auto in_prop1(input.get<Enum1::Enum1Enum>());
+    auto in_prop1(value.get<Enum1::Enum1Enum>());
     if (m_prop1 != in_prop1)
     {
         m_prop1 = in_prop1;
@@ -121,19 +120,19 @@ Enum1::Enum1Enum MqttEnumInterface::prop1() const
 
 void MqttEnumInterface::setProp2(Enum2::Enum2Enum prop2)
 {
-    static const QString topic = objectName() + QString("/set/prop2");
+    static const QString topic = interfaceName() + QString("/set/prop2");
     AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_client.isReady())
     {
         return;
     }
-    m_client.setRemoteProperty(topic, { prop2 });
+    m_client.setRemoteProperty(topic, nlohmann::json( prop2 ));
 }
 
-void MqttEnumInterface::setProp2Local(const nlohmann::json& input)
+void MqttEnumInterface::setProp2Local(const nlohmann::json& value)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    auto in_prop2(input.get<Enum2::Enum2Enum>());
+    auto in_prop2(value.get<Enum2::Enum2Enum>());
     if (m_prop2 != in_prop2)
     {
         m_prop2 = in_prop2;
@@ -148,19 +147,19 @@ Enum2::Enum2Enum MqttEnumInterface::prop2() const
 
 void MqttEnumInterface::setProp3(Enum3::Enum3Enum prop3)
 {
-    static const QString topic = objectName() + QString("/set/prop3");
+    static const QString topic = interfaceName() + QString("/set/prop3");
     AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_client.isReady())
     {
         return;
     }
-    m_client.setRemoteProperty(topic, { prop3 });
+    m_client.setRemoteProperty(topic, nlohmann::json( prop3 ));
 }
 
-void MqttEnumInterface::setProp3Local(const nlohmann::json& input)
+void MqttEnumInterface::setProp3Local(const nlohmann::json& value)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    auto in_prop3(input.get<Enum3::Enum3Enum>());
+    auto in_prop3(value.get<Enum3::Enum3Enum>());
     if (m_prop3 != in_prop3)
     {
         m_prop3 = in_prop3;
@@ -189,7 +188,7 @@ Enum0::Enum0Enum MqttEnumInterface::func0(Enum0::Enum0Enum param0)
 QtPromise::QPromise<Enum0::Enum0Enum> MqttEnumInterface::func0Async(Enum0::Enum0Enum param0)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    static const QString topic = objectName() + QString("/rpc/func0");
+    static const QString topic = interfaceName() + QString("/rpc/func0");
 
     if(!m_client.isReady())
     {
@@ -234,7 +233,7 @@ Enum1::Enum1Enum MqttEnumInterface::func1(Enum1::Enum1Enum param1)
 QtPromise::QPromise<Enum1::Enum1Enum> MqttEnumInterface::func1Async(Enum1::Enum1Enum param1)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    static const QString topic = objectName() + QString("/rpc/func1");
+    static const QString topic = interfaceName() + QString("/rpc/func1");
 
     if(!m_client.isReady())
     {
@@ -279,7 +278,7 @@ Enum2::Enum2Enum MqttEnumInterface::func2(Enum2::Enum2Enum param2)
 QtPromise::QPromise<Enum2::Enum2Enum> MqttEnumInterface::func2Async(Enum2::Enum2Enum param2)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    static const QString topic = objectName() + QString("/rpc/func2");
+    static const QString topic = interfaceName() + QString("/rpc/func2");
 
     if(!m_client.isReady())
     {
@@ -324,7 +323,7 @@ Enum3::Enum3Enum MqttEnumInterface::func3(Enum3::Enum3Enum param3)
 QtPromise::QPromise<Enum3::Enum3Enum> MqttEnumInterface::func3Async(Enum3::Enum3Enum param3)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    static const QString topic = objectName() + QString("/rpc/func3");
+    static const QString topic = interfaceName() + QString("/rpc/func3");
 
     if(!m_client.isReady())
     {
@@ -354,56 +353,67 @@ QtPromise::QPromise<Enum3::Enum3Enum> MqttEnumInterface::func3Async(Enum3::Enum3
 }
 
 
-const QString& MqttEnumInterface::objectName()
+const QString& MqttEnumInterface::interfaceName()
 {
-    return ID;
+    return InterfaceName;
 }
 void MqttEnumInterface::subscribeForPropertiesChanges()
 {
-        static const QString topicprop0 = objectName() + "/prop/prop0";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicprop0, [this](auto& input) { setProp0Local(input);}));
-        static const QString topicprop1 = objectName() + "/prop/prop1";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicprop1, [this](auto& input) { setProp1Local(input);}));
-        static const QString topicprop2 = objectName() + "/prop/prop2";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicprop2, [this](auto& input) { setProp2Local(input);}));
-        static const QString topicprop3 = objectName() + "/prop/prop3";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicprop3, [this](auto& input) { setProp3Local(input);}));
+        static const QString topicprop0 = interfaceName() + "/prop/prop0";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicprop0, [this](auto& value) { setProp0Local(value);}));
+        static const QString topicprop1 = interfaceName() + "/prop/prop1";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicprop1, [this](auto& value) { setProp1Local(value);}));
+        static const QString topicprop2 = interfaceName() + "/prop/prop2";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicprop2, [this](auto& value) { setProp2Local(value);}));
+        static const QString topicprop3 = interfaceName() + "/prop/prop3";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicprop3, [this](auto& value) { setProp3Local(value);}));
 }
 void MqttEnumInterface::subscribeForSignals()
 {
-        static const QString topicsig0 = objectName() + "/sig/sig0";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig0, [this](const nlohmann::json& input){
-            emit sig0(input[0].get<Enum0::Enum0Enum>());}));
-        static const QString topicsig1 = objectName() + "/sig/sig1";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig1, [this](const nlohmann::json& input){
-            emit sig1(input[0].get<Enum1::Enum1Enum>());}));
-        static const QString topicsig2 = objectName() + "/sig/sig2";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig2, [this](const nlohmann::json& input){
-            emit sig2(input[0].get<Enum2::Enum2Enum>());}));
-        static const QString topicsig3 = objectName() + "/sig/sig3";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig3, [this](const nlohmann::json& input){
-            emit sig3(input[0].get<Enum3::Enum3Enum>());}));
+        static const QString topicsig0 = interfaceName() + "/sig/sig0";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig0, [this](const nlohmann::json& argumentsArray){
+            emit sig0(argumentsArray[0].get<Enum0::Enum0Enum>());}));
+        static const QString topicsig1 = interfaceName() + "/sig/sig1";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig1, [this](const nlohmann::json& argumentsArray){
+            emit sig1(argumentsArray[0].get<Enum1::Enum1Enum>());}));
+        static const QString topicsig2 = interfaceName() + "/sig/sig2";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig2, [this](const nlohmann::json& argumentsArray){
+            emit sig2(argumentsArray[0].get<Enum2::Enum2Enum>());}));
+        static const QString topicsig3 = interfaceName() + "/sig/sig3";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig3, [this](const nlohmann::json& argumentsArray){
+            emit sig3(argumentsArray[0].get<Enum3::Enum3Enum>());}));
 }
 void MqttEnumInterface::subscribeForInvokeResponses()
 {
     // Subscribe for invokeReply and prepare invoke call info for non void functions.
-    const QString topicfunc0 = objectName() + "/rpc/func0";
-    const QString topicfunc0InvokeResp = objectName() + "/rpc/func0"+ m_client.clientId() + "/result";
+    const QString topicfunc0 = interfaceName() + "/rpc/func0";
+    const QString topicfunc0InvokeResp = interfaceName() + "/rpc/func0"+ m_client.clientId() + "/result";
     auto id_func0 = m_client.subscribeForInvokeResponse(topicfunc0InvokeResp);
     m_InvokeCallsInfo[topicfunc0] = std::make_pair(topicfunc0InvokeResp, id_func0);
-    const QString topicfunc1 = objectName() + "/rpc/func1";
-    const QString topicfunc1InvokeResp = objectName() + "/rpc/func1"+ m_client.clientId() + "/result";
+    const QString topicfunc1 = interfaceName() + "/rpc/func1";
+    const QString topicfunc1InvokeResp = interfaceName() + "/rpc/func1"+ m_client.clientId() + "/result";
     auto id_func1 = m_client.subscribeForInvokeResponse(topicfunc1InvokeResp);
     m_InvokeCallsInfo[topicfunc1] = std::make_pair(topicfunc1InvokeResp, id_func1);
-    const QString topicfunc2 = objectName() + "/rpc/func2";
-    const QString topicfunc2InvokeResp = objectName() + "/rpc/func2"+ m_client.clientId() + "/result";
+    const QString topicfunc2 = interfaceName() + "/rpc/func2";
+    const QString topicfunc2InvokeResp = interfaceName() + "/rpc/func2"+ m_client.clientId() + "/result";
     auto id_func2 = m_client.subscribeForInvokeResponse(topicfunc2InvokeResp);
     m_InvokeCallsInfo[topicfunc2] = std::make_pair(topicfunc2InvokeResp, id_func2);
-    const QString topicfunc3 = objectName() + "/rpc/func3";
-    const QString topicfunc3InvokeResp = objectName() + "/rpc/func3"+ m_client.clientId() + "/result";
+    const QString topicfunc3 = interfaceName() + "/rpc/func3";
+    const QString topicfunc3InvokeResp = interfaceName() + "/rpc/func3"+ m_client.clientId() + "/result";
     auto id_func3 = m_client.subscribeForInvokeResponse(topicfunc3InvokeResp);
     m_InvokeCallsInfo[topicfunc3] = std::make_pair(topicfunc3InvokeResp, id_func3);
 }
 
+void MqttEnumInterface::unsubscribeAll()
+{
+    for(auto id :m_subscribedIds)
+    {
+        m_client.unsubscribeTopic(id);
+    }
+    for(auto info :m_InvokeCallsInfo)
+    {
+        m_client.unsubscribeTopic(info.second.second);
+    }
+}
 
 } // namespace tb_enum

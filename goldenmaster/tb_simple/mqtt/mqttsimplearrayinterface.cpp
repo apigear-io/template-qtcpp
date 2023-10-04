@@ -27,7 +27,7 @@ namespace tb_simple {
 
 namespace
 {
-const QString ID = "tb.simple/SimpleArrayInterface";
+const QString InterfaceName = "tb.simple/SimpleArrayInterface";
 }
 
 MqttSimpleArrayInterface::MqttSimpleArrayInterface(ApiGear::Mqtt::Client& client, QObject *parent)
@@ -55,35 +55,34 @@ MqttSimpleArrayInterface::MqttSimpleArrayInterface(ApiGear::Mqtt::Client& client
             subscribeForSignals();
             subscribeForInvokeResponses();
     });
+    connect(&m_client, &ApiGear::Mqtt::Client::disconnected, [this](){
+        m_subscribedIds.clear();
+        m_InvokeCallsInfo.clear();
+    });
 }
 
 MqttSimpleArrayInterface::~MqttSimpleArrayInterface()
 {
-    for(auto id :m_subscribedIds)
-    {
-        m_client.unsubscribeTopic(id);
-    }
-    for(auto info :m_InvokeCallsInfo)
-    {
-        m_client.unsubscribeTopic(info.second.second);
-    }
+    disconnect(&m_client, &ApiGear::Mqtt::Client::disconnected, 0, 0);
+    disconnect(&m_client, &ApiGear::Mqtt::Client::ready, 0, 0);
+    unsubscribeAll();
 }
 
 void MqttSimpleArrayInterface::setPropBool(const QList<bool>& propBool)
 {
-    static const QString topic = objectName() + QString("/set/propBool");
+    static const QString topic = interfaceName() + QString("/set/propBool");
     AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_client.isReady())
     {
         return;
     }
-    m_client.setRemoteProperty(topic, { propBool });
+    m_client.setRemoteProperty(topic, nlohmann::json( propBool ));
 }
 
-void MqttSimpleArrayInterface::setPropBoolLocal(const nlohmann::json& input)
+void MqttSimpleArrayInterface::setPropBoolLocal(const nlohmann::json& value)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    auto in_propBool(input.get<QList<bool>>());
+    auto in_propBool(value.get<QList<bool>>());
     if (m_propBool != in_propBool)
     {
         m_propBool = in_propBool;
@@ -98,19 +97,19 @@ QList<bool> MqttSimpleArrayInterface::propBool() const
 
 void MqttSimpleArrayInterface::setPropInt(const QList<int>& propInt)
 {
-    static const QString topic = objectName() + QString("/set/propInt");
+    static const QString topic = interfaceName() + QString("/set/propInt");
     AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_client.isReady())
     {
         return;
     }
-    m_client.setRemoteProperty(topic, { propInt });
+    m_client.setRemoteProperty(topic, nlohmann::json( propInt ));
 }
 
-void MqttSimpleArrayInterface::setPropIntLocal(const nlohmann::json& input)
+void MqttSimpleArrayInterface::setPropIntLocal(const nlohmann::json& value)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    auto in_propInt(input.get<QList<int>>());
+    auto in_propInt(value.get<QList<int>>());
     if (m_propInt != in_propInt)
     {
         m_propInt = in_propInt;
@@ -125,19 +124,19 @@ QList<int> MqttSimpleArrayInterface::propInt() const
 
 void MqttSimpleArrayInterface::setPropInt32(const QList<qint32>& propInt32)
 {
-    static const QString topic = objectName() + QString("/set/propInt32");
+    static const QString topic = interfaceName() + QString("/set/propInt32");
     AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_client.isReady())
     {
         return;
     }
-    m_client.setRemoteProperty(topic, { propInt32 });
+    m_client.setRemoteProperty(topic, nlohmann::json( propInt32 ));
 }
 
-void MqttSimpleArrayInterface::setPropInt32Local(const nlohmann::json& input)
+void MqttSimpleArrayInterface::setPropInt32Local(const nlohmann::json& value)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    auto in_propInt32(input.get<QList<qint32>>());
+    auto in_propInt32(value.get<QList<qint32>>());
     if (m_propInt32 != in_propInt32)
     {
         m_propInt32 = in_propInt32;
@@ -152,19 +151,19 @@ QList<qint32> MqttSimpleArrayInterface::propInt32() const
 
 void MqttSimpleArrayInterface::setPropInt64(const QList<qint64>& propInt64)
 {
-    static const QString topic = objectName() + QString("/set/propInt64");
+    static const QString topic = interfaceName() + QString("/set/propInt64");
     AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_client.isReady())
     {
         return;
     }
-    m_client.setRemoteProperty(topic, { propInt64 });
+    m_client.setRemoteProperty(topic, nlohmann::json( propInt64 ));
 }
 
-void MqttSimpleArrayInterface::setPropInt64Local(const nlohmann::json& input)
+void MqttSimpleArrayInterface::setPropInt64Local(const nlohmann::json& value)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    auto in_propInt64(input.get<QList<qint64>>());
+    auto in_propInt64(value.get<QList<qint64>>());
     if (m_propInt64 != in_propInt64)
     {
         m_propInt64 = in_propInt64;
@@ -179,19 +178,19 @@ QList<qint64> MqttSimpleArrayInterface::propInt64() const
 
 void MqttSimpleArrayInterface::setPropFloat(const QList<qreal>& propFloat)
 {
-    static const QString topic = objectName() + QString("/set/propFloat");
+    static const QString topic = interfaceName() + QString("/set/propFloat");
     AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_client.isReady())
     {
         return;
     }
-    m_client.setRemoteProperty(topic, { propFloat });
+    m_client.setRemoteProperty(topic, nlohmann::json( propFloat ));
 }
 
-void MqttSimpleArrayInterface::setPropFloatLocal(const nlohmann::json& input)
+void MqttSimpleArrayInterface::setPropFloatLocal(const nlohmann::json& value)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    auto in_propFloat(input.get<QList<qreal>>());
+    auto in_propFloat(value.get<QList<qreal>>());
     if (m_propFloat != in_propFloat)
     {
         m_propFloat = in_propFloat;
@@ -206,19 +205,19 @@ QList<qreal> MqttSimpleArrayInterface::propFloat() const
 
 void MqttSimpleArrayInterface::setPropFloat32(const QList<float>& propFloat32)
 {
-    static const QString topic = objectName() + QString("/set/propFloat32");
+    static const QString topic = interfaceName() + QString("/set/propFloat32");
     AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_client.isReady())
     {
         return;
     }
-    m_client.setRemoteProperty(topic, { propFloat32 });
+    m_client.setRemoteProperty(topic, nlohmann::json( propFloat32 ));
 }
 
-void MqttSimpleArrayInterface::setPropFloat32Local(const nlohmann::json& input)
+void MqttSimpleArrayInterface::setPropFloat32Local(const nlohmann::json& value)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    auto in_propFloat32(input.get<QList<float>>());
+    auto in_propFloat32(value.get<QList<float>>());
     if (m_propFloat32 != in_propFloat32)
     {
         m_propFloat32 = in_propFloat32;
@@ -233,19 +232,19 @@ QList<float> MqttSimpleArrayInterface::propFloat32() const
 
 void MqttSimpleArrayInterface::setPropFloat64(const QList<double>& propFloat64)
 {
-    static const QString topic = objectName() + QString("/set/propFloat64");
+    static const QString topic = interfaceName() + QString("/set/propFloat64");
     AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_client.isReady())
     {
         return;
     }
-    m_client.setRemoteProperty(topic, { propFloat64 });
+    m_client.setRemoteProperty(topic, nlohmann::json( propFloat64 ));
 }
 
-void MqttSimpleArrayInterface::setPropFloat64Local(const nlohmann::json& input)
+void MqttSimpleArrayInterface::setPropFloat64Local(const nlohmann::json& value)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    auto in_propFloat64(input.get<QList<double>>());
+    auto in_propFloat64(value.get<QList<double>>());
     if (m_propFloat64 != in_propFloat64)
     {
         m_propFloat64 = in_propFloat64;
@@ -260,19 +259,19 @@ QList<double> MqttSimpleArrayInterface::propFloat64() const
 
 void MqttSimpleArrayInterface::setPropString(const QList<QString>& propString)
 {
-    static const QString topic = objectName() + QString("/set/propString");
+    static const QString topic = interfaceName() + QString("/set/propString");
     AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_client.isReady())
     {
         return;
     }
-    m_client.setRemoteProperty(topic, { propString });
+    m_client.setRemoteProperty(topic, nlohmann::json( propString ));
 }
 
-void MqttSimpleArrayInterface::setPropStringLocal(const nlohmann::json& input)
+void MqttSimpleArrayInterface::setPropStringLocal(const nlohmann::json& value)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    auto in_propString(input.get<QList<QString>>());
+    auto in_propString(value.get<QList<QString>>());
     if (m_propString != in_propString)
     {
         m_propString = in_propString;
@@ -301,7 +300,7 @@ QList<bool> MqttSimpleArrayInterface::funcBool(const QList<bool>& paramBool)
 QtPromise::QPromise<QList<bool>> MqttSimpleArrayInterface::funcBoolAsync(const QList<bool>& paramBool)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    static const QString topic = objectName() + QString("/rpc/funcBool");
+    static const QString topic = interfaceName() + QString("/rpc/funcBool");
 
     if(!m_client.isReady())
     {
@@ -346,7 +345,7 @@ QList<int> MqttSimpleArrayInterface::funcInt(const QList<int>& paramInt)
 QtPromise::QPromise<QList<int>> MqttSimpleArrayInterface::funcIntAsync(const QList<int>& paramInt)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    static const QString topic = objectName() + QString("/rpc/funcInt");
+    static const QString topic = interfaceName() + QString("/rpc/funcInt");
 
     if(!m_client.isReady())
     {
@@ -391,7 +390,7 @@ QList<qint32> MqttSimpleArrayInterface::funcInt32(const QList<qint32>& paramInt3
 QtPromise::QPromise<QList<qint32>> MqttSimpleArrayInterface::funcInt32Async(const QList<qint32>& paramInt32)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    static const QString topic = objectName() + QString("/rpc/funcInt32");
+    static const QString topic = interfaceName() + QString("/rpc/funcInt32");
 
     if(!m_client.isReady())
     {
@@ -436,7 +435,7 @@ QList<qint64> MqttSimpleArrayInterface::funcInt64(const QList<qint64>& paramInt6
 QtPromise::QPromise<QList<qint64>> MqttSimpleArrayInterface::funcInt64Async(const QList<qint64>& paramInt64)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    static const QString topic = objectName() + QString("/rpc/funcInt64");
+    static const QString topic = interfaceName() + QString("/rpc/funcInt64");
 
     if(!m_client.isReady())
     {
@@ -481,7 +480,7 @@ QList<qreal> MqttSimpleArrayInterface::funcFloat(const QList<qreal>& paramFloat)
 QtPromise::QPromise<QList<qreal>> MqttSimpleArrayInterface::funcFloatAsync(const QList<qreal>& paramFloat)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    static const QString topic = objectName() + QString("/rpc/funcFloat");
+    static const QString topic = interfaceName() + QString("/rpc/funcFloat");
 
     if(!m_client.isReady())
     {
@@ -526,7 +525,7 @@ QList<float> MqttSimpleArrayInterface::funcFloat32(const QList<float>& paramFloa
 QtPromise::QPromise<QList<float>> MqttSimpleArrayInterface::funcFloat32Async(const QList<float>& paramFloat32)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    static const QString topic = objectName() + QString("/rpc/funcFloat32");
+    static const QString topic = interfaceName() + QString("/rpc/funcFloat32");
 
     if(!m_client.isReady())
     {
@@ -571,7 +570,7 @@ QList<double> MqttSimpleArrayInterface::funcFloat64(const QList<double>& paramFl
 QtPromise::QPromise<QList<double>> MqttSimpleArrayInterface::funcFloat64Async(const QList<double>& paramFloat)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    static const QString topic = objectName() + QString("/rpc/funcFloat64");
+    static const QString topic = interfaceName() + QString("/rpc/funcFloat64");
 
     if(!m_client.isReady())
     {
@@ -616,7 +615,7 @@ QList<QString> MqttSimpleArrayInterface::funcString(const QList<QString>& paramS
 QtPromise::QPromise<QList<QString>> MqttSimpleArrayInterface::funcStringAsync(const QList<QString>& paramString)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    static const QString topic = objectName() + QString("/rpc/funcString");
+    static const QString topic = interfaceName() + QString("/rpc/funcString");
 
     if(!m_client.isReady())
     {
@@ -646,92 +645,103 @@ QtPromise::QPromise<QList<QString>> MqttSimpleArrayInterface::funcStringAsync(co
 }
 
 
-const QString& MqttSimpleArrayInterface::objectName()
+const QString& MqttSimpleArrayInterface::interfaceName()
 {
-    return ID;
+    return InterfaceName;
 }
 void MqttSimpleArrayInterface::subscribeForPropertiesChanges()
 {
-        static const QString topicpropBool = objectName() + "/prop/propBool";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicpropBool, [this](auto& input) { setPropBoolLocal(input);}));
-        static const QString topicpropInt = objectName() + "/prop/propInt";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicpropInt, [this](auto& input) { setPropIntLocal(input);}));
-        static const QString topicpropInt32 = objectName() + "/prop/propInt32";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicpropInt32, [this](auto& input) { setPropInt32Local(input);}));
-        static const QString topicpropInt64 = objectName() + "/prop/propInt64";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicpropInt64, [this](auto& input) { setPropInt64Local(input);}));
-        static const QString topicpropFloat = objectName() + "/prop/propFloat";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicpropFloat, [this](auto& input) { setPropFloatLocal(input);}));
-        static const QString topicpropFloat32 = objectName() + "/prop/propFloat32";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicpropFloat32, [this](auto& input) { setPropFloat32Local(input);}));
-        static const QString topicpropFloat64 = objectName() + "/prop/propFloat64";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicpropFloat64, [this](auto& input) { setPropFloat64Local(input);}));
-        static const QString topicpropString = objectName() + "/prop/propString";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicpropString, [this](auto& input) { setPropStringLocal(input);}));
+        static const QString topicpropBool = interfaceName() + "/prop/propBool";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicpropBool, [this](auto& value) { setPropBoolLocal(value);}));
+        static const QString topicpropInt = interfaceName() + "/prop/propInt";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicpropInt, [this](auto& value) { setPropIntLocal(value);}));
+        static const QString topicpropInt32 = interfaceName() + "/prop/propInt32";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicpropInt32, [this](auto& value) { setPropInt32Local(value);}));
+        static const QString topicpropInt64 = interfaceName() + "/prop/propInt64";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicpropInt64, [this](auto& value) { setPropInt64Local(value);}));
+        static const QString topicpropFloat = interfaceName() + "/prop/propFloat";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicpropFloat, [this](auto& value) { setPropFloatLocal(value);}));
+        static const QString topicpropFloat32 = interfaceName() + "/prop/propFloat32";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicpropFloat32, [this](auto& value) { setPropFloat32Local(value);}));
+        static const QString topicpropFloat64 = interfaceName() + "/prop/propFloat64";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicpropFloat64, [this](auto& value) { setPropFloat64Local(value);}));
+        static const QString topicpropString = interfaceName() + "/prop/propString";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicpropString, [this](auto& value) { setPropStringLocal(value);}));
 }
 void MqttSimpleArrayInterface::subscribeForSignals()
 {
-        static const QString topicsigBool = objectName() + "/sig/sigBool";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigBool, [this](const nlohmann::json& input){
-            emit sigBool(input[0].get<QList<bool>>());}));
-        static const QString topicsigInt = objectName() + "/sig/sigInt";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigInt, [this](const nlohmann::json& input){
-            emit sigInt(input[0].get<QList<int>>());}));
-        static const QString topicsigInt32 = objectName() + "/sig/sigInt32";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigInt32, [this](const nlohmann::json& input){
-            emit sigInt32(input[0].get<QList<qint32>>());}));
-        static const QString topicsigInt64 = objectName() + "/sig/sigInt64";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigInt64, [this](const nlohmann::json& input){
-            emit sigInt64(input[0].get<QList<qint64>>());}));
-        static const QString topicsigFloat = objectName() + "/sig/sigFloat";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigFloat, [this](const nlohmann::json& input){
-            emit sigFloat(input[0].get<QList<qreal>>());}));
-        static const QString topicsigFloat32 = objectName() + "/sig/sigFloat32";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigFloat32, [this](const nlohmann::json& input){
-            emit sigFloat32(input[0].get<QList<float>>());}));
-        static const QString topicsigFloat64 = objectName() + "/sig/sigFloat64";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigFloat64, [this](const nlohmann::json& input){
-            emit sigFloat64(input[0].get<QList<double>>());}));
-        static const QString topicsigString = objectName() + "/sig/sigString";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigString, [this](const nlohmann::json& input){
-            emit sigString(input[0].get<QList<QString>>());}));
+        static const QString topicsigBool = interfaceName() + "/sig/sigBool";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigBool, [this](const nlohmann::json& argumentsArray){
+            emit sigBool(argumentsArray[0].get<QList<bool>>());}));
+        static const QString topicsigInt = interfaceName() + "/sig/sigInt";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigInt, [this](const nlohmann::json& argumentsArray){
+            emit sigInt(argumentsArray[0].get<QList<int>>());}));
+        static const QString topicsigInt32 = interfaceName() + "/sig/sigInt32";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigInt32, [this](const nlohmann::json& argumentsArray){
+            emit sigInt32(argumentsArray[0].get<QList<qint32>>());}));
+        static const QString topicsigInt64 = interfaceName() + "/sig/sigInt64";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigInt64, [this](const nlohmann::json& argumentsArray){
+            emit sigInt64(argumentsArray[0].get<QList<qint64>>());}));
+        static const QString topicsigFloat = interfaceName() + "/sig/sigFloat";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigFloat, [this](const nlohmann::json& argumentsArray){
+            emit sigFloat(argumentsArray[0].get<QList<qreal>>());}));
+        static const QString topicsigFloat32 = interfaceName() + "/sig/sigFloat32";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigFloat32, [this](const nlohmann::json& argumentsArray){
+            emit sigFloat32(argumentsArray[0].get<QList<float>>());}));
+        static const QString topicsigFloat64 = interfaceName() + "/sig/sigFloat64";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigFloat64, [this](const nlohmann::json& argumentsArray){
+            emit sigFloat64(argumentsArray[0].get<QList<double>>());}));
+        static const QString topicsigString = interfaceName() + "/sig/sigString";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigString, [this](const nlohmann::json& argumentsArray){
+            emit sigString(argumentsArray[0].get<QList<QString>>());}));
 }
 void MqttSimpleArrayInterface::subscribeForInvokeResponses()
 {
     // Subscribe for invokeReply and prepare invoke call info for non void functions.
-    const QString topicfuncBool = objectName() + "/rpc/funcBool";
-    const QString topicfuncBoolInvokeResp = objectName() + "/rpc/funcBool"+ m_client.clientId() + "/result";
+    const QString topicfuncBool = interfaceName() + "/rpc/funcBool";
+    const QString topicfuncBoolInvokeResp = interfaceName() + "/rpc/funcBool"+ m_client.clientId() + "/result";
     auto id_funcBool = m_client.subscribeForInvokeResponse(topicfuncBoolInvokeResp);
     m_InvokeCallsInfo[topicfuncBool] = std::make_pair(topicfuncBoolInvokeResp, id_funcBool);
-    const QString topicfuncInt = objectName() + "/rpc/funcInt";
-    const QString topicfuncIntInvokeResp = objectName() + "/rpc/funcInt"+ m_client.clientId() + "/result";
+    const QString topicfuncInt = interfaceName() + "/rpc/funcInt";
+    const QString topicfuncIntInvokeResp = interfaceName() + "/rpc/funcInt"+ m_client.clientId() + "/result";
     auto id_funcInt = m_client.subscribeForInvokeResponse(topicfuncIntInvokeResp);
     m_InvokeCallsInfo[topicfuncInt] = std::make_pair(topicfuncIntInvokeResp, id_funcInt);
-    const QString topicfuncInt32 = objectName() + "/rpc/funcInt32";
-    const QString topicfuncInt32InvokeResp = objectName() + "/rpc/funcInt32"+ m_client.clientId() + "/result";
+    const QString topicfuncInt32 = interfaceName() + "/rpc/funcInt32";
+    const QString topicfuncInt32InvokeResp = interfaceName() + "/rpc/funcInt32"+ m_client.clientId() + "/result";
     auto id_funcInt32 = m_client.subscribeForInvokeResponse(topicfuncInt32InvokeResp);
     m_InvokeCallsInfo[topicfuncInt32] = std::make_pair(topicfuncInt32InvokeResp, id_funcInt32);
-    const QString topicfuncInt64 = objectName() + "/rpc/funcInt64";
-    const QString topicfuncInt64InvokeResp = objectName() + "/rpc/funcInt64"+ m_client.clientId() + "/result";
+    const QString topicfuncInt64 = interfaceName() + "/rpc/funcInt64";
+    const QString topicfuncInt64InvokeResp = interfaceName() + "/rpc/funcInt64"+ m_client.clientId() + "/result";
     auto id_funcInt64 = m_client.subscribeForInvokeResponse(topicfuncInt64InvokeResp);
     m_InvokeCallsInfo[topicfuncInt64] = std::make_pair(topicfuncInt64InvokeResp, id_funcInt64);
-    const QString topicfuncFloat = objectName() + "/rpc/funcFloat";
-    const QString topicfuncFloatInvokeResp = objectName() + "/rpc/funcFloat"+ m_client.clientId() + "/result";
+    const QString topicfuncFloat = interfaceName() + "/rpc/funcFloat";
+    const QString topicfuncFloatInvokeResp = interfaceName() + "/rpc/funcFloat"+ m_client.clientId() + "/result";
     auto id_funcFloat = m_client.subscribeForInvokeResponse(topicfuncFloatInvokeResp);
     m_InvokeCallsInfo[topicfuncFloat] = std::make_pair(topicfuncFloatInvokeResp, id_funcFloat);
-    const QString topicfuncFloat32 = objectName() + "/rpc/funcFloat32";
-    const QString topicfuncFloat32InvokeResp = objectName() + "/rpc/funcFloat32"+ m_client.clientId() + "/result";
+    const QString topicfuncFloat32 = interfaceName() + "/rpc/funcFloat32";
+    const QString topicfuncFloat32InvokeResp = interfaceName() + "/rpc/funcFloat32"+ m_client.clientId() + "/result";
     auto id_funcFloat32 = m_client.subscribeForInvokeResponse(topicfuncFloat32InvokeResp);
     m_InvokeCallsInfo[topicfuncFloat32] = std::make_pair(topicfuncFloat32InvokeResp, id_funcFloat32);
-    const QString topicfuncFloat64 = objectName() + "/rpc/funcFloat64";
-    const QString topicfuncFloat64InvokeResp = objectName() + "/rpc/funcFloat64"+ m_client.clientId() + "/result";
+    const QString topicfuncFloat64 = interfaceName() + "/rpc/funcFloat64";
+    const QString topicfuncFloat64InvokeResp = interfaceName() + "/rpc/funcFloat64"+ m_client.clientId() + "/result";
     auto id_funcFloat64 = m_client.subscribeForInvokeResponse(topicfuncFloat64InvokeResp);
     m_InvokeCallsInfo[topicfuncFloat64] = std::make_pair(topicfuncFloat64InvokeResp, id_funcFloat64);
-    const QString topicfuncString = objectName() + "/rpc/funcString";
-    const QString topicfuncStringInvokeResp = objectName() + "/rpc/funcString"+ m_client.clientId() + "/result";
+    const QString topicfuncString = interfaceName() + "/rpc/funcString";
+    const QString topicfuncStringInvokeResp = interfaceName() + "/rpc/funcString"+ m_client.clientId() + "/result";
     auto id_funcString = m_client.subscribeForInvokeResponse(topicfuncStringInvokeResp);
     m_InvokeCallsInfo[topicfuncString] = std::make_pair(topicfuncStringInvokeResp, id_funcString);
 }
 
+void MqttSimpleArrayInterface::unsubscribeAll()
+{
+    for(auto id :m_subscribedIds)
+    {
+        m_client.unsubscribeTopic(id);
+    }
+    for(auto info :m_InvokeCallsInfo)
+    {
+        m_client.unsubscribeTopic(info.second.second);
+    }
+}
 
 } // namespace tb_simple

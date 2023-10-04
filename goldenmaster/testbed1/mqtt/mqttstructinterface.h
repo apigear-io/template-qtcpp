@@ -132,11 +132,11 @@ signals:
 
 public:
     /**
-    * The name of the object for which this mqtt sink adapter is created, object on server side has to have the same name.
-    * It serves as an identifier for the client registry, it has to be unique for the pair sink object - client node.
-    * Used in subscriptions messages as an object identifier.
+    * The name of the interface for which this mqtt client adapter is created.
+    * It is used in subscriptions messages as an object identifier, to create topics for this interface, 
+    * so adapter for an interface on server side has to have the same name.
     */
-    const QString& objectName();
+    const QString& interfaceName();
 
 private:
     // Helper function, subscribes for property changes from the remote StructInterface service.
@@ -161,6 +161,9 @@ private:
     void setPropStringLocal(const nlohmann::json& input);
     /** A local value for propString */
     StructString m_propString;
+
+    // Helper function for removing all subscriptions. 
+    void unsubscribeAll();
 
     /** An indicator if the object is linked with the service. */
     bool m_isReady;

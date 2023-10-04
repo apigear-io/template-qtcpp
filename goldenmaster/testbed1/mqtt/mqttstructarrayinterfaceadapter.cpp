@@ -31,7 +31,7 @@ namespace testbed1 {
 
 namespace
 {
-const QString ID = "testbed1/StructArrayInterface";
+const QString InterfaceName = "testbed1/StructArrayInterface";
 }
 
 
@@ -54,45 +54,49 @@ MqttStructArrayInterfaceAdapter::MqttStructArrayInterfaceAdapter(ApiGear::Mqtt::
         connectServicePropertiesChanges();
         connectServiceSignals();
     });
+    
+    connect(&m_mqttServiceAdapter, &ApiGear::Mqtt::ServiceAdapter::disconnected, [this](){
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+        m_subscribedIds.clear();
+    });
 }
 
 MqttStructArrayInterfaceAdapter::~MqttStructArrayInterfaceAdapter()
 {
-    for(auto id :m_subscribedIds)
-    {
-        m_mqttServiceAdapter.unsubscribeTopic(id);
-    }
+    disconnect(&m_mqttServiceAdapter, &ApiGear::Mqtt::ServiceAdapter::disconnected, 0, 0);
+    disconnect(&m_mqttServiceAdapter, &ApiGear::Mqtt::ServiceAdapter::ready, 0, 0);
+    unsubscribeAll();
 }
 
-const QString& MqttStructArrayInterfaceAdapter::objectName()
+const QString& MqttStructArrayInterfaceAdapter::interfaceName()
 {
-    return ID;
+    return InterfaceName;
 }
 
 void MqttStructArrayInterfaceAdapter::subscribeForPropertiesChanges()
 {
-    const auto setTopic_propBool = objectName() + "/set/propBool";
+    const auto setTopic_propBool = interfaceName() + "/set/propBool";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_propBool,
         [this](const nlohmann::json& value)
         {
             QList<StructBool> propBool = value.get<QList<StructBool>>();
             m_impl->setPropBool(propBool);
         }));
-    const auto setTopic_propInt = objectName() + "/set/propInt";
+    const auto setTopic_propInt = interfaceName() + "/set/propInt";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_propInt,
         [this](const nlohmann::json& value)
         {
             QList<StructInt> propInt = value.get<QList<StructInt>>();
             m_impl->setPropInt(propInt);
         }));
-    const auto setTopic_propFloat = objectName() + "/set/propFloat";
+    const auto setTopic_propFloat = interfaceName() + "/set/propFloat";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_propFloat,
         [this](const nlohmann::json& value)
         {
             QList<StructFloat> propFloat = value.get<QList<StructFloat>>();
             m_impl->setPropFloat(propFloat);
         }));
-    const auto setTopic_propString = objectName() + "/set/propString";
+    const auto setTopic_propString = interfaceName() + "/set/propString";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_propString,
         [this](const nlohmann::json& value)
         {
@@ -103,7 +107,7 @@ void MqttStructArrayInterfaceAdapter::subscribeForPropertiesChanges()
 
 void MqttStructArrayInterfaceAdapter::subscribeForInvokeRequests()
 {
-    const auto invokeTopic_funcBool = objectName() + "/rpc/funcBool";
+    const auto invokeTopic_funcBool = interfaceName() + "/rpc/funcBool";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_funcBool,
         [this](const nlohmann::json& arguments)
         {
@@ -111,7 +115,7 @@ void MqttStructArrayInterfaceAdapter::subscribeForInvokeRequests()
             auto result = m_impl->funcBool(paramBool);
             return result;
         }));
-    const auto invokeTopic_funcInt = objectName() + "/rpc/funcInt";
+    const auto invokeTopic_funcInt = interfaceName() + "/rpc/funcInt";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_funcInt,
         [this](const nlohmann::json& arguments)
         {
@@ -119,7 +123,7 @@ void MqttStructArrayInterfaceAdapter::subscribeForInvokeRequests()
             auto result = m_impl->funcInt(paramInt);
             return result;
         }));
-    const auto invokeTopic_funcFloat = objectName() + "/rpc/funcFloat";
+    const auto invokeTopic_funcFloat = interfaceName() + "/rpc/funcFloat";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_funcFloat,
         [this](const nlohmann::json& arguments)
         {
@@ -127,7 +131,7 @@ void MqttStructArrayInterfaceAdapter::subscribeForInvokeRequests()
             auto result = m_impl->funcFloat(paramFloat);
             return result;
         }));
-    const auto invokeTopic_funcString = objectName() + "/rpc/funcString";
+    const auto invokeTopic_funcString = interfaceName() + "/rpc/funcString";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_funcString,
         [this](const nlohmann::json& arguments)
         {
@@ -139,25 +143,25 @@ void MqttStructArrayInterfaceAdapter::subscribeForInvokeRequests()
 
 void MqttStructArrayInterfaceAdapter::connectServicePropertiesChanges()
 {
-    const auto publishTopic_propBool = objectName() + "/prop/propBool";
+    const auto publishTopic_propBool = interfaceName() + "/prop/propBool";
     connect(m_impl.get(),&AbstractStructArrayInterface::propBoolChanged,
         this, [this, publishTopic_propBool](const QList<StructBool>& propBool)
         {
             m_mqttServiceAdapter.emitPropertyChange(publishTopic_propBool, propBool);
         });
-    const auto publishTopic_propInt = objectName() + "/prop/propInt";
+    const auto publishTopic_propInt = interfaceName() + "/prop/propInt";
     connect(m_impl.get(),&AbstractStructArrayInterface::propIntChanged,
         this, [this, publishTopic_propInt](const QList<StructInt>& propInt)
         {
             m_mqttServiceAdapter.emitPropertyChange(publishTopic_propInt, propInt);
         });
-    const auto publishTopic_propFloat = objectName() + "/prop/propFloat";
+    const auto publishTopic_propFloat = interfaceName() + "/prop/propFloat";
     connect(m_impl.get(),&AbstractStructArrayInterface::propFloatChanged,
         this, [this, publishTopic_propFloat](const QList<StructFloat>& propFloat)
         {
             m_mqttServiceAdapter.emitPropertyChange(publishTopic_propFloat, propFloat);
         });
-    const auto publishTopic_propString = objectName() + "/prop/propString";
+    const auto publishTopic_propString = interfaceName() + "/prop/propString";
     connect(m_impl.get(),&AbstractStructArrayInterface::propStringChanged,
         this, [this, publishTopic_propString](const QList<StructString>& propString)
         {
@@ -167,34 +171,42 @@ void MqttStructArrayInterfaceAdapter::connectServicePropertiesChanges()
 
 void MqttStructArrayInterfaceAdapter::connectServiceSignals()
 {
-    const auto topic_sigBool = objectName() + "/sig/sigBool";
+    const auto topic_sigBool = interfaceName() + "/sig/sigBool";
     connect(m_impl.get(), &AbstractStructArrayInterface::sigBool, this,
         [this, topic_sigBool](const QList<StructBool>& paramBool)
         {
             nlohmann::json args = { paramBool };
             m_mqttServiceAdapter.emitPropertyChange(topic_sigBool, args);
         });
-    const auto topic_sigInt = objectName() + "/sig/sigInt";
+    const auto topic_sigInt = interfaceName() + "/sig/sigInt";
     connect(m_impl.get(), &AbstractStructArrayInterface::sigInt, this,
         [this, topic_sigInt](const QList<StructInt>& paramInt)
         {
             nlohmann::json args = { paramInt };
             m_mqttServiceAdapter.emitPropertyChange(topic_sigInt, args);
         });
-    const auto topic_sigFloat = objectName() + "/sig/sigFloat";
+    const auto topic_sigFloat = interfaceName() + "/sig/sigFloat";
     connect(m_impl.get(), &AbstractStructArrayInterface::sigFloat, this,
         [this, topic_sigFloat](const QList<StructFloat>& paramFloat)
         {
             nlohmann::json args = { paramFloat };
             m_mqttServiceAdapter.emitPropertyChange(topic_sigFloat, args);
         });
-    const auto topic_sigString = objectName() + "/sig/sigString";
+    const auto topic_sigString = interfaceName() + "/sig/sigString";
     connect(m_impl.get(), &AbstractStructArrayInterface::sigString, this,
         [this, topic_sigString](const QList<StructString>& paramString)
         {
             nlohmann::json args = { paramString };
             m_mqttServiceAdapter.emitPropertyChange(topic_sigString, args);
         });
+}
+
+void MqttStructArrayInterfaceAdapter::unsubscribeAll()
+{
+    for(auto id :m_subscribedIds)
+    {
+        m_mqttServiceAdapter.unsubscribeTopic(id);
+    }
 }
 
 } // namespace testbed1

@@ -27,7 +27,7 @@ namespace testbed2 {
 
 namespace
 {
-const QString ID = "testbed2/NestedStruct1Interface";
+const QString InterfaceName = "testbed2/NestedStruct1Interface";
 }
 
 MqttNestedStruct1Interface::MqttNestedStruct1Interface(ApiGear::Mqtt::Client& client, QObject *parent)
@@ -48,35 +48,34 @@ MqttNestedStruct1Interface::MqttNestedStruct1Interface(ApiGear::Mqtt::Client& cl
             subscribeForSignals();
             subscribeForInvokeResponses();
     });
+    connect(&m_client, &ApiGear::Mqtt::Client::disconnected, [this](){
+        m_subscribedIds.clear();
+        m_InvokeCallsInfo.clear();
+    });
 }
 
 MqttNestedStruct1Interface::~MqttNestedStruct1Interface()
 {
-    for(auto id :m_subscribedIds)
-    {
-        m_client.unsubscribeTopic(id);
-    }
-    for(auto info :m_InvokeCallsInfo)
-    {
-        m_client.unsubscribeTopic(info.second.second);
-    }
+    disconnect(&m_client, &ApiGear::Mqtt::Client::disconnected, 0, 0);
+    disconnect(&m_client, &ApiGear::Mqtt::Client::ready, 0, 0);
+    unsubscribeAll();
 }
 
 void MqttNestedStruct1Interface::setProp1(const NestedStruct1& prop1)
 {
-    static const QString topic = objectName() + QString("/set/prop1");
+    static const QString topic = interfaceName() + QString("/set/prop1");
     AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_client.isReady())
     {
         return;
     }
-    m_client.setRemoteProperty(topic, { prop1 });
+    m_client.setRemoteProperty(topic, nlohmann::json( prop1 ));
 }
 
-void MqttNestedStruct1Interface::setProp1Local(const nlohmann::json& input)
+void MqttNestedStruct1Interface::setProp1Local(const nlohmann::json& value)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    auto in_prop1(input.get<NestedStruct1>());
+    auto in_prop1(value.get<NestedStruct1>());
     if (m_prop1 != in_prop1)
     {
         m_prop1 = in_prop1;
@@ -105,7 +104,7 @@ NestedStruct1 MqttNestedStruct1Interface::func1(const NestedStruct1& param1)
 QtPromise::QPromise<NestedStruct1> MqttNestedStruct1Interface::func1Async(const NestedStruct1& param1)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    static const QString topic = objectName() + QString("/rpc/func1");
+    static const QString topic = interfaceName() + QString("/rpc/func1");
 
     if(!m_client.isReady())
     {
@@ -135,29 +134,40 @@ QtPromise::QPromise<NestedStruct1> MqttNestedStruct1Interface::func1Async(const 
 }
 
 
-const QString& MqttNestedStruct1Interface::objectName()
+const QString& MqttNestedStruct1Interface::interfaceName()
 {
-    return ID;
+    return InterfaceName;
 }
 void MqttNestedStruct1Interface::subscribeForPropertiesChanges()
 {
-        static const QString topicprop1 = objectName() + "/prop/prop1";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicprop1, [this](auto& input) { setProp1Local(input);}));
+        static const QString topicprop1 = interfaceName() + "/prop/prop1";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicprop1, [this](auto& value) { setProp1Local(value);}));
 }
 void MqttNestedStruct1Interface::subscribeForSignals()
 {
-        static const QString topicsig1 = objectName() + "/sig/sig1";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig1, [this](const nlohmann::json& input){
-            emit sig1(input[0].get<NestedStruct1>());}));
+        static const QString topicsig1 = interfaceName() + "/sig/sig1";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig1, [this](const nlohmann::json& argumentsArray){
+            emit sig1(argumentsArray[0].get<NestedStruct1>());}));
 }
 void MqttNestedStruct1Interface::subscribeForInvokeResponses()
 {
     // Subscribe for invokeReply and prepare invoke call info for non void functions.
-    const QString topicfunc1 = objectName() + "/rpc/func1";
-    const QString topicfunc1InvokeResp = objectName() + "/rpc/func1"+ m_client.clientId() + "/result";
+    const QString topicfunc1 = interfaceName() + "/rpc/func1";
+    const QString topicfunc1InvokeResp = interfaceName() + "/rpc/func1"+ m_client.clientId() + "/result";
     auto id_func1 = m_client.subscribeForInvokeResponse(topicfunc1InvokeResp);
     m_InvokeCallsInfo[topicfunc1] = std::make_pair(topicfunc1InvokeResp, id_func1);
 }
 
+void MqttNestedStruct1Interface::unsubscribeAll()
+{
+    for(auto id :m_subscribedIds)
+    {
+        m_client.unsubscribeTopic(id);
+    }
+    for(auto info :m_InvokeCallsInfo)
+    {
+        m_client.unsubscribeTopic(info.second.second);
+    }
+}
 
 } // namespace testbed2

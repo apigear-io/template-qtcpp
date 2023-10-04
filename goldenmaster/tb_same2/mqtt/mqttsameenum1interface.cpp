@@ -27,7 +27,7 @@ namespace tb_same2 {
 
 namespace
 {
-const QString ID = "tb.same2/SameEnum1Interface";
+const QString InterfaceName = "tb.same2/SameEnum1Interface";
 }
 
 MqttSameEnum1Interface::MqttSameEnum1Interface(ApiGear::Mqtt::Client& client, QObject *parent)
@@ -48,35 +48,34 @@ MqttSameEnum1Interface::MqttSameEnum1Interface(ApiGear::Mqtt::Client& client, QO
             subscribeForSignals();
             subscribeForInvokeResponses();
     });
+    connect(&m_client, &ApiGear::Mqtt::Client::disconnected, [this](){
+        m_subscribedIds.clear();
+        m_InvokeCallsInfo.clear();
+    });
 }
 
 MqttSameEnum1Interface::~MqttSameEnum1Interface()
 {
-    for(auto id :m_subscribedIds)
-    {
-        m_client.unsubscribeTopic(id);
-    }
-    for(auto info :m_InvokeCallsInfo)
-    {
-        m_client.unsubscribeTopic(info.second.second);
-    }
+    disconnect(&m_client, &ApiGear::Mqtt::Client::disconnected, 0, 0);
+    disconnect(&m_client, &ApiGear::Mqtt::Client::ready, 0, 0);
+    unsubscribeAll();
 }
 
 void MqttSameEnum1Interface::setProp1(Enum1::Enum1Enum prop1)
 {
-    static const QString topic = objectName() + QString("/set/prop1");
+    static const QString topic = interfaceName() + QString("/set/prop1");
     AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_client.isReady())
     {
         return;
     }
-    m_client.setRemoteProperty(topic, { prop1 });
+    m_client.setRemoteProperty(topic, nlohmann::json( prop1 ));
 }
 
-void MqttSameEnum1Interface::setProp1Local(const nlohmann::json& input)
+void MqttSameEnum1Interface::setProp1Local(const nlohmann::json& value)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    auto in_prop1(input.get<Enum1::Enum1Enum>());
+    auto in_prop1(value.get<Enum1::Enum1Enum>());
     if (m_prop1 != in_prop1)
     {
         m_prop1 = in_prop1;
@@ -105,7 +104,7 @@ Enum1::Enum1Enum MqttSameEnum1Interface::func1(Enum1::Enum1Enum param1)
 QtPromise::QPromise<Enum1::Enum1Enum> MqttSameEnum1Interface::func1Async(Enum1::Enum1Enum param1)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    static const QString topic = objectName() + QString("/rpc/func1");
+    static const QString topic = interfaceName() + QString("/rpc/func1");
 
     if(!m_client.isReady())
     {
@@ -135,29 +134,40 @@ QtPromise::QPromise<Enum1::Enum1Enum> MqttSameEnum1Interface::func1Async(Enum1::
 }
 
 
-const QString& MqttSameEnum1Interface::objectName()
+const QString& MqttSameEnum1Interface::interfaceName()
 {
-    return ID;
+    return InterfaceName;
 }
 void MqttSameEnum1Interface::subscribeForPropertiesChanges()
 {
-        static const QString topicprop1 = objectName() + "/prop/prop1";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicprop1, [this](auto& input) { setProp1Local(input);}));
+        static const QString topicprop1 = interfaceName() + "/prop/prop1";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicprop1, [this](auto& value) { setProp1Local(value);}));
 }
 void MqttSameEnum1Interface::subscribeForSignals()
 {
-        static const QString topicsig1 = objectName() + "/sig/sig1";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig1, [this](const nlohmann::json& input){
-            emit sig1(input[0].get<Enum1::Enum1Enum>());}));
+        static const QString topicsig1 = interfaceName() + "/sig/sig1";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig1, [this](const nlohmann::json& argumentsArray){
+            emit sig1(argumentsArray[0].get<Enum1::Enum1Enum>());}));
 }
 void MqttSameEnum1Interface::subscribeForInvokeResponses()
 {
     // Subscribe for invokeReply and prepare invoke call info for non void functions.
-    const QString topicfunc1 = objectName() + "/rpc/func1";
-    const QString topicfunc1InvokeResp = objectName() + "/rpc/func1"+ m_client.clientId() + "/result";
+    const QString topicfunc1 = interfaceName() + "/rpc/func1";
+    const QString topicfunc1InvokeResp = interfaceName() + "/rpc/func1"+ m_client.clientId() + "/result";
     auto id_func1 = m_client.subscribeForInvokeResponse(topicfunc1InvokeResp);
     m_InvokeCallsInfo[topicfunc1] = std::make_pair(topicfunc1InvokeResp, id_func1);
 }
 
+void MqttSameEnum1Interface::unsubscribeAll()
+{
+    for(auto id :m_subscribedIds)
+    {
+        m_client.unsubscribeTopic(id);
+    }
+    for(auto info :m_InvokeCallsInfo)
+    {
+        m_client.unsubscribeTopic(info.second.second);
+    }
+}
 
 } // namespace tb_same2

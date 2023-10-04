@@ -23,7 +23,7 @@ namespace {{snake  .Module.Name }} {
 
 namespace
 {
-const QString ID = "{{$module}}/{{$iface}}";
+const QString InterfaceName = "{{$module}}/{{$iface}}";
 }
 
 {{$class}}::{{$class}}(ApiGear::Mqtt::Client& client, QObject *parent)
@@ -59,37 +59,36 @@ const QString ID = "{{$module}}/{{$iface}}";
             subscribeForInvokeResponses();
             {{- end }}
     });
+    connect(&m_client, &ApiGear::Mqtt::Client::disconnected, [this](){
+        m_subscribedIds.clear();
+        m_InvokeCallsInfo.clear();
+    });
 }
 
 {{$class}}::~{{$class}}()
 {
-    for(auto id :m_subscribedIds)
-    {
-        m_client.unsubscribeTopic(id);
-    }
-    for(auto info :m_InvokeCallsInfo)
-    {
-        m_client.unsubscribeTopic(info.second.second);
-    }
+    disconnect(&m_client, &ApiGear::Mqtt::Client::disconnected, 0, 0);
+    disconnect(&m_client, &ApiGear::Mqtt::Client::ready, 0, 0);
+    unsubscribeAll();
 }
 
 {{- range .Interface.Properties }}
 
 void {{$class}}::set{{Camel .Name}}({{qtParam "" .}})
 {
-    static const QString topic = objectName() + QString("/set/{{.Name}}");
+    static const QString topic = interfaceName() + QString("/set/{{.Name}}");
     AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_client.isReady())
     {
         return;
     }
-    m_client.setRemoteProperty(topic, { {{.Name}} });
+    m_client.setRemoteProperty(topic, nlohmann::json( {{.Name}} ));
 }
 
-void {{$class}}::set{{Camel .Name}}Local(const nlohmann::json& input)
+void {{$class}}::set{{Camel .Name}}Local(const nlohmann::json& value)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    auto in_{{.Name}}(input.get<{{qtReturn "" .}}>());
+    auto in_{{.Name}}(value.get<{{qtReturn "" .}}>());
     if (m_{{.Name}} != in_{{.Name}})
     {
         m_{{.Name}} = in_{{.Name}};
@@ -118,7 +117,7 @@ void {{$class}}::set{{Camel .Name}}Local(const nlohmann::json& input)
     auto arguments = nlohmann::json::array({
         {{- qtVars .Params -}}
     });
-    static const QString topic = objectName() + QString("/rpc/{{.Name}}");
+    static const QString topic = interfaceName() + QString("/rpc/{{.Name}}");
     m_client.invokeRemoteNoResponse(topic, arguments);
     {{- else }}
     {{$return}} value{ {{qtDefault "" .Return}} };
@@ -132,7 +131,7 @@ void {{$class}}::set{{Camel .Name}}Local(const nlohmann::json& input)
 QtPromise::QPromise<{{$return}}> {{$class}}::{{camel .Name}}Async({{qtParams "" .Params}})
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    static const QString topic = objectName() + QString("/rpc/{{.Name}}");
+    static const QString topic = interfaceName() + QString("/rpc/{{.Name}}");
 
     if(!m_client.isReady())
     {
@@ -171,9 +170,9 @@ QtPromise::QPromise<{{$return}}> {{$class}}::{{camel .Name}}Async({{qtParams "" 
 {{- end }}
 
 
-const QString& {{$class}}::objectName()
+const QString& {{$class}}::interfaceName()
 {
-    return ID;
+    return InterfaceName;
 }
 
 
@@ -181,8 +180,8 @@ const QString& {{$class}}::objectName()
 void {{$class}}::subscribeForPropertiesChanges()
 {
     {{- range .Interface.Properties }}
-        static const QString topic{{.Name}} = objectName() + "/prop/{{.Name}}";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topic{{.Name}}, [this](auto& input) { set{{Camel .Name}}Local(input);}));
+        static const QString topic{{.Name}} = interfaceName() + "/prop/{{.Name}}";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topic{{.Name}}, [this](auto& value) { set{{Camel .Name}}Local(value);}));
 
     {{- end }}
 }
@@ -192,10 +191,10 @@ void {{$class}}::subscribeForPropertiesChanges()
 void {{$class}}::subscribeForSignals()
 {
     {{- range .Interface.Signals }}
-        static const QString topic{{.Name}} = objectName() + "/sig/{{.Name}}";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topic{{.Name}}, [this](const nlohmann::json& input){
+        static const QString topic{{.Name}} = interfaceName() + "/sig/{{.Name}}";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topic{{.Name}}, [this](const nlohmann::json& argumentsArray){
             emit {{camel .Name}}( {{- range $i, $e := .Params }}{{if $i}},{{end -}}
-            input[{{$i}}].get<{{qtReturn "" .}}>(){{- end -}});}));
+            argumentsArray[{{$i}}].get<{{qtReturn "" .}}>(){{- end -}});}));
 
     {{- end }}
 }
@@ -206,8 +205,8 @@ void {{$class}}::subscribeForInvokeResponses()
     // Subscribe for invokeReply and prepare invoke call info for non void functions.
 {{- range .Interface.Operations }}
 {{- if not (.Return.IsVoid) }}
-    const QString topic{{.Name}} = objectName() + "/rpc/{{.Name}}";
-    const QString topic{{.Name}}InvokeResp = objectName() + "/rpc/{{.Name}}"+ m_client.clientId() + "/result";
+    const QString topic{{.Name}} = interfaceName() + "/rpc/{{.Name}}";
+    const QString topic{{.Name}}InvokeResp = interfaceName() + "/rpc/{{.Name}}"+ m_client.clientId() + "/result";
     auto id_{{.Name}} = m_client.subscribeForInvokeResponse(topic{{.Name}}InvokeResp);
     m_InvokeCallsInfo[topic{{.Name}}] = std::make_pair(topic{{.Name}}InvokeResp, id_{{.Name}});
 {{- end }}
@@ -215,5 +214,16 @@ void {{$class}}::subscribeForInvokeResponses()
 }
 {{- end }}
 
+void {{$class}}::unsubscribeAll()
+{
+    for(auto id :m_subscribedIds)
+    {
+        m_client.unsubscribeTopic(id);
+    }
+    for(auto info :m_InvokeCallsInfo)
+    {
+        m_client.unsubscribeTopic(info.second.second);
+    }
+}
 
 } // namespace {{snake  .Module.Name }}

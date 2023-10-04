@@ -30,8 +30,6 @@ set (SOURCES
     olinkremote.cpp
 )
 
-FILE(GLOB_RECURSE INCLUDES *.h)
-
 add_library(olink_qt SHARED ${SOURCES})
 add_library(apigear::olink_qt ALIAS olink_qt)
 

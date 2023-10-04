@@ -31,7 +31,7 @@ namespace tb_enum {
 
 namespace
 {
-const QString ID = "tb.enum/EnumInterface";
+const QString InterfaceName = "tb.enum/EnumInterface";
 }
 
 
@@ -54,45 +54,49 @@ MqttEnumInterfaceAdapter::MqttEnumInterfaceAdapter(ApiGear::Mqtt::ServiceAdapter
         connectServicePropertiesChanges();
         connectServiceSignals();
     });
+    
+    connect(&m_mqttServiceAdapter, &ApiGear::Mqtt::ServiceAdapter::disconnected, [this](){
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+        m_subscribedIds.clear();
+    });
 }
 
 MqttEnumInterfaceAdapter::~MqttEnumInterfaceAdapter()
 {
-    for(auto id :m_subscribedIds)
-    {
-        m_mqttServiceAdapter.unsubscribeTopic(id);
-    }
+    disconnect(&m_mqttServiceAdapter, &ApiGear::Mqtt::ServiceAdapter::disconnected, 0, 0);
+    disconnect(&m_mqttServiceAdapter, &ApiGear::Mqtt::ServiceAdapter::ready, 0, 0);
+    unsubscribeAll();
 }
 
-const QString& MqttEnumInterfaceAdapter::objectName()
+const QString& MqttEnumInterfaceAdapter::interfaceName()
 {
-    return ID;
+    return InterfaceName;
 }
 
 void MqttEnumInterfaceAdapter::subscribeForPropertiesChanges()
 {
-    const auto setTopic_prop0 = objectName() + "/set/prop0";
+    const auto setTopic_prop0 = interfaceName() + "/set/prop0";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_prop0,
         [this](const nlohmann::json& value)
         {
             Enum0::Enum0Enum prop0 = value.get<Enum0::Enum0Enum>();
             m_impl->setProp0(prop0);
         }));
-    const auto setTopic_prop1 = objectName() + "/set/prop1";
+    const auto setTopic_prop1 = interfaceName() + "/set/prop1";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_prop1,
         [this](const nlohmann::json& value)
         {
             Enum1::Enum1Enum prop1 = value.get<Enum1::Enum1Enum>();
             m_impl->setProp1(prop1);
         }));
-    const auto setTopic_prop2 = objectName() + "/set/prop2";
+    const auto setTopic_prop2 = interfaceName() + "/set/prop2";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_prop2,
         [this](const nlohmann::json& value)
         {
             Enum2::Enum2Enum prop2 = value.get<Enum2::Enum2Enum>();
             m_impl->setProp2(prop2);
         }));
-    const auto setTopic_prop3 = objectName() + "/set/prop3";
+    const auto setTopic_prop3 = interfaceName() + "/set/prop3";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_prop3,
         [this](const nlohmann::json& value)
         {
@@ -103,7 +107,7 @@ void MqttEnumInterfaceAdapter::subscribeForPropertiesChanges()
 
 void MqttEnumInterfaceAdapter::subscribeForInvokeRequests()
 {
-    const auto invokeTopic_func0 = objectName() + "/rpc/func0";
+    const auto invokeTopic_func0 = interfaceName() + "/rpc/func0";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_func0,
         [this](const nlohmann::json& arguments)
         {
@@ -111,7 +115,7 @@ void MqttEnumInterfaceAdapter::subscribeForInvokeRequests()
             auto result = m_impl->func0(param0);
             return result;
         }));
-    const auto invokeTopic_func1 = objectName() + "/rpc/func1";
+    const auto invokeTopic_func1 = interfaceName() + "/rpc/func1";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_func1,
         [this](const nlohmann::json& arguments)
         {
@@ -119,7 +123,7 @@ void MqttEnumInterfaceAdapter::subscribeForInvokeRequests()
             auto result = m_impl->func1(param1);
             return result;
         }));
-    const auto invokeTopic_func2 = objectName() + "/rpc/func2";
+    const auto invokeTopic_func2 = interfaceName() + "/rpc/func2";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_func2,
         [this](const nlohmann::json& arguments)
         {
@@ -127,7 +131,7 @@ void MqttEnumInterfaceAdapter::subscribeForInvokeRequests()
             auto result = m_impl->func2(param2);
             return result;
         }));
-    const auto invokeTopic_func3 = objectName() + "/rpc/func3";
+    const auto invokeTopic_func3 = interfaceName() + "/rpc/func3";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_func3,
         [this](const nlohmann::json& arguments)
         {
@@ -139,25 +143,25 @@ void MqttEnumInterfaceAdapter::subscribeForInvokeRequests()
 
 void MqttEnumInterfaceAdapter::connectServicePropertiesChanges()
 {
-    const auto publishTopic_prop0 = objectName() + "/prop/prop0";
+    const auto publishTopic_prop0 = interfaceName() + "/prop/prop0";
     connect(m_impl.get(),&AbstractEnumInterface::prop0Changed,
         this, [this, publishTopic_prop0](Enum0::Enum0Enum prop0)
         {
             m_mqttServiceAdapter.emitPropertyChange(publishTopic_prop0, prop0);
         });
-    const auto publishTopic_prop1 = objectName() + "/prop/prop1";
+    const auto publishTopic_prop1 = interfaceName() + "/prop/prop1";
     connect(m_impl.get(),&AbstractEnumInterface::prop1Changed,
         this, [this, publishTopic_prop1](Enum1::Enum1Enum prop1)
         {
             m_mqttServiceAdapter.emitPropertyChange(publishTopic_prop1, prop1);
         });
-    const auto publishTopic_prop2 = objectName() + "/prop/prop2";
+    const auto publishTopic_prop2 = interfaceName() + "/prop/prop2";
     connect(m_impl.get(),&AbstractEnumInterface::prop2Changed,
         this, [this, publishTopic_prop2](Enum2::Enum2Enum prop2)
         {
             m_mqttServiceAdapter.emitPropertyChange(publishTopic_prop2, prop2);
         });
-    const auto publishTopic_prop3 = objectName() + "/prop/prop3";
+    const auto publishTopic_prop3 = interfaceName() + "/prop/prop3";
     connect(m_impl.get(),&AbstractEnumInterface::prop3Changed,
         this, [this, publishTopic_prop3](Enum3::Enum3Enum prop3)
         {
@@ -167,34 +171,42 @@ void MqttEnumInterfaceAdapter::connectServicePropertiesChanges()
 
 void MqttEnumInterfaceAdapter::connectServiceSignals()
 {
-    const auto topic_sig0 = objectName() + "/sig/sig0";
+    const auto topic_sig0 = interfaceName() + "/sig/sig0";
     connect(m_impl.get(), &AbstractEnumInterface::sig0, this,
         [this, topic_sig0](Enum0::Enum0Enum param0)
         {
             nlohmann::json args = { param0 };
             m_mqttServiceAdapter.emitPropertyChange(topic_sig0, args);
         });
-    const auto topic_sig1 = objectName() + "/sig/sig1";
+    const auto topic_sig1 = interfaceName() + "/sig/sig1";
     connect(m_impl.get(), &AbstractEnumInterface::sig1, this,
         [this, topic_sig1](Enum1::Enum1Enum param1)
         {
             nlohmann::json args = { param1 };
             m_mqttServiceAdapter.emitPropertyChange(topic_sig1, args);
         });
-    const auto topic_sig2 = objectName() + "/sig/sig2";
+    const auto topic_sig2 = interfaceName() + "/sig/sig2";
     connect(m_impl.get(), &AbstractEnumInterface::sig2, this,
         [this, topic_sig2](Enum2::Enum2Enum param2)
         {
             nlohmann::json args = { param2 };
             m_mqttServiceAdapter.emitPropertyChange(topic_sig2, args);
         });
-    const auto topic_sig3 = objectName() + "/sig/sig3";
+    const auto topic_sig3 = interfaceName() + "/sig/sig3";
     connect(m_impl.get(), &AbstractEnumInterface::sig3, this,
         [this, topic_sig3](Enum3::Enum3Enum param3)
         {
             nlohmann::json args = { param3 };
             m_mqttServiceAdapter.emitPropertyChange(topic_sig3, args);
         });
+}
+
+void MqttEnumInterfaceAdapter::unsubscribeAll()
+{
+    for(auto id :m_subscribedIds)
+    {
+        m_mqttServiceAdapter.unsubscribeTopic(id);
+    }
 }
 
 } // namespace tb_enum

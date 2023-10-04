@@ -76,6 +76,10 @@ signals:
     * Signal emitted when this client is connected and ready to send or receive messages.
     */
     void ready();
+    /**
+    * Signal emitted when this client has disconnected.
+    */
+    void disconnected();
     // Internal signal for publishing messages. Used to allow multi thread safe use.
     void messageToWriteWithProperties(const QMqttTopicName& topic, const QByteArray& message, const QMqttPublishProperties &properties);
     // Internal signal for publishing messages. Used to allow multi thread safe use.
@@ -100,7 +104,7 @@ public:
     * Id with which this object is registered within the MQTT network.
     * @return the Id of this client.
     */
-    const QString& clientId() const;
+    QString clientId() const;
     /**
     * Connects to MQTT host.
     * @param hostAddress an address of the host.
@@ -134,13 +138,13 @@ public:
 
     /**
     * Publishes message, use when property of your interface changes.
-    * @param topic for property change, consists of objectName, "prop" keyword and a property name.
+    * @param topic for property change, consists of interfaceName, "prop" keyword and a property name.
     * @param value. The value to which property was changed.
     */
     void emitPropertyChange(const QMqttTopicName& topic, const nlohmann::json& value);
     /**
     * Publishes message, use your interface 
-    * @param topic for property change, consists of the objectName, "sig" keyword and a signal name.
+    * @param topic for property change, consists of the interfaceName, "sig" keyword and a signal name.
     * @param arguments. Arguments with which signal was emitted.
     */
     void emitSignalChange(const QMqttTopicName& topic, const nlohmann::json& arguments);
@@ -151,7 +155,14 @@ private:
     * @param message. Raw QMqttMessage.
     */
     void handleInvoke(const QMqttMessage& message);
-    /**The basic implementation of a mqqtt client, which gets adapted to expose interface as a service.*/
+    /**
+    * Helper function for handling invoke changes of client state.
+    * @param state. A Mqtt client state.
+    */
+    void handleClientStateChanged(QMqttClient::ClientState state);
+    // Helper function for unsubscribing all subscriptions
+    void unsubscribeAll();
+    /**The basic implementation of a Mqtt client, which gets adapted to expose interface as a service.*/
     QMqttClient m_client;
     /** Storage for subscribed topics for signals and property changes with their callbacks and subscription identifiers.*/
     QMultiMap<QMqttTopicFilter, std::pair<quint64, SimpleSubscribeCallback>> m_subscriptions;

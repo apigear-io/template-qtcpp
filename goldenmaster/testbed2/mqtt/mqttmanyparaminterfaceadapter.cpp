@@ -31,7 +31,7 @@ namespace testbed2 {
 
 namespace
 {
-const QString ID = "testbed2/ManyParamInterface";
+const QString InterfaceName = "testbed2/ManyParamInterface";
 }
 
 
@@ -54,45 +54,49 @@ MqttManyParamInterfaceAdapter::MqttManyParamInterfaceAdapter(ApiGear::Mqtt::Serv
         connectServicePropertiesChanges();
         connectServiceSignals();
     });
+    
+    connect(&m_mqttServiceAdapter, &ApiGear::Mqtt::ServiceAdapter::disconnected, [this](){
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+        m_subscribedIds.clear();
+    });
 }
 
 MqttManyParamInterfaceAdapter::~MqttManyParamInterfaceAdapter()
 {
-    for(auto id :m_subscribedIds)
-    {
-        m_mqttServiceAdapter.unsubscribeTopic(id);
-    }
+    disconnect(&m_mqttServiceAdapter, &ApiGear::Mqtt::ServiceAdapter::disconnected, 0, 0);
+    disconnect(&m_mqttServiceAdapter, &ApiGear::Mqtt::ServiceAdapter::ready, 0, 0);
+    unsubscribeAll();
 }
 
-const QString& MqttManyParamInterfaceAdapter::objectName()
+const QString& MqttManyParamInterfaceAdapter::interfaceName()
 {
-    return ID;
+    return InterfaceName;
 }
 
 void MqttManyParamInterfaceAdapter::subscribeForPropertiesChanges()
 {
-    const auto setTopic_prop1 = objectName() + "/set/prop1";
+    const auto setTopic_prop1 = interfaceName() + "/set/prop1";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_prop1,
         [this](const nlohmann::json& value)
         {
             int prop1 = value.get<int>();
             m_impl->setProp1(prop1);
         }));
-    const auto setTopic_prop2 = objectName() + "/set/prop2";
+    const auto setTopic_prop2 = interfaceName() + "/set/prop2";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_prop2,
         [this](const nlohmann::json& value)
         {
             int prop2 = value.get<int>();
             m_impl->setProp2(prop2);
         }));
-    const auto setTopic_prop3 = objectName() + "/set/prop3";
+    const auto setTopic_prop3 = interfaceName() + "/set/prop3";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_prop3,
         [this](const nlohmann::json& value)
         {
             int prop3 = value.get<int>();
             m_impl->setProp3(prop3);
         }));
-    const auto setTopic_prop4 = objectName() + "/set/prop4";
+    const auto setTopic_prop4 = interfaceName() + "/set/prop4";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_prop4,
         [this](const nlohmann::json& value)
         {
@@ -103,7 +107,7 @@ void MqttManyParamInterfaceAdapter::subscribeForPropertiesChanges()
 
 void MqttManyParamInterfaceAdapter::subscribeForInvokeRequests()
 {
-    const auto invokeTopic_func1 = objectName() + "/rpc/func1";
+    const auto invokeTopic_func1 = interfaceName() + "/rpc/func1";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_func1,
         [this](const nlohmann::json& arguments)
         {
@@ -111,7 +115,7 @@ void MqttManyParamInterfaceAdapter::subscribeForInvokeRequests()
             auto result = m_impl->func1(param1);
             return result;
         }));
-    const auto invokeTopic_func2 = objectName() + "/rpc/func2";
+    const auto invokeTopic_func2 = interfaceName() + "/rpc/func2";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_func2,
         [this](const nlohmann::json& arguments)
         {
@@ -120,7 +124,7 @@ void MqttManyParamInterfaceAdapter::subscribeForInvokeRequests()
             auto result = m_impl->func2(param1, param2);
             return result;
         }));
-    const auto invokeTopic_func3 = objectName() + "/rpc/func3";
+    const auto invokeTopic_func3 = interfaceName() + "/rpc/func3";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_func3,
         [this](const nlohmann::json& arguments)
         {
@@ -130,7 +134,7 @@ void MqttManyParamInterfaceAdapter::subscribeForInvokeRequests()
             auto result = m_impl->func3(param1, param2, param3);
             return result;
         }));
-    const auto invokeTopic_func4 = objectName() + "/rpc/func4";
+    const auto invokeTopic_func4 = interfaceName() + "/rpc/func4";
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_func4,
         [this](const nlohmann::json& arguments)
         {
@@ -145,25 +149,25 @@ void MqttManyParamInterfaceAdapter::subscribeForInvokeRequests()
 
 void MqttManyParamInterfaceAdapter::connectServicePropertiesChanges()
 {
-    const auto publishTopic_prop1 = objectName() + "/prop/prop1";
+    const auto publishTopic_prop1 = interfaceName() + "/prop/prop1";
     connect(m_impl.get(),&AbstractManyParamInterface::prop1Changed,
         this, [this, publishTopic_prop1](int prop1)
         {
             m_mqttServiceAdapter.emitPropertyChange(publishTopic_prop1, prop1);
         });
-    const auto publishTopic_prop2 = objectName() + "/prop/prop2";
+    const auto publishTopic_prop2 = interfaceName() + "/prop/prop2";
     connect(m_impl.get(),&AbstractManyParamInterface::prop2Changed,
         this, [this, publishTopic_prop2](int prop2)
         {
             m_mqttServiceAdapter.emitPropertyChange(publishTopic_prop2, prop2);
         });
-    const auto publishTopic_prop3 = objectName() + "/prop/prop3";
+    const auto publishTopic_prop3 = interfaceName() + "/prop/prop3";
     connect(m_impl.get(),&AbstractManyParamInterface::prop3Changed,
         this, [this, publishTopic_prop3](int prop3)
         {
             m_mqttServiceAdapter.emitPropertyChange(publishTopic_prop3, prop3);
         });
-    const auto publishTopic_prop4 = objectName() + "/prop/prop4";
+    const auto publishTopic_prop4 = interfaceName() + "/prop/prop4";
     connect(m_impl.get(),&AbstractManyParamInterface::prop4Changed,
         this, [this, publishTopic_prop4](int prop4)
         {
@@ -173,34 +177,42 @@ void MqttManyParamInterfaceAdapter::connectServicePropertiesChanges()
 
 void MqttManyParamInterfaceAdapter::connectServiceSignals()
 {
-    const auto topic_sig1 = objectName() + "/sig/sig1";
+    const auto topic_sig1 = interfaceName() + "/sig/sig1";
     connect(m_impl.get(), &AbstractManyParamInterface::sig1, this,
         [this, topic_sig1](int param1)
         {
             nlohmann::json args = { param1 };
             m_mqttServiceAdapter.emitPropertyChange(topic_sig1, args);
         });
-    const auto topic_sig2 = objectName() + "/sig/sig2";
+    const auto topic_sig2 = interfaceName() + "/sig/sig2";
     connect(m_impl.get(), &AbstractManyParamInterface::sig2, this,
         [this, topic_sig2](int param1, int param2)
         {
             nlohmann::json args = { param1, param2 };
             m_mqttServiceAdapter.emitPropertyChange(topic_sig2, args);
         });
-    const auto topic_sig3 = objectName() + "/sig/sig3";
+    const auto topic_sig3 = interfaceName() + "/sig/sig3";
     connect(m_impl.get(), &AbstractManyParamInterface::sig3, this,
         [this, topic_sig3](int param1, int param2, int param3)
         {
             nlohmann::json args = { param1, param2, param3 };
             m_mqttServiceAdapter.emitPropertyChange(topic_sig3, args);
         });
-    const auto topic_sig4 = objectName() + "/sig/sig4";
+    const auto topic_sig4 = interfaceName() + "/sig/sig4";
     connect(m_impl.get(), &AbstractManyParamInterface::sig4, this,
         [this, topic_sig4](int param1, int param2, int param3, int param4)
         {
             nlohmann::json args = { param1, param2, param3, param4 };
             m_mqttServiceAdapter.emitPropertyChange(topic_sig4, args);
         });
+}
+
+void MqttManyParamInterfaceAdapter::unsubscribeAll()
+{
+    for(auto id :m_subscribedIds)
+    {
+        m_mqttServiceAdapter.unsubscribeTopic(id);
+    }
 }
 
 } // namespace testbed2

@@ -7,6 +7,7 @@
 #include "mqtt_common.h"
 #include <nlohmann/json.hpp>
 #include "payloadconverter.h"
+#include "private/multimap_helper.h"
 
 #include <memory>
 namespace ApiGear {
@@ -26,7 +27,7 @@ Client::Client(QString id, QObject *parent)
     connect(this, &Client::messageToWriteWithProperties, this, &Client::writeMessageWithProperties, Qt::QueuedConnection);
     connect(this, &Client::messageToWrite, this, &Client::writeMessage, Qt::QueuedConnection);
 
-    connect(&m_client, &QMqttClient::stateChanged, [this](auto state){qDebug()<<"client stateChanged "<<state; if(state == QMqttClient::Connected){ready();}});
+    connect(&m_client, &QMqttClient::stateChanged, this, &Client::handleClientStateChanged);
 
     connect(this, &Client::subscribeTopicSignal, this, &Client::onSubscribeTopic, Qt::QueuedConnection);
     connect(this, &Client::subscribeForInvokeResponseSignal, this, &Client::onSubscribeForInvokeResponse, Qt::QueuedConnection);
@@ -52,13 +53,7 @@ void Client::onSubscribeTopic(quint64 id, const QString &topic, subscribeCallbac
         connect(subscription, &QMqttSubscription::messageReceived,
                 [this](const QMqttMessage& message)
                 {
-                    auto subscription = m_subscriptions.begin();
-                    for (subscription = m_subscriptions.begin(); subscription!= m_subscriptions.end(); subscription++)
-                    {
-                        if (subscription.key().match(message.topic()))
-                            break;
-                    }
-
+                    auto subscription = multimap_helper::find_first_with_matching_topic(m_subscriptions.begin(), m_subscriptions.end(), message.topic());
                     while (subscription != m_subscriptions.end() && subscription.key().match(message.topic()))
                     {
                         if (subscription.value().second)
@@ -87,37 +82,25 @@ void Client::onSubscribeForInvokeResponse(quint64 id, const QString &topic)
 
 void Client::onUnsubscribedTopic(quint64 subscriptionId)
 {
-
-    auto found = std::find_if(m_subscriptions.begin(),
-        m_subscriptions.end(), 
-        [subscriptionId](auto& element){ return element.first == subscriptionId;});
-    if (found != m_subscriptions.end())
+    auto removeSubscription = [this](auto& container, auto subscribedItem)
     {
-        auto topic = found.key();
-        m_subscriptions.erase(found);
-        auto values = m_subscriptions.values(topic);
-        if (values.empty())
+        if (subscribedItem != container.end())
         {
-            m_client.unsubscribe(topic);
-        }
-    }
-    else
-    {
-        auto foundInvokeSubscription = std::find_if(m_invokeReplySubscriptions.begin(),
-            m_invokeReplySubscriptions.end(),
-            [subscriptionId](auto& element){ return element == subscriptionId;});
-
-        if (foundInvokeSubscription != m_invokeReplySubscriptions.end())
-        {
-            auto topic = foundInvokeSubscription.key();
-            m_invokeReplySubscriptions.erase(foundInvokeSubscription);
-            auto values = m_invokeReplySubscriptions.values(topic);
+            auto topic = subscribedItem.key();
+            container.erase(subscribedItem);
+            auto values = container.values(topic);
             if (values.empty())
             {
                 m_client.unsubscribe(topic);
             }
         }
-    }
+    };
+    auto subscribedInPropertiesAndSignals = std::find_if(m_subscriptions.begin(), m_subscriptions.end(), 
+        [subscriptionId](auto& element){ return element.first == subscriptionId;});
+    removeSubscription(m_subscriptions, subscribedInPropertiesAndSignals);
+    auto subscribedInInvokeReplies= std::find_if(m_invokeReplySubscriptions.begin(), m_invokeReplySubscriptions.end(), 
+        [subscriptionId](auto& element){ return element == subscriptionId;});
+    removeSubscription(m_invokeReplySubscriptions, subscribedInInvokeReplies);
 }
 
 bool Client::isReady() const
@@ -125,10 +108,9 @@ bool Client::isReady() const
     return m_client.state() == QMqttClient::ClientState::Connected;
 }
 
-const QString& Client::clientId() const
+QString Client::clientId() const
 {
-    static auto clientID =  m_client.clientId();
-    return clientID;
+    return m_client.clientId();
 }
 
 void Client::connectToHost(QString hostAddress,int port)
@@ -180,7 +162,8 @@ void Client::invokeRemoteNoResponse(const QMqttTopicName& topic, const nlohmann:
 
 void Client::disconnect()
 {
-    m_client.disconnect();
+    unsubscribeAll();
+    m_client.disconnectFromHost();
 }
 
 void Client::handleInvokeResp(const QMqttMessage& message)
@@ -193,10 +176,11 @@ void Client::handleInvokeResp(const QMqttMessage& message)
     if (pendingReply != m_pendingInvokeReplies.end())
     {   auto topic = message.topic();
         auto subscriptionId = pendingReply.value().first;
-        bool isSubscriberStillSubscribed =  std::find_if(m_invokeReplySubscriptions.begin(),
-            m_invokeReplySubscriptions.end(),
-            [subscriptionId](auto& element){return element == subscriptionId;}) != m_invokeReplySubscriptions.end();
-        if (isSubscriberStillSubscribed)
+        auto subscription = std::find_if(m_invokeReplySubscriptions.begin(),
+                                         m_invokeReplySubscriptions.end(),
+                                         [subscriptionId](auto& element) {return element == subscriptionId; });
+        bool isSubscriptionStillValid = subscription != m_invokeReplySubscriptions.end();
+        if (isSubscriptionStillValid)
         {
             if (pendingReply->second)
             {
@@ -206,6 +190,36 @@ void Client::handleInvokeResp(const QMqttMessage& message)
         }
         m_pendingInvokeReplies.erase(pendingReply);
     }
+}
+
+void Client::handleClientStateChanged(QMqttClient::ClientState state)
+{
+    if (state == QMqttClient::Connected)
+    {
+        if (!m_subscriptions.empty() || !m_invokeReplySubscriptions.empty())
+        {
+            unsubscribeAll();
+        }
+        emit ready();
+    }
+    else if (state == QMqttClient::Disconnected)
+    {
+        emit disconnected();
+    }
+}
+
+void Client::unsubscribeAll()
+{
+    for (auto item = m_subscriptions.keyBegin(); item != m_subscriptions.keyEnd(); item++)
+    {
+        m_client.unsubscribe(*item);
+    }
+    for (auto item = m_invokeReplySubscriptions.keyBegin(); item != m_invokeReplySubscriptions.keyEnd(); item++)
+    {
+        m_client.unsubscribe(*item);
+    }
+    m_subscriptions.clear();
+    m_invokeReplySubscriptions.clear();
 }
 
 }} // namespace ApiGear::Mqtt

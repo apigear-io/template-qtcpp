@@ -14,8 +14,6 @@ set (SOURCES
     agentclient.cpp
 )
 
-FILE(GLOB_RECURSE INCLUDES *.h)
-
 add_library(monitor_qt SHARED ${SOURCES})
 add_library(apigear::monitor_qt ALIAS monitor_qt)
 

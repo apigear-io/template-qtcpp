@@ -27,7 +27,7 @@ namespace testbed1 {
 
 namespace
 {
-const QString ID = "testbed1/StructInterface";
+const QString InterfaceName = "testbed1/StructInterface";
 }
 
 MqttStructInterface::MqttStructInterface(ApiGear::Mqtt::Client& client, QObject *parent)
@@ -51,35 +51,34 @@ MqttStructInterface::MqttStructInterface(ApiGear::Mqtt::Client& client, QObject 
             subscribeForSignals();
             subscribeForInvokeResponses();
     });
+    connect(&m_client, &ApiGear::Mqtt::Client::disconnected, [this](){
+        m_subscribedIds.clear();
+        m_InvokeCallsInfo.clear();
+    });
 }
 
 MqttStructInterface::~MqttStructInterface()
 {
-    for(auto id :m_subscribedIds)
-    {
-        m_client.unsubscribeTopic(id);
-    }
-    for(auto info :m_InvokeCallsInfo)
-    {
-        m_client.unsubscribeTopic(info.second.second);
-    }
+    disconnect(&m_client, &ApiGear::Mqtt::Client::disconnected, 0, 0);
+    disconnect(&m_client, &ApiGear::Mqtt::Client::ready, 0, 0);
+    unsubscribeAll();
 }
 
 void MqttStructInterface::setPropBool(const StructBool& propBool)
 {
-    static const QString topic = objectName() + QString("/set/propBool");
+    static const QString topic = interfaceName() + QString("/set/propBool");
     AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_client.isReady())
     {
         return;
     }
-    m_client.setRemoteProperty(topic, { propBool });
+    m_client.setRemoteProperty(topic, nlohmann::json( propBool ));
 }
 
-void MqttStructInterface::setPropBoolLocal(const nlohmann::json& input)
+void MqttStructInterface::setPropBoolLocal(const nlohmann::json& value)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    auto in_propBool(input.get<StructBool>());
+    auto in_propBool(value.get<StructBool>());
     if (m_propBool != in_propBool)
     {
         m_propBool = in_propBool;
@@ -94,19 +93,19 @@ StructBool MqttStructInterface::propBool() const
 
 void MqttStructInterface::setPropInt(const StructInt& propInt)
 {
-    static const QString topic = objectName() + QString("/set/propInt");
+    static const QString topic = interfaceName() + QString("/set/propInt");
     AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_client.isReady())
     {
         return;
     }
-    m_client.setRemoteProperty(topic, { propInt });
+    m_client.setRemoteProperty(topic, nlohmann::json( propInt ));
 }
 
-void MqttStructInterface::setPropIntLocal(const nlohmann::json& input)
+void MqttStructInterface::setPropIntLocal(const nlohmann::json& value)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    auto in_propInt(input.get<StructInt>());
+    auto in_propInt(value.get<StructInt>());
     if (m_propInt != in_propInt)
     {
         m_propInt = in_propInt;
@@ -121,19 +120,19 @@ StructInt MqttStructInterface::propInt() const
 
 void MqttStructInterface::setPropFloat(const StructFloat& propFloat)
 {
-    static const QString topic = objectName() + QString("/set/propFloat");
+    static const QString topic = interfaceName() + QString("/set/propFloat");
     AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_client.isReady())
     {
         return;
     }
-    m_client.setRemoteProperty(topic, { propFloat });
+    m_client.setRemoteProperty(topic, nlohmann::json( propFloat ));
 }
 
-void MqttStructInterface::setPropFloatLocal(const nlohmann::json& input)
+void MqttStructInterface::setPropFloatLocal(const nlohmann::json& value)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    auto in_propFloat(input.get<StructFloat>());
+    auto in_propFloat(value.get<StructFloat>());
     if (m_propFloat != in_propFloat)
     {
         m_propFloat = in_propFloat;
@@ -148,19 +147,19 @@ StructFloat MqttStructInterface::propFloat() const
 
 void MqttStructInterface::setPropString(const StructString& propString)
 {
-    static const QString topic = objectName() + QString("/set/propString");
+    static const QString topic = interfaceName() + QString("/set/propString");
     AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_client.isReady())
     {
         return;
     }
-    m_client.setRemoteProperty(topic, { propString });
+    m_client.setRemoteProperty(topic, nlohmann::json( propString ));
 }
 
-void MqttStructInterface::setPropStringLocal(const nlohmann::json& input)
+void MqttStructInterface::setPropStringLocal(const nlohmann::json& value)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    auto in_propString(input.get<StructString>());
+    auto in_propString(value.get<StructString>());
     if (m_propString != in_propString)
     {
         m_propString = in_propString;
@@ -189,7 +188,7 @@ StructBool MqttStructInterface::funcBool(const StructBool& paramBool)
 QtPromise::QPromise<StructBool> MqttStructInterface::funcBoolAsync(const StructBool& paramBool)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    static const QString topic = objectName() + QString("/rpc/funcBool");
+    static const QString topic = interfaceName() + QString("/rpc/funcBool");
 
     if(!m_client.isReady())
     {
@@ -234,7 +233,7 @@ StructBool MqttStructInterface::funcInt(const StructInt& paramInt)
 QtPromise::QPromise<StructBool> MqttStructInterface::funcIntAsync(const StructInt& paramInt)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    static const QString topic = objectName() + QString("/rpc/funcInt");
+    static const QString topic = interfaceName() + QString("/rpc/funcInt");
 
     if(!m_client.isReady())
     {
@@ -279,7 +278,7 @@ StructFloat MqttStructInterface::funcFloat(const StructFloat& paramFloat)
 QtPromise::QPromise<StructFloat> MqttStructInterface::funcFloatAsync(const StructFloat& paramFloat)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    static const QString topic = objectName() + QString("/rpc/funcFloat");
+    static const QString topic = interfaceName() + QString("/rpc/funcFloat");
 
     if(!m_client.isReady())
     {
@@ -324,7 +323,7 @@ StructString MqttStructInterface::funcString(const StructString& paramString)
 QtPromise::QPromise<StructString> MqttStructInterface::funcStringAsync(const StructString& paramString)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    static const QString topic = objectName() + QString("/rpc/funcString");
+    static const QString topic = interfaceName() + QString("/rpc/funcString");
 
     if(!m_client.isReady())
     {
@@ -354,56 +353,67 @@ QtPromise::QPromise<StructString> MqttStructInterface::funcStringAsync(const Str
 }
 
 
-const QString& MqttStructInterface::objectName()
+const QString& MqttStructInterface::interfaceName()
 {
-    return ID;
+    return InterfaceName;
 }
 void MqttStructInterface::subscribeForPropertiesChanges()
 {
-        static const QString topicpropBool = objectName() + "/prop/propBool";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicpropBool, [this](auto& input) { setPropBoolLocal(input);}));
-        static const QString topicpropInt = objectName() + "/prop/propInt";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicpropInt, [this](auto& input) { setPropIntLocal(input);}));
-        static const QString topicpropFloat = objectName() + "/prop/propFloat";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicpropFloat, [this](auto& input) { setPropFloatLocal(input);}));
-        static const QString topicpropString = objectName() + "/prop/propString";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicpropString, [this](auto& input) { setPropStringLocal(input);}));
+        static const QString topicpropBool = interfaceName() + "/prop/propBool";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicpropBool, [this](auto& value) { setPropBoolLocal(value);}));
+        static const QString topicpropInt = interfaceName() + "/prop/propInt";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicpropInt, [this](auto& value) { setPropIntLocal(value);}));
+        static const QString topicpropFloat = interfaceName() + "/prop/propFloat";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicpropFloat, [this](auto& value) { setPropFloatLocal(value);}));
+        static const QString topicpropString = interfaceName() + "/prop/propString";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicpropString, [this](auto& value) { setPropStringLocal(value);}));
 }
 void MqttStructInterface::subscribeForSignals()
 {
-        static const QString topicsigBool = objectName() + "/sig/sigBool";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigBool, [this](const nlohmann::json& input){
-            emit sigBool(input[0].get<StructBool>());}));
-        static const QString topicsigInt = objectName() + "/sig/sigInt";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigInt, [this](const nlohmann::json& input){
-            emit sigInt(input[0].get<StructInt>());}));
-        static const QString topicsigFloat = objectName() + "/sig/sigFloat";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigFloat, [this](const nlohmann::json& input){
-            emit sigFloat(input[0].get<StructFloat>());}));
-        static const QString topicsigString = objectName() + "/sig/sigString";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigString, [this](const nlohmann::json& input){
-            emit sigString(input[0].get<StructString>());}));
+        static const QString topicsigBool = interfaceName() + "/sig/sigBool";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigBool, [this](const nlohmann::json& argumentsArray){
+            emit sigBool(argumentsArray[0].get<StructBool>());}));
+        static const QString topicsigInt = interfaceName() + "/sig/sigInt";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigInt, [this](const nlohmann::json& argumentsArray){
+            emit sigInt(argumentsArray[0].get<StructInt>());}));
+        static const QString topicsigFloat = interfaceName() + "/sig/sigFloat";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigFloat, [this](const nlohmann::json& argumentsArray){
+            emit sigFloat(argumentsArray[0].get<StructFloat>());}));
+        static const QString topicsigString = interfaceName() + "/sig/sigString";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigString, [this](const nlohmann::json& argumentsArray){
+            emit sigString(argumentsArray[0].get<StructString>());}));
 }
 void MqttStructInterface::subscribeForInvokeResponses()
 {
     // Subscribe for invokeReply and prepare invoke call info for non void functions.
-    const QString topicfuncBool = objectName() + "/rpc/funcBool";
-    const QString topicfuncBoolInvokeResp = objectName() + "/rpc/funcBool"+ m_client.clientId() + "/result";
+    const QString topicfuncBool = interfaceName() + "/rpc/funcBool";
+    const QString topicfuncBoolInvokeResp = interfaceName() + "/rpc/funcBool"+ m_client.clientId() + "/result";
     auto id_funcBool = m_client.subscribeForInvokeResponse(topicfuncBoolInvokeResp);
     m_InvokeCallsInfo[topicfuncBool] = std::make_pair(topicfuncBoolInvokeResp, id_funcBool);
-    const QString topicfuncInt = objectName() + "/rpc/funcInt";
-    const QString topicfuncIntInvokeResp = objectName() + "/rpc/funcInt"+ m_client.clientId() + "/result";
+    const QString topicfuncInt = interfaceName() + "/rpc/funcInt";
+    const QString topicfuncIntInvokeResp = interfaceName() + "/rpc/funcInt"+ m_client.clientId() + "/result";
     auto id_funcInt = m_client.subscribeForInvokeResponse(topicfuncIntInvokeResp);
     m_InvokeCallsInfo[topicfuncInt] = std::make_pair(topicfuncIntInvokeResp, id_funcInt);
-    const QString topicfuncFloat = objectName() + "/rpc/funcFloat";
-    const QString topicfuncFloatInvokeResp = objectName() + "/rpc/funcFloat"+ m_client.clientId() + "/result";
+    const QString topicfuncFloat = interfaceName() + "/rpc/funcFloat";
+    const QString topicfuncFloatInvokeResp = interfaceName() + "/rpc/funcFloat"+ m_client.clientId() + "/result";
     auto id_funcFloat = m_client.subscribeForInvokeResponse(topicfuncFloatInvokeResp);
     m_InvokeCallsInfo[topicfuncFloat] = std::make_pair(topicfuncFloatInvokeResp, id_funcFloat);
-    const QString topicfuncString = objectName() + "/rpc/funcString";
-    const QString topicfuncStringInvokeResp = objectName() + "/rpc/funcString"+ m_client.clientId() + "/result";
+    const QString topicfuncString = interfaceName() + "/rpc/funcString";
+    const QString topicfuncStringInvokeResp = interfaceName() + "/rpc/funcString"+ m_client.clientId() + "/result";
     auto id_funcString = m_client.subscribeForInvokeResponse(topicfuncStringInvokeResp);
     m_InvokeCallsInfo[topicfuncString] = std::make_pair(topicfuncStringInvokeResp, id_funcString);
 }
 
+void MqttStructInterface::unsubscribeAll()
+{
+    for(auto id :m_subscribedIds)
+    {
+        m_client.unsubscribeTopic(id);
+    }
+    for(auto info :m_InvokeCallsInfo)
+    {
+        m_client.unsubscribeTopic(info.second.second);
+    }
+}
 
 } // namespace testbed1

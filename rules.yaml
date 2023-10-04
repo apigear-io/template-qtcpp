@@ -157,6 +157,8 @@ features:
              raw: true
            - source: apigear/mqtt/payloadconverter.cpp
              raw: true
+           - source: apigear/mqtt/private/multimap_helper.h
+             raw: true
   - name: monitor
     requires:
       - api

@@ -39,6 +39,7 @@ Features generate a view model for the `api`. This can be used to implement a wo
 Features can be used in combination with `api` and add more functionality on top, like the simulation
 - [olink](olink.md) - provides a client and server adapters for each interface, that can be connected to any of the other technology templates with support for [ObjectLink](https://docs.apigear.io/objectlink/). Use this feature to connect with ApiGear simulation tools.
 - [monitor](monitor.md) - generates a middleware layer which logs all API events to the [CLI](https://docs.apigear.io/docs/category/command-line) or the [Studio](https://docs.apigear.io/docs/category/desktop-studio)
+- [MQTT](mqtt.md) experimental - provides minimal working adapters for MQTT client and service side for each interfaces. Check also MQTT in other technology templates that supports it.
 -  examples feature - generates:
     - `olinkserver` example with `main.cpp` that shows your services in olink server.
     - `olinkclient` example with `main.cpp` that shows your interfaces as olink client.

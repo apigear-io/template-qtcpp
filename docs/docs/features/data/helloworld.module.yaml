@@ -1,6 +1,6 @@
 schema: apigear.module/1.0
 name: io.world
-version: "1.0"
+version: "1.0.0"
 
 interfaces:
   - name: Hello

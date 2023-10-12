@@ -50,6 +50,9 @@
 #include "testbed1/implementation/structarrayinterface.h"
 #include "testbed1//olink/olinkstructarrayinterfaceadapter.h"
 #include "testbed1/monitor/structarrayinterfacetraced.h"
+#include "tb_names/implementation/nam_es.h"
+#include "tb_names//olink/olinknam_esadapter.h"
+#include "tb_names/monitor/nam_estraced.h"
 
 #include <QtCore>
 #include "apigear/olink/olinkhost.h"
@@ -138,6 +141,10 @@ int main(int argc, char *argv[]){
     testbed1::StructArrayInterfaceTraced testbed1StructArrayInterfaceTraced(testbed1StructArrayInterface );
     auto testbed1OlinkStructArrayInterfaceService = std::make_shared<testbed1::OLinkStructArrayInterfaceAdapter>(registry, &testbed1StructArrayInterfaceTraced);
     registry.addSource(testbed1OlinkStructArrayInterfaceService);
+    auto tbNamesNamEs = std::make_shared<tb_names::NamEs>();
+    tb_names::NamEsTraced tbNamesNamEsTraced(tbNamesNamEs );
+    auto tbNamesOlinkNamEsService = std::make_shared<tb_names::OLinkNam_EsAdapter>(registry, &tbNamesNamEsTraced);
+    registry.addSource(tbNamesOlinkNamEsService);
 
     auto result = app.exec();
     // Use the server.
@@ -158,5 +165,6 @@ int main(int argc, char *argv[]){
     registry.removeSource(tbSimpleOlinkSimpleArrayInterfaceService->olinkObjectName());
     registry.removeSource(testbed1OlinkStructInterfaceService->olinkObjectName());
     registry.removeSource(testbed1OlinkStructArrayInterfaceService->olinkObjectName());
+    registry.removeSource(tbNamesOlinkNamEsService->olinkObjectName());
     return result;
 }

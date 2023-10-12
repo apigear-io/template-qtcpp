@@ -2,7 +2,7 @@
 {{ cppGpl .Module }}
 #include <QtTest/QtTest>
 
-{{- $class :=  printf "%s%s" (Camel .Module.Name) .Interface.Name }}
+{{- $class :=  printf "%s%s" (Camel .Module.Name) (Camel .Interface.Name) }}
 
 class Test{{$class}}: public QObject
 {

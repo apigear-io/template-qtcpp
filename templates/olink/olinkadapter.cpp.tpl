@@ -77,7 +77,7 @@ void {{$class}}::applyState(const json& state)
 
 
 std::string {{$class}}::olinkObjectName() {
-    return "{{$module}}.{{$iface}}";
+    return "{{$module}}.{{ .Interface.Name }}";
 }
 
 json {{$class}}::olinkInvoke(const std::string& methodId, const nlohmann::json& args){

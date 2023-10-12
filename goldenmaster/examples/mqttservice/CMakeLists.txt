@@ -23,6 +23,7 @@ find_package(tb_same1 QUIET COMPONENTS tb_same1_impl tb_same1_mqtt tb_same1_moni
 find_package(tb_same2 QUIET COMPONENTS tb_same2_impl tb_same2_mqtt tb_same2_monitor)
 find_package(tb_simple QUIET COMPONENTS tb_simple_impl tb_simple_mqtt tb_simple_monitor)
 find_package(testbed1 QUIET COMPONENTS testbed1_impl testbed1_mqtt testbed1_monitor)
+find_package(tb_names QUIET COMPONENTS tb_names_impl tb_names_mqtt tb_names_monitor)
 target_link_libraries(MqttServer PUBLIC
     testbed2_impl
     testbed2_mqtt
@@ -42,6 +43,9 @@ target_link_libraries(MqttServer PUBLIC
     testbed1_impl
     testbed1_mqtt
     testbed1_monitor
+    tb_names_impl
+    tb_names_mqtt
+    tb_names_monitor
 Qt6::Gui)
 
 install(TARGETS MqttServer

@@ -37,6 +37,8 @@
 #include "testbed1/monitor/structinterfacetraced.h"
 #include "testbed1/olink/olinkstructarrayinterface.h"
 #include "testbed1/monitor/structarrayinterfacetraced.h"
+#include "tb_names/olink/olinknam_es.h"
+#include "tb_names/monitor/nam_estraced.h"
 
 
 // You can run this client app together with the server side app - either also example, simulation,
@@ -103,6 +105,9 @@ int main(int argc, char *argv[])
     auto testbed1StructArrayInterface = std::make_shared<testbed1::OLinkStructArrayInterface>();
     client.linkObjectSource(testbed1StructArrayInterface);
     testbed1::StructArrayInterfaceTraced testbed1StructArrayInterfaceTraced(testbed1StructArrayInterface );
+    auto tbNamesNamEs = std::make_shared<tb_names::OLinkNam_Es>();
+    client.linkObjectSource(tbNamesNamEs);
+    tb_names::NamEsTraced tbNamesNamEsTraced(tbNamesNamEs );
 
     
     // Try out properties: subscribe for changes
@@ -144,6 +149,7 @@ int main(int argc, char *argv[])
     client.unlinkObjectSource(tbSimpleSimpleArrayInterface->olinkObjectName());
     client.unlinkObjectSource(testbed1StructInterface->olinkObjectName());
     client.unlinkObjectSource(testbed1StructArrayInterface->olinkObjectName());
+    client.unlinkObjectSource(tbNamesNamEs->olinkObjectName());
 
     return result;
 }

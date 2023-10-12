@@ -37,6 +37,8 @@
 #include "testbed1/monitor/structinterfacetraced.h"
 #include "testbed1/mqtt/mqttstructarrayinterface.h"
 #include "testbed1/monitor/structarrayinterfacetraced.h"
+#include "tb_names/mqtt/mqttnam_es.h"
+#include "tb_names/monitor/nam_estraced.h"
 
 
 // You can run this client app together with the service side app - either also example, simulation,
@@ -89,6 +91,8 @@ int main(int argc, char *argv[])
     testbed1::StructInterfaceTraced testbed1StructInterfaceTraced(testbed1StructInterface );
     auto testbed1StructArrayInterface = std::make_shared<testbed1::MqttStructArrayInterface>(client);
     testbed1::StructArrayInterfaceTraced testbed1StructArrayInterfaceTraced(testbed1StructArrayInterface );
+    auto tbNamesNamEs = std::make_shared<tb_names::MqttNam_Es>(client);
+    tb_names::NamEsTraced tbNamesNamEsTraced(tbNamesNamEs );
 
     
     // Try out properties: subscribe for changes

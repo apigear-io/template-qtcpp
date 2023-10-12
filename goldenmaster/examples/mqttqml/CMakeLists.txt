@@ -29,6 +29,7 @@ find_package(tb_same1 QUIET COMPONENTS tb_same1_impl tb_same1_mqtt  tb_same1_mon
 find_package(tb_same2 QUIET COMPONENTS tb_same2_impl tb_same2_mqtt  tb_same2_monitor)
 find_package(tb_simple QUIET COMPONENTS tb_simple_impl tb_simple_mqtt  tb_simple_monitor)
 find_package(testbed1 QUIET COMPONENTS testbed1_impl testbed1_mqtt  testbed1_monitor)
+find_package(tb_names QUIET COMPONENTS tb_names_impl tb_names_mqtt  tb_names_monitor)
 target_link_libraries(MqttQmlExamlple PUBLIC
     testbed2_impl
     testbed2_qml
@@ -54,6 +55,10 @@ target_link_libraries(MqttQmlExamlple PUBLIC
     testbed1_qml
     testbed1_mqtt 
     testbed1_monitor
+    tb_names_impl
+    tb_names_qml
+    tb_names_mqtt 
+    tb_names_monitor
 PRIVATE Qt6::Qml Qt6::Gui Qt6::Quick Qt6::QuickControls2 Qt6::QuickWidgets
 )
 

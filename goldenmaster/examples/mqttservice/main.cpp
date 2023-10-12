@@ -50,6 +50,9 @@
 #include "testbed1/implementation/structarrayinterface.h"
 #include "testbed1/mqtt/mqttstructarrayinterfaceadapter.h"
 #include "testbed1/monitor/structarrayinterfacetraced.h"
+#include "tb_names/implementation/nam_es.h"
+#include "tb_names/mqtt/mqttnam_esadapter.h"
+#include "tb_names/monitor/nam_estraced.h"
 
 #include <QtCore>
 #include "apigear/mqtt/mqttservice.h"
@@ -122,6 +125,9 @@ int main(int argc, char *argv[]){
     auto testbed1StructArrayInterface = std::make_shared<testbed1::StructArrayInterface>();
     auto testbed1StructArrayInterfaceTraced = std::make_shared<testbed1::StructArrayInterfaceTraced>(testbed1StructArrayInterface );
     auto testbed1MqttStructArrayInterfaceService = std::make_shared<testbed1::MqttStructArrayInterfaceAdapter>(service, testbed1StructArrayInterfaceTraced);
+    auto tbNamesNamEs = std::make_shared<tb_names::NamEs>();
+    auto tbNamesNamEsTraced = std::make_shared<tb_names::NamEsTraced>(tbNamesNamEs );
+    auto tbNamesMqttNamEsService = std::make_shared<tb_names::MqttNam_EsAdapter>(service, tbNamesNamEsTraced);
 
     auto result = app.exec();
     // Use the server.

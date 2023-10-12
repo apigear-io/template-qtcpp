@@ -39,7 +39,7 @@ public:
 {{- range .Interface.Operations}}
 {{- $operation := . }}
     /** Traces {{$operation.Name}} and forwards call to {{$interfaceName}} implementation. */
-    {{qtReturn "" .Return }} {{lower1 .Name}}({{qtParams "" .Params}}) override;
+    {{qtReturn "" .Return }} {{camel .Name}}({{qtParams "" .Params}}) override;
     {{ end -}}
 {{- range .Interface.Properties}}
 {{- $property := . }}

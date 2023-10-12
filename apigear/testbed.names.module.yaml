@@ -1,0 +1,27 @@
+schema: apigear.module/1.0
+name: tb.names
+version: "1.0.0"
+
+
+interfaces:
+  - name: Nam_Es
+    properties:
+      - { name: Switch, type: bool }
+      - { name: SOME_PROPERTY, type: int }
+      - { name: Some_Poperty2, type: int }
+    operations:
+      - name: SOME_FUNCTION
+        params:
+          - name: SOME_PARAM
+            type: bool
+      - name: Some_Function2
+        params:
+          - name: Some_Param
+            type: bool
+    signals:
+      - name: SOME_SIGNAL
+        params:
+          - { name: SOME_PARAM, type: bool }
+      - name: Some_Signal2
+        params:
+          - { name: Some_Param, type: bool }

@@ -68,6 +68,12 @@
 #include "testbed1/qmlplugin/apifactory.h"
 #include "testbed1/mqtt/mqttfactory.h"
 #include "testbed1/monitor/tracedapifactory.h"
+#include "tb_names/implementation/nam_es.h"
+#include "tb_names/qmlplugin/qmlnam_es.h"
+#include "tb_names/mqtt/mqttnam_esadapter.h"
+#include "tb_names/qmlplugin/apifactory.h"
+#include "tb_names/mqtt/mqttfactory.h"
+#include "tb_names/monitor/tracedapifactory.h"
 
 #include <QtCore>
 #include "apigear/mqtt/mqttservice.h"
@@ -114,6 +120,9 @@ int main(int argc, char *argv[]){
     testbed1::MqttFactory testbed1MqttFactory(client);
     testbed1::TracedApiFactory testbed1TracedMqttFactory(testbed1MqttFactory); 
     testbed1::ApiFactory::set(&testbed1TracedMqttFactory);
+    tb_names::MqttFactory tb_namesMqttFactory(client);
+    tb_names::TracedApiFactory tb_namesTracedMqttFactory(tb_namesMqttFactory); 
+    tb_names::ApiFactory::set(&tb_namesTracedMqttFactory);
 
     // Create main app
     const QUrl url(QStringLiteral("qrc:/main.qml"));
@@ -166,6 +175,8 @@ int main(int argc, char *argv[]){
     auto testbed1MqttStructInterfaceService = std::make_shared<testbed1::MqttStructInterfaceAdapter>(service, testbed1StructInterface);
     auto testbed1StructArrayInterface = std::make_shared<testbed1::StructArrayInterface>();
     auto testbed1MqttStructArrayInterfaceService = std::make_shared<testbed1::MqttStructArrayInterfaceAdapter>(service, testbed1StructArrayInterface);
+    auto tbNamesNamEs = std::make_shared<tb_names::NamEs>();
+    auto tbNamesMqttNamEsService = std::make_shared<tb_names::MqttNam_EsAdapter>(service, tbNamesNamEs);
 
 
     /**

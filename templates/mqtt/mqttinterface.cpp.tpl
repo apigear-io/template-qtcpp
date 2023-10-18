@@ -151,17 +151,19 @@ QtPromise::QPromise<{{$return}}> {{$class}}::{{camel .Name}}Async({{qtParams "" 
         return QtPromise::QPromise<{{$return}}>::reject("not initialized");
     }
     auto respTopic = callInfo->second.first;
-    auto respSubscriptionId = callInfo->second.second;
     auto arguments = nlohmann::json::array({ {{- range $i, $e := .Params }}{{if $i}}, {{ end }}{{.Name}}{{- end }} });       
     return QtPromise::QPromise<{{$return}}>{[&](
         const QtPromise::QPromiseResolve<{{$return}}>& resolve)
         {
-                m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const nlohmann::json& arg)
+                auto callId = m_client.invokeRemote(topic, arguments, respTopic);
+                auto func = [resolve](const nlohmann::json& arg)
                 {
                     {{$return}} value = arg.get<{{$return}}>();
                     resolve(value);
-                });
+                };
+                auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
+                m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
+                lock.unlock();
         }
     };
     {{- end}}
@@ -207,7 +209,11 @@ void {{$class}}::subscribeForInvokeResponses()
 {{- if not (.Return.IsVoid) }}
     const QString topic{{.Name}} = interfaceName() + "/rpc/{{.Name}}";
     const QString topic{{.Name}}InvokeResp = interfaceName() + "/rpc/{{.Name}}"+ m_client.clientId() + "/result";
-    auto id_{{.Name}} = m_client.subscribeForInvokeResponse(topic{{.Name}}InvokeResp);
+    auto id_{{.Name}} = m_client.subscribeForInvokeResponse(topic{{.Name}}InvokeResp, 
+                        [this, topic{{.Name}}InvokeResp](const nlohmann::json& value, quint64 callId)
+                        {
+                            findAndExecuteCall(value, callId, topic{{.Name}}InvokeResp);
+                        });
     m_InvokeCallsInfo[topic{{.Name}}] = std::make_pair(topic{{.Name}}InvokeResp, id_{{.Name}});
 {{- end }}
 {{- end }}
@@ -224,6 +230,30 @@ void {{$class}}::unsubscribeAll()
     {
         m_client.unsubscribeTopic(info.second.second);
     }
+}
+
+void {{$class}}::findAndExecuteCall(const nlohmann::json& value, quint64 callId, QString topic)
+{
+    std::function <void(const nlohmann::json&)> function;
+    auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
+    auto call = m_pendingCallsInfo.find(callId);
+    if (call!= m_pendingCallsInfo.end())
+    {
+        if (call->second.first == topic)
+        {
+            function = call->second.second;
+            m_pendingCallsInfo.erase(call);
+            lock.unlock();
+        }
+        else
+        {
+            lock.unlock();
+            static std::string log = "Your call went wrong. An answear is no longer expected for ";
+            AG_LOG_WARNING(log);
+            AG_LOG_WARNING(topic.toStdString());
+        }
+    }
+    if (function) function(value);
 }
 
 } // namespace {{snake  .Module.Name }}

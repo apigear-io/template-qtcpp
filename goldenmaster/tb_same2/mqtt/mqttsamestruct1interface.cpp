@@ -118,17 +118,19 @@ QtPromise::QPromise<Struct1> MqttSameStruct1Interface::func1Async(const Struct1&
         return QtPromise::QPromise<Struct1>::reject("not initialized");
     }
     auto respTopic = callInfo->second.first;
-    auto respSubscriptionId = callInfo->second.second;
     auto arguments = nlohmann::json::array({param1 });       
     return QtPromise::QPromise<Struct1>{[&](
         const QtPromise::QPromiseResolve<Struct1>& resolve)
         {
-                m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const nlohmann::json& arg)
+                auto callId = m_client.invokeRemote(topic, arguments, respTopic);
+                auto func = [resolve](const nlohmann::json& arg)
                 {
                     Struct1 value = arg.get<Struct1>();
                     resolve(value);
-                });
+                };
+                auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
+                m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
+                lock.unlock();
         }
     };
 }
@@ -154,7 +156,11 @@ void MqttSameStruct1Interface::subscribeForInvokeResponses()
     // Subscribe for invokeReply and prepare invoke call info for non void functions.
     const QString topicfunc1 = interfaceName() + "/rpc/func1";
     const QString topicfunc1InvokeResp = interfaceName() + "/rpc/func1"+ m_client.clientId() + "/result";
-    auto id_func1 = m_client.subscribeForInvokeResponse(topicfunc1InvokeResp);
+    auto id_func1 = m_client.subscribeForInvokeResponse(topicfunc1InvokeResp, 
+                        [this, topicfunc1InvokeResp](const nlohmann::json& value, quint64 callId)
+                        {
+                            findAndExecuteCall(value, callId, topicfunc1InvokeResp);
+                        });
     m_InvokeCallsInfo[topicfunc1] = std::make_pair(topicfunc1InvokeResp, id_func1);
 }
 
@@ -168,6 +174,30 @@ void MqttSameStruct1Interface::unsubscribeAll()
     {
         m_client.unsubscribeTopic(info.second.second);
     }
+}
+
+void MqttSameStruct1Interface::findAndExecuteCall(const nlohmann::json& value, quint64 callId, QString topic)
+{
+    std::function <void(const nlohmann::json&)> function;
+    auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
+    auto call = m_pendingCallsInfo.find(callId);
+    if (call!= m_pendingCallsInfo.end())
+    {
+        if (call->second.first == topic)
+        {
+            function = call->second.second;
+            m_pendingCallsInfo.erase(call);
+            lock.unlock();
+        }
+        else
+        {
+            lock.unlock();
+            static std::string log = "Your call went wrong. An answear is no longer expected for ";
+            AG_LOG_WARNING(log);
+            AG_LOG_WARNING(topic.toStdString());
+        }
+    }
+    if (function) function(value);
 }
 
 } // namespace tb_same2

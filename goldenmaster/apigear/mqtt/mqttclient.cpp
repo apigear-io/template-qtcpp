@@ -69,21 +69,39 @@ void Client::onSubscribeTopic(quint64 id, const QString &topic, subscribeCallbac
     m_subscriptions.insert(subscription->topic(), std::make_pair(id, callback));
 }
 
-void Client::onSubscribeForInvokeResponse(quint64 id, const QString &topic)
+void Client::onSubscribeForInvokeResponse(quint64 id, const QString &topic, invokeReplyCallback callback)
 {
     auto subscription = m_client.subscribe(topic, QoS);
     auto topicFilter = subscription->topic();
     if (!m_invokeReplySubscriptions.contains(topicFilter))
     {
-        connect(subscription, &QMqttSubscription::messageReceived, this, &Client::handleInvokeResp);
+        connect(subscription, &QMqttSubscription::messageReceived,
+                [this](const QMqttMessage& message){
+                    auto callIdDataArray = message.publishProperties().correlationData();
+                    quint64 callId;
+                    PayloadConverter::fromPayload(callIdDataArray, &callId);
+
+                    auto subscription = multimap_helper::find_first_with_matching_topic(m_invokeReplySubscriptions.begin(), m_invokeReplySubscriptions.end(), message.topic());
+                    while (subscription != m_invokeReplySubscriptions.end() && subscription.key().match(message.topic()))
+                    {
+                        if (subscription.value().second)
+                        {
+                            auto arguments = PayloadConverter::fromPayload(message.payload());
+                            subscription.value().second(arguments, callId);
+                        }
+                        subscription++;
+                    }
+                });
     }
-    m_invokeReplySubscriptions.insert(topicFilter, id);
+    m_invokeReplySubscriptions.insert(topicFilter,  std::make_pair(id, callback));
 }
 
 void Client::onUnsubscribedTopic(quint64 subscriptionId)
 {
-    auto removeSubscription = [this](auto& container, auto subscribedItem)
+    auto removeSubscription = [this](auto& container, auto subscriptionId)
     {
+        auto subscribedItem = std::find_if(container.begin(), container.end(),
+                                           [subscriptionId](auto& element){ return element.first == subscriptionId;});
         if (subscribedItem != container.end())
         {
             auto topic = subscribedItem.key();
@@ -95,12 +113,9 @@ void Client::onUnsubscribedTopic(quint64 subscriptionId)
             }
         }
     };
-    auto subscribedInPropertiesAndSignals = std::find_if(m_subscriptions.begin(), m_subscriptions.end(), 
-        [subscriptionId](auto& element){ return element.first == subscriptionId;});
-    removeSubscription(m_subscriptions, subscribedInPropertiesAndSignals);
-    auto subscribedInInvokeReplies= std::find_if(m_invokeReplySubscriptions.begin(), m_invokeReplySubscriptions.end(), 
-        [subscriptionId](auto& element){ return element == subscriptionId;});
-    removeSubscription(m_invokeReplySubscriptions, subscribedInInvokeReplies);
+
+    removeSubscription(m_subscriptions, subscriptionId);
+    removeSubscription(m_invokeReplySubscriptions, subscriptionId);
 }
 
 bool Client::isReady() const
@@ -128,10 +143,10 @@ quint64 Client::subscribeTopic(const QString &topic, subscribeCallback callback)
     return id;
 }
 
-quint64 Client::subscribeForInvokeResponse(const QString &topic)
+quint64 Client::subscribeForInvokeResponse(const QString &topic, invokeReplyCallback callback)
 {
     auto id = subscriptionIdGenerator.getId();
-    subscribeForInvokeResponseSignal(id, topic);
+    subscribeForInvokeResponseSignal(id, topic, callback);
     return id;
 }
 
@@ -140,19 +155,17 @@ void Client::setRemoteProperty(const QMqttTopicName& topic, const nlohmann::json
     messageToWrite(topic, PayloadConverter::toPayload(value));
 }
 
-void Client::invokeRemote(const QMqttTopicName& topic,
+quint64 Client::invokeRemote(const QMqttTopicName& topic,
     const nlohmann::json& arguments,
-    const QString& responseTopic,
-    quint64  subscriptionId,
-    std::function<void(nlohmann::json)> resp)
+    const QString& responseTopic)
 {
     QMqttPublishProperties properties;
     properties.setResponseTopic(responseTopic);
     auto callId = functionCallIdGenerator.getId();
     auto correlationInfo = PayloadConverter::toPayload(&callId);
     properties.setCorrelationData(correlationInfo);
-    m_pendingInvokeReplies.insert(callId, std::make_pair(subscriptionId, resp));
     messageToWriteWithProperties(topic, PayloadConverter::toPayload(arguments), properties);
+    return callId;
 }
 
 void Client::invokeRemoteNoResponse(const QMqttTopicName& topic, const nlohmann::json& arguments)
@@ -164,32 +177,6 @@ void Client::disconnect()
 {
     unsubscribeAll();
     m_client.disconnectFromHost();
-}
-
-void Client::handleInvokeResp(const QMqttMessage& message)
-{
-    auto callIdDataArray = message.publishProperties().correlationData();
-    quint64 callId;
-    PayloadConverter::fromPayload(callIdDataArray, &callId);
-
-    auto pendingReply = m_pendingInvokeReplies.find(callId);
-    if (pendingReply != m_pendingInvokeReplies.end())
-    {   auto topic = message.topic();
-        auto subscriptionId = pendingReply.value().first;
-        auto subscription = std::find_if(m_invokeReplySubscriptions.begin(),
-                                         m_invokeReplySubscriptions.end(),
-                                         [subscriptionId](auto& element) {return element == subscriptionId; });
-        bool isSubscriptionStillValid = subscription != m_invokeReplySubscriptions.end();
-        if (isSubscriptionStillValid)
-        {
-            if (pendingReply->second)
-            {
-                nlohmann::json arguments = PayloadConverter::fromPayload(message.payload());
-                pendingReply.value().second(arguments);
-            }
-        }
-        m_pendingInvokeReplies.erase(pendingReply);
-    }
 }
 
 void Client::handleClientStateChanged(QMqttClient::ClientState state)

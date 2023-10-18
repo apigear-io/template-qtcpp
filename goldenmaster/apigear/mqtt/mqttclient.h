@@ -33,6 +33,8 @@ public:
     virtual ~Client() override = default;
     // An alias for callback, necessary for signals/slots, which don't handle well function parameters with "const". 
     using subscribeCallback = std::function<void(const nlohmann::json&)>;
+    // An alias for callback, necessary for signals/slots, which don't handle well function parameters with "const".
+    using invokeReplyCallback = std::function<void(const nlohmann::json&, quint64)>;
 public slots:
     // Internal handler for internal messageToWriteWithProperties signal emitted during invoke requests.
     void writeMessageWithProperties(const QMqttTopicName& topic, const QByteArray& message, const QMqttPublishProperties &properties);
@@ -41,7 +43,7 @@ public slots:
     // Internal handler for internal subscribeTopicSignal signal, emitted by  subscribeTopic method.
     void onSubscribeTopic(quint64 id, const QString &topic, subscribeCallback callback);
     // Internal handler of subscribeForInvokeResponseSignal signal, emitted by subscribeForInvokeResponse method.
-    void onSubscribeForInvokeResponse(quint64 id, const QString &topic);
+    void onSubscribeForInvokeResponse(quint64 id, const QString &topic, invokeReplyCallback callback);
     // Internal handler for an unsubscribeTopic signal.
     void onUnsubscribedTopic(quint64 subscriptionId);
 
@@ -61,7 +63,7 @@ signals:
     // Internal signal emitted by subscribeTopic. Used to allow multi thread safe use.
     void subscribeTopicSignal(quint64 id, const QString &topic, subscribeCallback callback);
     // Internal signal emitted by subscribeForInvokeTopic. Used to allow multi thread safe use.
-    void subscribeForInvokeResponseSignal(quint64 id, const QString &topic);
+    void subscribeForInvokeResponseSignal(quint64 id, const QString &topic, invokeReplyCallback callback);
     /**
     * Unsubscribes the callback from a topic, and the topic if there is no more callbacks subscribed to it.
     * @param id. A subscription id of a subscribed callback for a topic.
@@ -102,7 +104,7 @@ public:
     * @return an Id for this subscription. Remember to unsubscribe the callback with this id.
     * WARNING make sure that client is already connected.
     */
-    quint64 subscribeForInvokeResponse(const QString &topic);
+    quint64 subscribeForInvokeResponse(const QString &topic, invokeReplyCallback callback);
 
     /**
     * Publishes message, use requesting for a property of your interface to change.
@@ -116,10 +118,9 @@ public:
     * @param topic for invoke request, consists of interfaceName, "rpc" keyword and a method name.
     * @param arguments for invoke request.
     * @param responseTopic for property change, consists of interfaceName, "rpc" keyword method name, clientId and "response" keyword.
-    * @param subscriptionId Id with which object subscribed for response for invocation method.
-    * @param resp. The value to which property change is requested.
+    * @return callId an Id of remote call request. When response will be available a callback will be called with this callId.
     */
-    void invokeRemote(const QMqttTopicName& topic, const nlohmann::json& arguments, const QString& responseTopic, quint64  subscriptionId, std::function<void(nlohmann::json)> resp);
+    quint64 invokeRemote(const QMqttTopicName& topic, const nlohmann::json& arguments, const QString& responseTopic);
     /** 
     * Version of invokeRemote without waiting for response
     * Publishes message, with request of invoking a function.
@@ -136,11 +137,6 @@ public:
 
 private:
     /**
-    * Helper function for handling invoke requests from network.
-    * @param message. Raw QMqttMessage.
-    */
-    void handleInvokeResp(const QMqttMessage& message);
-    /**
     * Helper function for handling invoke changes of client state.
     * @param state. A Mqtt client state.
     */
@@ -152,10 +148,8 @@ private:
     /** Storage for subscribed topics for signals and property changes with their callbacks and subscription identifiers.*/
     QMultiMap<QMqttTopicFilter, std::pair<quint64, subscribeCallback>> m_subscriptions;
     /** All invoke responses topic subscriptions and ids for them, stored by the topic*/
-    QMultiMap<QMqttTopicFilter, quint64> m_invokeReplySubscriptions;
-    /** All invoke responses subscriptions ids for awaited method invocation calls with their topic subscription id and a callback to execute*/
-    QMap<quint64,  std::pair<quint64,  std::function<void(nlohmann::json)>>> m_pendingInvokeReplies;
-    /** Object used to generate ids for subscriptions.*/
+    QMultiMap<QMqttTopicFilter, std::pair<quint64, invokeReplyCallback>> m_invokeReplySubscriptions;
+    /** Object used to generate ids subscriptions.*/
     UniqueIdGenerator subscriptionIdGenerator;
     /** Object used to generate ids for awaited method invocation responses callbacks.*/
     UniqueIdGenerator functionCallIdGenerator;

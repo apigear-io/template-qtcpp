@@ -339,17 +339,19 @@ QtPromise::QPromise<bool> MqttSimpleInterface::funcBoolAsync(bool paramBool)
         return QtPromise::QPromise<bool>::reject("not initialized");
     }
     auto respTopic = callInfo->second.first;
-    auto respSubscriptionId = callInfo->second.second;
     auto arguments = nlohmann::json::array({paramBool });       
     return QtPromise::QPromise<bool>{[&](
         const QtPromise::QPromiseResolve<bool>& resolve)
         {
-                m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const nlohmann::json& arg)
+                auto callId = m_client.invokeRemote(topic, arguments, respTopic);
+                auto func = [resolve](const nlohmann::json& arg)
                 {
                     bool value = arg.get<bool>();
                     resolve(value);
-                });
+                };
+                auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
+                m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
+                lock.unlock();
         }
     };
 }
@@ -384,17 +386,19 @@ QtPromise::QPromise<int> MqttSimpleInterface::funcIntAsync(int paramInt)
         return QtPromise::QPromise<int>::reject("not initialized");
     }
     auto respTopic = callInfo->second.first;
-    auto respSubscriptionId = callInfo->second.second;
     auto arguments = nlohmann::json::array({paramInt });       
     return QtPromise::QPromise<int>{[&](
         const QtPromise::QPromiseResolve<int>& resolve)
         {
-                m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const nlohmann::json& arg)
+                auto callId = m_client.invokeRemote(topic, arguments, respTopic);
+                auto func = [resolve](const nlohmann::json& arg)
                 {
                     int value = arg.get<int>();
                     resolve(value);
-                });
+                };
+                auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
+                m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
+                lock.unlock();
         }
     };
 }
@@ -429,17 +433,19 @@ QtPromise::QPromise<qint32> MqttSimpleInterface::funcInt32Async(qint32 paramInt3
         return QtPromise::QPromise<qint32>::reject("not initialized");
     }
     auto respTopic = callInfo->second.first;
-    auto respSubscriptionId = callInfo->second.second;
     auto arguments = nlohmann::json::array({paramInt32 });       
     return QtPromise::QPromise<qint32>{[&](
         const QtPromise::QPromiseResolve<qint32>& resolve)
         {
-                m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const nlohmann::json& arg)
+                auto callId = m_client.invokeRemote(topic, arguments, respTopic);
+                auto func = [resolve](const nlohmann::json& arg)
                 {
                     qint32 value = arg.get<qint32>();
                     resolve(value);
-                });
+                };
+                auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
+                m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
+                lock.unlock();
         }
     };
 }
@@ -474,17 +480,19 @@ QtPromise::QPromise<qint64> MqttSimpleInterface::funcInt64Async(qint64 paramInt6
         return QtPromise::QPromise<qint64>::reject("not initialized");
     }
     auto respTopic = callInfo->second.first;
-    auto respSubscriptionId = callInfo->second.second;
     auto arguments = nlohmann::json::array({paramInt64 });       
     return QtPromise::QPromise<qint64>{[&](
         const QtPromise::QPromiseResolve<qint64>& resolve)
         {
-                m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const nlohmann::json& arg)
+                auto callId = m_client.invokeRemote(topic, arguments, respTopic);
+                auto func = [resolve](const nlohmann::json& arg)
                 {
                     qint64 value = arg.get<qint64>();
                     resolve(value);
-                });
+                };
+                auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
+                m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
+                lock.unlock();
         }
     };
 }
@@ -519,17 +527,19 @@ QtPromise::QPromise<qreal> MqttSimpleInterface::funcFloatAsync(qreal paramFloat)
         return QtPromise::QPromise<qreal>::reject("not initialized");
     }
     auto respTopic = callInfo->second.first;
-    auto respSubscriptionId = callInfo->second.second;
     auto arguments = nlohmann::json::array({paramFloat });       
     return QtPromise::QPromise<qreal>{[&](
         const QtPromise::QPromiseResolve<qreal>& resolve)
         {
-                m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const nlohmann::json& arg)
+                auto callId = m_client.invokeRemote(topic, arguments, respTopic);
+                auto func = [resolve](const nlohmann::json& arg)
                 {
                     qreal value = arg.get<qreal>();
                     resolve(value);
-                });
+                };
+                auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
+                m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
+                lock.unlock();
         }
     };
 }
@@ -564,17 +574,19 @@ QtPromise::QPromise<float> MqttSimpleInterface::funcFloat32Async(float paramFloa
         return QtPromise::QPromise<float>::reject("not initialized");
     }
     auto respTopic = callInfo->second.first;
-    auto respSubscriptionId = callInfo->second.second;
     auto arguments = nlohmann::json::array({paramFloat32 });       
     return QtPromise::QPromise<float>{[&](
         const QtPromise::QPromiseResolve<float>& resolve)
         {
-                m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const nlohmann::json& arg)
+                auto callId = m_client.invokeRemote(topic, arguments, respTopic);
+                auto func = [resolve](const nlohmann::json& arg)
                 {
                     float value = arg.get<float>();
                     resolve(value);
-                });
+                };
+                auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
+                m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
+                lock.unlock();
         }
     };
 }
@@ -609,17 +621,19 @@ QtPromise::QPromise<double> MqttSimpleInterface::funcFloat64Async(double paramFl
         return QtPromise::QPromise<double>::reject("not initialized");
     }
     auto respTopic = callInfo->second.first;
-    auto respSubscriptionId = callInfo->second.second;
     auto arguments = nlohmann::json::array({paramFloat });       
     return QtPromise::QPromise<double>{[&](
         const QtPromise::QPromiseResolve<double>& resolve)
         {
-                m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const nlohmann::json& arg)
+                auto callId = m_client.invokeRemote(topic, arguments, respTopic);
+                auto func = [resolve](const nlohmann::json& arg)
                 {
                     double value = arg.get<double>();
                     resolve(value);
-                });
+                };
+                auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
+                m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
+                lock.unlock();
         }
     };
 }
@@ -654,17 +668,19 @@ QtPromise::QPromise<QString> MqttSimpleInterface::funcStringAsync(const QString&
         return QtPromise::QPromise<QString>::reject("not initialized");
     }
     auto respTopic = callInfo->second.first;
-    auto respSubscriptionId = callInfo->second.second;
     auto arguments = nlohmann::json::array({paramString });       
     return QtPromise::QPromise<QString>{[&](
         const QtPromise::QPromiseResolve<QString>& resolve)
         {
-                m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const nlohmann::json& arg)
+                auto callId = m_client.invokeRemote(topic, arguments, respTopic);
+                auto func = [resolve](const nlohmann::json& arg)
                 {
                     QString value = arg.get<QString>();
                     resolve(value);
-                });
+                };
+                auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
+                m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
+                lock.unlock();
         }
     };
 }
@@ -728,35 +744,67 @@ void MqttSimpleInterface::subscribeForInvokeResponses()
     // Subscribe for invokeReply and prepare invoke call info for non void functions.
     const QString topicfuncBool = interfaceName() + "/rpc/funcBool";
     const QString topicfuncBoolInvokeResp = interfaceName() + "/rpc/funcBool"+ m_client.clientId() + "/result";
-    auto id_funcBool = m_client.subscribeForInvokeResponse(topicfuncBoolInvokeResp);
+    auto id_funcBool = m_client.subscribeForInvokeResponse(topicfuncBoolInvokeResp, 
+                        [this, topicfuncBoolInvokeResp](const nlohmann::json& value, quint64 callId)
+                        {
+                            findAndExecuteCall(value, callId, topicfuncBoolInvokeResp);
+                        });
     m_InvokeCallsInfo[topicfuncBool] = std::make_pair(topicfuncBoolInvokeResp, id_funcBool);
     const QString topicfuncInt = interfaceName() + "/rpc/funcInt";
     const QString topicfuncIntInvokeResp = interfaceName() + "/rpc/funcInt"+ m_client.clientId() + "/result";
-    auto id_funcInt = m_client.subscribeForInvokeResponse(topicfuncIntInvokeResp);
+    auto id_funcInt = m_client.subscribeForInvokeResponse(topicfuncIntInvokeResp, 
+                        [this, topicfuncIntInvokeResp](const nlohmann::json& value, quint64 callId)
+                        {
+                            findAndExecuteCall(value, callId, topicfuncIntInvokeResp);
+                        });
     m_InvokeCallsInfo[topicfuncInt] = std::make_pair(topicfuncIntInvokeResp, id_funcInt);
     const QString topicfuncInt32 = interfaceName() + "/rpc/funcInt32";
     const QString topicfuncInt32InvokeResp = interfaceName() + "/rpc/funcInt32"+ m_client.clientId() + "/result";
-    auto id_funcInt32 = m_client.subscribeForInvokeResponse(topicfuncInt32InvokeResp);
+    auto id_funcInt32 = m_client.subscribeForInvokeResponse(topicfuncInt32InvokeResp, 
+                        [this, topicfuncInt32InvokeResp](const nlohmann::json& value, quint64 callId)
+                        {
+                            findAndExecuteCall(value, callId, topicfuncInt32InvokeResp);
+                        });
     m_InvokeCallsInfo[topicfuncInt32] = std::make_pair(topicfuncInt32InvokeResp, id_funcInt32);
     const QString topicfuncInt64 = interfaceName() + "/rpc/funcInt64";
     const QString topicfuncInt64InvokeResp = interfaceName() + "/rpc/funcInt64"+ m_client.clientId() + "/result";
-    auto id_funcInt64 = m_client.subscribeForInvokeResponse(topicfuncInt64InvokeResp);
+    auto id_funcInt64 = m_client.subscribeForInvokeResponse(topicfuncInt64InvokeResp, 
+                        [this, topicfuncInt64InvokeResp](const nlohmann::json& value, quint64 callId)
+                        {
+                            findAndExecuteCall(value, callId, topicfuncInt64InvokeResp);
+                        });
     m_InvokeCallsInfo[topicfuncInt64] = std::make_pair(topicfuncInt64InvokeResp, id_funcInt64);
     const QString topicfuncFloat = interfaceName() + "/rpc/funcFloat";
     const QString topicfuncFloatInvokeResp = interfaceName() + "/rpc/funcFloat"+ m_client.clientId() + "/result";
-    auto id_funcFloat = m_client.subscribeForInvokeResponse(topicfuncFloatInvokeResp);
+    auto id_funcFloat = m_client.subscribeForInvokeResponse(topicfuncFloatInvokeResp, 
+                        [this, topicfuncFloatInvokeResp](const nlohmann::json& value, quint64 callId)
+                        {
+                            findAndExecuteCall(value, callId, topicfuncFloatInvokeResp);
+                        });
     m_InvokeCallsInfo[topicfuncFloat] = std::make_pair(topicfuncFloatInvokeResp, id_funcFloat);
     const QString topicfuncFloat32 = interfaceName() + "/rpc/funcFloat32";
     const QString topicfuncFloat32InvokeResp = interfaceName() + "/rpc/funcFloat32"+ m_client.clientId() + "/result";
-    auto id_funcFloat32 = m_client.subscribeForInvokeResponse(topicfuncFloat32InvokeResp);
+    auto id_funcFloat32 = m_client.subscribeForInvokeResponse(topicfuncFloat32InvokeResp, 
+                        [this, topicfuncFloat32InvokeResp](const nlohmann::json& value, quint64 callId)
+                        {
+                            findAndExecuteCall(value, callId, topicfuncFloat32InvokeResp);
+                        });
     m_InvokeCallsInfo[topicfuncFloat32] = std::make_pair(topicfuncFloat32InvokeResp, id_funcFloat32);
     const QString topicfuncFloat64 = interfaceName() + "/rpc/funcFloat64";
     const QString topicfuncFloat64InvokeResp = interfaceName() + "/rpc/funcFloat64"+ m_client.clientId() + "/result";
-    auto id_funcFloat64 = m_client.subscribeForInvokeResponse(topicfuncFloat64InvokeResp);
+    auto id_funcFloat64 = m_client.subscribeForInvokeResponse(topicfuncFloat64InvokeResp, 
+                        [this, topicfuncFloat64InvokeResp](const nlohmann::json& value, quint64 callId)
+                        {
+                            findAndExecuteCall(value, callId, topicfuncFloat64InvokeResp);
+                        });
     m_InvokeCallsInfo[topicfuncFloat64] = std::make_pair(topicfuncFloat64InvokeResp, id_funcFloat64);
     const QString topicfuncString = interfaceName() + "/rpc/funcString";
     const QString topicfuncStringInvokeResp = interfaceName() + "/rpc/funcString"+ m_client.clientId() + "/result";
-    auto id_funcString = m_client.subscribeForInvokeResponse(topicfuncStringInvokeResp);
+    auto id_funcString = m_client.subscribeForInvokeResponse(topicfuncStringInvokeResp, 
+                        [this, topicfuncStringInvokeResp](const nlohmann::json& value, quint64 callId)
+                        {
+                            findAndExecuteCall(value, callId, topicfuncStringInvokeResp);
+                        });
     m_InvokeCallsInfo[topicfuncString] = std::make_pair(topicfuncStringInvokeResp, id_funcString);
 }
 
@@ -770,6 +818,30 @@ void MqttSimpleInterface::unsubscribeAll()
     {
         m_client.unsubscribeTopic(info.second.second);
     }
+}
+
+void MqttSimpleInterface::findAndExecuteCall(const nlohmann::json& value, quint64 callId, QString topic)
+{
+    std::function <void(const nlohmann::json&)> function;
+    auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
+    auto call = m_pendingCallsInfo.find(callId);
+    if (call!= m_pendingCallsInfo.end())
+    {
+        if (call->second.first == topic)
+        {
+            function = call->second.second;
+            m_pendingCallsInfo.erase(call);
+            lock.unlock();
+        }
+        else
+        {
+            lock.unlock();
+            static std::string log = "Your call went wrong. An answear is no longer expected for ";
+            AG_LOG_WARNING(log);
+            AG_LOG_WARNING(topic.toStdString());
+        }
+    }
+    if (function) function(value);
 }
 
 } // namespace tb_simple

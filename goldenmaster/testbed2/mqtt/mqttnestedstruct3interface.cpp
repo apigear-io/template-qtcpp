@@ -174,17 +174,19 @@ QtPromise::QPromise<NestedStruct1> MqttNestedStruct3Interface::func1Async(const 
         return QtPromise::QPromise<NestedStruct1>::reject("not initialized");
     }
     auto respTopic = callInfo->second.first;
-    auto respSubscriptionId = callInfo->second.second;
     auto arguments = nlohmann::json::array({param1 });       
     return QtPromise::QPromise<NestedStruct1>{[&](
         const QtPromise::QPromiseResolve<NestedStruct1>& resolve)
         {
-                m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const nlohmann::json& arg)
+                auto callId = m_client.invokeRemote(topic, arguments, respTopic);
+                auto func = [resolve](const nlohmann::json& arg)
                 {
                     NestedStruct1 value = arg.get<NestedStruct1>();
                     resolve(value);
-                });
+                };
+                auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
+                m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
+                lock.unlock();
         }
     };
 }
@@ -219,17 +221,19 @@ QtPromise::QPromise<NestedStruct1> MqttNestedStruct3Interface::func2Async(const 
         return QtPromise::QPromise<NestedStruct1>::reject("not initialized");
     }
     auto respTopic = callInfo->second.first;
-    auto respSubscriptionId = callInfo->second.second;
     auto arguments = nlohmann::json::array({param1, param2 });       
     return QtPromise::QPromise<NestedStruct1>{[&](
         const QtPromise::QPromiseResolve<NestedStruct1>& resolve)
         {
-                m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const nlohmann::json& arg)
+                auto callId = m_client.invokeRemote(topic, arguments, respTopic);
+                auto func = [resolve](const nlohmann::json& arg)
                 {
                     NestedStruct1 value = arg.get<NestedStruct1>();
                     resolve(value);
-                });
+                };
+                auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
+                m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
+                lock.unlock();
         }
     };
 }
@@ -264,17 +268,19 @@ QtPromise::QPromise<NestedStruct1> MqttNestedStruct3Interface::func3Async(const 
         return QtPromise::QPromise<NestedStruct1>::reject("not initialized");
     }
     auto respTopic = callInfo->second.first;
-    auto respSubscriptionId = callInfo->second.second;
     auto arguments = nlohmann::json::array({param1, param2, param3 });       
     return QtPromise::QPromise<NestedStruct1>{[&](
         const QtPromise::QPromiseResolve<NestedStruct1>& resolve)
         {
-                m_client.invokeRemote(topic, arguments, respTopic, respSubscriptionId,
-                [resolve](const nlohmann::json& arg)
+                auto callId = m_client.invokeRemote(topic, arguments, respTopic);
+                auto func = [resolve](const nlohmann::json& arg)
                 {
                     NestedStruct1 value = arg.get<NestedStruct1>();
                     resolve(value);
-                });
+                };
+                auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
+                m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
+                lock.unlock();
         }
     };
 }
@@ -310,15 +316,27 @@ void MqttNestedStruct3Interface::subscribeForInvokeResponses()
     // Subscribe for invokeReply and prepare invoke call info for non void functions.
     const QString topicfunc1 = interfaceName() + "/rpc/func1";
     const QString topicfunc1InvokeResp = interfaceName() + "/rpc/func1"+ m_client.clientId() + "/result";
-    auto id_func1 = m_client.subscribeForInvokeResponse(topicfunc1InvokeResp);
+    auto id_func1 = m_client.subscribeForInvokeResponse(topicfunc1InvokeResp, 
+                        [this, topicfunc1InvokeResp](const nlohmann::json& value, quint64 callId)
+                        {
+                            findAndExecuteCall(value, callId, topicfunc1InvokeResp);
+                        });
     m_InvokeCallsInfo[topicfunc1] = std::make_pair(topicfunc1InvokeResp, id_func1);
     const QString topicfunc2 = interfaceName() + "/rpc/func2";
     const QString topicfunc2InvokeResp = interfaceName() + "/rpc/func2"+ m_client.clientId() + "/result";
-    auto id_func2 = m_client.subscribeForInvokeResponse(topicfunc2InvokeResp);
+    auto id_func2 = m_client.subscribeForInvokeResponse(topicfunc2InvokeResp, 
+                        [this, topicfunc2InvokeResp](const nlohmann::json& value, quint64 callId)
+                        {
+                            findAndExecuteCall(value, callId, topicfunc2InvokeResp);
+                        });
     m_InvokeCallsInfo[topicfunc2] = std::make_pair(topicfunc2InvokeResp, id_func2);
     const QString topicfunc3 = interfaceName() + "/rpc/func3";
     const QString topicfunc3InvokeResp = interfaceName() + "/rpc/func3"+ m_client.clientId() + "/result";
-    auto id_func3 = m_client.subscribeForInvokeResponse(topicfunc3InvokeResp);
+    auto id_func3 = m_client.subscribeForInvokeResponse(topicfunc3InvokeResp, 
+                        [this, topicfunc3InvokeResp](const nlohmann::json& value, quint64 callId)
+                        {
+                            findAndExecuteCall(value, callId, topicfunc3InvokeResp);
+                        });
     m_InvokeCallsInfo[topicfunc3] = std::make_pair(topicfunc3InvokeResp, id_func3);
 }
 
@@ -332,6 +350,30 @@ void MqttNestedStruct3Interface::unsubscribeAll()
     {
         m_client.unsubscribeTopic(info.second.second);
     }
+}
+
+void MqttNestedStruct3Interface::findAndExecuteCall(const nlohmann::json& value, quint64 callId, QString topic)
+{
+    std::function <void(const nlohmann::json&)> function;
+    auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
+    auto call = m_pendingCallsInfo.find(callId);
+    if (call!= m_pendingCallsInfo.end())
+    {
+        if (call->second.first == topic)
+        {
+            function = call->second.second;
+            m_pendingCallsInfo.erase(call);
+            lock.unlock();
+        }
+        else
+        {
+            lock.unlock();
+            static std::string log = "Your call went wrong. An answear is no longer expected for ";
+            AG_LOG_WARNING(log);
+            AG_LOG_WARNING(topic.toStdString());
+        }
+    }
+    if (function) function(value);
 }
 
 } // namespace testbed2

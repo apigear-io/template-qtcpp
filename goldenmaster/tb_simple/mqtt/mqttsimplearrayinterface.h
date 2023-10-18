@@ -256,6 +256,8 @@ private:
 
     // Helper function for removing all subscriptions. 
     void unsubscribeAll();
+    //Helper function for handling invoke responses.
+    void findAndExecuteCall(const nlohmann::json& value, quint64 callId, QString topic);
 
     /** An indicator if the object is linked with the service. */
     bool m_isReady;
@@ -280,6 +282,12 @@ private:
     * Keeps and helps accessing relevant information for invoke messages.
     */
     std::map<InvokeTopic, std::pair<InvokeRespTopic, InvokeRespSubscriptionId>> m_InvokeCallsInfo;
+    /**
+     * Invoke response handlers associated with the call Id.
+     */
+    std::map<quint64, std::pair<QString, std::function<void(const nlohmann::json&)>>> m_pendingCallsInfo;
+    /* Pending calls mutex */
+    std::mutex m_pendingCallMutex;
 };
 
 } //namespace tb_simple

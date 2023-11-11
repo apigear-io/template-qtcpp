@@ -36,7 +36,6 @@ add_library(tb_names::tb_names_qml ALIAS tb_names_qml)
 qt_add_qml_module(tb_names_qml
     URI "tb_names"
     VERSION 1.0
-    RESOURCE_PREFIX ${OUTPUT_PATH}/tb_names/qml
 )
 
 target_include_directories(tb_names_qml

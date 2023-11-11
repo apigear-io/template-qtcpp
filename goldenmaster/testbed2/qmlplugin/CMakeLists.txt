@@ -39,7 +39,6 @@ add_library(testbed2::testbed2_qml ALIAS testbed2_qml)
 qt_add_qml_module(testbed2_qml
     URI "testbed2"
     VERSION 1.0
-    RESOURCE_PREFIX ${OUTPUT_PATH}/testbed2/qml
 )
 
 target_include_directories(testbed2_qml

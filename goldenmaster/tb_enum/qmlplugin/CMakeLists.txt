@@ -36,7 +36,6 @@ add_library(tb_enum::tb_enum_qml ALIAS tb_enum_qml)
 qt_add_qml_module(tb_enum_qml
     URI "tb_enum"
     VERSION 1.0
-    RESOURCE_PREFIX ${OUTPUT_PATH}/tb_enum/qml
 )
 
 target_include_directories(tb_enum_qml

@@ -37,7 +37,6 @@ add_library(tb_simple::tb_simple_qml ALIAS tb_simple_qml)
 qt_add_qml_module(tb_simple_qml
     URI "tb_simple"
     VERSION 1.0
-    RESOURCE_PREFIX ${OUTPUT_PATH}/tb_simple/qml
 )
 
 target_include_directories(tb_simple_qml

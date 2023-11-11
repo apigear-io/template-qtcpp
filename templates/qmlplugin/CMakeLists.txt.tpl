@@ -43,7 +43,6 @@ add_library({{$module_id}}::{{$lib_id}} ALIAS {{$lib_id}})
 qt_add_qml_module({{$lib_id}}
     URI "{{$module_id}}"
     VERSION {{ .Module.Version.Major }}.{{ .Module.Version.Minor }}
-    RESOURCE_PREFIX ${OUTPUT_PATH}/{{ $module_id }}/qml
 )
 
 target_include_directories({{$lib_id}}

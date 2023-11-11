@@ -39,7 +39,6 @@ add_library(tb_same2::tb_same2_qml ALIAS tb_same2_qml)
 qt_add_qml_module(tb_same2_qml
     URI "tb_same2"
     VERSION 1.0
-    RESOURCE_PREFIX ${OUTPUT_PATH}/tb_same2/qml
 )
 
 target_include_directories(tb_same2_qml

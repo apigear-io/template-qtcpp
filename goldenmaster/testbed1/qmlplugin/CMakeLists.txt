@@ -8,8 +8,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Qml)
 
-set(OUTPUT_PATH ${LIBRARY_PATH}/)
-
 find_package(nlohmann_json QUIET)
 if(NOT nlohmann_json_FOUND)
   # pull nlohmann json as dependency
@@ -37,6 +35,7 @@ add_library(testbed1::testbed1_qml ALIAS testbed1_qml)
 qt_add_qml_module(testbed1_qml
     URI "testbed1"
     VERSION 1.0
+    OUTPUT_DIRECTORY ${LIBRARY_PATH}/testbed1
 )
 
 target_include_directories(testbed1_qml

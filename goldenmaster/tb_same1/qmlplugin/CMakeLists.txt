@@ -8,8 +8,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Qml)
 
-set(OUTPUT_PATH ${LIBRARY_PATH}/)
-
 find_package(nlohmann_json QUIET)
 if(NOT nlohmann_json_FOUND)
   # pull nlohmann json as dependency
@@ -39,6 +37,7 @@ add_library(tb_same1::tb_same1_qml ALIAS tb_same1_qml)
 qt_add_qml_module(tb_same1_qml
     URI "tb_same1"
     VERSION 1.0
+    OUTPUT_DIRECTORY ${LIBRARY_PATH}/tb_same1
 )
 
 target_include_directories(tb_same1_qml

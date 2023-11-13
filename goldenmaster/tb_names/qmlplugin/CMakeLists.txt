@@ -8,8 +8,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Qml)
 
-set(OUTPUT_PATH ${LIBRARY_PATH}/)
-
 find_package(nlohmann_json QUIET)
 if(NOT nlohmann_json_FOUND)
   # pull nlohmann json as dependency
@@ -36,6 +34,7 @@ add_library(tb_names::tb_names_qml ALIAS tb_names_qml)
 qt_add_qml_module(tb_names_qml
     URI "tb_names"
     VERSION 1.0
+    OUTPUT_DIRECTORY ${LIBRARY_PATH}/tb_names
 )
 
 target_include_directories(tb_names_qml

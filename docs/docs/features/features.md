@@ -21,7 +21,7 @@ For questions regarding this template please go to our [discussions page](https:
 
 ### Example API
 
-The following code snippet contains the *API* which is used throughout this guide to demonstrate the generated code and its usege in *Qt*.
+The following code snippet contains the *API* which is used throughout this guide to demonstrate the generated code and its usage in *Qt*.
 
 <details><summary>Hello World API (click to expand)</summary>
 <CodeBlock language="yaml" showLineNumbers>{helloWorldModuleComponent}</CodeBlock>
@@ -45,8 +45,12 @@ Features can be used in combination with `api` and add more functionality on top
     - `olinkclient` example with `main.cpp` that shows your interfaces as olink client.
     - `qml` example with a `main.cpp` and `qmlmain.qml`. The qml uses your interfaces. The main cpp sets olink client factory as a backend for the qml and sets up the olink server with your services (normally you'd have separate app for server)'.
 
-<Figure caption="Use a subset of shown features for UI application." src="/img/features/featuresApp.png" />
-<Figure caption="Features that may be used for server application." src="/img/features/featuresServer.png" />
+<Figure caption="Features overview, including receiving data from network: Bottom floor shows possible inputs for your API, you can either obtain data from the network with OLink or MQTT or use local implementation. The top floor shows feature qmlpugin for qml oriented applications." src="/img/features/featuresApp.png" />
+<Figure caption="Features overview, including publishing data through network: Topmost floor shows your options for using your local implementation (bottom floor): you can use it in your local app and/or use method of sharing the data with clients in the network." src="/img/features/featuresServer.png" />
+
+:::tip
+You may also use the OLink/Mqtt service side with Qml, you just need to provide implementation of IApiFactory, which will allow OLink/Mqtt Services Adapters use the network endpoints and the services implementation.
+:::
 
 There is also an *internal* feature `apigear`, which is generated for the *extended* features and is explained with them.
 Each feature can be selected using the solution file or via command line tool.

@@ -48,18 +48,19 @@ the following file structure will be generated. The purpose and content of each 
 ```bash {4,19}
 📂hello-world
  ┣ 📂apigear
- ┃ ┣ 📂monitor
- ┃ ┣ 📂olink
- ┃ ┃ ┣ 📜CMakeLists.txt
- ┃ ┃ ┣ 📜olinkclient.cpp
- ┃ ┃ ┣ 📜olinkclient.h
- ┃ ┃ ┣ 📜olinkhost.cpp
- ┃ ┃ ┣ 📜olinkhost.h
- ┃ ┃ ┣ 📜olinkremote.cpp
- ┃ ┃ ┗ 📜olinkremote.h
  ┃ ...
  ┣ 📂qt_hello_world
  ┃ ┣ 📂apigear
+ ┃ ┃ ┣ 📂monitor
+ ┃ ┃ ┣ 📂olink
+ ┃ ┃ ┃ ┣ 📜CMakeLists.txt
+ ┃ ┃ ┃ ┣ 📜olinkclient.cpp
+ ┃ ┃ ┃ ┣ 📜olinkclient.h
+ ┃ ┃ ┃ ┣ 📜olinkhost.cpp
+ ┃ ┃ ┃ ┣ 📜olinkhost.h
+ ┃ ┃ ┃ ┣ 📜olinkremote.cpp
+ ┃ ┃ ┃ ┗ 📜olinkremote.h
+ ┃ ┃ ... 
  ┃ ┣ 📂examples
  ┃ ┣ 📂io_world
  ┃ ┃ ┣ 📂api
@@ -130,10 +131,12 @@ As mentioned earlier you need a network layer, here provided by a `ApiGear::Obje
     client.linkObjectSource(ioWorldHello);
 
     // use your ioWorldHello as it was Hello implementation
-    ioWorldHello.say(someWhen);
+    ioWorldHello->say(io_world::Message(), io_world::When::Now);
     auto lastMessage = ioWorldHello->last();
-    ioWorldHello->setLast(someMessage);
-    ioWorldHello->connect(ioWorldHello.get(), &io_world::AbstractHello::justSaid, *otherObject, &SomeJustSaidUser::handleJustSaid);
+    auto local_last = io_world::Message();
+    local_last.m_content = "new message";
+    ioWorldHello->setLast(local_last);
+    ioWorldHello->connect(ioWorldHello.get(), &io_world::AbstractHello::justSaid, [](auto& param){qDebug()<< "received just said";});
 
     // remember to unlink your object if you won't use it anymore.
     client.unlinkObjectSource(ioWorldHello->olinkObjectName());
@@ -182,14 +185,16 @@ As mentioned earlier you need a network layer, here provided by a `ApiGear::Obje
     auto ioWorldHello = std::make_shared<io_world::Hello>();
 
     // Create your OLinkHelloAdapter and add it to registry.
-    auto ioWorldOlinkHelloService = std::make_shared<io_world::OLinkHelloAdapter>(registry, &ioWorldHello);
+    auto ioWorldOlinkHelloService = std::make_shared<io_world::OLinkHelloAdapter>(registry, ioWorldHello.get());
     registry.addSource(ioWorldOlinkHelloService);
 
-    // use your ioWorldHello as it was Hello implementation
-    ioWorldHello.say(someWhen);
+    // use your ioWorldHello implementation, all property changes, and signals will be passed to connected OLink clients.
     auto lastMessage = ioWorldHello->last();
+    ioWorldHello->say(lastMessage, io_world::When::Soon);
+    io_world::Message someMessage;
+    someMessage.m_content = "the new content";
     ioWorldHello->setLast(someMessage); // after this call - if new property is different than current one - all clients will be informed about new value.
-    ioWorldHello->connect(ioWorldHello.get(), &io_world::AbstractHello::justSaid, *otherObject, &SomeJustSaidUser::handleJustSaid);
+    emit ioWorldHello->justSaid(someMessage);
 
     // Remember to remove your ioWorldOlinkHelloService after you finish using it.
     registry.removeSource(ioWorldOlinkHelloService->olinkObjectName());

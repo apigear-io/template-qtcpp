@@ -17,7 +17,8 @@ Please also check issues on github for this template.
 This feature purpose is not only to help you introduce MQTT protocol into your project, but also show that an existing protocol can be adapted for sharing your data in your ecosystem. When going through this document you may notice this implementation contains general client/server adapters in 📂hello-world/apigear/mqtt
 and an interface specific part generated from templates for each interface in  📂hello-world/qt_hello_world/io_world/mqtt. <br /> <br /> 
  This feature provides a *client* and a *server* adapter for your interfaces for the MQTT protocol. It allows you to connect different applications in the same or different technologies (check all of our [templates](https://docs.apigear.io/docs/category/sdk-templates)).<br />
- Use an *Mqtt client* instead of your interface implementation to connect to be able to receive data from remote service.  Use an *Mqtt server adapter* to expose your interface implementation as a remote service.<br />
+ Use an *Mqtt client* instead of your interface implementation to be able to receive data from remote service.<br />
+ Use an *Mqtt server adapter* to expose your interface implementation as a remote service.<br />
 
 :::tip
 The MQTT broker is not provided with implementation. To be able to run client and service you need to run a broker of your choice.
@@ -52,17 +53,18 @@ the following file structure will be generated. The purpose and content of each 
 ```bash {4,19}
 📂hello-world
  ┣ 📂apigear
- ┃ ┣ 📂monitor
- ┃ ┣ 📂mqtt
- ┃ ┃ ┣ 📜CMakeLists.txt
- ┃ ┃ ┣ 📜mqttclient.cpp
- ┃ ┃ ┣ 📜mqttclient.h
- ┃ ┃ ┣ 📜mqttservice.cpp
- ┃ ┃ ┣ 📜mqttservice.h
- ┃ ┃ ┣ ... (helper files)
  ┃ ...
  ┣ 📂qt_hello_world
  ┃ ┣ 📂apigear
+ ┃ ┃ ┣ 📂monitor
+ ┃ ┃ ┣ 📂mqtt
+ ┃ ┃ ┃ ┣ 📜CMakeLists.txt
+ ┃ ┃ ┃ ┣ 📜mqttclient.cpp
+ ┃ ┃ ┃ ┣ 📜mqttclient.h
+ ┃ ┃ ┃ ┣ 📜mqttservice.cpp
+ ┃ ┃ ┃ ┣ 📜mqttservice.h
+ ┃ ┃ ┃ ┣ ... (helper files)
+ ┃ ┃ ...
  ┃ ┣ 📂examples
  ┃ ┣ 📂io_world
  ┃ ┃ ┣ 📂api
@@ -84,11 +86,16 @@ the following file structure will be generated. The purpose and content of each 
 
 When generating the mqtt feature (or any of those: olink monitor feature) you'll get an additional folder it the top most directory: the 📂hello-world/📂apigear. The 📂mqtt subfolder contains objects that implement a network layer (based on Qt Mqtt library) for the MQTT protocol. Those are:
 - Client - Adapts the Qt MQTT client, to serve as an network endpoint for [interface client adapters](mqtt#MQTT-Client-Adapter). 
-Exposes methods that allow receiving data for remote service: subscribing for properties changes, signals emission and method response invocation;
- methods that allow remote using the service: requesting property change or invoking a method. The client may serve many client interface adapters, even for the same interfaces (allows subscribing for same topic).
- In case many interface clients adapters for some interface are connected: property changes and signals are provided to all interface client adapters, but the invoke method response will be delivered only for the one that requested it.
-- ServiceAdapter - Adapts the Qt MQTT client to serve as an network endpoint for [interface service adapters](mqtt#MQTT-Server-Adapter). Exposes methods that allow receiving requests from remote clients: subscribing for properties change requests, send method invocation;
- methods that allow publishing property change, signal, functionality to handles sending a response for method invocation requests. This ServiceAdapter may be used for many interface service adapters, but it is not recommended to use more than one interface service adapter for same interface.
+  Exposes:
+    - methods that allow receiving data for remote service: subscribing for properties changes, signals emission and method response invocation;
+    - methods that allow remote using the service: requesting property change or invoking a method.  <br />
+  The client may serve many client interface adapters, even for the same interfaces (allows subscribing for same topic).
+  In case many interface client adapters for same interface are connected: property changes and signals are provided to all interface client adapters, but the invoke method response will be delivered only for the one that requested it.
+- ServiceAdapter - Adapts the Qt MQTT client to serve as an network endpoint for [interface service adapters](mqtt#MQTT-Server-Adapter). 
+  Exposes:
+    - methods that allow receiving requests from remote clients: subscribing for properties change requests, send method invocation;
+    - methods that allow publishing property change, signal, functionality to handles sending a response for method invocation requests. <br />
+  This ServiceAdapter may be used for many, interface service adapters, but it is not recommended to use more than one interface service adapter for the same interfaces.
 
 :::tip
 Have in mind that MQTT might not be suitable for high-frequency messages especially with one mqtt client serving more than one object.
@@ -102,14 +109,15 @@ The object is an `AbstractHello` implementation.<br />
 It requires an instance of Apigear::Mqtt::Client to work.  It uses the Client to subscribe (and unsubscribe) for topics that allow receiving properties, signals and invoke responses from service.
 
 #### Properties
-The property getters (here `Message last()` ) return immediately the locally stored last received value from server. <br /> 
-The property setter (here `void setLast(const Message& last)` ) requests setting a value on server side, local value is not changed. <br /> 
+The property getters (here getter `last`) return immediately the locally stored last received value from server. <br /> 
+The property setter (here setter `setLast ) requests setting a value on server side, local value is not changed. <br /> 
 You can connect to a property changed signals (here `void lastChanged(const Message& last)` )
 When the client receives information that server changed the property, a target property (here `last`) is updated locally and a signal that property has changed is emitted ( here `void lastChanged(const Message& last)`.
 
 :::note
 The connected interface client adapter has its local properties in sync with a service. The properties messages are retained in mqtt broker, so all already set properties are provided.
 :::
+
 #### Operations
 The operations have additionally the async version, which is called by the immediate version.<br />
 The async version sends an invoke operation request to a server.<br />
@@ -122,7 +130,8 @@ When a MqttHello client receives the message from server that indicates the sign
 
 #### Use `MqttHello`
 
-As mentioned earlier you an adapter of QtMqtt (with protcol and network layer implementation), here provided by a `ApiGear::Mqtt::Client`. All you need to do is to pass this Client to your Interface Client Adapter, and request connecting to host when it is convenient for you.
+MqttHello is an adapter of QtMqtt (with protcol and network layer implementation), here provided by a `ApiGear::Mqtt::Client`.
+All you need to do is to pass the `ApiGear::Mqtt::Client` to your Interface Client Adapter, and request connecting to host when it is convenient for you.
 
 ```cpp 
     // Create a client and make a connection
@@ -133,10 +142,12 @@ As mentioned earlier you an adapter of QtMqtt (with protcol and network layer im
     auto ioWorldHello = std::make_shared<io_world::MqttHello>(client);
 
     // use your ioWorldHello as it was Hello implementation
-    ioWorldHello.say(someWhen);
+    ioWorldHello->say(io_world::Message(), io_world::When::Now);
     auto lastMessage = ioWorldHello->last();
-    ioWorldHello->setLast(someMessage);
-    ioWorldHello->connect(ioWorldHello.get(), &io_world::AbstractHello::justSaid, *otherObject, &SomeJustSaidUser::handleJustSaid);
+    auto local_last = io_world::Message();
+    local_last.m_content = "new message";
+    ioWorldHello->setLast(local_last);
+    ioWorldHello->connect(ioWorldHello.get(), &io_world::AbstractHello::justSaid, [](auto& param){qDebug()<< "received just said";});
 ```
 ### MQTT Server Adapter
 
@@ -156,7 +167,7 @@ All the signals emitted by your local `Hello` objects are forwarded to all conne
 
 #### Use `MqttHelloAdapter`
 
-As mentioned earlier you an adapter of QtMqtt (with protcol and network layer implementation), here provided by a `ApiGear::Mqtt::ServiceAdapter` 
+As mentioned earlier, this is an adapter of QtMqtt (with protcol and network layer implementation), here provided by a `ApiGear::Mqtt::ServiceAdapter` 
 All you need to do is to pass this ServiceAdapter to your Interface Service Adapter, and request connecting to host when it is convenient for you.
 
 ```cpp 
@@ -169,11 +180,13 @@ All you need to do is to pass this ServiceAdapter to your Interface Service Adap
     // Create your MqttHelloAdapter and add it to registry.
     auto ioWorldMqttHelloService = std::make_shared<io_world::MqttHelloAdapter>(service, ioWorldHello);
 
-    // use your ioWorldHello as it was Hello implementation, all property changes, and signals will be passed to connected MqttHello clients.
-    ioWorldHello.say(someWhen);
+    // use your ioWorldHello implementation, all property changes, and signals will be passed to connected MqttHello clients.
     auto lastMessage = ioWorldHello->last();
+    ioWorldHello->say(lastMessage, io_world::When::Soon);
+    io_world::Message someMessage;
+    someMessage.m_content = "the new content";
     ioWorldHello->setLast(someMessage); // after this call - if new property is different than current one - all clients will be informed about new value.
-    ioWorldHello->connect(ioWorldHello.get(), &io_world::AbstractHello::justSaid, *otherObject, &SomeJustSaidUser::handleJustSaid);
+    emit ioWorldHello->justSaid(someMessage);
 
 ```
 

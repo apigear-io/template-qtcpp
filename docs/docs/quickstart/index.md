@@ -70,9 +70,9 @@ The example below specifies
 ```yaml title="helloworld.solution.yaml" showLineNumbers
 schema: "apigear.solution/1.0"
 name: hello_world_example
-version: "0.1"
+version: "0.1.0"
 
-layers:
+targets:
   - name: qt_hello_world
     inputs:
       - helloworld.module.yaml
@@ -82,8 +82,8 @@ layers:
     features:
       - stubs
 ```
-:::tip Layers
-You can extend this solution file with other layers, each for the different technology with  different template. The module.yaml is technology independent and may be used for any template.
+:::tip Targets
+You can extend this solution file with other targets, each for the different technology with  different template. The module.yaml is technology independent and may be used for any template.
 :::
 
 :::note
@@ -96,7 +96,7 @@ Use your favorite text editor to create the `helloworld.module.yaml` with the ex
 ```yaml title="helloworld.module.yaml" showLineNumbers
 schema: apigear.module/1.0
 name: io.world
-version: "1.0"
+version: "1.0.0"
 
 interfaces:
   - name: Hello

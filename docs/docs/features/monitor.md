@@ -22,14 +22,14 @@ the following file structure will be generated. The purpose and content of each 
 ```bash {4,16}
 📂hello-world
  ┣ 📂apigear
- ┃ ┣ 📂monitor
- ┃ ┃ ┣ 📜agentclient.cpp
- ┃ ┃ ┣ 📜agentclient.h
- ┃ ┃ ┗ 📜CMakeLists.txt
- ┃ ┗ 📂olink
  ┃ ...
  ┣ 📂qt_hello_world
  ┃ ┣ 📂apigear
+ ┃ ┃ ┣ 📂monitor
+ ┃ ┃ ┃ ┣ 📜agentclient.cpp
+ ┃ ┃ ┃ ┣ 📜agentclient.h
+ ┃ ┃ ┃ ┗ 📜CMakeLists.txt
+ ┃ ┃ ...
  ┃ ┣ 📂examples
  ┃ ┣ 📂io_world
  ┃ ┃ ┣ 📂api
@@ -49,7 +49,7 @@ the following file structure will be generated. The purpose and content of each 
 ### Qt Trace Client
 
 When generating the monitor feature (or olink feature) you'll get an additional folder it the top most directory: 📂hello-world/📂apigear. The 📂monitor subfolder contains a client for logging, with a network layer (based on the QtWebSocket library).
-The class handles connects to the `Apigear Trace Server` and takes care of formatting and sending the traces. 
+The class connects to the `Apigear Trace Server` and takes care of formatting and sending the traces. 
 
 
 ### Monitor

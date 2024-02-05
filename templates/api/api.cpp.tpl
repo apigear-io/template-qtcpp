@@ -16,13 +16,13 @@ namespace {{snake  .Module.Name }} {
     }
     switch (v) {
 {{- range .Members }}
-        case {{.Value}}: return {{$class}}::{{.Name}};
+        case {{.Value}}: return {{$class}}::{{upper1 .Name}};
 {{- end }}
         default:
             if (ok) {
                 *ok = false;
             }
-            return {{ printf "%s::%s" .Name .Default}};
+            return {{ printf "%s::%s" .Name (upper1 .Default.Name)}};
     }
 }
 {{- end }}

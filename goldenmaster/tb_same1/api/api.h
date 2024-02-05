@@ -38,8 +38,8 @@ public:
         : QObject(parent)
         {}
     enum Enum1Enum {
-        value1 = 1,
-        value2 = 2
+        Value1 = 1,
+        Value2 = 2
     };
     Q_ENUM(Enum1Enum)
 
@@ -81,8 +81,8 @@ public:
         : QObject(parent)
         {}
     enum Enum2Enum {
-        value1 = 1,
-        value2 = 2
+        Value1 = 1,
+        Value2 = 2
     };
     Q_ENUM(Enum2Enum)
 

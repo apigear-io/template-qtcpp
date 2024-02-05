@@ -27,15 +27,15 @@ Enum1::Enum1Enum Enum1::toEnum(quint8 v, bool *ok)
         *ok = true;
     }
     switch (v) {
-        case 1: return Enum1::value1;
-        case 2: return Enum1::value2;
-        case 3: return Enum1::value3;
-        case 4: return Enum1::value4;
+        case 1: return Enum1::Value1;
+        case 2: return Enum1::Value2;
+        case 3: return Enum1::Value3;
+        case 4: return Enum1::Value4;
         default:
             if (ok) {
                 *ok = false;
             }
-            return Enum1::value1;
+            return Enum1::Value1;
     }
 }
 // ********************************************************************
@@ -47,15 +47,15 @@ Enum2::Enum2Enum Enum2::toEnum(quint8 v, bool *ok)
         *ok = true;
     }
     switch (v) {
-        case 1: return Enum2::value1;
-        case 2: return Enum2::value2;
-        case 3: return Enum2::value3;
-        case 4: return Enum2::value4;
+        case 1: return Enum2::Value1;
+        case 2: return Enum2::Value2;
+        case 3: return Enum2::Value3;
+        case 4: return Enum2::Value4;
         default:
             if (ok) {
                 *ok = false;
             }
-            return Enum2::value1;
+            return Enum2::Value1;
     }
 }
 // ********************************************************************
@@ -67,15 +67,15 @@ Enum3::Enum3Enum Enum3::toEnum(quint8 v, bool *ok)
         *ok = true;
     }
     switch (v) {
-        case 1: return Enum3::value1;
-        case 2: return Enum3::value2;
-        case 3: return Enum3::value3;
-        case 4: return Enum3::value4;
+        case 1: return Enum3::Value1;
+        case 2: return Enum3::Value2;
+        case 3: return Enum3::Value3;
+        case 4: return Enum3::Value4;
         default:
             if (ok) {
                 *ok = false;
             }
-            return Enum3::value1;
+            return Enum3::Value1;
     }
 }
 // ********************************************************************

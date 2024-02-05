@@ -27,13 +27,13 @@ Enum1::Enum1Enum Enum1::toEnum(quint8 v, bool *ok)
         *ok = true;
     }
     switch (v) {
-        case 1: return Enum1::value1;
-        case 2: return Enum1::value2;
+        case 1: return Enum1::Value1;
+        case 2: return Enum1::Value2;
         default:
             if (ok) {
                 *ok = false;
             }
-            return Enum1::value1;
+            return Enum1::Value1;
     }
 }
 // ********************************************************************
@@ -45,13 +45,13 @@ Enum2::Enum2Enum Enum2::toEnum(quint8 v, bool *ok)
         *ok = true;
     }
     switch (v) {
-        case 1: return Enum2::value1;
-        case 2: return Enum2::value2;
+        case 1: return Enum2::Value1;
+        case 2: return Enum2::Value2;
         default:
             if (ok) {
                 *ok = false;
             }
-            return Enum2::value1;
+            return Enum2::Value1;
     }
 }
 // ********************************************************************

@@ -35,7 +35,7 @@ public:
     enum {{ $class }}Enum {
     {{- range $idx, $elem := .Members }}
         {{- if $idx}},{{end}}
-        {{ .Name }} = {{ .Value }} 
+        {{upper1 .Name }} = {{ .Value }} 
         {{- if .Description -}}
         /** .Description */
         {{- end }}

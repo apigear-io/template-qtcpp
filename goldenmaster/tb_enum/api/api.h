@@ -40,9 +40,9 @@ public:
         : QObject(parent)
         {}
     enum Enum0Enum {
-        value0 = 0,
-        value1 = 1,
-        value2 = 2
+        Value0 = 0,
+        Value1 = 1,
+        Value2 = 2
     };
     Q_ENUM(Enum0Enum)
 
@@ -85,9 +85,9 @@ public:
         : QObject(parent)
         {}
     enum Enum1Enum {
-        value1 = 1,
-        value2 = 2,
-        value3 = 3
+        Value1 = 1,
+        Value2 = 2,
+        Value3 = 3
     };
     Q_ENUM(Enum1Enum)
 
@@ -130,9 +130,9 @@ public:
         : QObject(parent)
         {}
     enum Enum2Enum {
-        value2 = 2,
-        value1 = 1,
-        value0 = 0
+        Value2 = 2,
+        Value1 = 1,
+        Value0 = 0
     };
     Q_ENUM(Enum2Enum)
 
@@ -175,9 +175,9 @@ public:
         : QObject(parent)
         {}
     enum Enum3Enum {
-        value3 = 3,
-        value2 = 2,
-        value1 = 1
+        Value3 = 3,
+        Value2 = 2,
+        Value1 = 1
     };
     Q_ENUM(Enum3Enum)
 

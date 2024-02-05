@@ -32,7 +32,7 @@ const QString InterfaceName = "tb.same1/SameEnum1Interface";
 
 MqttSameEnum1Interface::MqttSameEnum1Interface(ApiGear::Mqtt::Client& client, QObject *parent)
     : AbstractSameEnum1Interface(parent)
-    , m_prop1(Enum1::value1)
+    , m_prop1(Enum1::Value1)
     , m_isReady(false)
     , m_client(client)
 {
@@ -92,9 +92,9 @@ Enum1::Enum1Enum MqttSameEnum1Interface::func1(Enum1::Enum1Enum param1)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_client.isReady()) {
-        return Enum1::value1;
+        return Enum1::Value1;
     }
-    Enum1::Enum1Enum value{ Enum1::value1 };
+    Enum1::Enum1Enum value{ Enum1::Value1 };
     func1Async(param1)
         .then([&](Enum1::Enum1Enum result) {value = result;})
         .wait();

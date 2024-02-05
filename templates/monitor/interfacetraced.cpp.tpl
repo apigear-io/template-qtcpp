@@ -39,14 +39,14 @@ const std::string noObjectToTraceLogInfo = " object to trace is invalid.";
 {{- range .Interface.Operations}}
 {{- $operation := . }}
 
-{{qtReturn "" $operation.Return }} {{$class}}::{{lower1 $operation.Name}}({{qtParams "" $operation.Params}}) 
+{{qtReturn "" $operation.Return }} {{$class}}::{{camel $operation.Name}}({{qtParams "" $operation.Params}}) 
 {
     if (!m_impl) {
         AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return {{ if(not ($operation.Return.IsVoid)) }} {} {{ end }};
     }
     {{$interfaceName}}Agent::trace_{{$operation.Name}}(this{{- if (len $operation.Params) }},{{ end}} {{qtVars $operation.Params}});
-    {{ if (not ($operation.Return.IsVoid)) }}return {{ end }}m_impl->{{lower1 $operation.Name}}({{ qtVars $operation.Params}});
+    {{ if (not ($operation.Return.IsVoid)) }}return {{ end }}m_impl->{{camel $operation.Name}}({{ qtVars $operation.Params}});
 }
 {{ end -}}
 

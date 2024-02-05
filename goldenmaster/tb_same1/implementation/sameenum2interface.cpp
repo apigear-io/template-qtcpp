@@ -25,8 +25,8 @@ namespace tb_same1 {
 
 SameEnum2Interface::SameEnum2Interface(QObject *parent)
     : AbstractSameEnum2Interface(parent)
-    , m_prop1(Enum1::value1)
-    , m_prop2(Enum2::value1)
+    , m_prop1(Enum1::Value1)
+    , m_prop2(Enum2::Value1)
 {
 }
 
@@ -62,11 +62,11 @@ Enum2::Enum2Enum SameEnum2Interface::prop2() const
 
 Enum1::Enum1Enum SameEnum2Interface::func1(Enum1::Enum1Enum param1)
 {
-    return Enum1::value1;
+    return Enum1::Value1;
 }
 
 Enum1::Enum1Enum SameEnum2Interface::func2(Enum1::Enum1Enum param1, Enum2::Enum2Enum param2)
 {
-    return Enum1::value1;
+    return Enum1::Value1;
 }
 } //namespace tb_same1

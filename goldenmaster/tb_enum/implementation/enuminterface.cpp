@@ -25,10 +25,10 @@ namespace tb_enum {
 
 EnumInterface::EnumInterface(QObject *parent)
     : AbstractEnumInterface(parent)
-    , m_prop0(Enum0::value0)
-    , m_prop1(Enum1::value1)
-    , m_prop2(Enum2::value2)
-    , m_prop3(Enum3::value3)
+    , m_prop0(Enum0::Value0)
+    , m_prop1(Enum1::Value1)
+    , m_prop2(Enum2::Value2)
+    , m_prop3(Enum3::Value3)
 {
 }
 
@@ -90,21 +90,21 @@ Enum3::Enum3Enum EnumInterface::prop3() const
 
 Enum0::Enum0Enum EnumInterface::func0(Enum0::Enum0Enum param0)
 {
-    return Enum0::value0;
+    return Enum0::Value0;
 }
 
 Enum1::Enum1Enum EnumInterface::func1(Enum1::Enum1Enum param1)
 {
-    return Enum1::value1;
+    return Enum1::Value1;
 }
 
 Enum2::Enum2Enum EnumInterface::func2(Enum2::Enum2Enum param2)
 {
-    return Enum2::value2;
+    return Enum2::Value2;
 }
 
 Enum3::Enum3Enum EnumInterface::func3(Enum3::Enum3Enum param3)
 {
-    return Enum3::value3;
+    return Enum3::Value3;
 }
 } //namespace tb_enum

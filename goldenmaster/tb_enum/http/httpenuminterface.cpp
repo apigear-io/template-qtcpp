@@ -25,10 +25,10 @@ namespace tb_enum {
 HttpEnumInterface::HttpEnumInterface(QNetworkAccessManager *network, QObject *parent)
     : AbstractEnumInterface(parent)
     , m_network(network)
-    , m_prop0(Enum0::value0)
-    , m_prop1(Enum1::value1)
-    , m_prop2(Enum2::value2)
-    , m_prop3(Enum3::value3)
+    , m_prop0(Enum0::Value0)
+    , m_prop1(Enum1::Value1)
+    , m_prop2(Enum2::Value2)
+    , m_prop3(Enum3::Value3)
 {
 }
 
@@ -95,7 +95,7 @@ Enum0::Enum0Enum HttpEnumInterface::func0(Enum0::Enum0Enum param0)
     payload["param0"] = QJsonValue::fromVariant(QVariant::fromValue< Enum0::Enum0Enum >(param0));
     QJsonObject reply = post("tb.enum/EnumInterface/func0", payload);
     AG_LOG_DEBUG(qPrintable(QJsonDocument(reply).toJson()));
-    return Enum0::value0;
+    return Enum0::Value0;
 }
 
 Enum1::Enum1Enum HttpEnumInterface::func1(Enum1::Enum1Enum param1)
@@ -105,7 +105,7 @@ Enum1::Enum1Enum HttpEnumInterface::func1(Enum1::Enum1Enum param1)
     payload["param1"] = QJsonValue::fromVariant(QVariant::fromValue< Enum1::Enum1Enum >(param1));
     QJsonObject reply = post("tb.enum/EnumInterface/func1", payload);
     AG_LOG_DEBUG(qPrintable(QJsonDocument(reply).toJson()));
-    return Enum1::value1;
+    return Enum1::Value1;
 }
 
 Enum2::Enum2Enum HttpEnumInterface::func2(Enum2::Enum2Enum param2)
@@ -115,7 +115,7 @@ Enum2::Enum2Enum HttpEnumInterface::func2(Enum2::Enum2Enum param2)
     payload["param2"] = QJsonValue::fromVariant(QVariant::fromValue< Enum2::Enum2Enum >(param2));
     QJsonObject reply = post("tb.enum/EnumInterface/func2", payload);
     AG_LOG_DEBUG(qPrintable(QJsonDocument(reply).toJson()));
-    return Enum2::value2;
+    return Enum2::Value2;
 }
 
 Enum3::Enum3Enum HttpEnumInterface::func3(Enum3::Enum3Enum param3)
@@ -125,7 +125,7 @@ Enum3::Enum3Enum HttpEnumInterface::func3(Enum3::Enum3Enum param3)
     payload["param3"] = QJsonValue::fromVariant(QVariant::fromValue< Enum3::Enum3Enum >(param3));
     QJsonObject reply = post("tb.enum/EnumInterface/func3", payload);
     AG_LOG_DEBUG(qPrintable(QJsonDocument(reply).toJson()));
-    return Enum3::value3;
+    return Enum3::Value3;
 }
 
 QJsonObject HttpEnumInterface::post(const QString& path, const QJsonObject &payload)

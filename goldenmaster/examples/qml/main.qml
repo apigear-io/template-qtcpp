@@ -22,6 +22,7 @@ import testbed1.StructBoolFactorySingleton 1.0
 import testbed1.StructIntFactorySingleton 1.0
 import testbed1.StructFloatFactorySingleton 1.0
 import testbed1.StructStringFactorySingleton 1.0
+import tb.names 1.0
 
 ApplicationWindow {
     id: appWindow
@@ -59,5 +60,6 @@ ApplicationWindow {
     TbSimpleSimpleArrayInterface { id: qmlTbSimpleSimpleArrayInterface }
     Testbed1StructInterface { id: qmlTestbed1StructInterface }
     Testbed1StructArrayInterface { id: qmlTestbed1StructArrayInterface }
+    TbNamesNam_Es { id: qmlTbNamesNam_Es }
 
 }

@@ -31,10 +31,10 @@ namespace tb_enum {
 
 OLinkEnumInterface::OLinkEnumInterface(QObject *parent)
     : AbstractEnumInterface(parent)
-    , m_prop0(Enum0::value0)
-    , m_prop1(Enum1::value1)
-    , m_prop2(Enum2::value2)
-    , m_prop3(Enum3::value3)
+    , m_prop0(Enum0::Value0)
+    , m_prop1(Enum1::Value1)
+    , m_prop2(Enum2::Value2)
+    , m_prop3(Enum3::Value3)
     , m_isReady(false)
     , m_node(nullptr)
 {        
@@ -154,9 +154,9 @@ Enum0::Enum0Enum OLinkEnumInterface::func0(Enum0::Enum0Enum param0)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
-        return Enum0::value0;
+        return Enum0::Value0;
     }
-    Enum0::Enum0Enum value{ Enum0::value0 };
+    Enum0::Enum0Enum value{ Enum0::Value0 };
     func0Async(param0)
         .then([&](Enum0::Enum0Enum result) {
             value = result;
@@ -186,9 +186,9 @@ Enum1::Enum1Enum OLinkEnumInterface::func1(Enum1::Enum1Enum param1)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
-        return Enum1::value1;
+        return Enum1::Value1;
     }
-    Enum1::Enum1Enum value{ Enum1::value1 };
+    Enum1::Enum1Enum value{ Enum1::Value1 };
     func1Async(param1)
         .then([&](Enum1::Enum1Enum result) {
             value = result;
@@ -218,9 +218,9 @@ Enum2::Enum2Enum OLinkEnumInterface::func2(Enum2::Enum2Enum param2)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
-        return Enum2::value2;
+        return Enum2::Value2;
     }
-    Enum2::Enum2Enum value{ Enum2::value2 };
+    Enum2::Enum2Enum value{ Enum2::Value2 };
     func2Async(param2)
         .then([&](Enum2::Enum2Enum result) {
             value = result;
@@ -250,9 +250,9 @@ Enum3::Enum3Enum OLinkEnumInterface::func3(Enum3::Enum3Enum param3)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
-        return Enum3::value3;
+        return Enum3::Value3;
     }
-    Enum3::Enum3Enum value{ Enum3::value3 };
+    Enum3::Enum3Enum value{ Enum3::Value3 };
     func3Async(param3)
         .then([&](Enum3::Enum3Enum result) {
             value = result;

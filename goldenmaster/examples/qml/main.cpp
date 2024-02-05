@@ -68,6 +68,12 @@
 #include "testbed1/api/apifactory.h"
 #include "testbed1/olink/olinkfactory.h"
 #include "testbed1/monitor/tracedapifactory.h"
+#include "tb_names/implementation/nam_es.h"
+#include "tb_names/api/qmlnam_es.h"
+#include "tb_names/olink/olinknam_esadapter.h"
+#include "tb_names/api/apifactory.h"
+#include "tb_names/olink/olinkfactory.h"
+#include "tb_names/monitor/tracedapifactory.h"
 
 #include <QtCore>
 #include "apigear/olink/olinkhost.h"
@@ -114,6 +120,9 @@ int main(int argc, char *argv[]){
     testbed1::OLinkFactory testbed1OlinkFactory(client);
     testbed1::TracedApiFactory testbed1TracedOlinkFactory(testbed1OlinkFactory); 
     testbed1::ApiFactory::set(&testbed1TracedOlinkFactory);
+    tb_names::OLinkFactory tb_namesOlinkFactory(client);
+    tb_names::TracedApiFactory tb_namesTracedOlinkFactory(tb_namesOlinkFactory); 
+    tb_names::ApiFactory::set(&tb_namesTracedOlinkFactory);
 
     // Create main app
     const QUrl url(QStringLiteral("qrc:/main.qml"));
@@ -183,6 +192,9 @@ int main(int argc, char *argv[]){
     testbed1::StructArrayInterface testbed1StructArrayInterface;
     auto testbed1OlinkStructArrayInterfaceService = std::make_shared<testbed1::OLinkStructArrayInterfaceAdapter>(registry, &testbed1StructArrayInterface);
     registry.addSource(testbed1OlinkStructArrayInterfaceService);
+    tb_names::NamEs tbNamesNamEs;
+    auto tbNamesOlinkNamEsService = std::make_shared<tb_names::OLinkNam_EsAdapter>(registry, &tbNamesNamEs);
+    registry.addSource(tbNamesOlinkNamEsService);
 
     // With services ready connect the client - all qml olink clients will be linked
     client.connectToHost(QUrl("ws://127.0.0.1:8182/ws"));
@@ -218,6 +230,7 @@ int main(int argc, char *argv[]){
     registry.removeSource(tbSimpleOlinkSimpleArrayInterfaceService->olinkObjectName());
     registry.removeSource(testbed1OlinkStructInterfaceService->olinkObjectName());
     registry.removeSource(testbed1OlinkStructArrayInterfaceService->olinkObjectName());
+    registry.removeSource(tbNamesOlinkNamEsService->olinkObjectName());
 
     return result;
 }

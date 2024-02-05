@@ -3,8 +3,8 @@
 #include "test_{{.Interface.Name|lower}}.h"
 #include "implementation/{{.Interface.Name|lower}}.h"
 
-{{- $class :=  printf "%s%s" (Camel .Module.Name) .Interface.Name }}
-{{- $testedClass :=  .Interface.Name }}
+{{- $class :=  printf "%s%s" (Camel .Module.Name) (Camel .Interface.Name) }}
+{{- $testedClass := (Camel .Interface.Name) }}
 {{- $moduleName :=  snake .Module.Name }}
 
 /**

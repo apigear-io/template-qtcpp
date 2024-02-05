@@ -6,6 +6,7 @@ find_package(tb_same1 QUIET COMPONENTS tb_same1_api )
 find_package(tb_same2 QUIET COMPONENTS tb_same2_api )
 find_package(tb_simple QUIET COMPONENTS tb_simple_api )
 find_package(testbed1 QUIET COMPONENTS testbed1_api )
+find_package(tb_names QUIET COMPONENTS tb_names_api )
 
 set (PLUGIN_TB_SAME1_SOURCES
     plugin.cpp

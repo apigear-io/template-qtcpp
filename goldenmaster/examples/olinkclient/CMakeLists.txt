@@ -23,6 +23,7 @@ find_package(tb_same1 QUIET COMPONENTS tb_same1_api tb_same1_impl tb_same1_olink
 find_package(tb_same2 QUIET COMPONENTS tb_same2_api tb_same2_impl tb_same2_olink tb_same2_monitor)
 find_package(tb_simple QUIET COMPONENTS tb_simple_api tb_simple_impl tb_simple_olink tb_simple_monitor)
 find_package(testbed1 QUIET COMPONENTS testbed1_api testbed1_impl testbed1_olink testbed1_monitor)
+find_package(tb_names QUIET COMPONENTS tb_names_api tb_names_impl tb_names_olink tb_names_monitor)
 target_link_libraries(OLinkClient
     testbed2_api
     testbed2_impl
@@ -48,6 +49,10 @@ target_link_libraries(OLinkClient
     testbed1_impl
     testbed1_olink
     testbed1_monitor
+    tb_names_api
+    tb_names_impl
+    tb_names_olink
+    tb_names_monitor
 Qt5::Gui
 )
 install(TARGETS OLinkClient

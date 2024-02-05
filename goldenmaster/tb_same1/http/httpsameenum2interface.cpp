@@ -25,8 +25,8 @@ namespace tb_same1 {
 HttpSameEnum2Interface::HttpSameEnum2Interface(QNetworkAccessManager *network, QObject *parent)
     : AbstractSameEnum2Interface(parent)
     , m_network(network)
-    , m_prop1(Enum1::value1)
-    , m_prop2(Enum2::value1)
+    , m_prop1(Enum1::Value1)
+    , m_prop2(Enum2::Value1)
 {
 }
 
@@ -67,7 +67,7 @@ Enum1::Enum1Enum HttpSameEnum2Interface::func1(Enum1::Enum1Enum param1)
     payload["param1"] = QJsonValue::fromVariant(QVariant::fromValue< Enum1::Enum1Enum >(param1));
     QJsonObject reply = post("tb.same1/SameEnum2Interface/func1", payload);
     AG_LOG_DEBUG(qPrintable(QJsonDocument(reply).toJson()));
-    return Enum1::value1;
+    return Enum1::Value1;
 }
 
 Enum1::Enum1Enum HttpSameEnum2Interface::func2(Enum1::Enum1Enum param1, Enum2::Enum2Enum param2)
@@ -78,7 +78,7 @@ Enum1::Enum1Enum HttpSameEnum2Interface::func2(Enum1::Enum1Enum param1, Enum2::E
     payload["param2"] = QJsonValue::fromVariant(QVariant::fromValue< Enum2::Enum2Enum >(param2));
     QJsonObject reply = post("tb.same1/SameEnum2Interface/func2", payload);
     AG_LOG_DEBUG(qPrintable(QJsonDocument(reply).toJson()));
-    return Enum1::value1;
+    return Enum1::Value1;
 }
 
 QJsonObject HttpSameEnum2Interface::post(const QString& path, const QJsonObject &payload)

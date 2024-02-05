@@ -31,8 +31,8 @@ namespace tb_same1 {
 
 OLinkSameEnum2Interface::OLinkSameEnum2Interface(QObject *parent)
     : AbstractSameEnum2Interface(parent)
-    , m_prop1(Enum1::value1)
-    , m_prop2(Enum2::value1)
+    , m_prop1(Enum1::Value1)
+    , m_prop2(Enum2::Value1)
     , m_isReady(false)
     , m_node(nullptr)
 {        
@@ -100,9 +100,9 @@ Enum1::Enum1Enum OLinkSameEnum2Interface::func1(Enum1::Enum1Enum param1)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
-        return Enum1::value1;
+        return Enum1::Value1;
     }
-    Enum1::Enum1Enum value{ Enum1::value1 };
+    Enum1::Enum1Enum value{ Enum1::Value1 };
     func1Async(param1)
         .then([&](Enum1::Enum1Enum result) {
             value = result;
@@ -132,9 +132,9 @@ Enum1::Enum1Enum OLinkSameEnum2Interface::func2(Enum1::Enum1Enum param1, Enum2::
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
     if(!m_node) {
-        return Enum1::value1;
+        return Enum1::Value1;
     }
-    Enum1::Enum1Enum value{ Enum1::value1 };
+    Enum1::Enum1Enum value{ Enum1::Value1 };
     func2Async(param1, param2)
         .then([&](Enum1::Enum1Enum result) {
             value = result;

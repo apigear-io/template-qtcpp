@@ -1,3 +1,5 @@
+engines:
+  cli: ">= v0.36.0"
 features:
   - name: api
     scopes:
@@ -14,19 +16,14 @@ features:
         documents:
           - source: "api/CMakeLists.txt.tpl"
             target: "CMakeLists.txt"
-            force: true
           - source: "api/api.h.tpl"
             target: "api.h"
-            force: true
           - source: "api/api.cpp.tpl"
             target: "api.cpp"
-            force: true
           - source: "api/iapifactory.h.tpl"
             target: "iapifactory.h"
-            force: true
           - source: "api/json.adapter.h.tpl"
             target: "json.adapter.h"
-            force: true
   - name: stubs
     requires:
       - api
@@ -36,31 +33,27 @@ features:
       documents:
         - source: "library/CMakeLists.txt.tpl"
           target: "implementation/CMakeLists.txt"
-          force: true
         - source: "library/factory.h.tpl"
           target: "implementation/factory.h"
-          force: true
         - source: "library/factory.cpp.tpl"
           target: "implementation/factory.cpp"
-          force: true
         - source: "library/tests/CMakeLists.txt.tpl"
           target: "implementation/tests/CMakeLists.txt"
-          force: true
     - match: interface
       prefix: "{{snake .Module.Name}}/implementation/"
       documents:
         - source: "library/interface.h.tpl"
           target: "{{lower .Interface.Name}}.h"
-          force: true
+          preserve: true
         - source: "library/interface.cpp.tpl"
           target: "{{lower .Interface.Name}}.cpp"
-          force: true
+          preserve: true
         - source: "library/tests/test_interface.h.tpl"
           target: "tests/test_{{lower .Interface.Name}}.h"
-          force: true
+          preserve: true
         - source: "library/tests/test_interface.cpp.tpl"
           target: "tests/test_{{lower .Interface.Name}}.cpp"
-          force: true
+          preserve: true
   - name: http
     requires:
       - api
@@ -243,28 +236,21 @@ features:
         documents:
           - source: "qmlplugin/CMakeLists.txt.tpl"
             target: "CMakeLists.txt"
-            force: true
           - source: "qmlplugin/qml_api.h.tpl"
             target: "qml_api.h"
-            force: true
           - source: "qmlplugin/qml_api.cpp.tpl"
             target: "qml_api.cpp"
-            force: true
           - source: "qmlplugin/apifactory.h.tpl"
             target: "apifactory.h"
-            force: true
           - source: "qmlplugin/apifactory.cpp.tpl"
             target: "apifactory.cpp"
-            force: true
       - match: interface
         prefix: "{{snake .Module.Name}}/qmlplugin/"
         documents:
           - source: "qmlplugin/qmlinterface.h.tpl"
             target: "qml{{lower .Interface.Name}}.h"
-            force: true
           - source: "qmlplugin/qmlinterface.cpp.tpl"
             target: "qml{{lower .Interface.Name}}.cpp"
-            force: true
   - name: examples
     requires:
       - olink

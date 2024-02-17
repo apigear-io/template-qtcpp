@@ -1,12 +1,11 @@
 # Qt C++ Blueprint
 
 A Qt C++ blueprint with support for Qt Quick plugin.
+See https://apigear-io.github.io/template-qtcpp/ for more information
 
 ## Features
 
-* api:  creates api files with interfaces as QObjects with main cmake structure needed for compilation
-        adds qml wrapper that exposes interfaces to qml. The Qml classes require api factory, that creates backend for the wrapper when instantiating the class in qml.
-        For more details see qml example.
+* api:  creates api files with interfaces as QObjects with main cmake structure needed for compilation.
 * stubs: adds a stub implementation (without business logic for methods) and sets up test project for your interfaces implementation.
 * olink: Creates adapters for your interfaces to the ObjectLink protocol.
          The ObjectLink is an IPC protocol based on the idea to link a local object to a remote object a network connection. 
@@ -21,7 +20,8 @@ A Qt C++ blueprint with support for Qt Quick plugin.
            See examples with monitor feature on for more details.
 
 * http: http client adapter for ApiGear HTTP Protocol for each interface class
-* qmlplugin: creates a QtQuick plugin that registers all necessary types and metatypes.
+* qmlplugin: adds a qml wrapper that exposes interfaces to qml. The Qml classes require api factory, that creates backend for the wrapper when instantiating the class in qml.
+             For more details see qml example.creates a QtQuick plugin that registers all necessary types and metatypes.
 * examples:
     - object link server - see how to set up an object link server
     - object link client - see how to set up an object link client

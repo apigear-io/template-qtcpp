@@ -62,10 +62,11 @@ add_executable(test_olink ${TEST_OLINK_SOURCES})
 
 # do not automatically run this test on MacOS
 # see https://github.com/apigear-io/template-qtcpp/issues/38
-if (NOT ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+# see https://github.com/apigear-io/template-qtcpp/issues/69
+if ((NOT ${CMAKE_SYSTEM_NAME} MATCHES "Darwin") AND (NOT ${CMAKE_SYSTEM_NAME} MATCHES "Windows"))
 add_test(NAME test_olink COMMAND $<TARGET_FILE:test_olink>)
 add_dependencies(check test_olink)
-endif() # NOT Darwin
+endif() # NOT Darwin or Windows
 
 target_link_libraries(test_olink PRIVATE
     olink_qt

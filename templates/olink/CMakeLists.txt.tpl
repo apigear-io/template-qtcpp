@@ -25,4 +25,4 @@ target_include_directories({{$lib_id}}
     $<INSTALL_INTERFACE:include/{{$module_id}}>
 )
 
-target_link_libraries({{$lib_id}} PUBLIC {{$module_id}}::{{$module_id}}_api olink_qt Qt6::Concurrent qtpromise)
+target_link_libraries({{$lib_id}} PUBLIC {{$module_id}}::{{$module_id}}_api olink_qt Qt6::Concurrent)

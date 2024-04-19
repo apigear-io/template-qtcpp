@@ -23,6 +23,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "utilities/logger.h"
 
 #include <QtCore>
+#include <QtConcurrent>
 
 using namespace ApiGear;
 using namespace ApiGear::ObjectLink;
@@ -166,132 +167,112 @@ Enum3::Enum3Enum OLinkEnumInterface::prop3() const
     return m_prop3;
 }
 
+
 Enum0::Enum0Enum OLinkEnumInterface::func0(Enum0::Enum0Enum param0)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_node) {
-        return Enum0::Value0;
-    }
-    Enum0::Enum0Enum value{ Enum0::Value0 };
-    func0Async(param0)
-        .then([&](Enum0::Enum0Enum result) {
-            value = result;
-        })
-        .wait();
-    return value;
+    auto future = func0Async(param0);
+    future.waitForFinished();
+    return future.result();
 }
 
-QtPromise::QPromise<Enum0::Enum0Enum> OLinkEnumInterface::func0Async(Enum0::Enum0Enum param0)
+QFuture<Enum0::Enum0Enum> OLinkEnumInterface::func0Async(Enum0::Enum0Enum param0)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
+    auto resolve = std::make_shared<QPromise<Enum0::Enum0Enum>>();
     if(!m_node) {
-        return QtPromise::QPromise<Enum0::Enum0Enum>::reject("not initialized");
+        static auto noConnectionLogMessage = "Cannot request call on service + OLinkEnumInterface::func0, client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(noConnectionLogMessage);
+            resolve->addResult(Enum0::Value0);
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func0");
-    return QtPromise::QPromise<Enum0::Enum0Enum>{[&](
-        const QtPromise::QPromiseResolve<Enum0::Enum0Enum>& resolve) {
-            m_node->invokeRemote(operationId, nlohmann::json::array({param0}), [resolve](InvokeReplyArg arg) {                
-                const Enum0::Enum0Enum& value = arg.value.get<Enum0::Enum0Enum>();
-                resolve(value);
+    m_node->invokeRemote(operationId, nlohmann::json::array({param0}), 
+            [resolve](InvokeReplyArg arg) {
+                Enum0::Enum0Enum value = arg.value.get<Enum0::Enum0Enum>();
+                resolve->addResult(value);
             });
-        }
-    };
+    return resolve->future();
 }
+
 
 Enum1::Enum1Enum OLinkEnumInterface::func1(Enum1::Enum1Enum param1)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_node) {
-        return Enum1::Value1;
-    }
-    Enum1::Enum1Enum value{ Enum1::Value1 };
-    func1Async(param1)
-        .then([&](Enum1::Enum1Enum result) {
-            value = result;
-        })
-        .wait();
-    return value;
+    auto future = func1Async(param1);
+    future.waitForFinished();
+    return future.result();
 }
 
-QtPromise::QPromise<Enum1::Enum1Enum> OLinkEnumInterface::func1Async(Enum1::Enum1Enum param1)
+QFuture<Enum1::Enum1Enum> OLinkEnumInterface::func1Async(Enum1::Enum1Enum param1)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
+    auto resolve = std::make_shared<QPromise<Enum1::Enum1Enum>>();
     if(!m_node) {
-        return QtPromise::QPromise<Enum1::Enum1Enum>::reject("not initialized");
+        static auto noConnectionLogMessage = "Cannot request call on service + OLinkEnumInterface::func1, client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(noConnectionLogMessage);
+            resolve->addResult(Enum1::Value1);
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func1");
-    return QtPromise::QPromise<Enum1::Enum1Enum>{[&](
-        const QtPromise::QPromiseResolve<Enum1::Enum1Enum>& resolve) {
-            m_node->invokeRemote(operationId, nlohmann::json::array({param1}), [resolve](InvokeReplyArg arg) {                
-                const Enum1::Enum1Enum& value = arg.value.get<Enum1::Enum1Enum>();
-                resolve(value);
+    m_node->invokeRemote(operationId, nlohmann::json::array({param1}), 
+            [resolve](InvokeReplyArg arg) {
+                Enum1::Enum1Enum value = arg.value.get<Enum1::Enum1Enum>();
+                resolve->addResult(value);
             });
-        }
-    };
+    return resolve->future();
 }
+
 
 Enum2::Enum2Enum OLinkEnumInterface::func2(Enum2::Enum2Enum param2)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_node) {
-        return Enum2::Value2;
-    }
-    Enum2::Enum2Enum value{ Enum2::Value2 };
-    func2Async(param2)
-        .then([&](Enum2::Enum2Enum result) {
-            value = result;
-        })
-        .wait();
-    return value;
+    auto future = func2Async(param2);
+    future.waitForFinished();
+    return future.result();
 }
 
-QtPromise::QPromise<Enum2::Enum2Enum> OLinkEnumInterface::func2Async(Enum2::Enum2Enum param2)
+QFuture<Enum2::Enum2Enum> OLinkEnumInterface::func2Async(Enum2::Enum2Enum param2)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
+    auto resolve = std::make_shared<QPromise<Enum2::Enum2Enum>>();
     if(!m_node) {
-        return QtPromise::QPromise<Enum2::Enum2Enum>::reject("not initialized");
+        static auto noConnectionLogMessage = "Cannot request call on service + OLinkEnumInterface::func2, client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(noConnectionLogMessage);
+            resolve->addResult(Enum2::Value2);
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func2");
-    return QtPromise::QPromise<Enum2::Enum2Enum>{[&](
-        const QtPromise::QPromiseResolve<Enum2::Enum2Enum>& resolve) {
-            m_node->invokeRemote(operationId, nlohmann::json::array({param2}), [resolve](InvokeReplyArg arg) {                
-                const Enum2::Enum2Enum& value = arg.value.get<Enum2::Enum2Enum>();
-                resolve(value);
+    m_node->invokeRemote(operationId, nlohmann::json::array({param2}), 
+            [resolve](InvokeReplyArg arg) {
+                Enum2::Enum2Enum value = arg.value.get<Enum2::Enum2Enum>();
+                resolve->addResult(value);
             });
-        }
-    };
+    return resolve->future();
 }
+
 
 Enum3::Enum3Enum OLinkEnumInterface::func3(Enum3::Enum3Enum param3)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_node) {
-        return Enum3::Value3;
-    }
-    Enum3::Enum3Enum value{ Enum3::Value3 };
-    func3Async(param3)
-        .then([&](Enum3::Enum3Enum result) {
-            value = result;
-        })
-        .wait();
-    return value;
+    auto future = func3Async(param3);
+    future.waitForFinished();
+    return future.result();
 }
 
-QtPromise::QPromise<Enum3::Enum3Enum> OLinkEnumInterface::func3Async(Enum3::Enum3Enum param3)
+QFuture<Enum3::Enum3Enum> OLinkEnumInterface::func3Async(Enum3::Enum3Enum param3)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
+    auto resolve = std::make_shared<QPromise<Enum3::Enum3Enum>>();
     if(!m_node) {
-        return QtPromise::QPromise<Enum3::Enum3Enum>::reject("not initialized");
+        static auto noConnectionLogMessage = "Cannot request call on service + OLinkEnumInterface::func3, client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(noConnectionLogMessage);
+            resolve->addResult(Enum3::Value3);
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func3");
-    return QtPromise::QPromise<Enum3::Enum3Enum>{[&](
-        const QtPromise::QPromiseResolve<Enum3::Enum3Enum>& resolve) {
-            m_node->invokeRemote(operationId, nlohmann::json::array({param3}), [resolve](InvokeReplyArg arg) {                
-                const Enum3::Enum3Enum& value = arg.value.get<Enum3::Enum3Enum>();
-                resolve(value);
+    m_node->invokeRemote(operationId, nlohmann::json::array({param3}), 
+            [resolve](InvokeReplyArg arg) {
+                Enum3::Enum3Enum value = arg.value.get<Enum3::Enum3Enum>();
+                resolve->addResult(value);
             });
-        }
-    };
+    return resolve->future();
 }
 
 

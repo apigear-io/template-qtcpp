@@ -23,6 +23,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "utilities/logger.h"
 
 #include <QtCore>
+#include <QtConcurrent>
 
 using namespace ApiGear;
 using namespace ApiGear::ObjectLink;
@@ -136,58 +137,56 @@ int OLinkNam_Es::Some_Poperty2() const
     return m_Some_Poperty2;
 }
 
+
 void OLinkNam_Es::someFunction(bool SOME_PARAM)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_node) {
-        return;
-    }
-    InvokeReplyFunc func = [this](InvokeReplyArg arg) {};
-    const nlohmann::json &args = nlohmann::json::array({
-        SOME_PARAM
-    });
-    static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "SOME_FUNCTION");
-    m_node->invokeRemote(operationId, args, func);
+    auto future = someFunctionAsync(SOME_PARAM);
+    future.waitForFinished();
+    return;
 }
 
-QtPromise::QPromise<void> OLinkNam_Es::someFunctionAsync(bool SOME_PARAM)
+QFuture<void> OLinkNam_Es::someFunctionAsync(bool SOME_PARAM)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
+    auto resolve = std::make_shared<QPromise<void>>();
     if(!m_node) {
-        return QtPromise::QPromise<void>::reject("not initialized");
+        static auto noConnectionLogMessage = "Cannot request call on service + OLinkNam_Es::someFunction, client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(noConnectionLogMessage);
+            resolve->finish();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "SOME_FUNCTION");
-    m_node->invokeRemote(operationId, nlohmann::json::array({
-            
-                SOME_PARAM}));
-    return QtPromise::QPromise<void>::resolve();
+    m_node->invokeRemote(operationId, nlohmann::json::array({SOME_PARAM}), 
+            [resolve](InvokeReplyArg arg) {
+                resolve->finish();
+            });
+    return resolve->future();
 }
+
 
 void OLinkNam_Es::someFunction2(bool Some_Param)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_node) {
-        return;
-    }
-    InvokeReplyFunc func = [this](InvokeReplyArg arg) {};
-    const nlohmann::json &args = nlohmann::json::array({
-        Some_Param
-    });
-    static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "Some_Function2");
-    m_node->invokeRemote(operationId, args, func);
+    auto future = someFunction2Async(Some_Param);
+    future.waitForFinished();
+    return;
 }
 
-QtPromise::QPromise<void> OLinkNam_Es::someFunction2Async(bool Some_Param)
+QFuture<void> OLinkNam_Es::someFunction2Async(bool Some_Param)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
+    auto resolve = std::make_shared<QPromise<void>>();
     if(!m_node) {
-        return QtPromise::QPromise<void>::reject("not initialized");
+        static auto noConnectionLogMessage = "Cannot request call on service + OLinkNam_Es::someFunction2, client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(noConnectionLogMessage);
+            resolve->finish();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "Some_Function2");
-    m_node->invokeRemote(operationId, nlohmann::json::array({
-            
-                Some_Param}));
-    return QtPromise::QPromise<void>::resolve();
+    m_node->invokeRemote(operationId, nlohmann::json::array({Some_Param}), 
+            [resolve](InvokeReplyArg arg) {
+                resolve->finish();
+            });
+    return resolve->future();
 }
 
 

@@ -24,4 +24,4 @@ target_include_directories(tb_same1_olink
     $<INSTALL_INTERFACE:include/tb_same1>
 )
 
-target_link_libraries(tb_same1_olink PUBLIC tb_same1::tb_same1_api olink_qt Qt6::Concurrent qtpromise)
+target_link_libraries(tb_same1_olink PUBLIC tb_same1::tb_same1_api olink_qt Qt6::Concurrent)

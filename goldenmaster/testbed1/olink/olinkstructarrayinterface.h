@@ -18,7 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #pragma once
 
 #include <QtCore>
-#include <QtPromise>
+#include <QFuture>
 
 #include "testbed1/api/api.h"
 #include "olink/iobjectsink.h"
@@ -103,7 +103,7 @@ public:
     /**
     * Remote call of IStructArrayInterface::funcBool on the StructArrayInterface service.
     */
-    QtPromise::QPromise<StructBool> funcBoolAsync(const QList<StructBool>& paramBool);
+    QFuture<StructBool> funcBoolAsync(const QList<StructBool>& paramBool);
     /**
     * Remote call of IStructArrayInterface::funcInt on the StructArrayInterface service.
     * Uses funcIntAsync
@@ -112,7 +112,7 @@ public:
     /**
     * Remote call of IStructArrayInterface::funcInt on the StructArrayInterface service.
     */
-    QtPromise::QPromise<StructBool> funcIntAsync(const QList<StructInt>& paramInt);
+    QFuture<StructBool> funcIntAsync(const QList<StructInt>& paramInt);
     /**
     * Remote call of IStructArrayInterface::funcFloat on the StructArrayInterface service.
     * Uses funcFloatAsync
@@ -121,7 +121,7 @@ public:
     /**
     * Remote call of IStructArrayInterface::funcFloat on the StructArrayInterface service.
     */
-    QtPromise::QPromise<StructBool> funcFloatAsync(const QList<StructFloat>& paramFloat);
+    QFuture<StructBool> funcFloatAsync(const QList<StructFloat>& paramFloat);
     /**
     * Remote call of IStructArrayInterface::funcString on the StructArrayInterface service.
     * Uses funcStringAsync
@@ -130,7 +130,7 @@ public:
     /**
     * Remote call of IStructArrayInterface::funcString on the StructArrayInterface service.
     */
-    QtPromise::QPromise<StructBool> funcStringAsync(const QList<StructString>& paramString);
+    QFuture<StructBool> funcStringAsync(const QList<StructString>& paramString);
 
 signals:
 

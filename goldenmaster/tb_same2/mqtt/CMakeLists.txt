@@ -37,7 +37,7 @@ target_include_directories(tb_same2_mqtt
     $<INSTALL_INTERFACE:include/tb_same2>
 )
 
-target_link_libraries(tb_same2_mqtt PUBLIC tb_same2::tb_same2_api apigear::apigear_mqtt Qt6::Concurrent qtpromise)
+target_link_libraries(tb_same2_mqtt PUBLIC tb_same2::tb_same2_api apigear::apigear_mqtt Qt6::Concurrent)
 target_compile_definitions(tb_same2_mqtt PRIVATE TB_SAME2_MQTT_LIBRARY)
 
 

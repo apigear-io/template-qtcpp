@@ -14,10 +14,12 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/#pragma once
+*/
+
+#pragma once
 
 #include <QtCore>
-#include <QtPromise>
+#include <QFuture>
 
 #include "tb_same1/api/api.h"
 #include "mqtt_common.h"
@@ -75,7 +77,7 @@ public:
     /**
     * Remote call of ISameStruct2Interface::func1 on the SameStruct2Interface service.
     */
-    QtPromise::QPromise<Struct1> func1Async(const Struct1& param1);
+    QFuture<Struct1> func1Async(const Struct1& param1);
     /**
     * Remote call of ISameStruct2Interface::func2 on the SameStruct2Interface service.
     * Uses func2Async
@@ -84,7 +86,7 @@ public:
     /**
     * Remote call of ISameStruct2Interface::func2 on the SameStruct2Interface service.
     */
-    QtPromise::QPromise<Struct1> func2Async(const Struct1& param1, const Struct2& param2);
+    QFuture<Struct1> func2Async(const Struct1& param1, const Struct2& param2);
 
 signals:
     /**

@@ -33,7 +33,7 @@ target_include_directories(testbed1_mqtt
     $<INSTALL_INTERFACE:include/testbed1>
 )
 
-target_link_libraries(testbed1_mqtt PUBLIC testbed1::testbed1_api apigear::apigear_mqtt Qt6::Concurrent qtpromise)
+target_link_libraries(testbed1_mqtt PUBLIC testbed1::testbed1_api apigear::apigear_mqtt Qt6::Concurrent)
 target_compile_definitions(testbed1_mqtt PRIVATE TESTBED1_MQTT_LIBRARY)
 
 

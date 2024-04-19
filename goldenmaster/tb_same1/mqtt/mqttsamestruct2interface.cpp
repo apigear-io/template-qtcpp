@@ -119,95 +119,87 @@ Struct2 MqttSameStruct2Interface::prop2() const
 Struct1 MqttSameStruct2Interface::func1(const Struct1& param1)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_client.isReady()) {
-        return Struct1();
-    }
-    Struct1 value{ Struct1() };
-    func1Async(param1)
-        .then([&](Struct1 result) {value = result;})
-        .wait();
-    return value;
+
+    auto future = func1Async(param1);
+    future.waitForFinished();
+    return future.result();
 }
 
-QtPromise::QPromise<Struct1> MqttSameStruct2Interface::func1Async(const Struct1& param1)
+QFuture<Struct1> MqttSameStruct2Interface::func1Async(const Struct1& param1)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/func1");
-
+    auto promise = std::make_shared<QPromise<Struct1>>();
     if(!m_client.isReady())
     {
-        return QtPromise::QPromise<Struct1>::reject("not initialized");
+        static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(subscriptionIssues);
+            promise->addResult(Struct1());
     }
+
     auto callInfo = m_InvokeCallsInfo.find(topic);
     if(callInfo == m_InvokeCallsInfo.end())
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
-        AG_LOG_DEBUG(subscriptionIssues);
-        return QtPromise::QPromise<Struct1>::reject("not initialized");
+        AG_LOG_WARNING(subscriptionIssues);
+            promise->addResult(Struct1());
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({param1 });       
-    return QtPromise::QPromise<Struct1>{[&](
-        const QtPromise::QPromiseResolve<Struct1>& resolve)
+
+    auto func = [promise](const nlohmann::json& arg)
         {
-                auto callId = m_client.invokeRemote(topic, arguments, respTopic);
-                auto func = [resolve](const nlohmann::json& arg)
-                {
-                    Struct1 value = arg.get<Struct1>();
-                    resolve(value);
-                };
-                auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
-                m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
-                lock.unlock();
-        }
-    };
+            Struct1 value = arg.get<Struct1>();
+            promise->addResult(value);
+        };
+    auto callId = m_client.invokeRemote(topic, arguments, respTopic);
+    auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
+    m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
+    lock.unlock();
+    return promise->future();
 }
 
 Struct1 MqttSameStruct2Interface::func2(const Struct1& param1, const Struct2& param2)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_client.isReady()) {
-        return Struct1();
-    }
-    Struct1 value{ Struct1() };
-    func2Async(param1, param2)
-        .then([&](Struct1 result) {value = result;})
-        .wait();
-    return value;
+
+    auto future = func2Async(param1, param2);
+    future.waitForFinished();
+    return future.result();
 }
 
-QtPromise::QPromise<Struct1> MqttSameStruct2Interface::func2Async(const Struct1& param1, const Struct2& param2)
+QFuture<Struct1> MqttSameStruct2Interface::func2Async(const Struct1& param1, const Struct2& param2)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/func2");
-
+    auto promise = std::make_shared<QPromise<Struct1>>();
     if(!m_client.isReady())
     {
-        return QtPromise::QPromise<Struct1>::reject("not initialized");
+        static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(subscriptionIssues);
+            promise->addResult(Struct1());
     }
+
     auto callInfo = m_InvokeCallsInfo.find(topic);
     if(callInfo == m_InvokeCallsInfo.end())
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
-        AG_LOG_DEBUG(subscriptionIssues);
-        return QtPromise::QPromise<Struct1>::reject("not initialized");
+        AG_LOG_WARNING(subscriptionIssues);
+            promise->addResult(Struct1());
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({param1, param2 });       
-    return QtPromise::QPromise<Struct1>{[&](
-        const QtPromise::QPromiseResolve<Struct1>& resolve)
+
+    auto func = [promise](const nlohmann::json& arg)
         {
-                auto callId = m_client.invokeRemote(topic, arguments, respTopic);
-                auto func = [resolve](const nlohmann::json& arg)
-                {
-                    Struct1 value = arg.get<Struct1>();
-                    resolve(value);
-                };
-                auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
-                m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
-                lock.unlock();
-        }
-    };
+            Struct1 value = arg.get<Struct1>();
+            promise->addResult(value);
+        };
+    auto callId = m_client.invokeRemote(topic, arguments, respTopic);
+    auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
+    m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
+    lock.unlock();
+    return promise->future();
 }
 
 
@@ -233,7 +225,6 @@ void MqttSameStruct2Interface::subscribeForSignals()
 }
 void MqttSameStruct2Interface::subscribeForInvokeResponses()
 {
-    // Subscribe for invokeReply and prepare invoke call info for non void functions.
     const QString topicfunc1 = interfaceName() + "/rpc/func1";
     const QString topicfunc1InvokeResp = interfaceName() + "/rpc/func1"+ m_client.clientId() + "/result";
     auto id_func1 = m_client.subscribeForInvokeResponse(topicfunc1InvokeResp, 

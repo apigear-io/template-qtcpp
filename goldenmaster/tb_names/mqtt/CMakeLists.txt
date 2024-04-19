@@ -31,7 +31,7 @@ target_include_directories(tb_names_mqtt
     $<INSTALL_INTERFACE:include/tb_names>
 )
 
-target_link_libraries(tb_names_mqtt PUBLIC tb_names::tb_names_api apigear::apigear_mqtt Qt6::Concurrent qtpromise)
+target_link_libraries(tb_names_mqtt PUBLIC tb_names::tb_names_api apigear::apigear_mqtt Qt6::Concurrent)
 target_compile_definitions(tb_names_mqtt PRIVATE TB_NAMES_MQTT_LIBRARY)
 
 

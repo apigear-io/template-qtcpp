@@ -42,11 +42,13 @@ MqttNam_Es::MqttNam_Es(ApiGear::Mqtt::Client& client, QObject *parent)
     {
         subscribeForPropertiesChanges();
         subscribeForSignals();
+        subscribeForInvokeResponses();
     }
      connect(&m_client, &ApiGear::Mqtt::Client::ready, [this](){
         AG_LOG_DEBUG(Q_FUNC_INFO);
             subscribeForPropertiesChanges();
             subscribeForSignals();
+            subscribeForInvokeResponses();
     });
     connect(&m_client, &ApiGear::Mqtt::Client::disconnected, [this](){
         m_subscribedIds.clear();
@@ -145,51 +147,85 @@ int MqttNam_Es::Some_Poperty2() const
 void MqttNam_Es::someFunction(bool SOME_PARAM)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_client.isReady()) {
-        return;
-    }
-    auto arguments = nlohmann::json::array({SOME_PARAM});
-    static const QString topic = interfaceName() + QString("/rpc/SOME_FUNCTION");
-    m_client.invokeRemoteNoResponse(topic, arguments);
+
+    auto future = someFunctionAsync(SOME_PARAM);
+    future.waitForFinished();
+    return;
 }
 
-QtPromise::QPromise<void> MqttNam_Es::someFunctionAsync(bool SOME_PARAM)
+QFuture<void> MqttNam_Es::someFunctionAsync(bool SOME_PARAM)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/SOME_FUNCTION");
-
+    auto promise = std::make_shared<QPromise<void>>();
     if(!m_client.isReady())
     {
-        return QtPromise::QPromise<void>::reject("not initialized");
+        static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(subscriptionIssues);
+            promise->finish();
     }
-    auto arguments = nlohmann::json::array({SOME_PARAM });
-    m_client.invokeRemoteNoResponse(topic, arguments);
-    return QtPromise::QPromise<void>::resolve();
+
+    auto callInfo = m_InvokeCallsInfo.find(topic);
+    if(callInfo == m_InvokeCallsInfo.end())
+    {
+        static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
+        AG_LOG_WARNING(subscriptionIssues);
+            promise->finish();
+    }
+    auto respTopic = callInfo->second.first;
+    auto arguments = nlohmann::json::array({SOME_PARAM });       
+
+    auto func = [promise](const nlohmann::json& arg)
+        {
+            promise->finish();
+        };
+    auto callId = m_client.invokeRemote(topic, arguments, respTopic);
+    auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
+    m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
+    lock.unlock();
+    return promise->future();
 }
 
 void MqttNam_Es::someFunction2(bool Some_Param)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_client.isReady()) {
-        return;
-    }
-    auto arguments = nlohmann::json::array({Some_Param});
-    static const QString topic = interfaceName() + QString("/rpc/Some_Function2");
-    m_client.invokeRemoteNoResponse(topic, arguments);
+
+    auto future = someFunction2Async(Some_Param);
+    future.waitForFinished();
+    return;
 }
 
-QtPromise::QPromise<void> MqttNam_Es::someFunction2Async(bool Some_Param)
+QFuture<void> MqttNam_Es::someFunction2Async(bool Some_Param)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/Some_Function2");
-
+    auto promise = std::make_shared<QPromise<void>>();
     if(!m_client.isReady())
     {
-        return QtPromise::QPromise<void>::reject("not initialized");
+        static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(subscriptionIssues);
+            promise->finish();
     }
-    auto arguments = nlohmann::json::array({Some_Param });
-    m_client.invokeRemoteNoResponse(topic, arguments);
-    return QtPromise::QPromise<void>::resolve();
+
+    auto callInfo = m_InvokeCallsInfo.find(topic);
+    if(callInfo == m_InvokeCallsInfo.end())
+    {
+        static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
+        AG_LOG_WARNING(subscriptionIssues);
+            promise->finish();
+    }
+    auto respTopic = callInfo->second.first;
+    auto arguments = nlohmann::json::array({Some_Param });       
+
+    auto func = [promise](const nlohmann::json& arg)
+        {
+            promise->finish();
+        };
+    auto callId = m_client.invokeRemote(topic, arguments, respTopic);
+    auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
+    m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
+    lock.unlock();
+    return promise->future();
 }
 
 
@@ -214,6 +250,25 @@ void MqttNam_Es::subscribeForSignals()
         static const QString topicSome_Signal2 = interfaceName() + "/sig/Some_Signal2";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicSome_Signal2, [this](const nlohmann::json& argumentsArray){
             emit someSignal2(argumentsArray[0].get<bool>());}));
+}
+void MqttNam_Es::subscribeForInvokeResponses()
+{
+    const QString topicSOME_FUNCTION = interfaceName() + "/rpc/SOME_FUNCTION";
+    const QString topicSOME_FUNCTIONInvokeResp = interfaceName() + "/rpc/SOME_FUNCTION"+ m_client.clientId() + "/result";
+    auto id_SOME_FUNCTION = m_client.subscribeForInvokeResponse(topicSOME_FUNCTIONInvokeResp, 
+                        [this, topicSOME_FUNCTIONInvokeResp](const nlohmann::json& value, quint64 callId)
+                        {
+                            findAndExecuteCall(value, callId, topicSOME_FUNCTIONInvokeResp);
+                        });
+    m_InvokeCallsInfo[topicSOME_FUNCTION] = std::make_pair(topicSOME_FUNCTIONInvokeResp, id_SOME_FUNCTION);
+    const QString topicSome_Function2 = interfaceName() + "/rpc/Some_Function2";
+    const QString topicSome_Function2InvokeResp = interfaceName() + "/rpc/Some_Function2"+ m_client.clientId() + "/result";
+    auto id_Some_Function2 = m_client.subscribeForInvokeResponse(topicSome_Function2InvokeResp, 
+                        [this, topicSome_Function2InvokeResp](const nlohmann::json& value, quint64 callId)
+                        {
+                            findAndExecuteCall(value, callId, topicSome_Function2InvokeResp);
+                        });
+    m_InvokeCallsInfo[topicSome_Function2] = std::make_pair(topicSome_Function2InvokeResp, id_Some_Function2);
 }
 
 void MqttNam_Es::unsubscribeAll()

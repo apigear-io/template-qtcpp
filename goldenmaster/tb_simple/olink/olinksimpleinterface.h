@@ -18,7 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #pragma once
 
 #include <QtCore>
-#include <QtPromise>
+#include <QFuture>
 
 #include "tb_simple/api/api.h"
 #include "olink/iobjectsink.h"
@@ -143,7 +143,7 @@ public:
     /**
     * Remote call of ISimpleInterface::funcVoid on the SimpleInterface service.
     */
-    QtPromise::QPromise<void> funcVoidAsync();
+    QFuture<void> funcVoidAsync();
     /**
     * Remote call of ISimpleInterface::funcBool on the SimpleInterface service.
     * Uses funcBoolAsync
@@ -152,7 +152,7 @@ public:
     /**
     * Remote call of ISimpleInterface::funcBool on the SimpleInterface service.
     */
-    QtPromise::QPromise<bool> funcBoolAsync(bool paramBool);
+    QFuture<bool> funcBoolAsync(bool paramBool);
     /**
     * Remote call of ISimpleInterface::funcInt on the SimpleInterface service.
     * Uses funcIntAsync
@@ -161,7 +161,7 @@ public:
     /**
     * Remote call of ISimpleInterface::funcInt on the SimpleInterface service.
     */
-    QtPromise::QPromise<int> funcIntAsync(int paramInt);
+    QFuture<int> funcIntAsync(int paramInt);
     /**
     * Remote call of ISimpleInterface::funcInt32 on the SimpleInterface service.
     * Uses funcInt32Async
@@ -170,7 +170,7 @@ public:
     /**
     * Remote call of ISimpleInterface::funcInt32 on the SimpleInterface service.
     */
-    QtPromise::QPromise<qint32> funcInt32Async(qint32 paramInt32);
+    QFuture<qint32> funcInt32Async(qint32 paramInt32);
     /**
     * Remote call of ISimpleInterface::funcInt64 on the SimpleInterface service.
     * Uses funcInt64Async
@@ -179,7 +179,7 @@ public:
     /**
     * Remote call of ISimpleInterface::funcInt64 on the SimpleInterface service.
     */
-    QtPromise::QPromise<qint64> funcInt64Async(qint64 paramInt64);
+    QFuture<qint64> funcInt64Async(qint64 paramInt64);
     /**
     * Remote call of ISimpleInterface::funcFloat on the SimpleInterface service.
     * Uses funcFloatAsync
@@ -188,7 +188,7 @@ public:
     /**
     * Remote call of ISimpleInterface::funcFloat on the SimpleInterface service.
     */
-    QtPromise::QPromise<qreal> funcFloatAsync(qreal paramFloat);
+    QFuture<qreal> funcFloatAsync(qreal paramFloat);
     /**
     * Remote call of ISimpleInterface::funcFloat32 on the SimpleInterface service.
     * Uses funcFloat32Async
@@ -197,7 +197,7 @@ public:
     /**
     * Remote call of ISimpleInterface::funcFloat32 on the SimpleInterface service.
     */
-    QtPromise::QPromise<float> funcFloat32Async(float paramFloat32);
+    QFuture<float> funcFloat32Async(float paramFloat32);
     /**
     * Remote call of ISimpleInterface::funcFloat64 on the SimpleInterface service.
     * Uses funcFloat64Async
@@ -206,7 +206,7 @@ public:
     /**
     * Remote call of ISimpleInterface::funcFloat64 on the SimpleInterface service.
     */
-    QtPromise::QPromise<double> funcFloat64Async(double paramFloat);
+    QFuture<double> funcFloat64Async(double paramFloat);
     /**
     * Remote call of ISimpleInterface::funcString on the SimpleInterface service.
     * Uses funcStringAsync
@@ -215,7 +215,7 @@ public:
     /**
     * Remote call of ISimpleInterface::funcString on the SimpleInterface service.
     */
-    QtPromise::QPromise<QString> funcStringAsync(const QString& paramString);
+    QFuture<QString> funcStringAsync(const QString& paramString);
 
 signals:
 

@@ -18,4 +18,4 @@ target_include_directories(tb_names_olink
     $<INSTALL_INTERFACE:include/tb_names>
 )
 
-target_link_libraries(tb_names_olink PUBLIC tb_names::tb_names_api olink_qt Qt6::Concurrent qtpromise)
+target_link_libraries(tb_names_olink PUBLIC tb_names::tb_names_api olink_qt Qt6::Concurrent)

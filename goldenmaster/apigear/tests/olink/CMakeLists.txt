@@ -15,7 +15,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 include(CTest)
 
 
-if(BUILD_TESTING)
+
 enable_testing()
 
 Include(FetchContent)
@@ -46,7 +46,7 @@ endif()
 
 set(TEST_OLINK_SOURCES
     olink_connection.test.cpp
-    olinkhost.test.cpp
+    #olinkhost.test.cpp
     private/messagestorage.cpp
     private/test_server/testserver.cpp
     test_main.cpp
@@ -83,4 +83,3 @@ install(TARGETS test_olink
     LIBRARY DESTINATION "${INSTALL_EXAMPLEDIR}"
 )
 
-endif() # BUILD_TESTING

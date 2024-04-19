@@ -18,7 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #pragma once
 
 #include <QtCore>
-#include <QtPromise>
+#include <QFuture>
 
 #include "tb_same2/api/api.h"
 #include "olink/iobjectsink.h"
@@ -73,7 +73,7 @@ public:
     /**
     * Remote call of ISameEnum1Interface::func1 on the SameEnum1Interface service.
     */
-    QtPromise::QPromise<Enum1::Enum1Enum> func1Async(Enum1::Enum1Enum param1);
+    QFuture<Enum1::Enum1Enum> func1Async(Enum1::Enum1Enum param1);
 
 signals:
 

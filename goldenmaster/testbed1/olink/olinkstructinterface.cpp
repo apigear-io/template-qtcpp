@@ -23,6 +23,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "utilities/logger.h"
 
 #include <QtCore>
+#include <QtConcurrent>
 
 using namespace ApiGear;
 using namespace ApiGear::ObjectLink;
@@ -166,132 +167,112 @@ StructString OLinkStructInterface::propString() const
     return m_propString;
 }
 
+
 StructBool OLinkStructInterface::funcBool(const StructBool& paramBool)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_node) {
-        return StructBool();
-    }
-    StructBool value{ StructBool() };
-    funcBoolAsync(paramBool)
-        .then([&](StructBool result) {
-            value = result;
-        })
-        .wait();
-    return value;
+    auto future = funcBoolAsync(paramBool);
+    future.waitForFinished();
+    return future.result();
 }
 
-QtPromise::QPromise<StructBool> OLinkStructInterface::funcBoolAsync(const StructBool& paramBool)
+QFuture<StructBool> OLinkStructInterface::funcBoolAsync(const StructBool& paramBool)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
+    auto resolve = std::make_shared<QPromise<StructBool>>();
     if(!m_node) {
-        return QtPromise::QPromise<StructBool>::reject("not initialized");
+        static auto noConnectionLogMessage = "Cannot request call on service + OLinkStructInterface::funcBool, client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(noConnectionLogMessage);
+            resolve->addResult(StructBool());
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcBool");
-    return QtPromise::QPromise<StructBool>{[&](
-        const QtPromise::QPromiseResolve<StructBool>& resolve) {
-            m_node->invokeRemote(operationId, nlohmann::json::array({paramBool}), [resolve](InvokeReplyArg arg) {                
-                const StructBool& value = arg.value.get<StructBool>();
-                resolve(value);
+    m_node->invokeRemote(operationId, nlohmann::json::array({paramBool}), 
+            [resolve](InvokeReplyArg arg) {
+                StructBool value = arg.value.get<StructBool>();
+                resolve->addResult(value);
             });
-        }
-    };
+    return resolve->future();
 }
+
 
 StructBool OLinkStructInterface::funcInt(const StructInt& paramInt)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_node) {
-        return StructBool();
-    }
-    StructBool value{ StructBool() };
-    funcIntAsync(paramInt)
-        .then([&](StructBool result) {
-            value = result;
-        })
-        .wait();
-    return value;
+    auto future = funcIntAsync(paramInt);
+    future.waitForFinished();
+    return future.result();
 }
 
-QtPromise::QPromise<StructBool> OLinkStructInterface::funcIntAsync(const StructInt& paramInt)
+QFuture<StructBool> OLinkStructInterface::funcIntAsync(const StructInt& paramInt)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
+    auto resolve = std::make_shared<QPromise<StructBool>>();
     if(!m_node) {
-        return QtPromise::QPromise<StructBool>::reject("not initialized");
+        static auto noConnectionLogMessage = "Cannot request call on service + OLinkStructInterface::funcInt, client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(noConnectionLogMessage);
+            resolve->addResult(StructBool());
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcInt");
-    return QtPromise::QPromise<StructBool>{[&](
-        const QtPromise::QPromiseResolve<StructBool>& resolve) {
-            m_node->invokeRemote(operationId, nlohmann::json::array({paramInt}), [resolve](InvokeReplyArg arg) {                
-                const StructBool& value = arg.value.get<StructBool>();
-                resolve(value);
+    m_node->invokeRemote(operationId, nlohmann::json::array({paramInt}), 
+            [resolve](InvokeReplyArg arg) {
+                StructBool value = arg.value.get<StructBool>();
+                resolve->addResult(value);
             });
-        }
-    };
+    return resolve->future();
 }
+
 
 StructFloat OLinkStructInterface::funcFloat(const StructFloat& paramFloat)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_node) {
-        return StructFloat();
-    }
-    StructFloat value{ StructFloat() };
-    funcFloatAsync(paramFloat)
-        .then([&](StructFloat result) {
-            value = result;
-        })
-        .wait();
-    return value;
+    auto future = funcFloatAsync(paramFloat);
+    future.waitForFinished();
+    return future.result();
 }
 
-QtPromise::QPromise<StructFloat> OLinkStructInterface::funcFloatAsync(const StructFloat& paramFloat)
+QFuture<StructFloat> OLinkStructInterface::funcFloatAsync(const StructFloat& paramFloat)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
+    auto resolve = std::make_shared<QPromise<StructFloat>>();
     if(!m_node) {
-        return QtPromise::QPromise<StructFloat>::reject("not initialized");
+        static auto noConnectionLogMessage = "Cannot request call on service + OLinkStructInterface::funcFloat, client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(noConnectionLogMessage);
+            resolve->addResult(StructFloat());
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcFloat");
-    return QtPromise::QPromise<StructFloat>{[&](
-        const QtPromise::QPromiseResolve<StructFloat>& resolve) {
-            m_node->invokeRemote(operationId, nlohmann::json::array({paramFloat}), [resolve](InvokeReplyArg arg) {                
-                const StructFloat& value = arg.value.get<StructFloat>();
-                resolve(value);
+    m_node->invokeRemote(operationId, nlohmann::json::array({paramFloat}), 
+            [resolve](InvokeReplyArg arg) {
+                StructFloat value = arg.value.get<StructFloat>();
+                resolve->addResult(value);
             });
-        }
-    };
+    return resolve->future();
 }
+
 
 StructString OLinkStructInterface::funcString(const StructString& paramString)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_node) {
-        return StructString();
-    }
-    StructString value{ StructString() };
-    funcStringAsync(paramString)
-        .then([&](StructString result) {
-            value = result;
-        })
-        .wait();
-    return value;
+    auto future = funcStringAsync(paramString);
+    future.waitForFinished();
+    return future.result();
 }
 
-QtPromise::QPromise<StructString> OLinkStructInterface::funcStringAsync(const StructString& paramString)
+QFuture<StructString> OLinkStructInterface::funcStringAsync(const StructString& paramString)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
+    auto resolve = std::make_shared<QPromise<StructString>>();
     if(!m_node) {
-        return QtPromise::QPromise<StructString>::reject("not initialized");
+        static auto noConnectionLogMessage = "Cannot request call on service + OLinkStructInterface::funcString, client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(noConnectionLogMessage);
+            resolve->addResult(StructString());
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcString");
-    return QtPromise::QPromise<StructString>{[&](
-        const QtPromise::QPromiseResolve<StructString>& resolve) {
-            m_node->invokeRemote(operationId, nlohmann::json::array({paramString}), [resolve](InvokeReplyArg arg) {                
-                const StructString& value = arg.value.get<StructString>();
-                resolve(value);
+    m_node->invokeRemote(operationId, nlohmann::json::array({paramString}), 
+            [resolve](InvokeReplyArg arg) {
+                StructString value = arg.value.get<StructString>();
+                resolve->addResult(value);
             });
-        }
-    };
+    return resolve->future();
 }
 
 

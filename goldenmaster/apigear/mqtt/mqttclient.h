@@ -121,13 +121,6 @@ public:
     * @return callId an Id of remote call request. When response will be available a callback will be called with this callId.
     */
     quint64 invokeRemote(const QMqttTopicName& topic, const nlohmann::json& arguments, const QString& responseTopic);
-    /** 
-    * Version of invokeRemote without waiting for response
-    * Publishes message, with request of invoking a function.
-    * @param topic for invoke request, consists of interfaceName, "rpc" keyword and a method name.
-    * @param arguments for invoke request.
-    */
-    void invokeRemoteNoResponse(const QMqttTopicName& topic, const nlohmann::json& arguments);
 
     /**
     * Disconnects.

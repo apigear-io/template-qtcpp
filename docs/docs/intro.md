@@ -2,9 +2,9 @@
 sidebar_position: 1
 ---
 
-# Introduction
+# Template Qt6
 
-This is the documentation for the *Qt* template.
+This is the documentation for the *Qt6* template.
 
 It is split in these parts:
 

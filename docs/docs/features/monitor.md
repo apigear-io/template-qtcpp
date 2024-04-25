@@ -6,15 +6,16 @@ import helloWorldModuleComponent from '!!raw-loader!./data/helloworld.module.yam
 
 # Monitor
 
-Use our monitor feature to examine the interface calls, state and signals. With this feature you obtain a monitor client and a monitored version of your interfaces. The monitoring server is embedded into the [ApiGear Studio](https://docs.apigear.io/docs/category/desktop-studio) and CLI application(https://docs.apigear.io/docs/category/command-line).
-More details on [monitoring](https://docs.apigear.io/docs/advanced/monitor/intro)
+Use our monitor feature to examine the interface calls, state and signals. With this feature you obtain a monitor client and a monitored version of your interfaces. The monitoring server is embedded into the [ApiGear Studio](/docs/studio/intro) and CLI application(/docs/cli/intro).
+More details on [monitoring](/docs/advanced/monitor/intro)
 
 ## File overview for module
  
  With an example  API
 
-<details><summary>Hello World API (click to expand)</summary>
-<CodeBlock language="yaml" showLineNumbers>{helloWorldModuleComponent}</CodeBlock>
+<details>
+    <summary>Hello World API (click to expand)</summary>
+    <CodeBlock language="yaml" showLineNumbers>{helloWorldModuleComponent}</CodeBlock>
 </details>
 
 the following file structure will be generated. The purpose and content of each file is explained below.
@@ -77,7 +78,7 @@ class IO_WORLD_MONITOR_EXPORT TracedApiFactory : public QObject, public IApiFact
 {
     TracedApiFactory(IApiFactory& factory, QObject *parent = nullptr);
  ```
-The factory is necessary when you want to use the traced `Hello` object directly in QML. For that, you will choose the [QML version](api#qml-wrappers) of your API to which you need provide proper backend - this is what the factory is for. See more details [on providing backend to QML wrapper](api#providing-backend-to-qml-wrapper). The important difference between other factories implementations is, that the `TracedHello` is a wrapper, it requires the actual implementation to be passed to it. Therefor the factory needs a factory of the actual implementation objects, which it will wrap with the trace functionality. That it requires a factory in constructor. You can provide any backed you need e.g. your custom object, the [`OlinkClient`](olink.md).
+The factory is necessary when you want to use the traced `Hello` object directly in QML. For that, you will choose the [QML version](qmlplugin#qml-wrappers) of your API to which you need provide proper backend - this is what the factory is for. See more details [on providing backend to QML wrapper](qmlplugin#providing-backend-to-qml-wrapper). The important difference between other factories implementations is, that the `TracedHello` is a wrapper, it requires the actual implementation to be passed to it. Therefor the factory needs a factory of the actual implementation objects, which it will wrap with the trace functionality. That it requires a factory in constructor. You can provide any backed you need e.g. your custom object, the [`OlinkClient`](olink.md).
 See the example of traced OlinkClient backend below:
 
 ```cpp 

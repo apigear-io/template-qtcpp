@@ -16,7 +16,7 @@ Please also check issues on github for this template.
 
 This feature purpose is not only to help you introduce MQTT protocol into your project, but also show that an existing protocol can be adapted for sharing your data in your ecosystem. When going through this document you may notice this implementation contains general client/server adapters in 📂hello-world/apigear/mqtt
 and an interface specific part generated from templates for each interface in  📂hello-world/qt_hello_world/io_world/mqtt. <br /> <br /> 
- This feature provides a *client* and a *server* adapter for your interfaces for the MQTT protocol. It allows you to connect different applications in the same or different technologies (check all of our [templates](https://docs.apigear.io/docs/category/sdk-templates)).<br />
+ This feature provides a *client* and a *server* adapter for your interfaces for the MQTT protocol. It allows you to connect different applications in the same or different technologies (check all of our [templates](/docs/sdk/intro)).<br />
  Use an *Mqtt client* instead of your interface implementation to be able to receive data from remote service.<br />
  Use an *Mqtt server adapter* to expose your interface implementation as a remote service.<br />
 
@@ -44,8 +44,9 @@ cmake --install . --verbose
  
  With an example  API
 
-<details><summary>Hello World API (click to expand)</summary>
-<CodeBlock language="yaml" showLineNumbers>{helloWorldModuleComponent}</CodeBlock>
+<details>
+  <summary>Hello World API (click to expand)</summary>
+  <CodeBlock language="yaml" showLineNumbers>{helloWorldModuleComponent}</CodeBlock>
 </details>
 
 the following file structure will be generated. The purpose and content of each file is explained below.
@@ -85,13 +86,13 @@ the following file structure will be generated. The purpose and content of each 
 ### Qt apigear - The Network Layer
 
 When generating the mqtt feature (or any of those: olink monitor feature) you'll get an additional folder it the top most directory: the 📂hello-world/📂apigear. The 📂mqtt subfolder contains objects that implement a network layer (based on Qt Mqtt library) for the MQTT protocol. Those are:
-- Client - Adapts the Qt MQTT client, to serve as an network endpoint for [interface client adapters](mqtt#MQTT-Client-Adapter). 
+- Client - Adapts the Qt MQTT client, to serve as an network endpoint for [interface client adapters](mqtt#mqtt-client-adapter). 
   Exposes:
     - methods that allow receiving data for remote service: subscribing for properties changes, signals emission and method response invocation;
     - methods that allow remote using the service: requesting property change or invoking a method.  <br />
   The client may serve many client interface adapters, even for the same interfaces (allows subscribing for same topic).
   In case many interface client adapters for same interface are connected: property changes and signals are provided to all interface client adapters, but the invoke method response will be delivered only for the one that requested it.
-- ServiceAdapter - Adapts the Qt MQTT client to serve as an network endpoint for [interface service adapters](mqtt#MQTT-Server-Adapter). 
+- ServiceAdapter - Adapts the Qt MQTT client to serve as an network endpoint for [interface service adapters](mqtt#mqtt-server-adapter). 
   Exposes:
     - methods that allow receiving requests from remote clients: subscribing for properties change requests, send method invocation;
     - methods that allow publishing property change, signal, functionality to handles sending a response for method invocation requests. <br />
@@ -192,7 +193,7 @@ All you need to do is to pass this ServiceAdapter to your Interface Service Adap
 
 ### MQTT Factory - for QML usage
 Files `📜mqttfactory.h`  and `📜mqttfactory.cpp` contain the `MqttFactory` which creates the `MqttClient` version of your interfaces (returned as a`AbstractHello` interfaces). <br />
-The factory is necessary when you want to use the MqttClient implementation version for the [QML wrapper](api#qml-wrappers). You need to set the `MqttFactory` as an API factory. See more details [on providing backend to QML wrapper](api#providing-backend-to-qml-wrapper)
+The factory is necessary when you want to use the MqttClient implementation version for the [QML wrapper](qmlplugin#qml-wrappers). You need to set the `MqttFactory` as an API factory. See more details [on providing backend to QML wrapper](qmlplugin#providing-backend-to-qml-wrapper)
 
 ```cpp 
     // Prepare Factory before app is created.

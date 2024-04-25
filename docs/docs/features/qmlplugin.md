@@ -13,8 +13,9 @@ It provides qml -available version of you interfaces and factory implementation 
 
 With an example API
 
-<details><summary>Hello World API (click to expand)</summary>
-<CodeBlock language="yaml" showLineNumbers>{helloWorldModuleComponent}</CodeBlock>
+<details>
+    <summary>Hello World API (click to expand)</summary>
+    <CodeBlock language="yaml" showLineNumbers>{helloWorldModuleComponent}</CodeBlock>
 </details>
 
 the following file structure will be generated. The purpose and content of each file is explained below.

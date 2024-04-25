@@ -6,14 +6,14 @@ sidebar_position: 2
 
 The Quick-Start guide explains how to, in few steps, get from an API to a functional *Qt* plugin.
 Steps 1 and 3 are universal for other technologies. In the step 2 you will choose a concrete *Qt* template.
-For more general information about first steps with ApiGear [First Steps](https://docs.apigear.io/docs/start/first_steps)
+For more general information about first steps with ApiGear [First Steps](/docs/start/first_steps)
 
 The quick start enables only basic features: the [api](features/api.md) generation and simple [stub](features/stubs.md) implementation.
 For all available features check the [overview](features/features.md).
 
 ## 1. Install the code generator
 
-Get the [ApiGear Studio](https://github.com/apigear-io/studio-releases/releases) or [ApiGear CLI](https://github.com/apigear-io/cli/releases). For more information check the [ApiGear documentation](https://docs.apigear.io/docs/start/install).
+Get the [ApiGear Studio](https://github.com/apigear-io/studio/releases) or [ApiGear CLI](https://github.com/apigear-io/cli/releases). For more information check the [ApiGear documentation](/docs/start/install).
 
 ## 2. Get the template
 
@@ -60,7 +60,7 @@ Both should ideally be in a folder called `apigear` next to each other.
 Alternatively, you can also use the *Studio* to create a new project and modify the two example files.
 
 ### Solution file
-Create a [solution](https://docs.apigear.io/docs/start/first_steps#create-a-solution) file.
+Create a [solution](/docs/start/first_steps#create-a-solution) file.
 The example below specifies
 * module files in *line 8*, here the `helloworld.module.yaml` module with `Hello` API
 * the output directory for generated files in *line 9*
@@ -182,7 +182,7 @@ For the pure virtual interface see the pure C++ template
 :::
 
 :::note
-For the simulation check [the olink feature](features/olink.md) which provides middle layer on your code side and the [simulation](https://docs.apigear.io/docs/advanced/simulation/intro) explained.
+For the simulation check [the olink feature](features/olink.md) which provides middle layer on your code side and the [simulation](/docs/advanced/simulation/intro) explained.
 :::
 
 ### Create and run an example

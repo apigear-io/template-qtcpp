@@ -15,8 +15,9 @@ The feature `stubs` adds:
 
 With an example API
 
-<details><summary>Hello World API (click to expand)</summary>
-<CodeBlock language="yaml" showLineNumbers>{helloWorldModuleComponent}</CodeBlock>
+<details>
+    <summary>Hello World API (click to expand)</summary>
+    <CodeBlock language="yaml" showLineNumbers>{helloWorldModuleComponent}</CodeBlock>
 </details>
 
 the following file structure will be generated. The purpose and content of each file is explained below.
@@ -58,7 +59,7 @@ We generate the import/export statements - here IO_WORLD_IMPL_EXPORT - for all t
 
 Factory of stub is defined in `📜factory.h` and `📜factory.cpp`
 This factory is necessary, when you want to provide this stub implementation to the QML Wrapper.
-See [this](api.md#providing-backend-to-qml-wrapper) api section for full information.
+See [this](qmlplugin#providing-backend-to-qml-wrapper) api section for full information.
 
 Also have in mind, that using this version of provided pair "factory - stub", you will not have any handle to interact with a created stub from code. Only changes and interaction will be possible from QML. You could create your version of a factory which also registers the objects to some kind of global registry, which you're able to reach from code.
 

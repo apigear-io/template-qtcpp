@@ -12,7 +12,7 @@ This template generates code for [*Qt*](https://www.qt.io/) projects. In order t
 Basic understanding of *Qt* is required, and depending on your goal the qml or c++ knowledge is also necessary.
 
 ### Code generation
-Follow the documentation for the [code generation](https://docs.apigear.io/docs/start/first_steps) in general and [CLI](https://docs.apigear.io/docs/cli/generate) or the [Studio](https://docs.apigear.io/docs/category/desktop-studio) tools.
+Follow the documentation for the [code generation](/docs/start/first_steps) in general and [CLI](/docs/cli/generate) or the [Studio](/docs/studio/intro) tools.
 Or try first the [quick start guide](../quickstart/index.md) which shows how to prepare api and generate code out of it.
 
 :::tip
@@ -23,8 +23,9 @@ For questions regarding this template please go to our [discussions page](https:
 
 The following code snippet contains the *API* which is used throughout this guide to demonstrate the generated code and its usage in *Qt*.
 
-<details><summary>Hello World API (click to expand)</summary>
-<CodeBlock language="yaml" showLineNumbers>{helloWorldModuleComponent}</CodeBlock>
+<details>
+    <summary>Hello World API (click to expand)</summary>
+    <CodeBlock language="yaml" showLineNumbers>{helloWorldModuleComponent}</CodeBlock>
 </details>
 
 ## Features
@@ -37,8 +38,8 @@ Features generate a view model for the `api`. This can be used to implement a wo
 
 ### Extended
 Features can be used in combination with `api` and add more functionality on top, like the simulation
-- [olink](olink.md) - provides a client and server adapters for each interface, that can be connected to any of the other technology templates with support for [ObjectLink](https://docs.apigear.io/objectlink/). Use this feature to connect with ApiGear simulation tools.
-- [monitor](monitor.md) - generates a middleware layer which logs all API events to the [CLI](https://docs.apigear.io/docs/category/command-line) or the [Studio](https://docs.apigear.io/docs/category/desktop-studio)
+- [olink](olink.md) - provides a client and server adapters for each interface, that can be connected to any of the other technology templates with support for [ObjectLink](/docs/advanced/objectlink/intro). Use this feature to connect with ApiGear simulation tools.
+- [monitor](monitor.md) - generates a middleware layer which logs all API events to the [CLI](/docs/cli/intro) or the [Studio](/docs/studio/intro)
 - [MQTT](mqtt.md) experimental - provides minimal working adapters for MQTT client and service side for each interfaces. Check also MQTT in other technology templates that supports it.
 -  examples feature - generates:
     - `olinkserver` example with `main.cpp` that shows your services in olink server.

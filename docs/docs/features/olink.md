@@ -14,7 +14,7 @@ import Figure from '../figure'
 
 # Olink
 
- This feature provides a *client* and a *server* adapter for your interfaces for the [ObjectLink](https://docs.apigear.io/objectlink/) protocol. It allows you to connect different applications in the same or different technologies (check all of our [templates](https://docs.apigear.io/docs/category/sdk-templates)).<br />
+ This feature provides a *client* and a *server* adapter for your interfaces for the [ObjectLink](/docs/advanced/objectlink/intro) protocol. It allows you to connect different applications in the same or different technologies (check all of our [templates](/docs/sdk/intro)).<br />
  Use an *OLink client* instead of your interface implementation to connect to a remote service, or to a the [ApiGear simulation](olink#simulation).  Use an *OLink server adapter* to expose your interface implementation as a remote service.<br />
  Below you'll find short introduction on `ApiGear ObjectLink` protocol. Before details on client and server, you'll also find piece of information on a network layer implementation for handling ObjectLink in `Qt`. 
 
@@ -24,7 +24,7 @@ import Figure from '../figure'
 :::
 
 ### Apigear ObjectLink protocol and ObjectLink core library 
-The [ObjectLink](https://docs.apigear.io/objectlink/) protocol is a lightweight protocol for the Objects described with an interface. It allows connecting a client object with a server object, and perform remote operations like: remote property change request (client) or notifications on property changed (server), inform about signal emission (server) and allows requesting a call of a method (client) and giving a response to the outcome (server).
+The [ObjectLink](/docs/advanced/objectlink/intro) protocol is a lightweight protocol for the Objects described with an interface. It allows connecting a client object with a server object, and perform remote operations like: remote property change request (client) or notifications on property changed (server), inform about signal emission (server) and allows requesting a call of a method (client) and giving a response to the outcome (server).
 
 The Olink feature for your interface uses a library [ObjectLink core](https://github.com/apigear-io/objectlink-core-cpp), common for cpp based templates. The provided CMakeLists already contain all the dependencies, so you don't have to add it manually.
 
@@ -39,8 +39,9 @@ Otherwise, it has to be ensured that your build configuration matches the librar
  
  With an example  API
 
-<details><summary>Hello World API (click to expand)</summary>
-<CodeBlock language="yaml" showLineNumbers>{helloWorldModuleComponent}</CodeBlock>
+<details>
+    <summary>Hello World API (click to expand)</summary>
+    <CodeBlock language="yaml" showLineNumbers>{helloWorldModuleComponent}</CodeBlock>
 </details>
 
 the following file structure will be generated. The purpose and content of each file is explained below.
@@ -79,9 +80,9 @@ the following file structure will be generated. The purpose and content of each 
 ### Qt apigear - The Network Layer
 
 When generating the olink feature (or monitor feature) you'll get an additional folder it the top most directory: the 📂hello-world/📂apigear. The 📂olink subfolder contains objects that implement a network layer (based on QtWebSocket library) for the ObjectLink protocol. Those are:
-- OlinkClient - the client, that serves your [interface client adapters](olink#Olink-Client-Adapter). 
+- OlinkClient - the client, that serves your [interface client adapters](olink#olink-client-adapter). 
                 The class is responsible for network connection for ObjectLink client side. It uses the ObjectLink core library for handling messages according to the ObjectLink protocol. Handles linking and unlinking with a remote service for the sink added by the user (the interface OlinkClient Adapters), with regard to the connection state. All the messages dedicated to your object will be delivered to the adapter and proper actions will be performed for the clients that use it, without any of your actions. Also the OlinkClient holds a message queue for messages during disconnected time.
-- OlinkHost and a helper class OlinkRemote- the server, which hosts your services exposed to network through the [interface server adapters](olink#Olink-Server-Adapter). The class is responsible to set up the server and manage connections requested by clients. It uses ObjectLink core library for handling messages according to the ObjectLink protocol. All incoming messages will be translated to calls and routed to your local object.
+- OlinkHost and a helper class OlinkRemote- the server, which hosts your services exposed to network through the [interface server adapters](olink#olink-server-adapter). The class is responsible to set up the server and manage connections requested by clients. It uses ObjectLink core library for handling messages according to the ObjectLink protocol. All incoming messages will be translated to calls and routed to your local object.
 
 
 ### Olink Client Adapter
@@ -90,11 +91,12 @@ Files `📜olinkhello.h` and `📜olinkhello.cpp` contain the olink client versi
 It implements two interfaces: `AbstractHello` and a `IObjectSink`. <br />
 The IObjectSink interface comes from [ObjectLink core](https://github.com/apigear-io/objectlink-core-cpp):
 
-<details><summary>IObjectSink (click to expand)</summary>
-<CodeBlock language="cpp" >{objectSink}</CodeBlock>
+<details>
+    <summary>IObjectSink (click to expand)</summary>
+    <CodeBlock language="cpp" >{objectSink}</CodeBlock>
 </details>
 
-and is necessary for handling incoming messages from the server side and is used by a `OlinkClient` ([Qt Apigear Olink lib](olink#Qt-apigear---The-Network-Layer)). Apart from setting up and tear down of the `OLinkHello` object, you don't need to perform any additional actions, the object `OLinkHello` will communicate with the server transparently and you should use it as an `AbstractHello` Object only.
+and is necessary for handling incoming messages from the server side and is used by a `OlinkClient` ([Qt Apigear Olink lib](olink#qt-apigear---the-network-layer)). Apart from setting up and tear down of the `OLinkHello` object, you don't need to perform any additional actions, the object `OLinkHello` will communicate with the server transparently and you should use it as an `AbstractHello` Object only.
 
 #### Properties
 The property getters (here `Message last()` ) return immediately the locally stored last received value from server. <br /> 
@@ -149,12 +151,13 @@ ApiGear::ObjectLink::ClientRegistry can have only one object of a certain type. 
 ### Olink Server Adapter
 
 Files `📜olinkhelloadapter.h` and `📜olinkhelloadapter.h` contain the olink server adapter for the `Hello` interface - the `OLinkHelloAdapter` class.<br />
-It implements an `IObjectSource` interface (from [ObjectLink core](https://github.com/apigear-io/objectlink-core-cpp)), which wraps your `Hello` and exposes it for remote usage with the [ObjectLink](https://docs.apigear.io/objectlink/) protocol. It handles all the network requests, and calls your local object.<br />
+It implements an `IObjectSource` interface (from [ObjectLink core](https://github.com/apigear-io/objectlink-core-cpp)), which wraps your `Hello` and exposes it for remote usage with the [ObjectLink](/docs/advanced/objectlink/intro) protocol. It handles all the network requests, and calls your local object.<br />
 When creating the `OLinkHelloAdapter` you need to provide the local `AbstractHello` service object, you want to expose to clients.
 
 The IObjectSource interface:
-<details><summary>IObjectSource (click to expand)</summary>
-<CodeBlock language="cpp" >{objectSource}</CodeBlock>
+<details>
+    <summary>IObjectSource (click to expand)</summary>
+    <CodeBlock language="cpp" >{objectSource}</CodeBlock>
 </details>
 
 After setting up the OlinkHost (Qt Apigear Olink lib) and registering your Interface registered, the client connections and communication with them is handled transparently for you, no additional actions are needed.
@@ -202,7 +205,7 @@ As mentioned earlier you need a network layer, here provided by a `ApiGear::Obje
 
 ### Olink Factory - for QML usage
 Files `📜olinkfactory.h`  and `📜olinkfactory.cpp` contain the `OLinkFactory` which creates the `OlinkClient` version of your interfaces (returned as a`AbstractHello` interfaces). <br />
-The factory is necessary when you want to use the OlinkClient implementation version for the [QML wrapper](api#qml-wrappers). You need to set the `OlinkFactory` as an API factory. See more details [on providing backend to QML wrapper](api#providing-backend-to-qml-wrapper)
+The factory is necessary when you want to use the OlinkClient implementation version for the [QML wrapper](qmlplugin#qml-wrappers). You need to set the `OlinkFactory` as an API factory. See more details [on providing backend to QML wrapper](qmlplugin#providing-backend-to-qml-wrapper)
 
 ```cpp 
     // Prepare Factory before app is created.
@@ -238,11 +241,11 @@ ApplicationWindow {
  ## Simulation
  
  The simulation can be used to test, demonstrate or develop applications without the need to have the actual service available.
- The simulation server is integrated into the [ApiGear studio](https://docs.apigear.io/docs/category/desktop-studio) and the [CLI](https://docs.apigear.io/docs/cli/simulate).
+ The simulation server is integrated into the [ApiGear studio](/docs/studio/intro) and the [CLI](/docs/cli/simulate).
  
- For simulating you will use [simulation scenarios](https://docs.apigear.io/docs/advanced/simulation/scenario) They allow to define sequences of actions. The actions can change the property values of the service or emit signals. The scenarios can be written using a YAML schema.
+ For simulating you will use [simulation scenarios](/docs/advanced/simulation/scenario) They allow to define sequences of actions. The actions can change the property values of the service or emit signals. The scenarios can be written using a YAML schema.
 
-See more on [simulation](https://docs.apigear.io/docs/advanced/simulation/intro).
+See more on [simulation](/docs/advanced/simulation/intro).
 
 ### Prepare your application
 Make sure you are using OlinkClient as your `Hello` object, either:
@@ -253,8 +256,9 @@ You may try our example - copy the code into new folder in generated `examples` 
 This is an example with qml version of using OlinkClient. 
 ##### main.cpp
 The main.cpp sets up the qml factory
- <details><summary>main.cpp (click to expand)</summary>
-<CodeBlock language="yaml" showLineNumbers>{simulationExampleMain}</CodeBlock>
+<details>
+    <summary>main.cpp (click to expand)</summary>
+    <CodeBlock language="yaml" showLineNumbers>{simulationExampleMain}</CodeBlock>
 </details>
 
 :::note
@@ -269,26 +273,30 @@ As a starting point, describes 3 buttons, which are connected to:
 
 with a following code
 
-<details><summary>main.qml(click to expand)</summary>
-<CodeBlock language="yaml" showLineNumbers>{simulationExampleQml}</CodeBlock>
+<details>
+    <summary>main.qml(click to expand)</summary>
+    <CodeBlock language="yaml" showLineNumbers>{simulationExampleQml}</CodeBlock>
 </details>
 you should get an app like this
 
 <Figure caption="Testing application used with the simulation." src="/img/qtSimuApp.png" />
 
 ##### CMakeLists.txt and resource.qrc
-<details><summary>CMakeLists.txt(click to expand)</summary>
-<CodeBlock language="yaml" >{simulationExampleCMake}</CodeBlock>
+<details>
+    <summary>CMakeLists.txt(click to expand)</summary>
+    <CodeBlock language="yaml" >{simulationExampleCMake}</CodeBlock>
 </details>
-<details><summary>resources.qrc(click to expand)</summary>
-<CodeBlock language="yaml" >{simulationExampleQrc}</CodeBlock>
+<details>
+    <summary>resources.qrc(click to expand)</summary>
+    <CodeBlock language="yaml" >{simulationExampleQrc}</CodeBlock>
 </details>
 
 
 ### Prepare the scenario
 As a starting point you can check our simulation scenario: 
-<details><summary>Scenario(click to expand)</summary>
-<CodeBlock language="yaml" showLineNumbers>{simulationExampleTestScenario}</CodeBlock>
+<details>
+    <summary>Scenario(click to expand)</summary>
+    <CodeBlock language="yaml" showLineNumbers>{simulationExampleTestScenario}</CodeBlock>
 </details>
 
 Apart from the header with the scenario name and its version it consists of two parts:

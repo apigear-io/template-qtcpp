@@ -11,6 +11,10 @@
 #include <QtCore/QtGlobal>
 #include <QDataStream>
 
+{{- range .Module.Imports }}
+#include "{{snake .Name}}/api/api.h"
+{{- end }}
+
 #if defined({{ $MODULE_ID }}_LIBRARY)
 #  define {{ $MODULE_ID }}_EXPORT Q_DECL_EXPORT
 #else

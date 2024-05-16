@@ -8,7 +8,7 @@
 
 #include <QtQml>
 
-namespace {{snake  .Module.Name }} {
+namespace {{qtNamespace .Module.Name }} {
 
 Qml{{$class}}::Qml{{$class}}(QObject *parent)
     : Abstract{{$class}}(parent)
@@ -58,4 +58,4 @@ void Qml{{$class}}::set{{Camel .Name}}({{qtParam "" .}})
 }
 {{- end }}
 
-} //namespace {{snake  .Module.Name }}
+} //namespace {{qtNamespace .Module.Name }}

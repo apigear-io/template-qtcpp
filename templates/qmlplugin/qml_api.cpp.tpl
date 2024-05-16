@@ -2,7 +2,7 @@
 {{- cppGpl .Module }}
 #include "qml_api.h"
 
-namespace {{snake  .Module.Name }} {
+namespace {{qtNamespace .Module.Name }} {
 
 
 {{- range .Module.Structs }}
@@ -24,4 +24,4 @@ namespace {{snake  .Module.Name }} {
 }
 {{- end }}
 
-} // namespace {{snake  .Module.Name }}
+} // namespace {{qtNamespace .Module.Name }}

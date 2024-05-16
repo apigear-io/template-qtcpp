@@ -34,7 +34,7 @@ target_include_directories({{$lib_id}}
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries({{$lib_id}} PUBLIC nlohmann_json::nlohmann_json Qt6::Core)
+target_link_libraries({{$lib_id}} PUBLIC {{ range .Module.Imports }}{{snake .Name}}_api{{ end }} nlohmann_json::nlohmann_json Qt6::Core)
 
 target_compile_definitions({{$lib_id}} PRIVATE {{ $MODULE_ID }}_LIBRARY)
 

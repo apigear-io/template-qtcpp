@@ -27,7 +27,7 @@ target_include_directories(tb_names_api
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(tb_names_api PUBLIC nlohmann_json::nlohmann_json Qt6::Core)
+target_link_libraries(tb_names_api PUBLIC  nlohmann_json::nlohmann_json Qt6::Core)
 
 target_compile_definitions(tb_names_api PRIVATE TB_NAMES_API_LIBRARY)
 

@@ -90,6 +90,8 @@ features:
              raw: true
            - source: "apigear/utilities/logger.cpp"
              raw: true
+           - source: "apigear/utilities/qt_native.json.adapter.h"
+             raw: true
            - source: "apigear/utilities/tests/CMakeLists.txt"
              raw: true
            - source: "apigear/utilities/tests/logger.test.cpp"

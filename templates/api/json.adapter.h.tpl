@@ -13,7 +13,7 @@
 #include "{{snake .Name}}/api/json.adapter.h"
 {{- end }}
 
-namespace {{snake  .Module.Name }} {
+namespace {{qtNamespace .Module.Name }} {
 
 {{- range .Module.Structs }}
 {{- $class := .Name }}
@@ -34,4 +34,4 @@ inline void to_json(nlohmann::json& j, const {{$class}}& p) {
         };
 }
 {{- end }}
-} //namespace {{snake  .Module.Name }}
+} //namespace {{qtNamespace .Module.Name }}

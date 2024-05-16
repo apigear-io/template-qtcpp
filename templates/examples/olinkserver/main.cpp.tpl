@@ -39,12 +39,13 @@ int main(int argc, char *argv[]){
     {{- $modulePrefix := lower1 (Camel $module.Name)}}
     {{- $instanceName := printf "%s%s"  $modulePrefix $class }}
     {{- $serviceInstanceName := printf "%sOlink%sService" $modulePrefix $class }}
-    auto {{$instanceName}} = std::make_shared<{{ snake $module.Name }}::{{$class}}>();
+    {{ $namespacePrefix := qtNamespace $module.Name }}
+    auto {{$instanceName}} = std::make_shared<{{ $namespacePrefix }}::{{$class}}>();
     {{- if $features.monitor }}
-    {{ snake $module.Name }}::{{$class}}Traced {{$instanceName}}Traced({{$instanceName}} );
-    auto {{$serviceInstanceName}} = std::make_shared< {{- snake $module.Name }}::OLink{{$interface.Name}}Adapter>(registry, &{{ $instanceName }}Traced);
+    {{ $namespacePrefix }}::{{$class}}Traced {{$instanceName}}Traced({{$instanceName}} );
+    auto {{$serviceInstanceName}} = std::make_shared< {{- $namespacePrefix }}::OLink{{$interface.Name}}Adapter>(registry, &{{ $instanceName }}Traced);
     {{- else}}
-    auto {{$serviceInstanceName}} = std::make_shared< {{- snake $module.Name }}::OLink{{$interface.Name}}Adapter>(registry, {{ $instanceName }}.get());
+    auto {{$serviceInstanceName}} = std::make_shared< {{- $namespacePrefix }}::OLink{{$interface.Name}}Adapter>(registry, {{ $instanceName }}.get());
     {{- end }}
     registry.addSource( {{- $serviceInstanceName }});
     {{- end }}

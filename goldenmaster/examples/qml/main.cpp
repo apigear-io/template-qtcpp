@@ -102,24 +102,31 @@ int main(int argc, char *argv[]){
     // Prepare Factory before app is created.
     ApiGear::ObjectLink::ClientRegistry client_registry;
     ApiGear::ObjectLink::OLinkClient client(client_registry);
+    
     testbed2::OLinkFactory testbed2OlinkFactory(client);
     testbed2::TracedApiFactory testbed2TracedOlinkFactory(testbed2OlinkFactory); 
     testbed2::ApiFactory::set(&testbed2TracedOlinkFactory);
+    
     tb_enum::OLinkFactory tb_enumOlinkFactory(client);
     tb_enum::TracedApiFactory tb_enumTracedOlinkFactory(tb_enumOlinkFactory); 
     tb_enum::ApiFactory::set(&tb_enumTracedOlinkFactory);
+    
     tb_same1::OLinkFactory tb_same1OlinkFactory(client);
     tb_same1::TracedApiFactory tb_same1TracedOlinkFactory(tb_same1OlinkFactory); 
     tb_same1::ApiFactory::set(&tb_same1TracedOlinkFactory);
+    
     tb_same2::OLinkFactory tb_same2OlinkFactory(client);
     tb_same2::TracedApiFactory tb_same2TracedOlinkFactory(tb_same2OlinkFactory); 
     tb_same2::ApiFactory::set(&tb_same2TracedOlinkFactory);
+    
     tb_simple::OLinkFactory tb_simpleOlinkFactory(client);
     tb_simple::TracedApiFactory tb_simpleTracedOlinkFactory(tb_simpleOlinkFactory); 
     tb_simple::ApiFactory::set(&tb_simpleTracedOlinkFactory);
+    
     testbed1::OLinkFactory testbed1OlinkFactory(client);
     testbed1::TracedApiFactory testbed1TracedOlinkFactory(testbed1OlinkFactory); 
     testbed1::ApiFactory::set(&testbed1TracedOlinkFactory);
+    
     tb_names::OLinkFactory tb_namesOlinkFactory(client);
     tb_names::TracedApiFactory tb_namesTracedOlinkFactory(tb_namesOlinkFactory); 
     tb_names::ApiFactory::set(&tb_namesTracedOlinkFactory);

@@ -40,12 +40,13 @@ int main(int argc, char *argv[]){
     {{- $modulePrefix := lower1 (Camel $module.Name)}}
     {{- $instanceName := printf "%s%s"  $modulePrefix $class }}
     {{- $serviceInstanceName := printf "%sMqtt%sService" $modulePrefix $class }}
-    auto {{$instanceName}} = std::make_shared<{{ snake $module.Name }}::{{$class}}>();
+    {{ $namespacePrefix := qtNamespace $module.Name }}
+    auto {{$instanceName}} = std::make_shared<{{ $namespacePrefix }}::{{$class}}>();
     {{- if $features.monitor }}
-    auto {{$instanceName}}Traced = std::make_shared<{{ snake $module.Name }}::{{$class}}Traced>({{$instanceName}} );
-    auto {{$serviceInstanceName}} = std::make_shared< {{- snake $module.Name }}::Mqtt{{$interface.Name}}Adapter>(service, {{ $instanceName }}Traced);
+    auto {{$instanceName}}Traced = std::make_shared<{{$namespacePrefix }}::{{$class}}Traced>({{$instanceName}} );
+    auto {{$serviceInstanceName}} = std::make_shared<{{$namespacePrefix}}::Mqtt{{$interface.Name}}Adapter>(service, {{ $instanceName }}Traced);
     {{- else}}
-    auto {{$serviceInstanceName}} = std::make_shared< {{- snake $module.Name }}::Mqtt{{$interface.Name}}Adapter>(service, {{ $instanceName }});
+    auto {{$serviceInstanceName}} = std::make_shared<{{$namespacePrefix}}::Mqtt{{$interface.Name}}Adapter>(service, {{ $instanceName }});
     {{- end }}
     {{- end }}
     {{- end }}

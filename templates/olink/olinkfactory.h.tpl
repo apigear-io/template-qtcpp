@@ -5,7 +5,7 @@
 #include "{{snake .Module.Name}}/api/iapifactory.h"
 #include <apigear/olink/olinkclient.h>
 
-namespace {{snake  .Module.Name }} {
+namespace {{qtNamespace .Module.Name }} {
 
 /** 
 * A Factory that creates a OlinkClient version of interfaces in {{ .Module.Name }}
@@ -35,4 +35,4 @@ private:
     ApiGear::ObjectLink::OLinkClient& m_client;
 };
 
-} //namespace {{snake  .Module.Name }}
+} //namespace {{qtNamespace .Module.Name }}

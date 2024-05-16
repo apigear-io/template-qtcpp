@@ -73,74 +73,92 @@ int main(int argc, char *argv[]){
     QCoreApplication app(argc, argv);  ApiGear::ObjectLink::RemoteRegistry registry;
     ApiGear::ObjectLink::OLinkHost server(registry);
     server.listen("localhost", 8182);
+    
     auto testbed2ManyParamInterface = std::make_shared<testbed2::ManyParamInterface>();
     testbed2::ManyParamInterfaceTraced testbed2ManyParamInterfaceTraced(testbed2ManyParamInterface );
     auto testbed2OlinkManyParamInterfaceService = std::make_shared<testbed2::OLinkManyParamInterfaceAdapter>(registry, &testbed2ManyParamInterfaceTraced);
     registry.addSource(testbed2OlinkManyParamInterfaceService);
+    
     auto testbed2NestedStruct1Interface = std::make_shared<testbed2::NestedStruct1Interface>();
     testbed2::NestedStruct1InterfaceTraced testbed2NestedStruct1InterfaceTraced(testbed2NestedStruct1Interface );
     auto testbed2OlinkNestedStruct1InterfaceService = std::make_shared<testbed2::OLinkNestedStruct1InterfaceAdapter>(registry, &testbed2NestedStruct1InterfaceTraced);
     registry.addSource(testbed2OlinkNestedStruct1InterfaceService);
+    
     auto testbed2NestedStruct2Interface = std::make_shared<testbed2::NestedStruct2Interface>();
     testbed2::NestedStruct2InterfaceTraced testbed2NestedStruct2InterfaceTraced(testbed2NestedStruct2Interface );
     auto testbed2OlinkNestedStruct2InterfaceService = std::make_shared<testbed2::OLinkNestedStruct2InterfaceAdapter>(registry, &testbed2NestedStruct2InterfaceTraced);
     registry.addSource(testbed2OlinkNestedStruct2InterfaceService);
+    
     auto testbed2NestedStruct3Interface = std::make_shared<testbed2::NestedStruct3Interface>();
     testbed2::NestedStruct3InterfaceTraced testbed2NestedStruct3InterfaceTraced(testbed2NestedStruct3Interface );
     auto testbed2OlinkNestedStruct3InterfaceService = std::make_shared<testbed2::OLinkNestedStruct3InterfaceAdapter>(registry, &testbed2NestedStruct3InterfaceTraced);
     registry.addSource(testbed2OlinkNestedStruct3InterfaceService);
+    
     auto tbEnumEnumInterface = std::make_shared<tb_enum::EnumInterface>();
     tb_enum::EnumInterfaceTraced tbEnumEnumInterfaceTraced(tbEnumEnumInterface );
     auto tbEnumOlinkEnumInterfaceService = std::make_shared<tb_enum::OLinkEnumInterfaceAdapter>(registry, &tbEnumEnumInterfaceTraced);
     registry.addSource(tbEnumOlinkEnumInterfaceService);
+    
     auto tbSame1SameStruct1Interface = std::make_shared<tb_same1::SameStruct1Interface>();
     tb_same1::SameStruct1InterfaceTraced tbSame1SameStruct1InterfaceTraced(tbSame1SameStruct1Interface );
     auto tbSame1OlinkSameStruct1InterfaceService = std::make_shared<tb_same1::OLinkSameStruct1InterfaceAdapter>(registry, &tbSame1SameStruct1InterfaceTraced);
     registry.addSource(tbSame1OlinkSameStruct1InterfaceService);
+    
     auto tbSame1SameStruct2Interface = std::make_shared<tb_same1::SameStruct2Interface>();
     tb_same1::SameStruct2InterfaceTraced tbSame1SameStruct2InterfaceTraced(tbSame1SameStruct2Interface );
     auto tbSame1OlinkSameStruct2InterfaceService = std::make_shared<tb_same1::OLinkSameStruct2InterfaceAdapter>(registry, &tbSame1SameStruct2InterfaceTraced);
     registry.addSource(tbSame1OlinkSameStruct2InterfaceService);
+    
     auto tbSame1SameEnum1Interface = std::make_shared<tb_same1::SameEnum1Interface>();
     tb_same1::SameEnum1InterfaceTraced tbSame1SameEnum1InterfaceTraced(tbSame1SameEnum1Interface );
     auto tbSame1OlinkSameEnum1InterfaceService = std::make_shared<tb_same1::OLinkSameEnum1InterfaceAdapter>(registry, &tbSame1SameEnum1InterfaceTraced);
     registry.addSource(tbSame1OlinkSameEnum1InterfaceService);
+    
     auto tbSame1SameEnum2Interface = std::make_shared<tb_same1::SameEnum2Interface>();
     tb_same1::SameEnum2InterfaceTraced tbSame1SameEnum2InterfaceTraced(tbSame1SameEnum2Interface );
     auto tbSame1OlinkSameEnum2InterfaceService = std::make_shared<tb_same1::OLinkSameEnum2InterfaceAdapter>(registry, &tbSame1SameEnum2InterfaceTraced);
     registry.addSource(tbSame1OlinkSameEnum2InterfaceService);
+    
     auto tbSame2SameStruct1Interface = std::make_shared<tb_same2::SameStruct1Interface>();
     tb_same2::SameStruct1InterfaceTraced tbSame2SameStruct1InterfaceTraced(tbSame2SameStruct1Interface );
     auto tbSame2OlinkSameStruct1InterfaceService = std::make_shared<tb_same2::OLinkSameStruct1InterfaceAdapter>(registry, &tbSame2SameStruct1InterfaceTraced);
     registry.addSource(tbSame2OlinkSameStruct1InterfaceService);
+    
     auto tbSame2SameStruct2Interface = std::make_shared<tb_same2::SameStruct2Interface>();
     tb_same2::SameStruct2InterfaceTraced tbSame2SameStruct2InterfaceTraced(tbSame2SameStruct2Interface );
     auto tbSame2OlinkSameStruct2InterfaceService = std::make_shared<tb_same2::OLinkSameStruct2InterfaceAdapter>(registry, &tbSame2SameStruct2InterfaceTraced);
     registry.addSource(tbSame2OlinkSameStruct2InterfaceService);
+    
     auto tbSame2SameEnum1Interface = std::make_shared<tb_same2::SameEnum1Interface>();
     tb_same2::SameEnum1InterfaceTraced tbSame2SameEnum1InterfaceTraced(tbSame2SameEnum1Interface );
     auto tbSame2OlinkSameEnum1InterfaceService = std::make_shared<tb_same2::OLinkSameEnum1InterfaceAdapter>(registry, &tbSame2SameEnum1InterfaceTraced);
     registry.addSource(tbSame2OlinkSameEnum1InterfaceService);
+    
     auto tbSame2SameEnum2Interface = std::make_shared<tb_same2::SameEnum2Interface>();
     tb_same2::SameEnum2InterfaceTraced tbSame2SameEnum2InterfaceTraced(tbSame2SameEnum2Interface );
     auto tbSame2OlinkSameEnum2InterfaceService = std::make_shared<tb_same2::OLinkSameEnum2InterfaceAdapter>(registry, &tbSame2SameEnum2InterfaceTraced);
     registry.addSource(tbSame2OlinkSameEnum2InterfaceService);
+    
     auto tbSimpleSimpleInterface = std::make_shared<tb_simple::SimpleInterface>();
     tb_simple::SimpleInterfaceTraced tbSimpleSimpleInterfaceTraced(tbSimpleSimpleInterface );
     auto tbSimpleOlinkSimpleInterfaceService = std::make_shared<tb_simple::OLinkSimpleInterfaceAdapter>(registry, &tbSimpleSimpleInterfaceTraced);
     registry.addSource(tbSimpleOlinkSimpleInterfaceService);
+    
     auto tbSimpleSimpleArrayInterface = std::make_shared<tb_simple::SimpleArrayInterface>();
     tb_simple::SimpleArrayInterfaceTraced tbSimpleSimpleArrayInterfaceTraced(tbSimpleSimpleArrayInterface );
     auto tbSimpleOlinkSimpleArrayInterfaceService = std::make_shared<tb_simple::OLinkSimpleArrayInterfaceAdapter>(registry, &tbSimpleSimpleArrayInterfaceTraced);
     registry.addSource(tbSimpleOlinkSimpleArrayInterfaceService);
+    
     auto testbed1StructInterface = std::make_shared<testbed1::StructInterface>();
     testbed1::StructInterfaceTraced testbed1StructInterfaceTraced(testbed1StructInterface );
     auto testbed1OlinkStructInterfaceService = std::make_shared<testbed1::OLinkStructInterfaceAdapter>(registry, &testbed1StructInterfaceTraced);
     registry.addSource(testbed1OlinkStructInterfaceService);
+    
     auto testbed1StructArrayInterface = std::make_shared<testbed1::StructArrayInterface>();
     testbed1::StructArrayInterfaceTraced testbed1StructArrayInterfaceTraced(testbed1StructArrayInterface );
     auto testbed1OlinkStructArrayInterfaceService = std::make_shared<testbed1::OLinkStructArrayInterfaceAdapter>(registry, &testbed1StructArrayInterfaceTraced);
     registry.addSource(testbed1OlinkStructArrayInterfaceService);
+    
     auto tbNamesNamEs = std::make_shared<tb_names::NamEs>();
     tb_names::NamEsTraced tbNamesNamEsTraced(tbNamesNamEs );
     auto tbNamesOlinkNamEsService = std::make_shared<tb_names::OLinkNam_EsAdapter>(registry, &tbNamesNamEsTraced);

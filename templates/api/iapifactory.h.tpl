@@ -10,7 +10,7 @@
 #include <memory>
 
 
-namespace {{snake  .Module.Name }} {
+namespace {{qtNamespace .Module.Name }} {
 
 {{- range .Module.Interfaces }}
     class Abstract{{Camel .Name}};
@@ -35,4 +35,4 @@ public:
 {{- end }}
 };
 
-} //namespace {{snake  .Module.Name }}
+} //namespace {{qtNamespace .Module.Name }}

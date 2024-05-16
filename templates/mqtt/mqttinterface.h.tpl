@@ -20,7 +20,7 @@
 #include <nlohmann/json.hpp>
 #include <map>
 
-namespace {{snake  .Module.Name }} {
+namespace {{qtNamespace .Module.Name }} {
 
 /**
 * Adapts the general Mqtt Client handler to a {{$interfaceNameOriginal}} in a way it provides access
@@ -141,4 +141,4 @@ private:
     std::mutex m_pendingCallMutex;
 };
 
-} //namespace {{snake  .Module.Name }}
+} //namespace {{qtNamespace .Module.Name }}

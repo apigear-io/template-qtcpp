@@ -44,12 +44,13 @@ int main(int argc, char *argv[]){
 
 {{- range .System.Modules }}
 {{- $module := . }}
-    {{ snake $module.Name }}::MqttFactory {{ snake $module.Name }}MqttFactory(client);
+    {{ $namespacePrefix := qtNamespace $module.Name }}
+    {{ $namespacePrefix }}::MqttFactory {{ snake $module.Name }}MqttFactory(client);
     {{- if $features.monitor }}
-    {{ snake $module.Name }}::TracedApiFactory {{ snake $module.Name }}TracedMqttFactory({{ snake $module.Name }}MqttFactory); 
-    {{ snake $module.Name }}::ApiFactory::set(&{{ snake $module.Name }}TracedMqttFactory);
+    {{ $namespacePrefix}}::TracedApiFactory {{ snake $module.Name }}TracedMqttFactory({{ snake $module.Name }}MqttFactory); 
+    {{ $namespacePrefix }}::ApiFactory::set(&{{ snake $module.Name }}TracedMqttFactory);
     {{- else }}
-    {{ snake $module.Name }}::ApiFactory::set(&{{ snake $module.Name }}MqttFactory);
+    {{ $namespacePrefix }}::ApiFactory::set(&{{ snake $module.Name }}MqttFactory);
     {{- end}}
 {{- end}}
 
@@ -78,8 +79,8 @@ int main(int argc, char *argv[]){
     {{- $modulePrefix := lower1 (Camel $module.Name)}}
     {{- $instanceName := printf "%s%s"  $modulePrefix $class }}
     {{- $serviceInstanceName := printf "%sMqtt%sService" $modulePrefix $class }}
-    auto {{$instanceName}} = std::make_shared<{{ snake $module.Name }}::{{$class}}>();
-    auto {{$serviceInstanceName}} = std::make_shared< {{- snake $module.Name }}::Mqtt{{$interface.Name}}Adapter>(service, {{ $instanceName }});
+    auto {{$instanceName}} = std::make_shared<{{ qtNamespace $module.Name }}::{{$class}}>();
+    auto {{$serviceInstanceName}} = std::make_shared< {{- qtNamespace $module.Name }}::Mqtt{{$interface.Name}}Adapter>(service, {{ $instanceName }});
     {{- end }}
     {{- end }}
 

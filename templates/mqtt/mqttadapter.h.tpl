@@ -14,7 +14,7 @@
 #include "mqtt_common.h"
 
 
-namespace {{snake  .Module.Name }} {
+namespace {{qtNamespace .Module.Name }} {
 
 
 /**
@@ -78,4 +78,4 @@ private:
     std::vector<quint64> m_subscribedIds;
 };
 
-} // namespace {{snake  .Module.Name }}
+} // namespace {{qtNamespace .Module.Name }}

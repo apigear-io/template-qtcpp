@@ -10,7 +10,7 @@
 #  define {{ $MODULE_ID }}_EXPORT Q_DECL_IMPORT
 #endif
 
-namespace {{snake  .Module.Name }} {
+namespace {{qtNamespace .Module.Name }} {
 
 {{- range .Module.Interfaces }}
     class Abstract{{Camel .Name}};
@@ -48,4 +48,4 @@ private:
     static IApiFactory *s_instance;
 };
 
-} //namespace {{snake  .Module.Name }}
+} //namespace {{qtNamespace .Module.Name }}

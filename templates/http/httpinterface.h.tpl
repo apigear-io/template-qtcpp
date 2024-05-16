@@ -8,7 +8,7 @@
 
 #include "{{snake .Module.Name}}/api/api.h"
 
-namespace {{snake  .Module.Name }} {
+namespace {{qtNamespace .Module.Name }} {
 
 class {{$class}} : public Abstract{{Camel .Interface.Name}}
 {
@@ -35,4 +35,4 @@ private:
 {{- end }}
 };
 
-} // namespace {{snake  .Module.Name }} 
+} // namespace {{qtNamespace .Module.Name }} 

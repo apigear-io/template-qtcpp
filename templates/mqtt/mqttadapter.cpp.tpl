@@ -15,7 +15,7 @@
 #include <QtCore>
 
 
-namespace {{snake  .Module.Name }} {
+namespace {{qtNamespace .Module.Name }} {
 
 namespace
 {
@@ -152,4 +152,4 @@ void {{$class}}::unsubscribeAll()
     }
 }
 
-} // namespace {{snake  .Module.Name }}
+} // namespace {{qtNamespace .Module.Name }}

@@ -4,7 +4,7 @@
 #include "{{.Name|lower}}.h"
 {{- end }}
 
-namespace {{snake  .Module.Name }} {
+namespace {{qtNamespace .Module.Name }} {
 
 Factory::Factory(QObject *parent)
     : QObject(parent)
@@ -20,4 +20,4 @@ std::shared_ptr<Abstract{{Camel .Name}}> Factory::create{{Camel .Name}}(QObject 
 
 {{- end }}
 
-} // namespace {{snake  .Module.Name }}
+} // namespace {{qtNamespace .Module.Name }}

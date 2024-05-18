@@ -13,6 +13,10 @@
 {{- range .Module.Imports }}
 #include "{{snake .Name}}/api/api.h"
 {{- end }}
+{{- range .Module.Externs }}
+{{- $extern := qtExtern . }}
+#include {{ $extern.Include}}
+{{- end }}
 
 #if defined({{ $MODULE_ID }}_LIBRARY)
 #  define {{ $MODULE_ID }}_EXPORT Q_DECL_EXPORT

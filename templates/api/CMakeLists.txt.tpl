@@ -19,6 +19,15 @@ set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Core)
 
+{{- range .Module.Externs }}
+{{- $extern := qtExtern . }}
+{{ if (not (eq $extern.Package "")) }}
+find_package({{$extern.Package}} REQUIRED 
+{{- if (not ( eq $extern.Component "")) }} COMPONENTS {{$extern.Component -}}{{- end -}}
+)
+{{- end }}
+{{- end }}
+
 set(OUTPUT_PATH ${LIBRARY_PATH}/)
 
 set ({{$SOURCES}}
@@ -39,7 +48,11 @@ target_include_directories({{$lib_id}}
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries({{$lib_id}} PUBLIC {{ range .Module.Imports }}{{snake .Name}}_api{{ end }} nlohmann_json::nlohmann_json Qt6::Core)
+target_link_libraries({{$lib_id}} PUBLIC {{ range .Module.Imports }}{{snake .Name}}_api {{ end }}
+{{- range .Module.Externs }}
+{{- $extern := qtExtern . }}
+{{- if (not (eq $extern.Library "")) }} {{$extern.Library}} {{ end -}}
+{{- end }} nlohmann_json::nlohmann_json Qt6::Core)
 
 target_compile_definitions({{$lib_id}} PRIVATE {{ $MODULE_ID }}_LIBRARY)
 

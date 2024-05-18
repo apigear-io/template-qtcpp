@@ -5,8 +5,10 @@
 #endif
 #include "api.h"
 #include "apigear/utilities/qt_native.json.adapter.h"
+
 #include <nlohmann/json.hpp>
 #include <QtCore>
+
 
 namespace testbed2 {
 

@@ -27,7 +27,7 @@ target_include_directories(tb_same1_api
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(tb_same1_api PUBLIC  nlohmann_json::nlohmann_json Qt6::Core)
+target_link_libraries(tb_same1_api PUBLIC nlohmann_json::nlohmann_json Qt6::Core)
 
 target_compile_definitions(tb_same1_api PRIVATE TB_SAME1_API_LIBRARY)
 

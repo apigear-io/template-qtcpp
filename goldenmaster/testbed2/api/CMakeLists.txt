@@ -27,7 +27,7 @@ target_include_directories(testbed2_api
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(testbed2_api PUBLIC  nlohmann_json::nlohmann_json Qt6::Core)
+target_link_libraries(testbed2_api PUBLIC nlohmann_json::nlohmann_json Qt6::Core)
 
 target_compile_definitions(testbed2_api PRIVATE TESTBED2_API_LIBRARY)
 

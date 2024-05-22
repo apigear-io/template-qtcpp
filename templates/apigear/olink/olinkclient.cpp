@@ -3,17 +3,31 @@
 #include "olink/clientnode.h"
 #include "olink/iobjectsink.h"
 #include "../utilities/logger.h"
-#include <QThreadPool>
 #include <QRunnable>
 #include <memory>
 
+namespace{
+const size_t THREADPOOL_SIZE = 1;
+}
 
-class TaskHandleMessage : public QRunnable
+
+class HandleMessageTask : public QRunnable
 {
+public:
+    HandleMessageTask(std::shared_ptr<ApiGear::ObjectLink::ClientNode> node, const std::string& message)
+        :m_node(node),
+        m_message(message)
+    {
+    }
+
     void run() override
     {
-        qDebug() << "WILL HANDLE MESSAGE IN A THREAD, fist is for link " << QThread::currentThread();
+        m_node->handleMessage(m_message);
     }
+
+private:
+    std::shared_ptr<ApiGear::ObjectLink::ClientNode> m_node;
+    std::string m_message;
 };
 
 using namespace ApiGear::ObjectLink;
@@ -26,7 +40,7 @@ OLinkClient::OLinkClient(ClientRegistry& registry, QObject* parent)
     , m_retryTimer(new QTimer(this))
 {
 
-    m_clientThreads.setMaxThreadCount(7);
+    m_handleMessageThreads.setMaxThreadCount(THREADPOOL_SIZE);
     AG_LOG_DEBUG(Q_FUNC_INFO);
     m_node->onLog(m_logger.logFunc());
     m_registry.onLog(m_logger.logFunc());
@@ -45,6 +59,7 @@ OLinkClient::OLinkClient(ClientRegistry& registry, QObject* parent)
 
 OLinkClient::~OLinkClient()
 {
+    m_handleMessageThreads.waitForDone();
     auto copyObjectLinkStatus = m_objectLinkStatus;
     for (auto& object : copyObjectLinkStatus){
         unlinkObjectSource(object.first);
@@ -67,6 +82,7 @@ void OLinkClient::connectToHost(QUrl url)
 
 void OLinkClient::disconnect()
 {
+    m_handleMessageThreads.waitForDone();
     for (const auto& object : m_objectLinkStatus){
         if (object.second != LinkStatus::NotLinked){
             m_node->unlinkRemote(object.first);
@@ -144,15 +160,13 @@ void OLinkClient::onDisconnected()
         object.second = LinkStatus::NotLinked;
     }
     AG_LOG_INFO(Q_FUNC_INFO + std::string(" socket disconnected"));
-    m_clientThreads.waitForDone();
 }
 
 void OLinkClient::handleTextMessage(const QString& message)
 {
-    auto* task = new TaskHandleMessage();
+    auto* task = new HandleMessageTask(m_node, message.toStdString());
     task->setAutoDelete(true);
-    m_clientThreads.start(task);
-   // m_node->handleMessage(message.toStdString());
+    m_handleMessageThreads.start(task);
 }
 
 void OLinkClient::processMessages()
@@ -170,7 +184,6 @@ void OLinkClient::processMessages()
     }
     if (m_socket->state() == QAbstractSocket::ConnectedState) {
 
-         qDebug() << "claims the message will be sent" ;
         while (!m_queue.isEmpty()) {
             // text message should be used for JSON format, binary messages for others
             auto message = m_queue.front();
@@ -195,6 +208,3 @@ QAbstractSocket::SocketState OLinkClient::getConnectionState()
 {
     return m_socket ? m_socket->state() : QAbstractSocket::UnconnectedState;
 }
-
-
-

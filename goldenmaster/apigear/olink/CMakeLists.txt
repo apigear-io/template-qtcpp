@@ -27,7 +27,6 @@ endif()
 set (SOURCES
     olinkhost.cpp
     olinkclient.cpp
-    olinkclientimpl.cpp
     olinkremote.cpp
 )
 

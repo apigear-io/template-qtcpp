@@ -104,10 +104,6 @@ features:
              raw: true
            - source: apigear/olink/olinkclient.cpp
              raw: true
-           - source: apigear/olink/olinkclientimpl.h
-             raw: true
-           - source: apigear/olink/olinkclientimpl.cpp
-             raw: true
            - source: apigear/olink/olinkhost.h
              raw: true
            - source: apigear/olink/olinkhost.cpp

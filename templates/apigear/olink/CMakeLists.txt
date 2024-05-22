@@ -17,7 +17,7 @@ if(NOT olink_core_FOUND)
   message(STATUS "objectlink-core-cpp NOT FOUND, fetching the git repository")
   FetchContent_Declare(olink_core
       GIT_REPOSITORY https://github.com/apigear-io/objectlink-core-cpp.git
-      GIT_TAG v0.2.6
+      GIT_TAG v0.2.10
       GIT_SHALLOW TRUE
       EXCLUDE_FROM_ALL FALSE
   )
@@ -27,7 +27,6 @@ endif()
 set (SOURCES
     olinkhost.cpp
     olinkclient.cpp
-    olinkclientimpl.cpp
     olinkremote.cpp
 )
 

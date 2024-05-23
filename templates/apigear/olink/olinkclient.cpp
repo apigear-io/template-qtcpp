@@ -3,7 +3,32 @@
 #include "olink/clientnode.h"
 #include "olink/iobjectsink.h"
 #include "../utilities/logger.h"
+#include <QRunnable>
 #include <memory>
+
+namespace{
+const size_t THREADPOOL_SIZE = 1;
+}
+
+
+class HandleMessageTask : public QRunnable
+{
+public:
+    HandleMessageTask(std::shared_ptr<ApiGear::ObjectLink::ClientNode> node, const std::string& message)
+        :m_node(node),
+        m_message(message)
+    {
+    }
+
+    void run() override
+    {
+        m_node->handleMessage(m_message);
+    }
+
+private:
+    std::shared_ptr<ApiGear::ObjectLink::ClientNode> m_node;
+    std::string m_message;
+};
 
 using namespace ApiGear::ObjectLink;
 
@@ -14,6 +39,7 @@ OLinkClient::OLinkClient(ClientRegistry& registry, QObject* parent)
     , m_node(ClientNode::create(registry))
     , m_retryTimer(new QTimer(this))
 {
+    m_handleMessageThreads.setMaxThreadCount(THREADPOOL_SIZE);
     AG_LOG_DEBUG(Q_FUNC_INFO);
     m_node->onLog(m_logger.logFunc());
     m_registry.onLog(m_logger.logFunc());
@@ -32,6 +58,7 @@ OLinkClient::OLinkClient(ClientRegistry& registry, QObject* parent)
 
 OLinkClient::~OLinkClient()
 {
+    m_handleMessageThreads.waitForDone();
     auto copyObjectLinkStatus = m_objectLinkStatus;
     for (auto& object : copyObjectLinkStatus){
         unlinkObjectSource(object.first);
@@ -54,6 +81,7 @@ void OLinkClient::connectToHost(QUrl url)
 
 void OLinkClient::disconnect()
 {
+    m_handleMessageThreads.waitForDone();
     for (const auto& object : m_objectLinkStatus){
         if (object.second != LinkStatus::NotLinked){
             m_node->unlinkRemote(object.first);
@@ -135,7 +163,9 @@ void OLinkClient::onDisconnected()
 
 void OLinkClient::handleTextMessage(const QString& message)
 {
-    m_node->handleMessage(message.toStdString());
+    auto* task = new HandleMessageTask(m_node, message.toStdString());
+    task->setAutoDelete(true);
+    m_handleMessageThreads.start(task);
 }
 
 void OLinkClient::processMessages()
@@ -177,6 +207,3 @@ QAbstractSocket::SocketState OLinkClient::getConnectionState()
 {
     return m_socket ? m_socket->state() : QAbstractSocket::UnconnectedState;
 }
-
-
-

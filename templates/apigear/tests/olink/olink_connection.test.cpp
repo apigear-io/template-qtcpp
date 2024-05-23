@@ -49,7 +49,6 @@ nlohmann::json initProperties = { {"property1", "some_string" }, { "property2", 
 
 TEST_CASE("OlinkConnection tests")
 {
-
     auto sink1 = std::make_shared<SinkObjectMock>();
     ALLOW_CALL(*sink1, olinkObjectName()).RETURN(sink1Id);
 
@@ -63,13 +62,14 @@ TEST_CASE("OlinkConnection tests")
     //And a test client that created with empty registry
     ApiGear::ObjectLink::ClientRegistry registry;
     auto testOlinkClient = std::make_shared<ApiGear::ObjectLink::OLinkClient>(registry);
+    QTest::qWait(300);
 
     SECTION("Client node connects to host before the object is linked. On teardown first disconnect sink then the client")
     {
         testOlinkClient->connectToHost(QUrl(localHostAddressWithPort));
-
-        REQUIRE(QTest::qWaitFor([&server](){return server.isSocketConnected();}, 100));
+        REQUIRE(QTest::qWaitFor([&server](){return server.isSocketConnected();}, 300));
         testOlinkClient->linkObjectSource(sink1);
+        REQUIRE(QTest::qWaitFor([&registry](){return registry.getSink(sink1Id).expired()== false;}, 100));
         REQUIRE(registry.getSink(sink1Id).lock() == sink1);
 
         // Node is available from registry when the object is linked
@@ -89,17 +89,19 @@ TEST_CASE("OlinkConnection tests")
         // does't contain neither the sink nor the node for unlinked this objectId
         REQUIRE_CALL(*sink1, olinkOnRelease());
         testOlinkClient->unlinkObjectSource(sink1Id);
-        REQUIRE(registry.getSink(sink1Id).lock() == nullptr);
-        REQUIRE(registry.getNode(sink1Id).lock() == nullptr);
+        REQUIRE(QTest::qWaitFor([&registry](){return registry.getSink(sink1Id).expired();}, 40));
+        REQUIRE(QTest::qWaitFor([&registry](){return registry.getNode(sink1Id).expired();}, 40));
+
         // And the server receives unlink message
         auto expectedUnlinkMessage = QString::fromStdString(converter.toString(ApiGear::ObjectLink::Protocol::unlinkMessage(sink1Id)));
         REQUIRE(serverReceivedMessages.getMessage() == expectedUnlinkMessage);
+
 
         testOlinkClient->disconnect();
         REQUIRE(QTest::qWaitFor([&server](){return !server.isSocketConnected();}, 40));
     }
 
-    SECTION("Client node connects to host after the object is linked. On teardown client node disconnects befor unlink.")
+    SECTION("OlinkConnection tests Client node connects to host after the object is linked. On teardown client node disconnects befor unlink.")
     {
         testOlinkClient->linkObjectSource(sink1);
         QTest::qWait(100); //make sure the process event is not blocking
@@ -110,7 +112,8 @@ TEST_CASE("OlinkConnection tests")
 
         // When client establishes connection
         testOlinkClient->connectToHost(QUrl(localHostAddressWithPort));
-        REQUIRE(QTest::qWaitFor([&server](){return server.isSocketConnected();}, 100));
+        REQUIRE(QTest::qWaitFor([&server](){return server.isSocketConnected();}, 300));
+        REQUIRE(QTest::qWaitFor([&registry](){return !registry.getNode(sink1Id).expired();}, 100));
         // The server receives link message
         auto expectedLinkMessage = QString::fromStdString(converter.toString(ApiGear::ObjectLink::Protocol::linkMessage(sink1Id)));
         REQUIRE(serverReceivedMessages.getMessage() == expectedLinkMessage);
@@ -128,8 +131,8 @@ TEST_CASE("OlinkConnection tests")
         testOlinkClient->disconnect();
 
         // Sink stays in registry in case user wants to reconnect.
+        REQUIRE(QTest::qWaitFor([&registry](){return registry.getNode(sink1Id).expired();}, 100));
         REQUIRE(registry.getSink(sink1Id).lock() == sink1);
-        REQUIRE(registry.getNode(sink1Id).lock() == nullptr);
 
         // And server receives unlink message.
         auto expectedUnlinkMessage = QString::fromStdString(converter.toString(ApiGear::ObjectLink::Protocol::unlinkMessage(sink1Id)));
@@ -138,7 +141,7 @@ TEST_CASE("OlinkConnection tests")
         // When object is then unlinked, there is no duplicated information about link release or unlink sent to server
         testOlinkClient->unlinkObjectSource(sink1Id);
         // And registry is cleaned up
-        REQUIRE(registry.getSink(sink1Id).lock() == nullptr);
+        REQUIRE(QTest::qWaitFor([&registry](){return registry.getSink(sink1Id).expired();}, 100));
         REQUIRE(QTest::qWaitFor([&server](){return !server.isSocketConnected();}, 40));
     }
 
@@ -149,7 +152,7 @@ TEST_CASE("OlinkConnection tests")
         testOlinkClient->linkObjectSource(sink2);
         testOlinkClient->connectToHost(QUrl(localHostAddressWithPort));
         QTest::qWait(100); //make sure the process event is not blocking
-
+        REQUIRE(QTest::qWaitFor([&registry](){return !registry.getNode(sink1Id).expired();}, 100));
         auto expectedLinkMessage1 = QString::fromStdString(converter.toString(ApiGear::ObjectLink::Protocol::linkMessage(sink1Id)));
         auto expectedLinkMessage2 = QString::fromStdString(converter.toString(ApiGear::ObjectLink::Protocol::linkMessage(sink2Id)));
         {
@@ -164,6 +167,7 @@ TEST_CASE("OlinkConnection tests")
         REQUIRE_CALL(*sink2, olinkOnRelease());
         testOlinkClient->disconnect();
 
+        REQUIRE( QTest::qWaitFor([&server](){return !server.isSocketConnected();}, 300));
         auto expectedUnlinkMessage1 = QString::fromStdString(converter.toString(ApiGear::ObjectLink::Protocol::unlinkMessage(sink1Id)));
         auto expectedUnlinkMessage2 = QString::fromStdString(converter.toString(ApiGear::ObjectLink::Protocol::unlinkMessage(sink2Id)));
         {
@@ -174,14 +178,14 @@ TEST_CASE("OlinkConnection tests")
             REQUIRE(checkMessageInContainer({msg1, msg2}, expectedUnlinkMessage2));
         }
 
-        REQUIRE( QTest::qWaitFor([&server](){return !server.isSocketConnected();}, 100));
 
         // And sink2 is unlikend
         testOlinkClient->unlinkObjectSource(sink2Id);
 
         // And when client connects again
         testOlinkClient->connectToHost(QUrl(localHostAddressWithPort));
-        REQUIRE(QTest::qWaitFor([&server](){return server.isSocketConnected();}, 100));
+        REQUIRE(QTest::qWaitFor([&server](){return server.isSocketConnected();}, 300));
+                REQUIRE(QTest::qWaitFor([&registry](){return !registry.getNode(sink1Id).expired();}, 100));
         // Then client node sends link message only for sink1.
         REQUIRE(serverReceivedMessages.getMessage() == expectedLinkMessage1);
 
@@ -194,14 +198,17 @@ TEST_CASE("OlinkConnection tests")
         REQUIRE(QTest::qWaitFor([&server](){return !server.isSocketConnected();}, 40));
     }
 
-    SECTION("Cleanup resources olink connection destruction.")
+
+    SECTION("OLinkConnection: Cleanup resources olink connection destruction.")
     {
         // Given a sink linked to object on server side
         testOlinkClient->linkObjectSource(sink1);
+        REQUIRE(QTest::qWaitFor([&registry](){return !registry.getSink(sink1Id).expired();}, 100));
         REQUIRE(registry.getSink(sink1Id).lock() == sink1);
         testOlinkClient->connectToHost(QUrl(localHostAddressWithPort));
         REQUIRE(QTest::qWaitFor([&registry](){return !registry.getNode(sink1Id).expired();}, 100));
         REQUIRE(registry.getNode(sink1Id).lock().get() == testOlinkClient->node());
+
         auto expectedLinkMessage = QString::fromStdString(converter.toString(ApiGear::ObjectLink::Protocol::linkMessage(sink1Id)));
         REQUIRE(serverReceivedMessages.getMessage() == expectedLinkMessage);
 
@@ -219,7 +226,6 @@ TEST_CASE("OlinkConnection tests")
 }
 
 
-
 TEST_CASE("Connection closed for client from server side tests")
 {
     //GIVEN OlinkClient with a sink linked to an object on server side
@@ -235,11 +241,10 @@ TEST_CASE("Connection closed for client from server side tests")
     auto testOlinkClient = std::make_shared<ApiGear::ObjectLink::OLinkClient>(registry);
     testOlinkClient->connectToHost(QUrl(localHostAddressWithPort));
     testOlinkClient->linkObjectSource(sink1);
-
+    REQUIRE(QTest::qWaitFor([&registry](){return !registry.getSink(sink1Id).expired();}, 100));
     REQUIRE(registry.getSink(sink1Id).lock() == sink1);
-    REQUIRE(QTest::qWaitFor([&registry](){return !registry.getNode(sink1Id).expired();}, 200));
+    REQUIRE(QTest::qWaitFor([&registry](){return !registry.getNode(sink1Id).expired();}, 100));
     REQUIRE(registry.getNode(sink1Id).lock().get() == testOlinkClient->node());
-
     auto expectedLinkMessage = QString::fromStdString(converter.toString(ApiGear::ObjectLink::Protocol::linkMessage(sink1Id)));
     REQUIRE(serverReceivedMessages.getMessage() == expectedLinkMessage);
 
@@ -271,11 +276,11 @@ TEST_CASE("Connection closed for client from server side tests")
         // Test cleanup
        REQUIRE_CALL(*sink1, olinkOnRelease());
        testOlinkClient->disconnect();
+       REQUIRE(QTest::qWaitFor([&server](){return !server.isSocketConnected();}, 100));
 
        auto expectedUnlinkMessage = QString::fromStdString(converter.toString(ApiGear::ObjectLink::Protocol::unlinkMessage(sink1Id)));
        REQUIRE(serverReceivedMessages.getMessage() == expectedUnlinkMessage);
 
-       REQUIRE(QTest::qWaitFor([&server](){return !server.isSocketConnected();}, 100));
     }
 
     SECTION("Messages send during disconnected time are queued and send  when connection is back, along with the link message. Some messages are sent before the link message.")

@@ -2,7 +2,7 @@
 
 #include <QtCore>
 #include <QtWebSockets>
-
+#include <QThreadPool>
 #include "olink/consolelogger.h"
 #include "olink_common.h"
 
@@ -120,6 +120,8 @@ private:
     QUrl m_serverUrl;
     /** The timer used for to retry connection if it failed. */
     QTimer* m_retryTimer;
+    /** A ThreadPool to handle incoming messages in separate threads. By default the THREADPOOL_SIZE is set to one to keep order of messages guaranteed */
+    QThreadPool m_handleMessageThreads;
 };
 
 }} // namespace ApiGear::ObjectLink

@@ -23,6 +23,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "utilities/logger.h"
 
 #include <QtCore>
+#include <QtConcurrent>
 
 using namespace ApiGear;
 using namespace ApiGear::ObjectLink;
@@ -166,132 +167,112 @@ int OLinkManyParamInterface::prop4() const
     return m_prop4;
 }
 
+
 int OLinkManyParamInterface::func1(int param1)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_node) {
-        return 0;
-    }
-    int value{ 0 };
-    func1Async(param1)
-        .then([&](int result) {
-            value = result;
-        })
-        .wait();
-    return value;
+    auto future = func1Async(param1);
+    future.waitForFinished();
+    return future.result();
 }
 
-QtPromise::QPromise<int> OLinkManyParamInterface::func1Async(int param1)
+QFuture<int> OLinkManyParamInterface::func1Async(int param1)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
+    auto resolve = std::make_shared<QPromise<int>>();
     if(!m_node) {
-        return QtPromise::QPromise<int>::reject("not initialized");
+        static auto noConnectionLogMessage = "Cannot request call on service + OLinkManyParamInterface::func1, client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(noConnectionLogMessage);
+            resolve->addResult(0);
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func1");
-    return QtPromise::QPromise<int>{[&](
-        const QtPromise::QPromiseResolve<int>& resolve) {
-            m_node->invokeRemote(operationId, nlohmann::json::array({param1}), [resolve](InvokeReplyArg arg) {                
-                const int& value = arg.value.get<int>();
-                resolve(value);
+    m_node->invokeRemote(operationId, nlohmann::json::array({param1}), 
+            [resolve](InvokeReplyArg arg) {
+                int value = arg.value.get<int>();
+                resolve->addResult(value);
             });
-        }
-    };
+    return resolve->future();
 }
+
 
 int OLinkManyParamInterface::func2(int param1, int param2)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_node) {
-        return 0;
-    }
-    int value{ 0 };
-    func2Async(param1, param2)
-        .then([&](int result) {
-            value = result;
-        })
-        .wait();
-    return value;
+    auto future = func2Async(param1, param2);
+    future.waitForFinished();
+    return future.result();
 }
 
-QtPromise::QPromise<int> OLinkManyParamInterface::func2Async(int param1, int param2)
+QFuture<int> OLinkManyParamInterface::func2Async(int param1, int param2)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
+    auto resolve = std::make_shared<QPromise<int>>();
     if(!m_node) {
-        return QtPromise::QPromise<int>::reject("not initialized");
+        static auto noConnectionLogMessage = "Cannot request call on service + OLinkManyParamInterface::func2, client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(noConnectionLogMessage);
+            resolve->addResult(0);
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func2");
-    return QtPromise::QPromise<int>{[&](
-        const QtPromise::QPromiseResolve<int>& resolve) {
-            m_node->invokeRemote(operationId, nlohmann::json::array({param1,param2}), [resolve](InvokeReplyArg arg) {                
-                const int& value = arg.value.get<int>();
-                resolve(value);
+    m_node->invokeRemote(operationId, nlohmann::json::array({param1,param2}), 
+            [resolve](InvokeReplyArg arg) {
+                int value = arg.value.get<int>();
+                resolve->addResult(value);
             });
-        }
-    };
+    return resolve->future();
 }
+
 
 int OLinkManyParamInterface::func3(int param1, int param2, int param3)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_node) {
-        return 0;
-    }
-    int value{ 0 };
-    func3Async(param1, param2, param3)
-        .then([&](int result) {
-            value = result;
-        })
-        .wait();
-    return value;
+    auto future = func3Async(param1, param2, param3);
+    future.waitForFinished();
+    return future.result();
 }
 
-QtPromise::QPromise<int> OLinkManyParamInterface::func3Async(int param1, int param2, int param3)
+QFuture<int> OLinkManyParamInterface::func3Async(int param1, int param2, int param3)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
+    auto resolve = std::make_shared<QPromise<int>>();
     if(!m_node) {
-        return QtPromise::QPromise<int>::reject("not initialized");
+        static auto noConnectionLogMessage = "Cannot request call on service + OLinkManyParamInterface::func3, client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(noConnectionLogMessage);
+            resolve->addResult(0);
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func3");
-    return QtPromise::QPromise<int>{[&](
-        const QtPromise::QPromiseResolve<int>& resolve) {
-            m_node->invokeRemote(operationId, nlohmann::json::array({param1,param2,param3}), [resolve](InvokeReplyArg arg) {                
-                const int& value = arg.value.get<int>();
-                resolve(value);
+    m_node->invokeRemote(operationId, nlohmann::json::array({param1,param2,param3}), 
+            [resolve](InvokeReplyArg arg) {
+                int value = arg.value.get<int>();
+                resolve->addResult(value);
             });
-        }
-    };
+    return resolve->future();
 }
+
 
 int OLinkManyParamInterface::func4(int param1, int param2, int param3, int param4)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_node) {
-        return 0;
-    }
-    int value{ 0 };
-    func4Async(param1, param2, param3, param4)
-        .then([&](int result) {
-            value = result;
-        })
-        .wait();
-    return value;
+    auto future = func4Async(param1, param2, param3, param4);
+    future.waitForFinished();
+    return future.result();
 }
 
-QtPromise::QPromise<int> OLinkManyParamInterface::func4Async(int param1, int param2, int param3, int param4)
+QFuture<int> OLinkManyParamInterface::func4Async(int param1, int param2, int param3, int param4)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
+    auto resolve = std::make_shared<QPromise<int>>();
     if(!m_node) {
-        return QtPromise::QPromise<int>::reject("not initialized");
+        static auto noConnectionLogMessage = "Cannot request call on service + OLinkManyParamInterface::func4, client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(noConnectionLogMessage);
+            resolve->addResult(0);
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func4");
-    return QtPromise::QPromise<int>{[&](
-        const QtPromise::QPromiseResolve<int>& resolve) {
-            m_node->invokeRemote(operationId, nlohmann::json::array({param1,param2,param3,param4}), [resolve](InvokeReplyArg arg) {                
-                const int& value = arg.value.get<int>();
-                resolve(value);
+    m_node->invokeRemote(operationId, nlohmann::json::array({param1,param2,param3,param4}), 
+            [resolve](InvokeReplyArg arg) {
+                int value = arg.value.get<int>();
+                resolve->addResult(value);
             });
-        }
-    };
+    return resolve->future();
 }
 
 

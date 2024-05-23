@@ -12,6 +12,7 @@
 #include "utilities/logger.h"
 
 #include <QtCore>
+#include <QtConcurrent>
 
 using namespace ApiGear;
 using namespace ApiGear::ObjectLink;
@@ -83,55 +84,45 @@ void {{$class}}::set{{Camel .Name}}Local({{qtParam "" .}})
 {{- range .Interface.Operations }}
 {{- $return := (qtReturn "" .Return)}}
 
+
 {{$return}} {{$class}}::{{camel .Name}}({{qtParams "" .Params}})
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_node) {
-        return{{ if (not .Return.IsVoid) }} {{qtDefault "" .Return}} {{- end}};
-    }
+    auto future = {{camel .Name}}Async({{ qtVars .Params }});
+    future.waitForFinished();
     {{- if .Return.IsVoid }}
-    InvokeReplyFunc func = [this](InvokeReplyArg arg) {};
-    const nlohmann::json &args = nlohmann::json::array({
-        {{ qtVars .Params }}
-    });
-    static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "{{.Name}}");
-    m_node->invokeRemote(operationId, args, func);
-    {{- else }}
-    {{$return}} value{ {{qtDefault "" .Return}} };
-    {{camel .Name}}Async({{ qtVars .Params }})
-        .then([&]({{$return}} result) {
-            value = result;
-        })
-        .wait();
-    return value;
+    return;
+    {{- else}}
+    return future.result();
     {{- end }}
 }
 
-QtPromise::QPromise<{{$return}}> {{$class}}::{{camel .Name}}Async({{qtParams "" .Params}})
+QFuture<{{$return}}> {{$class}}::{{camel .Name}}Async({{qtParams "" .Params}})
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
+    auto resolve = std::make_shared<QPromise<{{$return}}>>();
     if(!m_node) {
-        return QtPromise::QPromise<{{$return}}>::reject("not initialized");
+        static auto noConnectionLogMessage = "Cannot request call on service + {{$class}}::{{camel .Name}}, client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(noConnectionLogMessage);
+        {{- if .Return.IsVoid }}
+            resolve->finish();
+        {{- else }}
+            resolve->addResult({{qtDefault "" .Return}});
+        {{- end}}
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "{{.Name}}");
-    {{- if .Return.IsVoid }}
     m_node->invokeRemote(operationId, nlohmann::json::array({
-            {{ range $i, $e := .Params }}{{if $i}}, {{end}}
-                {{.Name}}
-            {{- end }}}));
-    return QtPromise::QPromise<void>::resolve();
-    {{- else }}
-    return QtPromise::QPromise<{{$return}}>{[&](
-        const QtPromise::QPromiseResolve<{{$return}}>& resolve) {
-            m_node->invokeRemote(operationId, nlohmann::json::array({
             {{- range $i, $e := .Params }}{{if $i}},{{end}}{{.Name}}
-            {{- end }}}), [resolve](InvokeReplyArg arg) {                
-                const {{$return}}& value = arg.value.get<{{$return}}>();
-                resolve(value);
+            {{- end }}}), 
+            [resolve](InvokeReplyArg arg) {         
+                {{- if .Return.IsVoid }}
+                resolve->finish();
+                {{- else }}
+                {{$return}} value = arg.value.get<{{$return}}>();
+                resolve->addResult(value);
+                {{- end}}
             });
-        }
-    };
-    {{- end}}
+    return resolve->future();
 }
 
 {{- end }}

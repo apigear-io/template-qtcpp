@@ -18,7 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #pragma once
 
 #include <QtCore>
-#include <QtPromise>
+#include <QFuture>
 
 #include "testbed1/api/api.h"
 #include "olink/iobjectsink.h"
@@ -103,7 +103,7 @@ public:
     /**
     * Remote call of IStructInterface::funcBool on the StructInterface service.
     */
-    QtPromise::QPromise<StructBool> funcBoolAsync(const StructBool& paramBool);
+    QFuture<StructBool> funcBoolAsync(const StructBool& paramBool);
     /**
     * Remote call of IStructInterface::funcInt on the StructInterface service.
     * Uses funcIntAsync
@@ -112,7 +112,7 @@ public:
     /**
     * Remote call of IStructInterface::funcInt on the StructInterface service.
     */
-    QtPromise::QPromise<StructBool> funcIntAsync(const StructInt& paramInt);
+    QFuture<StructBool> funcIntAsync(const StructInt& paramInt);
     /**
     * Remote call of IStructInterface::funcFloat on the StructInterface service.
     * Uses funcFloatAsync
@@ -121,7 +121,7 @@ public:
     /**
     * Remote call of IStructInterface::funcFloat on the StructInterface service.
     */
-    QtPromise::QPromise<StructFloat> funcFloatAsync(const StructFloat& paramFloat);
+    QFuture<StructFloat> funcFloatAsync(const StructFloat& paramFloat);
     /**
     * Remote call of IStructInterface::funcString on the StructInterface service.
     * Uses funcStringAsync
@@ -130,7 +130,7 @@ public:
     /**
     * Remote call of IStructInterface::funcString on the StructInterface service.
     */
-    QtPromise::QPromise<StructString> funcStringAsync(const StructString& paramString);
+    QFuture<StructString> funcStringAsync(const StructString& paramString);
 
 signals:
 

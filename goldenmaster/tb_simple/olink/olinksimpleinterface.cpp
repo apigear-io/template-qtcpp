@@ -23,6 +23,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "utilities/logger.h"
 
 #include <QtCore>
+#include <QtConcurrent>
 
 using namespace ApiGear;
 using namespace ApiGear::ObjectLink;
@@ -286,286 +287,246 @@ QString OLinkSimpleInterface::propString() const
     return m_propString;
 }
 
+
 void OLinkSimpleInterface::funcVoid()
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_node) {
-        return;
-    }
-    InvokeReplyFunc func = [this](InvokeReplyArg arg) {};
-    const nlohmann::json &args = nlohmann::json::array({
-        
-    });
-    static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcVoid");
-    m_node->invokeRemote(operationId, args, func);
+    auto future = funcVoidAsync();
+    future.waitForFinished();
+    return;
 }
 
-QtPromise::QPromise<void> OLinkSimpleInterface::funcVoidAsync()
+QFuture<void> OLinkSimpleInterface::funcVoidAsync()
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
+    auto resolve = std::make_shared<QPromise<void>>();
     if(!m_node) {
-        return QtPromise::QPromise<void>::reject("not initialized");
+        static auto noConnectionLogMessage = "Cannot request call on service + OLinkSimpleInterface::funcVoid, client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(noConnectionLogMessage);
+            resolve->finish();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcVoid");
-    m_node->invokeRemote(operationId, nlohmann::json::array({
-            }));
-    return QtPromise::QPromise<void>::resolve();
+    m_node->invokeRemote(operationId, nlohmann::json::array({}), 
+            [resolve](InvokeReplyArg arg) {
+                resolve->finish();
+            });
+    return resolve->future();
 }
+
 
 bool OLinkSimpleInterface::funcBool(bool paramBool)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_node) {
-        return false;
-    }
-    bool value{ false };
-    funcBoolAsync(paramBool)
-        .then([&](bool result) {
-            value = result;
-        })
-        .wait();
-    return value;
+    auto future = funcBoolAsync(paramBool);
+    future.waitForFinished();
+    return future.result();
 }
 
-QtPromise::QPromise<bool> OLinkSimpleInterface::funcBoolAsync(bool paramBool)
+QFuture<bool> OLinkSimpleInterface::funcBoolAsync(bool paramBool)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
+    auto resolve = std::make_shared<QPromise<bool>>();
     if(!m_node) {
-        return QtPromise::QPromise<bool>::reject("not initialized");
+        static auto noConnectionLogMessage = "Cannot request call on service + OLinkSimpleInterface::funcBool, client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(noConnectionLogMessage);
+            resolve->addResult(false);
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcBool");
-    return QtPromise::QPromise<bool>{[&](
-        const QtPromise::QPromiseResolve<bool>& resolve) {
-            m_node->invokeRemote(operationId, nlohmann::json::array({paramBool}), [resolve](InvokeReplyArg arg) {                
-                const bool& value = arg.value.get<bool>();
-                resolve(value);
+    m_node->invokeRemote(operationId, nlohmann::json::array({paramBool}), 
+            [resolve](InvokeReplyArg arg) {
+                bool value = arg.value.get<bool>();
+                resolve->addResult(value);
             });
-        }
-    };
+    return resolve->future();
 }
+
 
 int OLinkSimpleInterface::funcInt(int paramInt)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_node) {
-        return 0;
-    }
-    int value{ 0 };
-    funcIntAsync(paramInt)
-        .then([&](int result) {
-            value = result;
-        })
-        .wait();
-    return value;
+    auto future = funcIntAsync(paramInt);
+    future.waitForFinished();
+    return future.result();
 }
 
-QtPromise::QPromise<int> OLinkSimpleInterface::funcIntAsync(int paramInt)
+QFuture<int> OLinkSimpleInterface::funcIntAsync(int paramInt)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
+    auto resolve = std::make_shared<QPromise<int>>();
     if(!m_node) {
-        return QtPromise::QPromise<int>::reject("not initialized");
+        static auto noConnectionLogMessage = "Cannot request call on service + OLinkSimpleInterface::funcInt, client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(noConnectionLogMessage);
+            resolve->addResult(0);
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcInt");
-    return QtPromise::QPromise<int>{[&](
-        const QtPromise::QPromiseResolve<int>& resolve) {
-            m_node->invokeRemote(operationId, nlohmann::json::array({paramInt}), [resolve](InvokeReplyArg arg) {                
-                const int& value = arg.value.get<int>();
-                resolve(value);
+    m_node->invokeRemote(operationId, nlohmann::json::array({paramInt}), 
+            [resolve](InvokeReplyArg arg) {
+                int value = arg.value.get<int>();
+                resolve->addResult(value);
             });
-        }
-    };
+    return resolve->future();
 }
+
 
 qint32 OLinkSimpleInterface::funcInt32(qint32 paramInt32)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_node) {
-        return 0;
-    }
-    qint32 value{ 0 };
-    funcInt32Async(paramInt32)
-        .then([&](qint32 result) {
-            value = result;
-        })
-        .wait();
-    return value;
+    auto future = funcInt32Async(paramInt32);
+    future.waitForFinished();
+    return future.result();
 }
 
-QtPromise::QPromise<qint32> OLinkSimpleInterface::funcInt32Async(qint32 paramInt32)
+QFuture<qint32> OLinkSimpleInterface::funcInt32Async(qint32 paramInt32)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
+    auto resolve = std::make_shared<QPromise<qint32>>();
     if(!m_node) {
-        return QtPromise::QPromise<qint32>::reject("not initialized");
+        static auto noConnectionLogMessage = "Cannot request call on service + OLinkSimpleInterface::funcInt32, client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(noConnectionLogMessage);
+            resolve->addResult(0);
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcInt32");
-    return QtPromise::QPromise<qint32>{[&](
-        const QtPromise::QPromiseResolve<qint32>& resolve) {
-            m_node->invokeRemote(operationId, nlohmann::json::array({paramInt32}), [resolve](InvokeReplyArg arg) {                
-                const qint32& value = arg.value.get<qint32>();
-                resolve(value);
+    m_node->invokeRemote(operationId, nlohmann::json::array({paramInt32}), 
+            [resolve](InvokeReplyArg arg) {
+                qint32 value = arg.value.get<qint32>();
+                resolve->addResult(value);
             });
-        }
-    };
+    return resolve->future();
 }
+
 
 qint64 OLinkSimpleInterface::funcInt64(qint64 paramInt64)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_node) {
-        return 0LL;
-    }
-    qint64 value{ 0LL };
-    funcInt64Async(paramInt64)
-        .then([&](qint64 result) {
-            value = result;
-        })
-        .wait();
-    return value;
+    auto future = funcInt64Async(paramInt64);
+    future.waitForFinished();
+    return future.result();
 }
 
-QtPromise::QPromise<qint64> OLinkSimpleInterface::funcInt64Async(qint64 paramInt64)
+QFuture<qint64> OLinkSimpleInterface::funcInt64Async(qint64 paramInt64)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
+    auto resolve = std::make_shared<QPromise<qint64>>();
     if(!m_node) {
-        return QtPromise::QPromise<qint64>::reject("not initialized");
+        static auto noConnectionLogMessage = "Cannot request call on service + OLinkSimpleInterface::funcInt64, client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(noConnectionLogMessage);
+            resolve->addResult(0LL);
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcInt64");
-    return QtPromise::QPromise<qint64>{[&](
-        const QtPromise::QPromiseResolve<qint64>& resolve) {
-            m_node->invokeRemote(operationId, nlohmann::json::array({paramInt64}), [resolve](InvokeReplyArg arg) {                
-                const qint64& value = arg.value.get<qint64>();
-                resolve(value);
+    m_node->invokeRemote(operationId, nlohmann::json::array({paramInt64}), 
+            [resolve](InvokeReplyArg arg) {
+                qint64 value = arg.value.get<qint64>();
+                resolve->addResult(value);
             });
-        }
-    };
+    return resolve->future();
 }
+
 
 qreal OLinkSimpleInterface::funcFloat(qreal paramFloat)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_node) {
-        return 0.0f;
-    }
-    qreal value{ 0.0f };
-    funcFloatAsync(paramFloat)
-        .then([&](qreal result) {
-            value = result;
-        })
-        .wait();
-    return value;
+    auto future = funcFloatAsync(paramFloat);
+    future.waitForFinished();
+    return future.result();
 }
 
-QtPromise::QPromise<qreal> OLinkSimpleInterface::funcFloatAsync(qreal paramFloat)
+QFuture<qreal> OLinkSimpleInterface::funcFloatAsync(qreal paramFloat)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
+    auto resolve = std::make_shared<QPromise<qreal>>();
     if(!m_node) {
-        return QtPromise::QPromise<qreal>::reject("not initialized");
+        static auto noConnectionLogMessage = "Cannot request call on service + OLinkSimpleInterface::funcFloat, client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(noConnectionLogMessage);
+            resolve->addResult(0.0f);
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcFloat");
-    return QtPromise::QPromise<qreal>{[&](
-        const QtPromise::QPromiseResolve<qreal>& resolve) {
-            m_node->invokeRemote(operationId, nlohmann::json::array({paramFloat}), [resolve](InvokeReplyArg arg) {                
-                const qreal& value = arg.value.get<qreal>();
-                resolve(value);
+    m_node->invokeRemote(operationId, nlohmann::json::array({paramFloat}), 
+            [resolve](InvokeReplyArg arg) {
+                qreal value = arg.value.get<qreal>();
+                resolve->addResult(value);
             });
-        }
-    };
+    return resolve->future();
 }
+
 
 float OLinkSimpleInterface::funcFloat32(float paramFloat32)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_node) {
-        return 0.0f;
-    }
-    float value{ 0.0f };
-    funcFloat32Async(paramFloat32)
-        .then([&](float result) {
-            value = result;
-        })
-        .wait();
-    return value;
+    auto future = funcFloat32Async(paramFloat32);
+    future.waitForFinished();
+    return future.result();
 }
 
-QtPromise::QPromise<float> OLinkSimpleInterface::funcFloat32Async(float paramFloat32)
+QFuture<float> OLinkSimpleInterface::funcFloat32Async(float paramFloat32)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
+    auto resolve = std::make_shared<QPromise<float>>();
     if(!m_node) {
-        return QtPromise::QPromise<float>::reject("not initialized");
+        static auto noConnectionLogMessage = "Cannot request call on service + OLinkSimpleInterface::funcFloat32, client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(noConnectionLogMessage);
+            resolve->addResult(0.0f);
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcFloat32");
-    return QtPromise::QPromise<float>{[&](
-        const QtPromise::QPromiseResolve<float>& resolve) {
-            m_node->invokeRemote(operationId, nlohmann::json::array({paramFloat32}), [resolve](InvokeReplyArg arg) {                
-                const float& value = arg.value.get<float>();
-                resolve(value);
+    m_node->invokeRemote(operationId, nlohmann::json::array({paramFloat32}), 
+            [resolve](InvokeReplyArg arg) {
+                float value = arg.value.get<float>();
+                resolve->addResult(value);
             });
-        }
-    };
+    return resolve->future();
 }
+
 
 double OLinkSimpleInterface::funcFloat64(double paramFloat)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_node) {
-        return 0.0;
-    }
-    double value{ 0.0 };
-    funcFloat64Async(paramFloat)
-        .then([&](double result) {
-            value = result;
-        })
-        .wait();
-    return value;
+    auto future = funcFloat64Async(paramFloat);
+    future.waitForFinished();
+    return future.result();
 }
 
-QtPromise::QPromise<double> OLinkSimpleInterface::funcFloat64Async(double paramFloat)
+QFuture<double> OLinkSimpleInterface::funcFloat64Async(double paramFloat)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
+    auto resolve = std::make_shared<QPromise<double>>();
     if(!m_node) {
-        return QtPromise::QPromise<double>::reject("not initialized");
+        static auto noConnectionLogMessage = "Cannot request call on service + OLinkSimpleInterface::funcFloat64, client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(noConnectionLogMessage);
+            resolve->addResult(0.0);
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcFloat64");
-    return QtPromise::QPromise<double>{[&](
-        const QtPromise::QPromiseResolve<double>& resolve) {
-            m_node->invokeRemote(operationId, nlohmann::json::array({paramFloat}), [resolve](InvokeReplyArg arg) {                
-                const double& value = arg.value.get<double>();
-                resolve(value);
+    m_node->invokeRemote(operationId, nlohmann::json::array({paramFloat}), 
+            [resolve](InvokeReplyArg arg) {
+                double value = arg.value.get<double>();
+                resolve->addResult(value);
             });
-        }
-    };
+    return resolve->future();
 }
+
 
 QString OLinkSimpleInterface::funcString(const QString& paramString)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_node) {
-        return QString();
-    }
-    QString value{ QString() };
-    funcStringAsync(paramString)
-        .then([&](QString result) {
-            value = result;
-        })
-        .wait();
-    return value;
+    auto future = funcStringAsync(paramString);
+    future.waitForFinished();
+    return future.result();
 }
 
-QtPromise::QPromise<QString> OLinkSimpleInterface::funcStringAsync(const QString& paramString)
+QFuture<QString> OLinkSimpleInterface::funcStringAsync(const QString& paramString)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
+    auto resolve = std::make_shared<QPromise<QString>>();
     if(!m_node) {
-        return QtPromise::QPromise<QString>::reject("not initialized");
+        static auto noConnectionLogMessage = "Cannot request call on service + OLinkSimpleInterface::funcString, client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(noConnectionLogMessage);
+            resolve->addResult(QString());
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcString");
-    return QtPromise::QPromise<QString>{[&](
-        const QtPromise::QPromiseResolve<QString>& resolve) {
-            m_node->invokeRemote(operationId, nlohmann::json::array({paramString}), [resolve](InvokeReplyArg arg) {                
-                const QString& value = arg.value.get<QString>();
-                resolve(value);
+    m_node->invokeRemote(operationId, nlohmann::json::array({paramString}), 
+            [resolve](InvokeReplyArg arg) {
+                QString value = arg.value.get<QString>();
+                resolve->addResult(value);
             });
-        }
-    };
+    return resolve->future();
 }
 
 

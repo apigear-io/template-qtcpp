@@ -23,6 +23,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "utilities/logger.h"
 
 #include <QtCore>
+#include <QtConcurrent>
 
 using namespace ApiGear;
 using namespace ApiGear::ObjectLink;
@@ -106,68 +107,58 @@ Enum2::Enum2Enum OLinkSameEnum2Interface::prop2() const
     return m_prop2;
 }
 
+
 Enum1::Enum1Enum OLinkSameEnum2Interface::func1(Enum1::Enum1Enum param1)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_node) {
-        return Enum1::Value1;
-    }
-    Enum1::Enum1Enum value{ Enum1::Value1 };
-    func1Async(param1)
-        .then([&](Enum1::Enum1Enum result) {
-            value = result;
-        })
-        .wait();
-    return value;
+    auto future = func1Async(param1);
+    future.waitForFinished();
+    return future.result();
 }
 
-QtPromise::QPromise<Enum1::Enum1Enum> OLinkSameEnum2Interface::func1Async(Enum1::Enum1Enum param1)
+QFuture<Enum1::Enum1Enum> OLinkSameEnum2Interface::func1Async(Enum1::Enum1Enum param1)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
+    auto resolve = std::make_shared<QPromise<Enum1::Enum1Enum>>();
     if(!m_node) {
-        return QtPromise::QPromise<Enum1::Enum1Enum>::reject("not initialized");
+        static auto noConnectionLogMessage = "Cannot request call on service + OLinkSameEnum2Interface::func1, client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(noConnectionLogMessage);
+            resolve->addResult(Enum1::Value1);
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func1");
-    return QtPromise::QPromise<Enum1::Enum1Enum>{[&](
-        const QtPromise::QPromiseResolve<Enum1::Enum1Enum>& resolve) {
-            m_node->invokeRemote(operationId, nlohmann::json::array({param1}), [resolve](InvokeReplyArg arg) {                
-                const Enum1::Enum1Enum& value = arg.value.get<Enum1::Enum1Enum>();
-                resolve(value);
+    m_node->invokeRemote(operationId, nlohmann::json::array({param1}), 
+            [resolve](InvokeReplyArg arg) {
+                Enum1::Enum1Enum value = arg.value.get<Enum1::Enum1Enum>();
+                resolve->addResult(value);
             });
-        }
-    };
+    return resolve->future();
 }
+
 
 Enum1::Enum1Enum OLinkSameEnum2Interface::func2(Enum1::Enum1Enum param1, Enum2::Enum2Enum param2)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_node) {
-        return Enum1::Value1;
-    }
-    Enum1::Enum1Enum value{ Enum1::Value1 };
-    func2Async(param1, param2)
-        .then([&](Enum1::Enum1Enum result) {
-            value = result;
-        })
-        .wait();
-    return value;
+    auto future = func2Async(param1, param2);
+    future.waitForFinished();
+    return future.result();
 }
 
-QtPromise::QPromise<Enum1::Enum1Enum> OLinkSameEnum2Interface::func2Async(Enum1::Enum1Enum param1, Enum2::Enum2Enum param2)
+QFuture<Enum1::Enum1Enum> OLinkSameEnum2Interface::func2Async(Enum1::Enum1Enum param1, Enum2::Enum2Enum param2)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
+    auto resolve = std::make_shared<QPromise<Enum1::Enum1Enum>>();
     if(!m_node) {
-        return QtPromise::QPromise<Enum1::Enum1Enum>::reject("not initialized");
+        static auto noConnectionLogMessage = "Cannot request call on service + OLinkSameEnum2Interface::func2, client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(noConnectionLogMessage);
+            resolve->addResult(Enum1::Value1);
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func2");
-    return QtPromise::QPromise<Enum1::Enum1Enum>{[&](
-        const QtPromise::QPromiseResolve<Enum1::Enum1Enum>& resolve) {
-            m_node->invokeRemote(operationId, nlohmann::json::array({param1,param2}), [resolve](InvokeReplyArg arg) {                
-                const Enum1::Enum1Enum& value = arg.value.get<Enum1::Enum1Enum>();
-                resolve(value);
+    m_node->invokeRemote(operationId, nlohmann::json::array({param1,param2}), 
+            [resolve](InvokeReplyArg arg) {
+                Enum1::Enum1Enum value = arg.value.get<Enum1::Enum1Enum>();
+                resolve->addResult(value);
             });
-        }
-    };
+    return resolve->future();
 }
 
 

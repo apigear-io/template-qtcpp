@@ -18,7 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #pragma once
 
 #include <QtCore>
-#include <QtPromise>
+#include <QFuture>
 
 #include "testbed2/api/api.h"
 #include "olink/iobjectsink.h"
@@ -93,7 +93,7 @@ public:
     /**
     * Remote call of INestedStruct3Interface::func1 on the NestedStruct3Interface service.
     */
-    QtPromise::QPromise<NestedStruct1> func1Async(const NestedStruct1& param1);
+    QFuture<NestedStruct1> func1Async(const NestedStruct1& param1);
     /**
     * Remote call of INestedStruct3Interface::func2 on the NestedStruct3Interface service.
     * Uses func2Async
@@ -102,7 +102,7 @@ public:
     /**
     * Remote call of INestedStruct3Interface::func2 on the NestedStruct3Interface service.
     */
-    QtPromise::QPromise<NestedStruct1> func2Async(const NestedStruct1& param1, const NestedStruct2& param2);
+    QFuture<NestedStruct1> func2Async(const NestedStruct1& param1, const NestedStruct2& param2);
     /**
     * Remote call of INestedStruct3Interface::func3 on the NestedStruct3Interface service.
     * Uses func3Async
@@ -111,7 +111,7 @@ public:
     /**
     * Remote call of INestedStruct3Interface::func3 on the NestedStruct3Interface service.
     */
-    QtPromise::QPromise<NestedStruct1> func3Async(const NestedStruct1& param1, const NestedStruct2& param2, const NestedStruct3& param3);
+    QFuture<NestedStruct1> func3Async(const NestedStruct1& param1, const NestedStruct2& param2, const NestedStruct3& param3);
 
 signals:
 

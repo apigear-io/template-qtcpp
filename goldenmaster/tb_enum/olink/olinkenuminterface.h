@@ -18,7 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #pragma once
 
 #include <QtCore>
-#include <QtPromise>
+#include <QFuture>
 
 #include "tb_enum/api/api.h"
 #include "olink/iobjectsink.h"
@@ -103,7 +103,7 @@ public:
     /**
     * Remote call of IEnumInterface::func0 on the EnumInterface service.
     */
-    QtPromise::QPromise<Enum0::Enum0Enum> func0Async(Enum0::Enum0Enum param0);
+    QFuture<Enum0::Enum0Enum> func0Async(Enum0::Enum0Enum param0);
     /**
     * Remote call of IEnumInterface::func1 on the EnumInterface service.
     * Uses func1Async
@@ -112,7 +112,7 @@ public:
     /**
     * Remote call of IEnumInterface::func1 on the EnumInterface service.
     */
-    QtPromise::QPromise<Enum1::Enum1Enum> func1Async(Enum1::Enum1Enum param1);
+    QFuture<Enum1::Enum1Enum> func1Async(Enum1::Enum1Enum param1);
     /**
     * Remote call of IEnumInterface::func2 on the EnumInterface service.
     * Uses func2Async
@@ -121,7 +121,7 @@ public:
     /**
     * Remote call of IEnumInterface::func2 on the EnumInterface service.
     */
-    QtPromise::QPromise<Enum2::Enum2Enum> func2Async(Enum2::Enum2Enum param2);
+    QFuture<Enum2::Enum2Enum> func2Async(Enum2::Enum2Enum param2);
     /**
     * Remote call of IEnumInterface::func3 on the EnumInterface service.
     * Uses func3Async
@@ -130,7 +130,7 @@ public:
     /**
     * Remote call of IEnumInterface::func3 on the EnumInterface service.
     */
-    QtPromise::QPromise<Enum3::Enum3Enum> func3Async(Enum3::Enum3Enum param3);
+    QFuture<Enum3::Enum3Enum> func3Async(Enum3::Enum3Enum param3);
 
 signals:
 

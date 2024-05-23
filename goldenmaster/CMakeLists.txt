@@ -32,8 +32,6 @@ endif() # BUILD_TESTING
 set(LIBRARY_PATH "${CMAKE_BINARY_DIR}/libs" CACHE STRING "Path where the libraries are deployed")
 set(IMPORTS_PATH "${CMAKE_BINARY_DIR}/imports" CACHE STRING "Path where the plugins are deployed")
 add_subdirectory(apigear)
-include_directories(thirdparty)
-add_subdirectory(thirdparty/qtpromise)
 add_subdirectory(testbed2/api)
 add_subdirectory(testbed2/implementation)
 add_subdirectory(testbed2/http)

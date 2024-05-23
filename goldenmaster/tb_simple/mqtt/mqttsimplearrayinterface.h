@@ -14,10 +14,12 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/#pragma once
+*/
+
+#pragma once
 
 #include <QtCore>
-#include <QtPromise>
+#include <QFuture>
 
 #include "tb_simple/api/api.h"
 #include "mqtt_common.h"
@@ -135,7 +137,7 @@ public:
     /**
     * Remote call of ISimpleArrayInterface::funcBool on the SimpleArrayInterface service.
     */
-    QtPromise::QPromise<QList<bool>> funcBoolAsync(const QList<bool>& paramBool);
+    QFuture<QList<bool>> funcBoolAsync(const QList<bool>& paramBool);
     /**
     * Remote call of ISimpleArrayInterface::funcInt on the SimpleArrayInterface service.
     * Uses funcIntAsync
@@ -144,7 +146,7 @@ public:
     /**
     * Remote call of ISimpleArrayInterface::funcInt on the SimpleArrayInterface service.
     */
-    QtPromise::QPromise<QList<int>> funcIntAsync(const QList<int>& paramInt);
+    QFuture<QList<int>> funcIntAsync(const QList<int>& paramInt);
     /**
     * Remote call of ISimpleArrayInterface::funcInt32 on the SimpleArrayInterface service.
     * Uses funcInt32Async
@@ -153,7 +155,7 @@ public:
     /**
     * Remote call of ISimpleArrayInterface::funcInt32 on the SimpleArrayInterface service.
     */
-    QtPromise::QPromise<QList<qint32>> funcInt32Async(const QList<qint32>& paramInt32);
+    QFuture<QList<qint32>> funcInt32Async(const QList<qint32>& paramInt32);
     /**
     * Remote call of ISimpleArrayInterface::funcInt64 on the SimpleArrayInterface service.
     * Uses funcInt64Async
@@ -162,7 +164,7 @@ public:
     /**
     * Remote call of ISimpleArrayInterface::funcInt64 on the SimpleArrayInterface service.
     */
-    QtPromise::QPromise<QList<qint64>> funcInt64Async(const QList<qint64>& paramInt64);
+    QFuture<QList<qint64>> funcInt64Async(const QList<qint64>& paramInt64);
     /**
     * Remote call of ISimpleArrayInterface::funcFloat on the SimpleArrayInterface service.
     * Uses funcFloatAsync
@@ -171,7 +173,7 @@ public:
     /**
     * Remote call of ISimpleArrayInterface::funcFloat on the SimpleArrayInterface service.
     */
-    QtPromise::QPromise<QList<qreal>> funcFloatAsync(const QList<qreal>& paramFloat);
+    QFuture<QList<qreal>> funcFloatAsync(const QList<qreal>& paramFloat);
     /**
     * Remote call of ISimpleArrayInterface::funcFloat32 on the SimpleArrayInterface service.
     * Uses funcFloat32Async
@@ -180,7 +182,7 @@ public:
     /**
     * Remote call of ISimpleArrayInterface::funcFloat32 on the SimpleArrayInterface service.
     */
-    QtPromise::QPromise<QList<float>> funcFloat32Async(const QList<float>& paramFloat32);
+    QFuture<QList<float>> funcFloat32Async(const QList<float>& paramFloat32);
     /**
     * Remote call of ISimpleArrayInterface::funcFloat64 on the SimpleArrayInterface service.
     * Uses funcFloat64Async
@@ -189,7 +191,7 @@ public:
     /**
     * Remote call of ISimpleArrayInterface::funcFloat64 on the SimpleArrayInterface service.
     */
-    QtPromise::QPromise<QList<double>> funcFloat64Async(const QList<double>& paramFloat);
+    QFuture<QList<double>> funcFloat64Async(const QList<double>& paramFloat);
     /**
     * Remote call of ISimpleArrayInterface::funcString on the SimpleArrayInterface service.
     * Uses funcStringAsync
@@ -198,7 +200,7 @@ public:
     /**
     * Remote call of ISimpleArrayInterface::funcString on the SimpleArrayInterface service.
     */
-    QtPromise::QPromise<QList<QString>> funcStringAsync(const QList<QString>& paramString);
+    QFuture<QList<QString>> funcStringAsync(const QList<QString>& paramString);
 
 signals:
     /**

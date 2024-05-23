@@ -14,10 +14,12 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/#pragma once
+*/
+
+#pragma once
 
 #include <QtCore>
-#include <QtPromise>
+#include <QFuture>
 
 #include "tb_same1/api/api.h"
 #include "mqtt_common.h"
@@ -65,7 +67,7 @@ public:
     /**
     * Remote call of ISameEnum1Interface::func1 on the SameEnum1Interface service.
     */
-    QtPromise::QPromise<Enum1::Enum1Enum> func1Async(Enum1::Enum1Enum param1);
+    QFuture<Enum1::Enum1Enum> func1Async(Enum1::Enum1Enum param1);
 
 signals:
     /**

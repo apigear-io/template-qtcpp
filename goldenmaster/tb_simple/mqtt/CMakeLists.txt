@@ -33,7 +33,7 @@ target_include_directories(tb_simple_mqtt
     $<INSTALL_INTERFACE:include/tb_simple>
 )
 
-target_link_libraries(tb_simple_mqtt PUBLIC tb_simple::tb_simple_api apigear::apigear_mqtt Qt6::Concurrent qtpromise)
+target_link_libraries(tb_simple_mqtt PUBLIC tb_simple::tb_simple_api apigear::apigear_mqtt Qt6::Concurrent)
 target_compile_definitions(tb_simple_mqtt PRIVATE TB_SIMPLE_MQTT_LIBRARY)
 
 

@@ -8,17 +8,10 @@
 {{- $interfaceClass := printf "I%s" $interfaceName }}
 {{- $MODULE_ID := printf "%s_MQTT" (SNAKE .Module.Name) }}
 
-{{- $hasNonVoidOperations := 0 -}}
-{{- range .Interface.Operations }}
-    {{- if not (.Return.IsVoid) }}
-        {{- $hasNonVoidOperations = 1}}
-    {{- end -}}
-{{- end -}}
-
 #pragma once
 
 #include <QtCore>
-#include <QtPromise>
+#include <QFuture>
 
 #include "{{snake .Module.Name}}/api/api.h"
 #include "mqtt_common.h"
@@ -73,7 +66,7 @@ public:
     /**
     * Remote call of {{$interfaceClass}}::{{$operation.Name}} on the {{$interfaceNameOriginal}} service.
     */
-    QtPromise::QPromise<{{qtReturn "" .Return}}> {{camel .Name}}Async({{qtParams "" .Params}});
+    QFuture<{{qtReturn "" .Return}}> {{camel .Name}}Async({{qtParams "" .Params}});
 {{- end }}
 
 signals:
@@ -99,7 +92,7 @@ private:
     // Helper function, subscribes for signals emitted by the remote {{$interfaceNameOriginal}} service.
     void subscribeForSignals();
     {{- end }}
-    {{- if $hasNonVoidOperations }}
+    {{- if (len .Interface.Operations) }}
     // Helper function, subscribes for result of invoke on remote {{$interfaceNameOriginal}} service.
     void subscribeForInvokeResponses();
     {{- end }}

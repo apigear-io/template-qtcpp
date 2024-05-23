@@ -175,189 +175,173 @@ QList<StructString> MqttStructArrayInterface::propString() const
 StructBool MqttStructArrayInterface::funcBool(const QList<StructBool>& paramBool)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_client.isReady()) {
-        return StructBool();
-    }
-    StructBool value{ StructBool() };
-    funcBoolAsync(paramBool)
-        .then([&](StructBool result) {value = result;})
-        .wait();
-    return value;
+
+    auto future = funcBoolAsync(paramBool);
+    future.waitForFinished();
+    return future.result();
 }
 
-QtPromise::QPromise<StructBool> MqttStructArrayInterface::funcBoolAsync(const QList<StructBool>& paramBool)
+QFuture<StructBool> MqttStructArrayInterface::funcBoolAsync(const QList<StructBool>& paramBool)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/funcBool");
-
+    auto promise = std::make_shared<QPromise<StructBool>>();
     if(!m_client.isReady())
     {
-        return QtPromise::QPromise<StructBool>::reject("not initialized");
+        static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(subscriptionIssues);
+            promise->addResult(StructBool());
     }
+
     auto callInfo = m_InvokeCallsInfo.find(topic);
     if(callInfo == m_InvokeCallsInfo.end())
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
-        AG_LOG_DEBUG(subscriptionIssues);
-        return QtPromise::QPromise<StructBool>::reject("not initialized");
+        AG_LOG_WARNING(subscriptionIssues);
+            promise->addResult(StructBool());
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({paramBool });       
-    return QtPromise::QPromise<StructBool>{[&](
-        const QtPromise::QPromiseResolve<StructBool>& resolve)
+
+    auto func = [promise](const nlohmann::json& arg)
         {
-                auto callId = m_client.invokeRemote(topic, arguments, respTopic);
-                auto func = [resolve](const nlohmann::json& arg)
-                {
-                    StructBool value = arg.get<StructBool>();
-                    resolve(value);
-                };
-                auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
-                m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
-                lock.unlock();
-        }
-    };
+            StructBool value = arg.get<StructBool>();
+            promise->addResult(value);
+        };
+    auto callId = m_client.invokeRemote(topic, arguments, respTopic);
+    auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
+    m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
+    lock.unlock();
+    return promise->future();
 }
 
 StructBool MqttStructArrayInterface::funcInt(const QList<StructInt>& paramInt)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_client.isReady()) {
-        return StructBool();
-    }
-    StructBool value{ StructBool() };
-    funcIntAsync(paramInt)
-        .then([&](StructBool result) {value = result;})
-        .wait();
-    return value;
+
+    auto future = funcIntAsync(paramInt);
+    future.waitForFinished();
+    return future.result();
 }
 
-QtPromise::QPromise<StructBool> MqttStructArrayInterface::funcIntAsync(const QList<StructInt>& paramInt)
+QFuture<StructBool> MqttStructArrayInterface::funcIntAsync(const QList<StructInt>& paramInt)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/funcInt");
-
+    auto promise = std::make_shared<QPromise<StructBool>>();
     if(!m_client.isReady())
     {
-        return QtPromise::QPromise<StructBool>::reject("not initialized");
+        static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(subscriptionIssues);
+            promise->addResult(StructBool());
     }
+
     auto callInfo = m_InvokeCallsInfo.find(topic);
     if(callInfo == m_InvokeCallsInfo.end())
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
-        AG_LOG_DEBUG(subscriptionIssues);
-        return QtPromise::QPromise<StructBool>::reject("not initialized");
+        AG_LOG_WARNING(subscriptionIssues);
+            promise->addResult(StructBool());
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({paramInt });       
-    return QtPromise::QPromise<StructBool>{[&](
-        const QtPromise::QPromiseResolve<StructBool>& resolve)
+
+    auto func = [promise](const nlohmann::json& arg)
         {
-                auto callId = m_client.invokeRemote(topic, arguments, respTopic);
-                auto func = [resolve](const nlohmann::json& arg)
-                {
-                    StructBool value = arg.get<StructBool>();
-                    resolve(value);
-                };
-                auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
-                m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
-                lock.unlock();
-        }
-    };
+            StructBool value = arg.get<StructBool>();
+            promise->addResult(value);
+        };
+    auto callId = m_client.invokeRemote(topic, arguments, respTopic);
+    auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
+    m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
+    lock.unlock();
+    return promise->future();
 }
 
 StructBool MqttStructArrayInterface::funcFloat(const QList<StructFloat>& paramFloat)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_client.isReady()) {
-        return StructBool();
-    }
-    StructBool value{ StructBool() };
-    funcFloatAsync(paramFloat)
-        .then([&](StructBool result) {value = result;})
-        .wait();
-    return value;
+
+    auto future = funcFloatAsync(paramFloat);
+    future.waitForFinished();
+    return future.result();
 }
 
-QtPromise::QPromise<StructBool> MqttStructArrayInterface::funcFloatAsync(const QList<StructFloat>& paramFloat)
+QFuture<StructBool> MqttStructArrayInterface::funcFloatAsync(const QList<StructFloat>& paramFloat)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/funcFloat");
-
+    auto promise = std::make_shared<QPromise<StructBool>>();
     if(!m_client.isReady())
     {
-        return QtPromise::QPromise<StructBool>::reject("not initialized");
+        static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(subscriptionIssues);
+            promise->addResult(StructBool());
     }
+
     auto callInfo = m_InvokeCallsInfo.find(topic);
     if(callInfo == m_InvokeCallsInfo.end())
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
-        AG_LOG_DEBUG(subscriptionIssues);
-        return QtPromise::QPromise<StructBool>::reject("not initialized");
+        AG_LOG_WARNING(subscriptionIssues);
+            promise->addResult(StructBool());
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({paramFloat });       
-    return QtPromise::QPromise<StructBool>{[&](
-        const QtPromise::QPromiseResolve<StructBool>& resolve)
+
+    auto func = [promise](const nlohmann::json& arg)
         {
-                auto callId = m_client.invokeRemote(topic, arguments, respTopic);
-                auto func = [resolve](const nlohmann::json& arg)
-                {
-                    StructBool value = arg.get<StructBool>();
-                    resolve(value);
-                };
-                auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
-                m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
-                lock.unlock();
-        }
-    };
+            StructBool value = arg.get<StructBool>();
+            promise->addResult(value);
+        };
+    auto callId = m_client.invokeRemote(topic, arguments, respTopic);
+    auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
+    m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
+    lock.unlock();
+    return promise->future();
 }
 
 StructBool MqttStructArrayInterface::funcString(const QList<StructString>& paramString)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_client.isReady()) {
-        return StructBool();
-    }
-    StructBool value{ StructBool() };
-    funcStringAsync(paramString)
-        .then([&](StructBool result) {value = result;})
-        .wait();
-    return value;
+
+    auto future = funcStringAsync(paramString);
+    future.waitForFinished();
+    return future.result();
 }
 
-QtPromise::QPromise<StructBool> MqttStructArrayInterface::funcStringAsync(const QList<StructString>& paramString)
+QFuture<StructBool> MqttStructArrayInterface::funcStringAsync(const QList<StructString>& paramString)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/funcString");
-
+    auto promise = std::make_shared<QPromise<StructBool>>();
     if(!m_client.isReady())
     {
-        return QtPromise::QPromise<StructBool>::reject("not initialized");
+        static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(subscriptionIssues);
+            promise->addResult(StructBool());
     }
+
     auto callInfo = m_InvokeCallsInfo.find(topic);
     if(callInfo == m_InvokeCallsInfo.end())
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
-        AG_LOG_DEBUG(subscriptionIssues);
-        return QtPromise::QPromise<StructBool>::reject("not initialized");
+        AG_LOG_WARNING(subscriptionIssues);
+            promise->addResult(StructBool());
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({paramString });       
-    return QtPromise::QPromise<StructBool>{[&](
-        const QtPromise::QPromiseResolve<StructBool>& resolve)
+
+    auto func = [promise](const nlohmann::json& arg)
         {
-                auto callId = m_client.invokeRemote(topic, arguments, respTopic);
-                auto func = [resolve](const nlohmann::json& arg)
-                {
-                    StructBool value = arg.get<StructBool>();
-                    resolve(value);
-                };
-                auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
-                m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
-                lock.unlock();
-        }
-    };
+            StructBool value = arg.get<StructBool>();
+            promise->addResult(value);
+        };
+    auto callId = m_client.invokeRemote(topic, arguments, respTopic);
+    auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
+    m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
+    lock.unlock();
+    return promise->future();
 }
 
 
@@ -393,7 +377,6 @@ void MqttStructArrayInterface::subscribeForSignals()
 }
 void MqttStructArrayInterface::subscribeForInvokeResponses()
 {
-    // Subscribe for invokeReply and prepare invoke call info for non void functions.
     const QString topicfuncBool = interfaceName() + "/rpc/funcBool";
     const QString topicfuncBoolInvokeResp = interfaceName() + "/rpc/funcBool"+ m_client.clientId() + "/result";
     auto id_funcBool = m_client.subscribeForInvokeResponse(topicfuncBoolInvokeResp, 

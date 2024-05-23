@@ -31,6 +31,19 @@ endif() # BUILD_TESTING
 
 set(LIBRARY_PATH "${CMAKE_BINARY_DIR}/libs" CACHE STRING "Path where the libraries are deployed")
 set(IMPORTS_PATH "${CMAKE_BINARY_DIR}/imports" CACHE STRING "Path where the plugins are deployed")
+
+find_package(nlohmann_json QUIET)
+if(NOT nlohmann_json_FOUND)
+  # pull nlohmann json as dependency
+  message(STATUS "nlohmann_json NOT FOUND, fetching the release package")
+  include(FetchContent)
+  set(JSON_Install ON)
+  FetchContent_Declare(nlohmann_json
+  GIT_REPOSITORY https://github.com/nlohmann/json
+  GIT_TAG v3.11.3
+  OVERRIDE_FIND_PACKAGE)
+  FetchContent_MakeAvailable(nlohmann_json)
+endif()
 add_subdirectory(apigear)
 add_subdirectory(testbed2/api)
 add_subdirectory(testbed2/implementation)

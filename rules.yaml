@@ -9,8 +9,6 @@ features:
             target: "CMakeLists.txt"
           - source: README.md
             raw: true
-          - source: thirdparty/qtpromise/CMakeLists.txt
-            raw: true
       - match: module
         prefix: "{{snake .Module.Name}}/api/"
         documents:
@@ -196,7 +194,7 @@ features:
           - source: "olink/olinkinterface.h.tpl"
             target: "olink/olink{{lower .Interface.Name}}.h"
           - source: "olink/olinkinterface.cpp.tpl"
-            target: "olink/olink{{lower .Interface.Name}}.cpp"            
+            target: "olink/olink{{lower .Interface.Name}}.cpp"    
           - source: "olink/olinkadapter.h.tpl"
             target: "olink/olink{{lower .Interface.Name}}adapter.h"
           - source: "olink/olinkadapter.cpp.tpl"

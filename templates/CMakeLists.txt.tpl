@@ -37,10 +37,6 @@ set(IMPORTS_PATH "${CMAKE_BINARY_DIR}/imports" CACHE STRING "Path where the plug
 {{- if $features.apigear }}
 add_subdirectory(apigear)
 {{- end}}
-{{- if $features.olink }}
-include_directories(thirdparty)
-add_subdirectory(thirdparty/qtpromise)
-{{- end}}
 {{- range .System.Modules }}
 {{- $moduleId := snake .Name }}
 add_subdirectory({{ $moduleId }}/api)

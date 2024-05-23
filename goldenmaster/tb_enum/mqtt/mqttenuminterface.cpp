@@ -175,189 +175,173 @@ Enum3::Enum3Enum MqttEnumInterface::prop3() const
 Enum0::Enum0Enum MqttEnumInterface::func0(Enum0::Enum0Enum param0)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_client.isReady()) {
-        return Enum0::Value0;
-    }
-    Enum0::Enum0Enum value{ Enum0::Value0 };
-    func0Async(param0)
-        .then([&](Enum0::Enum0Enum result) {value = result;})
-        .wait();
-    return value;
+
+    auto future = func0Async(param0);
+    future.waitForFinished();
+    return future.result();
 }
 
-QtPromise::QPromise<Enum0::Enum0Enum> MqttEnumInterface::func0Async(Enum0::Enum0Enum param0)
+QFuture<Enum0::Enum0Enum> MqttEnumInterface::func0Async(Enum0::Enum0Enum param0)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/func0");
-
+    auto promise = std::make_shared<QPromise<Enum0::Enum0Enum>>();
     if(!m_client.isReady())
     {
-        return QtPromise::QPromise<Enum0::Enum0Enum>::reject("not initialized");
+        static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(subscriptionIssues);
+            promise->addResult(Enum0::Value0);
     }
+
     auto callInfo = m_InvokeCallsInfo.find(topic);
     if(callInfo == m_InvokeCallsInfo.end())
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
-        AG_LOG_DEBUG(subscriptionIssues);
-        return QtPromise::QPromise<Enum0::Enum0Enum>::reject("not initialized");
+        AG_LOG_WARNING(subscriptionIssues);
+            promise->addResult(Enum0::Value0);
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({param0 });       
-    return QtPromise::QPromise<Enum0::Enum0Enum>{[&](
-        const QtPromise::QPromiseResolve<Enum0::Enum0Enum>& resolve)
+
+    auto func = [promise](const nlohmann::json& arg)
         {
-                auto callId = m_client.invokeRemote(topic, arguments, respTopic);
-                auto func = [resolve](const nlohmann::json& arg)
-                {
-                    Enum0::Enum0Enum value = arg.get<Enum0::Enum0Enum>();
-                    resolve(value);
-                };
-                auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
-                m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
-                lock.unlock();
-        }
-    };
+            Enum0::Enum0Enum value = arg.get<Enum0::Enum0Enum>();
+            promise->addResult(value);
+        };
+    auto callId = m_client.invokeRemote(topic, arguments, respTopic);
+    auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
+    m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
+    lock.unlock();
+    return promise->future();
 }
 
 Enum1::Enum1Enum MqttEnumInterface::func1(Enum1::Enum1Enum param1)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_client.isReady()) {
-        return Enum1::Value1;
-    }
-    Enum1::Enum1Enum value{ Enum1::Value1 };
-    func1Async(param1)
-        .then([&](Enum1::Enum1Enum result) {value = result;})
-        .wait();
-    return value;
+
+    auto future = func1Async(param1);
+    future.waitForFinished();
+    return future.result();
 }
 
-QtPromise::QPromise<Enum1::Enum1Enum> MqttEnumInterface::func1Async(Enum1::Enum1Enum param1)
+QFuture<Enum1::Enum1Enum> MqttEnumInterface::func1Async(Enum1::Enum1Enum param1)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/func1");
-
+    auto promise = std::make_shared<QPromise<Enum1::Enum1Enum>>();
     if(!m_client.isReady())
     {
-        return QtPromise::QPromise<Enum1::Enum1Enum>::reject("not initialized");
+        static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(subscriptionIssues);
+            promise->addResult(Enum1::Value1);
     }
+
     auto callInfo = m_InvokeCallsInfo.find(topic);
     if(callInfo == m_InvokeCallsInfo.end())
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
-        AG_LOG_DEBUG(subscriptionIssues);
-        return QtPromise::QPromise<Enum1::Enum1Enum>::reject("not initialized");
+        AG_LOG_WARNING(subscriptionIssues);
+            promise->addResult(Enum1::Value1);
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({param1 });       
-    return QtPromise::QPromise<Enum1::Enum1Enum>{[&](
-        const QtPromise::QPromiseResolve<Enum1::Enum1Enum>& resolve)
+
+    auto func = [promise](const nlohmann::json& arg)
         {
-                auto callId = m_client.invokeRemote(topic, arguments, respTopic);
-                auto func = [resolve](const nlohmann::json& arg)
-                {
-                    Enum1::Enum1Enum value = arg.get<Enum1::Enum1Enum>();
-                    resolve(value);
-                };
-                auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
-                m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
-                lock.unlock();
-        }
-    };
+            Enum1::Enum1Enum value = arg.get<Enum1::Enum1Enum>();
+            promise->addResult(value);
+        };
+    auto callId = m_client.invokeRemote(topic, arguments, respTopic);
+    auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
+    m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
+    lock.unlock();
+    return promise->future();
 }
 
 Enum2::Enum2Enum MqttEnumInterface::func2(Enum2::Enum2Enum param2)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_client.isReady()) {
-        return Enum2::Value2;
-    }
-    Enum2::Enum2Enum value{ Enum2::Value2 };
-    func2Async(param2)
-        .then([&](Enum2::Enum2Enum result) {value = result;})
-        .wait();
-    return value;
+
+    auto future = func2Async(param2);
+    future.waitForFinished();
+    return future.result();
 }
 
-QtPromise::QPromise<Enum2::Enum2Enum> MqttEnumInterface::func2Async(Enum2::Enum2Enum param2)
+QFuture<Enum2::Enum2Enum> MqttEnumInterface::func2Async(Enum2::Enum2Enum param2)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/func2");
-
+    auto promise = std::make_shared<QPromise<Enum2::Enum2Enum>>();
     if(!m_client.isReady())
     {
-        return QtPromise::QPromise<Enum2::Enum2Enum>::reject("not initialized");
+        static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(subscriptionIssues);
+            promise->addResult(Enum2::Value2);
     }
+
     auto callInfo = m_InvokeCallsInfo.find(topic);
     if(callInfo == m_InvokeCallsInfo.end())
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
-        AG_LOG_DEBUG(subscriptionIssues);
-        return QtPromise::QPromise<Enum2::Enum2Enum>::reject("not initialized");
+        AG_LOG_WARNING(subscriptionIssues);
+            promise->addResult(Enum2::Value2);
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({param2 });       
-    return QtPromise::QPromise<Enum2::Enum2Enum>{[&](
-        const QtPromise::QPromiseResolve<Enum2::Enum2Enum>& resolve)
+
+    auto func = [promise](const nlohmann::json& arg)
         {
-                auto callId = m_client.invokeRemote(topic, arguments, respTopic);
-                auto func = [resolve](const nlohmann::json& arg)
-                {
-                    Enum2::Enum2Enum value = arg.get<Enum2::Enum2Enum>();
-                    resolve(value);
-                };
-                auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
-                m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
-                lock.unlock();
-        }
-    };
+            Enum2::Enum2Enum value = arg.get<Enum2::Enum2Enum>();
+            promise->addResult(value);
+        };
+    auto callId = m_client.invokeRemote(topic, arguments, respTopic);
+    auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
+    m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
+    lock.unlock();
+    return promise->future();
 }
 
 Enum3::Enum3Enum MqttEnumInterface::func3(Enum3::Enum3Enum param3)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_client.isReady()) {
-        return Enum3::Value3;
-    }
-    Enum3::Enum3Enum value{ Enum3::Value3 };
-    func3Async(param3)
-        .then([&](Enum3::Enum3Enum result) {value = result;})
-        .wait();
-    return value;
+
+    auto future = func3Async(param3);
+    future.waitForFinished();
+    return future.result();
 }
 
-QtPromise::QPromise<Enum3::Enum3Enum> MqttEnumInterface::func3Async(Enum3::Enum3Enum param3)
+QFuture<Enum3::Enum3Enum> MqttEnumInterface::func3Async(Enum3::Enum3Enum param3)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/func3");
-
+    auto promise = std::make_shared<QPromise<Enum3::Enum3Enum>>();
     if(!m_client.isReady())
     {
-        return QtPromise::QPromise<Enum3::Enum3Enum>::reject("not initialized");
+        static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(subscriptionIssues);
+            promise->addResult(Enum3::Value3);
     }
+
     auto callInfo = m_InvokeCallsInfo.find(topic);
     if(callInfo == m_InvokeCallsInfo.end())
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
-        AG_LOG_DEBUG(subscriptionIssues);
-        return QtPromise::QPromise<Enum3::Enum3Enum>::reject("not initialized");
+        AG_LOG_WARNING(subscriptionIssues);
+            promise->addResult(Enum3::Value3);
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({param3 });       
-    return QtPromise::QPromise<Enum3::Enum3Enum>{[&](
-        const QtPromise::QPromiseResolve<Enum3::Enum3Enum>& resolve)
+
+    auto func = [promise](const nlohmann::json& arg)
         {
-                auto callId = m_client.invokeRemote(topic, arguments, respTopic);
-                auto func = [resolve](const nlohmann::json& arg)
-                {
-                    Enum3::Enum3Enum value = arg.get<Enum3::Enum3Enum>();
-                    resolve(value);
-                };
-                auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
-                m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
-                lock.unlock();
-        }
-    };
+            Enum3::Enum3Enum value = arg.get<Enum3::Enum3Enum>();
+            promise->addResult(value);
+        };
+    auto callId = m_client.invokeRemote(topic, arguments, respTopic);
+    auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
+    m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
+    lock.unlock();
+    return promise->future();
 }
 
 
@@ -393,7 +377,6 @@ void MqttEnumInterface::subscribeForSignals()
 }
 void MqttEnumInterface::subscribeForInvokeResponses()
 {
-    // Subscribe for invokeReply and prepare invoke call info for non void functions.
     const QString topicfunc0 = interfaceName() + "/rpc/func0";
     const QString topicfunc0InvokeResp = interfaceName() + "/rpc/func0"+ m_client.clientId() + "/result";
     auto id_func0 = m_client.subscribeForInvokeResponse(topicfunc0InvokeResp, 

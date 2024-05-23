@@ -5,13 +5,6 @@
 {{- $module := .Module.Name }}
 {{- $iface := .Interface.Name }}
 
-{{- $hasNonVoidOperations := 0 -}}
-{{- range .Interface.Operations }}
-    {{- if not (.Return.IsVoid) }}
-        {{- $hasNonVoidOperations = 1 }}
-    {{- end }}
-{{- end }}
-
 #include "{{lower $class}}.h"
 
 #include "{{snake .Module.Name}}/api/json.adapter.h"
@@ -42,7 +35,7 @@ const QString InterfaceName = "{{$module}}/{{$iface}}";
         {{- if (len .Interface.Signals) }}
         subscribeForSignals();
         {{- end }}
-        {{- if $hasNonVoidOperations }}
+        {{- if (len .Interface.Operations) }}
         subscribeForInvokeResponses();
         {{- end }}
     }
@@ -55,7 +48,7 @@ const QString InterfaceName = "{{$module}}/{{$iface}}";
             {{- if (len .Interface.Signals) }}
             subscribeForSignals();
             {{- end }}
-            {{- if $hasNonVoidOperations }}
+            {{- if (len .Interface.Operations) }}
             subscribeForInvokeResponses();
             {{- end }}
     });
@@ -110,63 +103,60 @@ void {{$class}}::set{{Camel .Name}}Local(const nlohmann::json& value)
 {{$return}} {{$class}}::{{camel .Name}}({{qtParams "" .Params}})
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    if(!m_client.isReady()) {
-        return{{ if (not .Return.IsVoid) }} {{qtDefault "" .Return}} {{- end}};
-    }
+
+    auto future = {{camel .Name}}Async({{ qtVars .Params }});
+    future.waitForFinished();
     {{- if .Return.IsVoid }}
-    auto arguments = nlohmann::json::array({
-        {{- qtVars .Params -}}
-    });
-    static const QString topic = interfaceName() + QString("/rpc/{{.Name}}");
-    m_client.invokeRemoteNoResponse(topic, arguments);
-    {{- else }}
-    {{$return}} value{ {{qtDefault "" .Return}} };
-    {{camel .Name}}Async({{ qtVars .Params }})
-        .then([&]({{$return}} result) {value = result;})
-        .wait();
-    return value;
+    return;
+    {{- else}}
+    return future.result();
     {{- end }}
 }
 
-QtPromise::QPromise<{{$return}}> {{$class}}::{{camel .Name}}Async({{qtParams "" .Params}})
+QFuture<{{$return}}> {{$class}}::{{camel .Name}}Async({{qtParams "" .Params}})
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/{{.Name}}");
-
+    auto promise = std::make_shared<QPromise<{{$return}}>>();
     if(!m_client.isReady())
     {
-        return QtPromise::QPromise<{{$return}}>::reject("not initialized");
+        static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
+        AG_LOG_WARNING(subscriptionIssues);
+        {{- if .Return.IsVoid }}
+            promise->finish();
+        {{- else }}
+            promise->addResult({{qtDefault "" .Return}});
+        {{- end}}
     }
 
-    {{- if .Return.IsVoid }}
-    auto arguments = nlohmann::json::array({ {{- range $i, $e := .Params }}{{if $i}}, {{ end }}{{.Name}}{{- end }} });
-    m_client.invokeRemoteNoResponse(topic, arguments);
-    return QtPromise::QPromise<void>::resolve();
-    {{- else }}
     auto callInfo = m_InvokeCallsInfo.find(topic);
     if(callInfo == m_InvokeCallsInfo.end())
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
-        AG_LOG_DEBUG(subscriptionIssues);
-        return QtPromise::QPromise<{{$return}}>::reject("not initialized");
+        AG_LOG_WARNING(subscriptionIssues);
+        {{- if .Return.IsVoid }}
+            promise->finish();
+        {{- else }}
+            promise->addResult({{qtDefault "" .Return}});
+        {{- end}}
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({ {{- range $i, $e := .Params }}{{if $i}}, {{ end }}{{.Name}}{{- end }} });       
-    return QtPromise::QPromise<{{$return}}>{[&](
-        const QtPromise::QPromiseResolve<{{$return}}>& resolve)
+
+    auto func = [promise](const nlohmann::json& arg)
         {
-                auto callId = m_client.invokeRemote(topic, arguments, respTopic);
-                auto func = [resolve](const nlohmann::json& arg)
-                {
-                    {{$return}} value = arg.get<{{$return}}>();
-                    resolve(value);
-                };
-                auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
-                m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
-                lock.unlock();
-        }
-    };
-    {{- end}}
+        {{- if .Return.IsVoid }}
+            promise->finish();
+        {{- else }}
+            {{$return}} value = arg.get<{{$return}}>();
+            promise->addResult(value);
+        {{- end}}
+        };
+    auto callId = m_client.invokeRemote(topic, arguments, respTopic);
+    auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
+    m_pendingCallsInfo[callId] = std::make_pair(respTopic,func);
+    lock.unlock();
+    return promise->future();
 }
 
 {{- end }}
@@ -201,12 +191,10 @@ void {{$class}}::subscribeForSignals()
     {{- end }}
 }
 {{- end }}
-{{- if $hasNonVoidOperations }}
+{{- if (len .Interface.Operations) }}
 void {{$class}}::subscribeForInvokeResponses()
 {
-    // Subscribe for invokeReply and prepare invoke call info for non void functions.
 {{- range .Interface.Operations }}
-{{- if not (.Return.IsVoid) }}
     const QString topic{{.Name}} = interfaceName() + "/rpc/{{.Name}}";
     const QString topic{{.Name}}InvokeResp = interfaceName() + "/rpc/{{.Name}}"+ m_client.clientId() + "/result";
     auto id_{{.Name}} = m_client.subscribeForInvokeResponse(topic{{.Name}}InvokeResp, 
@@ -215,7 +203,6 @@ void {{$class}}::subscribeForInvokeResponses()
                             findAndExecuteCall(value, callId, topic{{.Name}}InvokeResp);
                         });
     m_InvokeCallsInfo[topic{{.Name}}] = std::make_pair(topic{{.Name}}InvokeResp, id_{{.Name}});
-{{- end }}
 {{- end }}
 }
 {{- end }}

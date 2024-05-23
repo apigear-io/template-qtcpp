@@ -31,7 +31,7 @@ target_include_directories(tb_enum_mqtt
     $<INSTALL_INTERFACE:include/tb_enum>
 )
 
-target_link_libraries(tb_enum_mqtt PUBLIC tb_enum::tb_enum_api apigear::apigear_mqtt Qt6::Concurrent qtpromise)
+target_link_libraries(tb_enum_mqtt PUBLIC tb_enum::tb_enum_api apigear::apigear_mqtt Qt6::Concurrent)
 target_compile_definitions(tb_enum_mqtt PRIVATE TB_ENUM_MQTT_LIBRARY)
 
 

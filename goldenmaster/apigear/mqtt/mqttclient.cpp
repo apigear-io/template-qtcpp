@@ -168,11 +168,6 @@ quint64 Client::invokeRemote(const QMqttTopicName& topic,
     return callId;
 }
 
-void Client::invokeRemoteNoResponse(const QMqttTopicName& topic, const nlohmann::json& arguments)
-{
-    messageToWrite(topic, PayloadConverter::toPayload(arguments));
-}
-
 void Client::disconnect()
 {
     unsubscribeAll();

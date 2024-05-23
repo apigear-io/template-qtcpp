@@ -14,10 +14,12 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/#pragma once
+*/
+
+#pragma once
 
 #include <QtCore>
-#include <QtPromise>
+#include <QFuture>
 
 #include "tb_names/api/api.h"
 #include "mqtt_common.h"
@@ -85,7 +87,7 @@ public:
     /**
     * Remote call of INamEs::SOME_FUNCTION on the Nam_Es service.
     */
-    QtPromise::QPromise<void> someFunctionAsync(bool SOME_PARAM);
+    QFuture<void> someFunctionAsync(bool SOME_PARAM);
     /**
     * Remote call of INamEs::Some_Function2 on the Nam_Es service.
     * Uses Some_Function2Async
@@ -94,7 +96,7 @@ public:
     /**
     * Remote call of INamEs::Some_Function2 on the Nam_Es service.
     */
-    QtPromise::QPromise<void> someFunction2Async(bool Some_Param);
+    QFuture<void> someFunction2Async(bool Some_Param);
 
 signals:
     /**
@@ -115,6 +117,8 @@ private:
     void subscribeForPropertiesChanges();
     // Helper function, subscribes for signals emitted by the remote Nam_Es service.
     void subscribeForSignals();
+    // Helper function, subscribes for result of invoke on remote Nam_Es service.
+    void subscribeForInvokeResponses();
     /**  Updates local value for Switch and informs subscriber about the change with emit property changed signal. */
     void setSwitchLocal(const nlohmann::json& input);
     /** A local value for Switch */

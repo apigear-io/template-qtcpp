@@ -18,7 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #pragma once
 
 #include <QtCore>
-#include <QtPromise>
+#include <QFuture>
 
 #include "testbed2/api/api.h"
 #include "olink/iobjectsink.h"
@@ -103,7 +103,7 @@ public:
     /**
     * Remote call of IManyParamInterface::func1 on the ManyParamInterface service.
     */
-    QtPromise::QPromise<int> func1Async(int param1);
+    QFuture<int> func1Async(int param1);
     /**
     * Remote call of IManyParamInterface::func2 on the ManyParamInterface service.
     * Uses func2Async
@@ -112,7 +112,7 @@ public:
     /**
     * Remote call of IManyParamInterface::func2 on the ManyParamInterface service.
     */
-    QtPromise::QPromise<int> func2Async(int param1, int param2);
+    QFuture<int> func2Async(int param1, int param2);
     /**
     * Remote call of IManyParamInterface::func3 on the ManyParamInterface service.
     * Uses func3Async
@@ -121,7 +121,7 @@ public:
     /**
     * Remote call of IManyParamInterface::func3 on the ManyParamInterface service.
     */
-    QtPromise::QPromise<int> func3Async(int param1, int param2, int param3);
+    QFuture<int> func3Async(int param1, int param2, int param3);
     /**
     * Remote call of IManyParamInterface::func4 on the ManyParamInterface service.
     * Uses func4Async
@@ -130,7 +130,7 @@ public:
     /**
     * Remote call of IManyParamInterface::func4 on the ManyParamInterface service.
     */
-    QtPromise::QPromise<int> func4Async(int param1, int param2, int param3, int param4);
+    QFuture<int> func4Async(int param1, int param2, int param3, int param4);
 
 signals:
 

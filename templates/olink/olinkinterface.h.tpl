@@ -9,7 +9,7 @@
 #pragma once
 
 #include <QtCore>
-#include <QtPromise>
+#include <QFuture>
 
 #include "{{snake .Module.Name}}/api/api.h"
 #include "olink/iobjectsink.h"
@@ -71,7 +71,7 @@ public:
     /**
     * Remote call of {{$interfaceClass}}::{{$operation.Name}} on the {{$interfaceNameOriginal}} service.
     */
-    QtPromise::QPromise<{{qtReturn "" .Return}}> {{camel .Name}}Async({{qtParams "" .Params}});
+    QFuture<{{qtReturn "" .Return}}> {{camel .Name}}Async({{qtParams "" .Params}});
 {{- end }}
 
 signals:

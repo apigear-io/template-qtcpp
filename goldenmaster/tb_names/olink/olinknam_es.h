@@ -18,7 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #pragma once
 
 #include <QtCore>
-#include <QtPromise>
+#include <QFuture>
 
 #include "tb_names/api/api.h"
 #include "olink/iobjectsink.h"
@@ -93,7 +93,7 @@ public:
     /**
     * Remote call of INamEs::SOME_FUNCTION on the Nam_Es service.
     */
-    QtPromise::QPromise<void> someFunctionAsync(bool SOME_PARAM);
+    QFuture<void> someFunctionAsync(bool SOME_PARAM);
     /**
     * Remote call of INamEs::Some_Function2 on the Nam_Es service.
     * Uses Some_Function2Async
@@ -102,7 +102,7 @@ public:
     /**
     * Remote call of INamEs::Some_Function2 on the Nam_Es service.
     */
-    QtPromise::QPromise<void> someFunction2Async(bool Some_Param);
+    QFuture<void> someFunction2Async(bool Some_Param);
 
 signals:
 

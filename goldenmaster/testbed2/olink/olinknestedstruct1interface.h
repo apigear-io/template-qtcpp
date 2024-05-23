@@ -18,7 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #pragma once
 
 #include <QtCore>
-#include <QtPromise>
+#include <QFuture>
 
 #include "testbed2/api/api.h"
 #include "olink/iobjectsink.h"
@@ -73,7 +73,7 @@ public:
     /**
     * Remote call of INestedStruct1Interface::func1 on the NestedStruct1Interface service.
     */
-    QtPromise::QPromise<NestedStruct1> func1Async(const NestedStruct1& param1);
+    QFuture<NestedStruct1> func1Async(const NestedStruct1& param1);
 
 signals:
 

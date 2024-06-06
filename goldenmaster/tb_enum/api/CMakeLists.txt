@@ -4,9 +4,9 @@ project(tb_enum_api LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(nlohmann_json REQUIRED)
 
-find_package(Qt6 REQUIRED COMPONENTS Core)
+find_package(Qt6 REQUIRED Core )
+find_package(nlohmann_json REQUIRED )
 
 set(OUTPUT_PATH ${LIBRARY_PATH}/)
 
@@ -28,7 +28,7 @@ target_include_directories(tb_enum_api
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(tb_enum_api PUBLIC  nlohmann_json::nlohmann_json Qt6::Core)
+target_link_libraries(tb_enum_api PUBLIC Qt6::Core nlohmann_json::nlohmann_json )
 
 target_compile_definitions(tb_enum_api PRIVATE TB_ENUM_API_LIBRARY)
 

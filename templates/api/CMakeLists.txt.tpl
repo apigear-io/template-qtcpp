@@ -11,21 +11,42 @@ project({{ $lib_id }} LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(nlohmann_json REQUIRED)
-
 {{- if not (or .Module.Interfaces .Module.Structs )}}
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 {{- end }}
 
-find_package(Qt6 REQUIRED COMPONENTS Core)
-
-{{- range .Module.Externs }}
-{{- $extern := qtExtern . }}
-{{ if (not (eq $extern.Package "")) }}
-find_package({{$extern.Package}} REQUIRED 
-{{- if (not ( eq $extern.Component "")) }} COMPONENTS {{$extern.Component -}}{{- end -}}
-)
+{{ $externs :=  .Module.Externs }}
+{{- $listqtExterns := qtExterns .Module.Externs}}
+{{- $listPackage := (collectFields $listqtExterns  "Package")}}
+{{- $listPackage = (appendList $listPackage "Qt6") }}
+{{- $listPackage = (appendList $listPackage "nlohmann_json") }}
+{{- $listPackage = unique $listPackage }}
+{{- $link_libraries_list := getEmptyStringList }}
+{{- range $listPackage}}
+{{- $package := . }}
+{{- $components := getEmptyStringList }}
+{{- range $listqtExterns }}
+{{- if (eq .Package $package) }}
+{{- $components = (appendList $components .Component) }}
 {{- end }}
+{{- end }}
+{{- if (eq "Qt6" $package) }}
+{{- $components = (appendList $components "Core") }}
+{{- end}}
+{{- $packageOnly := 0 }}
+{{- if  (contains $components "" )}}
+{{- $packageOnly = 1 }}
+find_package({{$package}} REQUIRED )
+{{- $link_libraries_list = (appendList $link_libraries_list $package) }}
+{{- end }}
+{{- $components = unique $components }}
+{{- if not  (and (eq $packageOnly  1)  (eq (len $components)  1)) }}
+find_package({{$package}} REQUIRED {{ range $components }}{{.}} {{ end}})
+{{- end }}
+{{- range $components }}
+{{- $item:= printf "%s::%s"  $package .}}
+{{- $link_libraries_list = (appendList $link_libraries_list $item) }}
+{{- end}}
 {{- end }}
 
 set(OUTPUT_PATH ${LIBRARY_PATH}/)
@@ -48,11 +69,9 @@ target_include_directories({{$lib_id}}
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries({{$lib_id}} PUBLIC {{ range .Module.Imports }}{{snake .Name}}_api {{ end }}
-{{- range .Module.Externs }}
-{{- $extern := qtExtern . }}
-{{- if (not (eq $extern.Library "")) }} {{$extern.Library}} {{ end -}}
-{{- end }} nlohmann_json::nlohmann_json Qt6::Core)
+{{- $link_libraries_list = (appendList $link_libraries_list "nlohmann_json::nlohmann_json") }}
+
+target_link_libraries({{$lib_id}} PUBLIC {{ range .Module.Imports }}{{snake .Name}}_api {{ end }}{{ range $link_libraries_list }}{{.}} {{ end }})
 
 target_compile_definitions({{$lib_id}} PRIVATE {{ $MODULE_ID }}_LIBRARY)
 

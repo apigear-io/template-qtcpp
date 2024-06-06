@@ -6,16 +6,18 @@
 {{- $version := .Module.Version }}
 #pragma once
 
-#include <QtCore>
-#include <QtCore/QtGlobal>
-#include <QDataStream>
-
+{{- $listqtExterns := qtExterns .Module.Externs}}
+{{- $includes := (collectFields $listqtExterns  "Include")}}
+{{- $includes = (appendList $includes "<QtCore>") }}
+{{- $includes = (appendList $includes "<QtCore/QtGlobal>") }}
+{{- $includes = (appendList $includes "<QDataStream>") }}
 {{- range .Module.Imports }}
-#include "{{snake .Name}}/api/api.h"
+{{- $includeName :=  printf "\"%s/api/api.h\"" (snake .Name) }}
+{{- $includes = (appendList $includes  $includeName) }}
 {{- end }}
-{{- range .Module.Externs }}
-{{- $extern := qtExtern . }}
-#include {{ $extern.Include}}
+{{- $includes = unique $includes }}
+{{ range $includes }}
+#include {{ .}}
 {{- end }}
 
 #if defined({{ $MODULE_ID }}_LIBRARY)

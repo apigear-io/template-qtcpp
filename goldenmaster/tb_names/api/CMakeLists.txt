@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(nlohmann_json REQUIRED)
+
 find_package(Qt6 REQUIRED COMPONENTS Core)
 
 set(OUTPUT_PATH ${LIBRARY_PATH}/)

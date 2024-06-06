@@ -12,6 +12,11 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(nlohmann_json REQUIRED)
+
+{{- if not (or .Module.Interfaces .Module.Structs )}}
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+{{- end }}
+
 find_package(Qt6 REQUIRED COMPONENTS Core)
 
 set(OUTPUT_PATH ${LIBRARY_PATH}/)

@@ -7,7 +7,7 @@
 #include "{{$filename}}.h"
 {{- end }}
 
-namespace {{snake  .Module.Name }} {
+namespace {{qtNamespace .Module.Name }} {
 
 TracedApiFactory::TracedApiFactory(IApiFactory& factory, QObject *parent)
     : QObject(parent),
@@ -29,4 +29,4 @@ std::shared_ptr<Abstract{{Camel .Name}}> TracedApiFactory::create{{Camel .Name}}
 
 {{- end }}
 
-} //namespace {{snake  .Module.Name }}
+} //namespace {{qtNamespace .Module.Name }}

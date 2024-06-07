@@ -17,7 +17,7 @@ class RemoteRegistry;
 class IRemoteNode;
 }}
 
-namespace {{snake  .Module.Name }} {
+namespace {{qtNamespace .Module.Name }} {
 
 /**
 * Server side for {{.Interface.Name}} implements the {{.Interface.Name}} service.
@@ -105,4 +105,4 @@ private:
     ApiGear::ObjectLink::RemoteRegistry& m_registry;
 };
 
-} // namespace {{snake  .Module.Name }}
+} // namespace {{qtNamespace .Module.Name }}

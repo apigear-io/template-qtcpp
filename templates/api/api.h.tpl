@@ -1,15 +1,24 @@
 {{- /* Copyright (c) ApiGear UG 2020 */}}
 {{- $MODULE_ID := printf "%s_API" (SNAKE .Module.Name) }}
-{{- $module_id := snake .Module.Name }}
-{{- $Modulename := Camel .Module.Name }}
-{{- $namespacePrefix := printf "%s::" (snake .Module.Name) }}
+{{- $namespace := qtNamespace .Module.Name }}
+{{- $namespacePrefix := printf "%s::" (qtNamespace .Module.Name) }}
 {{- cppGpl .Module }}
 {{- $version := .Module.Version }}
 #pragma once
 
-#include <QtCore>
-#include <QtCore/QtGlobal>
-#include <QDataStream>
+{{- $listqtExterns := qtExterns .Module.Externs}}
+{{- $includes := (collectFields $listqtExterns  "Include")}}
+{{- $includes = (appendList $includes "<QtCore>") }}
+{{- $includes = (appendList $includes "<QtCore/QtGlobal>") }}
+{{- $includes = (appendList $includes "<QDataStream>") }}
+{{- range .Module.Imports }}
+{{- $includeName :=  printf "\"%s/api/api.h\"" (snake .Name) }}
+{{- $includes = (appendList $includes  $includeName) }}
+{{- end }}
+{{- $includes = unique $includes }}
+{{ range $includes }}
+#include {{ .}}
+{{- end }}
 
 #if defined({{ $MODULE_ID }}_LIBRARY)
 #  define {{ $MODULE_ID }}_EXPORT Q_DECL_EXPORT
@@ -17,7 +26,7 @@
 #  define {{ $MODULE_ID }}_EXPORT Q_DECL_IMPORT
 #endif
 
-namespace {{snake  .Module.Name }} {
+namespace {{qtNamespace .Module.Name }} {
 
 {{- range .Module.Enums }}
 {{- $class := .Name }}
@@ -194,13 +203,13 @@ signals:
 };
 {{ end }}
 
-} //namespace {{snake  .Module.Name }}
+} //namespace {{qtNamespace .Module.Name }}
 
 {{ range .Module.Enums }}
 {{- $class := .Name }}
-Q_DECLARE_METATYPE({{ $module_id }}::{{$class}}::{{$class}}Enum)
+Q_DECLARE_METATYPE({{ $namespace }}::{{$class}}::{{$class}}Enum)
 {{- end }}
 {{- range .Module.Structs }}
 {{- $class := .Name }}
-Q_DECLARE_METATYPE({{ $module_id }}::{{$class}})
+Q_DECLARE_METATYPE({{ $namespace }}::{{$class}})
 {{- end }}

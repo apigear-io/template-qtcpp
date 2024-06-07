@@ -17,9 +17,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #pragma once
 
-#include <QtCore>
-#include <QtCore/QtGlobal>
 #include <QDataStream>
+#include <QtCore/QtGlobal>
+#include <QtCore>
 
 #if defined(TB_SIMPLE_API_LIBRARY)
 #  define TB_SIMPLE_API_EXPORT Q_DECL_EXPORT

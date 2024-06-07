@@ -88,4 +88,4 @@ private:
 	std::shared_ptr<Abstract{{$class}}> m_obj;
 };
 
-} //namespace {{snake  .Module.Name }}
+} //namespace {{qtNamespace .Module.Name }}

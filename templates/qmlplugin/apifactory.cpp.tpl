@@ -4,7 +4,7 @@
 
 {{ snake .Module.Name }}::IApiFactory* {{ snake .Module.Name }}::ApiFactory::s_instance(nullptr);
 
-namespace {{snake  .Module.Name }} {
+namespace {{qtNamespace .Module.Name }} {
 
 ApiFactory::ApiFactory(QObject *parent)
     : QObject(parent)
@@ -41,4 +41,4 @@ std::shared_ptr<Abstract{{Camel .Name}}> ApiFactory::create{{Camel .Name}}(QObje
 };
 {{- end }}
 
-} //namespace {{snake  .Module.Name }}
+} //namespace {{qtNamespace .Module.Name }}

@@ -5,7 +5,7 @@
 
 #include "{{snake .Module.Name}}/api/iapifactory.h"
 
-namespace {{snake  .Module.Name }} {
+namespace {{qtNamespace .Module.Name }} {
 
 class HttpFactory : public QObject, public IApiFactory
 {
@@ -18,4 +18,4 @@ private:
     QNetworkAccessManager *m_network;
 };
 
-} // namespace {{snake  .Module.Name }}
+} // namespace {{qtNamespace .Module.Name }}

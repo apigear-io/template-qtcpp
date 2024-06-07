@@ -102,24 +102,31 @@ int main(int argc, char *argv[]){
     // Prepare Factory before app is created.
     ApiGear::Mqtt::Client client("UniqueClientForQmlExample");
     ApiGear::Mqtt::ServiceAdapter service("UniqueService");
+    
     testbed2::MqttFactory testbed2MqttFactory(client);
     testbed2::TracedApiFactory testbed2TracedMqttFactory(testbed2MqttFactory); 
     testbed2::ApiFactory::set(&testbed2TracedMqttFactory);
+    
     tb_enum::MqttFactory tb_enumMqttFactory(client);
     tb_enum::TracedApiFactory tb_enumTracedMqttFactory(tb_enumMqttFactory); 
     tb_enum::ApiFactory::set(&tb_enumTracedMqttFactory);
+    
     tb_same1::MqttFactory tb_same1MqttFactory(client);
     tb_same1::TracedApiFactory tb_same1TracedMqttFactory(tb_same1MqttFactory); 
     tb_same1::ApiFactory::set(&tb_same1TracedMqttFactory);
+    
     tb_same2::MqttFactory tb_same2MqttFactory(client);
     tb_same2::TracedApiFactory tb_same2TracedMqttFactory(tb_same2MqttFactory); 
     tb_same2::ApiFactory::set(&tb_same2TracedMqttFactory);
+    
     tb_simple::MqttFactory tb_simpleMqttFactory(client);
     tb_simple::TracedApiFactory tb_simpleTracedMqttFactory(tb_simpleMqttFactory); 
     tb_simple::ApiFactory::set(&tb_simpleTracedMqttFactory);
+    
     testbed1::MqttFactory testbed1MqttFactory(client);
     testbed1::TracedApiFactory testbed1TracedMqttFactory(testbed1MqttFactory); 
     testbed1::ApiFactory::set(&testbed1TracedMqttFactory);
+    
     tb_names::MqttFactory tb_namesMqttFactory(client);
     tb_names::TracedApiFactory tb_namesTracedMqttFactory(tb_namesMqttFactory); 
     tb_names::ApiFactory::set(&tb_namesTracedMqttFactory);

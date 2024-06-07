@@ -44,12 +44,13 @@ int main(int argc, char *argv[]){
 
 {{- range .System.Modules }}
 {{- $module := . }}
-    {{ snake $module.Name }}::OLinkFactory {{ snake $module.Name }}OlinkFactory(client);
+    {{ $namespacePrefix := qtNamespace $module.Name }}
+    {{ $namespacePrefix }}::OLinkFactory {{ snake $module.Name }}OlinkFactory(client);
     {{- if $features.monitor }}
-    {{ snake $module.Name }}::TracedApiFactory {{ snake $module.Name }}TracedOlinkFactory({{ snake $module.Name }}OlinkFactory); 
-    {{ snake $module.Name }}::ApiFactory::set(&{{ snake $module.Name }}TracedOlinkFactory);
+    {{$namespacePrefix}}::TracedApiFactory {{ snake $module.Name }}TracedOlinkFactory({{ snake $module.Name }}OlinkFactory); 
+    {{ $namespacePrefix }}::ApiFactory::set(&{{ snake $module.Name }}TracedOlinkFactory);
     {{- else }}
-    {{ snake $module.Name }}::ApiFactory::set(&{{ snake $module.Name }}OlinkFactory);
+    {{ $namespacePrefix }}::ApiFactory::set(&{{ snake $module.Name }}OlinkFactory);
     {{- end}}
 {{- end}}
 
@@ -78,8 +79,9 @@ int main(int argc, char *argv[]){
     {{- $modulePrefix := lower1 (Camel $module.Name)}}
     {{- $instanceName := printf "%s%s"  $modulePrefix $class }}
     {{- $serviceInstanceName := printf "%sOlink%sService" $modulePrefix $class }}
-    {{ snake $module.Name }}::{{$class}} {{$instanceName}};
-    auto {{$serviceInstanceName}} = std::make_shared< {{- snake $module.Name }}::OLink{{$interface.Name}}Adapter>(registry, &{{ $instanceName }});
+    {{- $namespacePrefix := snake $module.Name}}
+    {{ $namespacePrefix }}::{{$class}} {{$instanceName}};
+    auto {{$serviceInstanceName}} = std::make_shared< {{- $namespacePrefix }}::OLink{{$interface.Name}}Adapter>(registry, &{{ $instanceName }});
     registry.addSource( {{- $serviceInstanceName }});
     {{- end }}
     {{- end }}

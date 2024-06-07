@@ -25,7 +25,7 @@ class IClientNode;
 using namespace ApiGear;
 using namespace ApiGear::ObjectLink;
 
-namespace {{snake  .Module.Name }} {
+namespace {{qtNamespace .Module.Name }} {
 
 /**
 * Adapts the general OLink Client handler to a {{$interfaceNameOriginal}} in a way it provides access 
@@ -144,4 +144,4 @@ private:
     IClientNode *m_node;
 };
 
-} //namespace {{snake  .Module.Name }}
+} //namespace {{qtNamespace .Module.Name }}

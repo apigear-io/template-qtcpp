@@ -5,7 +5,7 @@
 
 #include "{{lower .Interface.Name}}.h"
 
-namespace {{snake  .Module.Name }} {
+namespace {{qtNamespace .Module.Name }} {
 
 {{$class}}::{{$class}}(QObject *parent)
     : Abstract{{$class}}(parent)
@@ -42,4 +42,4 @@ void {{$class}}::set{{Camel .Name}}({{qtParam "" .}})
     return{{ if (not .Return.IsVoid) }} {{qtDefault "" .Return}} {{- end}};
 }
 {{- end }}
-} //namespace {{snake  .Module.Name }}
+} //namespace {{qtNamespace .Module.Name }}

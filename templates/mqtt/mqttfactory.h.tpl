@@ -7,7 +7,7 @@
 #include <apigear/mqtt/mqttclient.h>
 #include "mqtt_common.h"
 
-namespace {{snake  .Module.Name }} {
+namespace {{qtNamespace .Module.Name }} {
 
 /** 
 * A Factory that creates a MqttClient version of interfaces in {{$.Module}}
@@ -29,4 +29,4 @@ private:
     ApiGear::Mqtt::Client& m_client;
 };
 
-} //namespace {{snake  .Module.Name }}
+} //namespace {{qtNamespace .Module.Name }}

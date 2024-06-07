@@ -12,7 +12,7 @@
 #  define {{ $MODULE_ID }}_EXPORT Q_DECL_IMPORT
 #endif
 
-namespace {{snake  .Module.Name }} {
+namespace {{qtNamespace .Module.Name }} {
 
 /** 
 * A Factory that uses an interface created by other factory and wraps it with traces.
@@ -31,4 +31,4 @@ private:
     IApiFactory& m_factory;
 };
 
-} //namespace {{snake  .Module.Name }}
+} //namespace {{qtNamespace .Module.Name }}

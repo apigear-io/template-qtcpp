@@ -17,7 +17,7 @@
 using namespace ApiGear;
 using namespace ApiGear::ObjectLink;
 
-namespace {{snake  .Module.Name }} {
+namespace {{qtNamespace .Module.Name }} {
 
 {{$class}}::{{$class}}(QObject *parent)
     : Abstract{{Camel .Interface.Name}}(parent)
@@ -175,4 +175,4 @@ void {{$class}}::olinkOnRelease()
     m_node = nullptr;
 }
 
-} //namespace {{snake  .Module.Name }}
+} //namespace {{qtNamespace .Module.Name }}

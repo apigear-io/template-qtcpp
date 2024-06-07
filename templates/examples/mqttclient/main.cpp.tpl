@@ -40,9 +40,9 @@ int main(int argc, char *argv[])
     {{- $class := Camel $interface.Name }}
     {{- $modulePrefix := lower1 (Camel $module.Name)}}
     {{- $clientClassName := printf "%s%s"  $modulePrefix $class }}
-    auto {{$clientClassName}} = std::make_shared< {{- snake $module.Name }}::Mqtt{{$interface.Name -}} >(client);
+    auto {{$clientClassName}} = std::make_shared< {{- qtNamespace $module.Name }}::Mqtt{{$interface.Name -}} >(client);
     {{- if $features.monitor }}
-    {{ snake $module.Name }}::{{$class}}Traced {{$clientClassName}}Traced({{$clientClassName}} );
+    {{ qtNamespace $module.Name }}::{{$class}}Traced {{$clientClassName}}Traced({{$clientClassName}} );
     {{- end }}
     {{- end }}
     {{- end }}
@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
 
         {{- $class := printf "Abstract%s" (Camel .Name) -}}
         {{- $modulePrefix := lower1 (Camel $module.Name) -}}
-        {{- $namespacePrefix := printf "%s::" (snake $module.Name) -}}
+        {{- $namespacePrefix := printf "%s::" (qtNamespace $module.Name) -}}
         {{- $clientClassNameCall := printf "%s%s->"  $modulePrefix (Camel $interface.Name) -}}
         {{- $clientClassNameGetPtr := printf "%s%s.get()"  $modulePrefix (Camel $interface.Name) -}}
         {{- if $features.monitor -}}
@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
 {{- if (and (eq $propertyExampleReady  0)  (len $interface.Properties) )}}
     {{- $property := (index $interface.Properties 0) }}
     // Try out properties: subscribe for changes
-    {{$clientClassNameCall}}connect({{$clientClassNameGetPtr}}, &{{ snake $module.Name }}::{{$class}}::{{$property.Name}}Changed, 
+    {{$clientClassNameCall}}connect({{$clientClassNameGetPtr}}, &{{ qtNamespace $module.Name }}::{{$class}}::{{$property.Name}}Changed, 
             []( {{qtParam $namespacePrefix $property}}){ 
                 static const std::string message = "{{$property.Name}} property changed ";
                 AG_LOG_DEBUG(message);
@@ -81,7 +81,7 @@ int main(int argc, char *argv[])
 {{- if (and (eq $signalExampleReady  0)  (len $interface.Signals))}}
     // Check the signals with subscribing for its change
     {{- $signal := (index $interface.Signals 0 ) }}
-    {{$clientClassNameCall}}connect({{$clientClassNameGetPtr}}, &{{ snake $module.Name }}::{{$class}}::{{camel $signal.Name}}, 
+    {{$clientClassNameCall}}connect({{$clientClassNameGetPtr}}, &{{ qtNamespace $module.Name }}::{{$class}}::{{camel $signal.Name}}, 
         []({{qtParams $namespacePrefix $signal.Params}}){
                 static const std::string message = "{{camel $signal.Name}} signal emitted ";
                 AG_LOG_DEBUG(message);

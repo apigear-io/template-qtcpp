@@ -3,7 +3,7 @@
 #include "agent.h"
 #include "apigear/monitor/agentclient.h"
 
-namespace {{snake  .Module.Name }} {
+namespace {{qtNamespace .Module.Name }} {
 
 {{- range .Module.Interfaces }}
 {{- $iface := Camel .Name }}
@@ -53,4 +53,4 @@ void {{$class}}::trace_{{.Name}}(Abstract{{$iface}}* obj{{- if (len .Params) }},
 
 {{- end }}
 
-} // namespace {{snake  .Module.Name }}
+} // namespace {{qtNamespace .Module.Name }}

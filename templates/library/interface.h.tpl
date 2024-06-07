@@ -18,7 +18,7 @@
 #  define {{ $LIB_ID }}_EXPORT Q_DECL_IMPORT
 #endif
 
-namespace {{snake  .Module.Name }} {
+namespace {{qtNamespace .Module.Name }} {
 
 /**
 * The {{$interfaceNameOriginal}} implementation.
@@ -65,4 +65,4 @@ private:
     {{qtReturn "" .}} m_{{.Name}};
 {{- end }}
 };
-} //namespace {{snake  .Module.Name }}
+} //namespace {{qtNamespace .Module.Name }}

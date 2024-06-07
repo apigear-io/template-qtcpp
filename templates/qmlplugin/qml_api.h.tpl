@@ -20,7 +20,7 @@
 #  define {{ $MODULE_ID }}_EXPORT Q_DECL_IMPORT
 #endif
 
-namespace {{snake  .Module.Name }} {
+namespace {{qtNamespace .Module.Name }} {
 
 {{- range .Module.Enums }}
 {{- $class := .Name }}
@@ -53,4 +53,4 @@ public:
 {{- end }}
 
 
-} //namespace {{snake  .Module.Name }}
+} //namespace {{qtNamespace .Module.Name }}

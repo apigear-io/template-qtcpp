@@ -12,7 +12,7 @@
 
 #include <QtCore>
 
-namespace {{snake  .Module.Name }} {
+namespace {{qtNamespace .Module.Name }} {
 
 namespace
 {
@@ -243,4 +243,4 @@ void {{$class}}::findAndExecuteCall(const nlohmann::json& value, quint64 callId,
     if (function) function(value);
 }
 
-} // namespace {{snake  .Module.Name }}
+} // namespace {{qtNamespace .Module.Name }}

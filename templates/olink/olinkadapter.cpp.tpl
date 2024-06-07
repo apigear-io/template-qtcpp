@@ -21,7 +21,7 @@ using namespace ApiGear::ObjectLink;
 
 using json = nlohmann::json;
 
-namespace {{snake  .Module.Name }} {
+namespace {{qtNamespace .Module.Name }} {
 
 {{$class}}::{{$class}}(RemoteRegistry& registry, Abstract{{$iface}}* impl, QObject *parent)
     : QObject(parent)
@@ -129,4 +129,4 @@ json {{$class}}::olinkCollectProperties()
     return captureState();
 }
 
-} // namespace {{snake  .Module.Name }}
+} // namespace {{qtNamespace .Module.Name }}

@@ -5,7 +5,7 @@
 #include "olink/olink{{.Name|lower}}.h"
 {{- end }}
 
-namespace {{snake  .Module.Name }} {
+namespace {{qtNamespace .Module.Name }} {
 
 OLinkFactory::OLinkFactory(ApiGear::ObjectLink::OLinkClient& client, QObject *parent)
     : QObject(parent),
@@ -26,4 +26,4 @@ std::shared_ptr<Abstract{{Camel .Name}}> OLinkFactory::create{{Camel .Name}}(QOb
 
 {{- end }}
 
-} //namespace {{snake  .Module.Name }}
+} //namespace {{qtNamespace .Module.Name }}

@@ -11,7 +11,7 @@
 #  define {{ $LIB_ID }}_EXPORT Q_DECL_IMPORT
 #endif
 
-namespace {{snake  .Module.Name }} {
+namespace {{qtNamespace .Module.Name }} {
 
 /** 
 * A Factory that creates the actual implementaion for interfaces in {{ .Module.Name }}
@@ -29,5 +29,5 @@ public:
 {{- end }}
 };
 
-} // namespace {{snake  .Module.Name }}
+} // namespace {{qtNamespace .Module.Name }}
 

@@ -2,7 +2,7 @@
 {{- cppGpl .Module }}
 #include "api.h"
 
-namespace {{snake  .Module.Name }} {
+namespace {{qtNamespace  .Module.Name }} {
 
 {{- range .Module.Enums }}
 {{- $class := .Name }}
@@ -95,4 +95,4 @@ QDataStream &operator>>(QDataStream &stream, {{$class}} &obj)
 
 {{- end }}
 
-} // namespace {{snake  .Module.Name }}
+} // namespace {{qtNamespace  .Module.Name }}

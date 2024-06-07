@@ -4,7 +4,7 @@
 #include "http{{.Name|lower}}.h"
 {{- end }}
 
-namespace {{snake  .Module.Name }} {
+namespace {{qtNamespace .Module.Name }} {
 
 HttpFactory::HttpFactory(QObject *parent)
     : QObject(parent)
@@ -22,4 +22,4 @@ std::shared_ptr<Abstract{{Camel .Name}}> HttpFactory::create{{Camel .Name}}(QObj
 {{- end }}
 
 
-} //namespace {{snake  .Module.Name }}
+} //namespace {{qtNamespace .Module.Name }}

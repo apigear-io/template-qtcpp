@@ -5,7 +5,7 @@
 #include "mqtt{{.Name|lower}}.h"
 {{- end }}
 
-namespace {{snake  .Module.Name }} {
+namespace {{qtNamespace .Module.Name }} {
 
 MqttFactory::MqttFactory(ApiGear::Mqtt::Client& client, QObject *parent)
     : QObject(parent),
@@ -24,4 +24,4 @@ std::shared_ptr<Abstract{{Camel .Name}}> MqttFactory::create{{Camel .Name}}(QObj
 
 {{- end }}
 
-} //namespace {{snake  .Module.Name }}
+} //namespace {{qtNamespace .Module.Name }}

@@ -74,57 +74,75 @@ int main(int argc, char *argv[]){
     QCoreApplication app(argc, argv);
     ApiGear::Mqtt::ServiceAdapter service("ServiceUniqueNameInMqtt");
     service.connectToHost("localhost", 1883);
+    
     auto testbed2ManyParamInterface = std::make_shared<testbed2::ManyParamInterface>();
     auto testbed2ManyParamInterfaceTraced = std::make_shared<testbed2::ManyParamInterfaceTraced>(testbed2ManyParamInterface );
     auto testbed2MqttManyParamInterfaceService = std::make_shared<testbed2::MqttManyParamInterfaceAdapter>(service, testbed2ManyParamInterfaceTraced);
+    
     auto testbed2NestedStruct1Interface = std::make_shared<testbed2::NestedStruct1Interface>();
     auto testbed2NestedStruct1InterfaceTraced = std::make_shared<testbed2::NestedStruct1InterfaceTraced>(testbed2NestedStruct1Interface );
     auto testbed2MqttNestedStruct1InterfaceService = std::make_shared<testbed2::MqttNestedStruct1InterfaceAdapter>(service, testbed2NestedStruct1InterfaceTraced);
+    
     auto testbed2NestedStruct2Interface = std::make_shared<testbed2::NestedStruct2Interface>();
     auto testbed2NestedStruct2InterfaceTraced = std::make_shared<testbed2::NestedStruct2InterfaceTraced>(testbed2NestedStruct2Interface );
     auto testbed2MqttNestedStruct2InterfaceService = std::make_shared<testbed2::MqttNestedStruct2InterfaceAdapter>(service, testbed2NestedStruct2InterfaceTraced);
+    
     auto testbed2NestedStruct3Interface = std::make_shared<testbed2::NestedStruct3Interface>();
     auto testbed2NestedStruct3InterfaceTraced = std::make_shared<testbed2::NestedStruct3InterfaceTraced>(testbed2NestedStruct3Interface );
     auto testbed2MqttNestedStruct3InterfaceService = std::make_shared<testbed2::MqttNestedStruct3InterfaceAdapter>(service, testbed2NestedStruct3InterfaceTraced);
+    
     auto tbEnumEnumInterface = std::make_shared<tb_enum::EnumInterface>();
     auto tbEnumEnumInterfaceTraced = std::make_shared<tb_enum::EnumInterfaceTraced>(tbEnumEnumInterface );
     auto tbEnumMqttEnumInterfaceService = std::make_shared<tb_enum::MqttEnumInterfaceAdapter>(service, tbEnumEnumInterfaceTraced);
+    
     auto tbSame1SameStruct1Interface = std::make_shared<tb_same1::SameStruct1Interface>();
     auto tbSame1SameStruct1InterfaceTraced = std::make_shared<tb_same1::SameStruct1InterfaceTraced>(tbSame1SameStruct1Interface );
     auto tbSame1MqttSameStruct1InterfaceService = std::make_shared<tb_same1::MqttSameStruct1InterfaceAdapter>(service, tbSame1SameStruct1InterfaceTraced);
+    
     auto tbSame1SameStruct2Interface = std::make_shared<tb_same1::SameStruct2Interface>();
     auto tbSame1SameStruct2InterfaceTraced = std::make_shared<tb_same1::SameStruct2InterfaceTraced>(tbSame1SameStruct2Interface );
     auto tbSame1MqttSameStruct2InterfaceService = std::make_shared<tb_same1::MqttSameStruct2InterfaceAdapter>(service, tbSame1SameStruct2InterfaceTraced);
+    
     auto tbSame1SameEnum1Interface = std::make_shared<tb_same1::SameEnum1Interface>();
     auto tbSame1SameEnum1InterfaceTraced = std::make_shared<tb_same1::SameEnum1InterfaceTraced>(tbSame1SameEnum1Interface );
     auto tbSame1MqttSameEnum1InterfaceService = std::make_shared<tb_same1::MqttSameEnum1InterfaceAdapter>(service, tbSame1SameEnum1InterfaceTraced);
+    
     auto tbSame1SameEnum2Interface = std::make_shared<tb_same1::SameEnum2Interface>();
     auto tbSame1SameEnum2InterfaceTraced = std::make_shared<tb_same1::SameEnum2InterfaceTraced>(tbSame1SameEnum2Interface );
     auto tbSame1MqttSameEnum2InterfaceService = std::make_shared<tb_same1::MqttSameEnum2InterfaceAdapter>(service, tbSame1SameEnum2InterfaceTraced);
+    
     auto tbSame2SameStruct1Interface = std::make_shared<tb_same2::SameStruct1Interface>();
     auto tbSame2SameStruct1InterfaceTraced = std::make_shared<tb_same2::SameStruct1InterfaceTraced>(tbSame2SameStruct1Interface );
     auto tbSame2MqttSameStruct1InterfaceService = std::make_shared<tb_same2::MqttSameStruct1InterfaceAdapter>(service, tbSame2SameStruct1InterfaceTraced);
+    
     auto tbSame2SameStruct2Interface = std::make_shared<tb_same2::SameStruct2Interface>();
     auto tbSame2SameStruct2InterfaceTraced = std::make_shared<tb_same2::SameStruct2InterfaceTraced>(tbSame2SameStruct2Interface );
     auto tbSame2MqttSameStruct2InterfaceService = std::make_shared<tb_same2::MqttSameStruct2InterfaceAdapter>(service, tbSame2SameStruct2InterfaceTraced);
+    
     auto tbSame2SameEnum1Interface = std::make_shared<tb_same2::SameEnum1Interface>();
     auto tbSame2SameEnum1InterfaceTraced = std::make_shared<tb_same2::SameEnum1InterfaceTraced>(tbSame2SameEnum1Interface );
     auto tbSame2MqttSameEnum1InterfaceService = std::make_shared<tb_same2::MqttSameEnum1InterfaceAdapter>(service, tbSame2SameEnum1InterfaceTraced);
+    
     auto tbSame2SameEnum2Interface = std::make_shared<tb_same2::SameEnum2Interface>();
     auto tbSame2SameEnum2InterfaceTraced = std::make_shared<tb_same2::SameEnum2InterfaceTraced>(tbSame2SameEnum2Interface );
     auto tbSame2MqttSameEnum2InterfaceService = std::make_shared<tb_same2::MqttSameEnum2InterfaceAdapter>(service, tbSame2SameEnum2InterfaceTraced);
+    
     auto tbSimpleSimpleInterface = std::make_shared<tb_simple::SimpleInterface>();
     auto tbSimpleSimpleInterfaceTraced = std::make_shared<tb_simple::SimpleInterfaceTraced>(tbSimpleSimpleInterface );
     auto tbSimpleMqttSimpleInterfaceService = std::make_shared<tb_simple::MqttSimpleInterfaceAdapter>(service, tbSimpleSimpleInterfaceTraced);
+    
     auto tbSimpleSimpleArrayInterface = std::make_shared<tb_simple::SimpleArrayInterface>();
     auto tbSimpleSimpleArrayInterfaceTraced = std::make_shared<tb_simple::SimpleArrayInterfaceTraced>(tbSimpleSimpleArrayInterface );
     auto tbSimpleMqttSimpleArrayInterfaceService = std::make_shared<tb_simple::MqttSimpleArrayInterfaceAdapter>(service, tbSimpleSimpleArrayInterfaceTraced);
+    
     auto testbed1StructInterface = std::make_shared<testbed1::StructInterface>();
     auto testbed1StructInterfaceTraced = std::make_shared<testbed1::StructInterfaceTraced>(testbed1StructInterface );
     auto testbed1MqttStructInterfaceService = std::make_shared<testbed1::MqttStructInterfaceAdapter>(service, testbed1StructInterfaceTraced);
+    
     auto testbed1StructArrayInterface = std::make_shared<testbed1::StructArrayInterface>();
     auto testbed1StructArrayInterfaceTraced = std::make_shared<testbed1::StructArrayInterfaceTraced>(testbed1StructArrayInterface );
     auto testbed1MqttStructArrayInterfaceService = std::make_shared<testbed1::MqttStructArrayInterfaceAdapter>(service, testbed1StructArrayInterfaceTraced);
+    
     auto tbNamesNamEs = std::make_shared<tb_names::NamEs>();
     auto tbNamesNamEsTraced = std::make_shared<tb_names::NamEsTraced>(tbNamesNamEs );
     auto tbNamesMqttNamEsService = std::make_shared<tb_names::MqttNam_EsAdapter>(service, tbNamesNamEsTraced);

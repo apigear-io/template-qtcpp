@@ -7,7 +7,7 @@
 #include "apigear/utilities/logger.h"
 
 
-namespace {{snake  .Module.Name }} {
+namespace {{qtNamespace .Module.Name }} {
 
 {{$class}}::{{$class}}(QNetworkAccessManager *network, QObject *parent)
     : Abstract{{Camel .Interface.Name}}(parent)
@@ -88,4 +88,4 @@ void {{$class}}::applyState(const QJsonObject &state)
   {{- end }}
 }
 
-} // namespace {{snake  .Module.Name }} 
+} // namespace {{qtNamespace .Module.Name }} 

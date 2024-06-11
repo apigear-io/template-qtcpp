@@ -86,6 +86,18 @@
 #include "tb_names/qmlplugin/apifactory.h"
 #include "tb_names/mqtt/mqttfactory.h"
 #include "tb_names/monitor/tracedapifactory.h"
+#include "custom_types/qmlplugin/apifactory.h"
+#include "custom_types/mqtt/mqttfactory.h"
+#include "custom_types/monitor/tracedapifactory.h"
+#include "extern_types/qmlplugin/apifactory.h"
+#include "extern_types/mqtt/mqttfactory.h"
+#include "extern_types/monitor/tracedapifactory.h"
+#include "counter/implementation/counter.h"
+#include "counter/qmlplugin/qmlcounter.h"
+#include "counter/mqtt/mqttcounteradapter.h"
+#include "counter/qmlplugin/apifactory.h"
+#include "counter/mqtt/mqttfactory.h"
+#include "counter/monitor/tracedapifactory.h"
 
 #include <QtCore>
 #include "apigear/mqtt/mqttservice.h"
@@ -142,6 +154,18 @@ int main(int argc, char *argv[]){
     tb_names::MqttFactory tb_namesMqttFactory(client);
     tb_names::TracedApiFactory tb_namesTracedMqttFactory(tb_namesMqttFactory); 
     tb_names::ApiFactory::set(&tb_namesTracedMqttFactory);
+    
+    custom_types::MqttFactory custom_typesMqttFactory(client);
+    custom_types::TracedApiFactory custom_typesTracedMqttFactory(custom_typesMqttFactory); 
+    custom_types::ApiFactory::set(&custom_typesTracedMqttFactory);
+    
+    extern_types::MqttFactory extern_typesMqttFactory(client);
+    extern_types::TracedApiFactory extern_typesTracedMqttFactory(extern_typesMqttFactory); 
+    extern_types::ApiFactory::set(&extern_typesTracedMqttFactory);
+    
+    counter::MqttFactory counterMqttFactory(client);
+    counter::TracedApiFactory counterTracedMqttFactory(counterMqttFactory); 
+    counter::ApiFactory::set(&counterTracedMqttFactory);
 
     // Create main app
     const QUrl url(QStringLiteral("qrc:/main.qml"));
@@ -204,6 +228,8 @@ int main(int argc, char *argv[]){
     auto testbed1MqttStructArrayInterfaceService = std::make_shared<testbed1::MqttStructArrayInterfaceAdapter>(service, testbed1StructArrayInterface);
     auto tbNamesNamEs = std::make_shared<tb_names::NamEs>();
     auto tbNamesMqttNamEsService = std::make_shared<tb_names::MqttNam_EsAdapter>(service, tbNamesNamEs);
+    auto counterCounter = std::make_shared<counter::Counter>();
+    auto counterMqttCounterService = std::make_shared<counter::MqttCounterAdapter>(service, counterCounter);
 
 
     /**

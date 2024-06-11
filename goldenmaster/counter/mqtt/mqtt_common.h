@@ -1,0 +1,8 @@
+
+#pragma once
+
+#if defined(COUNTER_MQTT_LIBRARY)
+#  define COUNTER_MQTT_LIBRARY_EXPORT Q_DECL_EXPORT
+#else
+#  define COUNTER_MQTT_LIBRARY_EXPORT Q_DECL_IMPORT
+#endif

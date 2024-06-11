@@ -65,6 +65,9 @@
 #include "tb_names/implementation/nam_es.h"
 #include "tb_names//olink/olinknam_esadapter.h"
 #include "tb_names/monitor/nam_estraced.h"
+#include "counter/implementation/counter.h"
+#include "counter//olink/olinkcounteradapter.h"
+#include "counter/monitor/countertraced.h"
 
 #include <QtCore>
 #include "apigear/olink/olinkhost.h"
@@ -195,6 +198,11 @@ int main(int argc, char *argv[]){
     tb_names::NamEsTraced tbNamesNamEsTraced(tbNamesNamEs );
     auto tbNamesOlinkNamEsService = std::make_shared<tb_names::OLinkNam_EsAdapter>(registry, &tbNamesNamEsTraced);
     registry.addSource(tbNamesOlinkNamEsService);
+    
+    auto counterCounter = std::make_shared<counter::Counter>();
+    counter::CounterTraced counterCounterTraced(counterCounter );
+    auto counterOlinkCounterService = std::make_shared<counter::OLinkCounterAdapter>(registry, &counterCounterTraced);
+    registry.addSource(counterOlinkCounterService);
 
     auto result = app.exec();
     // Use the server.
@@ -220,5 +228,6 @@ int main(int argc, char *argv[]){
     registry.removeSource(testbed1OlinkStructInterfaceService->olinkObjectName());
     registry.removeSource(testbed1OlinkStructArrayInterfaceService->olinkObjectName());
     registry.removeSource(tbNamesOlinkNamEsService->olinkObjectName());
+    registry.removeSource(counterOlinkCounterService->olinkObjectName());
     return result;
 }

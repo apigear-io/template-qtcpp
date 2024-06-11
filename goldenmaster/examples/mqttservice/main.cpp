@@ -65,6 +65,9 @@
 #include "tb_names/implementation/nam_es.h"
 #include "tb_names/mqtt/mqttnam_esadapter.h"
 #include "tb_names/monitor/nam_estraced.h"
+#include "counter/implementation/counter.h"
+#include "counter/mqtt/mqttcounteradapter.h"
+#include "counter/monitor/countertraced.h"
 
 #include <QtCore>
 #include "apigear/mqtt/mqttservice.h"
@@ -174,6 +177,10 @@ int main(int argc, char *argv[]){
     auto tbNamesNamEs = std::make_shared<tb_names::NamEs>();
     auto tbNamesNamEsTraced = std::make_shared<tb_names::NamEsTraced>(tbNamesNamEs );
     auto tbNamesMqttNamEsService = std::make_shared<tb_names::MqttNam_EsAdapter>(service, tbNamesNamEsTraced);
+    
+    auto counterCounter = std::make_shared<counter::Counter>();
+    auto counterCounterTraced = std::make_shared<counter::CounterTraced>(counterCounter );
+    auto counterMqttCounterService = std::make_shared<counter::MqttCounterAdapter>(service, counterCounterTraced);
 
     auto result = app.exec();
     // Use the server.

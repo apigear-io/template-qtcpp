@@ -195,7 +195,7 @@ QFuture<StructBool> OLinkStructInterface::funcBoolAsync(const StructBool& paramB
 }
 
 
-StructBool OLinkStructInterface::funcInt(const StructInt& paramInt)
+StructInt OLinkStructInterface::funcInt(const StructInt& paramInt)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
     auto future = funcIntAsync(paramInt);
@@ -203,19 +203,19 @@ StructBool OLinkStructInterface::funcInt(const StructInt& paramInt)
     return future.result();
 }
 
-QFuture<StructBool> OLinkStructInterface::funcIntAsync(const StructInt& paramInt)
+QFuture<StructInt> OLinkStructInterface::funcIntAsync(const StructInt& paramInt)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    auto resolve = std::make_shared<QPromise<StructBool>>();
+    auto resolve = std::make_shared<QPromise<StructInt>>();
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkStructInterface::funcInt, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->addResult(StructBool());
+            resolve->addResult(StructInt());
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcInt");
     m_node->invokeRemote(operationId, nlohmann::json::array({paramInt}), 
             [resolve](InvokeReplyArg arg) {
-                StructBool value = arg.value.get<StructBool>();
+                StructInt value = arg.value.get<StructInt>();
                 resolve->addResult(value);
             });
     return resolve->future();

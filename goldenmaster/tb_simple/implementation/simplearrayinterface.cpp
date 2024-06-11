@@ -31,6 +31,7 @@ SimpleArrayInterface::SimpleArrayInterface(QObject *parent)
     , m_propFloat32(QList<float>())
     , m_propFloat64(QList<double>())
     , m_propString(QList<QString>())
+    , m_propReadOnlyString(QString())
 {
 }
 
@@ -140,6 +141,19 @@ void SimpleArrayInterface::setPropString(const QList<QString>& propString)
 QList<QString> SimpleArrayInterface::propString() const
 {
     return m_propString;
+}
+
+void SimpleArrayInterface::setPropReadOnlyString(const QString& propReadOnlyString)
+{
+    if (m_propReadOnlyString != propReadOnlyString) {
+        m_propReadOnlyString = propReadOnlyString;
+        emit propReadOnlyStringChanged(propReadOnlyString);
+    }
+}
+
+QString SimpleArrayInterface::propReadOnlyString() const
+{
+    return m_propReadOnlyString;
 }
 
 QList<bool> SimpleArrayInterface::funcBool(const QList<bool>& paramBool)

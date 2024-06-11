@@ -142,7 +142,7 @@ QString SimpleInterface::propString() const
     return m_propString;
 }
 
-void SimpleInterface::funcVoid()
+void SimpleInterface::funcNoReturnValue(bool paramBool)
 {
     return;
 }

@@ -28,7 +28,7 @@ class TestTbSimpleSimpleInterface: public QObject
     void cleanup();
 
 private slots:
-    void funcVoid();
+    void funcNoReturnValue();
     void funcBool();
     void funcInt();
     void funcInt32();

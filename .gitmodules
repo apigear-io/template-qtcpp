@@ -1,0 +1,3 @@
+[submodule "apigear/test-apis"]
+	path = apigear/test-apis
+	url = https://github.com/apigear-io/test-apis

@@ -91,9 +91,9 @@ StructBool StructInterface::funcBool(const StructBool& paramBool)
     return StructBool();
 }
 
-StructBool StructInterface::funcInt(const StructInt& paramInt)
+StructInt StructInterface::funcInt(const StructInt& paramInt)
 {
-    return StructBool();
+    return StructInt();
 }
 
 StructFloat StructInterface::funcFloat(const StructFloat& paramFloat)

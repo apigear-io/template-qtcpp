@@ -131,6 +131,13 @@ void MqttSimpleArrayInterfaceAdapter::subscribeForPropertiesChanges()
             QList<QString> propString = value.get<QList<QString>>();
             m_impl->setPropString(propString);
         }));
+    const auto setTopic_propReadOnlyString = interfaceName() + "/set/propReadOnlyString";
+    m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_propReadOnlyString,
+        [this](const nlohmann::json& value)
+        {
+            QString propReadOnlyString = value.get<QString>();
+            m_impl->setPropReadOnlyString(propReadOnlyString);
+        }));
 }
 
 void MqttSimpleArrayInterfaceAdapter::subscribeForInvokeRequests()
@@ -250,6 +257,12 @@ void MqttSimpleArrayInterfaceAdapter::connectServicePropertiesChanges()
         this, [this, publishTopic_propString](const QList<QString>& propString)
         {
             m_mqttServiceAdapter.emitPropertyChange(publishTopic_propString, propString);
+        });
+    const auto publishTopic_propReadOnlyString = interfaceName() + "/prop/propReadOnlyString";
+    connect(m_impl.get(),&AbstractSimpleArrayInterface::propReadOnlyStringChanged,
+        this, [this, publishTopic_propReadOnlyString](const QString& propReadOnlyString)
+        {
+            m_mqttServiceAdapter.emitPropertyChange(publishTopic_propReadOnlyString, propReadOnlyString);
         });    
 }
 

@@ -41,8 +41,12 @@ ApplicationWindow {
     TbSame2SameStruct2Interface { id: qmlTbSame2SameStruct2Interface }
     TbSame2SameEnum1Interface { id: qmlTbSame2SameEnum1Interface }
     TbSame2SameEnum2Interface { id: qmlTbSame2SameEnum2Interface }
+    TbSimpleVoidInterface { id: qmlTbSimpleVoidInterface }
     TbSimpleSimpleInterface { id: qmlTbSimpleSimpleInterface }
     TbSimpleSimpleArrayInterface { id: qmlTbSimpleSimpleArrayInterface }
+    TbSimpleNoPropertiesInterface { id: qmlTbSimpleNoPropertiesInterface }
+    TbSimpleNoOperationsInterface { id: qmlTbSimpleNoOperationsInterface }
+    TbSimpleNoSignalsInterface { id: qmlTbSimpleNoSignalsInterface }
     Testbed1StructInterface { id: qmlTestbed1StructInterface }
     Testbed1StructArrayInterface { id: qmlTestbed1StructArrayInterface }
     TbNamesNamEs { id: qmlTbNamesNam_Es }

@@ -40,6 +40,7 @@ OLinkSimpleArrayInterface::OLinkSimpleArrayInterface(QObject *parent)
     , m_propFloat32(QList<float>())
     , m_propFloat64(QList<double>())
     , m_propString(QList<QString>())
+    , m_propReadOnlyString(QString())
     , m_isReady(false)
     , m_node(nullptr)
 {        
@@ -73,6 +74,9 @@ void OLinkSimpleArrayInterface::applyState(const nlohmann::json& fields)
     if(fields.contains("propString")) {
         setPropStringLocal(fields["propString"].get<QList<QString>>());
     }
+    if(fields.contains("propReadOnlyString")) {
+        setPropReadOnlyStringLocal(fields["propReadOnlyString"].get<QString>());
+    }
 }
 
 void OLinkSimpleArrayInterface::applyProperty(const std::string& propertyName, const nlohmann::json& value)
@@ -100,6 +104,9 @@ void OLinkSimpleArrayInterface::applyProperty(const std::string& propertyName, c
     }
     else if ( propertyName == "propString") {
         setPropStringLocal(value.get<QList<QString>>());
+    }
+    else if ( propertyName == "propReadOnlyString") {
+        setPropReadOnlyStringLocal(value.get<QString>());
     }
 }
 
@@ -285,6 +292,29 @@ void OLinkSimpleArrayInterface::setPropStringLocal(const QList<QString>& propStr
 QList<QString> OLinkSimpleArrayInterface::propString() const
 {
     return m_propString;
+}
+
+void OLinkSimpleArrayInterface::setPropReadOnlyString(const QString& propReadOnlyString)
+{
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+    if(!m_node) {
+        return;
+    }
+    m_node->setRemoteProperty("tb.simple.SimpleArrayInterface/propReadOnlyString", propReadOnlyString);
+}
+
+void OLinkSimpleArrayInterface::setPropReadOnlyStringLocal(const QString& propReadOnlyString)
+{
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+    if (m_propReadOnlyString != propReadOnlyString) {
+        m_propReadOnlyString = propReadOnlyString;
+        emit propReadOnlyStringChanged(propReadOnlyString);
+    }
+}
+
+QString OLinkSimpleArrayInterface::propReadOnlyString() const
+{
+    return m_propReadOnlyString;
 }
 
 

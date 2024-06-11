@@ -52,7 +52,6 @@ QmlSimpleInterface::QmlSimpleInterface(QObject *parent)
     // Forward the singals emitted by backend implementation to QmlSimpleInterface wrapper.
     //  Have in mind that there is no forwarding from the QmlSimpleInterface wrapper to backend implementation.
     //  This signal is designed to be emitted from backend only.
-    connect(m_obj.get(), &AbstractSimpleInterface::sigVoid, this, &AbstractSimpleInterface::sigVoid);
     connect(m_obj.get(), &AbstractSimpleInterface::sigBool, this, &AbstractSimpleInterface::sigBool);
     connect(m_obj.get(), &AbstractSimpleInterface::sigInt, this, &AbstractSimpleInterface::sigInt);
     connect(m_obj.get(), &AbstractSimpleInterface::sigInt32, this, &AbstractSimpleInterface::sigInt32);
@@ -147,9 +146,9 @@ void QmlSimpleInterface::setPropString(const QString& propString)
     return m_obj->setPropString(propString);
 }
 
-void QmlSimpleInterface::funcVoid()
+void QmlSimpleInterface::funcNoReturnValue(bool paramBool)
 {
-    return m_obj->funcVoid();
+    return m_obj->funcNoReturnValue(paramBool);
 }
 
 bool QmlSimpleInterface::funcBool(bool paramBool)

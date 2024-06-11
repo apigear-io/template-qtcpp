@@ -120,17 +120,6 @@ OLinkSimpleInterfaceAdapter::OLinkSimpleInterfaceAdapter(RemoteRegistry& registr
             }
         }
     });
-        connect(m_impl, &AbstractSimpleInterface::sigVoid, this,
-            [=]() {
-                const nlohmann::json& args = {  };
-                const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sigVoid");
-                for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
-                    auto lockedNode = node.lock();
-                    if(lockedNode) {
-                        lockedNode->notifySignal(signalId, args);
-                    }
-                }
-    });
         connect(m_impl, &AbstractSimpleInterface::sigBool, this,
             [=](bool paramBool) {
                 const nlohmann::json& args = { paramBool };
@@ -187,8 +176,8 @@ OLinkSimpleInterfaceAdapter::OLinkSimpleInterfaceAdapter(RemoteRegistry& registr
                 }
     });
         connect(m_impl, &AbstractSimpleInterface::sigFloat32, this,
-            [=](float paramFloa32) {
-                const nlohmann::json& args = { paramFloa32 };
+            [=](float paramFloat32) {
+                const nlohmann::json& args = { paramFloat32 };
                 const auto& signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "sigFloat32");
                 for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
                     auto lockedNode = node.lock();
@@ -272,8 +261,9 @@ json OLinkSimpleInterfaceAdapter::olinkInvoke(const std::string& methodId, const
     AG_LOG_DEBUG(Q_FUNC_INFO);
     AG_LOG_DEBUG(methodId);
     std::string path = Name::getMemberName(methodId);
-    if(path == "funcVoid") {
-        m_impl->funcVoid( );
+    if(path == "funcNoReturnValue") {
+        const bool& paramBool = args.at(0);
+        m_impl->funcNoReturnValue( paramBool);
         return json{};
     }
     if(path == "funcBool") {

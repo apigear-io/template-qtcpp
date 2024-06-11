@@ -130,14 +130,14 @@ public:
     */
     void setPropString(const QString& propString) override;
     /**
-    * Remote call of ISimpleInterface::funcVoid on the SimpleInterface service.
-    * Uses funcVoidAsync
+    * Remote call of ISimpleInterface::funcNoReturnValue on the SimpleInterface service.
+    * Uses funcNoReturnValueAsync
     */
-    void funcVoid() override;
+    void funcNoReturnValue(bool paramBool) override;
     /**
-    * Remote call of ISimpleInterface::funcVoid on the SimpleInterface service.
+    * Remote call of ISimpleInterface::funcNoReturnValue on the SimpleInterface service.
     */
-    QFuture<void> funcVoidAsync();
+    QFuture<void> funcNoReturnValueAsync(bool paramBool);
     /**
     * Remote call of ISimpleInterface::funcBool on the SimpleInterface service.
     * Uses funcBoolAsync

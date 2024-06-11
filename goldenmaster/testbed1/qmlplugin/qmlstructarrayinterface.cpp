@@ -94,22 +94,22 @@ void QmlStructArrayInterface::setPropString(const QList<StructString>& propStrin
     return m_obj->setPropString(propString);
 }
 
-StructBool QmlStructArrayInterface::funcBool(const QList<StructBool>& paramBool)
+QList<StructBool> QmlStructArrayInterface::funcBool(const QList<StructBool>& paramBool)
 {
     return m_obj->funcBool(paramBool);
 }
 
-StructBool QmlStructArrayInterface::funcInt(const QList<StructInt>& paramInt)
+QList<StructInt> QmlStructArrayInterface::funcInt(const QList<StructInt>& paramInt)
 {
     return m_obj->funcInt(paramInt);
 }
 
-StructBool QmlStructArrayInterface::funcFloat(const QList<StructFloat>& paramFloat)
+QList<StructFloat> QmlStructArrayInterface::funcFloat(const QList<StructFloat>& paramFloat)
 {
     return m_obj->funcFloat(paramFloat);
 }
 
-StructBool QmlStructArrayInterface::funcString(const QList<StructString>& paramString)
+QList<StructString> QmlStructArrayInterface::funcString(const QList<StructString>& paramString)
 {
     return m_obj->funcString(paramString);
 }

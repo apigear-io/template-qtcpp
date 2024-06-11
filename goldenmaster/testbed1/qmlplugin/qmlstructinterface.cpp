@@ -99,7 +99,7 @@ StructBool QmlStructInterface::funcBool(const StructBool& paramBool)
     return m_obj->funcBool(paramBool);
 }
 
-StructBool QmlStructInterface::funcInt(const StructInt& paramInt)
+StructInt QmlStructInterface::funcInt(const StructInt& paramInt)
 {
     return m_obj->funcInt(paramInt);
 }

@@ -86,23 +86,23 @@ QList<StructString> StructArrayInterface::propString() const
     return m_propString;
 }
 
-StructBool StructArrayInterface::funcBool(const QList<StructBool>& paramBool)
+QList<StructBool> StructArrayInterface::funcBool(const QList<StructBool>& paramBool)
 {
-    return StructBool();
+    return QList<StructBool>();
 }
 
-StructBool StructArrayInterface::funcInt(const QList<StructInt>& paramInt)
+QList<StructInt> StructArrayInterface::funcInt(const QList<StructInt>& paramInt)
 {
-    return StructBool();
+    return QList<StructInt>();
 }
 
-StructBool StructArrayInterface::funcFloat(const QList<StructFloat>& paramFloat)
+QList<StructFloat> StructArrayInterface::funcFloat(const QList<StructFloat>& paramFloat)
 {
-    return StructBool();
+    return QList<StructFloat>();
 }
 
-StructBool StructArrayInterface::funcString(const QList<StructString>& paramString)
+QList<StructString> StructArrayInterface::funcString(const QList<StructString>& paramString)
 {
-    return StructBool();
+    return QList<StructString>();
 }
 } //namespace testbed1

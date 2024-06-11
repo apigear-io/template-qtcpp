@@ -31,8 +31,8 @@ public:
     /** dtor */
     virtual ~SimpleInterfaceTraced() = default;
 
-    /** Traces funcVoid and forwards call to SimpleInterface implementation. */
-    void funcVoid() override;
+    /** Traces funcNoReturnValue and forwards call to SimpleInterface implementation. */
+    void funcNoReturnValue(bool paramBool) override;
     
     /** Traces funcBool and forwards call to SimpleInterface implementation. */
     bool funcBool(bool paramBool) override;
@@ -98,8 +98,6 @@ public:
     /** Forwards call to SimpleInterface implementation. */
     QString propString() const override;
     slots
-    /**  Traces sigVoid emission. */
-    void traceSigVoid();
     /**  Traces sigBool emission. */
     void traceSigBool(bool paramBool);
     /**  Traces sigInt emission. */
@@ -111,7 +109,7 @@ public:
     /**  Traces sigFloat emission. */
     void traceSigFloat(qreal paramFloat);
     /**  Traces sigFloat32 emission. */
-    void traceSigFloat32(float paramFloa32);
+    void traceSigFloat32(float paramFloat32);
     /**  Traces sigFloat64 emission. */
     void traceSigFloat64(double paramFloat64);
     /**  Traces sigString emission. */

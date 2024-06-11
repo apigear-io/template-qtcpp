@@ -136,6 +136,16 @@ public:
     */
     void setPropString(const QList<QString>& propString) override;
     /**
+    * Property getter
+    * @return Locally stored recent value for PropReadOnlyString.
+    */
+    QString propReadOnlyString() const override;
+    /**
+    * Request setting a property on the SimpleArrayInterface service.
+    * @param The value to which set request is send for the PropReadOnlyString.
+    */
+    void setPropReadOnlyString(const QString& propReadOnlyString) override;
+    /**
     * Remote call of ISimpleArrayInterface::funcBool on the SimpleArrayInterface service.
     * Uses funcBoolAsync
     */
@@ -292,6 +302,10 @@ private:
     void setPropStringLocal(const QList<QString>& propString);
     /** A local value for propString */
     QList<QString> m_propString;
+    /**  Updates local value for PropReadOnlyString and informs subscriber about the change with emit property changed signal. */
+    void setPropReadOnlyStringLocal(const QString& propReadOnlyString);
+    /** A local value for propReadOnlyString */
+    QString m_propReadOnlyString;
     /** An indicator if the object is linked with the service. */
     bool m_isReady;
     /** 

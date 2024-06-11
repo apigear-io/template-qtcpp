@@ -14,13 +14,24 @@
 namespace tb_simple {
 
 
+class TB_SIMPLE_MONITOR_EXPORT VoidInterfaceAgent
+{
+public:
+  VoidInterfaceAgent();
+  static QVariantMap capture_state(AbstractVoidInterface* obj);
+  static void trace_state(AbstractVoidInterface* obj);
+  static void trace_funcVoid(AbstractVoidInterface* obj );
+  static void trace_sigVoid(AbstractVoidInterface* obj );
+};
+
+
 class TB_SIMPLE_MONITOR_EXPORT SimpleInterfaceAgent
 {
 public:
   SimpleInterfaceAgent();
   static QVariantMap capture_state(AbstractSimpleInterface* obj);
   static void trace_state(AbstractSimpleInterface* obj);
-  static void trace_funcVoid(AbstractSimpleInterface* obj );
+  static void trace_funcNoReturnValue(AbstractSimpleInterface* obj, bool paramBool);
   static void trace_funcBool(AbstractSimpleInterface* obj, bool paramBool);
   static void trace_funcInt(AbstractSimpleInterface* obj, int paramInt);
   static void trace_funcInt32(AbstractSimpleInterface* obj, qint32 paramInt32);
@@ -29,7 +40,6 @@ public:
   static void trace_funcFloat32(AbstractSimpleInterface* obj, float paramFloat32);
   static void trace_funcFloat64(AbstractSimpleInterface* obj, double paramFloat);
   static void trace_funcString(AbstractSimpleInterface* obj, const QString& paramString);
-  static void trace_sigVoid(AbstractSimpleInterface* obj );
   static void trace_sigBool(AbstractSimpleInterface* obj, bool paramBool);
   static void trace_sigInt(AbstractSimpleInterface* obj, int paramInt);
   static void trace_sigInt32(AbstractSimpleInterface* obj, qint32 paramInt32);
@@ -63,6 +73,41 @@ public:
   static void trace_sigFloat32(AbstractSimpleArrayInterface* obj, const QList<float>& paramFloa32);
   static void trace_sigFloat64(AbstractSimpleArrayInterface* obj, const QList<double>& paramFloat64);
   static void trace_sigString(AbstractSimpleArrayInterface* obj, const QList<QString>& paramString);
+};
+
+
+class TB_SIMPLE_MONITOR_EXPORT NoPropertiesInterfaceAgent
+{
+public:
+  NoPropertiesInterfaceAgent();
+  static QVariantMap capture_state(AbstractNoPropertiesInterface* obj);
+  static void trace_state(AbstractNoPropertiesInterface* obj);
+  static void trace_funcVoid(AbstractNoPropertiesInterface* obj );
+  static void trace_funcBool(AbstractNoPropertiesInterface* obj, bool paramBool);
+  static void trace_sigVoid(AbstractNoPropertiesInterface* obj );
+  static void trace_sigBool(AbstractNoPropertiesInterface* obj, bool paramBool);
+};
+
+
+class TB_SIMPLE_MONITOR_EXPORT NoOperationsInterfaceAgent
+{
+public:
+  NoOperationsInterfaceAgent();
+  static QVariantMap capture_state(AbstractNoOperationsInterface* obj);
+  static void trace_state(AbstractNoOperationsInterface* obj);
+  static void trace_sigVoid(AbstractNoOperationsInterface* obj );
+  static void trace_sigBool(AbstractNoOperationsInterface* obj, bool paramBool);
+};
+
+
+class TB_SIMPLE_MONITOR_EXPORT NoSignalsInterfaceAgent
+{
+public:
+  NoSignalsInterfaceAgent();
+  static QVariantMap capture_state(AbstractNoSignalsInterface* obj);
+  static void trace_state(AbstractNoSignalsInterface* obj);
+  static void trace_funcVoid(AbstractNoSignalsInterface* obj );
+  static void trace_funcBool(AbstractNoSignalsInterface* obj, bool paramBool);
 };
 
 } // namespace tb_simple

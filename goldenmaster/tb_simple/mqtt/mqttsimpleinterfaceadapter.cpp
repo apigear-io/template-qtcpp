@@ -135,11 +135,12 @@ void MqttSimpleInterfaceAdapter::subscribeForPropertiesChanges()
 
 void MqttSimpleInterfaceAdapter::subscribeForInvokeRequests()
 {
-    const auto invokeTopic_funcVoid = interfaceName() + "/rpc/funcVoid";
-    m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_funcVoid,
+    const auto invokeTopic_funcNoReturnValue = interfaceName() + "/rpc/funcNoReturnValue";
+    m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_funcNoReturnValue,
         [this](const nlohmann::json& arguments)
         {
-            m_impl->funcVoid( );
+            bool paramBool = arguments.at(0).get<bool>();
+            m_impl->funcNoReturnValue( paramBool);
             return nlohmann::json {};
         }));
     const auto invokeTopic_funcBool = interfaceName() + "/rpc/funcBool";
@@ -262,13 +263,6 @@ void MqttSimpleInterfaceAdapter::connectServicePropertiesChanges()
 
 void MqttSimpleInterfaceAdapter::connectServiceSignals()
 {
-    const auto topic_sigVoid = interfaceName() + "/sig/sigVoid";
-    connect(m_impl.get(), &AbstractSimpleInterface::sigVoid, this,
-        [this, topic_sigVoid]()
-        {
-            nlohmann::json args = {  };
-            m_mqttServiceAdapter.emitPropertyChange(topic_sigVoid, args);
-        });
     const auto topic_sigBool = interfaceName() + "/sig/sigBool";
     connect(m_impl.get(), &AbstractSimpleInterface::sigBool, this,
         [this, topic_sigBool](bool paramBool)

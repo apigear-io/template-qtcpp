@@ -21,10 +21,18 @@ class TB_SIMPLE_MONITOR_EXPORT TracedApiFactory : public QObject, public IApiFac
 {
 public:
     TracedApiFactory(IApiFactory& factory, QObject *parent = nullptr);
+    /** @return Traced version of VoidInterface created by other factory*/
+    std::shared_ptr<AbstractVoidInterface> createVoidInterface(QObject *parent = nullptr) override;
     /** @return Traced version of SimpleInterface created by other factory*/
     std::shared_ptr<AbstractSimpleInterface> createSimpleInterface(QObject *parent = nullptr) override;
     /** @return Traced version of SimpleArrayInterface created by other factory*/
     std::shared_ptr<AbstractSimpleArrayInterface> createSimpleArrayInterface(QObject *parent = nullptr) override;
+    /** @return Traced version of NoPropertiesInterface created by other factory*/
+    std::shared_ptr<AbstractNoPropertiesInterface> createNoPropertiesInterface(QObject *parent = nullptr) override;
+    /** @return Traced version of NoOperationsInterface created by other factory*/
+    std::shared_ptr<AbstractNoOperationsInterface> createNoOperationsInterface(QObject *parent = nullptr) override;
+    /** @return Traced version of NoSignalsInterface created by other factory*/
+    std::shared_ptr<AbstractNoSignalsInterface> createNoSignalsInterface(QObject *parent = nullptr) override;
 private:
     IApiFactory& m_factory;
 };

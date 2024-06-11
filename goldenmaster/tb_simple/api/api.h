@@ -32,6 +32,31 @@ namespace tb_simple {
 // ********************************************************************
 /**
 *
+* AbstractVoidInterface is a pure interface QObject class.
+* Declares:
+*  - Methods defined for VoidInterface interface
+*  - Property setters and getters for defined properties
+*  - Property changed singals for properties of your interface.
+*  - Signals described for VoidInterface interface.
+*/
+// ********************************************************************
+
+
+class TB_SIMPLE_API_EXPORT AbstractVoidInterface : public QObject {
+    Q_OBJECT
+public:
+    AbstractVoidInterface(QObject * parent=nullptr);
+
+    virtual void funcVoid() = 0;
+signals:
+    /**
+    */
+    void sigVoid();
+};
+
+// ********************************************************************
+/**
+*
 * AbstractSimpleInterface is a pure interface QObject class.
 * Declares:
 *  - Methods defined for SimpleInterface interface
@@ -111,7 +136,7 @@ public:
     */
     virtual QString propString() const = 0;
 
-    virtual void funcVoid() = 0;
+    virtual void funcNoReturnValue(bool paramBool) = 0;
 
     virtual bool funcBool(bool paramBool) = 0;
 
@@ -129,9 +154,6 @@ public:
 
     virtual QString funcString(const QString& paramString) = 0;
 signals:
-    /**
-    */
-    void sigVoid();
     /**
     * @param paramBool 
     */
@@ -360,6 +382,136 @@ signals:
     * Emitted when propString value has changed.
     */
     void propStringChanged(const QList<QString>& propString);
+};
+
+// ********************************************************************
+/**
+*
+* AbstractNoPropertiesInterface is a pure interface QObject class.
+* Declares:
+*  - Methods defined for NoPropertiesInterface interface
+*  - Property setters and getters for defined properties
+*  - Property changed singals for properties of your interface.
+*  - Signals described for NoPropertiesInterface interface.
+*/
+// ********************************************************************
+
+
+class TB_SIMPLE_API_EXPORT AbstractNoPropertiesInterface : public QObject {
+    Q_OBJECT
+public:
+    AbstractNoPropertiesInterface(QObject * parent=nullptr);
+
+    virtual void funcVoid() = 0;
+
+    virtual bool funcBool(bool paramBool) = 0;
+signals:
+    /**
+    */
+    void sigVoid();
+    /**
+    * @param paramBool 
+    */
+    void sigBool(bool paramBool);
+};
+
+// ********************************************************************
+/**
+*
+* AbstractNoOperationsInterface is a pure interface QObject class.
+* Declares:
+*  - Methods defined for NoOperationsInterface interface
+*  - Property setters and getters for defined properties
+*  - Property changed singals for properties of your interface.
+*  - Signals described for NoOperationsInterface interface.
+*/
+// ********************************************************************
+
+
+class TB_SIMPLE_API_EXPORT AbstractNoOperationsInterface : public QObject {
+    Q_OBJECT
+public:
+    AbstractNoOperationsInterface(QObject * parent=nullptr);
+    /**
+    * Sets the value of the propBool property.
+    */
+    virtual void setPropBool(bool propBool) = 0;
+    /**
+    * Gets the value of the propBool property.
+    */
+    virtual bool propBool() const = 0;
+    /**
+    * Sets the value of the propInt property.
+    */
+    virtual void setPropInt(int propInt) = 0;
+    /**
+    * Gets the value of the propInt property.
+    */
+    virtual int propInt() const = 0;
+signals:
+    /**
+    */
+    void sigVoid();
+    /**
+    * @param paramBool 
+    */
+    void sigBool(bool paramBool);
+    /**
+    * Emitted when propBool value has changed.
+    */
+    void propBoolChanged(bool propBool);
+    /**
+    * Emitted when propInt value has changed.
+    */
+    void propIntChanged(int propInt);
+};
+
+// ********************************************************************
+/**
+*
+* AbstractNoSignalsInterface is a pure interface QObject class.
+* Declares:
+*  - Methods defined for NoSignalsInterface interface
+*  - Property setters and getters for defined properties
+*  - Property changed singals for properties of your interface.
+*  - Signals described for NoSignalsInterface interface.
+*/
+// ********************************************************************
+
+
+class TB_SIMPLE_API_EXPORT AbstractNoSignalsInterface : public QObject {
+    Q_OBJECT
+public:
+    AbstractNoSignalsInterface(QObject * parent=nullptr);
+    /**
+    * Sets the value of the propBool property.
+    */
+    virtual void setPropBool(bool propBool) = 0;
+    /**
+    * Gets the value of the propBool property.
+    */
+    virtual bool propBool() const = 0;
+    /**
+    * Sets the value of the propInt property.
+    */
+    virtual void setPropInt(int propInt) = 0;
+    /**
+    * Gets the value of the propInt property.
+    */
+    virtual int propInt() const = 0;
+
+    virtual void funcVoid() = 0;
+
+    virtual bool funcBool(bool paramBool) = 0;
+signals:
+    /**
+    * Emitted when propBool value has changed.
+    */
+    void propBoolChanged(bool propBool);
+    /**
+    * Emitted when propInt value has changed.
+    */
+    void propIntChanged(int propInt);
 };
 
 

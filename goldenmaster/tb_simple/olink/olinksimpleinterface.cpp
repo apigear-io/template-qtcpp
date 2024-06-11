@@ -288,25 +288,25 @@ QString OLinkSimpleInterface::propString() const
 }
 
 
-void OLinkSimpleInterface::funcVoid()
+void OLinkSimpleInterface::funcNoReturnValue(bool paramBool)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    auto future = funcVoidAsync();
+    auto future = funcNoReturnValueAsync(paramBool);
     future.waitForFinished();
     return;
 }
 
-QFuture<void> OLinkSimpleInterface::funcVoidAsync()
+QFuture<void> OLinkSimpleInterface::funcNoReturnValueAsync(bool paramBool)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
     auto resolve = std::make_shared<QPromise<void>>();
     if(!m_node) {
-        static auto noConnectionLogMessage = "Cannot request call on service + OLinkSimpleInterface::funcVoid, client is not connected. Try reconnecting the client.";
+        static auto noConnectionLogMessage = "Cannot request call on service + OLinkSimpleInterface::funcNoReturnValue, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
             resolve->finish();
     }
-    static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcVoid");
-    m_node->invokeRemote(operationId, nlohmann::json::array({}), 
+    static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcNoReturnValue");
+    m_node->invokeRemote(operationId, nlohmann::json::array({paramBool}), 
             [resolve](InvokeReplyArg arg) {
                 resolve->finish();
             });
@@ -540,10 +540,6 @@ void OLinkSimpleInterface::olinkOnSignal(const std::string& signalId, const nloh
     AG_LOG_DEBUG(Q_FUNC_INFO);
     AG_LOG_DEBUG(signalId);
     auto signalName = Name::getMemberName(signalId);
-    if(signalName == "sigVoid") {
-        emit sigVoid();   
-        return;
-    }
     if(signalName == "sigBool") {
         emit sigBool(args[0].get<bool>());   
         return;

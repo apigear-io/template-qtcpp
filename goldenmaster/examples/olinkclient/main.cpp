@@ -29,16 +29,26 @@
 #include "tb_same2/monitor/sameenum1interfacetraced.h"
 #include "tb_same2/olink/olinksameenum2interface.h"
 #include "tb_same2/monitor/sameenum2interfacetraced.h"
+#include "tb_simple/olink/olinkvoidinterface.h"
+#include "tb_simple/monitor/voidinterfacetraced.h"
 #include "tb_simple/olink/olinksimpleinterface.h"
 #include "tb_simple/monitor/simpleinterfacetraced.h"
 #include "tb_simple/olink/olinksimplearrayinterface.h"
 #include "tb_simple/monitor/simplearrayinterfacetraced.h"
+#include "tb_simple/olink/olinknopropertiesinterface.h"
+#include "tb_simple/monitor/nopropertiesinterfacetraced.h"
+#include "tb_simple/olink/olinknooperationsinterface.h"
+#include "tb_simple/monitor/nooperationsinterfacetraced.h"
+#include "tb_simple/olink/olinknosignalsinterface.h"
+#include "tb_simple/monitor/nosignalsinterfacetraced.h"
 #include "testbed1/olink/olinkstructinterface.h"
 #include "testbed1/monitor/structinterfacetraced.h"
 #include "testbed1/olink/olinkstructarrayinterface.h"
 #include "testbed1/monitor/structarrayinterfacetraced.h"
 #include "tb_names/olink/olinknam_es.h"
 #include "tb_names/monitor/nam_estraced.h"
+#include "counter/olink/olinkcounter.h"
+#include "counter/monitor/countertraced.h"
 
 
 // You can run this client app together with the server side app - either also example, simulation,
@@ -93,12 +103,24 @@ int main(int argc, char *argv[])
     auto tbSame2SameEnum2Interface = std::make_shared<tb_same2::OLinkSameEnum2Interface>();
     client.linkObjectSource(tbSame2SameEnum2Interface);
     tb_same2::SameEnum2InterfaceTraced tbSame2SameEnum2InterfaceTraced(tbSame2SameEnum2Interface );
+    auto tbSimpleVoidInterface = std::make_shared<tb_simple::OLinkVoidInterface>();
+    client.linkObjectSource(tbSimpleVoidInterface);
+    tb_simple::VoidInterfaceTraced tbSimpleVoidInterfaceTraced(tbSimpleVoidInterface );
     auto tbSimpleSimpleInterface = std::make_shared<tb_simple::OLinkSimpleInterface>();
     client.linkObjectSource(tbSimpleSimpleInterface);
     tb_simple::SimpleInterfaceTraced tbSimpleSimpleInterfaceTraced(tbSimpleSimpleInterface );
     auto tbSimpleSimpleArrayInterface = std::make_shared<tb_simple::OLinkSimpleArrayInterface>();
     client.linkObjectSource(tbSimpleSimpleArrayInterface);
     tb_simple::SimpleArrayInterfaceTraced tbSimpleSimpleArrayInterfaceTraced(tbSimpleSimpleArrayInterface );
+    auto tbSimpleNoPropertiesInterface = std::make_shared<tb_simple::OLinkNoPropertiesInterface>();
+    client.linkObjectSource(tbSimpleNoPropertiesInterface);
+    tb_simple::NoPropertiesInterfaceTraced tbSimpleNoPropertiesInterfaceTraced(tbSimpleNoPropertiesInterface );
+    auto tbSimpleNoOperationsInterface = std::make_shared<tb_simple::OLinkNoOperationsInterface>();
+    client.linkObjectSource(tbSimpleNoOperationsInterface);
+    tb_simple::NoOperationsInterfaceTraced tbSimpleNoOperationsInterfaceTraced(tbSimpleNoOperationsInterface );
+    auto tbSimpleNoSignalsInterface = std::make_shared<tb_simple::OLinkNoSignalsInterface>();
+    client.linkObjectSource(tbSimpleNoSignalsInterface);
+    tb_simple::NoSignalsInterfaceTraced tbSimpleNoSignalsInterfaceTraced(tbSimpleNoSignalsInterface );
     auto testbed1StructInterface = std::make_shared<testbed1::OLinkStructInterface>();
     client.linkObjectSource(testbed1StructInterface);
     testbed1::StructInterfaceTraced testbed1StructInterfaceTraced(testbed1StructInterface );
@@ -108,6 +130,9 @@ int main(int argc, char *argv[])
     auto tbNamesNamEs = std::make_shared<tb_names::OLinkNam_Es>();
     client.linkObjectSource(tbNamesNamEs);
     tb_names::NamEsTraced tbNamesNamEsTraced(tbNamesNamEs );
+    auto counterCounter = std::make_shared<counter::OLinkCounter>();
+    client.linkObjectSource(counterCounter);
+    counter::CounterTraced counterCounterTraced(counterCounter );
 
     
     // Try out properties: subscribe for changes
@@ -145,11 +170,16 @@ int main(int argc, char *argv[])
     client.unlinkObjectSource(tbSame2SameStruct2Interface->olinkObjectName());
     client.unlinkObjectSource(tbSame2SameEnum1Interface->olinkObjectName());
     client.unlinkObjectSource(tbSame2SameEnum2Interface->olinkObjectName());
+    client.unlinkObjectSource(tbSimpleVoidInterface->olinkObjectName());
     client.unlinkObjectSource(tbSimpleSimpleInterface->olinkObjectName());
     client.unlinkObjectSource(tbSimpleSimpleArrayInterface->olinkObjectName());
+    client.unlinkObjectSource(tbSimpleNoPropertiesInterface->olinkObjectName());
+    client.unlinkObjectSource(tbSimpleNoOperationsInterface->olinkObjectName());
+    client.unlinkObjectSource(tbSimpleNoSignalsInterface->olinkObjectName());
     client.unlinkObjectSource(testbed1StructInterface->olinkObjectName());
     client.unlinkObjectSource(testbed1StructArrayInterface->olinkObjectName());
     client.unlinkObjectSource(tbNamesNamEs->olinkObjectName());
+    client.unlinkObjectSource(counterCounter->olinkObjectName());
 
     return result;
 }

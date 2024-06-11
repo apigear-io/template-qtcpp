@@ -24,6 +24,9 @@ find_package(tb_same2 QUIET COMPONENTS tb_same2_api tb_same2_impl tb_same2_olink
 find_package(tb_simple QUIET COMPONENTS tb_simple_api tb_simple_impl tb_simple_olink tb_simple_monitor)
 find_package(testbed1 QUIET COMPONENTS testbed1_api testbed1_impl testbed1_olink testbed1_monitor)
 find_package(tb_names QUIET COMPONENTS tb_names_api tb_names_impl tb_names_olink tb_names_monitor)
+find_package(custom_types QUIET COMPONENTS custom_types_api custom_types_impl custom_types_olink custom_types_monitor)
+find_package(extern_types QUIET COMPONENTS extern_types_api extern_types_impl extern_types_olink extern_types_monitor)
+find_package(counter QUIET COMPONENTS counter_api counter_impl counter_olink counter_monitor)
 target_link_libraries(OLinkClient PUBLIC
     testbed2_api
     testbed2_impl
@@ -53,6 +56,18 @@ target_link_libraries(OLinkClient PUBLIC
     tb_names_impl
     tb_names_olink
     tb_names_monitor
+    custom_types_api
+    custom_types_impl
+    custom_types_olink
+    custom_types_monitor
+    extern_types_api
+    extern_types_impl
+    extern_types_olink
+    extern_types_monitor
+    counter_api
+    counter_impl
+    counter_olink
+    counter_monitor
 Qt6::Gui
 )
 install(TARGETS OLinkClient

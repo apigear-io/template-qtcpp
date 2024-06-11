@@ -97,6 +97,13 @@ public:
     * @param value to set for the property propString 
     */
     void setPropString(const QList<QString>& propString) override;
+    /** @return value of the property propReadOnlyString */
+    QString propReadOnlyString() const override;
+    /** Use to change a property value.
+    * if the property is changed, a signal {.Name}}Changed is emitted.
+    * @param value to set for the property propReadOnlyString 
+    */
+    void setPropReadOnlyString(const QString& propReadOnlyString) override;
     QList<bool> funcBool(const QList<bool>& paramBool) override;
     QList<int> funcInt(const QList<int>& paramInt) override;
     QList<qint32> funcInt32(const QList<qint32>& paramInt32) override;
@@ -123,5 +130,7 @@ private:
     QList<double> m_propFloat64;
     /** propString property */
     QList<QString> m_propString;
+    /** propReadOnlyString property */
+    QString m_propReadOnlyString;
 };
 } //namespace tb_simple

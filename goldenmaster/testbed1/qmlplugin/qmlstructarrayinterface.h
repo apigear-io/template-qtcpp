@@ -112,25 +112,25 @@ public:
     * Exposes funcBool of backend implementation to a qml.
     *   
     */
-    Q_INVOKABLE testbed1::StructBool funcBool(const QList<testbed1::StructBool>& paramBool) override;
+    Q_INVOKABLE QList<testbed1::StructBool> funcBool(const QList<testbed1::StructBool>& paramBool) override;
 
     /**
     * Exposes funcInt of backend implementation to a qml.
     *   
     */
-    Q_INVOKABLE testbed1::StructBool funcInt(const QList<testbed1::StructInt>& paramInt) override;
+    Q_INVOKABLE QList<testbed1::StructInt> funcInt(const QList<testbed1::StructInt>& paramInt) override;
 
     /**
     * Exposes funcFloat of backend implementation to a qml.
     *   
     */
-    Q_INVOKABLE testbed1::StructBool funcFloat(const QList<testbed1::StructFloat>& paramFloat) override;
+    Q_INVOKABLE QList<testbed1::StructFloat> funcFloat(const QList<testbed1::StructFloat>& paramFloat) override;
 
     /**
     * Exposes funcString of backend implementation to a qml.
     *   
     */
-    Q_INVOKABLE testbed1::StructBool funcString(const QList<testbed1::StructString>& paramString) override;
+    Q_INVOKABLE QList<testbed1::StructString> funcString(const QList<testbed1::StructString>& paramString) override;
 
 Q_SIGNALS:
     /** Re-define singals for property changed notification, to make them are available for qml property */

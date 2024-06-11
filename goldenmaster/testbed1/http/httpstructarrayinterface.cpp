@@ -87,44 +87,44 @@ QList<StructString> HttpStructArrayInterface::propString() const
     return m_propString;
 }
 
-StructBool HttpStructArrayInterface::funcBool(const QList<StructBool>& paramBool)
+QList<StructBool> HttpStructArrayInterface::funcBool(const QList<StructBool>& paramBool)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
     QJsonObject payload;
     payload["paramBool"] = QJsonValue::fromVariant(QVariant::fromValue< QList<StructBool> >(paramBool));
     QJsonObject reply = post("testbed1/StructArrayInterface/funcBool", payload);
     AG_LOG_DEBUG(qPrintable(QJsonDocument(reply).toJson()));
-    return StructBool();
+    return QList<StructBool>();
 }
 
-StructBool HttpStructArrayInterface::funcInt(const QList<StructInt>& paramInt)
+QList<StructInt> HttpStructArrayInterface::funcInt(const QList<StructInt>& paramInt)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
     QJsonObject payload;
     payload["paramInt"] = QJsonValue::fromVariant(QVariant::fromValue< QList<StructInt> >(paramInt));
     QJsonObject reply = post("testbed1/StructArrayInterface/funcInt", payload);
     AG_LOG_DEBUG(qPrintable(QJsonDocument(reply).toJson()));
-    return StructBool();
+    return QList<StructInt>();
 }
 
-StructBool HttpStructArrayInterface::funcFloat(const QList<StructFloat>& paramFloat)
+QList<StructFloat> HttpStructArrayInterface::funcFloat(const QList<StructFloat>& paramFloat)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
     QJsonObject payload;
     payload["paramFloat"] = QJsonValue::fromVariant(QVariant::fromValue< QList<StructFloat> >(paramFloat));
     QJsonObject reply = post("testbed1/StructArrayInterface/funcFloat", payload);
     AG_LOG_DEBUG(qPrintable(QJsonDocument(reply).toJson()));
-    return StructBool();
+    return QList<StructFloat>();
 }
 
-StructBool HttpStructArrayInterface::funcString(const QList<StructString>& paramString)
+QList<StructString> HttpStructArrayInterface::funcString(const QList<StructString>& paramString)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
     QJsonObject payload;
     payload["paramString"] = QJsonValue::fromVariant(QVariant::fromValue< QList<StructString> >(paramString));
     QJsonObject reply = post("testbed1/StructArrayInterface/funcString", payload);
     AG_LOG_DEBUG(qPrintable(QJsonDocument(reply).toJson()));
-    return StructBool();
+    return QList<StructString>();
 }
 
 QJsonObject HttpStructArrayInterface::post(const QString& path, const QJsonObject &payload)

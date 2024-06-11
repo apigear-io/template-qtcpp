@@ -5,13 +5,13 @@ version: "0.1.0"
 targets:
   - name: test
     inputs:
-      - testbed.advanced.module.yaml
-      - testbed.enum.module.yaml
-      - testbed.same1.module.yaml
-      - testbed.same2.module.yaml
-      - testbed.simple.module.yaml
-      - testbed.struct.module.yaml
-      - testbed.names.module.yaml
+      - test-apis/testbed.advanced.module.yaml
+      - test-apis/testbed.enum.module.yaml
+      - test-apis/testbed.same1.module.yaml
+      - test-apis/testbed.same2.module.yaml
+      - test-apis/testbed.simple.module.yaml
+      - test-apis/testbed.struct.module.yaml
+      - test-apis/testbed.names.module.yaml
     output: ../test
     template: ..
     features: [all]

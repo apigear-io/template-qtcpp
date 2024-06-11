@@ -45,7 +45,7 @@ StructBool StructInterfaceTraced::funcBool(const StructBool& paramBool)
 }
 
 
-StructBool StructInterfaceTraced::funcInt(const StructInt& paramInt) 
+StructInt StructInterfaceTraced::funcInt(const StructInt& paramInt) 
 {
     if (!m_impl) {
         AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);

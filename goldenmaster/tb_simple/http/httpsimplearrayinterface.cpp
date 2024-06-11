@@ -32,6 +32,7 @@ HttpSimpleArrayInterface::HttpSimpleArrayInterface(QNetworkAccessManager *networ
     , m_propFloat32(QList<float>())
     , m_propFloat64(QList<double>())
     , m_propString(QList<QString>())
+    , m_propReadOnlyString(QString())
 {
 }
 
@@ -141,6 +142,19 @@ void HttpSimpleArrayInterface::setPropString(const QList<QString>& propString)
 QList<QString> HttpSimpleArrayInterface::propString() const
 {
     return m_propString;
+}
+
+void HttpSimpleArrayInterface::setPropReadOnlyString(const QString& propReadOnlyString)
+{
+    if (m_propReadOnlyString != propReadOnlyString) {
+        m_propReadOnlyString = propReadOnlyString;
+        emit propReadOnlyStringChanged(propReadOnlyString);
+    }
+}
+
+QString HttpSimpleArrayInterface::propReadOnlyString() const
+{
+    return m_propReadOnlyString;
 }
 
 QList<bool> HttpSimpleArrayInterface::funcBool(const QList<bool>& paramBool)
@@ -281,6 +295,10 @@ void HttpSimpleArrayInterface::applyState(const QJsonObject &state)
   if(state.contains("propString")) {
     const QJsonValue &jsValue = state.value("propString");
     setPropString(jsValue.toVariant().value<QList<QString>>());
+  }
+  if(state.contains("propReadOnlyString")) {
+    const QJsonValue &jsValue = state.value("propReadOnlyString");
+    setPropReadOnlyString(jsValue.toVariant().value<QString>());
   }
 }
 

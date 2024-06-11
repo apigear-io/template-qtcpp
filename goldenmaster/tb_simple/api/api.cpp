@@ -22,6 +22,15 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 namespace tb_simple {
 
 // ********************************************************************
+// AbstractVoidInterface abstract interface
+// ********************************************************************
+
+AbstractVoidInterface::AbstractVoidInterface(QObject *parent)
+    : QObject(parent)
+{
+}
+
+// ********************************************************************
 // AbstractSimpleInterface abstract interface
 // ********************************************************************
 
@@ -35,6 +44,33 @@ AbstractSimpleInterface::AbstractSimpleInterface(QObject *parent)
 // ********************************************************************
 
 AbstractSimpleArrayInterface::AbstractSimpleArrayInterface(QObject *parent)
+    : QObject(parent)
+{
+}
+
+// ********************************************************************
+// AbstractNoPropertiesInterface abstract interface
+// ********************************************************************
+
+AbstractNoPropertiesInterface::AbstractNoPropertiesInterface(QObject *parent)
+    : QObject(parent)
+{
+}
+
+// ********************************************************************
+// AbstractNoOperationsInterface abstract interface
+// ********************************************************************
+
+AbstractNoOperationsInterface::AbstractNoOperationsInterface(QObject *parent)
+    : QObject(parent)
+{
+}
+
+// ********************************************************************
+// AbstractNoSignalsInterface abstract interface
+// ********************************************************************
+
+AbstractNoSignalsInterface::AbstractNoSignalsInterface(QObject *parent)
     : QObject(parent)
 {
 }

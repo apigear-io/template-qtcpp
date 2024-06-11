@@ -143,11 +143,12 @@ QString HttpSimpleInterface::propString() const
     return m_propString;
 }
 
-void HttpSimpleInterface::funcVoid()
+void HttpSimpleInterface::funcNoReturnValue(bool paramBool)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
     QJsonObject payload;
-    QJsonObject reply = post("tb.simple/SimpleInterface/funcVoid", payload);
+    payload["paramBool"] = QJsonValue::fromVariant(QVariant::fromValue< bool >(paramBool));
+    QJsonObject reply = post("tb.simple/SimpleInterface/funcNoReturnValue", payload);
     AG_LOG_DEBUG(qPrintable(QJsonDocument(reply).toJson()));
     return;
 }

@@ -46,6 +46,8 @@ public:
     void setPropFloat64(const QList<double>& propFloat64) override;
     QList<QString> propString() const override;
     void setPropString(const QList<QString>& propString) override;
+    QString propReadOnlyString() const override;
+    void setPropReadOnlyString(const QString& propReadOnlyString) override;
     QList<bool> funcBool(const QList<bool>& paramBool) override;
     QList<int> funcInt(const QList<int>& paramInt) override;
     QList<qint32> funcInt32(const QList<qint32>& paramInt32) override;
@@ -67,6 +69,7 @@ private:
     QList<float> m_propFloat32;
     QList<double> m_propFloat64;
     QList<QString> m_propString;
+    QString m_propReadOnlyString;
 };
 
 } // namespace tb_simple 

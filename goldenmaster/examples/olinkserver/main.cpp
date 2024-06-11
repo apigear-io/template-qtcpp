@@ -38,12 +38,24 @@
 #include "tb_same2/implementation/sameenum2interface.h"
 #include "tb_same2//olink/olinksameenum2interfaceadapter.h"
 #include "tb_same2/monitor/sameenum2interfacetraced.h"
+#include "tb_simple/implementation/voidinterface.h"
+#include "tb_simple//olink/olinkvoidinterfaceadapter.h"
+#include "tb_simple/monitor/voidinterfacetraced.h"
 #include "tb_simple/implementation/simpleinterface.h"
 #include "tb_simple//olink/olinksimpleinterfaceadapter.h"
 #include "tb_simple/monitor/simpleinterfacetraced.h"
 #include "tb_simple/implementation/simplearrayinterface.h"
 #include "tb_simple//olink/olinksimplearrayinterfaceadapter.h"
 #include "tb_simple/monitor/simplearrayinterfacetraced.h"
+#include "tb_simple/implementation/nopropertiesinterface.h"
+#include "tb_simple//olink/olinknopropertiesinterfaceadapter.h"
+#include "tb_simple/monitor/nopropertiesinterfacetraced.h"
+#include "tb_simple/implementation/nooperationsinterface.h"
+#include "tb_simple//olink/olinknooperationsinterfaceadapter.h"
+#include "tb_simple/monitor/nooperationsinterfacetraced.h"
+#include "tb_simple/implementation/nosignalsinterface.h"
+#include "tb_simple//olink/olinknosignalsinterfaceadapter.h"
+#include "tb_simple/monitor/nosignalsinterfacetraced.h"
 #include "testbed1/implementation/structinterface.h"
 #include "testbed1//olink/olinkstructinterfaceadapter.h"
 #include "testbed1/monitor/structinterfacetraced.h"
@@ -125,6 +137,10 @@ int main(int argc, char *argv[]){
     tb_same2::SameEnum2InterfaceTraced tbSame2SameEnum2InterfaceTraced(tbSame2SameEnum2Interface );
     auto tbSame2OlinkSameEnum2InterfaceService = std::make_shared<tb_same2::OLinkSameEnum2InterfaceAdapter>(registry, &tbSame2SameEnum2InterfaceTraced);
     registry.addSource(tbSame2OlinkSameEnum2InterfaceService);
+    auto tbSimpleVoidInterface = std::make_shared<tb_simple::VoidInterface>();
+    tb_simple::VoidInterfaceTraced tbSimpleVoidInterfaceTraced(tbSimpleVoidInterface );
+    auto tbSimpleOlinkVoidInterfaceService = std::make_shared<tb_simple::OLinkVoidInterfaceAdapter>(registry, &tbSimpleVoidInterfaceTraced);
+    registry.addSource(tbSimpleOlinkVoidInterfaceService);
     auto tbSimpleSimpleInterface = std::make_shared<tb_simple::SimpleInterface>();
     tb_simple::SimpleInterfaceTraced tbSimpleSimpleInterfaceTraced(tbSimpleSimpleInterface );
     auto tbSimpleOlinkSimpleInterfaceService = std::make_shared<tb_simple::OLinkSimpleInterfaceAdapter>(registry, &tbSimpleSimpleInterfaceTraced);
@@ -133,6 +149,18 @@ int main(int argc, char *argv[]){
     tb_simple::SimpleArrayInterfaceTraced tbSimpleSimpleArrayInterfaceTraced(tbSimpleSimpleArrayInterface );
     auto tbSimpleOlinkSimpleArrayInterfaceService = std::make_shared<tb_simple::OLinkSimpleArrayInterfaceAdapter>(registry, &tbSimpleSimpleArrayInterfaceTraced);
     registry.addSource(tbSimpleOlinkSimpleArrayInterfaceService);
+    auto tbSimpleNoPropertiesInterface = std::make_shared<tb_simple::NoPropertiesInterface>();
+    tb_simple::NoPropertiesInterfaceTraced tbSimpleNoPropertiesInterfaceTraced(tbSimpleNoPropertiesInterface );
+    auto tbSimpleOlinkNoPropertiesInterfaceService = std::make_shared<tb_simple::OLinkNoPropertiesInterfaceAdapter>(registry, &tbSimpleNoPropertiesInterfaceTraced);
+    registry.addSource(tbSimpleOlinkNoPropertiesInterfaceService);
+    auto tbSimpleNoOperationsInterface = std::make_shared<tb_simple::NoOperationsInterface>();
+    tb_simple::NoOperationsInterfaceTraced tbSimpleNoOperationsInterfaceTraced(tbSimpleNoOperationsInterface );
+    auto tbSimpleOlinkNoOperationsInterfaceService = std::make_shared<tb_simple::OLinkNoOperationsInterfaceAdapter>(registry, &tbSimpleNoOperationsInterfaceTraced);
+    registry.addSource(tbSimpleOlinkNoOperationsInterfaceService);
+    auto tbSimpleNoSignalsInterface = std::make_shared<tb_simple::NoSignalsInterface>();
+    tb_simple::NoSignalsInterfaceTraced tbSimpleNoSignalsInterfaceTraced(tbSimpleNoSignalsInterface );
+    auto tbSimpleOlinkNoSignalsInterfaceService = std::make_shared<tb_simple::OLinkNoSignalsInterfaceAdapter>(registry, &tbSimpleNoSignalsInterfaceTraced);
+    registry.addSource(tbSimpleOlinkNoSignalsInterfaceService);
     auto testbed1StructInterface = std::make_shared<testbed1::StructInterface>();
     testbed1::StructInterfaceTraced testbed1StructInterfaceTraced(testbed1StructInterface );
     auto testbed1OlinkStructInterfaceService = std::make_shared<testbed1::OLinkStructInterfaceAdapter>(registry, &testbed1StructInterfaceTraced);
@@ -161,8 +189,12 @@ int main(int argc, char *argv[]){
     registry.removeSource(tbSame2OlinkSameStruct2InterfaceService->olinkObjectName());
     registry.removeSource(tbSame2OlinkSameEnum1InterfaceService->olinkObjectName());
     registry.removeSource(tbSame2OlinkSameEnum2InterfaceService->olinkObjectName());
+    registry.removeSource(tbSimpleOlinkVoidInterfaceService->olinkObjectName());
     registry.removeSource(tbSimpleOlinkSimpleInterfaceService->olinkObjectName());
     registry.removeSource(tbSimpleOlinkSimpleArrayInterfaceService->olinkObjectName());
+    registry.removeSource(tbSimpleOlinkNoPropertiesInterfaceService->olinkObjectName());
+    registry.removeSource(tbSimpleOlinkNoOperationsInterfaceService->olinkObjectName());
+    registry.removeSource(tbSimpleOlinkNoSignalsInterfaceService->olinkObjectName());
     registry.removeSource(testbed1OlinkStructInterfaceService->olinkObjectName());
     registry.removeSource(testbed1OlinkStructArrayInterfaceService->olinkObjectName());
     registry.removeSource(tbNamesOlinkNamEsService->olinkObjectName());

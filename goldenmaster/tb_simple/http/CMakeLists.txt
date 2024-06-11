@@ -9,8 +9,12 @@ set(OUTPUT_PATH ${LIBRARY_PATH}/)
 
 set (TB_SIMPLE_HTTP_SOURCES
     httpfactory.cpp
+    httpvoidinterface.cpp
     httpsimpleinterface.cpp
     httpsimplearrayinterface.cpp
+    httpnopropertiesinterface.cpp
+    httpnooperationsinterface.cpp
+    httpnosignalsinterface.cpp
 )
 
 # dynamic library

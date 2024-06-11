@@ -38,12 +38,24 @@
 #include "tb_same2/implementation/sameenum2interface.h"
 #include "tb_same2/mqtt/mqttsameenum2interfaceadapter.h"
 #include "tb_same2/monitor/sameenum2interfacetraced.h"
+#include "tb_simple/implementation/voidinterface.h"
+#include "tb_simple/mqtt/mqttvoidinterfaceadapter.h"
+#include "tb_simple/monitor/voidinterfacetraced.h"
 #include "tb_simple/implementation/simpleinterface.h"
 #include "tb_simple/mqtt/mqttsimpleinterfaceadapter.h"
 #include "tb_simple/monitor/simpleinterfacetraced.h"
 #include "tb_simple/implementation/simplearrayinterface.h"
 #include "tb_simple/mqtt/mqttsimplearrayinterfaceadapter.h"
 #include "tb_simple/monitor/simplearrayinterfacetraced.h"
+#include "tb_simple/implementation/nopropertiesinterface.h"
+#include "tb_simple/mqtt/mqttnopropertiesinterfaceadapter.h"
+#include "tb_simple/monitor/nopropertiesinterfacetraced.h"
+#include "tb_simple/implementation/nooperationsinterface.h"
+#include "tb_simple/mqtt/mqttnooperationsinterfaceadapter.h"
+#include "tb_simple/monitor/nooperationsinterfacetraced.h"
+#include "tb_simple/implementation/nosignalsinterface.h"
+#include "tb_simple/mqtt/mqttnosignalsinterfaceadapter.h"
+#include "tb_simple/monitor/nosignalsinterfacetraced.h"
 #include "testbed1/implementation/structinterface.h"
 #include "testbed1/mqtt/mqttstructinterfaceadapter.h"
 #include "testbed1/monitor/structinterfacetraced.h"
@@ -113,12 +125,24 @@ int main(int argc, char *argv[]){
     auto tbSame2SameEnum2Interface = std::make_shared<tb_same2::SameEnum2Interface>();
     auto tbSame2SameEnum2InterfaceTraced = std::make_shared<tb_same2::SameEnum2InterfaceTraced>(tbSame2SameEnum2Interface );
     auto tbSame2MqttSameEnum2InterfaceService = std::make_shared<tb_same2::MqttSameEnum2InterfaceAdapter>(service, tbSame2SameEnum2InterfaceTraced);
+    auto tbSimpleVoidInterface = std::make_shared<tb_simple::VoidInterface>();
+    auto tbSimpleVoidInterfaceTraced = std::make_shared<tb_simple::VoidInterfaceTraced>(tbSimpleVoidInterface );
+    auto tbSimpleMqttVoidInterfaceService = std::make_shared<tb_simple::MqttVoidInterfaceAdapter>(service, tbSimpleVoidInterfaceTraced);
     auto tbSimpleSimpleInterface = std::make_shared<tb_simple::SimpleInterface>();
     auto tbSimpleSimpleInterfaceTraced = std::make_shared<tb_simple::SimpleInterfaceTraced>(tbSimpleSimpleInterface );
     auto tbSimpleMqttSimpleInterfaceService = std::make_shared<tb_simple::MqttSimpleInterfaceAdapter>(service, tbSimpleSimpleInterfaceTraced);
     auto tbSimpleSimpleArrayInterface = std::make_shared<tb_simple::SimpleArrayInterface>();
     auto tbSimpleSimpleArrayInterfaceTraced = std::make_shared<tb_simple::SimpleArrayInterfaceTraced>(tbSimpleSimpleArrayInterface );
     auto tbSimpleMqttSimpleArrayInterfaceService = std::make_shared<tb_simple::MqttSimpleArrayInterfaceAdapter>(service, tbSimpleSimpleArrayInterfaceTraced);
+    auto tbSimpleNoPropertiesInterface = std::make_shared<tb_simple::NoPropertiesInterface>();
+    auto tbSimpleNoPropertiesInterfaceTraced = std::make_shared<tb_simple::NoPropertiesInterfaceTraced>(tbSimpleNoPropertiesInterface );
+    auto tbSimpleMqttNoPropertiesInterfaceService = std::make_shared<tb_simple::MqttNoPropertiesInterfaceAdapter>(service, tbSimpleNoPropertiesInterfaceTraced);
+    auto tbSimpleNoOperationsInterface = std::make_shared<tb_simple::NoOperationsInterface>();
+    auto tbSimpleNoOperationsInterfaceTraced = std::make_shared<tb_simple::NoOperationsInterfaceTraced>(tbSimpleNoOperationsInterface );
+    auto tbSimpleMqttNoOperationsInterfaceService = std::make_shared<tb_simple::MqttNoOperationsInterfaceAdapter>(service, tbSimpleNoOperationsInterfaceTraced);
+    auto tbSimpleNoSignalsInterface = std::make_shared<tb_simple::NoSignalsInterface>();
+    auto tbSimpleNoSignalsInterfaceTraced = std::make_shared<tb_simple::NoSignalsInterfaceTraced>(tbSimpleNoSignalsInterface );
+    auto tbSimpleMqttNoSignalsInterfaceService = std::make_shared<tb_simple::MqttNoSignalsInterfaceAdapter>(service, tbSimpleNoSignalsInterfaceTraced);
     auto testbed1StructInterface = std::make_shared<testbed1::StructInterface>();
     auto testbed1StructInterfaceTraced = std::make_shared<testbed1::StructInterfaceTraced>(testbed1StructInterface );
     auto testbed1MqttStructInterfaceService = std::make_shared<testbed1::MqttStructInterfaceAdapter>(service, testbed1StructInterfaceTraced);

@@ -48,6 +48,8 @@ QmlSimpleArrayInterface::QmlSimpleArrayInterface(QObject *parent)
     connect(m_obj.get(), &AbstractSimpleArrayInterface::propFloat64Changed, this, &AbstractSimpleArrayInterface::propFloat64Changed);
     connect(m_obj.get(), &AbstractSimpleArrayInterface::propStringChanged, this, &QmlSimpleArrayInterface::propStringChanged);
     connect(m_obj.get(), &AbstractSimpleArrayInterface::propStringChanged, this, &AbstractSimpleArrayInterface::propStringChanged);
+    connect(m_obj.get(), &AbstractSimpleArrayInterface::propReadOnlyStringChanged, this, &QmlSimpleArrayInterface::propReadOnlyStringChanged);
+    connect(m_obj.get(), &AbstractSimpleArrayInterface::propReadOnlyStringChanged, this, &AbstractSimpleArrayInterface::propReadOnlyStringChanged);
 
     // Forward the singals emitted by backend implementation to QmlSimpleArrayInterface wrapper.
     //  Have in mind that there is no forwarding from the QmlSimpleArrayInterface wrapper to backend implementation.
@@ -144,6 +146,16 @@ QList<QString> QmlSimpleArrayInterface::propString() const
 void QmlSimpleArrayInterface::setPropString(const QList<QString>& propString)
 {
     return m_obj->setPropString(propString);
+}
+
+QString QmlSimpleArrayInterface::propReadOnlyString() const
+{
+    return m_obj->propReadOnlyString();
+}
+
+void QmlSimpleArrayInterface::setPropReadOnlyString(const QString& propReadOnlyString)
+{
+    return m_obj->setPropReadOnlyString(propReadOnlyString);
 }
 
 QList<bool> QmlSimpleArrayInterface::funcBool(const QList<bool>& paramBool)

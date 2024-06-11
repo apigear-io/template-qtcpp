@@ -50,12 +50,24 @@
 #include "tb_same2/qmlplugin/apifactory.h"
 #include "tb_same2/mqtt/mqttfactory.h"
 #include "tb_same2/monitor/tracedapifactory.h"
+#include "tb_simple/implementation/voidinterface.h"
+#include "tb_simple/qmlplugin/qmlvoidinterface.h"
+#include "tb_simple/mqtt/mqttvoidinterfaceadapter.h"
 #include "tb_simple/implementation/simpleinterface.h"
 #include "tb_simple/qmlplugin/qmlsimpleinterface.h"
 #include "tb_simple/mqtt/mqttsimpleinterfaceadapter.h"
 #include "tb_simple/implementation/simplearrayinterface.h"
 #include "tb_simple/qmlplugin/qmlsimplearrayinterface.h"
 #include "tb_simple/mqtt/mqttsimplearrayinterfaceadapter.h"
+#include "tb_simple/implementation/nopropertiesinterface.h"
+#include "tb_simple/qmlplugin/qmlnopropertiesinterface.h"
+#include "tb_simple/mqtt/mqttnopropertiesinterfaceadapter.h"
+#include "tb_simple/implementation/nooperationsinterface.h"
+#include "tb_simple/qmlplugin/qmlnooperationsinterface.h"
+#include "tb_simple/mqtt/mqttnooperationsinterfaceadapter.h"
+#include "tb_simple/implementation/nosignalsinterface.h"
+#include "tb_simple/qmlplugin/qmlnosignalsinterface.h"
+#include "tb_simple/mqtt/mqttnosignalsinterfaceadapter.h"
 #include "tb_simple/qmlplugin/apifactory.h"
 #include "tb_simple/mqtt/mqttfactory.h"
 #include "tb_simple/monitor/tracedapifactory.h"
@@ -167,10 +179,18 @@ int main(int argc, char *argv[]){
     auto tbSame2MqttSameEnum1InterfaceService = std::make_shared<tb_same2::MqttSameEnum1InterfaceAdapter>(service, tbSame2SameEnum1Interface);
     auto tbSame2SameEnum2Interface = std::make_shared<tb_same2::SameEnum2Interface>();
     auto tbSame2MqttSameEnum2InterfaceService = std::make_shared<tb_same2::MqttSameEnum2InterfaceAdapter>(service, tbSame2SameEnum2Interface);
+    auto tbSimpleVoidInterface = std::make_shared<tb_simple::VoidInterface>();
+    auto tbSimpleMqttVoidInterfaceService = std::make_shared<tb_simple::MqttVoidInterfaceAdapter>(service, tbSimpleVoidInterface);
     auto tbSimpleSimpleInterface = std::make_shared<tb_simple::SimpleInterface>();
     auto tbSimpleMqttSimpleInterfaceService = std::make_shared<tb_simple::MqttSimpleInterfaceAdapter>(service, tbSimpleSimpleInterface);
     auto tbSimpleSimpleArrayInterface = std::make_shared<tb_simple::SimpleArrayInterface>();
     auto tbSimpleMqttSimpleArrayInterfaceService = std::make_shared<tb_simple::MqttSimpleArrayInterfaceAdapter>(service, tbSimpleSimpleArrayInterface);
+    auto tbSimpleNoPropertiesInterface = std::make_shared<tb_simple::NoPropertiesInterface>();
+    auto tbSimpleMqttNoPropertiesInterfaceService = std::make_shared<tb_simple::MqttNoPropertiesInterfaceAdapter>(service, tbSimpleNoPropertiesInterface);
+    auto tbSimpleNoOperationsInterface = std::make_shared<tb_simple::NoOperationsInterface>();
+    auto tbSimpleMqttNoOperationsInterfaceService = std::make_shared<tb_simple::MqttNoOperationsInterfaceAdapter>(service, tbSimpleNoOperationsInterface);
+    auto tbSimpleNoSignalsInterface = std::make_shared<tb_simple::NoSignalsInterface>();
+    auto tbSimpleMqttNoSignalsInterfaceService = std::make_shared<tb_simple::MqttNoSignalsInterfaceAdapter>(service, tbSimpleNoSignalsInterface);
     auto testbed1StructInterface = std::make_shared<testbed1::StructInterface>();
     auto testbed1MqttStructInterfaceService = std::make_shared<testbed1::MqttStructInterfaceAdapter>(service, testbed1StructInterface);
     auto testbed1StructArrayInterface = std::make_shared<testbed1::StructArrayInterface>();

@@ -40,6 +40,7 @@ MqttSimpleArrayInterface::MqttSimpleArrayInterface(ApiGear::Mqtt::Client& client
     , m_propFloat32(QList<float>())
     , m_propFloat64(QList<double>())
     , m_propString(QList<QString>())
+    , m_propReadOnlyString(QString())
     , m_isReady(false)
     , m_client(client)
 {
@@ -282,6 +283,33 @@ void MqttSimpleArrayInterface::setPropStringLocal(const nlohmann::json& value)
 QList<QString> MqttSimpleArrayInterface::propString() const
 {
     return m_propString;
+}
+
+void MqttSimpleArrayInterface::setPropReadOnlyString(const QString& propReadOnlyString)
+{
+    static const QString topic = interfaceName() + QString("/set/propReadOnlyString");
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+    if(!m_client.isReady())
+    {
+        return;
+    }
+    m_client.setRemoteProperty(topic, nlohmann::json( propReadOnlyString ));
+}
+
+void MqttSimpleArrayInterface::setPropReadOnlyStringLocal(const nlohmann::json& value)
+{
+    AG_LOG_DEBUG(Q_FUNC_INFO);
+    auto in_propReadOnlyString(value.get<QString>());
+    if (m_propReadOnlyString != in_propReadOnlyString)
+    {
+        m_propReadOnlyString = in_propReadOnlyString;
+        emit propReadOnlyStringChanged(in_propReadOnlyString);
+    }
+}
+
+QString MqttSimpleArrayInterface::propReadOnlyString() const
+{
+    return m_propReadOnlyString;
 }
 
 QList<bool> MqttSimpleArrayInterface::funcBool(const QList<bool>& paramBool)
@@ -651,6 +679,8 @@ void MqttSimpleArrayInterface::subscribeForPropertiesChanges()
         m_subscribedIds.push_back(m_client.subscribeTopic(topicpropFloat64, [this](auto& value) { setPropFloat64Local(value);}));
         static const QString topicpropString = interfaceName() + "/prop/propString";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicpropString, [this](auto& value) { setPropStringLocal(value);}));
+        static const QString topicpropReadOnlyString = interfaceName() + "/prop/propReadOnlyString";
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicpropReadOnlyString, [this](auto& value) { setPropReadOnlyStringLocal(value);}));
 }
 void MqttSimpleArrayInterface::subscribeForSignals()
 {

@@ -168,7 +168,7 @@ json OLinkStructInterfaceAdapter::olinkInvoke(const std::string& methodId, const
     }
     if(path == "funcInt") {
         const StructInt& paramInt = args.at(0);
-        StructBool result = m_impl->funcInt(paramInt);
+        StructInt result = m_impl->funcInt(paramInt);
         return result;
     }
     if(path == "funcFloat") {

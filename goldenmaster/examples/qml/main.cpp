@@ -50,12 +50,24 @@
 #include "tb_same2/qmlplugin/apifactory.h"
 #include "tb_same2/olink/olinkfactory.h"
 #include "tb_same2/monitor/tracedapifactory.h"
+#include "tb_simple/implementation/voidinterface.h"
+#include "tb_simple/qmlplugin/qmlvoidinterface.h"
+#include "tb_simple/olink/olinkvoidinterfaceadapter.h"
 #include "tb_simple/implementation/simpleinterface.h"
 #include "tb_simple/qmlplugin/qmlsimpleinterface.h"
 #include "tb_simple/olink/olinksimpleinterfaceadapter.h"
 #include "tb_simple/implementation/simplearrayinterface.h"
 #include "tb_simple/qmlplugin/qmlsimplearrayinterface.h"
 #include "tb_simple/olink/olinksimplearrayinterfaceadapter.h"
+#include "tb_simple/implementation/nopropertiesinterface.h"
+#include "tb_simple/qmlplugin/qmlnopropertiesinterface.h"
+#include "tb_simple/olink/olinknopropertiesinterfaceadapter.h"
+#include "tb_simple/implementation/nooperationsinterface.h"
+#include "tb_simple/qmlplugin/qmlnooperationsinterface.h"
+#include "tb_simple/olink/olinknooperationsinterfaceadapter.h"
+#include "tb_simple/implementation/nosignalsinterface.h"
+#include "tb_simple/qmlplugin/qmlnosignalsinterface.h"
+#include "tb_simple/olink/olinknosignalsinterfaceadapter.h"
 #include "tb_simple/qmlplugin/apifactory.h"
 #include "tb_simple/olink/olinkfactory.h"
 #include "tb_simple/monitor/tracedapifactory.h"
@@ -180,12 +192,24 @@ int main(int argc, char *argv[]){
     tb_same2::SameEnum2Interface tbSame2SameEnum2Interface;
     auto tbSame2OlinkSameEnum2InterfaceService = std::make_shared<tb_same2::OLinkSameEnum2InterfaceAdapter>(registry, &tbSame2SameEnum2Interface);
     registry.addSource(tbSame2OlinkSameEnum2InterfaceService);
+    tb_simple::VoidInterface tbSimpleVoidInterface;
+    auto tbSimpleOlinkVoidInterfaceService = std::make_shared<tb_simple::OLinkVoidInterfaceAdapter>(registry, &tbSimpleVoidInterface);
+    registry.addSource(tbSimpleOlinkVoidInterfaceService);
     tb_simple::SimpleInterface tbSimpleSimpleInterface;
     auto tbSimpleOlinkSimpleInterfaceService = std::make_shared<tb_simple::OLinkSimpleInterfaceAdapter>(registry, &tbSimpleSimpleInterface);
     registry.addSource(tbSimpleOlinkSimpleInterfaceService);
     tb_simple::SimpleArrayInterface tbSimpleSimpleArrayInterface;
     auto tbSimpleOlinkSimpleArrayInterfaceService = std::make_shared<tb_simple::OLinkSimpleArrayInterfaceAdapter>(registry, &tbSimpleSimpleArrayInterface);
     registry.addSource(tbSimpleOlinkSimpleArrayInterfaceService);
+    tb_simple::NoPropertiesInterface tbSimpleNoPropertiesInterface;
+    auto tbSimpleOlinkNoPropertiesInterfaceService = std::make_shared<tb_simple::OLinkNoPropertiesInterfaceAdapter>(registry, &tbSimpleNoPropertiesInterface);
+    registry.addSource(tbSimpleOlinkNoPropertiesInterfaceService);
+    tb_simple::NoOperationsInterface tbSimpleNoOperationsInterface;
+    auto tbSimpleOlinkNoOperationsInterfaceService = std::make_shared<tb_simple::OLinkNoOperationsInterfaceAdapter>(registry, &tbSimpleNoOperationsInterface);
+    registry.addSource(tbSimpleOlinkNoOperationsInterfaceService);
+    tb_simple::NoSignalsInterface tbSimpleNoSignalsInterface;
+    auto tbSimpleOlinkNoSignalsInterfaceService = std::make_shared<tb_simple::OLinkNoSignalsInterfaceAdapter>(registry, &tbSimpleNoSignalsInterface);
+    registry.addSource(tbSimpleOlinkNoSignalsInterfaceService);
     testbed1::StructInterface testbed1StructInterface;
     auto testbed1OlinkStructInterfaceService = std::make_shared<testbed1::OLinkStructInterfaceAdapter>(registry, &testbed1StructInterface);
     registry.addSource(testbed1OlinkStructInterfaceService);
@@ -226,8 +250,12 @@ int main(int argc, char *argv[]){
     registry.removeSource(tbSame2OlinkSameStruct2InterfaceService->olinkObjectName());
     registry.removeSource(tbSame2OlinkSameEnum1InterfaceService->olinkObjectName());
     registry.removeSource(tbSame2OlinkSameEnum2InterfaceService->olinkObjectName());
+    registry.removeSource(tbSimpleOlinkVoidInterfaceService->olinkObjectName());
     registry.removeSource(tbSimpleOlinkSimpleInterfaceService->olinkObjectName());
     registry.removeSource(tbSimpleOlinkSimpleArrayInterfaceService->olinkObjectName());
+    registry.removeSource(tbSimpleOlinkNoPropertiesInterfaceService->olinkObjectName());
+    registry.removeSource(tbSimpleOlinkNoOperationsInterfaceService->olinkObjectName());
+    registry.removeSource(tbSimpleOlinkNoSignalsInterfaceService->olinkObjectName());
     registry.removeSource(testbed1OlinkStructInterfaceService->olinkObjectName());
     registry.removeSource(testbed1OlinkStructArrayInterfaceService->olinkObjectName());
     registry.removeSource(tbNamesOlinkNamEsService->olinkObjectName());

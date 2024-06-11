@@ -165,7 +165,7 @@ public:
 
     virtual StructBool funcBool(const StructBool& paramBool) = 0;
 
-    virtual StructBool funcInt(const StructInt& paramInt) = 0;
+    virtual StructInt funcInt(const StructInt& paramInt) = 0;
 
     virtual StructFloat funcFloat(const StructFloat& paramFloat) = 0;
 
@@ -255,13 +255,13 @@ public:
     */
     virtual QList<StructString> propString() const = 0;
 
-    virtual StructBool funcBool(const QList<StructBool>& paramBool) = 0;
+    virtual QList<StructBool> funcBool(const QList<StructBool>& paramBool) = 0;
 
-    virtual StructBool funcInt(const QList<StructInt>& paramInt) = 0;
+    virtual QList<StructInt> funcInt(const QList<StructInt>& paramInt) = 0;
 
-    virtual StructBool funcFloat(const QList<StructFloat>& paramFloat) = 0;
+    virtual QList<StructFloat> funcFloat(const QList<StructFloat>& paramFloat) = 0;
 
-    virtual StructBool funcString(const QList<StructString>& paramString) = 0;
+    virtual QList<StructString> funcString(const QList<StructString>& paramString) = 0;
 signals:
     /**
     * @param paramBool 

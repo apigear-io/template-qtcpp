@@ -163,22 +163,22 @@ json OLinkStructArrayInterfaceAdapter::olinkInvoke(const std::string& methodId, 
     std::string path = Name::getMemberName(methodId);
     if(path == "funcBool") {
         const QList<StructBool>& paramBool = args.at(0);
-        StructBool result = m_impl->funcBool(paramBool);
+        QList<StructBool> result = m_impl->funcBool(paramBool);
         return result;
     }
     if(path == "funcInt") {
         const QList<StructInt>& paramInt = args.at(0);
-        StructBool result = m_impl->funcInt(paramInt);
+        QList<StructInt> result = m_impl->funcInt(paramInt);
         return result;
     }
     if(path == "funcFloat") {
         const QList<StructFloat>& paramFloat = args.at(0);
-        StructBool result = m_impl->funcFloat(paramFloat);
+        QList<StructFloat> result = m_impl->funcFloat(paramFloat);
         return result;
     }
     if(path == "funcString") {
         const QList<StructString>& paramString = args.at(0);
-        StructBool result = m_impl->funcString(paramString);
+        QList<StructString> result = m_impl->funcString(paramString);
         return result;
     }
     return json();

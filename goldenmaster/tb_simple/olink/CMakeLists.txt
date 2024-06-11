@@ -4,10 +4,18 @@ find_package(Qt6 REQUIRED COMPONENTS Concurrent)
 
 set (TB_SIMPLE_OLINK_SOURCES
     olinkfactory.cpp
+    olinkvoidinterface.cpp
+    olinkvoidinterfaceadapter.cpp
     olinksimpleinterface.cpp
     olinksimpleinterfaceadapter.cpp
     olinksimplearrayinterface.cpp
     olinksimplearrayinterfaceadapter.cpp
+    olinknopropertiesinterface.cpp
+    olinknopropertiesinterfaceadapter.cpp
+    olinknooperationsinterface.cpp
+    olinknooperationsinterfaceadapter.cpp
+    olinknosignalsinterface.cpp
+    olinknosignalsinterfaceadapter.cpp
 )
 
 add_library(tb_simple_olink STATIC ${TB_SIMPLE_OLINK_SOURCES})

@@ -10,8 +10,12 @@ find_package(tb_simple QUIET COMPONENTS tb_simple_api)
 
 set (TB_SIMPLE_IMPL_SOURCES
     factory.cpp
+    voidinterface.cpp
     simpleinterface.cpp
     simplearrayinterface.cpp
+    nopropertiesinterface.cpp
+    nooperationsinterface.cpp
+    nosignalsinterface.cpp
 )
 
 # dynamic library

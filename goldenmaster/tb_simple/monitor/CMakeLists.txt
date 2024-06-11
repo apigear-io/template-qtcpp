@@ -9,8 +9,12 @@ find_package(tb_simple QUIET COMPONENTS tb_simple_api)
 set (TB_SIMPLE_MONITOR_SOURCES
     tracedapifactory.cpp
     agent.cpp
+    voidinterfacetraced.cpp
     simpleinterfacetraced.cpp
     simplearrayinterfacetraced.cpp
+    nopropertiesinterfacetraced.cpp
+    nooperationsinterfacetraced.cpp
+    nosignalsinterfacetraced.cpp
 )
 
 add_library(tb_simple_monitor SHARED ${TB_SIMPLE_MONITOR_SOURCES})

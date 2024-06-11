@@ -13,8 +13,12 @@ find_package(nlohmann_json REQUIRED)
 set (TB_SIMPLE_QML_SOURCES
     qml_api.cpp
     apifactory.cpp
+    qmlvoidinterface.cpp
     qmlsimpleinterface.cpp
     qmlsimplearrayinterface.cpp
+    qmlnopropertiesinterface.cpp
+    qmlnooperationsinterface.cpp
+    qmlnosignalsinterface.cpp
 )
 
 # dynamic library

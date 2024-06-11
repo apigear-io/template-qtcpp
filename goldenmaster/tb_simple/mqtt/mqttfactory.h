@@ -20,10 +20,18 @@ class TB_SIMPLE_MQTT_LIBRARY_EXPORT MqttFactory : public QObject, public IApiFac
 {
 public:
     MqttFactory(ApiGear::Mqtt::Client& client, QObject *parent = nullptr);
+    /** @return Mqtt Client version of VoidInterface */
+    std::shared_ptr<AbstractVoidInterface> createVoidInterface(QObject *parent = nullptr) override;
     /** @return Mqtt Client version of SimpleInterface */
     std::shared_ptr<AbstractSimpleInterface> createSimpleInterface(QObject *parent = nullptr) override;
     /** @return Mqtt Client version of SimpleArrayInterface */
     std::shared_ptr<AbstractSimpleArrayInterface> createSimpleArrayInterface(QObject *parent = nullptr) override;
+    /** @return Mqtt Client version of NoPropertiesInterface */
+    std::shared_ptr<AbstractNoPropertiesInterface> createNoPropertiesInterface(QObject *parent = nullptr) override;
+    /** @return Mqtt Client version of NoOperationsInterface */
+    std::shared_ptr<AbstractNoOperationsInterface> createNoOperationsInterface(QObject *parent = nullptr) override;
+    /** @return Mqtt Client version of NoSignalsInterface */
+    std::shared_ptr<AbstractNoSignalsInterface> createNoSignalsInterface(QObject *parent = nullptr) override;
 private:
     ApiGear::Mqtt::Client& m_client;
 };

@@ -27,6 +27,17 @@ IApiFactory * ApiFactory::get()
     return nullptr;
 }
 
+std::shared_ptr<AbstractVoidInterface> ApiFactory::createVoidInterface(QObject *parent) 
+{
+    auto factory = ApiFactory::get();
+    if (factory)
+    {
+        return factory->createVoidInterface(parent);
+    }
+    qCritical() << Q_FUNC_INFO << " No instance of factory set VoidInterface cannot be created. ";
+    return nullptr;
+};
+
 std::shared_ptr<AbstractSimpleInterface> ApiFactory::createSimpleInterface(QObject *parent) 
 {
     auto factory = ApiFactory::get();
@@ -46,6 +57,39 @@ std::shared_ptr<AbstractSimpleArrayInterface> ApiFactory::createSimpleArrayInter
         return factory->createSimpleArrayInterface(parent);
     }
     qCritical() << Q_FUNC_INFO << " No instance of factory set SimpleArrayInterface cannot be created. ";
+    return nullptr;
+};
+
+std::shared_ptr<AbstractNoPropertiesInterface> ApiFactory::createNoPropertiesInterface(QObject *parent) 
+{
+    auto factory = ApiFactory::get();
+    if (factory)
+    {
+        return factory->createNoPropertiesInterface(parent);
+    }
+    qCritical() << Q_FUNC_INFO << " No instance of factory set NoPropertiesInterface cannot be created. ";
+    return nullptr;
+};
+
+std::shared_ptr<AbstractNoOperationsInterface> ApiFactory::createNoOperationsInterface(QObject *parent) 
+{
+    auto factory = ApiFactory::get();
+    if (factory)
+    {
+        return factory->createNoOperationsInterface(parent);
+    }
+    qCritical() << Q_FUNC_INFO << " No instance of factory set NoOperationsInterface cannot be created. ";
+    return nullptr;
+};
+
+std::shared_ptr<AbstractNoSignalsInterface> ApiFactory::createNoSignalsInterface(QObject *parent) 
+{
+    auto factory = ApiFactory::get();
+    if (factory)
+    {
+        return factory->createNoSignalsInterface(parent);
+    }
+    qCritical() << Q_FUNC_INFO << " No instance of factory set NoSignalsInterface cannot be created. ";
     return nullptr;
 };
 

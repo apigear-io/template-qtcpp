@@ -16,7 +16,6 @@ SimpleInterfaceTraced::SimpleInterfaceTraced(std::shared_ptr<AbstractSimpleInter
     }
 
     // Connect signals emitted by implementation with tracing function.
-     connect(m_impl.get(), &AbstractSimpleInterface::sigVoid, this, &SimpleInterfaceTraced::sigVoid);
      connect(m_impl.get(), &AbstractSimpleInterface::sigBool, this, &SimpleInterfaceTraced::sigBool);
      connect(m_impl.get(), &AbstractSimpleInterface::sigInt, this, &SimpleInterfaceTraced::sigInt);
      connect(m_impl.get(), &AbstractSimpleInterface::sigInt32, this, &SimpleInterfaceTraced::sigInt32);
@@ -27,7 +26,6 @@ SimpleInterfaceTraced::SimpleInterfaceTraced(std::shared_ptr<AbstractSimpleInter
      connect(m_impl.get(), &AbstractSimpleInterface::sigString, this, &SimpleInterfaceTraced::sigString);
 
     // Connect signals emitted by implementation with this object.
-     connect(m_impl.get(), &AbstractSimpleInterface::sigVoid, this, &SimpleInterfaceTraced::traceSigVoid);
      connect(m_impl.get(), &AbstractSimpleInterface::sigBool, this, &SimpleInterfaceTraced::traceSigBool);
      connect(m_impl.get(), &AbstractSimpleInterface::sigInt, this, &SimpleInterfaceTraced::traceSigInt);
      connect(m_impl.get(), &AbstractSimpleInterface::sigInt32, this, &SimpleInterfaceTraced::traceSigInt32);
@@ -48,14 +46,14 @@ SimpleInterfaceTraced::SimpleInterfaceTraced(std::shared_ptr<AbstractSimpleInter
     connect(m_impl.get(), &AbstractSimpleInterface::propStringChanged, this, &AbstractSimpleInterface::propStringChanged);
 }
 
-void SimpleInterfaceTraced::funcVoid() 
+void SimpleInterfaceTraced::funcNoReturnValue(bool paramBool) 
 {
     if (!m_impl) {
         AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
         return ;
     }
-    SimpleInterfaceAgent::trace_funcVoid(this );
-    m_impl->funcVoid();
+    SimpleInterfaceAgent::trace_funcNoReturnValue(this, paramBool);
+    m_impl->funcNoReturnValue(paramBool);
 }
 
 
@@ -290,10 +288,6 @@ QString SimpleInterfaceTraced::propString() const
     return m_impl->propString();
 }
 
-void SimpleInterfaceTraced::traceSigVoid()
-{
-    SimpleInterfaceAgent::trace_sigVoid(this );
-}
 void SimpleInterfaceTraced::traceSigBool(bool paramBool)
 {
     SimpleInterfaceAgent::trace_sigBool(this, paramBool);

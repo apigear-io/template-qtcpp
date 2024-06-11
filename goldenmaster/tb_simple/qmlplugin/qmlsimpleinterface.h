@@ -169,10 +169,10 @@ public:
     void setPropString(const QString& propString) override;
 
     /**
-    * Exposes funcVoid of backend implementation to a qml.
+    * Exposes funcNoReturnValue of backend implementation to a qml.
     *   
     */
-    Q_INVOKABLE void funcVoid() override;
+    Q_INVOKABLE void funcNoReturnValue(bool paramBool) override;
 
     /**
     * Exposes funcBool of backend implementation to a qml.

@@ -13,10 +13,18 @@ find_package(Qt6 REQUIRED COMPONENTS Concurrent)
 
 set (TB_SIMPLE_MQTT_SOURCES
     mqttfactory.cpp
+    mqttvoidinterface.cpp
+    mqttvoidinterfaceadapter.cpp
     mqttsimpleinterface.cpp
     mqttsimpleinterfaceadapter.cpp
     mqttsimplearrayinterface.cpp
     mqttsimplearrayinterfaceadapter.cpp
+    mqttnopropertiesinterface.cpp
+    mqttnopropertiesinterfaceadapter.cpp
+    mqttnooperationsinterface.cpp
+    mqttnooperationsinterfaceadapter.cpp
+    mqttnosignalsinterface.cpp
+    mqttnosignalsinterfaceadapter.cpp
 )
 
 

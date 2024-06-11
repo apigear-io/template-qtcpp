@@ -284,19 +284,19 @@ QString MqttSimpleInterface::propString() const
     return m_propString;
 }
 
-void MqttSimpleInterface::funcVoid()
+void MqttSimpleInterface::funcNoReturnValue(bool paramBool)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
 
-    auto future = funcVoidAsync();
+    auto future = funcNoReturnValueAsync(paramBool);
     future.waitForFinished();
     return;
 }
 
-QFuture<void> MqttSimpleInterface::funcVoidAsync()
+QFuture<void> MqttSimpleInterface::funcNoReturnValueAsync(bool paramBool)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
-    static const QString topic = interfaceName() + QString("/rpc/funcVoid");
+    static const QString topic = interfaceName() + QString("/rpc/funcNoReturnValue");
     auto promise = std::make_shared<QPromise<void>>();
     if(!m_client.isReady())
     {
@@ -313,7 +313,7 @@ QFuture<void> MqttSimpleInterface::funcVoidAsync()
             promise->finish();
     }
     auto respTopic = callInfo->second.first;
-    auto arguments = nlohmann::json::array({ });       
+    auto arguments = nlohmann::json::array({paramBool });       
 
     auto func = [promise](const nlohmann::json& arg)
         {
@@ -696,9 +696,6 @@ void MqttSimpleInterface::subscribeForPropertiesChanges()
 }
 void MqttSimpleInterface::subscribeForSignals()
 {
-        static const QString topicsigVoid = interfaceName() + "/sig/sigVoid";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigVoid, [this](const nlohmann::json& argumentsArray){
-            emit sigVoid();}));
         static const QString topicsigBool = interfaceName() + "/sig/sigBool";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicsigBool, [this](const nlohmann::json& argumentsArray){
             emit sigBool(argumentsArray[0].get<bool>());}));
@@ -726,14 +723,14 @@ void MqttSimpleInterface::subscribeForSignals()
 }
 void MqttSimpleInterface::subscribeForInvokeResponses()
 {
-    const QString topicfuncVoid = interfaceName() + "/rpc/funcVoid";
-    const QString topicfuncVoidInvokeResp = interfaceName() + "/rpc/funcVoid"+ m_client.clientId() + "/result";
-    auto id_funcVoid = m_client.subscribeForInvokeResponse(topicfuncVoidInvokeResp, 
-                        [this, topicfuncVoidInvokeResp](const nlohmann::json& value, quint64 callId)
+    const QString topicfuncNoReturnValue = interfaceName() + "/rpc/funcNoReturnValue";
+    const QString topicfuncNoReturnValueInvokeResp = interfaceName() + "/rpc/funcNoReturnValue"+ m_client.clientId() + "/result";
+    auto id_funcNoReturnValue = m_client.subscribeForInvokeResponse(topicfuncNoReturnValueInvokeResp, 
+                        [this, topicfuncNoReturnValueInvokeResp](const nlohmann::json& value, quint64 callId)
                         {
-                            findAndExecuteCall(value, callId, topicfuncVoidInvokeResp);
+                            findAndExecuteCall(value, callId, topicfuncNoReturnValueInvokeResp);
                         });
-    m_InvokeCallsInfo[topicfuncVoid] = std::make_pair(topicfuncVoidInvokeResp, id_funcVoid);
+    m_InvokeCallsInfo[topicfuncNoReturnValue] = std::make_pair(topicfuncNoReturnValueInvokeResp, id_funcNoReturnValue);
     const QString topicfuncBool = interfaceName() + "/rpc/funcBool";
     const QString topicfuncBoolInvokeResp = interfaceName() + "/rpc/funcBool"+ m_client.clientId() + "/result";
     auto id_funcBool = m_client.subscribeForInvokeResponse(topicfuncBoolInvokeResp, 

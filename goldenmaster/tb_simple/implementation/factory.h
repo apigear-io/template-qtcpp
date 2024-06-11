@@ -21,10 +21,18 @@ class TB_SIMPLE_IMPL_EXPORT Factory : public QObject, public IApiFactory
 {
 public:
     Factory(QObject *parent = nullptr);
+    /** @return implementation of VoidInterface */
+    std::shared_ptr<AbstractVoidInterface> createVoidInterface(QObject *parent) override;
     /** @return implementation of SimpleInterface */
     std::shared_ptr<AbstractSimpleInterface> createSimpleInterface(QObject *parent) override;
     /** @return implementation of SimpleArrayInterface */
     std::shared_ptr<AbstractSimpleArrayInterface> createSimpleArrayInterface(QObject *parent) override;
+    /** @return implementation of NoPropertiesInterface */
+    std::shared_ptr<AbstractNoPropertiesInterface> createNoPropertiesInterface(QObject *parent) override;
+    /** @return implementation of NoOperationsInterface */
+    std::shared_ptr<AbstractNoOperationsInterface> createNoOperationsInterface(QObject *parent) override;
+    /** @return implementation of NoSignalsInterface */
+    std::shared_ptr<AbstractNoSignalsInterface> createNoSignalsInterface(QObject *parent) override;
 };
 
 } // namespace tb_simple

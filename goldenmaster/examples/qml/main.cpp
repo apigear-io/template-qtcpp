@@ -86,6 +86,18 @@
 #include "tb_names/qmlplugin/apifactory.h"
 #include "tb_names/olink/olinkfactory.h"
 #include "tb_names/monitor/tracedapifactory.h"
+#include "custom_types/qmlplugin/apifactory.h"
+#include "custom_types/olink/olinkfactory.h"
+#include "custom_types/monitor/tracedapifactory.h"
+#include "extern_types/qmlplugin/apifactory.h"
+#include "extern_types/olink/olinkfactory.h"
+#include "extern_types/monitor/tracedapifactory.h"
+#include "counter/implementation/counter.h"
+#include "counter/qmlplugin/qmlcounter.h"
+#include "counter/olink/olinkcounteradapter.h"
+#include "counter/qmlplugin/apifactory.h"
+#include "counter/olink/olinkfactory.h"
+#include "counter/monitor/tracedapifactory.h"
 
 #include <QtCore>
 #include "apigear/olink/olinkhost.h"
@@ -135,6 +147,15 @@ int main(int argc, char *argv[]){
     tb_names::OLinkFactory tb_namesOlinkFactory(client);
     tb_names::TracedApiFactory tb_namesTracedOlinkFactory(tb_namesOlinkFactory); 
     tb_names::ApiFactory::set(&tb_namesTracedOlinkFactory);
+    custom_types::OLinkFactory custom_typesOlinkFactory(client);
+    custom_types::TracedApiFactory custom_typesTracedOlinkFactory(custom_typesOlinkFactory); 
+    custom_types::ApiFactory::set(&custom_typesTracedOlinkFactory);
+    extern_types::OLinkFactory extern_typesOlinkFactory(client);
+    extern_types::TracedApiFactory extern_typesTracedOlinkFactory(extern_typesOlinkFactory); 
+    extern_types::ApiFactory::set(&extern_typesTracedOlinkFactory);
+    counter::OLinkFactory counterOlinkFactory(client);
+    counter::TracedApiFactory counterTracedOlinkFactory(counterOlinkFactory); 
+    counter::ApiFactory::set(&counterTracedOlinkFactory);
 
     // Create main app
     const QUrl url(QStringLiteral("qrc:/main.qml"));
@@ -219,6 +240,9 @@ int main(int argc, char *argv[]){
     tb_names::NamEs tbNamesNamEs;
     auto tbNamesOlinkNamEsService = std::make_shared<tb_names::OLinkNam_EsAdapter>(registry, &tbNamesNamEs);
     registry.addSource(tbNamesOlinkNamEsService);
+    counter::Counter counterCounter;
+    auto counterOlinkCounterService = std::make_shared<counter::OLinkCounterAdapter>(registry, &counterCounter);
+    registry.addSource(counterOlinkCounterService);
 
     // With services ready connect the client - all qml olink clients will be linked
     client.connectToHost(QUrl("ws://127.0.0.1:8182/ws"));
@@ -259,6 +283,7 @@ int main(int argc, char *argv[]){
     registry.removeSource(testbed1OlinkStructInterfaceService->olinkObjectName());
     registry.removeSource(testbed1OlinkStructArrayInterfaceService->olinkObjectName());
     registry.removeSource(tbNamesOlinkNamEsService->olinkObjectName());
+    registry.removeSource(counterOlinkCounterService->olinkObjectName());
 
     return result;
 }

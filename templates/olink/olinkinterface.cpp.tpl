@@ -61,7 +61,8 @@ void {{$class}}::set{{Camel .Name}}({{qtParam "" .}})
     if(!m_node) {
         return;
     }
-    m_node->setRemoteProperty("{{$module}}.{{$iface}}/{{.Name}}", {{.Name}});
+    static const auto propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "{{.Name}}");
+    m_node->setRemoteProperty(propertyId, {{.Name}});
 }
 
 void {{$class}}::set{{Camel .Name}}Local({{qtParam "" .}})

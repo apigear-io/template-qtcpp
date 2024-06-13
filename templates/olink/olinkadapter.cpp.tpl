@@ -31,7 +31,7 @@ namespace {{qtNamespace .Module.Name }} {
 {{- range .Interface.Properties }}
     connect(m_impl, &Abstract{{$iface}}::{{.Name}}Changed, this,
         [=]({{ qtParam "" . }}) {
-        static const auto propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "{{.Name}}");
+        const auto propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "{{.Name}}");
         for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
             auto lockedNode = node.lock();
             if(lockedNode) {
@@ -46,7 +46,7 @@ namespace {{qtNamespace .Module.Name }} {
         connect(m_impl, &Abstract{{$iface}}::{{$signalName}}, this,
             [=]({{qtParams "" .Params}}) {
                 const nlohmann::json& args = { {{ qtVars .Params }} };
-                static const auto signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "{{.Name}}");
+                const auto signalId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "{{.Name}}");
                 for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(signalId))) {
                     auto lockedNode = node.lock();
                     if(lockedNode) {

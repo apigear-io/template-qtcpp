@@ -61,7 +61,7 @@ void {{$class}}::set{{Camel .Name}}({{qtParam "" .}})
     if(!m_node) {
         return;
     }
-    static const auto propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "{{.Name}}");
+    const auto propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "{{.Name}}");
     m_node->setRemoteProperty(propertyId, {{.Name}});
 }
 
@@ -111,7 +111,7 @@ QFuture<{{$return}}> {{$class}}::{{camel .Name}}Async({{qtParams "" .Params}})
             resolve->addResult({{qtDefault "" .Return}});
         {{- end}}
     }
-    static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "{{.Name}}");
+    const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "{{.Name}}");
     m_node->invokeRemote(operationId, nlohmann::json::array({
             {{- range $i, $e := .Params }}{{if $i}},{{end}}{{.Name}}
             {{- end }}}), 

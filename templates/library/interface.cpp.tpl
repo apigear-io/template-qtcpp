@@ -7,10 +7,18 @@
 
 namespace {{qtNamespace .Module.Name }} {
 
-{{$class}}::{{$class}}(QObject *parent)
+
+
+{{$class}}::{{$class}}({{- range .Interface.Properties -}}
+{{- if (eq .KindType "interface") }} {{qtReturn "" .Type}}in_{{.Name}}, {{ end -}}
+{{- end }}QObject *parent)
     : Abstract{{$class}}(parent)
 {{- range .Interface.Properties }}
+{{- if (eq .KindType "interface") }}
+    , m_{{.Name}}(in_name)
+{{- else}}
     , m_{{.Name}}({{qtDefault "" .}})
+{{- end}}
 {{- end }}
 {
 }

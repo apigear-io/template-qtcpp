@@ -30,7 +30,9 @@ class {{ $LIB_ID }}_EXPORT {{$class}} : public Abstract{{$class}}
 {
     Q_OBJECT
 public:
-    explicit {{$class}}(QObject *parent = nullptr);
+    explicit {{$class}}({{- range .Interface.Properties -}}
+{{- if (eq .KindType "interface") }} {{qtReturn "" .Type}}in_{{.Name}}, {{ end -}}
+{{- end }}QObject *parent = nullptr);
     virtual ~{{$class}}() override;
 
 {{ range .Interface.Properties }}

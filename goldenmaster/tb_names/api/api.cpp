@@ -16,6 +16,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "api.h"
+// use json.adapter.h to compile the file with this module and export all the necessary symbols in the library
+#include "json.adapter.h"
 
 namespace tb_names {
 

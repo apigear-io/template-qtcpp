@@ -4,6 +4,7 @@ project(testbed1_api LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+find_package(apigear QUIET COMPONENTS utilities_qt)
 find_package(nlohmann_json REQUIRED)
 find_package(Qt6 REQUIRED COMPONENTS Core)
 
@@ -27,7 +28,7 @@ target_include_directories(testbed1_api
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(testbed1_api PUBLIC nlohmann_json::nlohmann_json Qt6::Core)
+target_link_libraries(testbed1_api PUBLIC apigear::utilities_qt nlohmann_json::nlohmann_json Qt6::Core)
 
 target_compile_definitions(testbed1_api PRIVATE TESTBED1_API_LIBRARY)
 

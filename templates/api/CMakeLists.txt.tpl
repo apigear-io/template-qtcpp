@@ -11,6 +11,7 @@ project({{ $lib_id }} LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+find_package(apigear QUIET COMPONENTS utilities_qt)
 find_package(nlohmann_json REQUIRED)
 find_package(Qt6 REQUIRED COMPONENTS Core)
 
@@ -43,7 +44,7 @@ target_include_directories({{$lib_id}}
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries({{$lib_id}} PUBLIC{{ range .Module.Imports }} {{snake .Name}}_api{{ end }}
+target_link_libraries({{$lib_id}} PUBLIC apigear::utilities_qt{{ range .Module.Imports }} {{snake .Name}}_api{{ end }}
 {{- range .Module.Externs }}
 {{- $extern := qtExtern . }}
 {{- if (not (eq $extern.Component "")) }} {{$extern.Package}}::{{$extern.Component}}

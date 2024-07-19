@@ -4,6 +4,7 @@ project(tb_names_api LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+find_package(apigear QUIET COMPONENTS utilities_qt)
 find_package(nlohmann_json REQUIRED)
 find_package(Qt6 REQUIRED COMPONENTS Core)
 
@@ -27,7 +28,7 @@ target_include_directories(tb_names_api
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(tb_names_api PUBLIC nlohmann_json::nlohmann_json Qt6::Core)
+target_link_libraries(tb_names_api PUBLIC apigear::utilities_qt nlohmann_json::nlohmann_json Qt6::Core)
 
 target_compile_definitions(tb_names_api PRIVATE TB_NAMES_API_LIBRARY)
 

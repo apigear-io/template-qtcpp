@@ -44,6 +44,7 @@ SimpleArrayInterfaceTraced::SimpleArrayInterfaceTraced(std::shared_ptr<AbstractS
     connect(m_impl.get(), &AbstractSimpleArrayInterface::propFloat32Changed, this, &AbstractSimpleArrayInterface::propFloat32Changed);
     connect(m_impl.get(), &AbstractSimpleArrayInterface::propFloat64Changed, this, &AbstractSimpleArrayInterface::propFloat64Changed);
     connect(m_impl.get(), &AbstractSimpleArrayInterface::propStringChanged, this, &AbstractSimpleArrayInterface::propStringChanged);
+    connect(m_impl.get(), &AbstractSimpleArrayInterface::propReadOnlyStringChanged, this, &AbstractSimpleArrayInterface::propReadOnlyStringChanged);
 }
 
 QList<bool> SimpleArrayInterfaceTraced::funcBool(const QList<bool>& paramBool) 
@@ -275,6 +276,24 @@ QList<QString> SimpleArrayInterfaceTraced::propString() const
         return {};
     }
     return m_impl->propString();
+}
+
+void SimpleArrayInterfaceTraced::setPropReadOnlyString(const QString& propReadOnlyString)
+{
+    if (!m_impl) {
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
+        return;
+    }
+    SimpleArrayInterfaceAgent::trace_state(this);
+    m_impl->setPropReadOnlyString(propReadOnlyString);
+}
+QString SimpleArrayInterfaceTraced::propReadOnlyString() const
+{
+    if (!m_impl) {
+        AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
+        return {};
+    }
+    return m_impl->propReadOnlyString();
 }
 
 void SimpleArrayInterfaceTraced::traceSigBool(const QList<bool>& paramBool)

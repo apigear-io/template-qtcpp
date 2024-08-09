@@ -27,10 +27,18 @@ class OLinkFactory : public QObject, public IApiFactory
 {
 public:
     OLinkFactory(ApiGear::ObjectLink::OLinkClient& client, QObject *parent = nullptr);
+    /** @return Olink Client version of VoidInterface */
+    std::shared_ptr<AbstractVoidInterface> createVoidInterface(QObject *parent = nullptr) override;
     /** @return Olink Client version of SimpleInterface */
     std::shared_ptr<AbstractSimpleInterface> createSimpleInterface(QObject *parent = nullptr) override;
     /** @return Olink Client version of SimpleArrayInterface */
     std::shared_ptr<AbstractSimpleArrayInterface> createSimpleArrayInterface(QObject *parent = nullptr) override;
+    /** @return Olink Client version of NoPropertiesInterface */
+    std::shared_ptr<AbstractNoPropertiesInterface> createNoPropertiesInterface(QObject *parent = nullptr) override;
+    /** @return Olink Client version of NoOperationsInterface */
+    std::shared_ptr<AbstractNoOperationsInterface> createNoOperationsInterface(QObject *parent = nullptr) override;
+    /** @return Olink Client version of NoSignalsInterface */
+    std::shared_ptr<AbstractNoSignalsInterface> createNoSignalsInterface(QObject *parent = nullptr) override;
 private:
     ApiGear::ObjectLink::OLinkClient& m_client;
 };

@@ -84,6 +84,11 @@ class TB_SIMPLE_QML_EXPORT QmlSimpleArrayInterface : public AbstractSimpleArrayI
     * Exposes propString property for qml.
     */
     Q_PROPERTY(QList<QString> propString READ propString WRITE setPropString NOTIFY propStringChanged)
+
+    /**
+    * Exposes propReadOnlyString property for qml.
+    */
+    Q_PROPERTY(QString propReadOnlyString READ propReadOnlyString WRITE setPropReadOnlyString NOTIFY propReadOnlyStringChanged)
 public:
     explicit QmlSimpleArrayInterface(QObject *parent = nullptr);
     ~QmlSimpleArrayInterface() override;
@@ -167,6 +172,16 @@ public:
     * @param const QList<QString>& propString  Value to set for  propString property.
     */
     void setPropString(const QList<QString>& propString) override;
+    /**
+    * Getter for a propReadOnlyString property
+    * @return A value for propReadOnlyString property provided by backend.
+    */
+    QString propReadOnlyString() const override;
+    /*
+    * Setter for a propReadOnlyString property, requests the backend to set the propReadOnlyString property
+    * @param const QString& propReadOnlyString  Value to set for  propReadOnlyString property.
+    */
+    void setPropReadOnlyString(const QString& propReadOnlyString) override;
 
     /**
     * Exposes funcBool of backend implementation to a qml.
@@ -226,6 +241,7 @@ Q_SIGNALS:
     void propFloat32Changed(const QList<float>& propFloat32);
     void propFloat64Changed(const QList<double>& propFloat64);
     void propStringChanged(const QList<QString>& propString);
+    void propReadOnlyStringChanged(const QString& propReadOnlyString);
 private:
     /**
     * Backend of AbstractSimpleArrayInterface type that provides properties on which methods will be invoked.

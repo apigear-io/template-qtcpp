@@ -53,9 +53,9 @@ void TestTbSimpleSimpleInterface::cleanup(){
 
 }
 /**
- *  Test operation funcVoid
+ *  Test operation funcNoReturnValue
 */
-void TestTbSimpleSimpleInterface::funcVoid(){
+void TestTbSimpleSimpleInterface::funcNoReturnValue(){
     tb_simple::SimpleInterface testTbsimplesimpleinterface;
     // Do implement test here
 }

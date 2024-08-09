@@ -38,10 +38,10 @@ public:
     void setPropFloat(const QList<StructFloat>& propFloat) override;
     QList<StructString> propString() const override;
     void setPropString(const QList<StructString>& propString) override;
-    StructBool funcBool(const QList<StructBool>& paramBool) override;
-    StructBool funcInt(const QList<StructInt>& paramInt) override;
-    StructBool funcFloat(const QList<StructFloat>& paramFloat) override;
-    StructBool funcString(const QList<StructString>& paramString) override;
+    QList<StructBool> funcBool(const QList<StructBool>& paramBool) override;
+    QList<StructInt> funcInt(const QList<StructInt>& paramInt) override;
+    QList<StructFloat> funcFloat(const QList<StructFloat>& paramFloat) override;
+    QList<StructString> funcString(const QList<StructString>& paramString) override;
 private:
     QJsonObject post(const QString& path, const QJsonObject &payload);
     void applyState(const QJsonObject &state);

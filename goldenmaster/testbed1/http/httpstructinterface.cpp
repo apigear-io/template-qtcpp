@@ -97,14 +97,14 @@ StructBool HttpStructInterface::funcBool(const StructBool& paramBool)
     return StructBool();
 }
 
-StructBool HttpStructInterface::funcInt(const StructInt& paramInt)
+StructInt HttpStructInterface::funcInt(const StructInt& paramInt)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
     QJsonObject payload;
     payload["paramInt"] = QJsonValue::fromVariant(QVariant::fromValue< StructInt >(paramInt));
     QJsonObject reply = post("testbed1/StructInterface/funcInt", payload);
     AG_LOG_DEBUG(qPrintable(QJsonDocument(reply).toJson()));
-    return StructBool();
+    return StructInt();
 }
 
 StructFloat HttpStructInterface::funcFloat(const StructFloat& paramFloat)

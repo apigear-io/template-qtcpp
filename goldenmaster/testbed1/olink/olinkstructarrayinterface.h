@@ -99,38 +99,38 @@ public:
     * Remote call of IStructArrayInterface::funcBool on the StructArrayInterface service.
     * Uses funcBoolAsync
     */
-    StructBool funcBool(const QList<StructBool>& paramBool) override;
+    QList<StructBool> funcBool(const QList<StructBool>& paramBool) override;
     /**
     * Remote call of IStructArrayInterface::funcBool on the StructArrayInterface service.
     */
-    QFuture<StructBool> funcBoolAsync(const QList<StructBool>& paramBool);
+    QFuture<QList<StructBool>> funcBoolAsync(const QList<StructBool>& paramBool);
     /**
     * Remote call of IStructArrayInterface::funcInt on the StructArrayInterface service.
     * Uses funcIntAsync
     */
-    StructBool funcInt(const QList<StructInt>& paramInt) override;
+    QList<StructInt> funcInt(const QList<StructInt>& paramInt) override;
     /**
     * Remote call of IStructArrayInterface::funcInt on the StructArrayInterface service.
     */
-    QFuture<StructBool> funcIntAsync(const QList<StructInt>& paramInt);
+    QFuture<QList<StructInt>> funcIntAsync(const QList<StructInt>& paramInt);
     /**
     * Remote call of IStructArrayInterface::funcFloat on the StructArrayInterface service.
     * Uses funcFloatAsync
     */
-    StructBool funcFloat(const QList<StructFloat>& paramFloat) override;
+    QList<StructFloat> funcFloat(const QList<StructFloat>& paramFloat) override;
     /**
     * Remote call of IStructArrayInterface::funcFloat on the StructArrayInterface service.
     */
-    QFuture<StructBool> funcFloatAsync(const QList<StructFloat>& paramFloat);
+    QFuture<QList<StructFloat>> funcFloatAsync(const QList<StructFloat>& paramFloat);
     /**
     * Remote call of IStructArrayInterface::funcString on the StructArrayInterface service.
     * Uses funcStringAsync
     */
-    StructBool funcString(const QList<StructString>& paramString) override;
+    QList<StructString> funcString(const QList<StructString>& paramString) override;
     /**
     * Remote call of IStructArrayInterface::funcString on the StructArrayInterface service.
     */
-    QFuture<StructBool> funcStringAsync(const QList<StructString>& paramString);
+    QFuture<QList<StructString>> funcStringAsync(const QList<StructString>& paramString);
 
 signals:
 

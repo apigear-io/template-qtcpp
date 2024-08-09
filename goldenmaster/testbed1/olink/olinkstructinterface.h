@@ -108,11 +108,11 @@ public:
     * Remote call of IStructInterface::funcInt on the StructInterface service.
     * Uses funcIntAsync
     */
-    StructBool funcInt(const StructInt& paramInt) override;
+    StructInt funcInt(const StructInt& paramInt) override;
     /**
     * Remote call of IStructInterface::funcInt on the StructInterface service.
     */
-    QFuture<StructBool> funcIntAsync(const StructInt& paramInt);
+    QFuture<StructInt> funcIntAsync(const StructInt& paramInt);
     /**
     * Remote call of IStructInterface::funcFloat on the StructInterface service.
     * Uses funcFloatAsync

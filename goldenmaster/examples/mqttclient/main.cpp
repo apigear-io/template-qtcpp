@@ -29,16 +29,26 @@
 #include "tb_same2/monitor/sameenum1interfacetraced.h"
 #include "tb_same2/mqtt/mqttsameenum2interface.h"
 #include "tb_same2/monitor/sameenum2interfacetraced.h"
+#include "tb_simple/mqtt/mqttvoidinterface.h"
+#include "tb_simple/monitor/voidinterfacetraced.h"
 #include "tb_simple/mqtt/mqttsimpleinterface.h"
 #include "tb_simple/monitor/simpleinterfacetraced.h"
 #include "tb_simple/mqtt/mqttsimplearrayinterface.h"
 #include "tb_simple/monitor/simplearrayinterfacetraced.h"
+#include "tb_simple/mqtt/mqttnopropertiesinterface.h"
+#include "tb_simple/monitor/nopropertiesinterfacetraced.h"
+#include "tb_simple/mqtt/mqttnooperationsinterface.h"
+#include "tb_simple/monitor/nooperationsinterfacetraced.h"
+#include "tb_simple/mqtt/mqttnosignalsinterface.h"
+#include "tb_simple/monitor/nosignalsinterfacetraced.h"
 #include "testbed1/mqtt/mqttstructinterface.h"
 #include "testbed1/monitor/structinterfacetraced.h"
 #include "testbed1/mqtt/mqttstructarrayinterface.h"
 #include "testbed1/monitor/structarrayinterfacetraced.h"
 #include "tb_names/mqtt/mqttnam_es.h"
 #include "tb_names/monitor/nam_estraced.h"
+#include "counter/mqtt/mqttcounter.h"
+#include "counter/monitor/countertraced.h"
 
 
 // You can run this client app together with the service side app - either also example, simulation,
@@ -83,16 +93,26 @@ int main(int argc, char *argv[])
     tb_same2::SameEnum1InterfaceTraced tbSame2SameEnum1InterfaceTraced(tbSame2SameEnum1Interface );
     auto tbSame2SameEnum2Interface = std::make_shared<tb_same2::MqttSameEnum2Interface>(client);
     tb_same2::SameEnum2InterfaceTraced tbSame2SameEnum2InterfaceTraced(tbSame2SameEnum2Interface );
+    auto tbSimpleVoidInterface = std::make_shared<tb_simple::MqttVoidInterface>(client);
+    tb_simple::VoidInterfaceTraced tbSimpleVoidInterfaceTraced(tbSimpleVoidInterface );
     auto tbSimpleSimpleInterface = std::make_shared<tb_simple::MqttSimpleInterface>(client);
     tb_simple::SimpleInterfaceTraced tbSimpleSimpleInterfaceTraced(tbSimpleSimpleInterface );
     auto tbSimpleSimpleArrayInterface = std::make_shared<tb_simple::MqttSimpleArrayInterface>(client);
     tb_simple::SimpleArrayInterfaceTraced tbSimpleSimpleArrayInterfaceTraced(tbSimpleSimpleArrayInterface );
+    auto tbSimpleNoPropertiesInterface = std::make_shared<tb_simple::MqttNoPropertiesInterface>(client);
+    tb_simple::NoPropertiesInterfaceTraced tbSimpleNoPropertiesInterfaceTraced(tbSimpleNoPropertiesInterface );
+    auto tbSimpleNoOperationsInterface = std::make_shared<tb_simple::MqttNoOperationsInterface>(client);
+    tb_simple::NoOperationsInterfaceTraced tbSimpleNoOperationsInterfaceTraced(tbSimpleNoOperationsInterface );
+    auto tbSimpleNoSignalsInterface = std::make_shared<tb_simple::MqttNoSignalsInterface>(client);
+    tb_simple::NoSignalsInterfaceTraced tbSimpleNoSignalsInterfaceTraced(tbSimpleNoSignalsInterface );
     auto testbed1StructInterface = std::make_shared<testbed1::MqttStructInterface>(client);
     testbed1::StructInterfaceTraced testbed1StructInterfaceTraced(testbed1StructInterface );
     auto testbed1StructArrayInterface = std::make_shared<testbed1::MqttStructArrayInterface>(client);
     testbed1::StructArrayInterfaceTraced testbed1StructArrayInterfaceTraced(testbed1StructArrayInterface );
     auto tbNamesNamEs = std::make_shared<tb_names::MqttNam_Es>(client);
     tb_names::NamEsTraced tbNamesNamEsTraced(tbNamesNamEs );
+    auto counterCounter = std::make_shared<counter::MqttCounter>(client);
+    counter::CounterTraced counterCounterTraced(counterCounter );
 
     
     // Try out properties: subscribe for changes

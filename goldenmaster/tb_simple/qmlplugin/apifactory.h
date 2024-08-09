@@ -11,8 +11,12 @@
 #endif
 
 namespace tb_simple {
+    class AbstractVoidInterface;
     class AbstractSimpleInterface;
     class AbstractSimpleArrayInterface;
+    class AbstractNoPropertiesInterface;
+    class AbstractNoOperationsInterface;
+    class AbstractNoSignalsInterface;
 
 /** 
 * A static accesor for ApiFactory - a factory that creates an implementaion of interfaces in tb.simple.
@@ -38,8 +42,12 @@ public:
     * WARNING Make sure a factory is set before calling ApiFactory::get(). 
     */
     static IApiFactory *get();
+    std::shared_ptr<AbstractVoidInterface> createVoidInterface(QObject *parent) override;
     std::shared_ptr<AbstractSimpleInterface> createSimpleInterface(QObject *parent) override;
     std::shared_ptr<AbstractSimpleArrayInterface> createSimpleArrayInterface(QObject *parent) override;
+    std::shared_ptr<AbstractNoPropertiesInterface> createNoPropertiesInterface(QObject *parent) override;
+    std::shared_ptr<AbstractNoOperationsInterface> createNoOperationsInterface(QObject *parent) override;
+    std::shared_ptr<AbstractNoSignalsInterface> createNoSignalsInterface(QObject *parent) override;
 private:
     static IApiFactory *s_instance;
 };

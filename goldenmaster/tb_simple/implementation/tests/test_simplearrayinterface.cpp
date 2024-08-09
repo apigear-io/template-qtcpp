@@ -164,6 +164,13 @@ void TestTbSimpleSimpleArrayInterface::propString(){
     tb_simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
     // Do implement test here
 }
+/**
+ *  Test proptery propReadOnlyString
+*/
+void TestTbSimpleSimpleArrayInterface::propReadOnlyString(){
+    tb_simple::SimpleArrayInterface testTbsimplesimplearrayinterface;
+    // Do implement test here
+}
 
 QTEST_MAIN(TestTbSimpleSimpleArrayInterface);
 

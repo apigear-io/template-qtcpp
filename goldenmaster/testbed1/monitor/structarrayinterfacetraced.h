@@ -32,16 +32,16 @@ public:
     virtual ~StructArrayInterfaceTraced() = default;
 
     /** Traces funcBool and forwards call to StructArrayInterface implementation. */
-    StructBool funcBool(const QList<StructBool>& paramBool) override;
+    QList<StructBool> funcBool(const QList<StructBool>& paramBool) override;
     
     /** Traces funcInt and forwards call to StructArrayInterface implementation. */
-    StructBool funcInt(const QList<StructInt>& paramInt) override;
+    QList<StructInt> funcInt(const QList<StructInt>& paramInt) override;
     
     /** Traces funcFloat and forwards call to StructArrayInterface implementation. */
-    StructBool funcFloat(const QList<StructFloat>& paramFloat) override;
+    QList<StructFloat> funcFloat(const QList<StructFloat>& paramFloat) override;
     
     /** Traces funcString and forwards call to StructArrayInterface implementation. */
-    StructBool funcString(const QList<StructString>& paramString) override;
+    QList<StructString> funcString(const QList<StructString>& paramString) override;
     
     /** Traces and forwards call to StructArrayInterface implementation. */
     void setPropBool(const QList<StructBool>& propBool) override;

@@ -69,10 +69,10 @@ public:
     * @param value to set for the property propString 
     */
     void setPropString(const QList<StructString>& propString) override;
-    StructBool funcBool(const QList<StructBool>& paramBool) override;
-    StructBool funcInt(const QList<StructInt>& paramInt) override;
-    StructBool funcFloat(const QList<StructFloat>& paramFloat) override;
-    StructBool funcString(const QList<StructString>& paramString) override;
+    QList<StructBool> funcBool(const QList<StructBool>& paramBool) override;
+    QList<StructInt> funcInt(const QList<StructInt>& paramInt) override;
+    QList<StructFloat> funcFloat(const QList<StructFloat>& paramFloat) override;
+    QList<StructString> funcString(const QList<StructString>& paramString) override;
 
 private:
     /** propBool property */

@@ -34,7 +34,7 @@ StructArrayInterfaceTraced::StructArrayInterfaceTraced(std::shared_ptr<AbstractS
     connect(m_impl.get(), &AbstractStructArrayInterface::propStringChanged, this, &AbstractStructArrayInterface::propStringChanged);
 }
 
-StructBool StructArrayInterfaceTraced::funcBool(const QList<StructBool>& paramBool) 
+QList<StructBool> StructArrayInterfaceTraced::funcBool(const QList<StructBool>& paramBool) 
 {
     if (!m_impl) {
         AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
@@ -45,7 +45,7 @@ StructBool StructArrayInterfaceTraced::funcBool(const QList<StructBool>& paramBo
 }
 
 
-StructBool StructArrayInterfaceTraced::funcInt(const QList<StructInt>& paramInt) 
+QList<StructInt> StructArrayInterfaceTraced::funcInt(const QList<StructInt>& paramInt) 
 {
     if (!m_impl) {
         AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
@@ -56,7 +56,7 @@ StructBool StructArrayInterfaceTraced::funcInt(const QList<StructInt>& paramInt)
 }
 
 
-StructBool StructArrayInterfaceTraced::funcFloat(const QList<StructFloat>& paramFloat) 
+QList<StructFloat> StructArrayInterfaceTraced::funcFloat(const QList<StructFloat>& paramFloat) 
 {
     if (!m_impl) {
         AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);
@@ -67,7 +67,7 @@ StructBool StructArrayInterfaceTraced::funcFloat(const QList<StructFloat>& param
 }
 
 
-StructBool StructArrayInterfaceTraced::funcString(const QList<StructString>& paramString) 
+QList<StructString> StructArrayInterfaceTraced::funcString(const QList<StructString>& paramString) 
 {
     if (!m_impl) {
         AG_LOG_WARNING(Q_FUNC_INFO + noObjectToTraceLogInfo);

@@ -35,7 +35,7 @@ public:
     StructBool funcBool(const StructBool& paramBool) override;
     
     /** Traces funcInt and forwards call to StructInterface implementation. */
-    StructBool funcInt(const StructInt& paramInt) override;
+    StructInt funcInt(const StructInt& paramInt) override;
     
     /** Traces funcFloat and forwards call to StructInterface implementation. */
     StructFloat funcFloat(const StructFloat& paramFloat) override;

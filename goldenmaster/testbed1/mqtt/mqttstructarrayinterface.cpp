@@ -172,7 +172,7 @@ QList<StructString> MqttStructArrayInterface::propString() const
     return m_propString;
 }
 
-StructBool MqttStructArrayInterface::funcBool(const QList<StructBool>& paramBool)
+QList<StructBool> MqttStructArrayInterface::funcBool(const QList<StructBool>& paramBool)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
 
@@ -181,16 +181,16 @@ StructBool MqttStructArrayInterface::funcBool(const QList<StructBool>& paramBool
     return future.result();
 }
 
-QFuture<StructBool> MqttStructArrayInterface::funcBoolAsync(const QList<StructBool>& paramBool)
+QFuture<QList<StructBool>> MqttStructArrayInterface::funcBoolAsync(const QList<StructBool>& paramBool)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/funcBool");
-    auto promise = std::make_shared<QPromise<StructBool>>();
+    auto promise = std::make_shared<QPromise<QList<StructBool>>>();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(StructBool());
+            promise->addResult(QList<StructBool>());
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -198,14 +198,14 @@ QFuture<StructBool> MqttStructArrayInterface::funcBoolAsync(const QList<StructBo
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(StructBool());
+            promise->addResult(QList<StructBool>());
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({paramBool });       
 
     auto func = [promise](const nlohmann::json& arg)
         {
-            StructBool value = arg.get<StructBool>();
+            QList<StructBool> value = arg.get<QList<StructBool>>();
             promise->addResult(value);
         };
     auto callId = m_client.invokeRemote(topic, arguments, respTopic);
@@ -215,7 +215,7 @@ QFuture<StructBool> MqttStructArrayInterface::funcBoolAsync(const QList<StructBo
     return promise->future();
 }
 
-StructBool MqttStructArrayInterface::funcInt(const QList<StructInt>& paramInt)
+QList<StructInt> MqttStructArrayInterface::funcInt(const QList<StructInt>& paramInt)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
 
@@ -224,16 +224,16 @@ StructBool MqttStructArrayInterface::funcInt(const QList<StructInt>& paramInt)
     return future.result();
 }
 
-QFuture<StructBool> MqttStructArrayInterface::funcIntAsync(const QList<StructInt>& paramInt)
+QFuture<QList<StructInt>> MqttStructArrayInterface::funcIntAsync(const QList<StructInt>& paramInt)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/funcInt");
-    auto promise = std::make_shared<QPromise<StructBool>>();
+    auto promise = std::make_shared<QPromise<QList<StructInt>>>();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(StructBool());
+            promise->addResult(QList<StructInt>());
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -241,14 +241,14 @@ QFuture<StructBool> MqttStructArrayInterface::funcIntAsync(const QList<StructInt
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(StructBool());
+            promise->addResult(QList<StructInt>());
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({paramInt });       
 
     auto func = [promise](const nlohmann::json& arg)
         {
-            StructBool value = arg.get<StructBool>();
+            QList<StructInt> value = arg.get<QList<StructInt>>();
             promise->addResult(value);
         };
     auto callId = m_client.invokeRemote(topic, arguments, respTopic);
@@ -258,7 +258,7 @@ QFuture<StructBool> MqttStructArrayInterface::funcIntAsync(const QList<StructInt
     return promise->future();
 }
 
-StructBool MqttStructArrayInterface::funcFloat(const QList<StructFloat>& paramFloat)
+QList<StructFloat> MqttStructArrayInterface::funcFloat(const QList<StructFloat>& paramFloat)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
 
@@ -267,16 +267,16 @@ StructBool MqttStructArrayInterface::funcFloat(const QList<StructFloat>& paramFl
     return future.result();
 }
 
-QFuture<StructBool> MqttStructArrayInterface::funcFloatAsync(const QList<StructFloat>& paramFloat)
+QFuture<QList<StructFloat>> MqttStructArrayInterface::funcFloatAsync(const QList<StructFloat>& paramFloat)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/funcFloat");
-    auto promise = std::make_shared<QPromise<StructBool>>();
+    auto promise = std::make_shared<QPromise<QList<StructFloat>>>();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(StructBool());
+            promise->addResult(QList<StructFloat>());
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -284,14 +284,14 @@ QFuture<StructBool> MqttStructArrayInterface::funcFloatAsync(const QList<StructF
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(StructBool());
+            promise->addResult(QList<StructFloat>());
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({paramFloat });       
 
     auto func = [promise](const nlohmann::json& arg)
         {
-            StructBool value = arg.get<StructBool>();
+            QList<StructFloat> value = arg.get<QList<StructFloat>>();
             promise->addResult(value);
         };
     auto callId = m_client.invokeRemote(topic, arguments, respTopic);
@@ -301,7 +301,7 @@ QFuture<StructBool> MqttStructArrayInterface::funcFloatAsync(const QList<StructF
     return promise->future();
 }
 
-StructBool MqttStructArrayInterface::funcString(const QList<StructString>& paramString)
+QList<StructString> MqttStructArrayInterface::funcString(const QList<StructString>& paramString)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
 
@@ -310,16 +310,16 @@ StructBool MqttStructArrayInterface::funcString(const QList<StructString>& param
     return future.result();
 }
 
-QFuture<StructBool> MqttStructArrayInterface::funcStringAsync(const QList<StructString>& paramString)
+QFuture<QList<StructString>> MqttStructArrayInterface::funcStringAsync(const QList<StructString>& paramString)
 {
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/funcString");
-    auto promise = std::make_shared<QPromise<StructBool>>();
+    auto promise = std::make_shared<QPromise<QList<StructString>>>();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(StructBool());
+            promise->addResult(QList<StructString>());
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -327,14 +327,14 @@ QFuture<StructBool> MqttStructArrayInterface::funcStringAsync(const QList<Struct
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(StructBool());
+            promise->addResult(QList<StructString>());
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({paramString });       
 
     auto func = [promise](const nlohmann::json& arg)
         {
-            StructBool value = arg.get<StructBool>();
+            QList<StructString> value = arg.get<QList<StructString>>();
             promise->addResult(value);
         };
     auto callId = m_client.invokeRemote(topic, arguments, respTopic);

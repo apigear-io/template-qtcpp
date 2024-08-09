@@ -39,7 +39,7 @@ public:
     StructString propString() const override;
     void setPropString(const StructString& propString) override;
     StructBool funcBool(const StructBool& paramBool) override;
-    StructBool funcInt(const StructInt& paramInt) override;
+    StructInt funcInt(const StructInt& paramInt) override;
     StructFloat funcFloat(const StructFloat& paramFloat) override;
     StructString funcString(const StructString& paramString) override;
 private:

@@ -44,4 +44,5 @@ private slots:
     void propFloat32();
     void propFloat64();
     void propString();
+    void propReadOnlyString();
 };

@@ -3,6 +3,34 @@
 
 namespace tb_simple {
 
+VoidInterfaceAgent::VoidInterfaceAgent()
+{
+}
+
+QVariantMap VoidInterfaceAgent::capture_state(AbstractVoidInterface* obj)
+{
+    return QVariantMap{
+    };
+}
+
+void VoidInterfaceAgent::trace_state(AbstractVoidInterface* obj)
+{
+    const QVariantMap &fields_ = capture_state(obj);
+    ApiGear::Monitor::AgentClient::instance()->traceState("tb.simple.VoidInterface", fields_);
+}
+void VoidInterfaceAgent::trace_funcVoid(AbstractVoidInterface* obj )
+{
+    const QVariantMap &params_ {
+    };
+    ApiGear::Monitor::AgentClient::instance()->traceCall("tb.simple.VoidInterface#funcVoid", params_);
+}
+void VoidInterfaceAgent::trace_sigVoid(AbstractVoidInterface* obj )
+{
+    const QVariantMap &params_ {
+    };
+    ApiGear::Monitor::AgentClient::instance()->traceSignal("tb.simple.VoidInterface#sigVoid", params_);
+}
+
 SimpleInterfaceAgent::SimpleInterfaceAgent()
 {
 }
@@ -26,11 +54,12 @@ void SimpleInterfaceAgent::trace_state(AbstractSimpleInterface* obj)
     const QVariantMap &fields_ = capture_state(obj);
     ApiGear::Monitor::AgentClient::instance()->traceState("tb.simple.SimpleInterface", fields_);
 }
-void SimpleInterfaceAgent::trace_funcVoid(AbstractSimpleInterface* obj )
+void SimpleInterfaceAgent::trace_funcNoReturnValue(AbstractSimpleInterface* obj, bool paramBool)
 {
     const QVariantMap &params_ {
+        { "paramBool", QVariant::fromValue(paramBool) },
     };
-    ApiGear::Monitor::AgentClient::instance()->traceCall("tb.simple.SimpleInterface#funcVoid", params_);
+    ApiGear::Monitor::AgentClient::instance()->traceCall("tb.simple.SimpleInterface#funcNoReturnValue", params_);
 }
 void SimpleInterfaceAgent::trace_funcBool(AbstractSimpleInterface* obj, bool paramBool)
 {
@@ -88,12 +117,6 @@ void SimpleInterfaceAgent::trace_funcString(AbstractSimpleInterface* obj, const 
     };
     ApiGear::Monitor::AgentClient::instance()->traceCall("tb.simple.SimpleInterface#funcString", params_);
 }
-void SimpleInterfaceAgent::trace_sigVoid(AbstractSimpleInterface* obj )
-{
-    const QVariantMap &params_ {
-    };
-    ApiGear::Monitor::AgentClient::instance()->traceSignal("tb.simple.SimpleInterface#sigVoid", params_);
-}
 void SimpleInterfaceAgent::trace_sigBool(AbstractSimpleInterface* obj, bool paramBool)
 {
     const QVariantMap &params_ {
@@ -129,10 +152,10 @@ void SimpleInterfaceAgent::trace_sigFloat(AbstractSimpleInterface* obj, qreal pa
     };
     ApiGear::Monitor::AgentClient::instance()->traceSignal("tb.simple.SimpleInterface#sigFloat", params_);
 }
-void SimpleInterfaceAgent::trace_sigFloat32(AbstractSimpleInterface* obj, float paramFloa32)
+void SimpleInterfaceAgent::trace_sigFloat32(AbstractSimpleInterface* obj, float paramFloat32)
 {
     const QVariantMap &params_ {
-        { "paramFloa32", QVariant::fromValue(paramFloa32) },
+        { "paramFloat32", QVariant::fromValue(paramFloat32) },
     };
     ApiGear::Monitor::AgentClient::instance()->traceSignal("tb.simple.SimpleInterface#sigFloat32", params_);
 }
@@ -166,6 +189,7 @@ QVariantMap SimpleArrayInterfaceAgent::capture_state(AbstractSimpleArrayInterfac
         { "propFloat32", QVariant::fromValue(obj->propFloat32()) },
         { "propFloat64", QVariant::fromValue(obj->propFloat64()) },
         { "propString", QVariant::fromValue(obj->propString()) },
+        { "propReadOnlyString", QVariant::fromValue(obj->propReadOnlyString()) },
     };
 }
 
@@ -285,6 +309,110 @@ void SimpleArrayInterfaceAgent::trace_sigString(AbstractSimpleArrayInterface* ob
         { "paramString", QVariant::fromValue(paramString) },
     };
     ApiGear::Monitor::AgentClient::instance()->traceSignal("tb.simple.SimpleArrayInterface#sigString", params_);
+}
+
+NoPropertiesInterfaceAgent::NoPropertiesInterfaceAgent()
+{
+}
+
+QVariantMap NoPropertiesInterfaceAgent::capture_state(AbstractNoPropertiesInterface* obj)
+{
+    return QVariantMap{
+    };
+}
+
+void NoPropertiesInterfaceAgent::trace_state(AbstractNoPropertiesInterface* obj)
+{
+    const QVariantMap &fields_ = capture_state(obj);
+    ApiGear::Monitor::AgentClient::instance()->traceState("tb.simple.NoPropertiesInterface", fields_);
+}
+void NoPropertiesInterfaceAgent::trace_funcVoid(AbstractNoPropertiesInterface* obj )
+{
+    const QVariantMap &params_ {
+    };
+    ApiGear::Monitor::AgentClient::instance()->traceCall("tb.simple.NoPropertiesInterface#funcVoid", params_);
+}
+void NoPropertiesInterfaceAgent::trace_funcBool(AbstractNoPropertiesInterface* obj, bool paramBool)
+{
+    const QVariantMap &params_ {
+        { "paramBool", QVariant::fromValue(paramBool) },
+    };
+    ApiGear::Monitor::AgentClient::instance()->traceCall("tb.simple.NoPropertiesInterface#funcBool", params_);
+}
+void NoPropertiesInterfaceAgent::trace_sigVoid(AbstractNoPropertiesInterface* obj )
+{
+    const QVariantMap &params_ {
+    };
+    ApiGear::Monitor::AgentClient::instance()->traceSignal("tb.simple.NoPropertiesInterface#sigVoid", params_);
+}
+void NoPropertiesInterfaceAgent::trace_sigBool(AbstractNoPropertiesInterface* obj, bool paramBool)
+{
+    const QVariantMap &params_ {
+        { "paramBool", QVariant::fromValue(paramBool) },
+    };
+    ApiGear::Monitor::AgentClient::instance()->traceSignal("tb.simple.NoPropertiesInterface#sigBool", params_);
+}
+
+NoOperationsInterfaceAgent::NoOperationsInterfaceAgent()
+{
+}
+
+QVariantMap NoOperationsInterfaceAgent::capture_state(AbstractNoOperationsInterface* obj)
+{
+    return QVariantMap{
+        { "propBool", QVariant::fromValue(obj->propBool()) },
+        { "propInt", QVariant::fromValue(obj->propInt()) },
+    };
+}
+
+void NoOperationsInterfaceAgent::trace_state(AbstractNoOperationsInterface* obj)
+{
+    const QVariantMap &fields_ = capture_state(obj);
+    ApiGear::Monitor::AgentClient::instance()->traceState("tb.simple.NoOperationsInterface", fields_);
+}
+void NoOperationsInterfaceAgent::trace_sigVoid(AbstractNoOperationsInterface* obj )
+{
+    const QVariantMap &params_ {
+    };
+    ApiGear::Monitor::AgentClient::instance()->traceSignal("tb.simple.NoOperationsInterface#sigVoid", params_);
+}
+void NoOperationsInterfaceAgent::trace_sigBool(AbstractNoOperationsInterface* obj, bool paramBool)
+{
+    const QVariantMap &params_ {
+        { "paramBool", QVariant::fromValue(paramBool) },
+    };
+    ApiGear::Monitor::AgentClient::instance()->traceSignal("tb.simple.NoOperationsInterface#sigBool", params_);
+}
+
+NoSignalsInterfaceAgent::NoSignalsInterfaceAgent()
+{
+}
+
+QVariantMap NoSignalsInterfaceAgent::capture_state(AbstractNoSignalsInterface* obj)
+{
+    return QVariantMap{
+        { "propBool", QVariant::fromValue(obj->propBool()) },
+        { "propInt", QVariant::fromValue(obj->propInt()) },
+    };
+}
+
+void NoSignalsInterfaceAgent::trace_state(AbstractNoSignalsInterface* obj)
+{
+    const QVariantMap &fields_ = capture_state(obj);
+    ApiGear::Monitor::AgentClient::instance()->traceState("tb.simple.NoSignalsInterface", fields_);
+}
+void NoSignalsInterfaceAgent::trace_funcVoid(AbstractNoSignalsInterface* obj )
+{
+    const QVariantMap &params_ {
+    };
+    ApiGear::Monitor::AgentClient::instance()->traceCall("tb.simple.NoSignalsInterface#funcVoid", params_);
+}
+void NoSignalsInterfaceAgent::trace_funcBool(AbstractNoSignalsInterface* obj, bool paramBool)
+{
+    const QVariantMap &params_ {
+        { "paramBool", QVariant::fromValue(paramBool) },
+    };
+    ApiGear::Monitor::AgentClient::instance()->traceCall("tb.simple.NoSignalsInterface#funcBool", params_);
 }
 
 } // namespace tb_simple

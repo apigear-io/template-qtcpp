@@ -118,7 +118,7 @@ public:
     * Exposes funcInt of backend implementation to a qml.
     *   
     */
-    Q_INVOKABLE testbed1::StructBool funcInt(const testbed1::StructInt& paramInt) override;
+    Q_INVOKABLE testbed1::StructInt funcInt(const testbed1::StructInt& paramInt) override;
 
     /**
     * Exposes funcFloat of backend implementation to a qml.

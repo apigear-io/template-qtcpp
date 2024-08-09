@@ -50,12 +50,24 @@
 #include "tb_same2/qmlplugin/apifactory.h"
 #include "tb_same2/mqtt/mqttfactory.h"
 #include "tb_same2/monitor/tracedapifactory.h"
+#include "tb_simple/implementation/voidinterface.h"
+#include "tb_simple/qmlplugin/qmlvoidinterface.h"
+#include "tb_simple/mqtt/mqttvoidinterfaceadapter.h"
 #include "tb_simple/implementation/simpleinterface.h"
 #include "tb_simple/qmlplugin/qmlsimpleinterface.h"
 #include "tb_simple/mqtt/mqttsimpleinterfaceadapter.h"
 #include "tb_simple/implementation/simplearrayinterface.h"
 #include "tb_simple/qmlplugin/qmlsimplearrayinterface.h"
 #include "tb_simple/mqtt/mqttsimplearrayinterfaceadapter.h"
+#include "tb_simple/implementation/nopropertiesinterface.h"
+#include "tb_simple/qmlplugin/qmlnopropertiesinterface.h"
+#include "tb_simple/mqtt/mqttnopropertiesinterfaceadapter.h"
+#include "tb_simple/implementation/nooperationsinterface.h"
+#include "tb_simple/qmlplugin/qmlnooperationsinterface.h"
+#include "tb_simple/mqtt/mqttnooperationsinterfaceadapter.h"
+#include "tb_simple/implementation/nosignalsinterface.h"
+#include "tb_simple/qmlplugin/qmlnosignalsinterface.h"
+#include "tb_simple/mqtt/mqttnosignalsinterfaceadapter.h"
 #include "tb_simple/qmlplugin/apifactory.h"
 #include "tb_simple/mqtt/mqttfactory.h"
 #include "tb_simple/monitor/tracedapifactory.h"
@@ -74,6 +86,18 @@
 #include "tb_names/qmlplugin/apifactory.h"
 #include "tb_names/mqtt/mqttfactory.h"
 #include "tb_names/monitor/tracedapifactory.h"
+#include "custom_types/qmlplugin/apifactory.h"
+#include "custom_types/mqtt/mqttfactory.h"
+#include "custom_types/monitor/tracedapifactory.h"
+#include "extern_types/qmlplugin/apifactory.h"
+#include "extern_types/mqtt/mqttfactory.h"
+#include "extern_types/monitor/tracedapifactory.h"
+#include "counter/implementation/counter.h"
+#include "counter/qmlplugin/qmlcounter.h"
+#include "counter/mqtt/mqttcounteradapter.h"
+#include "counter/qmlplugin/apifactory.h"
+#include "counter/mqtt/mqttfactory.h"
+#include "counter/monitor/tracedapifactory.h"
 
 #include <QtCore>
 #include "apigear/mqtt/mqttservice.h"
@@ -123,6 +147,15 @@ int main(int argc, char *argv[]){
     tb_names::MqttFactory tb_namesMqttFactory(client);
     tb_names::TracedApiFactory tb_namesTracedMqttFactory(tb_namesMqttFactory); 
     tb_names::ApiFactory::set(&tb_namesTracedMqttFactory);
+    custom_types::MqttFactory custom_typesMqttFactory(client);
+    custom_types::TracedApiFactory custom_typesTracedMqttFactory(custom_typesMqttFactory); 
+    custom_types::ApiFactory::set(&custom_typesTracedMqttFactory);
+    extern_types::MqttFactory extern_typesMqttFactory(client);
+    extern_types::TracedApiFactory extern_typesTracedMqttFactory(extern_typesMqttFactory); 
+    extern_types::ApiFactory::set(&extern_typesTracedMqttFactory);
+    counter::MqttFactory counterMqttFactory(client);
+    counter::TracedApiFactory counterTracedMqttFactory(counterMqttFactory); 
+    counter::ApiFactory::set(&counterTracedMqttFactory);
 
     // Create main app
     const QUrl url(QStringLiteral("qrc:/main.qml"));
@@ -167,16 +200,26 @@ int main(int argc, char *argv[]){
     auto tbSame2MqttSameEnum1InterfaceService = std::make_shared<tb_same2::MqttSameEnum1InterfaceAdapter>(service, tbSame2SameEnum1Interface);
     auto tbSame2SameEnum2Interface = std::make_shared<tb_same2::SameEnum2Interface>();
     auto tbSame2MqttSameEnum2InterfaceService = std::make_shared<tb_same2::MqttSameEnum2InterfaceAdapter>(service, tbSame2SameEnum2Interface);
+    auto tbSimpleVoidInterface = std::make_shared<tb_simple::VoidInterface>();
+    auto tbSimpleMqttVoidInterfaceService = std::make_shared<tb_simple::MqttVoidInterfaceAdapter>(service, tbSimpleVoidInterface);
     auto tbSimpleSimpleInterface = std::make_shared<tb_simple::SimpleInterface>();
     auto tbSimpleMqttSimpleInterfaceService = std::make_shared<tb_simple::MqttSimpleInterfaceAdapter>(service, tbSimpleSimpleInterface);
     auto tbSimpleSimpleArrayInterface = std::make_shared<tb_simple::SimpleArrayInterface>();
     auto tbSimpleMqttSimpleArrayInterfaceService = std::make_shared<tb_simple::MqttSimpleArrayInterfaceAdapter>(service, tbSimpleSimpleArrayInterface);
+    auto tbSimpleNoPropertiesInterface = std::make_shared<tb_simple::NoPropertiesInterface>();
+    auto tbSimpleMqttNoPropertiesInterfaceService = std::make_shared<tb_simple::MqttNoPropertiesInterfaceAdapter>(service, tbSimpleNoPropertiesInterface);
+    auto tbSimpleNoOperationsInterface = std::make_shared<tb_simple::NoOperationsInterface>();
+    auto tbSimpleMqttNoOperationsInterfaceService = std::make_shared<tb_simple::MqttNoOperationsInterfaceAdapter>(service, tbSimpleNoOperationsInterface);
+    auto tbSimpleNoSignalsInterface = std::make_shared<tb_simple::NoSignalsInterface>();
+    auto tbSimpleMqttNoSignalsInterfaceService = std::make_shared<tb_simple::MqttNoSignalsInterfaceAdapter>(service, tbSimpleNoSignalsInterface);
     auto testbed1StructInterface = std::make_shared<testbed1::StructInterface>();
     auto testbed1MqttStructInterfaceService = std::make_shared<testbed1::MqttStructInterfaceAdapter>(service, testbed1StructInterface);
     auto testbed1StructArrayInterface = std::make_shared<testbed1::StructArrayInterface>();
     auto testbed1MqttStructArrayInterfaceService = std::make_shared<testbed1::MqttStructArrayInterfaceAdapter>(service, testbed1StructArrayInterface);
     auto tbNamesNamEs = std::make_shared<tb_names::NamEs>();
     auto tbNamesMqttNamEsService = std::make_shared<tb_names::MqttNam_EsAdapter>(service, tbNamesNamEs);
+    auto counterCounter = std::make_shared<counter::Counter>();
+    auto counterMqttCounterService = std::make_shared<counter::MqttCounterAdapter>(service, counterCounter);
 
 
     /**

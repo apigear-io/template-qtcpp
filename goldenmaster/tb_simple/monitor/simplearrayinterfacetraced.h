@@ -94,6 +94,11 @@ public:
     void setPropString(const QList<QString>& propString) override;
     /** Forwards call to SimpleArrayInterface implementation. */
     QList<QString> propString() const override;
+    
+    /** Traces and forwards call to SimpleArrayInterface implementation. */
+    void setPropReadOnlyString(const QString& propReadOnlyString) override;
+    /** Forwards call to SimpleArrayInterface implementation. */
+    QString propReadOnlyString() const override;
     slots
     /**  Traces sigBool emission. */
     void traceSigBool(const QList<bool>& paramBool);

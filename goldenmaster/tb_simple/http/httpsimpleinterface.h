@@ -46,7 +46,7 @@ public:
     void setPropFloat64(double propFloat64) override;
     QString propString() const override;
     void setPropString(const QString& propString) override;
-    void funcVoid() override;
+    void funcNoReturnValue(bool paramBool) override;
     bool funcBool(bool paramBool) override;
     int funcInt(int paramInt) override;
     qint32 funcInt32(qint32 paramInt32) override;

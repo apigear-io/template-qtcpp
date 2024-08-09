@@ -120,6 +120,16 @@ OLinkSimpleArrayInterfaceAdapter::OLinkSimpleArrayInterfaceAdapter(RemoteRegistr
             }
         }
     });
+    connect(m_impl, &AbstractSimpleArrayInterface::propReadOnlyStringChanged, this,
+        [=](const QString& propReadOnlyString) {
+        const auto& propertyId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "propReadOnlyString");
+        for(auto node: m_registry.getNodes(ApiGear::ObjectLink::Name::getObjectId(propertyId))) {
+            auto lockedNode = node.lock();
+            if(lockedNode) {
+                lockedNode->notifyPropertyChange(propertyId, propReadOnlyString);
+            }
+        }
+    });
         connect(m_impl, &AbstractSimpleArrayInterface::sigBool, this,
             [=](const QList<bool>& paramBool) {
                 const nlohmann::json& args = { paramBool };
@@ -220,7 +230,8 @@ json OLinkSimpleArrayInterfaceAdapter::captureState()
         { "propFloat", m_impl->propFloat() },
         { "propFloat32", m_impl->propFloat32() },
         { "propFloat64", m_impl->propFloat64() },
-        { "propString", m_impl->propString() }
+        { "propString", m_impl->propString() },
+        { "propReadOnlyString", m_impl->propReadOnlyString() }
     });
 }
 
@@ -249,6 +260,9 @@ void OLinkSimpleArrayInterfaceAdapter::applyState(const json& state)
     }
     if(state.contains("propString")) {
         m_impl->setPropString(state["propString"]);
+    }
+    if(state.contains("propReadOnlyString")) {
+        m_impl->setPropReadOnlyString(state["propReadOnlyString"]);
     }
 }
 
@@ -339,6 +353,10 @@ void OLinkSimpleArrayInterfaceAdapter::olinkSetProperty(const std::string& prope
     if(path == "propString") {
         QList<QString> propString = value.get<QList<QString>>();
         m_impl->setPropString(propString);
+    }
+    if(path == "propReadOnlyString") {
+        QString propReadOnlyString = value.get<QString>();
+        m_impl->setPropReadOnlyString(propReadOnlyString);
     }    
 }
 

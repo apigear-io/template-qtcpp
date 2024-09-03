@@ -72,4 +72,5 @@ jobs:
         working-directory: goldenmaster
         env:
             CTEST_OUTPUT_ON_FAILURE: 1
+            QT_QPA_PLATFORM: offscreen
         run: cmake -Bbuild -DBUILD_TESTING=ON -DCMAKE_INSTALL_PREFIX=tmp && cmake --build build/ && cmake --build build/ --target test

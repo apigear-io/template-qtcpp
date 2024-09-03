@@ -16,6 +16,11 @@ void TestServer::listen(const QString& host, int port)
     m_wss->connect(m_wss.get(), &QWebSocketServer::newConnection, [this](){onNewConnection();});
 }
 
+bool TestServer::isListening()
+{
+    return m_wss->isListening();
+}
+
 void TestServer::onNewConnection()
 {
     m_socket = std::unique_ptr<QWebSocket>(m_wss->nextPendingConnection());

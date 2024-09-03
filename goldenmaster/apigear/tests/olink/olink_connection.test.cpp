@@ -40,7 +40,7 @@ bool checkMessageInContainer(const std::vector<QString>& container, const QStrin
 }
 
 auto portNumber = 8000;
-QString localHostAddress =  "ws://127.0.0.1";
+QString localHostAddress =  "127.0.0.1";
 QString localHostAddressWithPort = "ws://127.0.0.1:" + QString::fromStdString(std::to_string(portNumber)) + QString("/ws");
 const std::string sink1Id = "tests.sink1";
 const std::string sink2Id = "tests.sink2";
@@ -62,7 +62,8 @@ TEST_CASE("OlinkConnection tests")
     //And a test client that created with empty registry
     ApiGear::ObjectLink::ClientRegistry registry;
     auto testOlinkClient = std::make_shared<ApiGear::ObjectLink::OLinkClient>(registry);
-    QTest::qWait(300);
+    // Make sure the server is ready
+    REQUIRE(server.isListening());
 
     SECTION("Client node connects to host before the object is linked. On teardown first disconnect sink then the client")
     {
@@ -239,6 +240,8 @@ TEST_CASE("Connection closed for client from server side tests")
     // test client with a connection estblished
     ApiGear::ObjectLink::ClientRegistry registry;
     auto testOlinkClient = std::make_shared<ApiGear::ObjectLink::OLinkClient>(registry);
+    // Make sure the server is ready
+    REQUIRE(server.isListening());
     testOlinkClient->connectToHost(QUrl(localHostAddressWithPort));
     testOlinkClient->linkObjectSource(sink1);
     REQUIRE(QTest::qWaitFor([&registry](){return !registry.getSink(sink1Id).expired();}, 100));

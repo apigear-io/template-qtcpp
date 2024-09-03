@@ -24,6 +24,8 @@ public:
 
     /** Starts the server */
     void listen(const QString& host, int port);
+    /** Returns true if the server is ready and listening for new connections */
+    bool isListening();
 
     /** Writes message to a socket if the connection is on */
     void writeMessage(const std::string msg);

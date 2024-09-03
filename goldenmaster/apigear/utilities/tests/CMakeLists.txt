@@ -18,6 +18,7 @@ include(CTest)
 
 
 if(BUILD_TESTING)
+find_package(Qt6 REQUIRED COMPONENTS Test)
 enable_testing()
 
 Include(FetchContent)

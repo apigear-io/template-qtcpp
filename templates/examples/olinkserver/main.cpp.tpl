@@ -29,7 +29,6 @@ int main(int argc, char *argv[]){
 
     QCoreApplication app(argc, argv);  ApiGear::ObjectLink::RemoteRegistry registry;
     ApiGear::ObjectLink::OLinkHost server(registry);
-    server.listen("localhost", 8182);
 
     {{- range.System.Modules }}
     {{- $module := . }}
@@ -50,6 +49,10 @@ int main(int argc, char *argv[]){
     registry.addSource( {{- $serviceInstanceName }});
     {{- end }}
     {{- end }}
+    
+    // Start your server after all the services are added.
+    // This way you are sure that any new client that connects, will find the source it needs.
+    server.listen("localhost", 8182);
 
     auto result = app.exec();
     // Use the server.

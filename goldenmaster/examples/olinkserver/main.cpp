@@ -87,7 +87,6 @@ int main(int argc, char *argv[]){
 
     QCoreApplication app(argc, argv);  ApiGear::ObjectLink::RemoteRegistry registry;
     ApiGear::ObjectLink::OLinkHost server(registry);
-    server.listen("localhost", 8182);
     auto testbed2ManyParamInterface = std::make_shared<testbed2::ManyParamInterface>();
     testbed2::ManyParamInterfaceTraced testbed2ManyParamInterfaceTraced(testbed2ManyParamInterface );
     auto testbed2OlinkManyParamInterfaceService = std::make_shared<testbed2::OLinkManyParamInterfaceAdapter>(registry, &testbed2ManyParamInterfaceTraced);
@@ -180,6 +179,10 @@ int main(int argc, char *argv[]){
     counter::CounterTraced counterCounterTraced(counterCounter );
     auto counterOlinkCounterService = std::make_shared<counter::OLinkCounterAdapter>(registry, &counterCounterTraced);
     registry.addSource(counterOlinkCounterService);
+    
+    // Start your server after all the services are added.
+    // This way you are sure that any new client that connects, will find the source it needs.
+    server.listen("localhost", 8182);
 
     auto result = app.exec();
     // Use the server.

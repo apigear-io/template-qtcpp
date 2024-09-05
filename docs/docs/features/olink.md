@@ -184,12 +184,14 @@ As mentioned earlier you need a network layer, here provided by a `ApiGear::Obje
     // Prepare the registry, the server, and an object which you want to expose.
     ApiGear::ObjectLink::RemoteRegistry registry;
     ApiGear::ObjectLink::OLinkHost server(registry);
-    server.listen("localhost", 8182);
     auto ioWorldHello = std::make_shared<io_world::Hello>();
 
     // Create your OLinkHelloAdapter and add it to registry.
     auto ioWorldOlinkHelloService = std::make_shared<io_world::OLinkHelloAdapter>(registry, ioWorldHello.get());
     registry.addSource(ioWorldOlinkHelloService);
+
+    // Start server with source added to registry.
+    server.listen("localhost", 8182);
 
     // use your ioWorldHello implementation, all property changes, and signals will be passed to connected OLink clients.
     auto lastMessage = ioWorldHello->last();

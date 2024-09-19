@@ -41,11 +41,15 @@ Features can be used in combination with `api` and add more functionality on top
 - [olink](olink.md) - provides a client and server adapters for each interface, that can be connected to any of the other technology templates with support for [ObjectLink](/docs/advanced/objectlink/intro). Use this feature to connect with ApiGear simulation tools.
 - [monitor](monitor.md) - generates a middleware layer which logs all API events to the [CLI](/docs/cli/intro) or the [Studio](/docs/studio/intro)
 - [MQTT](mqtt.md) experimental - provides minimal working adapters for MQTT client and service side for each interfaces. Check also MQTT in other technology templates that supports it.
--  examples feature - generates:
+-  examples_olink - generates:
     - `olinkserver` example with `main.cpp` that shows your services in olink server.
     - `olinkclient` example with `main.cpp` that shows your interfaces as olink client.
-    - `qml` example with a `main.cpp` and `qmlmain.qml`. The qml uses your interfaces. The main cpp sets olink client factory as a backend for the qml and sets up the olink server with your services (normally you'd have separate app for server)'.
-
+    - `qml` example with a `main.cpp` and `main.qml`. The qml uses your interfaces. The main cpp sets olink client factory (which provides olink client as a backend for the qml) and sets up the olink server with your services (normally you'd have separate app for server)'.
+-  examples_mqtt - generates:
+    - `mqttserver` example with `main.cpp` that shows your services in mqtt server.
+    - `mqttclient` example with `main.cpp` that shows your interfaces as mqtt client.
+    - `mqttqml` example with a `main.cpp` and `main.qml`. The qml uses your interfaces. The main cpp sets mqtt client factory (which provides mqtt client as a backend for the qml) and sets up the mqtt server with your services (normally you'd have separate app for server)'.
+    <br />Have in mind that generated code doesn't provide the mqtt broker. 
 <Figure caption="Features overview, including receiving data from network: Bottom floor shows possible inputs for your API, you can either obtain data from the network with OLink or MQTT or use local implementation. The top floor shows feature qmlpugin for qml oriented applications." src="/img/features/featuresApp.png" />
 <Figure caption="Features overview, including publishing data through network: Topmost floor shows your options for using your local implementation (bottom floor): you can use it in your local app and/or use method of sharing the data with clients in the network." src="/img/features/featuresServer.png" />
 

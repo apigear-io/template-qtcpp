@@ -205,7 +205,6 @@ features:
     requires:
       - api
       - apigear
-      - examples
     scopes:
       - match: module
         prefix: "{{snake .Module.Name}}/mqtt/"
@@ -251,7 +250,7 @@ features:
             target: "qml{{lower .Interface.Name}}.h"
           - source: "qmlplugin/qmlinterface.cpp.tpl"
             target: "qml{{lower .Interface.Name}}.cpp"
-  - name: examples
+  - name: examples_olink
     requires:
       - olink
       - stubs
@@ -275,6 +274,14 @@ features:
           raw: true
         - source: "examples/qml/main.qml.tpl"
           target: "examples/qml/main.qml"
+  - name: examples_mqtt
+    requires:
+      - mqtt
+      - stubs
+      - qmlplugin
+    scopes:
+    - match: system
+      documents:
         - source: "examples/mqttservice/CMakeLists.txt.tpl"
           target: "examples/mqttservice/CMakeLists.txt"
         - source: "examples/mqttservice/main.cpp.tpl"

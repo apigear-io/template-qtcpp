@@ -72,12 +72,12 @@ add_subdirectory({{ $moduleId }}/monitor)
 add_subdirectory({{ $moduleId }}/qmlplugin)
 {{- end}}
 {{- end }}
-{{- if $features.examples }}
+{{- if $features.examples_olink }}
 add_subdirectory(examples/olinkserver)
 add_subdirectory(examples/olinkclient)
 add_subdirectory(examples/qml)
 {{- end }}
-{{- if $features.mqtt }}
+{{- if $features.examples_mqtt }}
 add_subdirectory(examples/mqttservice)
 add_subdirectory(examples/mqttclient)
 add_subdirectory(examples/mqttqml)

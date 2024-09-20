@@ -45,12 +45,8 @@ set(TEST_APIGEAR_UTILITIES_SOURCES
 
 add_executable(test_apigear_utilities ${TEST_APIGEAR_UTILITIES_SOURCES})
 
-# do not automatically run this test on MacOS
-# see https://github.com/apigear-io/template-qtcpp/issues/38
-if (NOT ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 add_test(NAME test_apigear_utilities COMMAND $<TARGET_FILE:test_apigear_utilities>)
 add_dependencies(check test_apigear_utilities)
-endif() # NOT Darwin
 
 target_link_libraries(test_apigear_utilities PRIVATE apigear::utilities_qt Catch2::Catch2 Qt::Test)
 

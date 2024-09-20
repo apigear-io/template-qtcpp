@@ -44,6 +44,7 @@ const std::string objectId = "tests.sink1";
 uint16_t portNumber = 7681;
 QString localHostAddress = "127.0.0.1";
 QUrl url("ws://127.0.0.1:7681/ws");
+int timeout_1sec = 1000;//millisec
 
 nlohmann::json initProperties1 = { {"property1", "some_string1" }, { "property2",  92 }, { "property3", true } };
 nlohmann::json initProperties2 = { {"property1", "some_string2" }, { "property2",  29 }, { "property3", false } };
@@ -86,8 +87,8 @@ TEST_CASE("OLinkHost tests")
        // Connect two client nodes
        clientSocket1->open(url);
        clientSocket2->open(url);
-       REQUIRE(QTest::qWaitFor([&clientSocket1](){return clientSocket1->isValid() && clientSocket1->state() == QAbstractSocket::ConnectedState;}, 100));
-       REQUIRE(QTest::qWaitFor([&clientSocket2](){return clientSocket2->isValid() && clientSocket2->state() == QAbstractSocket::ConnectedState;}, 100));
+       REQUIRE(QTest::qWaitFor([&clientSocket1](){return clientSocket1->isValid() && clientSocket1->state() == QAbstractSocket::ConnectedState;}, timeout_1sec));
+       REQUIRE(QTest::qWaitFor([&clientSocket2](){return clientSocket2->isValid() && clientSocket2->state() == QAbstractSocket::ConnectedState;}, timeout_1sec));
 
        // When client nodes request linking same object
        // The server opens connections and source is informed about linking with olinkLinked method
@@ -100,7 +101,7 @@ TEST_CASE("OLinkHost tests")
        clientSocket1->sendTextMessage(preparedLinkMessage);
        clientSocket2->sendTextMessage(preparedLinkMessage);
 
-       REQUIRE(QTest::qWaitFor([&registry](){return registry.getNodes(objectId).size() == 2;}, 40));
+       REQUIRE(QTest::qWaitFor([&registry](){return registry.getNodes(objectId).size() == 2;}, timeout_1sec));
        // And the registry has node for each connection for this source
        auto nodes = registry.getNodes(objectId);
        REQUIRE(nodes[0].expired() == false);
@@ -129,19 +130,19 @@ TEST_CASE("OLinkHost tests")
 
        // Connection is closed and the node that handled this connection is removed from registry
        // The node for other connection still works.
-       REQUIRE(QTest::qWaitFor([&registry](){return registry.getNodes(objectId).size() == 1;}, 100));
+       REQUIRE(QTest::qWaitFor([&registry](){return registry.getNodes(objectId).size() == 1;}, timeout_1sec));
        nodes = registry.getNodes(objectId);
        REQUIRE(nodes[0].expired() == false);
 
        // Test cleanup - unlink second client
        REQUIRE_CALL(*source1, olinkUnlinked(objectId));
        clientSocket2->sendTextMessage(unlinkMessage);
-       REQUIRE(QTest::qWaitFor([&registry](){return registry.getNodes(objectId).size() == 0;}, 100));
+       REQUIRE(QTest::qWaitFor([&registry](){return registry.getNodes(objectId).size() == 0;}, timeout_1sec));
        // And clos connections
        clientSocket1->close();
        clientSocket2->close();
-       REQUIRE(QTest::qWaitFor([&clientSocket1](){return !clientSocket1->isValid();}, 40));
-       REQUIRE(QTest::qWaitFor([&clientSocket2](){return !clientSocket2->isValid();}, 40));
+       REQUIRE(QTest::qWaitFor([&clientSocket1](){return !clientSocket1->isValid();}, timeout_1sec));
+       REQUIRE(QTest::qWaitFor([&clientSocket2](){return !clientSocket2->isValid();}, timeout_1sec));
 
    }
 
@@ -153,14 +154,14 @@ TEST_CASE("OLinkHost tests")
         registry.addSource(source1);
         testHost->listen(localHostAddress, quint16(portNumber));
         clientSocket1->open(url);
-        REQUIRE(QTest::qWaitFor([&clientSocket1](){return clientSocket1->isValid();}, 100));
+        REQUIRE(QTest::qWaitFor([&clientSocket1](){return clientSocket1->isValid();}, timeout_1sec));
 
         REQUIRE_CALL(*source1, olinkLinked(objectId, ANY(ApiGear::ObjectLink::IRemoteNode*)));
         REQUIRE_CALL(*source1, olinkCollectProperties()).RETURN(initProperties1);
 
         auto preparedLinkMessage = QString::fromStdString(converter.toString(ApiGear::ObjectLink::Protocol::linkMessage(objectId)));
         clientSocket1->sendTextMessage(preparedLinkMessage);
-        REQUIRE(QTest::qWaitFor([&registry](){return registry.getNodes(objectId).size() == 1;}, 100));
+        REQUIRE(QTest::qWaitFor([&registry](){return registry.getNodes(objectId).size() == 1;}, timeout_1sec));
         REQUIRE(registry.getNodes(objectId)[0].expired() == false);
 
         auto expectedInitMessage1 = QString::fromStdString(converter.toString(ApiGear::ObjectLink::Protocol::initMessage(objectId, initProperties1)));
@@ -169,9 +170,9 @@ TEST_CASE("OLinkHost tests")
         // When server restarts, the source stays in registry without any node
         // There is no other information to source that there are no linked objects.
         testHost.reset();
-        REQUIRE(QTest::qWaitFor([&registry](){return registry.getNodes(objectId).size() == 0;}, 40));
+        REQUIRE(QTest::qWaitFor([&registry](){return registry.getNodes(objectId).size() == 0;}, timeout_1sec));
         REQUIRE(registry.getSource(objectId).lock() == source1);
-        REQUIRE(QTest::qWaitFor([&clientSocket1](){return clientSocket1->state() == QAbstractSocket::UnconnectedState;}, 40));
+        REQUIRE(QTest::qWaitFor([&clientSocket1](){return clientSocket1->state() == QAbstractSocket::UnconnectedState;}, timeout_1sec));
     }
 
 
@@ -185,8 +186,8 @@ TEST_CASE("OLinkHost tests")
 
         clientSocket1->open(url);
         clientSocket2->open(url);
-        REQUIRE(QTest::qWaitFor([&clientSocket1](){return clientSocket1->isValid() && clientSocket1->state() == QAbstractSocket::ConnectedState;}, 100));
-        REQUIRE(QTest::qWaitFor([&clientSocket2](){return clientSocket2->isValid() && clientSocket2->state() == QAbstractSocket::ConnectedState;}, 100));
+        REQUIRE(QTest::qWaitFor([&clientSocket1](){return clientSocket1->isValid() && clientSocket1->state() == QAbstractSocket::ConnectedState;}, timeout_1sec));
+        REQUIRE(QTest::qWaitFor([&clientSocket2](){return clientSocket2->isValid() && clientSocket2->state() == QAbstractSocket::ConnectedState;}, timeout_1sec));
 
         REQUIRE_CALL(*source1, olinkLinked(objectId, ANY(ApiGear::ObjectLink::IRemoteNode*))).TIMES(2);
         REQUIRE_CALL(*source1, olinkCollectProperties()).RETURN(initProperties1);
@@ -196,7 +197,7 @@ TEST_CASE("OLinkHost tests")
         clientSocket1->sendTextMessage(preparedLinkMessage);
         clientSocket2->sendTextMessage(preparedLinkMessage);
 
-        REQUIRE(QTest::qWaitFor([&registry](){return registry.getNodes(objectId).size() == 2;}, 40));
+        REQUIRE(QTest::qWaitFor([&registry](){return registry.getNodes(objectId).size() == 2;}, timeout_1sec));
         auto nodes = registry.getNodes(objectId);
         REQUIRE(!nodes[0].expired());
         REQUIRE(!nodes[1].expired());
@@ -218,14 +219,14 @@ TEST_CASE("OLinkHost tests")
         // When client closes
         clientSocket1->close();
 
-        REQUIRE(QTest::qWaitFor([&registry](){return registry.getNodes(objectId).size() == 1;}, 40));
+        REQUIRE(QTest::qWaitFor([&registry](){return registry.getNodes(objectId).size() == 1;}, timeout_1sec));
         nodes = registry.getNodes(objectId);
         // The other client still works
         REQUIRE(!nodes[0].expired());
         // And when server restarts with linked and connected client
         // There is no other information to source or sink that there are no linked objects.
         testHost.reset();
-        REQUIRE(QTest::qWaitFor([&clientSocket1](){return clientSocket1->state() == QAbstractSocket::UnconnectedState;}, 40));
+        REQUIRE(QTest::qWaitFor([&clientSocket1](){return clientSocket1->state() == QAbstractSocket::UnconnectedState;}, timeout_1sec));
     }
 
     SECTION("Reconnection scenario, host sends init message again")
@@ -235,14 +236,14 @@ TEST_CASE("OLinkHost tests")
         registry.addSource(source1);
         testHost->listen(localHostAddress, quint16(portNumber));
         clientSocket1->open(url);
-        REQUIRE(QTest::qWaitFor([&clientSocket1](){return clientSocket1->isValid();}, 150));
+        REQUIRE(QTest::qWaitFor([&clientSocket1](){return clientSocket1->isValid();}, timeout_1sec));
         // That is linked to the source
         REQUIRE_CALL(*source1, olinkLinked(objectId, ANY(ApiGear::ObjectLink::IRemoteNode*)));
         REQUIRE_CALL(*source1, olinkCollectProperties()).RETURN(initProperties1);
         auto preparedLinkMessage = QString::fromStdString(converter.toString(ApiGear::ObjectLink::Protocol::linkMessage(objectId)));
         clientSocket1->sendTextMessage(preparedLinkMessage);
 
-        REQUIRE(QTest::qWaitFor([&registry](){return registry.getNodes(objectId).size() == 1;}, 150));
+        REQUIRE(QTest::qWaitFor([&registry](){return registry.getNodes(objectId).size() == 1;}, timeout_1sec));
         auto nodes = registry.getNodes(objectId);
         REQUIRE(!nodes[0].expired());
 
@@ -252,19 +253,19 @@ TEST_CASE("OLinkHost tests")
 
         // When Client closes connection, there is no node working for it.
         clientSocket1->close();
-        REQUIRE(QTest::qWaitFor([&registry](){return registry.getNodes(objectId).size() == 0;}, 200));
-        REQUIRE(QTest::qWaitFor([&clientSocket1](){return !clientSocket1->isValid();}, 40));
+        REQUIRE(QTest::qWaitFor([&registry](){return registry.getNodes(objectId).size() == 0;}, timeout_1sec));
+        REQUIRE(QTest::qWaitFor([&clientSocket1](){return !clientSocket1->isValid();}, timeout_1sec));
 
         // And when it opens a new connection
         clientSocket1->open(url);
-        REQUIRE(QTest::qWaitFor([&clientSocket1](){return clientSocket1->isValid();}, 100));
+        REQUIRE(QTest::qWaitFor([&clientSocket1](){return clientSocket1->isValid();}, timeout_1sec));
 
         // With re-sending link message, the source accepts again that client
         REQUIRE_CALL(*source1, olinkLinked(objectId, ANY(ApiGear::ObjectLink::IRemoteNode*)));
         REQUIRE_CALL(*source1, olinkCollectProperties()).RETURN(initProperties1);
         clientSocket1->sendTextMessage(preparedLinkMessage);
 
-        REQUIRE(QTest::qWaitFor([&registry](){return registry.getNodes(objectId).size() == 1;}, 200));
+        REQUIRE(QTest::qWaitFor([&registry](){return registry.getNodes(objectId).size() == 1;}, timeout_1sec));
         nodes = registry.getNodes(objectId);
         REQUIRE(!nodes[0].expired());
 
@@ -287,7 +288,7 @@ TEST_CASE("OLinkHost tests")
         auto testHost = std::make_unique<ApiGear::ObjectLink::OLinkHost>(registry);
         testHost->listen(localHostAddress, quint16(portNumber));
         clientSocket1->open(url);
-        REQUIRE(QTest::qWaitFor([&clientSocket1](){return clientSocket1->isValid();}, 150));
+        REQUIRE(QTest::qWaitFor([&clientSocket1](){return clientSocket1->isValid();}, timeout_1sec));
 
         auto preparedLinkMessage1 = QString::fromStdString(converter.toString(ApiGear::ObjectLink::Protocol::linkMessage(objectId)));
         auto preparedLinkMessage2 = QString::fromStdString(converter.toString(ApiGear::ObjectLink::Protocol::linkMessage(objectId2)));
@@ -298,7 +299,7 @@ TEST_CASE("OLinkHost tests")
         clientSocket1->sendTextMessage(preparedLinkMessage1);
         clientSocket1->sendTextMessage(preparedLinkMessage2);
 
-        REQUIRE(QTest::qWaitFor([&registry](){return registry.getNodes(objectId).size() == 1;}, 150));
+        REQUIRE(QTest::qWaitFor([&registry](){return registry.getNodes(objectId).size() == 1;}, timeout_1sec));
         auto nodes = registry.getNodes(objectId);
         auto node = nodes[0];
         REQUIRE(!node.expired());
@@ -339,7 +340,7 @@ TEST_CASE("OLinkHost tests")
                             messages.push_back(message);
                         }
                         return !message.isEmpty();
-                    }, 100));
+                    }, timeout_1sec));
                 }
                 std::cout << "client received "<< messages.size() <<" messages." << std::endl;
                 for (auto i = 0; i< 40; i++)

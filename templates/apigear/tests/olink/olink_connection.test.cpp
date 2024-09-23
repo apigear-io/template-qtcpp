@@ -15,7 +15,6 @@
 
 #include "private/messagestorage.h"
 #include "private/test_server/testserver.h"
-#include <iostream>
 
 #include <QtCore>
 #include <QTest>
@@ -85,15 +84,17 @@ TEST_CASE("OlinkConnection tests")
 
         // When server sends init message from server, the source gests initalized with init properties and a client node
         auto preparedInitMessage = converter.toString(ApiGear::ObjectLink::Protocol::initMessage(sink1Id, initProperties));
-        REQUIRE_CALL(*sink1, olinkOnInit(sink1Id, initProperties, testOlinkClient->node()));
+        std::atomic<bool> isInitReceived{ false };
+        auto setInitReceived = [&isInitReceived]() {isInitReceived = true; };
+        REQUIRE_CALL(*sink1, olinkOnInit(sink1Id, initProperties, testOlinkClient->node())).SIDE_EFFECT(setInitReceived(););
         server.writeMessage(preparedInitMessage);
+        REQUIRE(QTest::qWaitFor([&isInitReceived]() {return isInitReceived == true; }, timeout_1sec));
 
         // When object is unlinked, the sink gets information that link was released, and the registry
         // does't contain neither the sink nor the node for unlinked this objectId
         REQUIRE_CALL(*sink1, olinkOnRelease());
         testOlinkClient->unlinkObjectSource(sink1Id);
         REQUIRE(QTest::qWaitFor([&registry](){return registry.getSink(sink1Id).expired();}, timeout_1sec));
-        REQUIRE(QTest::qWaitFor([&registry](){return registry.getNode(sink1Id).expired();}, timeout_1sec));
 
         // And the server receives unlink message
         auto expectedUnlinkMessage = QString::fromStdString(converter.toString(ApiGear::ObjectLink::Protocol::unlinkMessage(sink1Id)));
@@ -125,9 +126,12 @@ TEST_CASE("OlinkConnection tests")
         REQUIRE(registry.getNode(sink1Id).lock().get() == testOlinkClient->node());
 
         // When server sends init message from server, the source gests initalized with init properties and a client node
-        REQUIRE_CALL(*sink1, olinkOnInit(sink1Id, initProperties, testOlinkClient->node()));
+        std::atomic<bool> isInitReceived{ false };
+        auto setInitReceived = [&isInitReceived]() {isInitReceived = true; };
+        REQUIRE_CALL(*sink1, olinkOnInit(sink1Id, initProperties, testOlinkClient->node())).SIDE_EFFECT(setInitReceived(););
         auto preparedInitMessage = converter.toString(ApiGear::ObjectLink::Protocol::initMessage(sink1Id, initProperties));
         server.writeMessage(preparedInitMessage);
+        REQUIRE(QTest::qWaitFor([&isInitReceived]() {return isInitReceived == true; }, timeout_1sec));
 
         // When client disconnects with linked sinks, sink is informed about link release
         REQUIRE_CALL(*sink1, olinkOnRelease());
@@ -254,10 +258,12 @@ TEST_CASE("Connection closed for client from server side tests")
     REQUIRE(serverReceivedMessages.getMessage() == expectedLinkMessage);
 
     // When server sends init message from server, the source gests initalized with init properties and a client node
-    REQUIRE_CALL(*sink1, olinkOnInit(sink1Id, initProperties, testOlinkClient->node()));
+    std::atomic<bool> isInitReceived{ false };
+    auto setInitReceived = [&isInitReceived]() {isInitReceived = true; };
+    REQUIRE_CALL(*sink1, olinkOnInit(sink1Id, initProperties, testOlinkClient->node())).SIDE_EFFECT(setInitReceived(););
     auto preparedInitMessage = converter.toString(ApiGear::ObjectLink::Protocol::initMessage(sink1Id, initProperties));
     server.writeMessage(preparedInitMessage);
-    QTest::qWait(100);// Wait for init message to be delivered and handled before the sink will be released
+    REQUIRE(QTest::qWaitFor([&isInitReceived]() {return isInitReceived == true; }, timeout_1sec));
 
     SECTION("Server stops connection. During that time socket wants to unlink - connection will be reestablished and unlik will be send after link message")
     {

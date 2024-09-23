@@ -1,5 +1,6 @@
 #include "messagestorage.h"
 #include <QtCore>
+#include <QTest>
 MessageStorage::MessageStorage(QObject *parent)
     : QObject{parent}
 {
@@ -8,12 +9,8 @@ MessageStorage::MessageStorage(QObject *parent)
 
 QString MessageStorage::getMessage()
 {
-    for (size_t i = 0; i < 25; i++)
-    {
-        QCoreApplication::processEvents();
-        if (!m_messages.isEmpty()) break;
-    }
-    if (m_messages.isEmpty() )
+    auto messageArrived = QTest::qWaitFor([this]() {return !m_messages.isEmpty(); }, 1000);
+    if (!messageArrived)
     {
         return QString();
     }

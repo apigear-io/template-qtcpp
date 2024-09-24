@@ -1,0 +1,78 @@
+# This workflow will ensure that all changes to the goldenmaster are tested
+
+name: Build Feature Configurations
+
+on:
+  pull_request:
+    paths:
+      - '*/**'
+      - '!docs/**'
+    branches: [main]
+
+env:
+  go_version: "1.21.x"
+
+jobs:
+  cmake_build:
+    name: ${{ matrix.config.name }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - { name: "Simple Conf CMake script", short: "simple", features: "stubs,qmlplugin" }
+          - { name: "Monitor Conf CMake script", short: "monitor", features: "monitor,qmlplugin" }
+          - { name: "OLink Conf CMake script", short: "olink", features: "olink,examples_olink" }
+          - { name: "MQTT Conf CMake script", short: "mqtt", features: "mqtt,examples_mqtt" }
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Setup cmake
+        uses: jwlawson/actions-setup-cmake@v1.13
+        with:
+          cmake-version: '3.24.x'
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '6.5.2'
+          cache: 'true'
+          modules: qtwebsockets
+      - name: create mqtt dir
+        if: ${{ matrix.config.short == 'mqtt'}}
+        run: |
+            mkdir qtmqtt
+      - name: Checkout QMqtt
+        if: ${{ matrix.config.short == 'mqtt'}}
+        uses: actions/checkout@v3
+        with:
+          repository: qt/qtmqtt
+          ref: '6.5.2'
+          path: qtmqtt
+      - name: Build qmqtt 
+        if: ${{ matrix.config.short == 'mqtt'}}
+        working-directory: qtmqtt
+        run: |
+             cmake .
+             cmake --build .
+             cmake --install . --verbose 
+      - uses: actions/setup-go@v5
+        with:
+          go-version: ${{env.go_version}}
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/go/pkg/mod
+            ~/.cache/go-build
+          key: ${{ runner.os }}-go-${{ env.go_version }}-${{ hashFiles('**/go.sum') }}
+          restore-keys: ${{ runner.os }}-go-${{ env.go_version }}-
+      - run: go run main.go install
+      - name: generate ${{ matrix.config.short }} feature set
+        run: bin/apigear g x -f "${{ matrix.config.features }}" -t . -o test -i apigear/test-apis/testbed.simple.module.yaml,apigear/test-apis/testbed.struct.module.yaml
+      - name: Run cmake build & test on Linux/macOS
+        working-directory: test
+        env:
+            CTEST_OUTPUT_ON_FAILURE: 1
+            QT_QPA_PLATFORM: offscreen
+        run: cmake -Bbuild -DBUILD_TESTING=ON -DCMAKE_INSTALL_PREFIX=tmp && cmake --build build/ && cmake --build build/ --target test

@@ -2,6 +2,8 @@ engines:
   cli: ">= v0.38.0"
 features:
   - name: api
+    requires:
+      - apigear
     scopes:
       - match: system
         documents:
@@ -78,12 +80,6 @@ features:
         documents:
            - source: "apigear/CMakeLists.txt.tpl"
              target: "apigear/CMakeLists.txt"
-           - source: "apigear/monitor/CMakeLists.txt"
-             raw: true
-           - source: "apigear/monitor/agentclient.h"
-             raw: true
-           - source: "apigear/monitor/agentclient.cpp"
-             raw: true
            - source: "apigear/utilities/CMakeLists.txt"
              raw: true
            - source: "apigear/utilities/logger.h"
@@ -98,6 +94,45 @@ features:
              raw: true
            - source: "apigear/utilities/tests/test_main.cpp"
              raw: true
+  - name: monitor
+    requires:
+      - api
+      - apigear
+    scopes:
+      - match: system
+        documents:
+           - source: "apigear/monitor/CMakeLists.txt"
+             raw: true
+           - source: "apigear/monitor/agentclient.h"
+             raw: true
+           - source: "apigear/monitor/agentclient.cpp"
+             raw: true
+      - match: module
+        documents:
+          - source: "monitor/CMakeLists.txt.tpl"
+            target: "{{snake .Module.Name}}/monitor/CMakeLists.txt"
+          - source: "monitor/agent.h.tpl"
+            target: "{{snake .Module.Name}}/monitor/agent.h"
+          - source: "monitor/agent.cpp.tpl"
+            target: "{{snake .Module.Name}}/monitor/agent.cpp"
+          - source: "monitor/tracedapifactory.h.tpl"
+            target: "{{snake .Module.Name}}/monitor/tracedapifactory.h"
+          - source: "monitor/tracedapifactory.cpp.tpl"
+            target: "{{snake .Module.Name}}/monitor/tracedapifactory.cpp"
+      - match: interface
+        prefix: "{{snake .Module.Name}}/monitor/"
+        documents:
+          - source: "monitor/interfacetraced.h.tpl"
+            target: "{{lower .Interface.Name}}traced.h"
+          - source: "monitor/interfacetraced.cpp.tpl"
+            target: "{{lower .Interface.Name}}traced.cpp"
+  - name: olink
+    requires:
+      - api
+      - apigear
+    scopes:
+      - match: system
+        documents:
            - source: apigear/olink/CMakeLists.txt
              raw: true
            - source: apigear/olink/olink_common.h
@@ -134,53 +169,6 @@ features:
              raw: true
            - source: apigear/tests/olink/private/test_server/testserver.cpp
              raw: true
-           - source: apigear/mqtt/CMakeLists.txt
-             raw: true
-           - source: apigear/mqtt/mqtt_common.h
-             raw: true
-           - source: apigear/mqtt/mqttclient.h
-             raw: true
-           - source: apigear/mqtt/mqttclient.cpp
-             raw: true
-           - source: apigear/mqtt/mqttservice.h
-             raw: true
-           - source: apigear/mqtt/mqttservice.cpp
-             raw: true
-           - source: apigear/mqtt/payloadconverter.h
-             raw: true
-           - source: apigear/mqtt/payloadconverter.cpp
-             raw: true
-           - source: apigear/mqtt/private/multimap_helper.h
-             raw: true
-  - name: monitor
-    requires:
-      - api
-      - apigear
-    scopes:
-      - match: module
-        documents:
-          - source: "monitor/CMakeLists.txt.tpl"
-            target: "{{snake .Module.Name}}/monitor/CMakeLists.txt"
-          - source: "monitor/agent.h.tpl"
-            target: "{{snake .Module.Name}}/monitor/agent.h"
-          - source: "monitor/agent.cpp.tpl"
-            target: "{{snake .Module.Name}}/monitor/agent.cpp"
-          - source: "monitor/tracedapifactory.h.tpl"
-            target: "{{snake .Module.Name}}/monitor/tracedapifactory.h"
-          - source: "monitor/tracedapifactory.cpp.tpl"
-            target: "{{snake .Module.Name}}/monitor/tracedapifactory.cpp"
-      - match: interface
-        prefix: "{{snake .Module.Name}}/monitor/"
-        documents:
-          - source: "monitor/interfacetraced.h.tpl"
-            target: "{{lower .Interface.Name}}traced.h"
-          - source: "monitor/interfacetraced.cpp.tpl"
-            target: "{{lower .Interface.Name}}traced.cpp"
-  - name: olink
-    requires:
-      - api
-      - apigear
-    scopes:
       - match: module
         prefix: "{{snake .Module.Name}}/"
         documents:
@@ -206,6 +194,26 @@ features:
       - api
       - apigear
     scopes:
+      - match: system
+        documents:
+           - source: apigear/mqtt/CMakeLists.txt
+             raw: true
+           - source: apigear/mqtt/mqtt_common.h
+             raw: true
+           - source: apigear/mqtt/mqttclient.h
+             raw: true
+           - source: apigear/mqtt/mqttclient.cpp
+             raw: true
+           - source: apigear/mqtt/mqttservice.h
+             raw: true
+           - source: apigear/mqtt/mqttservice.cpp
+             raw: true
+           - source: apigear/mqtt/payloadconverter.h
+             raw: true
+           - source: apigear/mqtt/payloadconverter.cpp
+             raw: true
+           - source: apigear/mqtt/private/multimap_helper.h
+             raw: true
       - match: module
         prefix: "{{snake .Module.Name}}/mqtt/"
         documents:

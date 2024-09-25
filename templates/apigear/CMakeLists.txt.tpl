@@ -13,13 +13,19 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_subdirectory(utilities)
+{{- if  .Features.olink }}
 add_subdirectory(olink)
+{{- end}}
+{{- if  .Features.monitor }}
 add_subdirectory(monitor)
+{{- end}}
 {{- if  .Features.mqtt }}
 add_subdirectory(mqtt)
 {{- end}}
 
 if(BUILD_TESTING)
 enable_testing()
+{{- if  .Features.olink }}
     add_subdirectory(tests/olink)
+{{- end}}
 endif() # BUILD_TESTING

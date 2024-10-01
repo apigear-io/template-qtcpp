@@ -14,7 +14,7 @@ import Figure from '../figure'
 
 # Olink
 
- This feature provides a *client* and a *server* adapter for your interfaces for the [ObjectLink](/docs/advanced/objectlink/intro) protocol. It allows you to connect different applications in the same or different technologies (check all of our [templates](/docs/sdk/intro)).<br />
+ This feature provides a *client* and a *server* adapter for your interfaces for the [ObjectLink](/docs/advanced/protocols/objectlink/intro) protocol. It allows you to connect different applications in the same or different technologies (check all of our [templates](/docs/sdk/intro)).<br />
  Use an *OLink client* instead of your interface implementation to connect to a remote service, or to a the [ApiGear simulation](olink#simulation).  Use an *OLink server adapter* to expose your interface implementation as a remote service.<br />
  Below you'll find short introduction on `ApiGear ObjectLink` protocol. Before details on client and server, you'll also find piece of information on a network layer implementation for handling ObjectLink in `Qt`. 
 
@@ -24,7 +24,7 @@ import Figure from '../figure'
 :::
 
 ### Apigear ObjectLink protocol and ObjectLink core library 
-The [ObjectLink](/docs/advanced/objectlink/intro) protocol is a lightweight protocol for the Objects described with an interface. It allows connecting a client object with a server object, and perform remote operations like: remote property change request (client) or notifications on property changed (server), inform about signal emission (server) and allows requesting a call of a method (client) and giving a response to the outcome (server).
+The [ObjectLink](/docs/advanced/protocols/objectlink/intro) protocol is a lightweight protocol for the Objects described with an interface. It allows connecting a client object with a server object, and perform remote operations like: remote property change request (client) or notifications on property changed (server), inform about signal emission (server) and allows requesting a call of a method (client) and giving a response to the outcome (server).
 
 The Olink feature for your interface uses a library [ObjectLink core](https://github.com/apigear-io/objectlink-core-cpp), common for cpp based templates. The provided CMakeLists already contain all the dependencies, so you don't have to add it manually.
 
@@ -151,7 +151,7 @@ ApiGear::ObjectLink::ClientRegistry can have only one object of a certain type. 
 ### Olink Server Adapter
 
 Files `📜olinkhelloadapter.h` and `📜olinkhelloadapter.h` contain the olink server adapter for the `Hello` interface - the `OLinkHelloAdapter` class.<br />
-It implements an `IObjectSource` interface (from [ObjectLink core](https://github.com/apigear-io/objectlink-core-cpp)), which wraps your `Hello` and exposes it for remote usage with the [ObjectLink](/docs/advanced/objectlink/intro) protocol. It handles all the network requests, and calls your local object.<br />
+It implements an `IObjectSource` interface (from [ObjectLink core](https://github.com/apigear-io/objectlink-core-cpp)), which wraps your `Hello` and exposes it for remote usage with the [ObjectLink](/docs/advanced/protocols/objectlink/intro) protocol. It handles all the network requests, and calls your local object.<br />
 When creating the `OLinkHelloAdapter` you need to provide the local `AbstractHello` service object, you want to expose to clients.
 
 The IObjectSource interface:
@@ -243,7 +243,7 @@ ApplicationWindow {
  ## Simulation
  
  The simulation can be used to test, demonstrate or develop applications without the need to have the actual service available.
- The simulation server is integrated into the [ApiGear studio](/docs/studio/intro) and the [CLI](/docs/cli/simulate).
+ The simulation server is integrated into the [ApiGear studio](/docs/tools/studio/intro) and the [CLI](/docs/tools/cli/simulate).
  
  For simulating you will use [simulation scenarios](/docs/advanced/simulation/scenario) They allow to define sequences of actions. The actions can change the property values of the service or emit signals. The scenarios can be written using a YAML schema.
 

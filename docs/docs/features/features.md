@@ -12,7 +12,7 @@ This template generates code for [*Qt*](https://www.qt.io/) projects. In order t
 Basic understanding of *Qt* is required, and depending on your goal the qml or c++ knowledge is also necessary.
 
 ### Code generation
-Follow the documentation for the [code generation](/docs/guide/intro) in general and [CLI](/docs/cli/generate) or the [Studio](/docs/studio/intro) tools.
+Follow the documentation for the [code generation](/docs/guide/intro) in general and [CLI](/docs/tools/cli/generate) or the [Studio](/docs/tools/studio/intro) tools.
 Or try first the [quick start guide](../quickstart/index.md) which shows how to prepare api and generate code out of it.
 
 :::tip
@@ -38,8 +38,8 @@ Features generate a view model for the `api`. This can be used to implement a wo
 
 ### Extended
 Features can be used in combination with `api` and add more functionality on top, like the simulation
-- [olink](olink.md) - provides a client and server adapters for each interface, that can be connected to any of the other technology templates with support for [ObjectLink](/docs/advanced/objectlink/intro). Use this feature to connect with ApiGear simulation tools.
-- [monitor](monitor.md) - generates a middleware layer which logs all API events to the [CLI](/docs/cli/intro) or the [Studio](/docs/studio/intro)
+- [olink](olink.md) - provides a client and server adapters for each interface, that can be connected to any of the other technology templates with support for [ObjectLink](/docs/advanced/protocols/objectlink/intro). Use this feature to connect with ApiGear simulation tools.
+- [monitor](monitor.md) - generates a middleware layer which logs all API events to the [CLI](/docs/tools/cli/intro) or the [Studio](/docs/tools/studio/intro)
 - [MQTT](mqtt.md) experimental - provides minimal working adapters for MQTT client and service side for each interfaces. Check also MQTT in other technology templates that supports it.
 -  examples_olink - generates:
     - `olinkserver` example with `main.cpp` that shows your services in olink server.

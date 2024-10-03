@@ -18,26 +18,22 @@ include(CTest)
 if(BUILD_TESTING)
 enable_testing()
 
-Include(FetchContent)
-
 find_package(Qt6 REQUIRED COMPONENTS Test Core Qml Network WebSockets)
 find_package(apigear QUIET COMPONENTS olink_qt)
 
-FetchContent_Declare(
-    Catch2
-    GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-    GIT_TAG        v2.13.8
-    GIT_SHALLOW    TRUE
-    FIND_PACKAGE_ARGS)
+find_package(Catch2 REQUIRED)
+
+find_package(trompeloeil QUIET)
+if(NOT trompeloeil_FOUND)
+Include(FetchContent)
 
 FetchContent_Declare(
     trompeloeil
     GIT_REPOSITORY https://github.com/rollbear/trompeloeil.git
     GIT_TAG        8480eda8bcda5ac85ef18866047f485d7d2392f5
     )
-FetchContent_MakeAvailable(Catch2 trompeloeil)
-
-find_package(Catch2 REQUIRED)
+FetchContent_MakeAvailable(trompeloeil)
+endif()
 
 set(CMAKE_CTEST_COMMAND ctest -V)
 if(NOT TARGET check)

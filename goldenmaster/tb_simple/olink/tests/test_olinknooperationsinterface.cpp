@@ -56,6 +56,33 @@ TEST_CASE("Olink  tb.simple NoOperationsInterface tests")
         REQUIRE(implNoOperationsInterface->propInt() == test_value);
         REQUIRE(clientNoOperationsInterface->propInt() == test_value);
     }
+    SECTION("Test emit sigVoid")
+    {
+        bool issigVoidEmitted = false;
+
+        clientNoOperationsInterface->connect(clientNoOperationsInterface.get(), &tb_simple::AbstractNoOperationsInterface::sigVoid,
+        [&issigVoidEmitted]()
+        {
+            issigVoidEmitted  = true;
+        });
+
+        emit implNoOperationsInterface->sigVoid();
+        REQUIRE(issigVoidEmitted  == true);
+    }
+    SECTION("Test emit sigBool")
+    {
+        bool issigBoolEmitted = false;
+
+        clientNoOperationsInterface->connect(clientNoOperationsInterface.get(), &tb_simple::AbstractNoOperationsInterface::sigBool,
+        [&issigBoolEmitted](bool paramBool)
+        {
+            REQUIRE(paramBool == true);
+            issigBoolEmitted  = true;
+        });
+
+        emit implNoOperationsInterface->sigBool(true);
+        REQUIRE(issigBoolEmitted  == true);
+    }
 
     clientNode->unlinkRemote(clientNoOperationsInterface->olinkObjectName());
     remote_registry.removeSource(serviceNoOperationsInterface->olinkObjectName());

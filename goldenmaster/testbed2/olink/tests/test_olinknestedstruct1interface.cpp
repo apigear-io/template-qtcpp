@@ -47,6 +47,22 @@ TEST_CASE("Olink  testbed2 NestedStruct1Interface tests")
         REQUIRE(implNestedStruct1Interface->prop1() == test_value);
         REQUIRE(clientNestedStruct1Interface->prop1() == test_value);
     }
+    SECTION("Test emit sig1")
+    {
+        bool issig1Emitted = false;
+        auto local_param1_struct = testbed2::NestedStruct1();
+        testbed2::fillTestNestedStruct1(local_param1_struct);
+
+        clientNestedStruct1Interface->connect(clientNestedStruct1Interface.get(), &testbed2::AbstractNestedStruct1Interface::sig1,
+        [&issig1Emitted, &local_param1_struct](const testbed2::NestedStruct1& param1)
+        {
+            REQUIRE(param1 ==local_param1_struct);
+            issig1Emitted  = true;
+        });
+
+        emit implNestedStruct1Interface->sig1(local_param1_struct);
+        REQUIRE(issig1Emitted  == true);
+    }
 
     clientNode->unlinkRemote(clientNestedStruct1Interface->olinkObjectName());
     remote_registry.removeSource(serviceNestedStruct1Interface->olinkObjectName());

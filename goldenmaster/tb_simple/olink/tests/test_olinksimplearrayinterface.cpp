@@ -124,6 +124,134 @@ TEST_CASE("Olink  tb.simple SimpleArrayInterface tests")
         REQUIRE(implSimpleArrayInterface->propString() == test_value);
         REQUIRE(clientSimpleArrayInterface->propString() == test_value);
     }
+    SECTION("Test emit sigBool")
+    {
+        bool issigBoolEmitted = false;
+        auto local_param_bool_array = QList<bool>();
+        local_param_bool_array.append(true);
+
+        clientSimpleArrayInterface->connect(clientSimpleArrayInterface.get(), &tb_simple::AbstractSimpleArrayInterface::sigBool,
+        [&issigBoolEmitted, &local_param_bool_array](const QList<bool>& paramBool)
+        {
+            REQUIRE(paramBool == local_param_bool_array);
+            issigBoolEmitted  = true;
+        });
+
+        emit implSimpleArrayInterface->sigBool(local_param_bool_array);
+        REQUIRE(issigBoolEmitted  == true);
+    }
+    SECTION("Test emit sigInt")
+    {
+        bool issigIntEmitted = false;
+        auto local_param_int_array = QList<int>();
+        local_param_int_array.append(1);
+
+        clientSimpleArrayInterface->connect(clientSimpleArrayInterface.get(), &tb_simple::AbstractSimpleArrayInterface::sigInt,
+        [&issigIntEmitted, &local_param_int_array](const QList<int>& paramInt)
+        {
+            REQUIRE(paramInt == local_param_int_array);
+            issigIntEmitted  = true;
+        });
+
+        emit implSimpleArrayInterface->sigInt(local_param_int_array);
+        REQUIRE(issigIntEmitted  == true);
+    }
+    SECTION("Test emit sigInt32")
+    {
+        bool issigInt32Emitted = false;
+        auto local_param_int32_array = QList<qint32>();
+        local_param_int32_array.append(1);
+
+        clientSimpleArrayInterface->connect(clientSimpleArrayInterface.get(), &tb_simple::AbstractSimpleArrayInterface::sigInt32,
+        [&issigInt32Emitted, &local_param_int32_array](const QList<qint32>& paramInt32)
+        {
+            REQUIRE(paramInt32 == local_param_int32_array);
+            issigInt32Emitted  = true;
+        });
+
+        emit implSimpleArrayInterface->sigInt32(local_param_int32_array);
+        REQUIRE(issigInt32Emitted  == true);
+    }
+    SECTION("Test emit sigInt64")
+    {
+        bool issigInt64Emitted = false;
+        auto local_param_int64_array = QList<qint64>();
+        local_param_int64_array.append(1LL);
+
+        clientSimpleArrayInterface->connect(clientSimpleArrayInterface.get(), &tb_simple::AbstractSimpleArrayInterface::sigInt64,
+        [&issigInt64Emitted, &local_param_int64_array](const QList<qint64>& paramInt64)
+        {
+            REQUIRE(paramInt64 == local_param_int64_array);
+            issigInt64Emitted  = true;
+        });
+
+        emit implSimpleArrayInterface->sigInt64(local_param_int64_array);
+        REQUIRE(issigInt64Emitted  == true);
+    }
+    SECTION("Test emit sigFloat")
+    {
+        bool issigFloatEmitted = false;
+        auto local_param_float_array = QList<qreal>();
+        local_param_float_array.append(1.1f);
+
+        clientSimpleArrayInterface->connect(clientSimpleArrayInterface.get(), &tb_simple::AbstractSimpleArrayInterface::sigFloat,
+        [&issigFloatEmitted, &local_param_float_array](const QList<qreal>& paramFloat)
+        {
+            REQUIRE(paramFloat == local_param_float_array);
+            issigFloatEmitted  = true;
+        });
+
+        emit implSimpleArrayInterface->sigFloat(local_param_float_array);
+        REQUIRE(issigFloatEmitted  == true);
+    }
+    SECTION("Test emit sigFloat32")
+    {
+        bool issigFloat32Emitted = false;
+        auto local_param_floa32_array = QList<float>();
+        local_param_floa32_array.append(1.1f);
+
+        clientSimpleArrayInterface->connect(clientSimpleArrayInterface.get(), &tb_simple::AbstractSimpleArrayInterface::sigFloat32,
+        [&issigFloat32Emitted, &local_param_floa32_array](const QList<float>& paramFloa32)
+        {
+            REQUIRE(paramFloa32 == local_param_floa32_array);
+            issigFloat32Emitted  = true;
+        });
+
+        emit implSimpleArrayInterface->sigFloat32(local_param_floa32_array);
+        REQUIRE(issigFloat32Emitted  == true);
+    }
+    SECTION("Test emit sigFloat64")
+    {
+        bool issigFloat64Emitted = false;
+        auto local_param_float64_array = QList<double>();
+        local_param_float64_array.append(1.1);
+
+        clientSimpleArrayInterface->connect(clientSimpleArrayInterface.get(), &tb_simple::AbstractSimpleArrayInterface::sigFloat64,
+        [&issigFloat64Emitted, &local_param_float64_array](const QList<double>& paramFloat64)
+        {
+            REQUIRE(paramFloat64 == local_param_float64_array);
+            issigFloat64Emitted  = true;
+        });
+
+        emit implSimpleArrayInterface->sigFloat64(local_param_float64_array);
+        REQUIRE(issigFloat64Emitted  == true);
+    }
+    SECTION("Test emit sigString")
+    {
+        bool issigStringEmitted = false;
+        auto local_param_string_array = QList<QString>();
+        local_param_string_array.append(QString("xyz"));
+
+        clientSimpleArrayInterface->connect(clientSimpleArrayInterface.get(), &tb_simple::AbstractSimpleArrayInterface::sigString,
+        [&issigStringEmitted, &local_param_string_array](const QList<QString>& paramString)
+        {
+            REQUIRE(paramString == local_param_string_array);
+            issigStringEmitted  = true;
+        });
+
+        emit implSimpleArrayInterface->sigString(local_param_string_array);
+        REQUIRE(issigStringEmitted  == true);
+    }
 
     clientNode->unlinkRemote(clientSimpleArrayInterface->olinkObjectName());
     remote_registry.removeSource(serviceSimpleArrayInterface->olinkObjectName());

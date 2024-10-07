@@ -76,6 +76,62 @@ TEST_CASE("Olink  tb.enum EnumInterface tests")
         REQUIRE(implEnumInterface->prop3() == test_value);
         REQUIRE(clientEnumInterface->prop3() == test_value);
     }
+    SECTION("Test emit sig0")
+    {
+        bool issig0Emitted = false;
+
+        clientEnumInterface->connect(clientEnumInterface.get(), &tb_enum::AbstractEnumInterface::sig0,
+        [&issig0Emitted](tb_enum::Enum0::Enum0Enum param0)
+        {
+            REQUIRE(param0 == tb_enum::Enum0::Value1);
+            issig0Emitted  = true;
+        });
+
+        emit implEnumInterface->sig0(tb_enum::Enum0::Value1);
+        REQUIRE(issig0Emitted  == true);
+    }
+    SECTION("Test emit sig1")
+    {
+        bool issig1Emitted = false;
+
+        clientEnumInterface->connect(clientEnumInterface.get(), &tb_enum::AbstractEnumInterface::sig1,
+        [&issig1Emitted](tb_enum::Enum1::Enum1Enum param1)
+        {
+            REQUIRE(param1 == tb_enum::Enum1::Value2);
+            issig1Emitted  = true;
+        });
+
+        emit implEnumInterface->sig1(tb_enum::Enum1::Value2);
+        REQUIRE(issig1Emitted  == true);
+    }
+    SECTION("Test emit sig2")
+    {
+        bool issig2Emitted = false;
+
+        clientEnumInterface->connect(clientEnumInterface.get(), &tb_enum::AbstractEnumInterface::sig2,
+        [&issig2Emitted](tb_enum::Enum2::Enum2Enum param2)
+        {
+            REQUIRE(param2 == tb_enum::Enum2::Value1);
+            issig2Emitted  = true;
+        });
+
+        emit implEnumInterface->sig2(tb_enum::Enum2::Value1);
+        REQUIRE(issig2Emitted  == true);
+    }
+    SECTION("Test emit sig3")
+    {
+        bool issig3Emitted = false;
+
+        clientEnumInterface->connect(clientEnumInterface.get(), &tb_enum::AbstractEnumInterface::sig3,
+        [&issig3Emitted](tb_enum::Enum3::Enum3Enum param3)
+        {
+            REQUIRE(param3 == tb_enum::Enum3::Value2);
+            issig3Emitted  = true;
+        });
+
+        emit implEnumInterface->sig3(tb_enum::Enum3::Value2);
+        REQUIRE(issig3Emitted  == true);
+    }
 
     clientNode->unlinkRemote(clientEnumInterface->olinkObjectName());
     remote_registry.removeSource(serviceEnumInterface->olinkObjectName());

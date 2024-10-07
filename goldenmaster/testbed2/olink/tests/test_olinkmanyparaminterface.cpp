@@ -76,6 +76,68 @@ TEST_CASE("Olink  testbed2 ManyParamInterface tests")
         REQUIRE(implManyParamInterface->prop4() == test_value);
         REQUIRE(clientManyParamInterface->prop4() == test_value);
     }
+    SECTION("Test emit sig1")
+    {
+        bool issig1Emitted = false;
+
+        clientManyParamInterface->connect(clientManyParamInterface.get(), &testbed2::AbstractManyParamInterface::sig1,
+        [&issig1Emitted](int param1)
+        {
+            REQUIRE(param1 == 1);
+            issig1Emitted  = true;
+        });
+
+        emit implManyParamInterface->sig1(1);
+        REQUIRE(issig1Emitted  == true);
+    }
+    SECTION("Test emit sig2")
+    {
+        bool issig2Emitted = false;
+
+        clientManyParamInterface->connect(clientManyParamInterface.get(), &testbed2::AbstractManyParamInterface::sig2,
+        [&issig2Emitted](int param1, int param2)
+        {
+            REQUIRE(param1 == 1);
+            REQUIRE(param2 == 1);
+            issig2Emitted  = true;
+        });
+
+        emit implManyParamInterface->sig2(1, 1);
+        REQUIRE(issig2Emitted  == true);
+    }
+    SECTION("Test emit sig3")
+    {
+        bool issig3Emitted = false;
+
+        clientManyParamInterface->connect(clientManyParamInterface.get(), &testbed2::AbstractManyParamInterface::sig3,
+        [&issig3Emitted](int param1, int param2, int param3)
+        {
+            REQUIRE(param1 == 1);
+            REQUIRE(param2 == 1);
+            REQUIRE(param3 == 1);
+            issig3Emitted  = true;
+        });
+
+        emit implManyParamInterface->sig3(1, 1, 1);
+        REQUIRE(issig3Emitted  == true);
+    }
+    SECTION("Test emit sig4")
+    {
+        bool issig4Emitted = false;
+
+        clientManyParamInterface->connect(clientManyParamInterface.get(), &testbed2::AbstractManyParamInterface::sig4,
+        [&issig4Emitted](int param1, int param2, int param3, int param4)
+        {
+            REQUIRE(param1 == 1);
+            REQUIRE(param2 == 1);
+            REQUIRE(param3 == 1);
+            REQUIRE(param4 == 1);
+            issig4Emitted  = true;
+        });
+
+        emit implManyParamInterface->sig4(1, 1, 1, 1);
+        REQUIRE(issig4Emitted  == true);
+    }
 
     clientNode->unlinkRemote(clientManyParamInterface->olinkObjectName());
     remote_registry.removeSource(serviceManyParamInterface->olinkObjectName());

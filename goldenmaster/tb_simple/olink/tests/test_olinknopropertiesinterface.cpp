@@ -36,6 +36,33 @@ TEST_CASE("Olink  tb.simple NoPropertiesInterface tests")
 
     clientNode->registry().addSink(clientNoPropertiesInterface);
     clientNode->linkRemote(clientNoPropertiesInterface->olinkObjectName());
+    SECTION("Test emit sigVoid")
+    {
+        bool issigVoidEmitted = false;
+
+        clientNoPropertiesInterface->connect(clientNoPropertiesInterface.get(), &tb_simple::AbstractNoPropertiesInterface::sigVoid,
+        [&issigVoidEmitted]()
+        {
+            issigVoidEmitted  = true;
+        });
+
+        emit implNoPropertiesInterface->sigVoid();
+        REQUIRE(issigVoidEmitted  == true);
+    }
+    SECTION("Test emit sigBool")
+    {
+        bool issigBoolEmitted = false;
+
+        clientNoPropertiesInterface->connect(clientNoPropertiesInterface.get(), &tb_simple::AbstractNoPropertiesInterface::sigBool,
+        [&issigBoolEmitted](bool paramBool)
+        {
+            REQUIRE(paramBool == true);
+            issigBoolEmitted  = true;
+        });
+
+        emit implNoPropertiesInterface->sigBool(true);
+        REQUIRE(issigBoolEmitted  == true);
+    }
 
     clientNode->unlinkRemote(clientNoPropertiesInterface->olinkObjectName());
     remote_registry.removeSource(serviceNoPropertiesInterface->olinkObjectName());

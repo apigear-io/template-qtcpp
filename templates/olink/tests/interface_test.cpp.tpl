@@ -1,4 +1,5 @@
 {{- $class := Camel .Interface.Name  }}
+{{- $namespace := qtNamespace .Module.Name   }}
 {{- $olinkclass := printf "OLink%s" .Interface.Name }}
 {{- $namespacePrefix := printf "%s::" (qtNamespace .Module.Name) -}}
 #pragma warning (disable: 4251)
@@ -88,6 +89,60 @@ TEST_CASE("Olink  {{.Module.Name}} {{$class}} tests")
         REQUIRE(client{{$class}}->{{.Name}}() == test_value);
     }
     {{- end }}
+    {{- end }}
+
+    {{- range .Interface.Signals }}
+    SECTION("Test emit {{.Name}}")
+    {
+        bool is{{.Name}}Emitted = false;
+
+        {{- range $idx, $p := .Params -}}
+        {{- if .IsArray }}
+        auto local_{{snake .Name}}_array = {{ qtDefault $namespacePrefix . }};
+        {{- if not ( or (eq .KindType "extern") ( or .IsPrimitive  (eq .KindType "enum") ) )}}
+        auto element_{{$p.Name}} = {{ qtTestValue $namespacePrefix . }};
+        {{template "get_namespace" .}}::fillTest{{.Type }}(element_{{$p.Name}});
+        local_{{snake .Name}}_array .append(element_{{$p.Name}});
+        {{- else }}
+        local_{{snake .Name}}_array.append({{ qtTestValue $namespacePrefix . }});
+        {{- end }}
+        {{- else if not ( or (eq .KindType "extern") ( or .IsPrimitive  (eq .KindType "enum") ) )}}
+        auto local_{{snake .Name}}_struct = {{ qtDefault $namespacePrefix . }};
+        {{template "get_namespace" .}}::fillTest{{.Type }}(local_{{snake .Name}}_struct);
+        {{- end -}}
+        {{- end }}
+
+        client{{$class}}->connect(client{{$class}}.get(), &{{$namespace}}::Abstract{{$class}}::{{camel .Name}},
+        [&is{{.Name}}Emitted 
+        {{- range $idx, $p := .Params -}}
+        {{- if .IsArray }}, &local_{{snake .Name}}_array
+        {{- else if not ( or (eq .KindType "extern") ( or .IsPrimitive  (eq .KindType "enum") ) ) }}, &local_{{snake .Name}}_struct{{- end -}}
+        {{- end }}]({{qtParams $namespacePrefix .Params}})
+        {
+        {{- range $idx, $p := .Params }}
+            REQUIRE({{ .Name}} == 
+            {{- if .IsArray }} local_{{snake .Name}}_array
+            {{- else if (eq .KindType "extern") }} {{ qtDefault $namespacePrefix .}}
+            {{- else if  ( or .IsPrimitive  (eq .KindType "enum") ) }} {{ qtTestValue $namespacePrefix . }}
+            {{- else -}} local_{{snake .Name}}_struct
+            {{- end }});
+        {{- end }}
+            is{{.Name}}Emitted  = true;
+        });
+
+        emit impl{{$class}}->{{camel .Name}}(
+    {{- range $idx, $p := .Params -}}
+            {{- if $idx }}, {{end -}}
+            {{- if .IsArray }}local_{{snake .Name}}_array
+            {{- else if (eq .KindType "extern") }}{{ qtDefault $namespacePrefix .}}
+            {{- else if  ( or .IsPrimitive  (eq .KindType "enum") ) }}{{ qtTestValue $namespacePrefix . }}
+            {{- else -}}
+            local_{{snake .Name}}_struct
+            {{- end -}}
+    {{- end -}}
+        );
+        REQUIRE(is{{.Name}}Emitted  == true);
+    }
     {{- end }}
 
     clientNode->unlinkRemote(client{{$class}}->olinkObjectName());

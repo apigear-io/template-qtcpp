@@ -46,6 +46,20 @@ TEST_CASE("Olink  tb.same2 SameEnum1Interface tests")
         REQUIRE(implSameEnum1Interface->prop1() == test_value);
         REQUIRE(clientSameEnum1Interface->prop1() == test_value);
     }
+    SECTION("Test emit sig1")
+    {
+        bool issig1Emitted = false;
+
+        clientSameEnum1Interface->connect(clientSameEnum1Interface.get(), &tb_same2::AbstractSameEnum1Interface::sig1,
+        [&issig1Emitted](tb_same2::Enum1::Enum1Enum param1)
+        {
+            REQUIRE(param1 == tb_same2::Enum1::Value2);
+            issig1Emitted  = true;
+        });
+
+        emit implSameEnum1Interface->sig1(tb_same2::Enum1::Value2);
+        REQUIRE(issig1Emitted  == true);
+    }
 
     clientNode->unlinkRemote(clientSameEnum1Interface->olinkObjectName());
     remote_registry.removeSource(serviceSameEnum1Interface->olinkObjectName());

@@ -66,6 +66,34 @@ TEST_CASE("Olink  tb.names NamEs tests")
         REQUIRE(implNamEs->Some_Poperty2() == test_value);
         REQUIRE(clientNamEs->Some_Poperty2() == test_value);
     }
+    SECTION("Test emit SOME_SIGNAL")
+    {
+        bool isSOME_SIGNALEmitted = false;
+
+        clientNamEs->connect(clientNamEs.get(), &tb_names::AbstractNamEs::someSignal,
+        [&isSOME_SIGNALEmitted](bool SOME_PARAM)
+        {
+            REQUIRE(SOME_PARAM == true);
+            isSOME_SIGNALEmitted  = true;
+        });
+
+        emit implNamEs->someSignal(true);
+        REQUIRE(isSOME_SIGNALEmitted  == true);
+    }
+    SECTION("Test emit Some_Signal2")
+    {
+        bool isSome_Signal2Emitted = false;
+
+        clientNamEs->connect(clientNamEs.get(), &tb_names::AbstractNamEs::someSignal2,
+        [&isSome_Signal2Emitted](bool Some_Param)
+        {
+            REQUIRE(Some_Param == true);
+            isSome_Signal2Emitted  = true;
+        });
+
+        emit implNamEs->someSignal2(true);
+        REQUIRE(isSome_Signal2Emitted  == true);
+    }
 
     clientNode->unlinkRemote(clientNamEs->olinkObjectName());
     remote_registry.removeSource(serviceNamEs->olinkObjectName());

@@ -80,6 +80,70 @@ TEST_CASE("Olink  testbed1 StructInterface tests")
         REQUIRE(implStructInterface->propString() == test_value);
         REQUIRE(clientStructInterface->propString() == test_value);
     }
+    SECTION("Test emit sigBool")
+    {
+        bool issigBoolEmitted = false;
+        auto local_param_bool_struct = testbed1::StructBool();
+        testbed1::fillTestStructBool(local_param_bool_struct);
+
+        clientStructInterface->connect(clientStructInterface.get(), &testbed1::AbstractStructInterface::sigBool,
+        [&issigBoolEmitted, &local_param_bool_struct](const testbed1::StructBool& paramBool)
+        {
+            REQUIRE(paramBool ==local_param_bool_struct);
+            issigBoolEmitted  = true;
+        });
+
+        emit implStructInterface->sigBool(local_param_bool_struct);
+        REQUIRE(issigBoolEmitted  == true);
+    }
+    SECTION("Test emit sigInt")
+    {
+        bool issigIntEmitted = false;
+        auto local_param_int_struct = testbed1::StructInt();
+        testbed1::fillTestStructInt(local_param_int_struct);
+
+        clientStructInterface->connect(clientStructInterface.get(), &testbed1::AbstractStructInterface::sigInt,
+        [&issigIntEmitted, &local_param_int_struct](const testbed1::StructInt& paramInt)
+        {
+            REQUIRE(paramInt ==local_param_int_struct);
+            issigIntEmitted  = true;
+        });
+
+        emit implStructInterface->sigInt(local_param_int_struct);
+        REQUIRE(issigIntEmitted  == true);
+    }
+    SECTION("Test emit sigFloat")
+    {
+        bool issigFloatEmitted = false;
+        auto local_param_float_struct = testbed1::StructFloat();
+        testbed1::fillTestStructFloat(local_param_float_struct);
+
+        clientStructInterface->connect(clientStructInterface.get(), &testbed1::AbstractStructInterface::sigFloat,
+        [&issigFloatEmitted, &local_param_float_struct](const testbed1::StructFloat& paramFloat)
+        {
+            REQUIRE(paramFloat ==local_param_float_struct);
+            issigFloatEmitted  = true;
+        });
+
+        emit implStructInterface->sigFloat(local_param_float_struct);
+        REQUIRE(issigFloatEmitted  == true);
+    }
+    SECTION("Test emit sigString")
+    {
+        bool issigStringEmitted = false;
+        auto local_param_string_struct = testbed1::StructString();
+        testbed1::fillTestStructString(local_param_string_struct);
+
+        clientStructInterface->connect(clientStructInterface.get(), &testbed1::AbstractStructInterface::sigString,
+        [&issigStringEmitted, &local_param_string_struct](const testbed1::StructString& paramString)
+        {
+            REQUIRE(paramString ==local_param_string_struct);
+            issigStringEmitted  = true;
+        });
+
+        emit implStructInterface->sigString(local_param_string_struct);
+        REQUIRE(issigStringEmitted  == true);
+    }
 
     clientNode->unlinkRemote(clientStructInterface->olinkObjectName());
     remote_registry.removeSource(serviceStructInterface->olinkObjectName());

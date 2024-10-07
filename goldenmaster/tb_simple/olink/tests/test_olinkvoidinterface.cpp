@@ -36,6 +36,19 @@ TEST_CASE("Olink  tb.simple VoidInterface tests")
 
     clientNode->registry().addSink(clientVoidInterface);
     clientNode->linkRemote(clientVoidInterface->olinkObjectName());
+    SECTION("Test emit sigVoid")
+    {
+        bool issigVoidEmitted = false;
+
+        clientVoidInterface->connect(clientVoidInterface.get(), &tb_simple::AbstractVoidInterface::sigVoid,
+        [&issigVoidEmitted]()
+        {
+            issigVoidEmitted  = true;
+        });
+
+        emit implVoidInterface->sigVoid();
+        REQUIRE(issigVoidEmitted  == true);
+    }
 
     clientNode->unlinkRemote(clientVoidInterface->olinkObjectName());
     remote_registry.removeSource(serviceVoidInterface->olinkObjectName());

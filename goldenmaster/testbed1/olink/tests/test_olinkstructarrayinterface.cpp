@@ -88,6 +88,78 @@ TEST_CASE("Olink  testbed1 StructArrayInterface tests")
         REQUIRE(implStructArrayInterface->propString() == test_value);
         REQUIRE(clientStructArrayInterface->propString() == test_value);
     }
+    SECTION("Test emit sigBool")
+    {
+        bool issigBoolEmitted = false;
+        auto local_param_bool_array = QList<testbed1::StructBool>();
+        auto element_paramBool = testbed1::StructBool();
+        testbed1::fillTestStructBool(element_paramBool);
+        local_param_bool_array .append(element_paramBool);
+
+        clientStructArrayInterface->connect(clientStructArrayInterface.get(), &testbed1::AbstractStructArrayInterface::sigBool,
+        [&issigBoolEmitted, &local_param_bool_array](const QList<testbed1::StructBool>& paramBool)
+        {
+            REQUIRE(paramBool == local_param_bool_array);
+            issigBoolEmitted  = true;
+        });
+
+        emit implStructArrayInterface->sigBool(local_param_bool_array);
+        REQUIRE(issigBoolEmitted  == true);
+    }
+    SECTION("Test emit sigInt")
+    {
+        bool issigIntEmitted = false;
+        auto local_param_int_array = QList<testbed1::StructInt>();
+        auto element_paramInt = testbed1::StructInt();
+        testbed1::fillTestStructInt(element_paramInt);
+        local_param_int_array .append(element_paramInt);
+
+        clientStructArrayInterface->connect(clientStructArrayInterface.get(), &testbed1::AbstractStructArrayInterface::sigInt,
+        [&issigIntEmitted, &local_param_int_array](const QList<testbed1::StructInt>& paramInt)
+        {
+            REQUIRE(paramInt == local_param_int_array);
+            issigIntEmitted  = true;
+        });
+
+        emit implStructArrayInterface->sigInt(local_param_int_array);
+        REQUIRE(issigIntEmitted  == true);
+    }
+    SECTION("Test emit sigFloat")
+    {
+        bool issigFloatEmitted = false;
+        auto local_param_float_array = QList<testbed1::StructFloat>();
+        auto element_paramFloat = testbed1::StructFloat();
+        testbed1::fillTestStructFloat(element_paramFloat);
+        local_param_float_array .append(element_paramFloat);
+
+        clientStructArrayInterface->connect(clientStructArrayInterface.get(), &testbed1::AbstractStructArrayInterface::sigFloat,
+        [&issigFloatEmitted, &local_param_float_array](const QList<testbed1::StructFloat>& paramFloat)
+        {
+            REQUIRE(paramFloat == local_param_float_array);
+            issigFloatEmitted  = true;
+        });
+
+        emit implStructArrayInterface->sigFloat(local_param_float_array);
+        REQUIRE(issigFloatEmitted  == true);
+    }
+    SECTION("Test emit sigString")
+    {
+        bool issigStringEmitted = false;
+        auto local_param_string_array = QList<testbed1::StructString>();
+        auto element_paramString = testbed1::StructString();
+        testbed1::fillTestStructString(element_paramString);
+        local_param_string_array .append(element_paramString);
+
+        clientStructArrayInterface->connect(clientStructArrayInterface.get(), &testbed1::AbstractStructArrayInterface::sigString,
+        [&issigStringEmitted, &local_param_string_array](const QList<testbed1::StructString>& paramString)
+        {
+            REQUIRE(paramString == local_param_string_array);
+            issigStringEmitted  = true;
+        });
+
+        emit implStructArrayInterface->sigString(local_param_string_array);
+        REQUIRE(issigStringEmitted  == true);
+    }
 
     clientNode->unlinkRemote(clientStructArrayInterface->olinkObjectName());
     remote_registry.removeSource(serviceStructArrayInterface->olinkObjectName());

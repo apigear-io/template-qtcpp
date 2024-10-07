@@ -58,6 +58,41 @@ TEST_CASE("Olink  tb.same2 SameStruct2Interface tests")
         REQUIRE(implSameStruct2Interface->prop2() == test_value);
         REQUIRE(clientSameStruct2Interface->prop2() == test_value);
     }
+    SECTION("Test emit sig1")
+    {
+        bool issig1Emitted = false;
+        auto local_param1_struct = tb_same2::Struct1();
+        tb_same2::fillTestStruct1(local_param1_struct);
+
+        clientSameStruct2Interface->connect(clientSameStruct2Interface.get(), &tb_same2::AbstractSameStruct2Interface::sig1,
+        [&issig1Emitted, &local_param1_struct](const tb_same2::Struct1& param1)
+        {
+            REQUIRE(param1 ==local_param1_struct);
+            issig1Emitted  = true;
+        });
+
+        emit implSameStruct2Interface->sig1(local_param1_struct);
+        REQUIRE(issig1Emitted  == true);
+    }
+    SECTION("Test emit sig2")
+    {
+        bool issig2Emitted = false;
+        auto local_param1_struct = tb_same2::Struct1();
+        tb_same2::fillTestStruct1(local_param1_struct);
+        auto local_param2_struct = tb_same2::Struct2();
+        tb_same2::fillTestStruct2(local_param2_struct);
+
+        clientSameStruct2Interface->connect(clientSameStruct2Interface.get(), &tb_same2::AbstractSameStruct2Interface::sig2,
+        [&issig2Emitted, &local_param1_struct, &local_param2_struct](const tb_same2::Struct1& param1, const tb_same2::Struct2& param2)
+        {
+            REQUIRE(param1 ==local_param1_struct);
+            REQUIRE(param2 ==local_param2_struct);
+            issig2Emitted  = true;
+        });
+
+        emit implSameStruct2Interface->sig2(local_param1_struct, local_param2_struct);
+        REQUIRE(issig2Emitted  == true);
+    }
 
     clientNode->unlinkRemote(clientSameStruct2Interface->olinkObjectName());
     remote_registry.removeSource(serviceSameStruct2Interface->olinkObjectName());

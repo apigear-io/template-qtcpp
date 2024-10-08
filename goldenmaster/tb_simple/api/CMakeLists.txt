@@ -14,6 +14,7 @@ set(OUTPUT_PATH ${LIBRARY_PATH}/)
 
 set (TB_SIMPLE_API_SOURCES
     api.cpp
+    test_struct_helper.cpp
 )
 
 # dynamic library

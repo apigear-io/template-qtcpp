@@ -24,6 +24,17 @@ features:
             target: "iapifactory.h"
           - source: "api/json.adapter.h.tpl"
             target: "json.adapter.h"
+  - name: test_helpers
+    requires:
+      - api
+    scopes:
+      - match: module
+        prefix: "{{snake .Module.Name}}/api/"
+        documents:
+          - source: "api/test_struct_helper.h.tpl"
+            target: "test_struct_helper.h"  
+          - source: "api/test_struct_helper.cpp.tpl"
+            target: "test_struct_helper.cpp"  
   - name: stubs
     requires:
       - api

@@ -213,6 +213,7 @@ features:
       - api
       - apigear
       - stubs
+      - test_helpers
     scopes:
       - match: system
         documents:
@@ -260,7 +261,9 @@ features:
           - source: "mqtt/mqttadapter.h.tpl"
             target: "mqtt{{lower .Interface.Name}}adapter.h"
           - source: "mqtt/mqttadapter.cpp.tpl"
-            target: "mqtt{{lower .Interface.Name}}adapter.cpp"     
+            target: "mqtt{{lower .Interface.Name}}adapter.cpp"
+          - source: "mqtt/tests/interface_test.cpp.tpl"
+            target: "tests/test_mqtt{{lower .Interface.Name}}.cpp"
   - name: qmlplugin
     scopes:
       - match: module

@@ -56,6 +56,32 @@ TEST_CASE("Olink  tb.simple NoSignalsInterface tests")
         REQUIRE(implNoSignalsInterface->propInt() == test_value);
         REQUIRE(clientNoSignalsInterface->propInt() == test_value);
     }
+    SECTION("Test method funcVoid")
+    {
+        clientNoSignalsInterface->funcVoid();
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method funcVoid async")
+    {
+        auto resultFuture = clientNoSignalsInterface->funcVoidAsync();
+        resultFuture.waitForFinished();
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    SECTION("Test method funcBool")
+    {
+        [[maybe_unused]] auto result = clientNoSignalsInterface->funcBool(false);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method funcBool async")
+    {
+        auto resultFuture = clientNoSignalsInterface->funcBoolAsync(false);
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == false);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
 
     clientNode->unlinkRemote(clientNoSignalsInterface->olinkObjectName());
     remote_registry.removeSource(serviceNoSignalsInterface->olinkObjectName());

@@ -160,6 +160,62 @@ TEST_CASE("Olink  testbed1 StructArrayInterface tests")
         emit implStructArrayInterface->sigString(local_param_string_array);
         REQUIRE(issigStringEmitted  == true);
     }
+    SECTION("Test method funcBool")
+    {
+        [[maybe_unused]] auto result = clientStructArrayInterface->funcBool(QList<testbed1::StructBool>());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method funcBool async")
+    {
+        auto resultFuture = clientStructArrayInterface->funcBoolAsync(QList<testbed1::StructBool>());
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == QList<testbed1::StructBool>());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    SECTION("Test method funcInt")
+    {
+        [[maybe_unused]] auto result = clientStructArrayInterface->funcInt(QList<testbed1::StructInt>());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method funcInt async")
+    {
+        auto resultFuture = clientStructArrayInterface->funcIntAsync(QList<testbed1::StructInt>());
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == QList<testbed1::StructInt>());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    SECTION("Test method funcFloat")
+    {
+        [[maybe_unused]] auto result = clientStructArrayInterface->funcFloat(QList<testbed1::StructFloat>());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method funcFloat async")
+    {
+        auto resultFuture = clientStructArrayInterface->funcFloatAsync(QList<testbed1::StructFloat>());
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == QList<testbed1::StructFloat>());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    SECTION("Test method funcString")
+    {
+        [[maybe_unused]] auto result = clientStructArrayInterface->funcString(QList<testbed1::StructString>());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method funcString async")
+    {
+        auto resultFuture = clientStructArrayInterface->funcStringAsync(QList<testbed1::StructString>());
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == QList<testbed1::StructString>());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
 
     clientNode->unlinkRemote(clientStructArrayInterface->olinkObjectName());
     remote_registry.removeSource(serviceStructArrayInterface->olinkObjectName());

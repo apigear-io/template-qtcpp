@@ -132,6 +132,62 @@ TEST_CASE("Olink  tb.enum EnumInterface tests")
         emit implEnumInterface->sig3(tb_enum::Enum3::Value2);
         REQUIRE(issig3Emitted  == true);
     }
+    SECTION("Test method func0")
+    {
+        [[maybe_unused]] auto result = clientEnumInterface->func0(tb_enum::Enum0::Value0);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method func0 async")
+    {
+        auto resultFuture = clientEnumInterface->func0Async(tb_enum::Enum0::Value0);
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == tb_enum::Enum0::Value0);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    SECTION("Test method func1")
+    {
+        [[maybe_unused]] auto result = clientEnumInterface->func1(tb_enum::Enum1::Value1);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method func1 async")
+    {
+        auto resultFuture = clientEnumInterface->func1Async(tb_enum::Enum1::Value1);
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == tb_enum::Enum1::Value1);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    SECTION("Test method func2")
+    {
+        [[maybe_unused]] auto result = clientEnumInterface->func2(tb_enum::Enum2::Value2);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method func2 async")
+    {
+        auto resultFuture = clientEnumInterface->func2Async(tb_enum::Enum2::Value2);
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == tb_enum::Enum2::Value2);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    SECTION("Test method func3")
+    {
+        [[maybe_unused]] auto result = clientEnumInterface->func3(tb_enum::Enum3::Value3);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method func3 async")
+    {
+        auto resultFuture = clientEnumInterface->func3Async(tb_enum::Enum3::Value3);
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == tb_enum::Enum3::Value3);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
 
     clientNode->unlinkRemote(clientEnumInterface->olinkObjectName());
     remote_registry.removeSource(serviceEnumInterface->olinkObjectName());

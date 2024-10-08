@@ -63,6 +63,20 @@ TEST_CASE("Olink  tb.same1 SameStruct1Interface tests")
         emit implSameStruct1Interface->sig1(local_param1_struct);
         REQUIRE(issig1Emitted  == true);
     }
+    SECTION("Test method func1")
+    {
+        [[maybe_unused]] auto result = clientSameStruct1Interface->func1(tb_same1::Struct1());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method func1 async")
+    {
+        auto resultFuture = clientSameStruct1Interface->func1Async(tb_same1::Struct1());
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == tb_same1::Struct1());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
 
     clientNode->unlinkRemote(clientSameStruct1Interface->olinkObjectName());
     remote_registry.removeSource(serviceSameStruct1Interface->olinkObjectName());

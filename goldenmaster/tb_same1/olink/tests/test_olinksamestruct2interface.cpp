@@ -93,6 +93,34 @@ TEST_CASE("Olink  tb.same1 SameStruct2Interface tests")
         emit implSameStruct2Interface->sig2(local_param1_struct, local_param2_struct);
         REQUIRE(issig2Emitted  == true);
     }
+    SECTION("Test method func1")
+    {
+        [[maybe_unused]] auto result = clientSameStruct2Interface->func1(tb_same1::Struct1());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method func1 async")
+    {
+        auto resultFuture = clientSameStruct2Interface->func1Async(tb_same1::Struct1());
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == tb_same1::Struct1());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    SECTION("Test method func2")
+    {
+        [[maybe_unused]] auto result = clientSameStruct2Interface->func2(tb_same1::Struct1(), tb_same1::Struct2());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method func2 async")
+    {
+        auto resultFuture = clientSameStruct2Interface->func2Async(tb_same1::Struct1(), tb_same1::Struct2());
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == tb_same1::Struct1());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
 
     clientNode->unlinkRemote(clientSameStruct2Interface->olinkObjectName());
     remote_registry.removeSource(serviceSameStruct2Interface->olinkObjectName());

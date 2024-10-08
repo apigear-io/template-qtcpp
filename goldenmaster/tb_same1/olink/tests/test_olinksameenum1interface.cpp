@@ -60,6 +60,20 @@ TEST_CASE("Olink  tb.same1 SameEnum1Interface tests")
         emit implSameEnum1Interface->sig1(tb_same1::Enum1::Value2);
         REQUIRE(issig1Emitted  == true);
     }
+    SECTION("Test method func1")
+    {
+        [[maybe_unused]] auto result = clientSameEnum1Interface->func1(tb_same1::Enum1::Value1);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method func1 async")
+    {
+        auto resultFuture = clientSameEnum1Interface->func1Async(tb_same1::Enum1::Value1);
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == tb_same1::Enum1::Value1);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
 
     clientNode->unlinkRemote(clientSameEnum1Interface->olinkObjectName());
     remote_registry.removeSource(serviceSameEnum1Interface->olinkObjectName());

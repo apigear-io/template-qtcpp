@@ -94,6 +94,30 @@ TEST_CASE("Olink  tb.names NamEs tests")
         emit implNamEs->someSignal2(true);
         REQUIRE(isSome_Signal2Emitted  == true);
     }
+    SECTION("Test method SOME_FUNCTION")
+    {
+        clientNamEs->someFunction(false);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method SOME_FUNCTION async")
+    {
+        auto resultFuture = clientNamEs->someFunctionAsync(false);
+        resultFuture.waitForFinished();
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    SECTION("Test method Some_Function2")
+    {
+        clientNamEs->someFunction2(false);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method Some_Function2 async")
+    {
+        auto resultFuture = clientNamEs->someFunction2Async(false);
+        resultFuture.waitForFinished();
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
 
     clientNode->unlinkRemote(clientNamEs->olinkObjectName());
     remote_registry.removeSource(serviceNamEs->olinkObjectName());

@@ -126,6 +126,48 @@ TEST_CASE("Olink  testbed2 NestedStruct3Interface tests")
         emit implNestedStruct3Interface->sig3(local_param1_struct, local_param2_struct, local_param3_struct);
         REQUIRE(issig3Emitted  == true);
     }
+    SECTION("Test method func1")
+    {
+        [[maybe_unused]] auto result = clientNestedStruct3Interface->func1(testbed2::NestedStruct1());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method func1 async")
+    {
+        auto resultFuture = clientNestedStruct3Interface->func1Async(testbed2::NestedStruct1());
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == testbed2::NestedStruct1());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    SECTION("Test method func2")
+    {
+        [[maybe_unused]] auto result = clientNestedStruct3Interface->func2(testbed2::NestedStruct1(), testbed2::NestedStruct2());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method func2 async")
+    {
+        auto resultFuture = clientNestedStruct3Interface->func2Async(testbed2::NestedStruct1(), testbed2::NestedStruct2());
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == testbed2::NestedStruct1());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    SECTION("Test method func3")
+    {
+        [[maybe_unused]] auto result = clientNestedStruct3Interface->func3(testbed2::NestedStruct1(), testbed2::NestedStruct2(), testbed2::NestedStruct3());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method func3 async")
+    {
+        auto resultFuture = clientNestedStruct3Interface->func3Async(testbed2::NestedStruct1(), testbed2::NestedStruct2(), testbed2::NestedStruct3());
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == testbed2::NestedStruct1());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
 
     clientNode->unlinkRemote(clientNestedStruct3Interface->olinkObjectName());
     remote_registry.removeSource(serviceNestedStruct3Interface->olinkObjectName());

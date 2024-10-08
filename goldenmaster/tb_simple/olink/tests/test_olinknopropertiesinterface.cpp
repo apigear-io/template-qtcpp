@@ -63,6 +63,32 @@ TEST_CASE("Olink  tb.simple NoPropertiesInterface tests")
         emit implNoPropertiesInterface->sigBool(true);
         REQUIRE(issigBoolEmitted  == true);
     }
+    SECTION("Test method funcVoid")
+    {
+        clientNoPropertiesInterface->funcVoid();
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method funcVoid async")
+    {
+        auto resultFuture = clientNoPropertiesInterface->funcVoidAsync();
+        resultFuture.waitForFinished();
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    SECTION("Test method funcBool")
+    {
+        [[maybe_unused]] auto result = clientNoPropertiesInterface->funcBool(false);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method funcBool async")
+    {
+        auto resultFuture = clientNoPropertiesInterface->funcBoolAsync(false);
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == false);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
 
     clientNode->unlinkRemote(clientNoPropertiesInterface->olinkObjectName());
     remote_registry.removeSource(serviceNoPropertiesInterface->olinkObjectName());

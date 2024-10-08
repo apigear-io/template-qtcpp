@@ -29,6 +29,7 @@ add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND})
 endif()
 
 set(TEST_TB_NAMES_GENERATED_MQTT_SOURCES
+    test_mqttnam_es.cpp
     test_main.cpp
     )
 

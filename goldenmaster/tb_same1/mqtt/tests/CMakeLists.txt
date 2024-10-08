@@ -29,6 +29,10 @@ add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND})
 endif()
 
 set(TEST_TB_SAME1_GENERATED_MQTT_SOURCES
+    test_mqttsamestruct1interface.cpp
+    test_mqttsamestruct2interface.cpp
+    test_mqttsameenum1interface.cpp
+    test_mqttsameenum2interface.cpp
     test_main.cpp
     )
 

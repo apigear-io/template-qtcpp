@@ -212,6 +212,7 @@ features:
     requires:
       - api
       - apigear
+      - stubs
     scopes:
       - match: system
         documents:
@@ -244,6 +245,11 @@ features:
             target: "mqttfactory.cpp"
           - source: "mqtt/mqtt_common.h.tpl"
             target: "mqtt_common.h"
+          - source: "mqtt/tests/CMakeLists.txt.tpl"
+            target: "tests/CMakeLists.txt"
+          - source: "mqtt/tests/test_main.cpp"
+            target: "tests/test_main.cpp"
+            raw: true
       - match: interface
         prefix: "{{snake .Module.Name}}/mqtt/"
         documents:

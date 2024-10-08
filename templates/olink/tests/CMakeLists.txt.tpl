@@ -30,6 +30,9 @@ add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND})
 endif()
 
 set(TEST_{{$MODULE_ID}}_GENERATED_OLINK_SOURCES
+{{- range .Module.Interfaces }}
+    test_olink{{lower .Name}}.cpp
+{{- end }}
     test_main.cpp
     )
 

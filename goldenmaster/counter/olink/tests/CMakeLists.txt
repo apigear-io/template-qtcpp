@@ -29,6 +29,7 @@ add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND})
 endif()
 
 set(TEST_COUNTER_GENERATED_OLINK_SOURCES
+    test_olinkcounter.cpp
     test_main.cpp
     )
 

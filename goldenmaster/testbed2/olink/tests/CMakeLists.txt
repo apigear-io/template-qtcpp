@@ -29,6 +29,10 @@ add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND})
 endif()
 
 set(TEST_TESTBED2_GENERATED_OLINK_SOURCES
+    test_olinkmanyparaminterface.cpp
+    test_olinknestedstruct1interface.cpp
+    test_olinknestedstruct2interface.cpp
+    test_olinknestedstruct3interface.cpp
     test_main.cpp
     )
 

@@ -29,6 +29,12 @@ add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND})
 endif()
 
 set(TEST_TB_SIMPLE_GENERATED_OLINK_SOURCES
+    test_olinkvoidinterface.cpp
+    test_olinksimpleinterface.cpp
+    test_olinksimplearrayinterface.cpp
+    test_olinknopropertiesinterface.cpp
+    test_olinknooperationsinterface.cpp
+    test_olinknosignalsinterface.cpp
     test_main.cpp
     )
 

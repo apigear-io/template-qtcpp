@@ -142,6 +142,7 @@ features:
       - api
       - apigear
       - stubs
+      - test_helpers
     scopes:
       - match: system
         documents:
@@ -205,6 +206,8 @@ features:
             target: "olink/olink{{lower .Interface.Name}}adapter.h"
           - source: "olink/olinkadapter.cpp.tpl"
             target: "olink/olink{{lower .Interface.Name}}adapter.cpp"
+          - source: "olink/tests/interface_test.cpp.tpl"
+            target: "olink/tests/test_olink{{lower .Interface.Name}}.cpp"
   - name: mqtt
     requires:
       - api

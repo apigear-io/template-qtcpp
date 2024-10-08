@@ -24,4 +24,6 @@ target_include_directories(tb_same2_olink
     $<INSTALL_INTERFACE:include/tb_same2>
 )
 
+add_subdirectory(tests)
+
 target_link_libraries(tb_same2_olink PUBLIC tb_same2::tb_same2_api olink_qt Qt6::Concurrent)

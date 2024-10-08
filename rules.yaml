@@ -141,6 +141,7 @@ features:
     requires:
       - api
       - apigear
+      - stubs
     scopes:
       - match: system
         documents:
@@ -189,6 +190,10 @@ features:
             target: "olink/olinkfactory.h"
           - source: "olink/olinkfactory.cpp.tpl"
             target: "olink/olinkfactory.cpp"
+          - source: "olink/tests/CMakeLists.txt.tpl"
+            target: "olink/tests/CMakeLists.txt"
+          - source: "olink/tests/test_main.cpp"
+            raw: true
       - match: interface
         prefix: "{{snake .Module.Name}}/"
         documents:

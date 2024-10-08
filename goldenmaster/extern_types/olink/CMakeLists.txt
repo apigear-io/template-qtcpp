@@ -16,4 +16,6 @@ target_include_directories(extern_types_olink
     $<INSTALL_INTERFACE:include/extern_types>
 )
 
+add_subdirectory(tests)
+
 target_link_libraries(extern_types_olink PUBLIC extern_types::extern_types_api olink_qt Qt6::Concurrent)

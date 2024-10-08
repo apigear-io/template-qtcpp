@@ -18,4 +18,6 @@ target_include_directories(counter_olink
     $<INSTALL_INTERFACE:include/counter>
 )
 
+add_subdirectory(tests)
+
 target_link_libraries(counter_olink PUBLIC counter::counter_api olink_qt Qt6::Concurrent)

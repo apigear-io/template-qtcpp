@@ -20,4 +20,6 @@ target_include_directories(testbed1_olink
     $<INSTALL_INTERFACE:include/testbed1>
 )
 
+add_subdirectory(tests)
+
 target_link_libraries(testbed1_olink PUBLIC testbed1::testbed1_api olink_qt Qt6::Concurrent)

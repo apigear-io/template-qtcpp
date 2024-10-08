@@ -49,6 +49,34 @@ TEST_CASE("Olink  counter Counter tests")
         REQUIRE(implCounter->vector() == test_value);
         REQUIRE(clientCounter->vector() == test_value);
     }
+    SECTION("Test method increment")
+    {
+        [[maybe_unused]] auto result = clientCounter->increment(QVector3D());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method increment async")
+    {
+        auto resultFuture = clientCounter->incrementAsync(QVector3D());
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == QVector3D());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    SECTION("Test method decrement")
+    {
+        [[maybe_unused]] auto result = clientCounter->decrement(custom_types::Vector3D());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method decrement async")
+    {
+        auto resultFuture = clientCounter->decrementAsync(custom_types::Vector3D());
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == custom_types::Vector3D());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
 
     clientNode->unlinkRemote(clientCounter->olinkObjectName());
     remote_registry.removeSource(serviceCounter->olinkObjectName());

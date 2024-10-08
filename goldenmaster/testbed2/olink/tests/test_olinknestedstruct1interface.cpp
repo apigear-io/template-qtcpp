@@ -63,6 +63,20 @@ TEST_CASE("Olink  testbed2 NestedStruct1Interface tests")
         emit implNestedStruct1Interface->sig1(local_param1_struct);
         REQUIRE(issig1Emitted  == true);
     }
+    SECTION("Test method func1")
+    {
+        [[maybe_unused]] auto result = clientNestedStruct1Interface->func1(testbed2::NestedStruct1());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method func1 async")
+    {
+        auto resultFuture = clientNestedStruct1Interface->func1Async(testbed2::NestedStruct1());
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == testbed2::NestedStruct1());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
 
     clientNode->unlinkRemote(clientNestedStruct1Interface->olinkObjectName());
     remote_registry.removeSource(serviceNestedStruct1Interface->olinkObjectName());

@@ -49,6 +49,18 @@ TEST_CASE("Olink  tb.simple VoidInterface tests")
         emit implVoidInterface->sigVoid();
         REQUIRE(issigVoidEmitted  == true);
     }
+    SECTION("Test method funcVoid")
+    {
+        clientVoidInterface->funcVoid();
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method funcVoid async")
+    {
+        auto resultFuture = clientVoidInterface->funcVoidAsync();
+        resultFuture.waitForFinished();
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
 
     clientNode->unlinkRemote(clientVoidInterface->olinkObjectName());
     remote_registry.removeSource(serviceVoidInterface->olinkObjectName());

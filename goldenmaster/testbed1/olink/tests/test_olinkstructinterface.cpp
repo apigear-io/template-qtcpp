@@ -144,6 +144,62 @@ TEST_CASE("Olink  testbed1 StructInterface tests")
         emit implStructInterface->sigString(local_param_string_struct);
         REQUIRE(issigStringEmitted  == true);
     }
+    SECTION("Test method funcBool")
+    {
+        [[maybe_unused]] auto result = clientStructInterface->funcBool(testbed1::StructBool());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method funcBool async")
+    {
+        auto resultFuture = clientStructInterface->funcBoolAsync(testbed1::StructBool());
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == testbed1::StructBool());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    SECTION("Test method funcInt")
+    {
+        [[maybe_unused]] auto result = clientStructInterface->funcInt(testbed1::StructInt());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method funcInt async")
+    {
+        auto resultFuture = clientStructInterface->funcIntAsync(testbed1::StructInt());
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == testbed1::StructInt());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    SECTION("Test method funcFloat")
+    {
+        [[maybe_unused]] auto result = clientStructInterface->funcFloat(testbed1::StructFloat());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method funcFloat async")
+    {
+        auto resultFuture = clientStructInterface->funcFloatAsync(testbed1::StructFloat());
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == testbed1::StructFloat());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    SECTION("Test method funcString")
+    {
+        [[maybe_unused]] auto result = clientStructInterface->funcString(testbed1::StructString());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method funcString async")
+    {
+        auto resultFuture = clientStructInterface->funcStringAsync(testbed1::StructString());
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == testbed1::StructString());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
 
     clientNode->unlinkRemote(clientStructInterface->olinkObjectName());
     remote_registry.removeSource(serviceStructInterface->olinkObjectName());

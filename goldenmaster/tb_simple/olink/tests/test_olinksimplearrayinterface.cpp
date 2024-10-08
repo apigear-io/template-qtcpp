@@ -252,6 +252,118 @@ TEST_CASE("Olink  tb.simple SimpleArrayInterface tests")
         emit implSimpleArrayInterface->sigString(local_param_string_array);
         REQUIRE(issigStringEmitted  == true);
     }
+    SECTION("Test method funcBool")
+    {
+        [[maybe_unused]] auto result = clientSimpleArrayInterface->funcBool(QList<bool>());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method funcBool async")
+    {
+        auto resultFuture = clientSimpleArrayInterface->funcBoolAsync(QList<bool>());
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == QList<bool>());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    SECTION("Test method funcInt")
+    {
+        [[maybe_unused]] auto result = clientSimpleArrayInterface->funcInt(QList<int>());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method funcInt async")
+    {
+        auto resultFuture = clientSimpleArrayInterface->funcIntAsync(QList<int>());
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == QList<int>());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    SECTION("Test method funcInt32")
+    {
+        [[maybe_unused]] auto result = clientSimpleArrayInterface->funcInt32(QList<qint32>());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method funcInt32 async")
+    {
+        auto resultFuture = clientSimpleArrayInterface->funcInt32Async(QList<qint32>());
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == QList<qint32>());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    SECTION("Test method funcInt64")
+    {
+        [[maybe_unused]] auto result = clientSimpleArrayInterface->funcInt64(QList<qint64>());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method funcInt64 async")
+    {
+        auto resultFuture = clientSimpleArrayInterface->funcInt64Async(QList<qint64>());
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == QList<qint64>());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    SECTION("Test method funcFloat")
+    {
+        [[maybe_unused]] auto result = clientSimpleArrayInterface->funcFloat(QList<qreal>());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method funcFloat async")
+    {
+        auto resultFuture = clientSimpleArrayInterface->funcFloatAsync(QList<qreal>());
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == QList<qreal>());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    SECTION("Test method funcFloat32")
+    {
+        [[maybe_unused]] auto result = clientSimpleArrayInterface->funcFloat32(QList<float>());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method funcFloat32 async")
+    {
+        auto resultFuture = clientSimpleArrayInterface->funcFloat32Async(QList<float>());
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == QList<float>());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    SECTION("Test method funcFloat64")
+    {
+        [[maybe_unused]] auto result = clientSimpleArrayInterface->funcFloat64(QList<double>());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method funcFloat64 async")
+    {
+        auto resultFuture = clientSimpleArrayInterface->funcFloat64Async(QList<double>());
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == QList<double>());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    SECTION("Test method funcString")
+    {
+        [[maybe_unused]] auto result = clientSimpleArrayInterface->funcString(QList<QString>());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method funcString async")
+    {
+        auto resultFuture = clientSimpleArrayInterface->funcStringAsync(QList<QString>());
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == QList<QString>());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
 
     clientNode->unlinkRemote(clientSimpleArrayInterface->olinkObjectName());
     remote_registry.removeSource(serviceSimpleArrayInterface->olinkObjectName());

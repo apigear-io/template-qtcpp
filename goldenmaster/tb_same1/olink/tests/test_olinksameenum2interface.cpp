@@ -85,6 +85,34 @@ TEST_CASE("Olink  tb.same1 SameEnum2Interface tests")
         emit implSameEnum2Interface->sig2(tb_same1::Enum1::Value2, tb_same1::Enum2::Value2);
         REQUIRE(issig2Emitted  == true);
     }
+    SECTION("Test method func1")
+    {
+        [[maybe_unused]] auto result = clientSameEnum2Interface->func1(tb_same1::Enum1::Value1);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method func1 async")
+    {
+        auto resultFuture = clientSameEnum2Interface->func1Async(tb_same1::Enum1::Value1);
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == tb_same1::Enum1::Value1);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    SECTION("Test method func2")
+    {
+        [[maybe_unused]] auto result = clientSameEnum2Interface->func2(tb_same1::Enum1::Value1, tb_same1::Enum2::Value1);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method func2 async")
+    {
+        auto resultFuture = clientSameEnum2Interface->func2Async(tb_same1::Enum1::Value1, tb_same1::Enum2::Value1);
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == tb_same1::Enum1::Value1);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
 
     clientNode->unlinkRemote(clientSameEnum2Interface->olinkObjectName());
     remote_registry.removeSource(serviceSameEnum2Interface->olinkObjectName());

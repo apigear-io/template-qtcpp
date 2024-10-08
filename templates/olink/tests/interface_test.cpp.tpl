@@ -145,6 +145,35 @@ TEST_CASE("Olink  {{.Module.Name}} {{$class}} tests")
     }
     {{- end }}
 
+    {{- range .Interface.Operations }}
+    SECTION("Test method {{.Name}}")
+    {
+        {{ if (not .Return.IsVoid) }}[[maybe_unused]] auto result = {{ end }}client{{$class}}->{{camel .Name}}(
+    {{- range $idx, $p := .Params -}}
+            {{- if $idx }}, {{end -}}
+            {{ qtDefault $namespacePrefix .}}
+    {{- end -}}
+        );
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method {{.Name}} async")
+    {
+        auto resultFuture = client{{$class}}->{{camel .Name}}Async(
+    {{- range $idx, $p := .Params -}}
+            {{- if $idx }}, {{end -}}
+            {{ qtDefault $namespacePrefix .}}
+    {{- end -}}
+        );
+        resultFuture.waitForFinished();
+        {{- if (not .Return.IsVoid) }}
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == {{ qtDefault $namespacePrefix .Return }});
+        {{- end }}
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    {{- end }}
+
     clientNode->unlinkRemote(client{{$class}}->olinkObjectName());
     remote_registry.removeSource(service{{$class}}->olinkObjectName());
     client_registry.removeSink(client{{$class}}->olinkObjectName());

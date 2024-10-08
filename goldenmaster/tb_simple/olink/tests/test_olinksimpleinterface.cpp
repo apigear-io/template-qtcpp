@@ -228,6 +228,130 @@ TEST_CASE("Olink  tb.simple SimpleInterface tests")
         emit implSimpleInterface->sigString(QString("xyz"));
         REQUIRE(issigStringEmitted  == true);
     }
+    SECTION("Test method funcNoReturnValue")
+    {
+        clientSimpleInterface->funcNoReturnValue(false);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method funcNoReturnValue async")
+    {
+        auto resultFuture = clientSimpleInterface->funcNoReturnValueAsync(false);
+        resultFuture.waitForFinished();
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    SECTION("Test method funcBool")
+    {
+        [[maybe_unused]] auto result = clientSimpleInterface->funcBool(false);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method funcBool async")
+    {
+        auto resultFuture = clientSimpleInterface->funcBoolAsync(false);
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == false);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    SECTION("Test method funcInt")
+    {
+        [[maybe_unused]] auto result = clientSimpleInterface->funcInt(0);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method funcInt async")
+    {
+        auto resultFuture = clientSimpleInterface->funcIntAsync(0);
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == 0);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    SECTION("Test method funcInt32")
+    {
+        [[maybe_unused]] auto result = clientSimpleInterface->funcInt32(0);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method funcInt32 async")
+    {
+        auto resultFuture = clientSimpleInterface->funcInt32Async(0);
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == 0);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    SECTION("Test method funcInt64")
+    {
+        [[maybe_unused]] auto result = clientSimpleInterface->funcInt64(0LL);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method funcInt64 async")
+    {
+        auto resultFuture = clientSimpleInterface->funcInt64Async(0LL);
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == 0LL);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    SECTION("Test method funcFloat")
+    {
+        [[maybe_unused]] auto result = clientSimpleInterface->funcFloat(0.0f);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method funcFloat async")
+    {
+        auto resultFuture = clientSimpleInterface->funcFloatAsync(0.0f);
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == 0.0f);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    SECTION("Test method funcFloat32")
+    {
+        [[maybe_unused]] auto result = clientSimpleInterface->funcFloat32(0.0f);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method funcFloat32 async")
+    {
+        auto resultFuture = clientSimpleInterface->funcFloat32Async(0.0f);
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == 0.0f);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    SECTION("Test method funcFloat64")
+    {
+        [[maybe_unused]] auto result = clientSimpleInterface->funcFloat64(0.0);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method funcFloat64 async")
+    {
+        auto resultFuture = clientSimpleInterface->funcFloat64Async(0.0);
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == 0.0);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    SECTION("Test method funcString")
+    {
+        [[maybe_unused]] auto result = clientSimpleInterface->funcString(QString());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method funcString async")
+    {
+        auto resultFuture = clientSimpleInterface->funcStringAsync(QString());
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == QString());
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
 
     clientNode->unlinkRemote(clientSimpleInterface->olinkObjectName());
     remote_registry.removeSource(serviceSimpleInterface->olinkObjectName());

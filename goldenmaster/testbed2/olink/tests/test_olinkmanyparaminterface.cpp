@@ -138,6 +138,62 @@ TEST_CASE("Olink  testbed2 ManyParamInterface tests")
         emit implManyParamInterface->sig4(1, 1, 1, 1);
         REQUIRE(issig4Emitted  == true);
     }
+    SECTION("Test method func1")
+    {
+        [[maybe_unused]] auto result = clientManyParamInterface->func1(0);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method func1 async")
+    {
+        auto resultFuture = clientManyParamInterface->func1Async(0);
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == 0);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    SECTION("Test method func2")
+    {
+        [[maybe_unused]] auto result = clientManyParamInterface->func2(0, 0);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method func2 async")
+    {
+        auto resultFuture = clientManyParamInterface->func2Async(0, 0);
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == 0);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    SECTION("Test method func3")
+    {
+        [[maybe_unused]] auto result = clientManyParamInterface->func3(0, 0, 0);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method func3 async")
+    {
+        auto resultFuture = clientManyParamInterface->func3Async(0, 0, 0);
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == 0);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
+    SECTION("Test method func4")
+    {
+        [[maybe_unused]] auto result = clientManyParamInterface->func4(0, 0, 0, 0);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+
+    }
+    SECTION("Test method func4 async")
+    {
+        auto resultFuture = clientManyParamInterface->func4Async(0, 0, 0, 0);
+        resultFuture.waitForFinished();
+        auto return_value = resultFuture.result();
+        REQUIRE(return_value == 0);
+        // CHECK EFFECTS OF YOUR METHOD HERE
+    }
 
     clientNode->unlinkRemote(clientManyParamInterface->olinkObjectName());
     remote_registry.removeSource(serviceManyParamInterface->olinkObjectName());

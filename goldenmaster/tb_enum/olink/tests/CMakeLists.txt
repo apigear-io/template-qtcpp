@@ -29,6 +29,7 @@ add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND})
 endif()
 
 set(TEST_TB_ENUM_GENERATED_OLINK_SOURCES
+    test_olinkenuminterface.cpp
     test_main.cpp
     )
 

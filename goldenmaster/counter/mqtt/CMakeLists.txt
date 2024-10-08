@@ -31,6 +31,10 @@ target_include_directories(counter_mqtt
     $<INSTALL_INTERFACE:include/counter>
 )
 
+if (ENABLE_MQTT_TEST_FOR_NON_LINUX_OS OR ((NOT ${CMAKE_SYSTEM_NAME} MATCHES "Darwin") AND (NOT ${CMAKE_SYSTEM_NAME} MATCHES "Windows")))
+add_subdirectory(tests)
+endif()
+
 target_link_libraries(counter_mqtt PUBLIC counter::counter_api apigear::apigear_mqtt Qt6::Concurrent)
 target_compile_definitions(counter_mqtt PRIVATE COUNTER_MQTT_LIBRARY)
 

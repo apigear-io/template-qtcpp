@@ -37,6 +37,10 @@ target_include_directories(tb_same2_mqtt
     $<INSTALL_INTERFACE:include/tb_same2>
 )
 
+if (ENABLE_MQTT_TEST_FOR_NON_LINUX_OS OR ((NOT ${CMAKE_SYSTEM_NAME} MATCHES "Darwin") AND (NOT ${CMAKE_SYSTEM_NAME} MATCHES "Windows")))
+add_subdirectory(tests)
+endif()
+
 target_link_libraries(tb_same2_mqtt PUBLIC tb_same2::tb_same2_api apigear::apigear_mqtt Qt6::Concurrent)
 target_compile_definitions(tb_same2_mqtt PRIVATE TB_SAME2_MQTT_LIBRARY)
 

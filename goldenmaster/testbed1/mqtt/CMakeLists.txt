@@ -33,6 +33,10 @@ target_include_directories(testbed1_mqtt
     $<INSTALL_INTERFACE:include/testbed1>
 )
 
+if (ENABLE_MQTT_TEST_FOR_NON_LINUX_OS OR ((NOT ${CMAKE_SYSTEM_NAME} MATCHES "Darwin") AND (NOT ${CMAKE_SYSTEM_NAME} MATCHES "Windows")))
+add_subdirectory(tests)
+endif()
+
 target_link_libraries(testbed1_mqtt PUBLIC testbed1::testbed1_api apigear::apigear_mqtt Qt6::Concurrent)
 target_compile_definitions(testbed1_mqtt PRIVATE TESTBED1_MQTT_LIBRARY)
 

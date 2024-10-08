@@ -31,6 +31,10 @@ target_include_directories(tb_enum_mqtt
     $<INSTALL_INTERFACE:include/tb_enum>
 )
 
+if (ENABLE_MQTT_TEST_FOR_NON_LINUX_OS OR ((NOT ${CMAKE_SYSTEM_NAME} MATCHES "Darwin") AND (NOT ${CMAKE_SYSTEM_NAME} MATCHES "Windows")))
+add_subdirectory(tests)
+endif()
+
 target_link_libraries(tb_enum_mqtt PUBLIC tb_enum::tb_enum_api apigear::apigear_mqtt Qt6::Concurrent)
 target_compile_definitions(tb_enum_mqtt PRIVATE TB_ENUM_MQTT_LIBRARY)
 

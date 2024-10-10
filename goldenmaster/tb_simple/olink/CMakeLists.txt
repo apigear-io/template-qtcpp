@@ -28,4 +28,6 @@ target_include_directories(tb_simple_olink
     $<INSTALL_INTERFACE:include/tb_simple>
 )
 
+add_subdirectory(tests)
+
 target_link_libraries(tb_simple_olink PUBLIC tb_simple::tb_simple_api olink_qt Qt6::Concurrent)

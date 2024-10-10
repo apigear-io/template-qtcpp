@@ -27,6 +27,16 @@ option(BUILD_TESTING "Enable this option to build the test targets" OFF)
 if(BUILD_TESTING)
 find_package(Qt6 COMPONENTS Test REQUIRED)
 enable_testing()
+
+Include(FetchContent)
+FetchContent_Declare(
+    Catch2
+    GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+    GIT_TAG        v2.13.8
+    GIT_SHALLOW    TRUE
+    FIND_PACKAGE_ARGS)
+
+FetchContent_MakeAvailable(Catch2)
 endif() # BUILD_TESTING
 
 set(LIBRARY_PATH "${CMAKE_BINARY_DIR}/libs" CACHE STRING "Path where the libraries are deployed")

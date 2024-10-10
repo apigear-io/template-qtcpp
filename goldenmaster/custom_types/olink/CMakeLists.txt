@@ -16,4 +16,6 @@ target_include_directories(custom_types_olink
     $<INSTALL_INTERFACE:include/custom_types>
 )
 
+add_subdirectory(tests)
+
 target_link_libraries(custom_types_olink PUBLIC custom_types::custom_types_api olink_qt Qt6::Concurrent)

@@ -51,6 +51,9 @@ set(OUTPUT_PATH ${LIBRARY_PATH}/)
 
 set ({{$SOURCES}}
     api.cpp
+    {{- if $features.test_helpers }}
+    test_struct_helper.cpp
+    {{- end }}
 )
 
 # dynamic library

@@ -44,7 +44,7 @@ void Client::writeMessage(const QMqttTopicName& topic, const QByteArray& message
     m_client.publish(topic, message, QoS, noRetain);
 }
 
-void Client::onSubscribeTopic(quint64 id, const QString &topic, subscribeCallback callback)
+void Client::onSubscribeTopic(quint64 id, const QString &topic, SimpleSubscribeCallback callback)
 {
     auto subscription = m_client.subscribe(topic, QoS);
     auto subscribedTopic = subscription->topic();
@@ -69,7 +69,7 @@ void Client::onSubscribeTopic(quint64 id, const QString &topic, subscribeCallbac
     m_subscriptions.insert(subscription->topic(), std::make_pair(id, callback));
 }
 
-void Client::onSubscribeForInvokeResponse(quint64 id, const QString &topic, invokeReplyCallback callback)
+void Client::onSubscribeForInvokeResponse(quint64 id, const QString &topic, InvokeReplyCallback callback)
 {
     auto subscription = m_client.subscribe(topic, QoS);
     auto topicFilter = subscription->topic();
@@ -136,14 +136,14 @@ void Client::connectToHost(QString hostAddress,int port)
 
 }
 
-quint64 Client::subscribeTopic(const QString &topic, subscribeCallback callback)
+quint64 Client::subscribeTopic(const QString &topic, SimpleSubscribeCallback callback)
 {
     auto id = subscriptionIdGenerator.getId();
     subscribeTopicSignal(id, topic, callback);
     return id;
 }
 
-quint64 Client::subscribeForInvokeResponse(const QString &topic, invokeReplyCallback callback)
+quint64 Client::subscribeForInvokeResponse(const QString &topic, InvokeReplyCallback callback)
 {
     auto id = subscriptionIdGenerator.getId();
     subscribeForInvokeResponseSignal(id, topic, callback);

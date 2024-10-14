@@ -127,14 +127,14 @@ void ServiceAdapter::connectToHost(QString hostAddress,int port)
 
 }
 
-quint64 ServiceAdapter::subscribeTopic(const QString &topic, std::function<void(const nlohmann::json&)> callback)
+quint64 ServiceAdapter::subscribeTopic(const QString &topic, SimpleSubscribeCallback callback)
 {
     auto id = subscriptionIdGenerator.getId();
     subscribeTopicSignal(id, topic, callback);
     return id;
 }
 
-quint64 ServiceAdapter::subscribeForInvokeTopic(const QString &topic, std::function<nlohmann::json(const nlohmann::json&)> callback){
+quint64 ServiceAdapter::subscribeForInvokeTopic(const QString &topic, InvokeSubscribeCallback callback){
 
     auto id = subscriptionIdGenerator.getId();
     subscribeForInvokeTopicSignal(id,topic, callback);

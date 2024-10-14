@@ -60,15 +60,17 @@ public:
     using SimpleSubscribeCallback = std::function<void(const nlohmann::json&)>;
     // An alias for callback, necessary for signals/slots, which don't handle well function parameters with "const". 
     using InvokeSubscribeCallback =  std::function<nlohmann::json(const nlohmann::json&)>;
+    // An alias for callback, for consistency,
+    using OnSubscribedCallback = std::function<void(quint64 id, bool hasSucceed)>;
 public slots:
     // Internal handler for internal messageToWriteWithProperties signal emitted during handling invoke requests.
     void writeMessageWithProperties(const QMqttTopicName& topic, const QByteArray& message, const QMqttPublishProperties &properties);
     // Internal handler for internal messageToWrite signal emitted by emitPropertyChange or emitSignalChange.
     void writeMessage(const QMqttTopicName& topic, const QByteArray& message, bool retain);
     // Internal handler for internal subscribeTopicSignal signal, emitted by  subscribeTopic method.
-    void onSubscribeTopic(quint64 id, const QString &topic, SimpleSubscribeCallback callback);
+    void onSubscribeTopic(quint64 id, const QString &topic, OnSubscribedCallback onSubscribed, SimpleSubscribeCallback callback);
     // Internal handler of subscribeForInvokeTopicSignal signal, emitted by subscribeForInvokeTopic method.
-    void onSubscribeForInvokeTopic(quint64 id, const QString &topic, InvokeSubscribeCallback callback);
+    void onSubscribeForInvokeTopic(quint64 id, const QString &topic, OnSubscribedCallback onSubscribed, InvokeSubscribeCallback callback);
     // Internal handler for an unsubscribeTopic signal.
     void onUnsubscribeTopic(quint64 id);
 signals:
@@ -85,9 +87,9 @@ signals:
     // Internal signal for publishing messages. Used to allow multi thread safe use.
     void messageToWrite(const QMqttTopicName& topic, const QByteArray& message, bool retain);
     // Internal signal emitted by subscribeTopic. Used to allow multi thread safe use.
-    void subscribeTopicSignal(quint64 id, const QString &topic, SimpleSubscribeCallback callback);
+    void subscribeTopicSignal(quint64 id, const QString &topic, OnSubscribedCallback onSubscribed, SimpleSubscribeCallback callback);
     // Internal signal emitted by subscribeForInvokeTopic. Used to allow multi thread safe use.
-    void subscribeForInvokeTopicSignal(quint64 id, const QString &topic, InvokeSubscribeCallback callback);
+    void subscribeForInvokeTopicSignal(quint64 id, const QString &topic, OnSubscribedCallback onSubscribed, InvokeSubscribeCallback callback);
     /**
     * Unsubscribes the callback from a topic, and the topic if there is no more callbacks subscribed to it.
     * @param id. A subscription id of a subscribed callback for a topic.
@@ -121,20 +123,22 @@ public:
     * Subscribes for receiving topic and provides a callback to be executed on receiving topic.
     * May subscribe many callbacks for same topic, all of subscribed callbacks will be executed on receiving the message.
     * @param topic. Topic of message to subscribe.
-    * @param callback. A function to be executed on receiving the message with given topic
+    *     * @param onSubscribed. A function to handle when subscribing is finished.
+    * @param callback. A function to be executed on receiving the message with given topic.
     * NOTE Remember to unsubscribe the callback with an id given here as a parameter.
     * WARNING make sure that client is already connected.
     */
-    quint64 subscribeTopic(const QString &topic, SimpleSubscribeCallback callback);
+    quint64 subscribeTopic(const QString &topic, OnSubscribedCallback onSubscribed, SimpleSubscribeCallback callback);
     /** 
     * Subscribes for receiving topic and provides a callback to be executed on receiving topic.
     * May subscribe many callbacks for same topic, all of subscribed callbacks will be executed on receiving the message.
     * @param topic.Topic of message to subscribe.
-    * @param callback.A function to be executed on receiving the message with given topic
+    * @param onSubscribed. A function to handle when subscribing is finished.
+    * @param callback. A function to be executed on receiving the message with given topic.
     * @return an Id for this subscription. Remember to unsubscribe the callback with this id.
     * WARNING make sure that client is already connected.
     */
-    quint64 subscribeForInvokeTopic(const QString &topic, InvokeSubscribeCallback callback);
+    quint64 subscribeForInvokeTopic(const QString &topic, OnSubscribedCallback onSubscribed, InvokeSubscribeCallback callback);
 
     /**
     * Publishes message, use when property of your interface changes.

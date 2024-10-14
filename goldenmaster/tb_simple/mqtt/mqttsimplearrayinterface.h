@@ -211,12 +211,16 @@ public:
     * Remote call of ISimpleArrayInterface::funcString on the SimpleArrayInterface service.
     */
     QFuture<QList<QString>> funcStringAsync(const QList<QString>& paramString);
+    /**
+    * Use to check if the MqttSimpleArrayInterface is ready to send and receive messages.
+    */
+    bool isReady() const;
 
 signals:
     /**
     * Informs if the MqttSimpleArrayInterface is ready to send and receive messages.
     */
-    void isReady();
+    void ready();
 
 public:
     /**
@@ -274,9 +278,11 @@ private:
     void unsubscribeAll();
     //Helper function for handling invoke responses.
     void findAndExecuteCall(const nlohmann::json& value, quint64 callId, QString topic);
+    // Helper function for handling subsbscriptions
+    void handleOnSubscribed(QString topic, quint64 id,  bool hasSucceed);
 
-    /** An indicator if the object is linked with the service. */
-    bool m_isReady;
+    /** An indicator if the object has fisnished initialization. */
+    bool m_finishedInitialization;
     /** 
     * An abstraction layer over the connection with service for the MqttSimpleArrayInterface.
     * Handles incoming and outgoing messages.
@@ -304,6 +310,8 @@ private:
     std::map<quint64, std::pair<QString, std::function<void(const nlohmann::json&)>>> m_pendingCallsInfo;
     /* Pending calls mutex */
     std::mutex m_pendingCallMutex;
+    /* Storage for tracking pending subscriptions */
+    std::vector<QString> m_pendingSubscriptions;
 };
 
 } //namespace tb_simple

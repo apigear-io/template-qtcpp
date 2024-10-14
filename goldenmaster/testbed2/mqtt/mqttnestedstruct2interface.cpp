@@ -34,7 +34,7 @@ MqttNestedStruct2Interface::MqttNestedStruct2Interface(ApiGear::Mqtt::Client& cl
     : AbstractNestedStruct2Interface(parent)
     , m_prop1(NestedStruct1())
     , m_prop2(NestedStruct2())
-    , m_isReady(false)
+    , m_finishedInitialization(false)
     , m_client(client)
 {
     if (m_client.isReady())
@@ -48,11 +48,13 @@ MqttNestedStruct2Interface::MqttNestedStruct2Interface(ApiGear::Mqtt::Client& cl
             subscribeForPropertiesChanges();
             subscribeForSignals();
             subscribeForInvokeResponses();
+            m_finishedInitialization = true;
     });
     connect(&m_client, &ApiGear::Mqtt::Client::disconnected, [this](){
         m_subscribedIds.clear();
         m_InvokeCallsInfo.clear();
     });
+    m_finishedInitialization = m_client.isReady();
 }
 
 MqttNestedStruct2Interface::~MqttNestedStruct2Interface()
@@ -60,6 +62,11 @@ MqttNestedStruct2Interface::~MqttNestedStruct2Interface()
     disconnect(&m_client, &ApiGear::Mqtt::Client::disconnected, 0, 0);
     disconnect(&m_client, &ApiGear::Mqtt::Client::ready, 0, 0);
     unsubscribeAll();
+}
+
+bool MqttNestedStruct2Interface::isReady() const
+{
+    return m_finishedInitialization && m_pendingSubscriptions.empty();
 }
 
 void MqttNestedStruct2Interface::setProp1(const NestedStruct1& prop1)
@@ -207,27 +214,60 @@ const QString& MqttNestedStruct2Interface::interfaceName()
 {
     return InterfaceName;
 }
+
+void MqttNestedStruct2Interface::handleOnSubscribed(QString topic, quint64 id,  bool hasSucceed)
+{
+    if (!hasSucceed)
+    {
+        AG_LOG_WARNING("Subscription failed for  "+ topic+". Try reconnecting the client.");
+        return;
+    }
+    auto iter = std::find_if(m_pendingSubscriptions.begin(), m_pendingSubscriptions.end(), [topic](auto element){return topic == element;});
+    if (iter == m_pendingSubscriptions.end()){
+         AG_LOG_WARNING("Subscription failed for  "+ topic+". Try reconnecting the client.");
+        return;
+    }
+    m_pendingSubscriptions.erase(iter);
+    if (m_finishedInitialization && m_pendingSubscriptions.empty())
+    {
+        emit ready();
+    }
+}
 void MqttNestedStruct2Interface::subscribeForPropertiesChanges()
 {
+        // Subscription may succeed, before finising the function that subscribes it and assigns an id for if it was already added (and succeeded) for same topic,
+        // hence, for pending subscriptions a topic is used, and added before the subscribe function.
         const QString topicprop1 = interfaceName() + "/prop/prop1";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicprop1, [this](auto& value) { setProp1Local(value);}));
+        m_pendingSubscriptions.push_back(topicprop1);
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicprop1,
+            [this, topicprop1](auto id, bool hasSucceed){handleOnSubscribed(topicprop1, id, hasSucceed);},
+            [this](auto& value) { setProp1Local(value);}));
         const QString topicprop2 = interfaceName() + "/prop/prop2";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicprop2, [this](auto& value) { setProp2Local(value);}));
+        m_pendingSubscriptions.push_back(topicprop2);
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicprop2,
+            [this, topicprop2](auto id, bool hasSucceed){handleOnSubscribed(topicprop2, id, hasSucceed);},
+            [this](auto& value) { setProp2Local(value);}));
 }
 void MqttNestedStruct2Interface::subscribeForSignals()
 {
         const QString topicsig1 = interfaceName() + "/sig/sig1";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig1, [this](const nlohmann::json& argumentsArray){
-            emit sig1(argumentsArray[0].get<NestedStruct1>());}));
+        m_pendingSubscriptions.push_back(topicsig1);
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig1,
+            [this, topicsig1](auto id, bool hasSucceed){handleOnSubscribed(topicsig1, id, hasSucceed);},
+            [this](const nlohmann::json& argumentsArray){ emit sig1(argumentsArray[0].get<NestedStruct1>());}));
         const QString topicsig2 = interfaceName() + "/sig/sig2";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig2, [this](const nlohmann::json& argumentsArray){
-            emit sig2(argumentsArray[0].get<NestedStruct1>(),argumentsArray[1].get<NestedStruct2>());}));
+        m_pendingSubscriptions.push_back(topicsig2);
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig2,
+            [this, topicsig2](auto id, bool hasSucceed){handleOnSubscribed(topicsig2, id, hasSucceed);},
+            [this](const nlohmann::json& argumentsArray){ emit sig2(argumentsArray[0].get<NestedStruct1>(), argumentsArray[1].get<NestedStruct2>());}));
 }
 void MqttNestedStruct2Interface::subscribeForInvokeResponses()
 {
     const QString topicfunc1 = interfaceName() + "/rpc/func1";
     const QString topicfunc1InvokeResp = interfaceName() + "/rpc/func1"+ m_client.clientId() + "/result";
+    m_pendingSubscriptions.push_back(topicfunc1InvokeResp);
     auto id_func1 = m_client.subscribeForInvokeResponse(topicfunc1InvokeResp, 
+                        [this, topicfunc1InvokeResp](auto id, bool hasSucceed){handleOnSubscribed(topicfunc1InvokeResp, id, hasSucceed);},
                         [this, topicfunc1InvokeResp](const nlohmann::json& value, quint64 callId)
                         {
                             findAndExecuteCall(value, callId, topicfunc1InvokeResp);
@@ -235,7 +275,9 @@ void MqttNestedStruct2Interface::subscribeForInvokeResponses()
     m_InvokeCallsInfo[topicfunc1] = std::make_pair(topicfunc1InvokeResp, id_func1);
     const QString topicfunc2 = interfaceName() + "/rpc/func2";
     const QString topicfunc2InvokeResp = interfaceName() + "/rpc/func2"+ m_client.clientId() + "/result";
+    m_pendingSubscriptions.push_back(topicfunc2InvokeResp);
     auto id_func2 = m_client.subscribeForInvokeResponse(topicfunc2InvokeResp, 
+                        [this, topicfunc2InvokeResp](auto id, bool hasSucceed){handleOnSubscribed(topicfunc2InvokeResp, id, hasSucceed);},
                         [this, topicfunc2InvokeResp](const nlohmann::json& value, quint64 callId)
                         {
                             findAndExecuteCall(value, callId, topicfunc2InvokeResp);

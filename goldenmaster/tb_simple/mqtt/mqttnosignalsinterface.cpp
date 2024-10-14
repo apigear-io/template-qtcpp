@@ -34,7 +34,7 @@ MqttNoSignalsInterface::MqttNoSignalsInterface(ApiGear::Mqtt::Client& client, QO
     : AbstractNoSignalsInterface(parent)
     , m_propBool(false)
     , m_propInt(0)
-    , m_isReady(false)
+    , m_finishedInitialization(false)
     , m_client(client)
 {
     if (m_client.isReady())
@@ -46,11 +46,13 @@ MqttNoSignalsInterface::MqttNoSignalsInterface(ApiGear::Mqtt::Client& client, QO
         AG_LOG_DEBUG(Q_FUNC_INFO);
             subscribeForPropertiesChanges();
             subscribeForInvokeResponses();
+            m_finishedInitialization = true;
     });
     connect(&m_client, &ApiGear::Mqtt::Client::disconnected, [this](){
         m_subscribedIds.clear();
         m_InvokeCallsInfo.clear();
     });
+    m_finishedInitialization = m_client.isReady();
 }
 
 MqttNoSignalsInterface::~MqttNoSignalsInterface()
@@ -58,6 +60,11 @@ MqttNoSignalsInterface::~MqttNoSignalsInterface()
     disconnect(&m_client, &ApiGear::Mqtt::Client::disconnected, 0, 0);
     disconnect(&m_client, &ApiGear::Mqtt::Client::ready, 0, 0);
     unsubscribeAll();
+}
+
+bool MqttNoSignalsInterface::isReady() const
+{
+    return m_finishedInitialization && m_pendingSubscriptions.empty();
 }
 
 void MqttNoSignalsInterface::setPropBool(bool propBool)
@@ -204,18 +211,47 @@ const QString& MqttNoSignalsInterface::interfaceName()
 {
     return InterfaceName;
 }
+
+void MqttNoSignalsInterface::handleOnSubscribed(QString topic, quint64 id,  bool hasSucceed)
+{
+    if (!hasSucceed)
+    {
+        AG_LOG_WARNING("Subscription failed for  "+ topic+". Try reconnecting the client.");
+        return;
+    }
+    auto iter = std::find_if(m_pendingSubscriptions.begin(), m_pendingSubscriptions.end(), [topic](auto element){return topic == element;});
+    if (iter == m_pendingSubscriptions.end()){
+         AG_LOG_WARNING("Subscription failed for  "+ topic+". Try reconnecting the client.");
+        return;
+    }
+    m_pendingSubscriptions.erase(iter);
+    if (m_finishedInitialization && m_pendingSubscriptions.empty())
+    {
+        emit ready();
+    }
+}
 void MqttNoSignalsInterface::subscribeForPropertiesChanges()
 {
+        // Subscription may succeed, before finising the function that subscribes it and assigns an id for if it was already added (and succeeded) for same topic,
+        // hence, for pending subscriptions a topic is used, and added before the subscribe function.
         const QString topicpropBool = interfaceName() + "/prop/propBool";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicpropBool, [this](auto& value) { setPropBoolLocal(value);}));
+        m_pendingSubscriptions.push_back(topicpropBool);
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicpropBool,
+            [this, topicpropBool](auto id, bool hasSucceed){handleOnSubscribed(topicpropBool, id, hasSucceed);},
+            [this](auto& value) { setPropBoolLocal(value);}));
         const QString topicpropInt = interfaceName() + "/prop/propInt";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicpropInt, [this](auto& value) { setPropIntLocal(value);}));
+        m_pendingSubscriptions.push_back(topicpropInt);
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicpropInt,
+            [this, topicpropInt](auto id, bool hasSucceed){handleOnSubscribed(topicpropInt, id, hasSucceed);},
+            [this](auto& value) { setPropIntLocal(value);}));
 }
 void MqttNoSignalsInterface::subscribeForInvokeResponses()
 {
     const QString topicfuncVoid = interfaceName() + "/rpc/funcVoid";
     const QString topicfuncVoidInvokeResp = interfaceName() + "/rpc/funcVoid"+ m_client.clientId() + "/result";
+    m_pendingSubscriptions.push_back(topicfuncVoidInvokeResp);
     auto id_funcVoid = m_client.subscribeForInvokeResponse(topicfuncVoidInvokeResp, 
+                        [this, topicfuncVoidInvokeResp](auto id, bool hasSucceed){handleOnSubscribed(topicfuncVoidInvokeResp, id, hasSucceed);},
                         [this, topicfuncVoidInvokeResp](const nlohmann::json& value, quint64 callId)
                         {
                             findAndExecuteCall(value, callId, topicfuncVoidInvokeResp);
@@ -223,7 +259,9 @@ void MqttNoSignalsInterface::subscribeForInvokeResponses()
     m_InvokeCallsInfo[topicfuncVoid] = std::make_pair(topicfuncVoidInvokeResp, id_funcVoid);
     const QString topicfuncBool = interfaceName() + "/rpc/funcBool";
     const QString topicfuncBoolInvokeResp = interfaceName() + "/rpc/funcBool"+ m_client.clientId() + "/result";
+    m_pendingSubscriptions.push_back(topicfuncBoolInvokeResp);
     auto id_funcBool = m_client.subscribeForInvokeResponse(topicfuncBoolInvokeResp, 
+                        [this, topicfuncBoolInvokeResp](auto id, bool hasSucceed){handleOnSubscribed(topicfuncBoolInvokeResp, id, hasSucceed);},
                         [this, topicfuncBoolInvokeResp](const nlohmann::json& value, quint64 callId)
                         {
                             findAndExecuteCall(value, callId, topicfuncBoolInvokeResp);

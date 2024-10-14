@@ -74,7 +74,7 @@ void ServiceAdapter::writeMessage(const QMqttTopicName& topic, const QByteArray&
     m_client.publish(topic, message, QoS, retain);
 }
 
-void ServiceAdapter::onSubscribeTopic(quint64 id, const QString &topic, SimpleSubscribeCallback callback)
+void ServiceAdapter::onSubscribeTopic(quint64 id, const QString &topic, OnSubscribedCallback onSubscribed, SimpleSubscribeCallback callback)
 {
     auto subscription = m_client.subscribe(topic, QoS);
     auto subscribedTopic = subscription->topic();
@@ -98,7 +98,7 @@ void ServiceAdapter::onSubscribeTopic(quint64 id, const QString &topic, SimpleSu
     m_subscriptions.insert(subscription->topic(), std::make_pair(id, callback));
 }
 
-void ServiceAdapter::onSubscribeForInvokeTopic(quint64 id, const QString &topic, InvokeSubscribeCallback callback)
+void ServiceAdapter::onSubscribeForInvokeTopic(quint64 id, const QString &topic, OnSubscribedCallback onSubscribed, InvokeSubscribeCallback callback)
 {
     auto subscription = m_client.subscribe(topic, QoS);
     auto topicFilter = subscription->topic();
@@ -127,17 +127,17 @@ void ServiceAdapter::connectToHost(QString hostAddress,int port)
 
 }
 
-quint64 ServiceAdapter::subscribeTopic(const QString &topic, SimpleSubscribeCallback callback)
+quint64 ServiceAdapter::subscribeTopic(const QString &topic, OnSubscribedCallback onSubscribed, SimpleSubscribeCallback callback)
 {
     auto id = subscriptionIdGenerator.getId();
-    subscribeTopicSignal(id, topic, callback);
+    emit subscribeTopicSignal(id, topic, onSubscribed, callback);
     return id;
 }
 
-quint64 ServiceAdapter::subscribeForInvokeTopic(const QString &topic, InvokeSubscribeCallback callback){
+quint64 ServiceAdapter::subscribeForInvokeTopic(const QString &topic, OnSubscribedCallback onSubscribed, InvokeSubscribeCallback callback){
 
     auto id = subscriptionIdGenerator.getId();
-    subscribeForInvokeTopicSignal(id,topic, callback);
+    emit subscribeForInvokeTopicSignal(id, topic, onSubscribed, callback);
     return id;
 }
 

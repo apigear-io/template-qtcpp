@@ -32,7 +32,7 @@ const QString InterfaceName = "tb.simple/VoidInterface";
 
 MqttVoidInterface::MqttVoidInterface(ApiGear::Mqtt::Client& client, QObject *parent)
     : AbstractVoidInterface(parent)
-    , m_isReady(false)
+    , m_finishedInitialization(false)
     , m_client(client)
 {
     if (m_client.isReady())
@@ -44,11 +44,13 @@ MqttVoidInterface::MqttVoidInterface(ApiGear::Mqtt::Client& client, QObject *par
         AG_LOG_DEBUG(Q_FUNC_INFO);
             subscribeForSignals();
             subscribeForInvokeResponses();
+            m_finishedInitialization = true;
     });
     connect(&m_client, &ApiGear::Mqtt::Client::disconnected, [this](){
         m_subscribedIds.clear();
         m_InvokeCallsInfo.clear();
     });
+    m_finishedInitialization = m_client.isReady();
 }
 
 MqttVoidInterface::~MqttVoidInterface()
@@ -56,6 +58,11 @@ MqttVoidInterface::~MqttVoidInterface()
     disconnect(&m_client, &ApiGear::Mqtt::Client::disconnected, 0, 0);
     disconnect(&m_client, &ApiGear::Mqtt::Client::ready, 0, 0);
     unsubscribeAll();
+}
+
+bool MqttVoidInterface::isReady() const
+{
+    return m_finishedInitialization && m_pendingSubscriptions.empty();
 }
 
 void MqttVoidInterface::funcVoid()
@@ -105,17 +112,40 @@ const QString& MqttVoidInterface::interfaceName()
 {
     return InterfaceName;
 }
+
+void MqttVoidInterface::handleOnSubscribed(QString topic, quint64 id,  bool hasSucceed)
+{
+    if (!hasSucceed)
+    {
+        AG_LOG_WARNING("Subscription failed for  "+ topic+". Try reconnecting the client.");
+        return;
+    }
+    auto iter = std::find_if(m_pendingSubscriptions.begin(), m_pendingSubscriptions.end(), [topic](auto element){return topic == element;});
+    if (iter == m_pendingSubscriptions.end()){
+         AG_LOG_WARNING("Subscription failed for  "+ topic+". Try reconnecting the client.");
+        return;
+    }
+    m_pendingSubscriptions.erase(iter);
+    if (m_finishedInitialization && m_pendingSubscriptions.empty())
+    {
+        emit ready();
+    }
+}
 void MqttVoidInterface::subscribeForSignals()
 {
         const QString topicsigVoid = interfaceName() + "/sig/sigVoid";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigVoid, [this](const nlohmann::json& argumentsArray){
-            emit sigVoid();}));
+        m_pendingSubscriptions.push_back(topicsigVoid);
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsigVoid,
+            [this, topicsigVoid](auto id, bool hasSucceed){handleOnSubscribed(topicsigVoid, id, hasSucceed);},
+            [this](const nlohmann::json& argumentsArray){ emit sigVoid();}));
 }
 void MqttVoidInterface::subscribeForInvokeResponses()
 {
     const QString topicfuncVoid = interfaceName() + "/rpc/funcVoid";
     const QString topicfuncVoidInvokeResp = interfaceName() + "/rpc/funcVoid"+ m_client.clientId() + "/result";
+    m_pendingSubscriptions.push_back(topicfuncVoidInvokeResp);
     auto id_funcVoid = m_client.subscribeForInvokeResponse(topicfuncVoidInvokeResp, 
+                        [this, topicfuncVoidInvokeResp](auto id, bool hasSucceed){handleOnSubscribed(topicfuncVoidInvokeResp, id, hasSucceed);},
                         [this, topicfuncVoidInvokeResp](const nlohmann::json& value, quint64 callId)
                         {
                             findAndExecuteCall(value, callId, topicfuncVoidInvokeResp);

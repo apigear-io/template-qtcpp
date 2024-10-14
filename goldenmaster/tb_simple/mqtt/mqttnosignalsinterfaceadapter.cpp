@@ -38,6 +38,7 @@ const QString InterfaceName = "tb.simple/NoSignalsInterface";
 MqttNoSignalsInterfaceAdapter::MqttNoSignalsInterfaceAdapter(ApiGear::Mqtt::ServiceAdapter& mqttServiceAdapter, std::shared_ptr<AbstractNoSignalsInterface> impl, QObject *parent)
     : QObject(parent)
     , m_impl(impl)
+    , m_finishedInitialization(false)
     , m_mqttServiceAdapter(mqttServiceAdapter)
 {
     if (m_mqttServiceAdapter.isReady())
@@ -51,12 +52,14 @@ MqttNoSignalsInterfaceAdapter::MqttNoSignalsInterfaceAdapter(ApiGear::Mqtt::Serv
         subscribeForPropertiesChanges();
         subscribeForInvokeRequests();
         connectServicePropertiesChanges();
+        m_finishedInitialization = true;
     });
     
     connect(&m_mqttServiceAdapter, &ApiGear::Mqtt::ServiceAdapter::disconnected, [this](){
     AG_LOG_DEBUG(Q_FUNC_INFO);
         m_subscribedIds.clear();
     });
+    m_finishedInitialization = m_mqttServiceAdapter.isReady();
 }
 
 MqttNoSignalsInterfaceAdapter::~MqttNoSignalsInterfaceAdapter()
@@ -66,6 +69,12 @@ MqttNoSignalsInterfaceAdapter::~MqttNoSignalsInterfaceAdapter()
     unsubscribeAll();
 }
 
+bool MqttNoSignalsInterfaceAdapter::isReady() const
+{
+    return m_finishedInitialization && m_pendingSubscriptions.empty();
+}
+
+
 const QString& MqttNoSignalsInterfaceAdapter::interfaceName()
 {
     return InterfaceName;
@@ -74,14 +83,18 @@ const QString& MqttNoSignalsInterfaceAdapter::interfaceName()
 void MqttNoSignalsInterfaceAdapter::subscribeForPropertiesChanges()
 {
     const auto setTopic_propBool = interfaceName() + "/set/propBool";
+    m_pendingSubscriptions.push_back(setTopic_propBool);
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_propBool,
+        [this, setTopic_propBool](auto id, bool hasSucceed){handleOnSubscribed(setTopic_propBool, id, hasSucceed);},
         [this](const nlohmann::json& value)
         {
             bool propBool = value.get<bool>();
             m_impl->setPropBool(propBool);
         }));
     const auto setTopic_propInt = interfaceName() + "/set/propInt";
+    m_pendingSubscriptions.push_back(setTopic_propInt);
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_propInt,
+        [this, setTopic_propInt](auto id, bool hasSucceed){handleOnSubscribed(setTopic_propInt, id, hasSucceed);},
         [this](const nlohmann::json& value)
         {
             int propInt = value.get<int>();
@@ -92,14 +105,18 @@ void MqttNoSignalsInterfaceAdapter::subscribeForPropertiesChanges()
 void MqttNoSignalsInterfaceAdapter::subscribeForInvokeRequests()
 {
     const auto invokeTopic_funcVoid = interfaceName() + "/rpc/funcVoid";
+    m_pendingSubscriptions.push_back(invokeTopic_funcVoid);
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_funcVoid,
+        [this, invokeTopic_funcVoid](auto id, bool hasSucceed){handleOnSubscribed(invokeTopic_funcVoid, id, hasSucceed);},
         [this](const nlohmann::json& arguments)
         {
             m_impl->funcVoid( );
             return nlohmann::json {};
         }));
     const auto invokeTopic_funcBool = interfaceName() + "/rpc/funcBool";
+    m_pendingSubscriptions.push_back(invokeTopic_funcBool);
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_funcBool,
+        [this, invokeTopic_funcBool](auto id, bool hasSucceed){handleOnSubscribed(invokeTopic_funcBool, id, hasSucceed);},
         [this](const nlohmann::json& arguments)
         {
             bool paramBool = arguments.at(0).get<bool>();
@@ -130,6 +147,25 @@ void MqttNoSignalsInterfaceAdapter::unsubscribeAll()
     for(auto id :m_subscribedIds)
     {
         m_mqttServiceAdapter.unsubscribeTopic(id);
+    }
+}
+
+void MqttNoSignalsInterfaceAdapter::handleOnSubscribed(QString topic, quint64 id,  bool hasSucceed)
+{
+    if (!hasSucceed)
+    {
+        AG_LOG_WARNING("Subscription failed for  "+ topic+". Try reconnecting the client.");
+        return;
+    }
+    auto iter = std::find_if(m_pendingSubscriptions.begin(), m_pendingSubscriptions.end(), [topic](auto element){return topic == element;});
+    if (iter == m_pendingSubscriptions.end()){
+         AG_LOG_WARNING("Subscription failed for  "+ topic+". Try reconnecting the client.");
+        return;
+    }
+    m_pendingSubscriptions.erase(iter);
+    if (m_finishedInitialization && m_pendingSubscriptions.empty())
+    {
+        emit ready();
     }
 }
 

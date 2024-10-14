@@ -55,7 +55,16 @@ public:
     * so adapter for an interface on client side has to have the same name.
     */
     const QString& interfaceName();
+    /**
+    * Use to check if the MqttSameStruct1InterfaceAdapter is ready to send and receive messages.
+    */
+    bool isReady() const;
 
+signals:
+    /**
+    * Informs if the MqttSameStruct1InterfaceAdapter is ready to send and receive messages.
+    */
+    void ready();
 private:
     // Helper function, subscribes this adpater for property change requests from remote clients.
     void subscribeForPropertiesChanges();
@@ -68,6 +77,8 @@ private:
 
     // Helper function for removing all subscriptions. 
     void unsubscribeAll();
+    // Helper function for handling subsbscriptions
+    void handleOnSubscribed(QString topic, quint64 id,  bool hasSucceed);
 
     /**
     * The actual implementation of a SameStruct1Interface that gets adapted to be a service in mqtt network.
@@ -78,8 +89,13 @@ private:
     */
     ApiGear::Mqtt::ServiceAdapter& m_mqttServiceAdapter;
 
+    /** An indicator if the object has fisnished initialization. */
+    bool m_finishedInitialization;
+
     /** Ids of subscribed topics */
     std::vector<quint64> m_subscribedIds;
+    /* Storage for tracking pending subscriptions */
+    std::vector<QString> m_pendingSubscriptions;
 };
 
 } // namespace tb_same2

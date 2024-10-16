@@ -125,15 +125,16 @@ QFuture<{{$return}}> {{$class}}::{{camel .Name}}Async({{qtParams "" .Params}})
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/{{.Name}}");
     auto promise = std::make_shared<QPromise<{{$return}}>>();
+    promise->start();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-        {{- if .Return.IsVoid }}
-            promise->finish();
-        {{- else }}
+        {{- if not .Return.IsVoid }}
             promise->addResult({{qtDefault "" .Return}});
         {{- end}}
+        promise->finish();
+        return promise->future();
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -141,23 +142,22 @@ QFuture<{{$return}}> {{$class}}::{{camel .Name}}Async({{qtParams "" .Params}})
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-        {{- if .Return.IsVoid }}
-            promise->finish();
-        {{- else }}
-            promise->addResult({{qtDefault "" .Return}});
+        {{- if not .Return.IsVoid }}
+        promise->addResult({{qtDefault "" .Return}});
         {{- end}}
+        promise->finish();
+        return promise->future();
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({ {{- range $i, $e := .Params }}{{if $i}}, {{ end }}{{.Name}}{{- end }} });       
 
     auto func = [promise](const nlohmann::json& arg)
         {
-        {{- if .Return.IsVoid }}
-            promise->finish();
-        {{- else }}
+        {{- if not .Return.IsVoid }}
             {{$return}} value = arg.get<{{$return}}>();
             promise->addResult(value);
         {{- end}}
+            promise->finish();
         };
     auto callId = m_client.invokeRemote(topic, arguments, respTopic);
     auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);

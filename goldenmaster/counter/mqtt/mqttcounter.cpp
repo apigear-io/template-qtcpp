@@ -135,11 +135,14 @@ QFuture<QVector3D> MqttCounter::incrementAsync(const QVector3D& vec)
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/increment");
     auto promise = std::make_shared<QPromise<QVector3D>>();
+    promise->start();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
             promise->addResult(QVector3D());
+        promise->finish();
+        return promise->future();
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -147,7 +150,9 @@ QFuture<QVector3D> MqttCounter::incrementAsync(const QVector3D& vec)
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(QVector3D());
+        promise->addResult(QVector3D());
+        promise->finish();
+        return promise->future();
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({vec });       
@@ -156,6 +161,7 @@ QFuture<QVector3D> MqttCounter::incrementAsync(const QVector3D& vec)
         {
             QVector3D value = arg.get<QVector3D>();
             promise->addResult(value);
+            promise->finish();
         };
     auto callId = m_client.invokeRemote(topic, arguments, respTopic);
     auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
@@ -178,11 +184,14 @@ QFuture<custom_types::Vector3D> MqttCounter::decrementAsync(const custom_types::
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/decrement");
     auto promise = std::make_shared<QPromise<custom_types::Vector3D>>();
+    promise->start();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
             promise->addResult(custom_types::Vector3D());
+        promise->finish();
+        return promise->future();
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -190,7 +199,9 @@ QFuture<custom_types::Vector3D> MqttCounter::decrementAsync(const custom_types::
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(custom_types::Vector3D());
+        promise->addResult(custom_types::Vector3D());
+        promise->finish();
+        return promise->future();
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({vec });       
@@ -199,6 +210,7 @@ QFuture<custom_types::Vector3D> MqttCounter::decrementAsync(const custom_types::
         {
             custom_types::Vector3D value = arg.get<custom_types::Vector3D>();
             promise->addResult(value);
+            promise->finish();
         };
     auto callId = m_client.invokeRemote(topic, arguments, respTopic);
     auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);

@@ -305,11 +305,13 @@ QFuture<void> MqttSimpleInterface::funcNoReturnValueAsync(bool paramBool)
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/funcNoReturnValue");
     auto promise = std::make_shared<QPromise<void>>();
+    promise->start();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->finish();
+        promise->finish();
+        return promise->future();
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -317,7 +319,8 @@ QFuture<void> MqttSimpleInterface::funcNoReturnValueAsync(bool paramBool)
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->finish();
+        promise->finish();
+        return promise->future();
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({paramBool });       
@@ -347,11 +350,14 @@ QFuture<bool> MqttSimpleInterface::funcBoolAsync(bool paramBool)
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/funcBool");
     auto promise = std::make_shared<QPromise<bool>>();
+    promise->start();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
             promise->addResult(false);
+        promise->finish();
+        return promise->future();
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -359,7 +365,9 @@ QFuture<bool> MqttSimpleInterface::funcBoolAsync(bool paramBool)
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(false);
+        promise->addResult(false);
+        promise->finish();
+        return promise->future();
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({paramBool });       
@@ -368,6 +376,7 @@ QFuture<bool> MqttSimpleInterface::funcBoolAsync(bool paramBool)
         {
             bool value = arg.get<bool>();
             promise->addResult(value);
+            promise->finish();
         };
     auto callId = m_client.invokeRemote(topic, arguments, respTopic);
     auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
@@ -390,11 +399,14 @@ QFuture<int> MqttSimpleInterface::funcIntAsync(int paramInt)
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/funcInt");
     auto promise = std::make_shared<QPromise<int>>();
+    promise->start();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
             promise->addResult(0);
+        promise->finish();
+        return promise->future();
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -402,7 +414,9 @@ QFuture<int> MqttSimpleInterface::funcIntAsync(int paramInt)
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(0);
+        promise->addResult(0);
+        promise->finish();
+        return promise->future();
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({paramInt });       
@@ -411,6 +425,7 @@ QFuture<int> MqttSimpleInterface::funcIntAsync(int paramInt)
         {
             int value = arg.get<int>();
             promise->addResult(value);
+            promise->finish();
         };
     auto callId = m_client.invokeRemote(topic, arguments, respTopic);
     auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
@@ -433,11 +448,14 @@ QFuture<qint32> MqttSimpleInterface::funcInt32Async(qint32 paramInt32)
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/funcInt32");
     auto promise = std::make_shared<QPromise<qint32>>();
+    promise->start();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
             promise->addResult(0);
+        promise->finish();
+        return promise->future();
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -445,7 +463,9 @@ QFuture<qint32> MqttSimpleInterface::funcInt32Async(qint32 paramInt32)
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(0);
+        promise->addResult(0);
+        promise->finish();
+        return promise->future();
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({paramInt32 });       
@@ -454,6 +474,7 @@ QFuture<qint32> MqttSimpleInterface::funcInt32Async(qint32 paramInt32)
         {
             qint32 value = arg.get<qint32>();
             promise->addResult(value);
+            promise->finish();
         };
     auto callId = m_client.invokeRemote(topic, arguments, respTopic);
     auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
@@ -476,11 +497,14 @@ QFuture<qint64> MqttSimpleInterface::funcInt64Async(qint64 paramInt64)
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/funcInt64");
     auto promise = std::make_shared<QPromise<qint64>>();
+    promise->start();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
             promise->addResult(0LL);
+        promise->finish();
+        return promise->future();
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -488,7 +512,9 @@ QFuture<qint64> MqttSimpleInterface::funcInt64Async(qint64 paramInt64)
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(0LL);
+        promise->addResult(0LL);
+        promise->finish();
+        return promise->future();
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({paramInt64 });       
@@ -497,6 +523,7 @@ QFuture<qint64> MqttSimpleInterface::funcInt64Async(qint64 paramInt64)
         {
             qint64 value = arg.get<qint64>();
             promise->addResult(value);
+            promise->finish();
         };
     auto callId = m_client.invokeRemote(topic, arguments, respTopic);
     auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
@@ -519,11 +546,14 @@ QFuture<qreal> MqttSimpleInterface::funcFloatAsync(qreal paramFloat)
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/funcFloat");
     auto promise = std::make_shared<QPromise<qreal>>();
+    promise->start();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
             promise->addResult(0.0f);
+        promise->finish();
+        return promise->future();
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -531,7 +561,9 @@ QFuture<qreal> MqttSimpleInterface::funcFloatAsync(qreal paramFloat)
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(0.0f);
+        promise->addResult(0.0f);
+        promise->finish();
+        return promise->future();
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({paramFloat });       
@@ -540,6 +572,7 @@ QFuture<qreal> MqttSimpleInterface::funcFloatAsync(qreal paramFloat)
         {
             qreal value = arg.get<qreal>();
             promise->addResult(value);
+            promise->finish();
         };
     auto callId = m_client.invokeRemote(topic, arguments, respTopic);
     auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
@@ -562,11 +595,14 @@ QFuture<float> MqttSimpleInterface::funcFloat32Async(float paramFloat32)
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/funcFloat32");
     auto promise = std::make_shared<QPromise<float>>();
+    promise->start();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
             promise->addResult(0.0f);
+        promise->finish();
+        return promise->future();
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -574,7 +610,9 @@ QFuture<float> MqttSimpleInterface::funcFloat32Async(float paramFloat32)
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(0.0f);
+        promise->addResult(0.0f);
+        promise->finish();
+        return promise->future();
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({paramFloat32 });       
@@ -583,6 +621,7 @@ QFuture<float> MqttSimpleInterface::funcFloat32Async(float paramFloat32)
         {
             float value = arg.get<float>();
             promise->addResult(value);
+            promise->finish();
         };
     auto callId = m_client.invokeRemote(topic, arguments, respTopic);
     auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
@@ -605,11 +644,14 @@ QFuture<double> MqttSimpleInterface::funcFloat64Async(double paramFloat)
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/funcFloat64");
     auto promise = std::make_shared<QPromise<double>>();
+    promise->start();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
             promise->addResult(0.0);
+        promise->finish();
+        return promise->future();
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -617,7 +659,9 @@ QFuture<double> MqttSimpleInterface::funcFloat64Async(double paramFloat)
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(0.0);
+        promise->addResult(0.0);
+        promise->finish();
+        return promise->future();
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({paramFloat });       
@@ -626,6 +670,7 @@ QFuture<double> MqttSimpleInterface::funcFloat64Async(double paramFloat)
         {
             double value = arg.get<double>();
             promise->addResult(value);
+            promise->finish();
         };
     auto callId = m_client.invokeRemote(topic, arguments, respTopic);
     auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
@@ -648,11 +693,14 @@ QFuture<QString> MqttSimpleInterface::funcStringAsync(const QString& paramString
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/funcString");
     auto promise = std::make_shared<QPromise<QString>>();
+    promise->start();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
             promise->addResult(QString());
+        promise->finish();
+        return promise->future();
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -660,7 +708,9 @@ QFuture<QString> MqttSimpleInterface::funcStringAsync(const QString& paramString
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(QString());
+        promise->addResult(QString());
+        promise->finish();
+        return promise->future();
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({paramString });       
@@ -669,6 +719,7 @@ QFuture<QString> MqttSimpleInterface::funcStringAsync(const QString& paramString
         {
             QString value = arg.get<QString>();
             promise->addResult(value);
+            promise->finish();
         };
     auto callId = m_client.invokeRemote(topic, arguments, respTopic);
     auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);

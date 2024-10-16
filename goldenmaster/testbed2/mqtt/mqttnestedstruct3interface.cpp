@@ -165,11 +165,14 @@ QFuture<NestedStruct1> MqttNestedStruct3Interface::func1Async(const NestedStruct
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/func1");
     auto promise = std::make_shared<QPromise<NestedStruct1>>();
+    promise->start();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
             promise->addResult(NestedStruct1());
+        promise->finish();
+        return promise->future();
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -177,7 +180,9 @@ QFuture<NestedStruct1> MqttNestedStruct3Interface::func1Async(const NestedStruct
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(NestedStruct1());
+        promise->addResult(NestedStruct1());
+        promise->finish();
+        return promise->future();
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({param1 });       
@@ -186,6 +191,7 @@ QFuture<NestedStruct1> MqttNestedStruct3Interface::func1Async(const NestedStruct
         {
             NestedStruct1 value = arg.get<NestedStruct1>();
             promise->addResult(value);
+            promise->finish();
         };
     auto callId = m_client.invokeRemote(topic, arguments, respTopic);
     auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
@@ -208,11 +214,14 @@ QFuture<NestedStruct1> MqttNestedStruct3Interface::func2Async(const NestedStruct
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/func2");
     auto promise = std::make_shared<QPromise<NestedStruct1>>();
+    promise->start();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
             promise->addResult(NestedStruct1());
+        promise->finish();
+        return promise->future();
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -220,7 +229,9 @@ QFuture<NestedStruct1> MqttNestedStruct3Interface::func2Async(const NestedStruct
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(NestedStruct1());
+        promise->addResult(NestedStruct1());
+        promise->finish();
+        return promise->future();
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({param1, param2 });       
@@ -229,6 +240,7 @@ QFuture<NestedStruct1> MqttNestedStruct3Interface::func2Async(const NestedStruct
         {
             NestedStruct1 value = arg.get<NestedStruct1>();
             promise->addResult(value);
+            promise->finish();
         };
     auto callId = m_client.invokeRemote(topic, arguments, respTopic);
     auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
@@ -251,11 +263,14 @@ QFuture<NestedStruct1> MqttNestedStruct3Interface::func3Async(const NestedStruct
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/func3");
     auto promise = std::make_shared<QPromise<NestedStruct1>>();
+    promise->start();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
             promise->addResult(NestedStruct1());
+        promise->finish();
+        return promise->future();
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -263,7 +278,9 @@ QFuture<NestedStruct1> MqttNestedStruct3Interface::func3Async(const NestedStruct
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(NestedStruct1());
+        promise->addResult(NestedStruct1());
+        promise->finish();
+        return promise->future();
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({param1, param2, param3 });       
@@ -272,6 +289,7 @@ QFuture<NestedStruct1> MqttNestedStruct3Interface::func3Async(const NestedStruct
         {
             NestedStruct1 value = arg.get<NestedStruct1>();
             promise->addResult(value);
+            promise->finish();
         };
     auto callId = m_client.invokeRemote(topic, arguments, respTopic);
     auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);

@@ -165,11 +165,13 @@ QFuture<void> MqttNam_Es::someFunctionAsync(bool SOME_PARAM)
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/SOME_FUNCTION");
     auto promise = std::make_shared<QPromise<void>>();
+    promise->start();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->finish();
+        promise->finish();
+        return promise->future();
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -177,7 +179,8 @@ QFuture<void> MqttNam_Es::someFunctionAsync(bool SOME_PARAM)
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->finish();
+        promise->finish();
+        return promise->future();
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({SOME_PARAM });       
@@ -207,11 +210,13 @@ QFuture<void> MqttNam_Es::someFunction2Async(bool Some_Param)
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/Some_Function2");
     auto promise = std::make_shared<QPromise<void>>();
+    promise->start();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->finish();
+        promise->finish();
+        return promise->future();
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -219,7 +224,8 @@ QFuture<void> MqttNam_Es::someFunction2Async(bool Some_Param)
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->finish();
+        promise->finish();
+        return promise->future();
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({Some_Param });       

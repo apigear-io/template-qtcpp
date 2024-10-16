@@ -56,7 +56,14 @@ jobs:
         run: |
              cmake .
              cmake --build .
-             cmake --install . --verbose 
+             cmake --install . --verbose
+      - name: Start Mosquitto
+        if: ${{ matrix.config.os == 'ubuntu-latest'}}
+        uses: namoshek/mosquitto-github-action@v1
+        with:
+          version: '1.6'
+          ports: '1883:1883'
+          container-name: 'mqtt'
       - name: Update path env on Windows for testing
         if: ${{ matrix.config.os == 'windows-latest'}}
         run: echo "$GITHUB_WORKSPACE/goldenmaster/build/bin/Debug/" >> $GITHUB_PATH

@@ -24,7 +24,7 @@ const QString InterfaceName = "{{$module}}/{{$iface}}";
 {{- range .Interface.Properties }}
     , m_{{.Name}}({{qtDefault "" .}})
 {{- end }}
-    , m_isReady(false)
+    , m_finishedInitialization(false)
     , m_client(client)
 {
     if (m_client.isReady())
@@ -51,11 +51,13 @@ const QString InterfaceName = "{{$module}}/{{$iface}}";
             {{- if (len .Interface.Operations) }}
             subscribeForInvokeResponses();
             {{- end }}
+            m_finishedInitialization = true;
     });
     connect(&m_client, &ApiGear::Mqtt::Client::disconnected, [this](){
         m_subscribedIds.clear();
         m_InvokeCallsInfo.clear();
     });
+    m_finishedInitialization = m_client.isReady();
 }
 
 {{$class}}::~{{$class}}()
@@ -63,6 +65,11 @@ const QString InterfaceName = "{{$module}}/{{$iface}}";
     disconnect(&m_client, &ApiGear::Mqtt::Client::disconnected, 0, 0);
     disconnect(&m_client, &ApiGear::Mqtt::Client::ready, 0, 0);
     unsubscribeAll();
+}
+
+bool {{$class}}::isReady() const
+{
+    return m_finishedInitialization && m_pendingSubscriptions.empty();
 }
 
 {{- range .Interface.Properties }}
@@ -118,15 +125,16 @@ QFuture<{{$return}}> {{$class}}::{{camel .Name}}Async({{qtParams "" .Params}})
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/{{.Name}}");
     auto promise = std::make_shared<QPromise<{{$return}}>>();
+    promise->start();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-        {{- if .Return.IsVoid }}
-            promise->finish();
-        {{- else }}
+        {{- if not .Return.IsVoid }}
             promise->addResult({{qtDefault "" .Return}});
         {{- end}}
+        promise->finish();
+        return promise->future();
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -134,23 +142,22 @@ QFuture<{{$return}}> {{$class}}::{{camel .Name}}Async({{qtParams "" .Params}})
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-        {{- if .Return.IsVoid }}
-            promise->finish();
-        {{- else }}
-            promise->addResult({{qtDefault "" .Return}});
+        {{- if not .Return.IsVoid }}
+        promise->addResult({{qtDefault "" .Return}});
         {{- end}}
+        promise->finish();
+        return promise->future();
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({ {{- range $i, $e := .Params }}{{if $i}}, {{ end }}{{.Name}}{{- end }} });       
 
     auto func = [promise](const nlohmann::json& arg)
         {
-        {{- if .Return.IsVoid }}
-            promise->finish();
-        {{- else }}
+        {{- if not .Return.IsVoid }}
             {{$return}} value = arg.get<{{$return}}>();
             promise->addResult(value);
         {{- end}}
+            promise->finish();
         };
     auto callId = m_client.invokeRemote(topic, arguments, respTopic);
     auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
@@ -167,14 +174,36 @@ const QString& {{$class}}::interfaceName()
     return InterfaceName;
 }
 
+void {{$class}}::handleOnSubscribed(QString topic, quint64 id,  bool hasSucceed)
+{
+    if (!hasSucceed)
+    {
+        AG_LOG_WARNING("Subscription failed for  "+ topic+". Try reconnecting the client.");
+        return;
+    }
+    auto iter = std::find_if(m_pendingSubscriptions.begin(), m_pendingSubscriptions.end(), [topic](auto element){return topic == element;});
+    if (iter == m_pendingSubscriptions.end()){
+         AG_LOG_WARNING("Subscription failed for  "+ topic+". Try reconnecting the client.");
+        return;
+    }
+    m_pendingSubscriptions.erase(iter);
+    if (m_finishedInitialization && m_pendingSubscriptions.empty())
+    {
+        emit ready();
+    }
+}
 
 {{- if (len .Interface.Properties) }}
 void {{$class}}::subscribeForPropertiesChanges()
 {
+        // Subscription may succeed, before finising the function that subscribes it and assigns an id for if it was already added (and succeeded) for same topic,
+        // hence, for pending subscriptions a topic is used, and added before the subscribe function.
     {{- range .Interface.Properties }}
-        static const QString topic{{.Name}} = interfaceName() + "/prop/{{.Name}}";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topic{{.Name}}, [this](auto& value) { set{{Camel .Name}}Local(value);}));
-
+        const QString topic{{.Name}} = interfaceName() + "/prop/{{.Name}}";
+        m_pendingSubscriptions.push_back(topic{{.Name}});
+        m_subscribedIds.push_back(m_client.subscribeTopic(topic{{.Name}},
+            [this, topic{{.Name}}](auto id, bool hasSucceed){handleOnSubscribed(topic{{.Name}}, id, hasSucceed);},
+            [this](auto& value) { set{{Camel .Name}}Local(value);}));
     {{- end }}
 }
 {{- end }}
@@ -183,11 +212,12 @@ void {{$class}}::subscribeForPropertiesChanges()
 void {{$class}}::subscribeForSignals()
 {
     {{- range .Interface.Signals }}
-        static const QString topic{{.Name}} = interfaceName() + "/sig/{{.Name}}";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topic{{.Name}}, [this](const nlohmann::json& argumentsArray){
-            emit {{camel .Name}}( {{- range $i, $e := .Params }}{{if $i}},{{end -}}
+        const QString topic{{.Name}} = interfaceName() + "/sig/{{.Name}}";
+        m_pendingSubscriptions.push_back(topic{{.Name}});
+        m_subscribedIds.push_back(m_client.subscribeTopic(topic{{.Name}},
+            [this, topic{{.Name}}](auto id, bool hasSucceed){handleOnSubscribed(topic{{.Name}}, id, hasSucceed);},
+            [this](const nlohmann::json& argumentsArray){ emit {{camel .Name}}( {{- range $i, $e := .Params }}{{if $i}}, {{end -}}
             argumentsArray[{{$i}}].get<{{qtReturn "" .}}>(){{- end -}});}));
-
     {{- end }}
 }
 {{- end }}
@@ -197,7 +227,9 @@ void {{$class}}::subscribeForInvokeResponses()
 {{- range .Interface.Operations }}
     const QString topic{{.Name}} = interfaceName() + "/rpc/{{.Name}}";
     const QString topic{{.Name}}InvokeResp = interfaceName() + "/rpc/{{.Name}}"+ m_client.clientId() + "/result";
+    m_pendingSubscriptions.push_back(topic{{.Name}}InvokeResp);
     auto id_{{.Name}} = m_client.subscribeForInvokeResponse(topic{{.Name}}InvokeResp, 
+                        [this, topic{{.Name}}InvokeResp](auto id, bool hasSucceed){handleOnSubscribed(topic{{.Name}}InvokeResp, id, hasSucceed);},
                         [this, topic{{.Name}}InvokeResp](const nlohmann::json& value, quint64 callId)
                         {
                             findAndExecuteCall(value, callId, topic{{.Name}}InvokeResp);

@@ -87,12 +87,16 @@ public:
     * Remote call of ISameStruct2Interface::func2 on the SameStruct2Interface service.
     */
     QFuture<Struct1> func2Async(const Struct1& param1, const Struct2& param2);
+    /**
+    * Use to check if the MqttSameStruct2Interface is ready to send and receive messages.
+    */
+    bool isReady() const;
 
 signals:
     /**
     * Informs if the MqttSameStruct2Interface is ready to send and receive messages.
     */
-    void isReady();
+    void ready();
 
 public:
     /**
@@ -122,9 +126,11 @@ private:
     void unsubscribeAll();
     //Helper function for handling invoke responses.
     void findAndExecuteCall(const nlohmann::json& value, quint64 callId, QString topic);
+    // Helper function for handling subsbscriptions
+    void handleOnSubscribed(QString topic, quint64 id,  bool hasSucceed);
 
-    /** An indicator if the object is linked with the service. */
-    bool m_isReady;
+    /** An indicator if the object has fisnished initialization. */
+    bool m_finishedInitialization;
     /** 
     * An abstraction layer over the connection with service for the MqttSameStruct2Interface.
     * Handles incoming and outgoing messages.
@@ -152,6 +158,8 @@ private:
     std::map<quint64, std::pair<QString, std::function<void(const nlohmann::json&)>>> m_pendingCallsInfo;
     /* Pending calls mutex */
     std::mutex m_pendingCallMutex;
+    /* Storage for tracking pending subscriptions */
+    std::vector<QString> m_pendingSubscriptions;
 };
 
 } //namespace tb_same2

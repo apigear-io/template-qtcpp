@@ -38,6 +38,7 @@ const QString InterfaceName = "tb.enum/EnumInterface";
 MqttEnumInterfaceAdapter::MqttEnumInterfaceAdapter(ApiGear::Mqtt::ServiceAdapter& mqttServiceAdapter, std::shared_ptr<AbstractEnumInterface> impl, QObject *parent)
     : QObject(parent)
     , m_impl(impl)
+    , m_finishedInitialization(false)
     , m_mqttServiceAdapter(mqttServiceAdapter)
 {
     if (m_mqttServiceAdapter.isReady())
@@ -53,12 +54,14 @@ MqttEnumInterfaceAdapter::MqttEnumInterfaceAdapter(ApiGear::Mqtt::ServiceAdapter
         subscribeForInvokeRequests();
         connectServicePropertiesChanges();
         connectServiceSignals();
+        m_finishedInitialization = true;
     });
     
     connect(&m_mqttServiceAdapter, &ApiGear::Mqtt::ServiceAdapter::disconnected, [this](){
     AG_LOG_DEBUG(Q_FUNC_INFO);
         m_subscribedIds.clear();
     });
+    m_finishedInitialization = m_mqttServiceAdapter.isReady();
 }
 
 MqttEnumInterfaceAdapter::~MqttEnumInterfaceAdapter()
@@ -68,6 +71,12 @@ MqttEnumInterfaceAdapter::~MqttEnumInterfaceAdapter()
     unsubscribeAll();
 }
 
+bool MqttEnumInterfaceAdapter::isReady() const
+{
+    return m_finishedInitialization && m_pendingSubscriptions.empty();
+}
+
+
 const QString& MqttEnumInterfaceAdapter::interfaceName()
 {
     return InterfaceName;
@@ -76,28 +85,36 @@ const QString& MqttEnumInterfaceAdapter::interfaceName()
 void MqttEnumInterfaceAdapter::subscribeForPropertiesChanges()
 {
     const auto setTopic_prop0 = interfaceName() + "/set/prop0";
+    m_pendingSubscriptions.push_back(setTopic_prop0);
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_prop0,
+        [this, setTopic_prop0](auto id, bool hasSucceed){handleOnSubscribed(setTopic_prop0, id, hasSucceed);},
         [this](const nlohmann::json& value)
         {
             Enum0::Enum0Enum prop0 = value.get<Enum0::Enum0Enum>();
             m_impl->setProp0(prop0);
         }));
     const auto setTopic_prop1 = interfaceName() + "/set/prop1";
+    m_pendingSubscriptions.push_back(setTopic_prop1);
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_prop1,
+        [this, setTopic_prop1](auto id, bool hasSucceed){handleOnSubscribed(setTopic_prop1, id, hasSucceed);},
         [this](const nlohmann::json& value)
         {
             Enum1::Enum1Enum prop1 = value.get<Enum1::Enum1Enum>();
             m_impl->setProp1(prop1);
         }));
     const auto setTopic_prop2 = interfaceName() + "/set/prop2";
+    m_pendingSubscriptions.push_back(setTopic_prop2);
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_prop2,
+        [this, setTopic_prop2](auto id, bool hasSucceed){handleOnSubscribed(setTopic_prop2, id, hasSucceed);},
         [this](const nlohmann::json& value)
         {
             Enum2::Enum2Enum prop2 = value.get<Enum2::Enum2Enum>();
             m_impl->setProp2(prop2);
         }));
     const auto setTopic_prop3 = interfaceName() + "/set/prop3";
+    m_pendingSubscriptions.push_back(setTopic_prop3);
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_prop3,
+        [this, setTopic_prop3](auto id, bool hasSucceed){handleOnSubscribed(setTopic_prop3, id, hasSucceed);},
         [this](const nlohmann::json& value)
         {
             Enum3::Enum3Enum prop3 = value.get<Enum3::Enum3Enum>();
@@ -108,7 +125,9 @@ void MqttEnumInterfaceAdapter::subscribeForPropertiesChanges()
 void MqttEnumInterfaceAdapter::subscribeForInvokeRequests()
 {
     const auto invokeTopic_func0 = interfaceName() + "/rpc/func0";
+    m_pendingSubscriptions.push_back(invokeTopic_func0);
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_func0,
+        [this, invokeTopic_func0](auto id, bool hasSucceed){handleOnSubscribed(invokeTopic_func0, id, hasSucceed);},
         [this](const nlohmann::json& arguments)
         {
             Enum0::Enum0Enum param0 = arguments.at(0).get<Enum0::Enum0Enum>();
@@ -116,7 +135,9 @@ void MqttEnumInterfaceAdapter::subscribeForInvokeRequests()
             return result;
         }));
     const auto invokeTopic_func1 = interfaceName() + "/rpc/func1";
+    m_pendingSubscriptions.push_back(invokeTopic_func1);
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_func1,
+        [this, invokeTopic_func1](auto id, bool hasSucceed){handleOnSubscribed(invokeTopic_func1, id, hasSucceed);},
         [this](const nlohmann::json& arguments)
         {
             Enum1::Enum1Enum param1 = arguments.at(0).get<Enum1::Enum1Enum>();
@@ -124,7 +145,9 @@ void MqttEnumInterfaceAdapter::subscribeForInvokeRequests()
             return result;
         }));
     const auto invokeTopic_func2 = interfaceName() + "/rpc/func2";
+    m_pendingSubscriptions.push_back(invokeTopic_func2);
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_func2,
+        [this, invokeTopic_func2](auto id, bool hasSucceed){handleOnSubscribed(invokeTopic_func2, id, hasSucceed);},
         [this](const nlohmann::json& arguments)
         {
             Enum2::Enum2Enum param2 = arguments.at(0).get<Enum2::Enum2Enum>();
@@ -132,7 +155,9 @@ void MqttEnumInterfaceAdapter::subscribeForInvokeRequests()
             return result;
         }));
     const auto invokeTopic_func3 = interfaceName() + "/rpc/func3";
+    m_pendingSubscriptions.push_back(invokeTopic_func3);
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_func3,
+        [this, invokeTopic_func3](auto id, bool hasSucceed){handleOnSubscribed(invokeTopic_func3, id, hasSucceed);},
         [this](const nlohmann::json& arguments)
         {
             Enum3::Enum3Enum param3 = arguments.at(0).get<Enum3::Enum3Enum>();
@@ -206,6 +231,25 @@ void MqttEnumInterfaceAdapter::unsubscribeAll()
     for(auto id :m_subscribedIds)
     {
         m_mqttServiceAdapter.unsubscribeTopic(id);
+    }
+}
+
+void MqttEnumInterfaceAdapter::handleOnSubscribed(QString topic, quint64 id,  bool hasSucceed)
+{
+    if (!hasSucceed)
+    {
+        AG_LOG_WARNING("Subscription failed for  "+ topic+". Try reconnecting the client.");
+        return;
+    }
+    auto iter = std::find_if(m_pendingSubscriptions.begin(), m_pendingSubscriptions.end(), [topic](auto element){return topic == element;});
+    if (iter == m_pendingSubscriptions.end()){
+         AG_LOG_WARNING("Subscription failed for  "+ topic+". Try reconnecting the client.");
+        return;
+    }
+    m_pendingSubscriptions.erase(iter);
+    if (m_finishedInitialization && m_pendingSubscriptions.empty())
+    {
+        emit ready();
     }
 }
 

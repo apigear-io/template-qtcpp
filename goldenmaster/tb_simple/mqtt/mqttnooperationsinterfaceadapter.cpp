@@ -38,6 +38,7 @@ const QString InterfaceName = "tb.simple/NoOperationsInterface";
 MqttNoOperationsInterfaceAdapter::MqttNoOperationsInterfaceAdapter(ApiGear::Mqtt::ServiceAdapter& mqttServiceAdapter, std::shared_ptr<AbstractNoOperationsInterface> impl, QObject *parent)
     : QObject(parent)
     , m_impl(impl)
+    , m_finishedInitialization(false)
     , m_mqttServiceAdapter(mqttServiceAdapter)
 {
     if (m_mqttServiceAdapter.isReady())
@@ -51,12 +52,14 @@ MqttNoOperationsInterfaceAdapter::MqttNoOperationsInterfaceAdapter(ApiGear::Mqtt
         subscribeForPropertiesChanges();
         connectServicePropertiesChanges();
         connectServiceSignals();
+        m_finishedInitialization = true;
     });
     
     connect(&m_mqttServiceAdapter, &ApiGear::Mqtt::ServiceAdapter::disconnected, [this](){
     AG_LOG_DEBUG(Q_FUNC_INFO);
         m_subscribedIds.clear();
     });
+    m_finishedInitialization = m_mqttServiceAdapter.isReady();
 }
 
 MqttNoOperationsInterfaceAdapter::~MqttNoOperationsInterfaceAdapter()
@@ -66,6 +69,12 @@ MqttNoOperationsInterfaceAdapter::~MqttNoOperationsInterfaceAdapter()
     unsubscribeAll();
 }
 
+bool MqttNoOperationsInterfaceAdapter::isReady() const
+{
+    return m_finishedInitialization && m_pendingSubscriptions.empty();
+}
+
+
 const QString& MqttNoOperationsInterfaceAdapter::interfaceName()
 {
     return InterfaceName;
@@ -74,14 +83,18 @@ const QString& MqttNoOperationsInterfaceAdapter::interfaceName()
 void MqttNoOperationsInterfaceAdapter::subscribeForPropertiesChanges()
 {
     const auto setTopic_propBool = interfaceName() + "/set/propBool";
+    m_pendingSubscriptions.push_back(setTopic_propBool);
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_propBool,
+        [this, setTopic_propBool](auto id, bool hasSucceed){handleOnSubscribed(setTopic_propBool, id, hasSucceed);},
         [this](const nlohmann::json& value)
         {
             bool propBool = value.get<bool>();
             m_impl->setPropBool(propBool);
         }));
     const auto setTopic_propInt = interfaceName() + "/set/propInt";
+    m_pendingSubscriptions.push_back(setTopic_propInt);
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_propInt,
+        [this, setTopic_propInt](auto id, bool hasSucceed){handleOnSubscribed(setTopic_propInt, id, hasSucceed);},
         [this](const nlohmann::json& value)
         {
             int propInt = value.get<int>();
@@ -129,6 +142,25 @@ void MqttNoOperationsInterfaceAdapter::unsubscribeAll()
     for(auto id :m_subscribedIds)
     {
         m_mqttServiceAdapter.unsubscribeTopic(id);
+    }
+}
+
+void MqttNoOperationsInterfaceAdapter::handleOnSubscribed(QString topic, quint64 id,  bool hasSucceed)
+{
+    if (!hasSucceed)
+    {
+        AG_LOG_WARNING("Subscription failed for  "+ topic+". Try reconnecting the client.");
+        return;
+    }
+    auto iter = std::find_if(m_pendingSubscriptions.begin(), m_pendingSubscriptions.end(), [topic](auto element){return topic == element;});
+    if (iter == m_pendingSubscriptions.end()){
+         AG_LOG_WARNING("Subscription failed for  "+ topic+". Try reconnecting the client.");
+        return;
+    }
+    m_pendingSubscriptions.erase(iter);
+    if (m_finishedInitialization && m_pendingSubscriptions.empty())
+    {
+        emit ready();
     }
 }
 

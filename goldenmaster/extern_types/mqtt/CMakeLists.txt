@@ -29,6 +29,10 @@ target_include_directories(extern_types_mqtt
     $<INSTALL_INTERFACE:include/extern_types>
 )
 
+if (ENABLE_MQTT_TEST_FOR_NON_LINUX_OS OR ((NOT ${CMAKE_SYSTEM_NAME} MATCHES "Darwin") AND (NOT ${CMAKE_SYSTEM_NAME} MATCHES "Windows")))
+add_subdirectory(tests)
+endif()
+
 target_link_libraries(extern_types_mqtt PUBLIC extern_types::extern_types_api apigear::apigear_mqtt Qt6::Concurrent)
 target_compile_definitions(extern_types_mqtt PRIVATE EXTERN_TYPES_MQTT_LIBRARY)
 

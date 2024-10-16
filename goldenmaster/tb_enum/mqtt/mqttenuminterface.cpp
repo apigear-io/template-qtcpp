@@ -36,7 +36,7 @@ MqttEnumInterface::MqttEnumInterface(ApiGear::Mqtt::Client& client, QObject *par
     , m_prop1(Enum1::Value1)
     , m_prop2(Enum2::Value2)
     , m_prop3(Enum3::Value3)
-    , m_isReady(false)
+    , m_finishedInitialization(false)
     , m_client(client)
 {
     if (m_client.isReady())
@@ -50,11 +50,13 @@ MqttEnumInterface::MqttEnumInterface(ApiGear::Mqtt::Client& client, QObject *par
             subscribeForPropertiesChanges();
             subscribeForSignals();
             subscribeForInvokeResponses();
+            m_finishedInitialization = true;
     });
     connect(&m_client, &ApiGear::Mqtt::Client::disconnected, [this](){
         m_subscribedIds.clear();
         m_InvokeCallsInfo.clear();
     });
+    m_finishedInitialization = m_client.isReady();
 }
 
 MqttEnumInterface::~MqttEnumInterface()
@@ -62,6 +64,11 @@ MqttEnumInterface::~MqttEnumInterface()
     disconnect(&m_client, &ApiGear::Mqtt::Client::disconnected, 0, 0);
     disconnect(&m_client, &ApiGear::Mqtt::Client::ready, 0, 0);
     unsubscribeAll();
+}
+
+bool MqttEnumInterface::isReady() const
+{
+    return m_finishedInitialization && m_pendingSubscriptions.empty();
 }
 
 void MqttEnumInterface::setProp0(Enum0::Enum0Enum prop0)
@@ -186,11 +193,14 @@ QFuture<Enum0::Enum0Enum> MqttEnumInterface::func0Async(Enum0::Enum0Enum param0)
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/func0");
     auto promise = std::make_shared<QPromise<Enum0::Enum0Enum>>();
+    promise->start();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
             promise->addResult(Enum0::Value0);
+        promise->finish();
+        return promise->future();
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -198,7 +208,9 @@ QFuture<Enum0::Enum0Enum> MqttEnumInterface::func0Async(Enum0::Enum0Enum param0)
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(Enum0::Value0);
+        promise->addResult(Enum0::Value0);
+        promise->finish();
+        return promise->future();
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({param0 });       
@@ -207,6 +219,7 @@ QFuture<Enum0::Enum0Enum> MqttEnumInterface::func0Async(Enum0::Enum0Enum param0)
         {
             Enum0::Enum0Enum value = arg.get<Enum0::Enum0Enum>();
             promise->addResult(value);
+            promise->finish();
         };
     auto callId = m_client.invokeRemote(topic, arguments, respTopic);
     auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
@@ -229,11 +242,14 @@ QFuture<Enum1::Enum1Enum> MqttEnumInterface::func1Async(Enum1::Enum1Enum param1)
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/func1");
     auto promise = std::make_shared<QPromise<Enum1::Enum1Enum>>();
+    promise->start();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
             promise->addResult(Enum1::Value1);
+        promise->finish();
+        return promise->future();
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -241,7 +257,9 @@ QFuture<Enum1::Enum1Enum> MqttEnumInterface::func1Async(Enum1::Enum1Enum param1)
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(Enum1::Value1);
+        promise->addResult(Enum1::Value1);
+        promise->finish();
+        return promise->future();
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({param1 });       
@@ -250,6 +268,7 @@ QFuture<Enum1::Enum1Enum> MqttEnumInterface::func1Async(Enum1::Enum1Enum param1)
         {
             Enum1::Enum1Enum value = arg.get<Enum1::Enum1Enum>();
             promise->addResult(value);
+            promise->finish();
         };
     auto callId = m_client.invokeRemote(topic, arguments, respTopic);
     auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
@@ -272,11 +291,14 @@ QFuture<Enum2::Enum2Enum> MqttEnumInterface::func2Async(Enum2::Enum2Enum param2)
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/func2");
     auto promise = std::make_shared<QPromise<Enum2::Enum2Enum>>();
+    promise->start();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
             promise->addResult(Enum2::Value2);
+        promise->finish();
+        return promise->future();
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -284,7 +306,9 @@ QFuture<Enum2::Enum2Enum> MqttEnumInterface::func2Async(Enum2::Enum2Enum param2)
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(Enum2::Value2);
+        promise->addResult(Enum2::Value2);
+        promise->finish();
+        return promise->future();
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({param2 });       
@@ -293,6 +317,7 @@ QFuture<Enum2::Enum2Enum> MqttEnumInterface::func2Async(Enum2::Enum2Enum param2)
         {
             Enum2::Enum2Enum value = arg.get<Enum2::Enum2Enum>();
             promise->addResult(value);
+            promise->finish();
         };
     auto callId = m_client.invokeRemote(topic, arguments, respTopic);
     auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
@@ -315,11 +340,14 @@ QFuture<Enum3::Enum3Enum> MqttEnumInterface::func3Async(Enum3::Enum3Enum param3)
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/func3");
     auto promise = std::make_shared<QPromise<Enum3::Enum3Enum>>();
+    promise->start();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
             promise->addResult(Enum3::Value3);
+        promise->finish();
+        return promise->future();
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -327,7 +355,9 @@ QFuture<Enum3::Enum3Enum> MqttEnumInterface::func3Async(Enum3::Enum3Enum param3)
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(Enum3::Value3);
+        promise->addResult(Enum3::Value3);
+        promise->finish();
+        return promise->future();
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({param3 });       
@@ -336,6 +366,7 @@ QFuture<Enum3::Enum3Enum> MqttEnumInterface::func3Async(Enum3::Enum3Enum param3)
         {
             Enum3::Enum3Enum value = arg.get<Enum3::Enum3Enum>();
             promise->addResult(value);
+            promise->finish();
         };
     auto callId = m_client.invokeRemote(topic, arguments, respTopic);
     auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
@@ -349,37 +380,80 @@ const QString& MqttEnumInterface::interfaceName()
 {
     return InterfaceName;
 }
+
+void MqttEnumInterface::handleOnSubscribed(QString topic, quint64 id,  bool hasSucceed)
+{
+    if (!hasSucceed)
+    {
+        AG_LOG_WARNING("Subscription failed for  "+ topic+". Try reconnecting the client.");
+        return;
+    }
+    auto iter = std::find_if(m_pendingSubscriptions.begin(), m_pendingSubscriptions.end(), [topic](auto element){return topic == element;});
+    if (iter == m_pendingSubscriptions.end()){
+         AG_LOG_WARNING("Subscription failed for  "+ topic+". Try reconnecting the client.");
+        return;
+    }
+    m_pendingSubscriptions.erase(iter);
+    if (m_finishedInitialization && m_pendingSubscriptions.empty())
+    {
+        emit ready();
+    }
+}
 void MqttEnumInterface::subscribeForPropertiesChanges()
 {
-        static const QString topicprop0 = interfaceName() + "/prop/prop0";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicprop0, [this](auto& value) { setProp0Local(value);}));
-        static const QString topicprop1 = interfaceName() + "/prop/prop1";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicprop1, [this](auto& value) { setProp1Local(value);}));
-        static const QString topicprop2 = interfaceName() + "/prop/prop2";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicprop2, [this](auto& value) { setProp2Local(value);}));
-        static const QString topicprop3 = interfaceName() + "/prop/prop3";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicprop3, [this](auto& value) { setProp3Local(value);}));
+        // Subscription may succeed, before finising the function that subscribes it and assigns an id for if it was already added (and succeeded) for same topic,
+        // hence, for pending subscriptions a topic is used, and added before the subscribe function.
+        const QString topicprop0 = interfaceName() + "/prop/prop0";
+        m_pendingSubscriptions.push_back(topicprop0);
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicprop0,
+            [this, topicprop0](auto id, bool hasSucceed){handleOnSubscribed(topicprop0, id, hasSucceed);},
+            [this](auto& value) { setProp0Local(value);}));
+        const QString topicprop1 = interfaceName() + "/prop/prop1";
+        m_pendingSubscriptions.push_back(topicprop1);
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicprop1,
+            [this, topicprop1](auto id, bool hasSucceed){handleOnSubscribed(topicprop1, id, hasSucceed);},
+            [this](auto& value) { setProp1Local(value);}));
+        const QString topicprop2 = interfaceName() + "/prop/prop2";
+        m_pendingSubscriptions.push_back(topicprop2);
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicprop2,
+            [this, topicprop2](auto id, bool hasSucceed){handleOnSubscribed(topicprop2, id, hasSucceed);},
+            [this](auto& value) { setProp2Local(value);}));
+        const QString topicprop3 = interfaceName() + "/prop/prop3";
+        m_pendingSubscriptions.push_back(topicprop3);
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicprop3,
+            [this, topicprop3](auto id, bool hasSucceed){handleOnSubscribed(topicprop3, id, hasSucceed);},
+            [this](auto& value) { setProp3Local(value);}));
 }
 void MqttEnumInterface::subscribeForSignals()
 {
-        static const QString topicsig0 = interfaceName() + "/sig/sig0";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig0, [this](const nlohmann::json& argumentsArray){
-            emit sig0(argumentsArray[0].get<Enum0::Enum0Enum>());}));
-        static const QString topicsig1 = interfaceName() + "/sig/sig1";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig1, [this](const nlohmann::json& argumentsArray){
-            emit sig1(argumentsArray[0].get<Enum1::Enum1Enum>());}));
-        static const QString topicsig2 = interfaceName() + "/sig/sig2";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig2, [this](const nlohmann::json& argumentsArray){
-            emit sig2(argumentsArray[0].get<Enum2::Enum2Enum>());}));
-        static const QString topicsig3 = interfaceName() + "/sig/sig3";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig3, [this](const nlohmann::json& argumentsArray){
-            emit sig3(argumentsArray[0].get<Enum3::Enum3Enum>());}));
+        const QString topicsig0 = interfaceName() + "/sig/sig0";
+        m_pendingSubscriptions.push_back(topicsig0);
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig0,
+            [this, topicsig0](auto id, bool hasSucceed){handleOnSubscribed(topicsig0, id, hasSucceed);},
+            [this](const nlohmann::json& argumentsArray){ emit sig0(argumentsArray[0].get<Enum0::Enum0Enum>());}));
+        const QString topicsig1 = interfaceName() + "/sig/sig1";
+        m_pendingSubscriptions.push_back(topicsig1);
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig1,
+            [this, topicsig1](auto id, bool hasSucceed){handleOnSubscribed(topicsig1, id, hasSucceed);},
+            [this](const nlohmann::json& argumentsArray){ emit sig1(argumentsArray[0].get<Enum1::Enum1Enum>());}));
+        const QString topicsig2 = interfaceName() + "/sig/sig2";
+        m_pendingSubscriptions.push_back(topicsig2);
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig2,
+            [this, topicsig2](auto id, bool hasSucceed){handleOnSubscribed(topicsig2, id, hasSucceed);},
+            [this](const nlohmann::json& argumentsArray){ emit sig2(argumentsArray[0].get<Enum2::Enum2Enum>());}));
+        const QString topicsig3 = interfaceName() + "/sig/sig3";
+        m_pendingSubscriptions.push_back(topicsig3);
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicsig3,
+            [this, topicsig3](auto id, bool hasSucceed){handleOnSubscribed(topicsig3, id, hasSucceed);},
+            [this](const nlohmann::json& argumentsArray){ emit sig3(argumentsArray[0].get<Enum3::Enum3Enum>());}));
 }
 void MqttEnumInterface::subscribeForInvokeResponses()
 {
     const QString topicfunc0 = interfaceName() + "/rpc/func0";
     const QString topicfunc0InvokeResp = interfaceName() + "/rpc/func0"+ m_client.clientId() + "/result";
+    m_pendingSubscriptions.push_back(topicfunc0InvokeResp);
     auto id_func0 = m_client.subscribeForInvokeResponse(topicfunc0InvokeResp, 
+                        [this, topicfunc0InvokeResp](auto id, bool hasSucceed){handleOnSubscribed(topicfunc0InvokeResp, id, hasSucceed);},
                         [this, topicfunc0InvokeResp](const nlohmann::json& value, quint64 callId)
                         {
                             findAndExecuteCall(value, callId, topicfunc0InvokeResp);
@@ -387,7 +461,9 @@ void MqttEnumInterface::subscribeForInvokeResponses()
     m_InvokeCallsInfo[topicfunc0] = std::make_pair(topicfunc0InvokeResp, id_func0);
     const QString topicfunc1 = interfaceName() + "/rpc/func1";
     const QString topicfunc1InvokeResp = interfaceName() + "/rpc/func1"+ m_client.clientId() + "/result";
+    m_pendingSubscriptions.push_back(topicfunc1InvokeResp);
     auto id_func1 = m_client.subscribeForInvokeResponse(topicfunc1InvokeResp, 
+                        [this, topicfunc1InvokeResp](auto id, bool hasSucceed){handleOnSubscribed(topicfunc1InvokeResp, id, hasSucceed);},
                         [this, topicfunc1InvokeResp](const nlohmann::json& value, quint64 callId)
                         {
                             findAndExecuteCall(value, callId, topicfunc1InvokeResp);
@@ -395,7 +471,9 @@ void MqttEnumInterface::subscribeForInvokeResponses()
     m_InvokeCallsInfo[topicfunc1] = std::make_pair(topicfunc1InvokeResp, id_func1);
     const QString topicfunc2 = interfaceName() + "/rpc/func2";
     const QString topicfunc2InvokeResp = interfaceName() + "/rpc/func2"+ m_client.clientId() + "/result";
+    m_pendingSubscriptions.push_back(topicfunc2InvokeResp);
     auto id_func2 = m_client.subscribeForInvokeResponse(topicfunc2InvokeResp, 
+                        [this, topicfunc2InvokeResp](auto id, bool hasSucceed){handleOnSubscribed(topicfunc2InvokeResp, id, hasSucceed);},
                         [this, topicfunc2InvokeResp](const nlohmann::json& value, quint64 callId)
                         {
                             findAndExecuteCall(value, callId, topicfunc2InvokeResp);
@@ -403,7 +481,9 @@ void MqttEnumInterface::subscribeForInvokeResponses()
     m_InvokeCallsInfo[topicfunc2] = std::make_pair(topicfunc2InvokeResp, id_func2);
     const QString topicfunc3 = interfaceName() + "/rpc/func3";
     const QString topicfunc3InvokeResp = interfaceName() + "/rpc/func3"+ m_client.clientId() + "/result";
+    m_pendingSubscriptions.push_back(topicfunc3InvokeResp);
     auto id_func3 = m_client.subscribeForInvokeResponse(topicfunc3InvokeResp, 
+                        [this, topicfunc3InvokeResp](auto id, bool hasSucceed){handleOnSubscribed(topicfunc3InvokeResp, id, hasSucceed);},
                         [this, topicfunc3InvokeResp](const nlohmann::json& value, quint64 callId)
                         {
                             findAndExecuteCall(value, callId, topicfunc3InvokeResp);

@@ -209,17 +209,17 @@ const QString& MqttSameStruct2Interface::interfaceName()
 }
 void MqttSameStruct2Interface::subscribeForPropertiesChanges()
 {
-        static const QString topicprop1 = interfaceName() + "/prop/prop1";
+        const QString topicprop1 = interfaceName() + "/prop/prop1";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicprop1, [this](auto& value) { setProp1Local(value);}));
-        static const QString topicprop2 = interfaceName() + "/prop/prop2";
+        const QString topicprop2 = interfaceName() + "/prop/prop2";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicprop2, [this](auto& value) { setProp2Local(value);}));
 }
 void MqttSameStruct2Interface::subscribeForSignals()
 {
-        static const QString topicsig1 = interfaceName() + "/sig/sig1";
+        const QString topicsig1 = interfaceName() + "/sig/sig1";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicsig1, [this](const nlohmann::json& argumentsArray){
             emit sig1(argumentsArray[0].get<Struct1>());}));
-        static const QString topicsig2 = interfaceName() + "/sig/sig2";
+        const QString topicsig2 = interfaceName() + "/sig/sig2";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicsig2, [this](const nlohmann::json& argumentsArray){
             emit sig2(argumentsArray[0].get<Struct1>(),argumentsArray[1].get<Struct2>());}));
 }

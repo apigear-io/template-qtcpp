@@ -207,9 +207,9 @@ const QString& MqttCounter::interfaceName()
 }
 void MqttCounter::subscribeForPropertiesChanges()
 {
-        static const QString topicvector = interfaceName() + "/prop/vector";
+        const QString topicvector = interfaceName() + "/prop/vector";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicvector, [this](auto& value) { setVectorLocal(value);}));
-        static const QString topicextern_vector = interfaceName() + "/prop/extern_vector";
+        const QString topicextern_vector = interfaceName() + "/prop/extern_vector";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicextern_vector, [this](auto& value) { setExternVectorLocal(value);}));
 }
 void MqttCounter::subscribeForInvokeResponses()

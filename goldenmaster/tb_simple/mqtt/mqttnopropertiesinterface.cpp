@@ -150,10 +150,10 @@ const QString& MqttNoPropertiesInterface::interfaceName()
 }
 void MqttNoPropertiesInterface::subscribeForSignals()
 {
-        static const QString topicsigVoid = interfaceName() + "/sig/sigVoid";
+        const QString topicsigVoid = interfaceName() + "/sig/sigVoid";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicsigVoid, [this](const nlohmann::json& argumentsArray){
             emit sigVoid();}));
-        static const QString topicsigBool = interfaceName() + "/sig/sigBool";
+        const QString topicsigBool = interfaceName() + "/sig/sigBool";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicsigBool, [this](const nlohmann::json& argumentsArray){
             emit sigBool(argumentsArray[0].get<bool>());}));
 }

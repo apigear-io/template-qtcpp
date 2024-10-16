@@ -351,27 +351,27 @@ const QString& MqttEnumInterface::interfaceName()
 }
 void MqttEnumInterface::subscribeForPropertiesChanges()
 {
-        static const QString topicprop0 = interfaceName() + "/prop/prop0";
+        const QString topicprop0 = interfaceName() + "/prop/prop0";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicprop0, [this](auto& value) { setProp0Local(value);}));
-        static const QString topicprop1 = interfaceName() + "/prop/prop1";
+        const QString topicprop1 = interfaceName() + "/prop/prop1";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicprop1, [this](auto& value) { setProp1Local(value);}));
-        static const QString topicprop2 = interfaceName() + "/prop/prop2";
+        const QString topicprop2 = interfaceName() + "/prop/prop2";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicprop2, [this](auto& value) { setProp2Local(value);}));
-        static const QString topicprop3 = interfaceName() + "/prop/prop3";
+        const QString topicprop3 = interfaceName() + "/prop/prop3";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicprop3, [this](auto& value) { setProp3Local(value);}));
 }
 void MqttEnumInterface::subscribeForSignals()
 {
-        static const QString topicsig0 = interfaceName() + "/sig/sig0";
+        const QString topicsig0 = interfaceName() + "/sig/sig0";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicsig0, [this](const nlohmann::json& argumentsArray){
             emit sig0(argumentsArray[0].get<Enum0::Enum0Enum>());}));
-        static const QString topicsig1 = interfaceName() + "/sig/sig1";
+        const QString topicsig1 = interfaceName() + "/sig/sig1";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicsig1, [this](const nlohmann::json& argumentsArray){
             emit sig1(argumentsArray[0].get<Enum1::Enum1Enum>());}));
-        static const QString topicsig2 = interfaceName() + "/sig/sig2";
+        const QString topicsig2 = interfaceName() + "/sig/sig2";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicsig2, [this](const nlohmann::json& argumentsArray){
             emit sig2(argumentsArray[0].get<Enum2::Enum2Enum>());}));
-        static const QString topicsig3 = interfaceName() + "/sig/sig3";
+        const QString topicsig3 = interfaceName() + "/sig/sig3";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicsig3, [this](const nlohmann::json& argumentsArray){
             emit sig3(argumentsArray[0].get<Enum3::Enum3Enum>());}));
 }

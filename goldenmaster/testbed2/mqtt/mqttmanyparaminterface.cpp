@@ -193,11 +193,14 @@ QFuture<int> MqttManyParamInterface::func1Async(int param1)
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/func1");
     auto promise = std::make_shared<QPromise<int>>();
+    promise->start();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
             promise->addResult(0);
+        promise->finish();
+        return promise->future();
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -205,7 +208,9 @@ QFuture<int> MqttManyParamInterface::func1Async(int param1)
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(0);
+        promise->addResult(0);
+        promise->finish();
+        return promise->future();
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({param1 });       
@@ -214,6 +219,7 @@ QFuture<int> MqttManyParamInterface::func1Async(int param1)
         {
             int value = arg.get<int>();
             promise->addResult(value);
+            promise->finish();
         };
     auto callId = m_client.invokeRemote(topic, arguments, respTopic);
     auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
@@ -236,11 +242,14 @@ QFuture<int> MqttManyParamInterface::func2Async(int param1, int param2)
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/func2");
     auto promise = std::make_shared<QPromise<int>>();
+    promise->start();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
             promise->addResult(0);
+        promise->finish();
+        return promise->future();
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -248,7 +257,9 @@ QFuture<int> MqttManyParamInterface::func2Async(int param1, int param2)
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(0);
+        promise->addResult(0);
+        promise->finish();
+        return promise->future();
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({param1, param2 });       
@@ -257,6 +268,7 @@ QFuture<int> MqttManyParamInterface::func2Async(int param1, int param2)
         {
             int value = arg.get<int>();
             promise->addResult(value);
+            promise->finish();
         };
     auto callId = m_client.invokeRemote(topic, arguments, respTopic);
     auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
@@ -279,11 +291,14 @@ QFuture<int> MqttManyParamInterface::func3Async(int param1, int param2, int para
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/func3");
     auto promise = std::make_shared<QPromise<int>>();
+    promise->start();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
             promise->addResult(0);
+        promise->finish();
+        return promise->future();
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -291,7 +306,9 @@ QFuture<int> MqttManyParamInterface::func3Async(int param1, int param2, int para
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(0);
+        promise->addResult(0);
+        promise->finish();
+        return promise->future();
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({param1, param2, param3 });       
@@ -300,6 +317,7 @@ QFuture<int> MqttManyParamInterface::func3Async(int param1, int param2, int para
         {
             int value = arg.get<int>();
             promise->addResult(value);
+            promise->finish();
         };
     auto callId = m_client.invokeRemote(topic, arguments, respTopic);
     auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
@@ -322,11 +340,14 @@ QFuture<int> MqttManyParamInterface::func4Async(int param1, int param2, int para
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/func4");
     auto promise = std::make_shared<QPromise<int>>();
+    promise->start();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
             promise->addResult(0);
+        promise->finish();
+        return promise->future();
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -334,7 +355,9 @@ QFuture<int> MqttManyParamInterface::func4Async(int param1, int param2, int para
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(0);
+        promise->addResult(0);
+        promise->finish();
+        return promise->future();
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({param1, param2, param3, param4 });       
@@ -343,6 +366,7 @@ QFuture<int> MqttManyParamInterface::func4Async(int param1, int param2, int para
         {
             int value = arg.get<int>();
             promise->addResult(value);
+            promise->finish();
         };
     auto callId = m_client.invokeRemote(topic, arguments, respTopic);
     auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);

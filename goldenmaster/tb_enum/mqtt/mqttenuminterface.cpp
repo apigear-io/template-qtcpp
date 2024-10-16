@@ -193,11 +193,14 @@ QFuture<Enum0::Enum0Enum> MqttEnumInterface::func0Async(Enum0::Enum0Enum param0)
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/func0");
     auto promise = std::make_shared<QPromise<Enum0::Enum0Enum>>();
+    promise->start();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
             promise->addResult(Enum0::Value0);
+        promise->finish();
+        return promise->future();
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -205,7 +208,9 @@ QFuture<Enum0::Enum0Enum> MqttEnumInterface::func0Async(Enum0::Enum0Enum param0)
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(Enum0::Value0);
+        promise->addResult(Enum0::Value0);
+        promise->finish();
+        return promise->future();
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({param0 });       
@@ -214,6 +219,7 @@ QFuture<Enum0::Enum0Enum> MqttEnumInterface::func0Async(Enum0::Enum0Enum param0)
         {
             Enum0::Enum0Enum value = arg.get<Enum0::Enum0Enum>();
             promise->addResult(value);
+            promise->finish();
         };
     auto callId = m_client.invokeRemote(topic, arguments, respTopic);
     auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
@@ -236,11 +242,14 @@ QFuture<Enum1::Enum1Enum> MqttEnumInterface::func1Async(Enum1::Enum1Enum param1)
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/func1");
     auto promise = std::make_shared<QPromise<Enum1::Enum1Enum>>();
+    promise->start();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
             promise->addResult(Enum1::Value1);
+        promise->finish();
+        return promise->future();
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -248,7 +257,9 @@ QFuture<Enum1::Enum1Enum> MqttEnumInterface::func1Async(Enum1::Enum1Enum param1)
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(Enum1::Value1);
+        promise->addResult(Enum1::Value1);
+        promise->finish();
+        return promise->future();
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({param1 });       
@@ -257,6 +268,7 @@ QFuture<Enum1::Enum1Enum> MqttEnumInterface::func1Async(Enum1::Enum1Enum param1)
         {
             Enum1::Enum1Enum value = arg.get<Enum1::Enum1Enum>();
             promise->addResult(value);
+            promise->finish();
         };
     auto callId = m_client.invokeRemote(topic, arguments, respTopic);
     auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
@@ -279,11 +291,14 @@ QFuture<Enum2::Enum2Enum> MqttEnumInterface::func2Async(Enum2::Enum2Enum param2)
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/func2");
     auto promise = std::make_shared<QPromise<Enum2::Enum2Enum>>();
+    promise->start();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
             promise->addResult(Enum2::Value2);
+        promise->finish();
+        return promise->future();
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -291,7 +306,9 @@ QFuture<Enum2::Enum2Enum> MqttEnumInterface::func2Async(Enum2::Enum2Enum param2)
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(Enum2::Value2);
+        promise->addResult(Enum2::Value2);
+        promise->finish();
+        return promise->future();
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({param2 });       
@@ -300,6 +317,7 @@ QFuture<Enum2::Enum2Enum> MqttEnumInterface::func2Async(Enum2::Enum2Enum param2)
         {
             Enum2::Enum2Enum value = arg.get<Enum2::Enum2Enum>();
             promise->addResult(value);
+            promise->finish();
         };
     auto callId = m_client.invokeRemote(topic, arguments, respTopic);
     auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
@@ -322,11 +340,14 @@ QFuture<Enum3::Enum3Enum> MqttEnumInterface::func3Async(Enum3::Enum3Enum param3)
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/func3");
     auto promise = std::make_shared<QPromise<Enum3::Enum3Enum>>();
+    promise->start();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
             promise->addResult(Enum3::Value3);
+        promise->finish();
+        return promise->future();
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -334,7 +355,9 @@ QFuture<Enum3::Enum3Enum> MqttEnumInterface::func3Async(Enum3::Enum3Enum param3)
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(Enum3::Value3);
+        promise->addResult(Enum3::Value3);
+        promise->finish();
+        return promise->future();
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({param3 });       
@@ -343,6 +366,7 @@ QFuture<Enum3::Enum3Enum> MqttEnumInterface::func3Async(Enum3::Enum3Enum param3)
         {
             Enum3::Enum3Enum value = arg.get<Enum3::Enum3Enum>();
             promise->addResult(value);
+            promise->finish();
         };
     auto callId = m_client.invokeRemote(topic, arguments, respTopic);
     auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);

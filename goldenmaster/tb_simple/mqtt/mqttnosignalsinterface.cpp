@@ -135,11 +135,13 @@ QFuture<void> MqttNoSignalsInterface::funcVoidAsync()
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/funcVoid");
     auto promise = std::make_shared<QPromise<void>>();
+    promise->start();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->finish();
+        promise->finish();
+        return promise->future();
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -147,7 +149,8 @@ QFuture<void> MqttNoSignalsInterface::funcVoidAsync()
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->finish();
+        promise->finish();
+        return promise->future();
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({ });       
@@ -177,11 +180,14 @@ QFuture<bool> MqttNoSignalsInterface::funcBoolAsync(bool paramBool)
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/funcBool");
     auto promise = std::make_shared<QPromise<bool>>();
+    promise->start();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
             promise->addResult(false);
+        promise->finish();
+        return promise->future();
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -189,7 +195,9 @@ QFuture<bool> MqttNoSignalsInterface::funcBoolAsync(bool paramBool)
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(false);
+        promise->addResult(false);
+        promise->finish();
+        return promise->future();
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({paramBool });       
@@ -198,6 +206,7 @@ QFuture<bool> MqttNoSignalsInterface::funcBoolAsync(bool paramBool)
         {
             bool value = arg.get<bool>();
             promise->addResult(value);
+            promise->finish();
         };
     auto callId = m_client.invokeRemote(topic, arguments, respTopic);
     auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);

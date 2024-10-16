@@ -235,19 +235,19 @@ const QString& MqttNam_Es::interfaceName()
 }
 void MqttNam_Es::subscribeForPropertiesChanges()
 {
-        static const QString topicSwitch = interfaceName() + "/prop/Switch";
+        const QString topicSwitch = interfaceName() + "/prop/Switch";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicSwitch, [this](auto& value) { setSwitchLocal(value);}));
-        static const QString topicSOME_PROPERTY = interfaceName() + "/prop/SOME_PROPERTY";
+        const QString topicSOME_PROPERTY = interfaceName() + "/prop/SOME_PROPERTY";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicSOME_PROPERTY, [this](auto& value) { setSomePropertyLocal(value);}));
-        static const QString topicSome_Poperty2 = interfaceName() + "/prop/Some_Poperty2";
+        const QString topicSome_Poperty2 = interfaceName() + "/prop/Some_Poperty2";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicSome_Poperty2, [this](auto& value) { setSomePoperty2Local(value);}));
 }
 void MqttNam_Es::subscribeForSignals()
 {
-        static const QString topicSOME_SIGNAL = interfaceName() + "/sig/SOME_SIGNAL";
+        const QString topicSOME_SIGNAL = interfaceName() + "/sig/SOME_SIGNAL";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicSOME_SIGNAL, [this](const nlohmann::json& argumentsArray){
             emit someSignal(argumentsArray[0].get<bool>());}));
-        static const QString topicSome_Signal2 = interfaceName() + "/sig/Some_Signal2";
+        const QString topicSome_Signal2 = interfaceName() + "/sig/Some_Signal2";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicSome_Signal2, [this](const nlohmann::json& argumentsArray){
             emit someSignal2(argumentsArray[0].get<bool>());}));
 }

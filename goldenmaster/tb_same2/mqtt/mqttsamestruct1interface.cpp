@@ -138,12 +138,12 @@ const QString& MqttSameStruct1Interface::interfaceName()
 }
 void MqttSameStruct1Interface::subscribeForPropertiesChanges()
 {
-        static const QString topicprop1 = interfaceName() + "/prop/prop1";
+        const QString topicprop1 = interfaceName() + "/prop/prop1";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicprop1, [this](auto& value) { setProp1Local(value);}));
 }
 void MqttSameStruct1Interface::subscribeForSignals()
 {
-        static const QString topicsig1 = interfaceName() + "/sig/sig1";
+        const QString topicsig1 = interfaceName() + "/sig/sig1";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicsig1, [this](const nlohmann::json& argumentsArray){
             emit sig1(argumentsArray[0].get<Struct1>());}));
 }

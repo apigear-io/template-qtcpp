@@ -206,9 +206,9 @@ const QString& MqttNoSignalsInterface::interfaceName()
 }
 void MqttNoSignalsInterface::subscribeForPropertiesChanges()
 {
-        static const QString topicpropBool = interfaceName() + "/prop/propBool";
+        const QString topicpropBool = interfaceName() + "/prop/propBool";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicpropBool, [this](auto& value) { setPropBoolLocal(value);}));
-        static const QString topicpropInt = interfaceName() + "/prop/propInt";
+        const QString topicpropInt = interfaceName() + "/prop/propInt";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicpropInt, [this](auto& value) { setPropIntLocal(value);}));
 }
 void MqttNoSignalsInterface::subscribeForInvokeResponses()

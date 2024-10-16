@@ -107,7 +107,7 @@ const QString& MqttVoidInterface::interfaceName()
 }
 void MqttVoidInterface::subscribeForSignals()
 {
-        static const QString topicsigVoid = interfaceName() + "/sig/sigVoid";
+        const QString topicsigVoid = interfaceName() + "/sig/sigVoid";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicsigVoid, [this](const nlohmann::json& argumentsArray){
             emit sigVoid();}));
 }

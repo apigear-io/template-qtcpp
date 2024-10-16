@@ -351,27 +351,27 @@ const QString& MqttStructArrayInterface::interfaceName()
 }
 void MqttStructArrayInterface::subscribeForPropertiesChanges()
 {
-        static const QString topicpropBool = interfaceName() + "/prop/propBool";
+        const QString topicpropBool = interfaceName() + "/prop/propBool";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicpropBool, [this](auto& value) { setPropBoolLocal(value);}));
-        static const QString topicpropInt = interfaceName() + "/prop/propInt";
+        const QString topicpropInt = interfaceName() + "/prop/propInt";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicpropInt, [this](auto& value) { setPropIntLocal(value);}));
-        static const QString topicpropFloat = interfaceName() + "/prop/propFloat";
+        const QString topicpropFloat = interfaceName() + "/prop/propFloat";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicpropFloat, [this](auto& value) { setPropFloatLocal(value);}));
-        static const QString topicpropString = interfaceName() + "/prop/propString";
+        const QString topicpropString = interfaceName() + "/prop/propString";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicpropString, [this](auto& value) { setPropStringLocal(value);}));
 }
 void MqttStructArrayInterface::subscribeForSignals()
 {
-        static const QString topicsigBool = interfaceName() + "/sig/sigBool";
+        const QString topicsigBool = interfaceName() + "/sig/sigBool";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicsigBool, [this](const nlohmann::json& argumentsArray){
             emit sigBool(argumentsArray[0].get<QList<StructBool>>());}));
-        static const QString topicsigInt = interfaceName() + "/sig/sigInt";
+        const QString topicsigInt = interfaceName() + "/sig/sigInt";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicsigInt, [this](const nlohmann::json& argumentsArray){
             emit sigInt(argumentsArray[0].get<QList<StructInt>>());}));
-        static const QString topicsigFloat = interfaceName() + "/sig/sigFloat";
+        const QString topicsigFloat = interfaceName() + "/sig/sigFloat";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicsigFloat, [this](const nlohmann::json& argumentsArray){
             emit sigFloat(argumentsArray[0].get<QList<StructFloat>>());}));
-        static const QString topicsigString = interfaceName() + "/sig/sigString";
+        const QString topicsigString = interfaceName() + "/sig/sigString";
         m_subscribedIds.push_back(m_client.subscribeTopic(topicsigString, [this](const nlohmann::json& argumentsArray){
             emit sigString(argumentsArray[0].get<QList<StructString>>());}));
 }

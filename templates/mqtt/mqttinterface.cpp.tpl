@@ -172,7 +172,7 @@ const QString& {{$class}}::interfaceName()
 void {{$class}}::subscribeForPropertiesChanges()
 {
     {{- range .Interface.Properties }}
-        static const QString topic{{.Name}} = interfaceName() + "/prop/{{.Name}}";
+        const QString topic{{.Name}} = interfaceName() + "/prop/{{.Name}}";
         m_subscribedIds.push_back(m_client.subscribeTopic(topic{{.Name}}, [this](auto& value) { set{{Camel .Name}}Local(value);}));
 
     {{- end }}
@@ -183,7 +183,7 @@ void {{$class}}::subscribeForPropertiesChanges()
 void {{$class}}::subscribeForSignals()
 {
     {{- range .Interface.Signals }}
-        static const QString topic{{.Name}} = interfaceName() + "/sig/{{.Name}}";
+        const QString topic{{.Name}} = interfaceName() + "/sig/{{.Name}}";
         m_subscribedIds.push_back(m_client.subscribeTopic(topic{{.Name}}, [this](const nlohmann::json& argumentsArray){
             emit {{camel .Name}}( {{- range $i, $e := .Params }}{{if $i}},{{end -}}
             argumentsArray[{{$i}}].get<{{qtReturn "" .}}>(){{- end -}});}));

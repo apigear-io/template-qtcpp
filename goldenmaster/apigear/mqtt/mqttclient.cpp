@@ -47,6 +47,18 @@ void Client::writeMessage(const QMqttTopicName& topic, const QByteArray& message
 void Client::onSubscribeTopic(quint64 id, const QString &topic, OnSubscribedCallback onSubscribed, SimpleSubscribeCallback callback)
 {
     auto subscription = m_client.subscribe(topic, QoS);
+    auto informSubscriptionState = [onSubscribed, id](QMqttSubscription::SubscriptionState state)
+        {
+            if (state == QMqttSubscription::SubscriptionState::Subscribed)
+            {
+                onSubscribed(id, true);
+            }
+            else if (state == QMqttSubscription::SubscriptionState::Error)
+            {
+                onSubscribed(id, false);
+            }
+        };
+    connect(subscription, &QMqttSubscription::stateChanged, [informSubscriptionState](QMqttSubscription::SubscriptionState state) {informSubscriptionState(state); });
     auto subscribedTopic = subscription->topic();
     if (!m_subscriptions.contains(subscribedTopic))
     {
@@ -66,12 +78,28 @@ void Client::onSubscribeTopic(quint64 id, const QString &topic, OnSubscribedCall
                 });
 
     }
+    else
+    {
+        informSubscriptionState(subscription->state());
+    }
     m_subscriptions.insert(subscription->topic(), std::make_pair(id, callback));
 }
 
 void Client::onSubscribeForInvokeResponse(quint64 id, const QString &topic, OnSubscribedCallback onSubscribed, InvokeReplyCallback callback)
 {
     auto subscription = m_client.subscribe(topic, QoS);
+    auto informSubscriptionState = [onSubscribed, id](QMqttSubscription::SubscriptionState state)
+        {
+            if (state == QMqttSubscription::SubscriptionState::Subscribed)
+            {
+                onSubscribed(id, true);
+            }
+            else if (state == QMqttSubscription::SubscriptionState::Error)
+            {
+                onSubscribed(id, false);
+            }
+        };
+    connect(subscription, &QMqttSubscription::stateChanged, [informSubscriptionState](QMqttSubscription::SubscriptionState state) {informSubscriptionState(state); });
     auto topicFilter = subscription->topic();
     if (!m_invokeReplySubscriptions.contains(topicFilter))
     {
@@ -92,6 +120,10 @@ void Client::onSubscribeForInvokeResponse(quint64 id, const QString &topic, OnSu
                         subscription++;
                     }
                 });
+    }
+    else
+    {
+        informSubscriptionState(subscription->state());
     }
     m_invokeReplySubscriptions.insert(topicFilter,  std::make_pair(id, callback));
 }

@@ -78,6 +78,18 @@ void ServiceAdapter::onSubscribeTopic(quint64 id, const QString &topic, OnSubscr
 {
     auto subscription = m_client.subscribe(topic, QoS);
     auto subscribedTopic = subscription->topic();
+    auto informSubscriptionState = [onSubscribed, id](QMqttSubscription::SubscriptionState state)
+        {
+            if (state == QMqttSubscription::SubscriptionState::Subscribed)
+            {
+                onSubscribed(id, true);
+            }
+            else if (state == QMqttSubscription::SubscriptionState::Error)
+            {
+                onSubscribed(id, false);
+            }
+        };
+    connect(subscription, &QMqttSubscription::stateChanged, [informSubscriptionState](QMqttSubscription::SubscriptionState state) {informSubscriptionState(state); });
     if (!m_subscriptions.contains(subscription->topic()))
     {
         connect(subscription, &QMqttSubscription::messageReceived, [this](const QMqttMessage& message)
@@ -95,16 +107,36 @@ void ServiceAdapter::onSubscribeTopic(quint64 id, const QString &topic, OnSubscr
                 }
             });
     }
+    else 
+    {
+        informSubscriptionState(subscription->state());
+    }
     m_subscriptions.insert(subscription->topic(), std::make_pair(id, callback));
 }
 
 void ServiceAdapter::onSubscribeForInvokeTopic(quint64 id, const QString &topic, OnSubscribedCallback onSubscribed, InvokeSubscribeCallback callback)
 {
     auto subscription = m_client.subscribe(topic, QoS);
+    auto informSubscriptionState = [onSubscribed, id](QMqttSubscription::SubscriptionState state)
+        {
+            if (state == QMqttSubscription::SubscriptionState::Subscribed)
+            {
+                onSubscribed(id, true);
+            }
+            else if (state == QMqttSubscription::SubscriptionState::Error)
+            {
+                onSubscribed(id, false);
+            }
+        };
+    connect(subscription, &QMqttSubscription::stateChanged, [informSubscriptionState](QMqttSubscription::SubscriptionState state) {informSubscriptionState(state); });
     auto topicFilter = subscription->topic();
     if (!m_invokeSubscriptions.contains(topicFilter))
     {
         connect(subscription, &QMqttSubscription::messageReceived, this, &ServiceAdapter::handleInvoke);
+    }
+    else
+    {
+        informSubscriptionState(subscription->state());
     }
     m_invokeSubscriptions.insert(topicFilter, std::make_pair(id, callback));
 }

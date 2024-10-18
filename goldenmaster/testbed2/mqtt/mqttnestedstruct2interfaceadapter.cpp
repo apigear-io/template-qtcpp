@@ -38,6 +38,7 @@ const QString InterfaceName = "testbed2/NestedStruct2Interface";
 MqttNestedStruct2InterfaceAdapter::MqttNestedStruct2InterfaceAdapter(ApiGear::Mqtt::ServiceAdapter& mqttServiceAdapter, std::shared_ptr<AbstractNestedStruct2Interface> impl, QObject *parent)
     : QObject(parent)
     , m_impl(impl)
+    , m_finishedInitialization(false)
     , m_mqttServiceAdapter(mqttServiceAdapter)
 {
     if (m_mqttServiceAdapter.isReady())
@@ -53,12 +54,14 @@ MqttNestedStruct2InterfaceAdapter::MqttNestedStruct2InterfaceAdapter(ApiGear::Mq
         subscribeForInvokeRequests();
         connectServicePropertiesChanges();
         connectServiceSignals();
+        m_finishedInitialization = true;
     });
     
     connect(&m_mqttServiceAdapter, &ApiGear::Mqtt::ServiceAdapter::disconnected, [this](){
     AG_LOG_DEBUG(Q_FUNC_INFO);
         m_subscribedIds.clear();
     });
+    m_finishedInitialization = m_mqttServiceAdapter.isReady();
 }
 
 MqttNestedStruct2InterfaceAdapter::~MqttNestedStruct2InterfaceAdapter()
@@ -68,6 +71,12 @@ MqttNestedStruct2InterfaceAdapter::~MqttNestedStruct2InterfaceAdapter()
     unsubscribeAll();
 }
 
+bool MqttNestedStruct2InterfaceAdapter::isReady() const
+{
+    return m_finishedInitialization && m_pendingSubscriptions.empty();
+}
+
+
 const QString& MqttNestedStruct2InterfaceAdapter::interfaceName()
 {
     return InterfaceName;
@@ -76,14 +85,18 @@ const QString& MqttNestedStruct2InterfaceAdapter::interfaceName()
 void MqttNestedStruct2InterfaceAdapter::subscribeForPropertiesChanges()
 {
     const auto setTopic_prop1 = interfaceName() + "/set/prop1";
+    m_pendingSubscriptions.push_back(setTopic_prop1);
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_prop1,
+        [this, setTopic_prop1](auto id, bool hasSucceed){handleOnSubscribed(setTopic_prop1, id, hasSucceed);},
         [this](const nlohmann::json& value)
         {
             NestedStruct1 prop1 = value.get<NestedStruct1>();
             m_impl->setProp1(prop1);
         }));
     const auto setTopic_prop2 = interfaceName() + "/set/prop2";
+    m_pendingSubscriptions.push_back(setTopic_prop2);
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_prop2,
+        [this, setTopic_prop2](auto id, bool hasSucceed){handleOnSubscribed(setTopic_prop2, id, hasSucceed);},
         [this](const nlohmann::json& value)
         {
             NestedStruct2 prop2 = value.get<NestedStruct2>();
@@ -94,7 +107,9 @@ void MqttNestedStruct2InterfaceAdapter::subscribeForPropertiesChanges()
 void MqttNestedStruct2InterfaceAdapter::subscribeForInvokeRequests()
 {
     const auto invokeTopic_func1 = interfaceName() + "/rpc/func1";
+    m_pendingSubscriptions.push_back(invokeTopic_func1);
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_func1,
+        [this, invokeTopic_func1](auto id, bool hasSucceed){handleOnSubscribed(invokeTopic_func1, id, hasSucceed);},
         [this](const nlohmann::json& arguments)
         {
             NestedStruct1 param1 = arguments.at(0).get<NestedStruct1>();
@@ -102,7 +117,9 @@ void MqttNestedStruct2InterfaceAdapter::subscribeForInvokeRequests()
             return result;
         }));
     const auto invokeTopic_func2 = interfaceName() + "/rpc/func2";
+    m_pendingSubscriptions.push_back(invokeTopic_func2);
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_func2,
+        [this, invokeTopic_func2](auto id, bool hasSucceed){handleOnSubscribed(invokeTopic_func2, id, hasSucceed);},
         [this](const nlohmann::json& arguments)
         {
             NestedStruct1 param1 = arguments.at(0).get<NestedStruct1>();
@@ -151,6 +168,25 @@ void MqttNestedStruct2InterfaceAdapter::unsubscribeAll()
     for(auto id :m_subscribedIds)
     {
         m_mqttServiceAdapter.unsubscribeTopic(id);
+    }
+}
+
+void MqttNestedStruct2InterfaceAdapter::handleOnSubscribed(QString topic, quint64 id,  bool hasSucceed)
+{
+    if (!hasSucceed)
+    {
+        AG_LOG_WARNING("Subscription failed for  "+ topic+". Try reconnecting the client.");
+        return;
+    }
+    auto iter = std::find_if(m_pendingSubscriptions.begin(), m_pendingSubscriptions.end(), [topic](auto element){return topic == element;});
+    if (iter == m_pendingSubscriptions.end()){
+         AG_LOG_WARNING("Subscription failed for  "+ topic+". Try reconnecting the client.");
+        return;
+    }
+    m_pendingSubscriptions.erase(iter);
+    if (m_finishedInitialization && m_pendingSubscriptions.empty())
+    {
+        emit ready();
     }
 }
 

@@ -34,7 +34,7 @@ MqttCounter::MqttCounter(ApiGear::Mqtt::Client& client, QObject *parent)
     : AbstractCounter(parent)
     , m_vector(custom_types::Vector3D())
     , m_extern_vector(QVector3D())
-    , m_isReady(false)
+    , m_finishedInitialization(false)
     , m_client(client)
 {
     if (m_client.isReady())
@@ -46,11 +46,13 @@ MqttCounter::MqttCounter(ApiGear::Mqtt::Client& client, QObject *parent)
         AG_LOG_DEBUG(Q_FUNC_INFO);
             subscribeForPropertiesChanges();
             subscribeForInvokeResponses();
+            m_finishedInitialization = true;
     });
     connect(&m_client, &ApiGear::Mqtt::Client::disconnected, [this](){
         m_subscribedIds.clear();
         m_InvokeCallsInfo.clear();
     });
+    m_finishedInitialization = m_client.isReady();
 }
 
 MqttCounter::~MqttCounter()
@@ -58,6 +60,11 @@ MqttCounter::~MqttCounter()
     disconnect(&m_client, &ApiGear::Mqtt::Client::disconnected, 0, 0);
     disconnect(&m_client, &ApiGear::Mqtt::Client::ready, 0, 0);
     unsubscribeAll();
+}
+
+bool MqttCounter::isReady() const
+{
+    return m_finishedInitialization && m_pendingSubscriptions.empty();
 }
 
 void MqttCounter::setVector(const custom_types::Vector3D& vector)
@@ -128,11 +135,14 @@ QFuture<QVector3D> MqttCounter::incrementAsync(const QVector3D& vec)
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/increment");
     auto promise = std::make_shared<QPromise<QVector3D>>();
+    promise->start();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
             promise->addResult(QVector3D());
+        promise->finish();
+        return promise->future();
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -140,7 +150,9 @@ QFuture<QVector3D> MqttCounter::incrementAsync(const QVector3D& vec)
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(QVector3D());
+        promise->addResult(QVector3D());
+        promise->finish();
+        return promise->future();
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({vec });       
@@ -149,6 +161,7 @@ QFuture<QVector3D> MqttCounter::incrementAsync(const QVector3D& vec)
         {
             QVector3D value = arg.get<QVector3D>();
             promise->addResult(value);
+            promise->finish();
         };
     auto callId = m_client.invokeRemote(topic, arguments, respTopic);
     auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
@@ -171,11 +184,14 @@ QFuture<custom_types::Vector3D> MqttCounter::decrementAsync(const custom_types::
     AG_LOG_DEBUG(Q_FUNC_INFO);
     static const QString topic = interfaceName() + QString("/rpc/decrement");
     auto promise = std::make_shared<QPromise<custom_types::Vector3D>>();
+    promise->start();
     if(!m_client.isReady())
     {
         static auto subscriptionIssues = "Trying to send a message for "+ topic+", but client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
             promise->addResult(custom_types::Vector3D());
+        promise->finish();
+        return promise->future();
     }
 
     auto callInfo = m_InvokeCallsInfo.find(topic);
@@ -183,7 +199,9 @@ QFuture<custom_types::Vector3D> MqttCounter::decrementAsync(const custom_types::
     {
         static auto subscriptionIssues = "Could not perform operation "+ topic+". Try reconnecting the client.";
         AG_LOG_WARNING(subscriptionIssues);
-            promise->addResult(custom_types::Vector3D());
+        promise->addResult(custom_types::Vector3D());
+        promise->finish();
+        return promise->future();
     }
     auto respTopic = callInfo->second.first;
     auto arguments = nlohmann::json::array({vec });       
@@ -192,6 +210,7 @@ QFuture<custom_types::Vector3D> MqttCounter::decrementAsync(const custom_types::
         {
             custom_types::Vector3D value = arg.get<custom_types::Vector3D>();
             promise->addResult(value);
+            promise->finish();
         };
     auto callId = m_client.invokeRemote(topic, arguments, respTopic);
     auto lock = std::unique_lock<std::mutex>(m_pendingCallMutex);
@@ -205,18 +224,47 @@ const QString& MqttCounter::interfaceName()
 {
     return InterfaceName;
 }
+
+void MqttCounter::handleOnSubscribed(QString topic, quint64 id,  bool hasSucceed)
+{
+    if (!hasSucceed)
+    {
+        AG_LOG_WARNING("Subscription failed for  "+ topic+". Try reconnecting the client.");
+        return;
+    }
+    auto iter = std::find_if(m_pendingSubscriptions.begin(), m_pendingSubscriptions.end(), [topic](auto element){return topic == element;});
+    if (iter == m_pendingSubscriptions.end()){
+         AG_LOG_WARNING("Subscription failed for  "+ topic+". Try reconnecting the client.");
+        return;
+    }
+    m_pendingSubscriptions.erase(iter);
+    if (m_finishedInitialization && m_pendingSubscriptions.empty())
+    {
+        emit ready();
+    }
+}
 void MqttCounter::subscribeForPropertiesChanges()
 {
-        static const QString topicvector = interfaceName() + "/prop/vector";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicvector, [this](auto& value) { setVectorLocal(value);}));
-        static const QString topicextern_vector = interfaceName() + "/prop/extern_vector";
-        m_subscribedIds.push_back(m_client.subscribeTopic(topicextern_vector, [this](auto& value) { setExternVectorLocal(value);}));
+        // Subscription may succeed, before finising the function that subscribes it and assigns an id for if it was already added (and succeeded) for same topic,
+        // hence, for pending subscriptions a topic is used, and added before the subscribe function.
+        const QString topicvector = interfaceName() + "/prop/vector";
+        m_pendingSubscriptions.push_back(topicvector);
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicvector,
+            [this, topicvector](auto id, bool hasSucceed){handleOnSubscribed(topicvector, id, hasSucceed);},
+            [this](auto& value) { setVectorLocal(value);}));
+        const QString topicextern_vector = interfaceName() + "/prop/extern_vector";
+        m_pendingSubscriptions.push_back(topicextern_vector);
+        m_subscribedIds.push_back(m_client.subscribeTopic(topicextern_vector,
+            [this, topicextern_vector](auto id, bool hasSucceed){handleOnSubscribed(topicextern_vector, id, hasSucceed);},
+            [this](auto& value) { setExternVectorLocal(value);}));
 }
 void MqttCounter::subscribeForInvokeResponses()
 {
     const QString topicincrement = interfaceName() + "/rpc/increment";
     const QString topicincrementInvokeResp = interfaceName() + "/rpc/increment"+ m_client.clientId() + "/result";
+    m_pendingSubscriptions.push_back(topicincrementInvokeResp);
     auto id_increment = m_client.subscribeForInvokeResponse(topicincrementInvokeResp, 
+                        [this, topicincrementInvokeResp](auto id, bool hasSucceed){handleOnSubscribed(topicincrementInvokeResp, id, hasSucceed);},
                         [this, topicincrementInvokeResp](const nlohmann::json& value, quint64 callId)
                         {
                             findAndExecuteCall(value, callId, topicincrementInvokeResp);
@@ -224,7 +272,9 @@ void MqttCounter::subscribeForInvokeResponses()
     m_InvokeCallsInfo[topicincrement] = std::make_pair(topicincrementInvokeResp, id_increment);
     const QString topicdecrement = interfaceName() + "/rpc/decrement";
     const QString topicdecrementInvokeResp = interfaceName() + "/rpc/decrement"+ m_client.clientId() + "/result";
+    m_pendingSubscriptions.push_back(topicdecrementInvokeResp);
     auto id_decrement = m_client.subscribeForInvokeResponse(topicdecrementInvokeResp, 
+                        [this, topicdecrementInvokeResp](auto id, bool hasSucceed){handleOnSubscribed(topicdecrementInvokeResp, id, hasSucceed);},
                         [this, topicdecrementInvokeResp](const nlohmann::json& value, quint64 callId)
                         {
                             findAndExecuteCall(value, callId, topicdecrementInvokeResp);

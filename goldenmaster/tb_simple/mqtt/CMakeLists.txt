@@ -41,6 +41,10 @@ target_include_directories(tb_simple_mqtt
     $<INSTALL_INTERFACE:include/tb_simple>
 )
 
+if (ENABLE_MQTT_TEST_FOR_NON_LINUX_OS OR ((NOT ${CMAKE_SYSTEM_NAME} MATCHES "Darwin") AND (NOT ${CMAKE_SYSTEM_NAME} MATCHES "Windows")))
+add_subdirectory(tests)
+endif()
+
 target_link_libraries(tb_simple_mqtt PUBLIC tb_simple::tb_simple_api apigear::apigear_mqtt Qt6::Concurrent)
 target_compile_definitions(tb_simple_mqtt PRIVATE TB_SIMPLE_MQTT_LIBRARY)
 

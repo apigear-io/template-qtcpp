@@ -38,6 +38,7 @@ const QString InterfaceName = "testbed1/StructInterface";
 MqttStructInterfaceAdapter::MqttStructInterfaceAdapter(ApiGear::Mqtt::ServiceAdapter& mqttServiceAdapter, std::shared_ptr<AbstractStructInterface> impl, QObject *parent)
     : QObject(parent)
     , m_impl(impl)
+    , m_finishedInitialization(false)
     , m_mqttServiceAdapter(mqttServiceAdapter)
 {
     if (m_mqttServiceAdapter.isReady())
@@ -53,12 +54,14 @@ MqttStructInterfaceAdapter::MqttStructInterfaceAdapter(ApiGear::Mqtt::ServiceAda
         subscribeForInvokeRequests();
         connectServicePropertiesChanges();
         connectServiceSignals();
+        m_finishedInitialization = true;
     });
     
     connect(&m_mqttServiceAdapter, &ApiGear::Mqtt::ServiceAdapter::disconnected, [this](){
     AG_LOG_DEBUG(Q_FUNC_INFO);
         m_subscribedIds.clear();
     });
+    m_finishedInitialization = m_mqttServiceAdapter.isReady();
 }
 
 MqttStructInterfaceAdapter::~MqttStructInterfaceAdapter()
@@ -68,6 +71,12 @@ MqttStructInterfaceAdapter::~MqttStructInterfaceAdapter()
     unsubscribeAll();
 }
 
+bool MqttStructInterfaceAdapter::isReady() const
+{
+    return m_finishedInitialization && m_pendingSubscriptions.empty();
+}
+
+
 const QString& MqttStructInterfaceAdapter::interfaceName()
 {
     return InterfaceName;
@@ -76,28 +85,36 @@ const QString& MqttStructInterfaceAdapter::interfaceName()
 void MqttStructInterfaceAdapter::subscribeForPropertiesChanges()
 {
     const auto setTopic_propBool = interfaceName() + "/set/propBool";
+    m_pendingSubscriptions.push_back(setTopic_propBool);
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_propBool,
+        [this, setTopic_propBool](auto id, bool hasSucceed){handleOnSubscribed(setTopic_propBool, id, hasSucceed);},
         [this](const nlohmann::json& value)
         {
             StructBool propBool = value.get<StructBool>();
             m_impl->setPropBool(propBool);
         }));
     const auto setTopic_propInt = interfaceName() + "/set/propInt";
+    m_pendingSubscriptions.push_back(setTopic_propInt);
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_propInt,
+        [this, setTopic_propInt](auto id, bool hasSucceed){handleOnSubscribed(setTopic_propInt, id, hasSucceed);},
         [this](const nlohmann::json& value)
         {
             StructInt propInt = value.get<StructInt>();
             m_impl->setPropInt(propInt);
         }));
     const auto setTopic_propFloat = interfaceName() + "/set/propFloat";
+    m_pendingSubscriptions.push_back(setTopic_propFloat);
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_propFloat,
+        [this, setTopic_propFloat](auto id, bool hasSucceed){handleOnSubscribed(setTopic_propFloat, id, hasSucceed);},
         [this](const nlohmann::json& value)
         {
             StructFloat propFloat = value.get<StructFloat>();
             m_impl->setPropFloat(propFloat);
         }));
     const auto setTopic_propString = interfaceName() + "/set/propString";
+    m_pendingSubscriptions.push_back(setTopic_propString);
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_propString,
+        [this, setTopic_propString](auto id, bool hasSucceed){handleOnSubscribed(setTopic_propString, id, hasSucceed);},
         [this](const nlohmann::json& value)
         {
             StructString propString = value.get<StructString>();
@@ -108,7 +125,9 @@ void MqttStructInterfaceAdapter::subscribeForPropertiesChanges()
 void MqttStructInterfaceAdapter::subscribeForInvokeRequests()
 {
     const auto invokeTopic_funcBool = interfaceName() + "/rpc/funcBool";
+    m_pendingSubscriptions.push_back(invokeTopic_funcBool);
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_funcBool,
+        [this, invokeTopic_funcBool](auto id, bool hasSucceed){handleOnSubscribed(invokeTopic_funcBool, id, hasSucceed);},
         [this](const nlohmann::json& arguments)
         {
             StructBool paramBool = arguments.at(0).get<StructBool>();
@@ -116,7 +135,9 @@ void MqttStructInterfaceAdapter::subscribeForInvokeRequests()
             return result;
         }));
     const auto invokeTopic_funcInt = interfaceName() + "/rpc/funcInt";
+    m_pendingSubscriptions.push_back(invokeTopic_funcInt);
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_funcInt,
+        [this, invokeTopic_funcInt](auto id, bool hasSucceed){handleOnSubscribed(invokeTopic_funcInt, id, hasSucceed);},
         [this](const nlohmann::json& arguments)
         {
             StructInt paramInt = arguments.at(0).get<StructInt>();
@@ -124,7 +145,9 @@ void MqttStructInterfaceAdapter::subscribeForInvokeRequests()
             return result;
         }));
     const auto invokeTopic_funcFloat = interfaceName() + "/rpc/funcFloat";
+    m_pendingSubscriptions.push_back(invokeTopic_funcFloat);
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_funcFloat,
+        [this, invokeTopic_funcFloat](auto id, bool hasSucceed){handleOnSubscribed(invokeTopic_funcFloat, id, hasSucceed);},
         [this](const nlohmann::json& arguments)
         {
             StructFloat paramFloat = arguments.at(0).get<StructFloat>();
@@ -132,7 +155,9 @@ void MqttStructInterfaceAdapter::subscribeForInvokeRequests()
             return result;
         }));
     const auto invokeTopic_funcString = interfaceName() + "/rpc/funcString";
+    m_pendingSubscriptions.push_back(invokeTopic_funcString);
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_funcString,
+        [this, invokeTopic_funcString](auto id, bool hasSucceed){handleOnSubscribed(invokeTopic_funcString, id, hasSucceed);},
         [this](const nlohmann::json& arguments)
         {
             StructString paramString = arguments.at(0).get<StructString>();
@@ -206,6 +231,25 @@ void MqttStructInterfaceAdapter::unsubscribeAll()
     for(auto id :m_subscribedIds)
     {
         m_mqttServiceAdapter.unsubscribeTopic(id);
+    }
+}
+
+void MqttStructInterfaceAdapter::handleOnSubscribed(QString topic, quint64 id,  bool hasSucceed)
+{
+    if (!hasSucceed)
+    {
+        AG_LOG_WARNING("Subscription failed for  "+ topic+". Try reconnecting the client.");
+        return;
+    }
+    auto iter = std::find_if(m_pendingSubscriptions.begin(), m_pendingSubscriptions.end(), [topic](auto element){return topic == element;});
+    if (iter == m_pendingSubscriptions.end()){
+         AG_LOG_WARNING("Subscription failed for  "+ topic+". Try reconnecting the client.");
+        return;
+    }
+    m_pendingSubscriptions.erase(iter);
+    if (m_finishedInitialization && m_pendingSubscriptions.empty())
+    {
+        emit ready();
     }
 }
 

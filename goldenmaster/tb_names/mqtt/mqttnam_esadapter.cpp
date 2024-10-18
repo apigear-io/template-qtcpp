@@ -31,7 +31,7 @@ namespace tb_names {
 
 namespace
 {
-const QString InterfaceName = "tb.names/NamEs";
+const QString InterfaceName = "tb.names/Nam_Es";
 }
 
 
@@ -161,14 +161,14 @@ void MqttNam_EsAdapter::connectServicePropertiesChanges()
 
 void MqttNam_EsAdapter::connectServiceSignals()
 {
-    const auto topic_someSignal = interfaceName() + "/sig/someSignal";
+    const auto topic_someSignal = interfaceName() + "/sig/SOME_SIGNAL";
     connect(m_impl.get(), &AbstractNamEs::someSignal, this,
         [this, topic_someSignal](bool SOME_PARAM)
         {
             nlohmann::json args = { SOME_PARAM };
             m_mqttServiceAdapter.emitPropertyChange(topic_someSignal, args);
         });
-    const auto topic_someSignal2 = interfaceName() + "/sig/someSignal2";
+    const auto topic_someSignal2 = interfaceName() + "/sig/Some_Signal2";
     connect(m_impl.get(), &AbstractNamEs::someSignal2, this,
         [this, topic_someSignal2](bool Some_Param)
         {

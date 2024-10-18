@@ -19,7 +19,7 @@ namespace {{qtNamespace .Module.Name }} {
 
 namespace
 {
-const QString InterfaceName = "{{$module}}/{{$iface}}";
+const QString InterfaceName = "{{$module}}/{{ .Interface.Name}}";
 }
 
 
@@ -146,7 +146,7 @@ void {{$class}}::connectServiceSignals()
 {
 {{- range .Interface.Signals }}
 {{- $signalName := camel .Name }}
-    const auto topic_{{$signalName}} = interfaceName() + "/sig/{{$signalName}}";
+    const auto topic_{{$signalName}} = interfaceName() + "/sig/{{.Name}}";
     connect(m_impl.get(), &Abstract{{$iface}}::{{$signalName}}, this,
         [this, topic_{{$signalName}}]({{qtParams "" .Params}})
         {

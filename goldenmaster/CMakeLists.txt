@@ -25,6 +25,9 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 option(BUILD_TESTING "Enable this option to build the test targets" OFF)
 
 if(BUILD_TESTING)
+
+option(ENABLE_MQTT_TEST_FOR_NON_LINUX_OS "By default enable only for linux, due to easy broker setup on CI" OFF)
+
 find_package(Qt6 COMPONENTS Test REQUIRED)
 enable_testing()
 

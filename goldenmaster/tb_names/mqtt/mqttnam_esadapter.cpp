@@ -31,13 +31,14 @@ namespace tb_names {
 
 namespace
 {
-const QString InterfaceName = "tb.names/NamEs";
+const QString InterfaceName = "tb.names/Nam_Es";
 }
 
 
 MqttNam_EsAdapter::MqttNam_EsAdapter(ApiGear::Mqtt::ServiceAdapter& mqttServiceAdapter, std::shared_ptr<AbstractNamEs> impl, QObject *parent)
     : QObject(parent)
     , m_impl(impl)
+    , m_finishedInitialization(false)
     , m_mqttServiceAdapter(mqttServiceAdapter)
 {
     if (m_mqttServiceAdapter.isReady())
@@ -53,12 +54,14 @@ MqttNam_EsAdapter::MqttNam_EsAdapter(ApiGear::Mqtt::ServiceAdapter& mqttServiceA
         subscribeForInvokeRequests();
         connectServicePropertiesChanges();
         connectServiceSignals();
+        m_finishedInitialization = true;
     });
     
     connect(&m_mqttServiceAdapter, &ApiGear::Mqtt::ServiceAdapter::disconnected, [this](){
     AG_LOG_DEBUG(Q_FUNC_INFO);
         m_subscribedIds.clear();
     });
+    m_finishedInitialization = m_mqttServiceAdapter.isReady();
 }
 
 MqttNam_EsAdapter::~MqttNam_EsAdapter()
@@ -68,6 +71,12 @@ MqttNam_EsAdapter::~MqttNam_EsAdapter()
     unsubscribeAll();
 }
 
+bool MqttNam_EsAdapter::isReady() const
+{
+    return m_finishedInitialization && m_pendingSubscriptions.empty();
+}
+
+
 const QString& MqttNam_EsAdapter::interfaceName()
 {
     return InterfaceName;
@@ -76,21 +85,27 @@ const QString& MqttNam_EsAdapter::interfaceName()
 void MqttNam_EsAdapter::subscribeForPropertiesChanges()
 {
     const auto setTopic_Switch = interfaceName() + "/set/Switch";
+    m_pendingSubscriptions.push_back(setTopic_Switch);
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_Switch,
+        [this, setTopic_Switch](auto id, bool hasSucceed){handleOnSubscribed(setTopic_Switch, id, hasSucceed);},
         [this](const nlohmann::json& value)
         {
             bool Switch = value.get<bool>();
             m_impl->setSwitch(Switch);
         }));
     const auto setTopic_SOME_PROPERTY = interfaceName() + "/set/SOME_PROPERTY";
+    m_pendingSubscriptions.push_back(setTopic_SOME_PROPERTY);
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_SOME_PROPERTY,
+        [this, setTopic_SOME_PROPERTY](auto id, bool hasSucceed){handleOnSubscribed(setTopic_SOME_PROPERTY, id, hasSucceed);},
         [this](const nlohmann::json& value)
         {
             int SOME_PROPERTY = value.get<int>();
             m_impl->setSomeProperty(SOME_PROPERTY);
         }));
     const auto setTopic_Some_Poperty2 = interfaceName() + "/set/Some_Poperty2";
+    m_pendingSubscriptions.push_back(setTopic_Some_Poperty2);
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeTopic(setTopic_Some_Poperty2,
+        [this, setTopic_Some_Poperty2](auto id, bool hasSucceed){handleOnSubscribed(setTopic_Some_Poperty2, id, hasSucceed);},
         [this](const nlohmann::json& value)
         {
             int Some_Poperty2 = value.get<int>();
@@ -101,7 +116,9 @@ void MqttNam_EsAdapter::subscribeForPropertiesChanges()
 void MqttNam_EsAdapter::subscribeForInvokeRequests()
 {
     const auto invokeTopic_SOME_FUNCTION = interfaceName() + "/rpc/SOME_FUNCTION";
+    m_pendingSubscriptions.push_back(invokeTopic_SOME_FUNCTION);
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_SOME_FUNCTION,
+        [this, invokeTopic_SOME_FUNCTION](auto id, bool hasSucceed){handleOnSubscribed(invokeTopic_SOME_FUNCTION, id, hasSucceed);},
         [this](const nlohmann::json& arguments)
         {
             bool SOME_PARAM = arguments.at(0).get<bool>();
@@ -109,7 +126,9 @@ void MqttNam_EsAdapter::subscribeForInvokeRequests()
             return nlohmann::json {};
         }));
     const auto invokeTopic_Some_Function2 = interfaceName() + "/rpc/Some_Function2";
+    m_pendingSubscriptions.push_back(invokeTopic_Some_Function2);
     m_subscribedIds.push_back(m_mqttServiceAdapter.subscribeForInvokeTopic(invokeTopic_Some_Function2,
+        [this, invokeTopic_Some_Function2](auto id, bool hasSucceed){handleOnSubscribed(invokeTopic_Some_Function2, id, hasSucceed);},
         [this](const nlohmann::json& arguments)
         {
             bool Some_Param = arguments.at(0).get<bool>();
@@ -142,14 +161,14 @@ void MqttNam_EsAdapter::connectServicePropertiesChanges()
 
 void MqttNam_EsAdapter::connectServiceSignals()
 {
-    const auto topic_someSignal = interfaceName() + "/sig/someSignal";
+    const auto topic_someSignal = interfaceName() + "/sig/SOME_SIGNAL";
     connect(m_impl.get(), &AbstractNamEs::someSignal, this,
         [this, topic_someSignal](bool SOME_PARAM)
         {
             nlohmann::json args = { SOME_PARAM };
             m_mqttServiceAdapter.emitPropertyChange(topic_someSignal, args);
         });
-    const auto topic_someSignal2 = interfaceName() + "/sig/someSignal2";
+    const auto topic_someSignal2 = interfaceName() + "/sig/Some_Signal2";
     connect(m_impl.get(), &AbstractNamEs::someSignal2, this,
         [this, topic_someSignal2](bool Some_Param)
         {
@@ -163,6 +182,25 @@ void MqttNam_EsAdapter::unsubscribeAll()
     for(auto id :m_subscribedIds)
     {
         m_mqttServiceAdapter.unsubscribeTopic(id);
+    }
+}
+
+void MqttNam_EsAdapter::handleOnSubscribed(QString topic, quint64 id,  bool hasSucceed)
+{
+    if (!hasSucceed)
+    {
+        AG_LOG_WARNING("Subscription failed for  "+ topic+". Try reconnecting the client.");
+        return;
+    }
+    auto iter = std::find_if(m_pendingSubscriptions.begin(), m_pendingSubscriptions.end(), [topic](auto element){return topic == element;});
+    if (iter == m_pendingSubscriptions.end()){
+         AG_LOG_WARNING("Subscription failed for  "+ topic+". Try reconnecting the client.");
+        return;
+    }
+    m_pendingSubscriptions.erase(iter);
+    if (m_finishedInitialization && m_pendingSubscriptions.empty())
+    {
+        emit ready();
     }
 }
 

@@ -39,6 +39,10 @@ target_include_directories({{$lib_id}}
     $<INSTALL_INTERFACE:include/{{$module_id}}>
 )
 
+if (ENABLE_MQTT_TEST_FOR_NON_LINUX_OS OR ((NOT ${CMAKE_SYSTEM_NAME} MATCHES "Darwin") AND (NOT ${CMAKE_SYSTEM_NAME} MATCHES "Windows")))
+add_subdirectory(tests)
+endif()
+
 target_link_libraries({{$lib_id}} PUBLIC {{$module_id}}::{{$module_id}}_api apigear::apigear_mqtt Qt6::Concurrent)
 target_compile_definitions({{$lib_id}} PRIVATE {{$MODULE_ID}}_LIBRARY)
 

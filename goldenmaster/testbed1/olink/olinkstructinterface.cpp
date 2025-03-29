@@ -183,7 +183,8 @@ QFuture<StructBool> OLinkStructInterface::funcBoolAsync(const StructBool& paramB
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkStructInterface::funcBool, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->addResult(StructBool());
+        resolve->addResult(StructBool());
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcBool");
     m_node->invokeRemote(operationId, nlohmann::json::array({paramBool}), 
@@ -210,7 +211,8 @@ QFuture<StructInt> OLinkStructInterface::funcIntAsync(const StructInt& paramInt)
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkStructInterface::funcInt, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->addResult(StructInt());
+        resolve->addResult(StructInt());
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcInt");
     m_node->invokeRemote(operationId, nlohmann::json::array({paramInt}), 
@@ -237,7 +239,8 @@ QFuture<StructFloat> OLinkStructInterface::funcFloatAsync(const StructFloat& par
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkStructInterface::funcFloat, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->addResult(StructFloat());
+        resolve->addResult(StructFloat());
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcFloat");
     m_node->invokeRemote(operationId, nlohmann::json::array({paramFloat}), 
@@ -264,7 +267,8 @@ QFuture<StructString> OLinkStructInterface::funcStringAsync(const StructString& 
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkStructInterface::funcString, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->addResult(StructString());
+        resolve->addResult(StructString());
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcString");
     m_node->invokeRemote(operationId, nlohmann::json::array({paramString}), 

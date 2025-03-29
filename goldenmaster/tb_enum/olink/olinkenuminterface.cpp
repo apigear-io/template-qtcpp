@@ -183,7 +183,8 @@ QFuture<Enum0::Enum0Enum> OLinkEnumInterface::func0Async(Enum0::Enum0Enum param0
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkEnumInterface::func0, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->addResult(Enum0::Value0);
+        resolve->addResult(Enum0::Value0);
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func0");
     m_node->invokeRemote(operationId, nlohmann::json::array({param0}), 
@@ -210,7 +211,8 @@ QFuture<Enum1::Enum1Enum> OLinkEnumInterface::func1Async(Enum1::Enum1Enum param1
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkEnumInterface::func1, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->addResult(Enum1::Value1);
+        resolve->addResult(Enum1::Value1);
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func1");
     m_node->invokeRemote(operationId, nlohmann::json::array({param1}), 
@@ -237,7 +239,8 @@ QFuture<Enum2::Enum2Enum> OLinkEnumInterface::func2Async(Enum2::Enum2Enum param2
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkEnumInterface::func2, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->addResult(Enum2::Value2);
+        resolve->addResult(Enum2::Value2);
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func2");
     m_node->invokeRemote(operationId, nlohmann::json::array({param2}), 
@@ -264,7 +267,8 @@ QFuture<Enum3::Enum3Enum> OLinkEnumInterface::func3Async(Enum3::Enum3Enum param3
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkEnumInterface::func3, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->addResult(Enum3::Value3);
+        resolve->addResult(Enum3::Value3);
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func3");
     m_node->invokeRemote(operationId, nlohmann::json::array({param3}), 

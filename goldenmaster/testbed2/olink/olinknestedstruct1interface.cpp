@@ -93,7 +93,8 @@ QFuture<NestedStruct1> OLinkNestedStruct1Interface::func1Async(const NestedStruc
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkNestedStruct1Interface::func1, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->addResult(NestedStruct1());
+        resolve->addResult(NestedStruct1());
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func1");
     m_node->invokeRemote(operationId, nlohmann::json::array({param1}), 

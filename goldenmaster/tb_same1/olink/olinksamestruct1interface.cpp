@@ -93,7 +93,8 @@ QFuture<Struct1> OLinkSameStruct1Interface::func1Async(const Struct1& param1)
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkSameStruct1Interface::func1, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->addResult(Struct1());
+        resolve->addResult(Struct1());
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func1");
     m_node->invokeRemote(operationId, nlohmann::json::array({param1}), 

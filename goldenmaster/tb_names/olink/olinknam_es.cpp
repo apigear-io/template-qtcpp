@@ -153,7 +153,8 @@ QFuture<void> OLinkNam_Es::someFunctionAsync(bool SOME_PARAM)
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkNam_Es::someFunction, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->finish();
+        resolve->finish();
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "SOME_FUNCTION");
     m_node->invokeRemote(operationId, nlohmann::json::array({SOME_PARAM}), 
@@ -179,7 +180,8 @@ QFuture<void> OLinkNam_Es::someFunction2Async(bool Some_Param)
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkNam_Es::someFunction2, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->finish();
+        resolve->finish();
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "Some_Function2");
     m_node->invokeRemote(operationId, nlohmann::json::array({Some_Param}), 

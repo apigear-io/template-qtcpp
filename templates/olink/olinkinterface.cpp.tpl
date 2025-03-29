@@ -105,10 +105,11 @@ QFuture<{{$return}}> {{$class}}::{{camel .Name}}Async({{qtParams "" .Params}})
         static auto noConnectionLogMessage = "Cannot request call on service + {{$class}}::{{camel .Name}}, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
         {{- if .Return.IsVoid }}
-            resolve->finish();
+        resolve->finish();
         {{- else }}
-            resolve->addResult({{qtDefault "" .Return}});
+        resolve->addResult({{qtDefault "" .Return}});
         {{- end}}
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "{{.Name}}");
     m_node->invokeRemote(operationId, nlohmann::json::array({

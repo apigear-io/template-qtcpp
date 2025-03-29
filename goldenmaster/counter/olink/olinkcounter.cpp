@@ -123,7 +123,8 @@ QFuture<QVector3D> OLinkCounter::incrementAsync(const QVector3D& vec)
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkCounter::increment, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->addResult(QVector3D());
+        resolve->addResult(QVector3D());
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "increment");
     m_node->invokeRemote(operationId, nlohmann::json::array({vec}), 
@@ -150,7 +151,8 @@ QFuture<custom_types::Vector3D> OLinkCounter::decrementAsync(const custom_types:
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkCounter::decrement, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->addResult(custom_types::Vector3D());
+        resolve->addResult(custom_types::Vector3D());
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "decrement");
     m_node->invokeRemote(operationId, nlohmann::json::array({vec}), 

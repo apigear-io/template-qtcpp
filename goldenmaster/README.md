@@ -38,4 +38,4 @@ See https://apigear-io.github.io/template-qtcpp/ for more information
 For simulation the object link core protocol is used.
 Use the olink feature to prepare an olink client adapters and use it with your implementation of backend. (See olink client examples, set up proper server address).
 Use a simulation server to make single changes of an api manually or load simulation scenarios to feed your application automatically with desired behavior.
-See https://docs.apigear.io/docs/advanced/simulation/intro
+See https://docs.apigear.io/docs/scripting/backends/intro

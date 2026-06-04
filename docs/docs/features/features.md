@@ -1,3 +1,10 @@
+---
+sidebar_label: "Features"
+title: "Qt6 C++ Template Features - ApiGear"
+description: "Overview of the Qt6 C++ template features for the ApiGear code generator: generated interfaces and data types, stub implementations, networking adapters, and traffic monitoring."
+keywords: [qt6, qt c++, qml, apigear, objectapi, template features, code generator]
+---
+
 import CodeBlock from '@theme/CodeBlock';
 import helloWorldModuleComponent from '!!raw-loader!./data/helloworld.module.yaml';
 import Figure from '../figure'

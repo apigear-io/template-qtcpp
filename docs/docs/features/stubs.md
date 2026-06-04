@@ -1,4 +1,8 @@
 ﻿---
+sidebar_label: "Stubs"
+title: "Qt6 C++ Template Stub Implementations - ApiGear"
+description: "Generated stub implementations in the ApiGear Qt6 C++ template: ready-to-extend default classes for your interfaces, ideal for prototyping and testing Qt6 C++ services."
+keywords: [qt6, qt c++, qml, apigear, objectapi, stubs, default implementation, prototyping]
 sidebar_position: 2
 ---
 import CodeBlock from '@theme/CodeBlock';

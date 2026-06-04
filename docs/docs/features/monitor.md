@@ -1,4 +1,8 @@
 ﻿---
+sidebar_label: "Monitor"
+title: "Qt6 C++ Template Monitoring - ApiGear"
+description: "Traffic monitoring in the ApiGear Qt6 C++ template: trace interface properties, methods, and signals from your Qt6 C++ SDK in ApiGear Studio."
+keywords: [qt6, qt c++, qml, apigear, objectapi, monitoring, tracing, apigear studio]
 sidebar_position: 4
 ---
 import CodeBlock from '@theme/CodeBlock';

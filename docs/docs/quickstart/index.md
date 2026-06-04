@@ -1,4 +1,8 @@
 ---
+sidebar_label: "Quick-Start"
+title: "Qt6 C++ Template Quick Start - ApiGear"
+description: "Quick-start guide for the ApiGear Qt6 C++ template: install the generator, define an ObjectAPI interface, and generate your first Qt6 C++ SDK in minutes."
+keywords: [qt6, qt c++, qml, apigear, objectapi, quick start, getting started, tutorial]
 sidebar_position: 2
 ---
 import QuickStartCommon from "@site/docs/_quickstart_common.md"

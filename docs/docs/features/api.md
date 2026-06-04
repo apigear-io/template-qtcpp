@@ -1,4 +1,8 @@
 ---
+sidebar_label: "API"
+title: "Qt6 C++ Template API Generation - ApiGear"
+description: "How the ApiGear Qt6 C++ template generates API code from ObjectAPI definitions — interfaces, structs, and enums for your Qt6 C++ SDK."
+keywords: [qt6, qt c++, qml, apigear, objectapi, api generation, interfaces, structs, enums]
 sidebar_position: 1
 ---
 import CodeBlock from '@theme/CodeBlock';

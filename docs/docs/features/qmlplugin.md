@@ -1,4 +1,8 @@
 ﻿---
+sidebar_label: "QML Plugin"
+title: "Qt6 C++ Template QML Plugin - ApiGear"
+description: "Generate a QML plugin from ObjectAPI definitions with the ApiGear Qt6 template — use your interfaces directly in QML and Qt Quick applications."
+keywords: [qt6, qt c++, qml, apigear, objectapi, qml, qt quick, plugin]
 sidebar_position: 5
 ---
 import CodeBlock from '@theme/CodeBlock';

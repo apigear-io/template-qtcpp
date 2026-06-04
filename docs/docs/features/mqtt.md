@@ -1,4 +1,8 @@
 ﻿---
+sidebar_label: "MQTT"
+title: "Qt6 C++ Template MQTT Networking - ApiGear"
+description: "MQTT networking in the ApiGear Qt6 C++ template: expose and consume Qt6 C++ interfaces over MQTT using generated client and server adapters."
+keywords: [qt6, qt c++, qml, apigear, objectapi, mqtt, networking, messaging]
 sidebar_position: 3
 ---
 import CodeBlock from '@theme/CodeBlock';

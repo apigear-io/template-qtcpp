@@ -1,4 +1,8 @@
 ﻿---
+sidebar_label: "OLink"
+title: "Qt6 C++ Template OLink Networking - ApiGear"
+description: "OLink (ObjectLink) networking in the ApiGear Qt6 C++ template: connect Qt6 C++ interface clients and services over the ObjectLink protocol with built-in monitoring."
+keywords: [qt6, qt c++, qml, apigear, objectapi, olink, objectlink, networking]
 sidebar_position: 3
 ---
 import CodeBlock from '@theme/CodeBlock';
@@ -12,7 +16,7 @@ import simulationExampleQrc from '!!raw-loader!./data/example/resources.qrc';
 import simulationExampleTestScenario from '!!raw-loader!./data/example/helloworldtest.scenario.yaml';
 import Figure from '../figure'
 
-# Olink
+# OLink
 
  This feature provides a *client* and a *server* adapter for your interfaces for the [ObjectLink](/docs/protocols/objectlink/intro) protocol. It allows you to connect different applications in the same or different technologies (check all of our [templates](/docs/sdk/intro)).<br />
  Use an *OLink client* instead of your interface implementation to connect to a remote service, or to a the [ApiGear simulation](olink#simulation).  Use an *OLink server adapter* to expose your interface implementation as a remote service.<br />

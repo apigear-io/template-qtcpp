@@ -7,7 +7,6 @@ sidebar_position: 3
 ---
 import CodeBlock from '@theme/CodeBlock';
 import helloWorldModuleComponent from '!!raw-loader!./data/helloworld.module.yaml';
-import mqttMessagesFormat from '/files/mqtt/ApiGearMQTTv0.1.pdf';
 
 
 # MQTT
@@ -230,4 +229,4 @@ ApplicationWindow {
 ```
 
 ### MQTT Messages
-In case you want construct messages for client or server side on your own, please check how topics are created and how does the payload look like, check this documentS [messages format](/files/mqtt/ApiGearMQTTv0.1.pdf).
+For the MQTT topic structure and payload format, see **[ApiGear over MQTT](/docs/protocols/mqtt/mapping)**.

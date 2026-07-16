@@ -303,7 +303,8 @@ QFuture<void> OLinkSimpleInterface::funcNoReturnValueAsync(bool paramBool)
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkSimpleInterface::funcNoReturnValue, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->finish();
+        resolve->finish();
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcNoReturnValue");
     m_node->invokeRemote(operationId, nlohmann::json::array({paramBool}), 
@@ -329,7 +330,8 @@ QFuture<bool> OLinkSimpleInterface::funcBoolAsync(bool paramBool)
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkSimpleInterface::funcBool, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->addResult(false);
+        resolve->addResult(false);
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcBool");
     m_node->invokeRemote(operationId, nlohmann::json::array({paramBool}), 
@@ -356,7 +358,8 @@ QFuture<int> OLinkSimpleInterface::funcIntAsync(int paramInt)
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkSimpleInterface::funcInt, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->addResult(0);
+        resolve->addResult(0);
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcInt");
     m_node->invokeRemote(operationId, nlohmann::json::array({paramInt}), 
@@ -383,7 +386,8 @@ QFuture<qint32> OLinkSimpleInterface::funcInt32Async(qint32 paramInt32)
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkSimpleInterface::funcInt32, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->addResult(0);
+        resolve->addResult(0);
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcInt32");
     m_node->invokeRemote(operationId, nlohmann::json::array({paramInt32}), 
@@ -410,7 +414,8 @@ QFuture<qint64> OLinkSimpleInterface::funcInt64Async(qint64 paramInt64)
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkSimpleInterface::funcInt64, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->addResult(0LL);
+        resolve->addResult(0LL);
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcInt64");
     m_node->invokeRemote(operationId, nlohmann::json::array({paramInt64}), 
@@ -437,7 +442,8 @@ QFuture<qreal> OLinkSimpleInterface::funcFloatAsync(qreal paramFloat)
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkSimpleInterface::funcFloat, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->addResult(0.0f);
+        resolve->addResult(0.0f);
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcFloat");
     m_node->invokeRemote(operationId, nlohmann::json::array({paramFloat}), 
@@ -464,7 +470,8 @@ QFuture<float> OLinkSimpleInterface::funcFloat32Async(float paramFloat32)
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkSimpleInterface::funcFloat32, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->addResult(0.0f);
+        resolve->addResult(0.0f);
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcFloat32");
     m_node->invokeRemote(operationId, nlohmann::json::array({paramFloat32}), 
@@ -491,7 +498,8 @@ QFuture<double> OLinkSimpleInterface::funcFloat64Async(double paramFloat)
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkSimpleInterface::funcFloat64, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->addResult(0.0);
+        resolve->addResult(0.0);
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcFloat64");
     m_node->invokeRemote(operationId, nlohmann::json::array({paramFloat}), 
@@ -518,7 +526,8 @@ QFuture<QString> OLinkSimpleInterface::funcStringAsync(const QString& paramStrin
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkSimpleInterface::funcString, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->addResult(QString());
+        resolve->addResult(QString());
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcString");
     m_node->invokeRemote(operationId, nlohmann::json::array({paramString}), 

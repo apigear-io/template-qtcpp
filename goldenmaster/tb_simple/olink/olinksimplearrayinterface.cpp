@@ -333,7 +333,8 @@ QFuture<QList<bool>> OLinkSimpleArrayInterface::funcBoolAsync(const QList<bool>&
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkSimpleArrayInterface::funcBool, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->addResult(QList<bool>());
+        resolve->addResult(QList<bool>());
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcBool");
     m_node->invokeRemote(operationId, nlohmann::json::array({paramBool}), 
@@ -360,7 +361,8 @@ QFuture<QList<int>> OLinkSimpleArrayInterface::funcIntAsync(const QList<int>& pa
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkSimpleArrayInterface::funcInt, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->addResult(QList<int>());
+        resolve->addResult(QList<int>());
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcInt");
     m_node->invokeRemote(operationId, nlohmann::json::array({paramInt}), 
@@ -387,7 +389,8 @@ QFuture<QList<qint32>> OLinkSimpleArrayInterface::funcInt32Async(const QList<qin
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkSimpleArrayInterface::funcInt32, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->addResult(QList<qint32>());
+        resolve->addResult(QList<qint32>());
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcInt32");
     m_node->invokeRemote(operationId, nlohmann::json::array({paramInt32}), 
@@ -414,7 +417,8 @@ QFuture<QList<qint64>> OLinkSimpleArrayInterface::funcInt64Async(const QList<qin
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkSimpleArrayInterface::funcInt64, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->addResult(QList<qint64>());
+        resolve->addResult(QList<qint64>());
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcInt64");
     m_node->invokeRemote(operationId, nlohmann::json::array({paramInt64}), 
@@ -441,7 +445,8 @@ QFuture<QList<qreal>> OLinkSimpleArrayInterface::funcFloatAsync(const QList<qrea
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkSimpleArrayInterface::funcFloat, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->addResult(QList<qreal>());
+        resolve->addResult(QList<qreal>());
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcFloat");
     m_node->invokeRemote(operationId, nlohmann::json::array({paramFloat}), 
@@ -468,7 +473,8 @@ QFuture<QList<float>> OLinkSimpleArrayInterface::funcFloat32Async(const QList<fl
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkSimpleArrayInterface::funcFloat32, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->addResult(QList<float>());
+        resolve->addResult(QList<float>());
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcFloat32");
     m_node->invokeRemote(operationId, nlohmann::json::array({paramFloat32}), 
@@ -495,7 +501,8 @@ QFuture<QList<double>> OLinkSimpleArrayInterface::funcFloat64Async(const QList<d
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkSimpleArrayInterface::funcFloat64, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->addResult(QList<double>());
+        resolve->addResult(QList<double>());
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcFloat64");
     m_node->invokeRemote(operationId, nlohmann::json::array({paramFloat}), 
@@ -522,7 +529,8 @@ QFuture<QList<QString>> OLinkSimpleArrayInterface::funcStringAsync(const QList<Q
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkSimpleArrayInterface::funcString, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->addResult(QList<QString>());
+        resolve->addResult(QList<QString>());
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcString");
     m_node->invokeRemote(operationId, nlohmann::json::array({paramString}), 

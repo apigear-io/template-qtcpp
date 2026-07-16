@@ -183,7 +183,8 @@ QFuture<int> OLinkManyParamInterface::func1Async(int param1)
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkManyParamInterface::func1, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->addResult(0);
+        resolve->addResult(0);
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func1");
     m_node->invokeRemote(operationId, nlohmann::json::array({param1}), 
@@ -210,7 +211,8 @@ QFuture<int> OLinkManyParamInterface::func2Async(int param1, int param2)
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkManyParamInterface::func2, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->addResult(0);
+        resolve->addResult(0);
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func2");
     m_node->invokeRemote(operationId, nlohmann::json::array({param1,param2}), 
@@ -237,7 +239,8 @@ QFuture<int> OLinkManyParamInterface::func3Async(int param1, int param2, int par
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkManyParamInterface::func3, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->addResult(0);
+        resolve->addResult(0);
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func3");
     m_node->invokeRemote(operationId, nlohmann::json::array({param1,param2,param3}), 
@@ -264,7 +267,8 @@ QFuture<int> OLinkManyParamInterface::func4Async(int param1, int param2, int par
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkManyParamInterface::func4, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->addResult(0);
+        resolve->addResult(0);
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func4");
     m_node->invokeRemote(operationId, nlohmann::json::array({param1,param2,param3,param4}), 

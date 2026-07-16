@@ -123,7 +123,8 @@ QFuture<Struct1> OLinkSameStruct2Interface::func1Async(const Struct1& param1)
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkSameStruct2Interface::func1, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->addResult(Struct1());
+        resolve->addResult(Struct1());
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func1");
     m_node->invokeRemote(operationId, nlohmann::json::array({param1}), 
@@ -150,7 +151,8 @@ QFuture<Struct1> OLinkSameStruct2Interface::func2Async(const Struct1& param1, co
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkSameStruct2Interface::func2, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->addResult(Struct1());
+        resolve->addResult(Struct1());
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "func2");
     m_node->invokeRemote(operationId, nlohmann::json::array({param1,param2}), 

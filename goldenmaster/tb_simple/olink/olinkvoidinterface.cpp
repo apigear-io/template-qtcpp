@@ -65,7 +65,8 @@ QFuture<void> OLinkVoidInterface::funcVoidAsync()
     if(!m_node) {
         static auto noConnectionLogMessage = "Cannot request call on service + OLinkVoidInterface::funcVoid, client is not connected. Try reconnecting the client.";
         AG_LOG_WARNING(noConnectionLogMessage);
-            resolve->finish();
+        resolve->finish();
+        return resolve->future();
     }
     static const auto operationId = ApiGear::ObjectLink::Name::createMemberId(olinkObjectName(), "funcVoid");
     m_node->invokeRemote(operationId, nlohmann::json::array({}), 
